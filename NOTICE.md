@@ -1,4 +1,4 @@
-Copyright 2022 Massachusetts Institute of Techology, Center for transportation & Logistics
+Copyright 2022 Massachusetts Institute of Techology, Center for Transportation & Logistics
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
