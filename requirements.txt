@@ -1,13 +1,13 @@
 autoflake==1.4
-black==22.3.0
-channels==3.0.4
-Django==4.0.2
-django-cors-headers==3.11.0
+black==22.6.0
+channels==3.0.5
+Django==4.1
+django-cors-headers==3.13.0
 django-import-export==2.8.0
 django-solo==2.0.0
 djangorestframework==3.13.1
 pamda==0.0.13
-Pillow==9.0.1
+Pillow==9.2.0
 psycopg2-binary==2.9.3
 python-decouple==3.6
 -e ./cave_api
