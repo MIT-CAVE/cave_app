@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="section-heading form-container">
+    <h1 class="main-title mt-3">{{ form_title }}</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div id="table-wrapper">
+        <table class="table">
+        {{ form.as_table }}
+        </table>
+      </div>
+      <div class="form-btn-container">
+        <button type="submit" class="btn btn-primary btn-lg" name="submit" value="True">{{ submit_button }}</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (() => {
+    const tableWrapper = document.getElementById("table-wrapper");
+    const matches = tableWrapper.querySelectorAll("input, textarea");
+    matches.forEach((match) => {
+      if(match.type === 'checkbox')
+        match.classList.add("form-check-input");
+      else if(match.type === 'file')
+        match.classList.add("form-control-file");
+      else
+        match.classList.add("form-control");
+    });
+  })();
+  {% if error %}
+  (() => {
+    alert('{{ error }}');
+  })();
+  {% endif %}
+</script>
+{% endblock %}

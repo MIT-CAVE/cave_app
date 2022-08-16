@@ -1,0 +1,27 @@
+{% include "modules/generic/utils/container_end.html" %}
+<div class="bg-secondary text-white full-width my-2">
+  <div class="container row col-12 col-lg-9 mx-auto">
+    <div class="p-3 mx-auto">
+      <div class="border rounded p-3">
+        <div class="row">
+          {% if page_section.photo %}
+            <div class="col-3 mx-2">
+              <img class="img-responsive picture rounded-circle profile-photo-xl slight-shadow d-inline" src="{{ page_section.photo.url }}" alt="{{ page_section.header }}" align="center"/>
+            </div>
+          {% elif page_section.photo_private %}
+            <div class="col-3 mx-2">
+              <img class="img-responsive picture rounded-circle profile-photo-xl slight-shadow d-inline" src="{{ page_section.photo_private.url }}" alt="{{ page_section.header }}" align="center"/>
+            </div>
+          {% endif %}
+          <div class="col-auto mx-2">
+            <blockquote class="blockquote">
+              <p class="m-2 text-white">{{ page_section.content }}</p>
+              <p class="m-2 blockquote-footer text-white"><cite title="Source Title">{{ page_section.subheader }}</cite></p>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "modules/generic/utils/container_start.html" %}

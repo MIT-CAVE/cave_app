@@ -1,0 +1,7 @@
+{% include "modules/generic/utils/container_end.html" %}
+<div class="container-fluid">
+{% if page_section.content %}
+  {{ page_section.content | safe }}
+{% endif %}
+</div>
+{% include "modules/generic/utils/container_start.html" %}

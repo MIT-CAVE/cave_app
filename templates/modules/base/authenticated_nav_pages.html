@@ -1,0 +1,65 @@
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link {{home_active}}" href="/">
+        <span class="material-icons">home</span>
+        <p class="d-inline d-lg-none mx-3">Home</p>
+      </a>
+    </li>
+    {% if globals.show_custom_pages %}
+    <li class="nav-item d-inline dropdown">
+      <a
+        class="nav-link {{custom_page_active}}"
+        href="#"
+        id="CustomPageDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+        >
+        <span class="material-icons">view_carousel</span>
+        <p class="d-inline d-lg-none mx-3">{{ globals.custom_pages_name }}</p>
+      </a>
+      <div class="dropdown-menu dropdown-menu-left" aria-labelledby="CustomPageDropdown" id="CustomPageDropdownItems">
+
+      </div>
+    </li>
+    {% endif %}
+    {% if access %}
+
+      {% if globals.show_people_page %}
+      <li class="nav-item">
+        <a class="nav-link {{ people_active }}" href="/people/">
+          <span class="material-icons">people</span>
+          <p class="d-inline d-lg-none mx-3">People</p>
+        </a>
+      </li>
+      {% endif %}
+
+      {% if globals.show_app_page %}
+      <li class="nav-item d-inline dropdown">
+        <a
+          class="nav-link {{app_active}}"
+          href="#"
+          id="SessionDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <span class="material-icons">pages</span>
+          {% if sessionName %}
+            <p id="SessionDropdownSessionName" class="mx-1 mb-0">({{ sessionName }})</p>
+          {% else %}
+            <p class="d-inline d-lg-none mx-3">App</p>
+          {% endif %}
+        </a>
+        <div class="dropdown-menu dropdown-menu-left" style="min-width:400px;" aria-labelledby="SessionDropdown" id="SessionDropdownItems">
+
+        </div>
+      </li>
+      {% endif %}
+    {% else %}
+      <!-- TODO: Special No Access Page Here -->
+    {% endif %}
+
+  </ul>

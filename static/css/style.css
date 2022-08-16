@@ -1,0 +1,143 @@
+/* Background and Color Scheme */
+.bg-background {
+  background-color: rgb(240, 240, 240);
+  min-height: calc(100vh - 56px);
+}
+
+.bg-empty {
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.picture {
+  object-fit:cover;
+}
+
+.full-width {
+  width:100%;
+}
+
+.full-height {
+  height:100%;
+}
+
+.height-20 {
+  height:20vh;
+  min-height: 100px;
+}
+
+.height-25 {
+  height:25vh;
+  min-height: 125px;
+}
+
+.height-35 {
+  height:35vh;
+  min-height: 175px;
+}
+
+.height-50 {
+  height:50vh;
+  min-height: 250px;
+}
+
+.profile-photo-lg {
+  height: 42px;
+  width: 42px;
+}
+
+.profile-photo-xl {
+  height: 84px;
+  width: 84px;
+}
+
+.profile-photo-md {
+  height: 35px;
+  width: 35px;
+}
+
+.profile-photo-sm {
+  height: 24px;
+  width: 24px;
+}
+
+.slight-shadow {
+  box-shadow: 0px 3px 10px rgba(0,0,0,.25);
+}
+
+.wrap-on-hover {
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.wrap-on-hover:hover {
+  overflow:visible;
+  white-space:normal;
+}
+
+.margin-5-on-hover {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.margin-5-on-hover:hover {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-material-icon {
+  display: flex;
+  justify-content: center;
+}
+
+/* Should match media for navbar expand */
+@media (max-width: 991.9px) {
+    .navbar {
+        overflow: auto;
+        max-height: 95vh;
+        align-items: flex-start;
+    }
+}
+
+/* Special Code to handle nav link for various sizing */
+@media (max-width: 991.9px) {
+    .nav-link {
+      display: flex;
+      justify-content: start;
+      margin-left: 10px;
+    }
+}
+
+@media (min-width: 991.9px) {
+    .nav-link {
+      display: flex;
+      justify-content: center;
+    }
+}
+
+/* Nav Styles */
+.nav-link:hover {
+  -webkit-animation: pulse 1s;
+  animation: pulse 1s;
+}
+
+/* Form Styles */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 56px);
+  overflow: auto;
+  padding: 5px;
+}
+
+.form-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Full Height Body */
+.body-for-full-height {
+  min-height: calc(100vh);
+}

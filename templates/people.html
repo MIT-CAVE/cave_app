@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{globals.site_name}}: Teams{% endblock %}
+{% block header_text %}{{globals.site_name}}{% endblock %}
+
+{% block content %}
+{% include "modules/generic/utils/container_start.html" %}
+  {% if people_info %}
+    {% for group_name, teams in people_info.items %}
+      {% for team_name, team_users in teams.items %}
+        <div class="bg-secondary text-white full-width row mx-1 pt-2 mt-2">
+          <div class="container-fluid col-12 text-center mx-auto mb-2">
+            <h2 class="text-center">{{ group_name }} - {{ team_name }}</h2>
+          </div>
+        </div>
+        <div class="row m-1 m-lg-4" style="width:100%">
+          {% for user_obj in team_users %}
+            {% include "modules/generic/user_card.html" %}
+          {% endfor %}
+        </div>
+      {% endfor %}
+    {% endfor %}
+  {% else %}
+    <div class="bg-secondary text-white full-width row mx-1 pt-2 mt-2">
+      <div class="container-fluid col-12 mx-auto mb-2">
+        <h2 class="text-center"> No Team</h2>
+      </div>
+    </div>
+    <div class="row mt-4 mx-auto">
+      <div class="col-12 col-lg-8 mx-auto text-center">
+        <h3>
+          Oops! It looks like you are not on a team yet.
+          <br/><br/>
+          Contact the program administrator to get added to a team.
+        </h3>
+      </div>
+    </div>
+  {% endif %}
+{% include "modules/generic/utils/container_end.html" %}
+{% endblock %}

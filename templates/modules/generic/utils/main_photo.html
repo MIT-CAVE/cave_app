@@ -1,0 +1,9 @@
+{% if page_section.photo %}
+  <div id="page_section_{{ page_section.id }}" class="full-width height-25" style="max-height: 260px;">
+    <img class="picture full-width full-height" src="{{ page_section.photo.url }}" alt="{{ page_section.header }}">
+  </div>
+{% elif page_section.photo_private %}
+  <div id="page_section_{{ page_section.id }}" class="full-width height-25" style="max-height: 260px;">
+    <img class="picture full-width full-height" src="{{ page_section.photo_private.url }}" alt="{{ page_section.header }}">
+  </div>
+{% endif %}

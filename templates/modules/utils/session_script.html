@@ -1,0 +1,245 @@
+<script>
+  function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Dont return empty string
+    template.innerHTML = html;
+    return template.content.firstChild;
+  }
+
+  function createSession(team_id){
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `/create_session/`);
+    const postData = new FormData();
+    if (team_id) {
+      postData.append("team_id", parseInt(team_id))
+    }
+    postData.append("session_name", document.getElementById(`new-session-name-${team_id}`).value)
+    postData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200 || xhr.status === 204){
+          const response = JSON.parse(xhr.responseText);
+            if (response.error){
+              alert("Error: "+response.error);
+            }
+            else {
+              switchSessions(response.session_id)
+            }
+        }
+        else{
+          alert('Something went wrong during session creation.');
+        }
+      }
+    };
+    xhr.send(postData);
+  }
+
+  function copySession(team_id, session_id){
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `/copy_session/`);
+    const postData = new FormData();
+    postData.append("session_id", session_id)
+    postData.append("session_name", document.getElementById(`new-session-name-${team_id}`).value)
+    postData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200 || xhr.status === 204){
+          const response = JSON.parse(xhr.responseText);
+            if (response.error){
+              alert("Error: "+response.error);
+            }
+            else {
+              switchSessions(response.session_id)
+            }
+        }
+        else{
+          alert('Something went wrong during session creation.');
+        }
+      }
+    };
+    xhr.send(postData);
+  }
+
+  function editSession(team_id, session_id){
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `/edit_session/`);
+    const postData = new FormData();
+    postData.append("session_id", session_id)
+    postData.append("session_name", document.getElementById(`new-session-name-${team_id}`).value)
+    postData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200 || xhr.status === 204){
+          const response = JSON.parse(xhr.responseText);
+            if (response.error){
+              alert("Error: "+response.error);
+            }
+            else {
+              switchSessions(response.session_id)
+            }
+        }
+        else{
+          alert('Something went wrong during session creation.');
+        }
+      }
+    };
+    xhr.send(postData);
+  }
+
+  function deleteSession(session_id){
+    let isSure = confirm("Are you sure you want to delete this session?")
+    if (isSure){
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `/delete_session/`);
+      const postData = new FormData();
+      postData.append("session_id", session_id)
+      postData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+      xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4){
+          if(xhr.status === 200 || xhr.status === 204){
+            const response = JSON.parse(xhr.responseText);
+              if (response.error){
+                alert("Error: "+response.error);
+              }
+              else {
+                // console.log(response);
+              }
+          }
+          else{
+            alert('Something went wrong during session deletion.');
+          }
+        }
+      };
+      xhr.send(postData);
+    }
+  }
+
+  function switchSessions(session_id){
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `/switch_session/`);
+    const postData = new FormData();
+    postData.append("session_id", session_id)
+    postData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200 || xhr.status === 204){
+          const response = JSON.parse(xhr.responseText);
+            if (response.Error){
+              alert("Error: "+response.Error);
+            }
+            else {
+              if (window.location.pathname!="/app/"){
+                window.location.pathname = "app"
+              }
+            }
+        }
+        else{
+          alert('Unable to switch your session.');
+        }
+      }
+    };
+    xhr.send(postData);
+  }
+
+  function getSessions(){
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/sessions/`);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          const response = JSON.parse(xhr.responseText);
+            if (response.error){
+              alert("Error: "+response.error);
+            }
+            else {
+              var dropdown=document.getElementById('SessionDropdownItems')
+              dropdown.innerHTML = ''
+              response.teams.forEach((team) => {
+                var teamHeader = htmlToElement(`<h5 class="dropdown-item bg-secondary text-white text-center" style="min-width:300px;">${team.name}</h5>`)
+                dropdown.appendChild(teamHeader)
+                team.sessions.forEach((session) => {
+                  var link = htmlToElement(`
+                    <div class="row px-0 mx-0 py-1">
+                      <div class="col-5 p-0 mx-auto">
+                        <button
+                          id="switch-to-session-${session.id}"
+                          class="btn btn-block ${session.id==response.active_session ? "btn-primary" : "btn-outline-secondary"} px-0  full-width btn-material-icon"
+                          onclick="switchSessions(${session.id})"
+                        >
+                          <div class="wrap-on-hover margin-5-on-hover">
+                            ${session.name}
+                          </div>
+                        </button>
+                      </div>
+                      <div class="${team.under_limit ? "col-2" : "d-none"} p-0 mx-auto">
+                        <button
+                          id="copy-session-${session.id}"
+                          class="btn btn-block btn-outline-secondary px-0 full-width btn-material-icon"
+                          onclick="copySession(${team.id}, ${session.id})"
+                        >
+                          <span class="material-icons">copy_all</span>
+                        </button>
+                      </div>
+                      <div class="${team.under_limit ? "col-2" : "col-3"} p-0 mx-auto">
+                        <button
+                          id="edit-session-${session.id}"
+                          class="btn btn-block btn-outline-secondary px-0  full-width btn-material-icon"
+                          onclick="editSession(${team.id}, ${session.id})"
+                        >
+                          <span class="material-icons">edit</span>
+                        </button>
+                      </div>
+                      <div class="${team.under_limit ? "col-2" : "col-3"} p-0 mx-auto">
+                        <button
+                          id="delete-session-${session.id}"
+                          class="btn btn-block btn-outline-danger px-0 full-width btn-material-icon"
+                          onclick="deleteSession(${session.id})"
+                        >
+                          <span class="material-icons">delete</span>
+                        </button>
+                      </div>
+                    </div>
+                  `)
+                  dropdown.appendChild(link)
+                })
+                var addSessionForm = htmlToElement(`
+                <div class="row px-0 mx-0 py-1">
+                  <div class="col-7 p-0 mx-auto">
+                    <input
+                      class="form-control"
+                      id="new-session-name-${team.id}"
+                      type="text"
+                      name="session_name"
+                      placeholder="Session Name">
+                  </div>
+                  <div class="col-4 p-0 mx-auto">
+                    <button
+                      id="add-to-team-${team.id}"
+                      class="btn btn-block btn-outline-success px-0 full-width btn-material-icon"
+                      onclick="createSession(${team.id})"
+                      ${team.under_limit ? "" : "disabled"}
+                    >
+                      <span class="material-icons">add</span>
+                    </button>
+                  </div>
+                </div>
+                `)
+                dropdown.appendChild(addSessionForm)
+              })
+            }
+        }
+        else{
+          alert('Unable to get your sessions.');
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  (() => {
+    var sessionDropdown = document.getElementById('SessionDropdown');
+    if (sessionDropdown) {
+      sessionDropdown.onclick = getSessions;
+    }
+  })();
+</script>

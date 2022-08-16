@@ -1,0 +1,31 @@
+<div class="col-11 col-xl-4 col-lg-5 mx-auto my-3">
+  <div class="card m-3 pb-2 box-shadow overflow-hidden" style="height:100%;">
+    <div class="text-center mb-3 mx-auto">
+      {% if page_section.photo %}
+        <img class="img-responsive picture full-width p-3" src="{{ page_section.photo.url }}" alt="{{ page_section.header }} image" align="center" style="height:10vh; min-height: 120px;"/>
+      {% elif page_section.photo_private %}
+        <img class="img-responsive picture full-width p-3" src="{{ page_section.photo_private.url }}" alt="{{ page_section.header }} image" align="center" style="height:10vh; min-height: 120px;"/>
+      {% endif %}
+      <div class="card-body">
+        {% if page_section.header %}
+        <h2 class="card-title"><b>{{ page_section.header }}</b></h2>
+        {% endif %}
+        {% if page_section.subheader %}
+        <h4 class="card-title">{{ page_section.subheader }}</h4>
+        {% endif %}
+        {% include "modules/generic/utils/content.html" %}
+      </div>
+    </div>
+    <div class="col-11 mx-auto mb-2 align-bottom" style="margin-top: auto; flex: none;">
+      {% if page_section.link %}
+        <a type="button" class="btn btn-lg btn-block btn-outline-secondary btn-material-icon" href="{{ page_section.link }}" target="_blank" rel="noopener noreferrer"><span class="material-icons">link</span></a>
+      {% elif page_section.file %}
+        <a type="button" class="btn btn-lg btn-block btn-outline-secondary btn-material-icon" href="{{ page_section.file.url }}" target="_blank" download="{{ page_section.name }}"><span class="material-icons">download</span></a>
+      {% elif page_section.file_private %}
+        <a type="button" class="btn btn-lg btn-block btn-outline-secondary btn-material-icon" href="{{ page_section.file_private.url }}" target="_blank" download="{{ page_section.name }}"><span class="material-icons">download</span></a>
+      {% else %}
+        <a type="button" class="btn btn-lg btn-block btn-outline-secondary btn-material-icon" href="/resources" download="{{ page_section.name }}"><span class="material-icons">link_off</span></a>
+      {% endif%}
+    </div>
+  </div>
+</div>

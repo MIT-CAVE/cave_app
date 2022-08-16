@@ -1,0 +1,31 @@
+<script>
+  function resend_validation_email(){
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `/send_email_validation_code/`);
+    const postData = new FormData();
+    postData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200 || xhr.status === 204){
+          const response = JSON.parse(xhr.responseText);
+            if (response.Error){
+              alert("Error: "+response.Error);
+            }
+            else {
+              alert("Validation Email: Sent")
+            }
+        }
+        else {
+          alert('Validation Email: Unable to send email. Please contact the site administrator.');
+        }
+      }
+    };
+    xhr.send(postData);
+  }
+  (() => {
+    var resendValidationEmail = document.getElementById('ResendValidationEmail');
+    if (resendValidationEmail) {
+      resendValidationEmail.onclick = resend_validation_email;
+    };
+  })();
+</script>

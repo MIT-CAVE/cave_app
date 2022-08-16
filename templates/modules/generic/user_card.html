@@ -1,0 +1,19 @@
+<div class="row border border-rounded mt-3 col-12 col-lg-5 mx-auto px-lg-4 pb-1 pt-2">
+  <div class="row col-12 mx-auto">
+    <div class="col-6 col-xl-3 mt-xl-3 mt-1 mt-xl-4 mx-auto text-center">
+      <img class="img-responsive picture rounded-circle profile-photo-xl slight-shadow" src="{{ user_obj.photo.url }}" alt="Profile Photo" align="center"/>
+    </div>
+    <div class="col-12 col-xl-9 my-3 mt-xl-5 mb-xl-2 mx-auto text-center">
+      <h4 class="m-0 p-0 card-title">
+          <b>{{ user_obj.first_name }} {{ user_obj.last_name }}</b>
+      </h4>
+      <p class="m-0 p-0 lead">
+          {{ user_obj.email }}
+      </p>
+    </div>
+  </div>
+
+  <div class="col-12 mt-1 mt-lg-4 mb-2 text-justify" style="white-space: pre-line">
+    {{ user_obj.bio }}
+  </div>
+</div>

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ globals.site_name }}: {{ page }}{% endblock %}
+{% block header_text %}{{ globals.site_name }}{% endblock %}
+
+{% block content %}
+  {% include "modules/generic/utils/container_start.html" %}
+  {% for page_section in page_sections %}
+    {% if page_section.section_type.name == "photo_only" %}
+      {% include "modules/generic/photo_only.html" %}
+    {% elif page_section.section_type.name == "video_only" %}
+      {% include "modules/generic/video_only.html" %}
+    {% elif page_section.section_type.name == "photo_header" %}
+      {% include "modules/generic/photo_header.html" %}
+    {% elif page_section.section_type.name == "photo_header_left" %}
+      {% include "modules/generic/photo_header_left.html" %}
+    {% elif page_section.section_type.name == "photo_header_right" %}
+      {% include "modules/generic/photo_header_right.html" %}
+    {% elif page_section.section_type.name == "html_content" %}
+      {% include "modules/generic/html_content.html" %}
+    {% elif page_section.section_type.name == "photo_quote" %}
+      {% include "modules/generic/photo_quote.html" %}
+    {% elif page_section.section_type.name == "photo_resource" %}
+      {% include "modules/generic/photo_resource.html" %}
+    {% elif page_section.section_type.name == "faq" %}
+      {% include "modules/generic/faq.html" %}
+    {% elif page_section.section_type.name == "break" %}
+      {% include "modules/generic/break.html" %}
+    {% endif %}
+  {% endfor %}
+  {% include "modules/generic/utils/container_end.html" %}
+  {% include "modules/generic/utils/spacing.html" %}
+{% endblock %}

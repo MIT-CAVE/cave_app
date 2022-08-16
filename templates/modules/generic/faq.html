@@ -1,0 +1,19 @@
+<div class="col-12">
+  <div class="row">
+    <div class="card my-3 box-shadow overflow-hidden col-xl-9 col-11 mx-auto text-left">
+      <div class="card-body">
+        <!-- Different layouts for gt xl vs lt xl screens note the d-none s -->
+        <div class="row d-xl-flex d-none">
+          <h2 class="col-12 col-xl-3 text-right">Question:</h2><h2 class="col-12 col-xl-9">{{ page_section.subheader }}</h2>
+          <hr/>
+          <h3 class="lead col-12 col-xl-3 text-right">Answer:</h3><h3 class="lead col-12 col-xl-9">{{ page_section.content | safe }}</h3>
+        </div>
+        <div class="row d-flex d-xl-none">
+          <h4 class="card-title col-12 pb-1">{{ page_section.subheader }}</h4>
+          <p class="card-title col-12"> {{ page_section.content | safe }}</p>
+        </div>
+        {% include "modules/generic/utils/video_embed_link.html" %}
+      </div>
+    </div>
+  </div>
+</div>

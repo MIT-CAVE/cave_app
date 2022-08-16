@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="section-heading form-container">
+  <h1 class="main-title">Login</h1>
+  <form method="post">
+    {% csrf_token %}
+    <table class="table">
+    {{ form.as_table }}
+    </table>
+    <div class="form-btn-container">
+      <button type="submit" class="btn btn-primary btn-lg" name="submit" value="True">Login</button>
+    </div>
+  </form>
+  <hr class="text-dark"/>
+  <a class="text-center my-2 text-dark" href="/reset_password"><h5>Reset Password</h5></a>
+</div>
+{% endblock %}

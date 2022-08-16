@@ -1,0 +1,35 @@
+{% if warning_page == 'email_validation' %}
+<li class="nav-item">
+  <a class="nav-link btn btn-warning" href="#" id="accessDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Validate Your Email
+  </a>
+  <div class="dropdown-menu dropdown-menu-end text-center p-2 bg-warning" style="width:300px;" aria-labelledby="accessDropdown">
+    <a class="text-dark">
+      <button id="ResendValidationEmail" class="btn btn-success m-2">Send Validation Email</button>
+    </a>
+  </div>
+</li>
+{% include "modules/base/resend_validation_email_script.html" %}
+{% endif %}
+{% if warning_page == 'access_pending' %}
+<li class="nav-item">
+  <a class="nav-link btn btn-warning" href="#" id="accessPendingDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Access Pending
+  </a>
+  <div class="dropdown-menu dropdown-menu-end text-center p-2 bg-warning" style="width:300px;" aria-labelledby="accessPendingDropdown">
+    <h5 class="text-dark">Your access to the site is currently pending review from the site staff.</h5>
+  </div>
+</li>
+{% endif %}
+{% if warning_page == 'access_denied' %}
+<li class="nav-item">
+  <a class="nav-link btn btn-danger" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Access Denied
+  </a>
+  <div class="dropdown-menu dropdown-menu-end text-center p-2 " style="width:300px;" aria-labelledby="signupDropdown">
+    <a class="text-dark">
+      <h4>Your access to the site has been denied by the site staff.</h4>
+    </a>
+  </div>
+</li>
+{% endif %}

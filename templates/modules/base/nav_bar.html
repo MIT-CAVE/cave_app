@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary slight-shadow">
+  <div class="d-flex d-lg-none justify-content-between full-width">
+    <button
+      class="navbar-toggler mx-2"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="material-icons">menu</span>
+    </button>
+    <a class="navbar-brand" href="/">{{ globals.site_name }}</a>
+    <div></div>
+  </div>
+  <div class="collapse navbar-collapse d-flex-lg justify-content-between flex-row mx-2" id="navbarSupportedContent">
+    <div>
+      {% if user.is_authenticated %}
+        {% include "modules/base/authenticated_nav_pages.html" %}
+      {% else %}
+        {% include "modules/base/non_authenticated_nav_pages.html" %}
+      {% endif %}
+    </div>
+    <div class="d-none d-lg-flex">
+      <a class="navbar-brand" href="/">{{ globals.site_name }}</a>
+    </div>
+    <div>
+      <ul class="navbar-nav dropdown">
+        <li class="nav-item">
+          <a class="nav-link" href="#" id="CopyrightDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="material-icons">copyright</span>
+            <p class="d-inline d-lg-none mx-3">Copyright</p>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end" style="width: 500px; max-width: 90vw;" aria-labelledby="CopyrightDropdown">
+            <div class="text-center m-2">
+              © Copyright {% now "Y" %} <a href="https://cave.mit.edu/" class="text-dark">MIT Center for Transportation & Logistics</a>
+            </div>
+          </div>
+        </li>
+        {% if user.is_authenticated %}
+          {% include "modules/base/authenticated_nav.html" %}
+        {% else %}
+          {% include "modules/base/non_authenticated_nav.html" %}
+        {% endif %}
+      </ul>
+    </div>
+</nav>

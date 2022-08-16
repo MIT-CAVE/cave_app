@@ -1,0 +1,42 @@
+<script>
+  function getCustomPages(){
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/custom_pages/`);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          const response = JSON.parse(xhr.responseText);
+            if (response.Error){
+              alert("Error: "+response.Error);
+            }
+            else {
+              document.getElementById('CustomPageDropdownItems').innerHTML = ''
+              response.custom_pages.forEach((custom_page) => {
+                var link = document.createElement("a")
+                link.classList.add('nav-link')
+                link.classList.add('dropdown-item')
+                link.id = 'cusom_page-'.concat(custom_page.url_name)
+                link.href = `/page/?page=${custom_page.url_name}`
+                link.appendChild(document.createTextNode(custom_page.name))
+                document.getElementById('CustomPageDropdownItems').appendChild(link)
+              })
+            }
+        }
+        else{
+          alert('Unable to complete this request. No pages returned.');
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  /*
+     Invoke listeners when the page loads.
+  */
+  (() => {
+    var customPageDropDown =document.getElementById('CustomPageDropdown');
+    if (customPageDropDown) {
+      customPageDropDown.onclick = getCustomPages;
+    };
+  })();
+</script>
