@@ -1,5 +1,5 @@
 # Cave App
-A Django server to act as a Cave Back End
+A Django server to act as a Cave Back End and host API code.
 
 ## License Notice
 
