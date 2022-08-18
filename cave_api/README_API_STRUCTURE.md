@@ -73,7 +73,7 @@ Key | Default | Description
 <a name="data">`data`</a> | | Dictionary object that contains data related to the use case.
 <a name="endSize">`endSize`</a> | | The end dimension in pixels for a stroke width of an arc or the size of an icon on a node, which matches the maximum value of a given parameter in a set of data points. Used in [`arcs`](#arcs) and [`nodes`](#nodes).
 <a name="icon">`icon`</a> | Required | The name of a [React Icon](https://react-icons.github.io/react-icons) that will be displayed in the UI. Currently icons are downloaded after the app has loaded (not in the build) and stored in a local cache. This reduces build size while allowing for all react-icons to be supported.
-<a name="layout">`layout`</a> | | A layout that describes how [props](#the-props-key) or [KPIs](#kpis) are organized within their main container components. See the [layout](#the-layout-key) section for a more detailed explanation of this group and its different use cases. (*Under construction*)
+<a name="layout">`layout`</a> | | A dictionary object that describes how [props](#the-props-key) or [KPIs](#kpis) are organized within their UI container components. See the [layout](#the-layout-key) section for a more detailed explanation of this group and some common use cases.
 <a name="name">`name`</a> | | The name of the element to be displayed as a label in the user interface. If omitted, the parent key of the **un`name`d** group is displayed.
 <a name="order">`order`</a> | | When specified in a key group, the `order` parameter sets the position in which the element is rendered in the UI, relative to its siblings. The `order` key takes integer values and the sibling elements will be sorted in ascending order. Since this parameter is optional, all **un`order`ed** items will be sorted alphabetically against each other and placed after the **`order`ed** items. Therefore, if you do not specify any `order` for a group of sibling keys, all of them will be sorted alphabetically according to their `name` values (or parent key when `name` is not specified).
 <a name="propDefaults">`propDefaults`</a> | | A dictionary object that contains one or more input control definitions (`props` items), to reduce the overhead caused by duplicate items. The `propDefaults` definitions can be overriden by `props` items.
@@ -181,10 +181,10 @@ Since multiple selection is possible in the `checkbox` variant, one or more opti
 - When a user is allowed to select only one option from a set, unless you need to expose all the available options with `radio`, you may consider using a `dropdown` instead, as it uses less space.
 
 #### The `layout` key
->(*Under construction*)
+> (*Under construction*)
+The `layout` key allows for use cases where you want to arrange components that are related or simply group them under a well-structured layout. The supported components for use with a layout structure are [props](#the-props-key) and [KPIs](#kpis). In addition to properly aligning a group of props or KPIs, an `style` prop is provided to act as a escape hatch for specifying CSS rules. Through these CSS rules, it is possible to modify the appereance of your prop components or KPIs and allows a way to make them more distinctive or visually appealing.
 
-The `layout` group allows for different use cases where you aim to align components that are related or group components that belong to the same context under a well-structured layout. This prop allows you to define for props and KPIs. This makes your components visually more appealing. Although the structure is very similar for either props or KPIs, Let's dive into its internal structure.
-
+The structure for both prop and KPI `layout`s is the same. Let's dive into it:
 
 ```py
 'layout': {
@@ -192,6 +192,18 @@ The `layout` group allows for different use cases where you aim to align compone
     'num_columns': 'auto',
     'num_rows': 'auto',
     'data': {
+        'col1_row1': {
+            'type': 'item',
+            'column': 1,
+            'row': 1,
+            'itemId': 'custom_prop_or_kpi_key_1'
+        },
+        'col1_row2': {
+            'type': 'item',
+            'column': 1,
+            'row': 1,
+            'itemId': 'custom_prop_or_kpi_key_2',
+        },
         # As many rows and columns as needed
     },
 }
@@ -204,13 +216,12 @@ Key | Default | Description
 --- | ------- | -----------
 <a name="layout-column">`column`</a> | | An integer for the grid column from left to right.
 <a name="layout-data">`data`</a> | `{}` | (*Under construction*)
-<a name="layout-column">`kpiId`</a> | | (*Under construction*)
+<a name="layout-column">`itemId`</a> | | (*Under construction*)
 <a name="layout-columns">`num_columns`</a> | `'auto'` | An integer for the number of columns or the keyword `'auto'`.
 <a name="layout-rows">`num_rows`</a> | `'auto'` | An integer for the number of rows or the keyword `'auto'`.
-<a name="layout-column">`propId`</a> | | (*Under construction*)
 <a name="layout-row">`row`</a> | | An integer for the grid row from top to bottom.
 <a name="layout-column">`style`</a> | | (*Under construction*)
-<a name="layout-type">`type`</a> | Required | The type of layout item. It can be `'grid'`, `'prop'` or `'kpi'`.
+<a name="layout-type">`type`</a> | Required | The type of layout. It can be `'grid'` or `'item'`.
 
 #### timeObjects
 `timeObjects` can be used to replace numerical values displayed on the map or used as prop [`values`](#value) in [`geos`](#geos), [`arcs`](#arcs), or [`nodes`](#nodes). These objects contain a list of values that correspond to a specfic timestep. The user can step through these in order or select a specific timestep from a list. In order to use `timeObjects` a [`timeLength`](#timeLength) must be specified equal to the length of all `value` lists given. Optionally [`timeUnits`](#timeUnits) can be given to display the real world representation of each timestep.
