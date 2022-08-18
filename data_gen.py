@@ -187,7 +187,7 @@ def generate():
             header="Example Header Photo Left",
             subheader="Example Subheader Here",
             content=lorem,
-            photo="page_section_photos/scoring.jpg",
+            photo="page_section_photos/cli.jpg",
             video_embed_link="https://youtube.com/embed/C0DPdy98e4c",
             priority=90,
         )
@@ -218,7 +218,7 @@ def generate():
             section_type=html_content_section,
             header="HTML Content Example",
             content=f'<h1 class="text-center">Custom html content here</h1><br/><p class="text-center">{lorem}</p>',
-            photo="page_section_photos/default.png",
+            photo="page_section_photos/data_glasses.png",
             priority=60,
         )
         # Header
