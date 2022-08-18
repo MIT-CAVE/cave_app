@@ -100,7 +100,7 @@ def generate():
             page=home_page,
             section_type=photo_quote_section,
             header="Welcome Quote",
-            subheader="Connor Makowski",
+            subheader="Connor Makowski - MIT CAVE Researcher",
             content="Welcome to the CAVE App!",
             photo="page_section_photos/connor.jpeg",
             priority=95,
@@ -108,11 +108,38 @@ def generate():
         # Introduction
         PageSections.objects.get_or_create(
             page=home_page,
-            section_type=photo_header_section,
-            header="This is an example Header",
-            subheader="This is an example Subheader",
-            content=lorem,
-            priority=90,
+            section_type=photo_resource_section,
+            header="Cave CLI",
+            subheader="A link to the Cave CLI repo",
+            photo="page_section_photos/cli.jpg",
+            link="https://github.com/MIT-CAVE/cave_cli",
+            priority=83,
+        )
+        PageSections.objects.get_or_create(
+            page=home_page,
+            section_type=photo_resource_section,
+            header="Cave App",
+            subheader="A link to the Cave App repo",
+            photo="page_section_photos/cave.png",
+            link="https://github.com/MIT-CAVE/cave_app",
+            priority=82,
+        )
+        PageSections.objects.get_or_create(
+            page=home_page,
+            section_type=photo_resource_section,
+            header="Cave Static",
+            subheader="A link to the Cave Static repo",
+            photo="page_section_photos/data_storage.jpg",
+            link="https://github.com/MIT-CAVE/cave_static",
+            priority=81,
+        )
+        PageSections.objects.get_or_create(
+            page=home_page,
+            section_type=faq_section,
+            header="Installing the CLI",
+            subheader="How can I install and use the CLI?",
+            content="Make sure to install python3.9+ and postgresql on a unix based system<br/><br/>Then install the cli by running:<br/><br/><div style='background:rgb(75, 75, 75);color:rgb(134, 236, 148);padding:10px;'>bash -c \"$(curl https://raw.githubusercontent.com/MIT-CAVE/cave_cli/main/install.sh)\"</div><br/><br/>To see cave cli functions, run:<br/><br/><div style='background:rgb(75, 75, 75);color:rgb(134, 236, 148);padding:10px;'>cave help</div>",
+            priority=70,
         )
 
     if deployment_type != "development":
@@ -179,8 +206,8 @@ def generate():
         PageSections.objects.get_or_create(
             page=gs_page,
             section_type=photo_quote_section,
-            header="Example Quote",
-            subheader="Connor Makowski",
+            header="Photo Quote",
+            subheader="Connor Makowski - MIT CAVE Researcher",
             content="Welcome to the CAVE App!",
             photo="page_section_photos/connor.jpeg",
             priority=70,
