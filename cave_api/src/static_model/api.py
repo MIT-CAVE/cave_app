@@ -60,11 +60,24 @@ def execute_command(session_data, command="init"):
             "send_to_client": True,
             "data": {
                 "syncToggles": {
-                    "Layers": {"custom_path_name_1": ["map", "data", "enabledTypes"]},
-                    "Open pane": {"pane_path": ["appBar", "paneState"]},
+                    "Map Layers": {
+                        "ml1": ["map", "data", "enabledTypes"],
+                        "ml2": ["nodes","types"],
+                        "ml3": ["arcs","types"],
+                        "ml4": ["geos","types"],
+                    },
                 },
                 "defaultDesync": {
-                    "Open pane": {"pane_path": ["appBar", "paneState"]},
+                    "Map Layers": {
+                        "ml1": ["map", "data", "enabledTypes"],
+                        "ml2": ["nodes","types"],
+                        "ml3": ["arcs","types"],
+                        "ml4": ["geos","types"],
+                    },
+                    "App Bar": {
+                        "ab1": ["appBar", "data", "dashboardId"],
+                        "ab2": ["appBar", "paneState"]
+                    },
                 },
                 "IconUrl": "https://react-icons.mitcave.com/0.0.1",
                 "debug": True,
@@ -156,19 +169,59 @@ def execute_command(session_data, command="init"):
         },
         "appBar": {
             "data": {
+                "appSettings": {
+                    "icon": "MdOutlineSettings",
+                    "type": "pane",
+                    "variant": "appSettings",
+                    "bar": "upper",
+                    "order":0,
+                },
                 "button_1": {
                     "name": "Solve Button",
                     "icon": "BsLightningFill",
                     "color": {
-                        "dark": "rgb(64, 179, 54)",
-                        "light": "rgb(24, 73, 20)",
+                        "dark": "rgb(178, 179, 55)",
+                        "light": "rgb(79, 79, 24)",
                     },
                     "apiCommand": "solve_session",
                     "type": "button",
                     "bar": "upper",
+                    "order":1,
+                },
+                "settings": {
+                    "name": "Settings Pane",
+                    "props": {
+                        "Solver": {
+                            "name": "Solver",
+                            "type": "selector",
+                            "variant": "dropdown",
+                            "value": [
+                                {"name": "Gurobi", "value": True},
+                                {"name": "Cplex", "value": False},
+                                {"name": "CoinOR", "value": False},
+                            ],
+                            "enabled": True,
+                            "help": "Select a solver type to use",
+                        },
+                        "Pct_Optimal": {
+                            "name": "Percent Optimal",
+                            "type": "num",
+                            "value": 97,
+                            "enabled": True,
+                            "help": "What percent of optimal would you like to solve to?",
+                            "maxValue": 100,
+                            "minValue": 0,
+                        },
+                    },
+                    "icon": "BsWrench",
+                    "type": "pane",
+                    "variant": "options",
+                    "teamSync": True,
+                    "bar": "upper",
+                    "order": 2,
                 },
                 "settingsBig": {
-                    "name": "Settings Big Pane",
+                    "name": "A Big Settings Pane",
                     "width": "100%",
                     "props": {
                         "solver_section": {
@@ -187,7 +240,6 @@ def execute_command(session_data, command="init"):
                             ],
                             "enabled": True,
                             "help": "Select a solver type to use",
-                            "reinit": True,
                         },
                         "optimality_section": {
                             "name": "Optimality Section",
@@ -397,81 +449,14 @@ def execute_command(session_data, command="init"):
                             },
                         },
                     },
-                    "icon": "BsWrench",
-                    "color": {
-                        "dark": "rgb(46, 244, 208)",
-                        "light": "rgb(17, 79, 68)",
-                    },
+                    "icon": "FaCogs",
                     "type": "pane",
                     "variant": "options",
                     "bar": "upper",
-                    "order": 2,
-                },
-                "options": {
-                    "name": "Options Pane",
-                    "props": {
-                        "Combine_Materials": {
-                            "type": "selector",
-                            "value": [
-                                {"name": "True", "value": True},
-                                {"name": "False", "value": False},
-                            ],
-                            "enabled": True,
-                            "help": "Do you want to combine materials and treat them equally when solving?",
-                            "variant": "radio",
-                        },
-                        "Meet_Monthly_Demand": {
-                            "type": "selector",
-                            "value": [
-                                {"name": "True", "value": True},
-                                {"name": "False", "value": False},
-                            ],
-                            "enabled": True,
-                            "help": "Do you want to force the solver to meet the monthly demand thresholds?",
-                            "variant": "radio",
-                        },
-                        "Combined Options": {
-                            "name": "Combined Options",
-                            "type": "selector",
-                            "variant": "checkbox",
-                            "value": [
-                                {"name": "Meet Monthly Demand", "value": True},
-                                {"name": "Combine Materials", "value": False},
-                            ],
-                            "enabled": True,
-                            "help": "Help for both options",
-                            "reinit": True,
-                        },
-                    },
-                    "icon": "MdSettings",
-                    "type": "pane",
-                    "variant": "options",
-                    "bar": "upper",
-                    "order": 1,
-                },
-                "map_1": {
-                    "type": "map",
-                    "icon": "FaMapMarkedAlt",
-                    "bar": "upper",
-                    "color": {
-                        "dark": "rgb(178, 179, 55)",
-                        "light": "rgb(79, 79, 24)",
-                    },
-                },
-                "filter": {
-                    "icon": "FaFilter",
-                    "type": "pane",
-                    "variant": "filter",
-                    "order": 6,
-                    "bar": "upper",
-                },
-                "appSettings": {
-                    "icon": "MdOutlineSettings",
-                    "type": "pane",
-                    "variant": "appSettings",
-                    "bar": "upper",
+                    "order": 3,
                 },
                 "context": {
+                    "name": "Context Pane",
                     "props": {
                         "Demand_Multiplier": {
                             "type": "num",
@@ -508,59 +493,23 @@ def execute_command(session_data, command="init"):
                     "order": 4,
                     "bar": "upper",
                 },
-                "settings": {
-                    "name": "Settings Pane",
-                    "props": {
-                        "Solver": {
-                            "name": "Solver",
-                            "type": "selector",
-                            "variant": "dropdown",
-                            "value": [
-                                {"name": "Gurobi", "value": True},
-                                {"name": "Cplex", "value": False},
-                                {"name": "CoinOR", "value": False},
-                            ],
-                            "enabled": True,
-                            "help": "Select a solver type to use",
-                            "reinit": True,
-                            "order": 1,
-                        },
-                        "optimality_section": {
-                            "name": "Optimality Section",
-                            "type": "head",
-                            "help": "Some help for the optimality section",
-                            "order": 2,
-                        },
-                        "Pct_Optimal": {
-                            "name": "Percent Optimal",
-                            "type": "num",
-                            "value": 97,
-                            "enabled": True,
-                            "help": "What percent of optimal would you like to solve to?",
-                            "maxValue": 100,
-                            "minValue": 0,
-                            "order": 3,
-                        },
-                    },
-                    "icon": "BsWrench",
-                    "color": {
-                        "dark": "rgb(64, 179, 54)",
-                        "light": "rgb(24, 73, 20)",
-                    },
+                "filter": {
+                    "icon": "FaFilter",
                     "type": "pane",
-                    "variant": "options",
-                    "teamSync": True,
+                    "variant": "filter",
+                    "order": 5,
+                    "bar": "upper",
+                },
+                "map_1": {
+                    "type": "map",
+                    "icon": "FaMapMarkedAlt",
                     "bar": "lower",
-                    "order": 1,
+                    "order":1,
                 },
                 "dash_1": {
-                    "icon": "BsCircleFill",
-                    "name": "Dashboard 1",
                     "type": "stats",
-                    "color": {
-                        "dark": "rgb(178, 179, 55)",
-                        "light": "rgb(79, 79, 24)",
-                    },
+                    "icon": "MdInsertChart",
+                    "name": "Dashboard 1",
                     "order": 2,
                     "bar": "lower",
                     "dashboardLayout": [
@@ -595,10 +544,6 @@ def execute_command(session_data, command="init"):
                     "type": "kpi",
                     "icon": "MdSpeed",
                     "bar": "lower",
-                    "color": {
-                        "dark": "rgb(224, 224, 224)",
-                        "light": "rgb(32, 32, 32)",
-                    },
                     "order": 3,
                 },
             }
