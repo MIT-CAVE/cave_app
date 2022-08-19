@@ -39,12 +39,14 @@ A Django server to host the an API and act as the Cave back end.
 
 ## Admin Access
 1. Login as:
+
     - Use the admin information that you used during setup (or look in the `./.env` file).
 
 2. To view the admin page navigate to: `localhost:8000/admin`
 
 ## Making API Changes
 See the API documentation:
+
     - [General API Topics](cave_api/README.md)
     - [API Structure](cave_api/README_API_STRUCTURE.md)
 
