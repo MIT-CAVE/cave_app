@@ -86,11 +86,11 @@
 NOTE: All prettify commands write over existing code.
 
 To apply our default lint fixes to all python code in `./cave_core` and `./cave_app`:
-    ```
-    ./utils/prettify.sh
-    ```
+```
+./utils/prettify.sh
+```
 
 To apply our default lint fixes to all python code in `./cave_api`:
-    ```
-    ./utils/api_prettify.sh
-    ```
+```
+./utils/api_prettify.sh
+```
