@@ -1,15 +1,5 @@
 # Cave App
-A Django server to act as a Cave Back End and host API code.
-
-## License Notice
-
-Copyright 2022 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
-
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+A Django server to host the an API and act as the Cave back end.
 
 # Getting Started
 
@@ -18,14 +8,43 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - Make sure you are using a Unix based kernel (Mac or Linux).
   - If you are using Windows, you can use Ubuntu20.04 (via WSL2).
     - While using WSL2, make sure to follow all instructions in your WSL2 terminal
-- Install Python 3.9.x (or higher) python pip and python dev tools
-  - Note: Only python is supported (and not derivatives like anaconda)
-  - You can download python [here](https://www.python.org/downloads/).
-- Install Postgres:
+- Install `python3.9+`, `python3 pip`, `python development tools`, and `virtualenv`
+  - **Note**: Only `python` is supported (and not python derivatives like anaconda)
   - On Ubuntu:
     ```sh
-    sudo apt-get install postgresql
-    sudo apt-get install postgresql-contrib
+    # Update your package list and current packages
+    sudo apt-get update && sudo apt-get upgrade
+    # Install software to add external PPAs
+    sudo apt install software-properties-common -y
+    # Add the deadsnakes python PPA
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    # Install python3.10 from the deadsnakes PPA
+    sudo apt-get install python3.10
+    # Install pip
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+    # Install virtualenv
+    pip install virtualenv
+    ```
+  - On Mac (via Brew):
+    - Install `python development tools`
+      - Install `XCode` from the `App Store`
+      - Once `XCode` is installed, install the XCode `Command Line Tools`
+        - `menu` -> `preferences` -> `downloads` -> `command line tools`
+    - Install `python3.9+`
+      ```sh
+      brew install python@3.10
+      ```
+    - Install `pip` and `virtualenv`:
+      ```sh
+      # Install pip
+      curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+      # Install virtualenv
+      pip install virtualenv
+      ```
+- Install `Postgres 12`:
+  - On Ubuntu:
+    ```sh
+    sudo apt-get install postgresql postgresql-contrib
     ```
   - On Mac (via Brew):
     ```sh
@@ -34,6 +53,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
     ```
 
 ## CLI Instructions
+NOTE: If you do not want to use the cave cli see the [Non CLI Instructions](NON_CLI_README.md).
 
 1. Install the CLI:
     ```
@@ -58,113 +78,53 @@ Unless required by applicable law or agreed to in writing, software distributed 
     cd my_app
     ```
 
-4. Run the app at `localhost:3000` (while in `my_app`):
+4. Run the app at `localhost:8000` (while in `my_app`):
     ```
     cave run
     ```
+    - Optional: Run the app on `<your-ip>:8000` with development settings:
+      ```
+      cave run <your-ip>:8000
+      ```
+      - Replace <your-ip> with an IP address that points to your machine
 
-## Standard Instructions
+    - Optional: Run the app on `<any-ip>:8000` that points to your machine with development settings:
+      ```
+      cave run 0.0.0.0:8000
+      ```
 
-1. Clone this repo in your preferred directory and enter the repo:
-    ```
-    git clone git@github.com:MIT-CAVE/cave_app.git
-    cd cave_app
-    ```
-
-2. Setup a virtual environment and install all requirements:
-    Install (or upgrade) virtualenv:
-    ```
-    python3 -m pip install --upgrade virtualenv
-    ```
-    Create your virtualenv named `venv`:
-    ```
-    python3 -m virtualenv venv
-    ```
-    Activate your virtual environment on Unix (Mac or Linux):
-    ```
-    source venv/bin/activate
-    ```
-    Install all requirements for development:
-    ```
-    pip install -r requirements.txt
-    ```
-
-## Update the Server Environment Variables
-
-1. Rename `example.env` to `.env`
+5. In Chrome, you can now open the web app:
+  - EG: If you use the standard settings
   ```
-  mv example.env .env
+  http://localhost:8000
   ```
-2. Update the `.env` file
-  - Make sure to edit:
-    - `SECRET_KEY`: A [Django SECRET_KEY](https://docs.djangoproject.com/en/4.1/ref/settings/#secret-key)
-    - `DJANGO_ADMIN_EMAIL`: The email for the site administrator
-    - `DJANGO_ADMIN_PASSWORD`: A secure password for the site administrator
-    - `DATABASE_NAME`: The name of your locally hosted development database in postgresql
-      - NOTE: Certain features wipe the database so you should have a unique `DATABASE_NAME` per project
-    - `DATABASE_USER`: A user to access your database
-      - NOTE: You should have a unique `DATABASE_USER` per project to avoid password change conflicts
-    - `DATABASE_PASSWORD`: A secure password for database access
-  - You might also consider editing:
-    - `STATIC_APP_URL` and `STATIC_APP_URL_PATH`
-      - If you plan doing development on `cave_static` and deploying it locally:
-        - `STATIC_APP_URL='http://localhost:3000'`
-        - `STATIC_APP_URL_PATH=''`
-      - To use any existing static build:
-        - `STATIC_APP_URL='https://builds.mitcave.com'`
-        - `STATIC_APP_URL_PATH='<major>.<minor>.<patch>/index.html'`
-          - EG: `STATIC_APP_URL_PATH='0.0.1/index.html'`
-3. Open `.gitignore` and remove `.env` (if you wish to commit .env changes to your source control)
-
-
-## Mapbox Setup
-
-1. Go to [mapbox.com](https://mapbox.com) and create an account.
-2. Copy your public token to `MAPBOX_TOKEN` in your `.env` file.
-
-
-## Local Deployment
-
-1. Remove any legacy database (if it exists) and set up the stock database:
-  ```
-  cd path/to/cave_app
-  sudo chmod 700 .
-  ./utils/reset_db.sh
-  ```
-2. Run the app on `localhost:8000` with development settings:
-  ```
-  python manage.py runserver
-  ```
-  - Optional: Run the app on `<your-ip>:8000` with development settings:
-    ```
-    python manage.py runserver <your-ip>:8000
-    ```
-
-  - Optional: Run the app on `<any-ip>:8000` that points to your machine with development settings:
-    ```
-    python manage.py runserver 0.0.0.0:8000
-    ```
 
 ## Admin Access
 1. Login as:
-  - See the admin information that you set in the `./.env` file.
+  - Use the admin information that you used during setup (or look in the `./.env` file).
 
 2. To view the admin page navigate to: `localhost:8000/admin`
 
 ## Making API Changes
-See the API documentation
+See the API documentation:
 - [General API Topics](cave_api/README.md)
 - [API Structure](cave_api/README_API_STRUCTURE.md)
 
-# Prettify Code
-NOTE: All prettify commands write over existing code.
+### Prettify Code
+Use the CLI to keep your API code `pretty` and match cave coding format standards.
 
-To apply our default lint fixes to all python code in `./cave_core` and `./cave_app`:
-```
-./utils/prettify.sh
+```sh
+cave prettify
 ```
 
-To apply our default lint fixes to all python code in `./cave_api`:
-```
-./utils/api_prettify.sh
-```
+**NOTE**: All prettify commands write over existing code (in place).
+
+## License Notice
+
+Copyright 2022 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
+
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
