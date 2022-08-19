@@ -24,7 +24,6 @@ def execute_command(session_data, command="init"):
         - Type: str
         - What: A string to indicate a command to be processed by the api
         - Default: 'init'
-        - Note: The init command is
 
     Returns:
     - `output`:
@@ -48,10 +47,10 @@ def execute_command(session_data, command="init"):
                 ...
             }
             ```
-        - Note: `send_to_api`=False data will not be serialzed and sent to `solve` and `configure`
+        - Note: `send_to_api`=False data will not be serialzed and sent to the api when a command is executed
         - Note: `allow_modification`=False data can not be modified by users
-        - Note: `send_to_client`=False data will not be sent to any users (this is used for api state management)
-        - Note: Only what is returned from `execute_command` will be available for end users after `execute_command` (previous data will be removed)
+        - Note: `send_to_client`=False data will not be sent to any users (this can be used for api state management)
+        - Note: Only what is returned from `execute_command` will be available for end users after execution (previous data will be removed)
     """
     example = {
         "settings": {

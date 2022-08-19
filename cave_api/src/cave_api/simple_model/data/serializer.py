@@ -1,7 +1,10 @@
 import type_enforced
 import csv
+import pkg_resources
 
-data_location = "./cave_api/src/simple_model/data/"
+# For Pip based package resources see:
+# https://stackoverflow.com/questions/779495/access-data-in-package-subdirectory
+data_location = pkg_resources.resource_filename('cave_api', 'simple_model/data/')
 product_unit = "unit"
 money_unit = "$"
 

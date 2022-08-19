@@ -3,8 +3,9 @@ from setuptools import find_packages
 
 setup(
     name="cave_api",
-    packages=find_packages(),
-    package_data={"": ["*.csv"]},
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    include_package_data=True,
     version="0.0.1",
     license="MIT",
     description="Python wrapper for api use in the cave_app",
