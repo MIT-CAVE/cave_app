@@ -47,15 +47,15 @@ A Django server to host the an API and act as the Cave back end.
 ## Making API Changes
 See the API documentation:
 
-    - [General API Topics](cave_api/README.md)
-    - [API Structure](cave_api/README_API_STRUCTURE.md)
+- [General API Topics](cave_api/README.md)
+- [API Structure](cave_api/README_API_STRUCTURE.md)
 
 ### Prettify Code
 Use the CLI to keep your API code `pretty` and match cave coding format standards.
 
-```sh
-cave prettify
-```
+  ```sh
+  cave prettify
+  ```
 
 **NOTE**: All prettify commands write over existing code (in place).
 
