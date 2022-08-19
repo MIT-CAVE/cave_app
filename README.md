@@ -3,70 +3,8 @@ A Django server to host the an API and act as the Cave back end.
 
 # Getting Started
 
-## Development Prerequisites
-
-- Make sure you are using a Unix based kernel (Mac or Linux).
-  - If you are using Windows, you can use Ubuntu20.04 (via WSL2).
-    - While using WSL2, make sure to follow all instructions in your WSL2 terminal
-- Install `python3.9+`, `python3 pip`, `python development tools`, and `virtualenv`
-  - **Note**: Only `python` is supported (and not python derivatives like anaconda)
-  - On Ubuntu:
-    ```sh
-    # Update your package list and current packages
-    sudo apt-get update && sudo apt-get upgrade
-    # Install software to add external PPAs
-    sudo apt install software-properties-common -y
-    # Add the deadsnakes python PPA
-    sudo add-apt-repository ppa:deadsnakes/ppa
-    # Install python3.10 from the deadsnakes PPA
-    sudo apt-get install python3.10
-    # Install pip
-    curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
-    # Install virtualenv
-    pip install virtualenv
-    ```
-  - On Mac (via Brew):
-    - Install `python development tools`
-      - Install `XCode` from the `App Store`
-      - Once `XCode` is installed, install the XCode `Command Line Tools`
-        - `menu` -> `preferences` -> `downloads` -> `command line tools`
-    - Install `python3.9+`
-      ```sh
-      brew install python@3.10
-      ```
-    - Install `pip` and `virtualenv`:
-      ```sh
-      # Install pip
-      curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
-      # Install virtualenv
-      pip install virtualenv
-      ```
-- Install `Postgres 12`:
-  - On Ubuntu:
-    ```sh
-    sudo apt-get install postgresql postgresql-contrib
-    ```
-  - On Mac (via Brew):
-    ```sh
-    brew install postgresql
-    brew services start posgresql
-    ```
-
-## CLI Instructions
-NOTE: If you do not want to use the cave cli see the [Non CLI Instructions](NON_CLI_README.md).
-
-1. Install the CLI:
-    ```
-    bash -c "$(curl https://raw.githubusercontent.com/MIT-CAVE/cave_cli/main/install.sh)"
-    ```
-    - Validate Installation:
-      ```
-      cave --version
-      ```
-    - Get cli help:
-      ```
-      cave --help
-      ```
+1. Install the [Cave CLI](https://github.com/MIT-CAVE/cave_cli). See the full instructions how how to install the Cave CLI [here](https://github.com/MIT-CAVE/cave_cli).
+  - If you do not want to use the CLI, see the instructions [here](NON_CLI_README.md).
 
 2. Create a new cave app:
     ```

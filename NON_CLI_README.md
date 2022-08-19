@@ -1,12 +1,13 @@
 ## Non CLI Setup Instructions
+1. Install the [Cave Development Prerequisites](https://github.com/MIT-CAVE/cave_cli#Development Prerequisites)
 
-1. Clone this repo in your preferred directory and enter the repo:
+2. Clone this repo in your preferred directory and enter the repo:
     ```
     git clone git@github.com:MIT-CAVE/cave_app.git
     cd cave_app
     ```
 
-2. Setup a virtual environment and install all requirements:
+3. Setup a virtual environment and install all requirements:
     Install (or upgrade) virtualenv:
     ```
     python3 -m pip install --upgrade virtualenv
