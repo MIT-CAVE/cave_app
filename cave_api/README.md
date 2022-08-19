@@ -41,9 +41,9 @@ This structure guarantees some nice features for API developers who want forward
 To make changes to the `cave_api`, navigate to `<your_app>/cave_api/src/cave_api` and begin to make adjustments.
 
 By default the `cave_api` uses the `simple_model` listed in `src`. To change this over to the `static_model`:
-    - Edit `<your_app>/cave_api/src/cave_api/__init__.py`
-    - Replace `simple_model` with `static_model`
-    - Save the file
+- Edit `<your_app>/cave_api/src/cave_api/__init__.py`
+- Replace `simple_model` with `static_model`
+- Save the file
 
 Using the `static_model` is a great way to explore the functions available in the `cave_api`. It does not do anything, but it is helpful to explore how the API can control the UI.
 
@@ -106,27 +106,27 @@ cave update-environment
 ## Adding Static Data to the API
 
 To add static data to the api:
-    - Make sure it is located in: `your_app/cave_api/src/cave_api`
-    - Depending on how the `cave_api` package is installed, the location of this file may fundamentally change.
-        - To access this file, use something similar to the following inside of your code to get the relative data path:
-        ```
-        import pkg_resources
-        data_location = pkg_resources.resource_filename('cave_api', 'simple_model/data/')
-        ```
+- Make sure it is located in: `your_app/cave_api/src/cave_api`
+- Depending on how the `cave_api` package is installed, the location of this file may fundamentally change.
+    - To access this file, use something similar to the following inside of your code to get the relative data path:
+    ```
+    import pkg_resources
+    data_location = pkg_resources.resource_filename('cave_api', 'simple_model/data/')
+    ```
 
 ## Testing
 
-- You can create test scripts that allow you to validate your API functionality.
-    - These should be located in `your_app/cave_api/tests/`
-    - An example test is found in `your_app/cave_api/tests/test_init.py`
-    - To run tests (while in your project root):
-    ```
-    cave api-test <your-test>
-    ```
-    - Example:
-    ```
-    cave api-test test_init.py
-    ```
+You can create test scripts that allow you to validate your API functionality.
+- These should be located in `your_app/cave_api/tests/`
+- An example test is found in `your_app/cave_api/tests/test_init.py`
+- To run tests (while in your project root):
+```
+cave api-test <your-test>
+```
+- Example:
+```
+cave api-test test_init.py
+```
 
 
 # Appendix
