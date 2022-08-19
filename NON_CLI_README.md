@@ -1,5 +1,5 @@
 ## Non CLI Setup Instructions
-1. Install the [Cave Development Prerequisites](https://github.com/MIT-CAVE/cave_cli#Development Prerequisites)
+1. Install the [Cave Development Prerequisites](https://github.com/MIT-CAVE/cave_cli#development-prerequisites)
 
 2. Clone this repo in your preferred directory and enter the repo:
     ```
