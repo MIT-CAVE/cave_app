@@ -176,6 +176,18 @@ def execute_command(session_data, command="init"):
                     "bar": "upper",
                     "order":0,
                 },
+                "button_reset": {
+                    "name": "Reset Button",
+                    "icon": "MdSync",
+                    "color": {
+                        "dark": "rgb(255, 101, 101)",
+                        "light": "rgb(212, 0, 0)",
+                    },
+                    "apiCommand": "reset",
+                    "type": "button",
+                    "bar": "upper",
+                    "order":1,
+                },
                 "button_1": {
                     "name": "Solve Button",
                     "icon": "BsLightningFill",
@@ -1367,6 +1379,8 @@ def execute_command(session_data, command="init"):
             "wipe_existing": True,
         },
     }
+    if command == 'reset':
+        return example
     if session_data:
         for key, value in session_data.items():
             example[key] = value
