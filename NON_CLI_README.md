@@ -64,34 +64,33 @@
 ### Local Deployment
 
 1. Remove any legacy database (if it exists) and set up the stock database:
-  ```
-  cd path/to/cave_app
-  sudo chmod 700 .
-  ./utils/reset_db.sh
-  ```
+    ```
+    cd path/to/cave_app
+    sudo chmod 700 .
+    ./utils/reset_db.sh
+    ```
 2. Run the app on `localhost:8000` with development settings:
-  ```
-  python manage.py runserver
-  ```
-  - Optional: Run the app on `<your-ip>:8000` with development settings:
     ```
-    python manage.py runserver <your-ip>:8000
+    python manage.py runserver
     ```
-
-  - Optional: Run the app on `<any-ip>:8000` that points to your machine with development settings:
-    ```
-    python manage.py runserver 0.0.0.0:8000
-    ```
+    - Optional: Run the app on `<your-ip>:8000` with development settings:
+        ```
+        python manage.py runserver <your-ip>:8000
+        ```
+    - Optional: Run the app on `<any-ip>:8000` that points to your machine with development settings:
+        ```
+        python manage.py runserver 0.0.0.0:8000
+        ```
 
 ### Prettify Code
 NOTE: All prettify commands write over existing code.
 
 To apply our default lint fixes to all python code in `./cave_core` and `./cave_app`:
-```
-./utils/prettify.sh
-```
+    ```
+    ./utils/prettify.sh
+    ```
 
 To apply our default lint fixes to all python code in `./cave_api`:
-```
-./utils/api_prettify.sh
-```
+    ```
+    ./utils/api_prettify.sh
+    ```
