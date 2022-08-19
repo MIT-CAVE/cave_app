@@ -8,49 +8,50 @@
     ```
 
 3. Setup a virtual environment and install all requirements:
-    Install (or upgrade) virtualenv:
-    ```
-    python3 -m pip install --upgrade virtualenv
-    ```
-    Create your virtualenv named `venv`:
-    ```
-    python3 -m virtualenv venv
-    ```
-    Activate your virtual environment on Unix (Mac or Linux):
-    ```
-    source venv/bin/activate
-    ```
-    Install all requirements for development:
-    ```
-    pip install -r requirements.txt
-    ```
+
+    - Install (or upgrade) virtualenv:
+        ```
+        python3 -m pip install --upgrade virtualenv
+        ```
+    - Create your virtualenv named `venv`:
+        ```
+        python3 -m virtualenv venv
+        ```
+    - Activate your virtual environment on Unix (Mac or Linux):
+        ```
+        source venv/bin/activate
+        ```
+    - Install all requirements for development:
+        ```
+        pip install -r requirements.txt
+        ```
 
 ### Update the Server Environment Variables
 
 1. Rename `example.env` to `.env`
-  ```
-  mv example.env .env
-  ```
+    ```
+    mv example.env .env
+    ```
 2. Update the `.env` file
-  - Make sure to edit:
-    - `SECRET_KEY`: A [Django SECRET_KEY](https://docs.djangoproject.com/en/4.1/ref/settings/#secret-key)
-      - If you used the CLI to create this `.env` file, a random secret key was generated during that process.
-    - `DJANGO_ADMIN_EMAIL`: The email for the site administrator
-    - `DJANGO_ADMIN_PASSWORD`: A secure password for the site administrator
-    - `DATABASE_NAME`: The name of your locally hosted development database in postgresql
-      - NOTE: Certain features wipe the database so you should have a unique `DATABASE_NAME` per project
-    - `DATABASE_USER`: A user to access your database
-      - NOTE: You should have a unique `DATABASE_USER` per project to avoid password change conflicts
-    - `DATABASE_PASSWORD`: A secure password for database access
-  - You might also consider editing:
-    - `STATIC_APP_URL` and `STATIC_APP_URL_PATH`
-      - If you plan doing development on `cave_static` and deploying it locally:
-        - `STATIC_APP_URL='http://localhost:3000'`
-        - `STATIC_APP_URL_PATH=''`
-      - To use any existing static build:
-        - `STATIC_APP_URL='https://builds.mitcave.com'`
-        - `STATIC_APP_URL_PATH='<major>.<minor>.<patch>/index.html'`
-          - EG: `STATIC_APP_URL_PATH='0.1.0/index.html'`
+    - Make sure to edit:
+        - `SECRET_KEY`: A [Django SECRET_KEY](https://docs.djangoproject.com/en/4.1/ref/settings/#secret-key)
+            - If you used the CLI to create this `.env` file, a random secret key was generated during that process.
+        - `DJANGO_ADMIN_EMAIL`: The email for the site administrator
+        - `DJANGO_ADMIN_PASSWORD`: A secure password for the site administrator
+        - `DATABASE_NAME`: The name of your locally hosted development database in postgresql
+            - NOTE: Certain features wipe the database so you should have a unique `DATABASE_NAME` per project
+        - `DATABASE_USER`: A user to access your database
+            - NOTE: You should have a unique `DATABASE_USER` per project to avoid password change conflicts
+          - `DATABASE_PASSWORD`: A secure password for database access
+      - You might also consider editing:
+          - `STATIC_APP_URL` and `STATIC_APP_URL_PATH`
+              - If you plan doing development on `cave_static` and deploying it locally:
+                  - `STATIC_APP_URL='http://localhost:3000'`
+                  - `STATIC_APP_URL_PATH=''`
+              - To use any existing static build:
+                  - `STATIC_APP_URL='https://builds.mitcave.com'`
+                  - `STATIC_APP_URL_PATH='<major>.<minor>.<patch>/index.html'`
+                      - EG: `STATIC_APP_URL_PATH='0.1.0/index.html'`
 3. Open `.gitignore` and remove `.env` (if you wish to commit .env changes to your source control)
 
 
