@@ -181,15 +181,14 @@ Since multiple selection is possible in the `checkbox` variant, one or more opti
 - When a user is allowed to select only one option from a set, unless you need to expose all the available options with `radio`, you may consider using a `dropdown` instead, as it uses less space.
 
 #### The `layout` key
-> (*Under construction*)
+
 The `layout` key allows for use cases where you want to arrange components that are related or simply group them under a well-structured layout. The supported components for use with a layout structure are [props](#the-props-key) and [KPIs](#kpis). In addition to properly aligning a group of props or KPIs, an `style` prop is provided to act as a escape hatch for specifying CSS rules. Through these CSS rules, it is possible to modify the appereance of your prop components or KPIs and allows a way to make them more distinctive or visually appealing.
 
-The structure for both prop and KPI `layout`s is the same. Let's dive into it:
-
+The `layout` structure is the same for `props` and `kpis` and looks as follows:
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 'auto',
+    'num_columns': 2,
     'num_rows': 'auto',
     'data': {
         'col1_row1': {
@@ -198,35 +197,287 @@ The structure for both prop and KPI `layout`s is the same. Let's dive into it:
             'row': 1,
             'itemId': 'custom_prop_or_kpi_key_1'
         },
+        'col2_row1': {
+            'type': 'grid',
+            'num_columns': 'auto',
+            'num_rows': 1,
+            'column': 2,
+            'row': 1,
+            'data': {
+                'col1': {
+                    'type': 'item',
+                    'column': 1,
+                    'itemId': 'custom_prop_or_kpi_key_2',
+                },
+                'col2': {
+                    'type': 'item',
+                    'column': 2,
+                    'itemId': 'custom_prop_or_kpi_key_3',
+                },
+                'col3': {...},
+                # As many columns as needed
+            },
+        },
         'col1_row2': {
             'type': 'item',
             'column': 1,
-            'row': 1,
-            'itemId': 'custom_prop_or_kpi_key_2',
+            'row': 2,
+            'itemId': 'custom_prop_or_kpi_key_4'
         },
-        # As many rows and columns as needed
+        'col2_row2': {
+            'type': 'item',
+            'column': 2,
+            'row': 2,
+            'itemId': 'custom_prop_or_kpi_key_5'
+        },
+        'col1_row3': {...},
+        'col2_row3': {...},
+        # As many two-column rows as needed
     },
 }
 ```
 
 ##### Nested inside the `layout` group
->(*Under construction*)
-
 Key | Default | Description
 --- | ------- | -----------
-<a name="layout-column">`column`</a> | | An integer for the grid column from left to right.
-<a name="layout-data">`data`</a> | `{}` | (*Under construction*)
-<a name="layout-column">`itemId`</a> | | (*Under construction*)
-<a name="layout-columns">`num_columns`</a> | `'auto'` | An integer for the number of columns or the keyword `'auto'`.
-<a name="layout-rows">`num_rows`</a> | `'auto'` | An integer for the number of rows or the keyword `'auto'`.
-<a name="layout-row">`row`</a> | | An integer for the grid row from top to bottom.
-<a name="layout-column">`style`</a> | | (*Under construction*)
-<a name="layout-type">`type`</a> | Required | The type of layout. It can be `'grid'` or `'item'`.
+<a name="layout-data">`*.data`</a> | `{}` | A wrapper for layout elements that are contained in a `'grid'` layout type.
+<a name="layout-height">`*.height`</a> | `'auto'` | Sets the height of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `height` property](https://developer.mozilla.org/en-US/docs/Web/CSS/height). Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/height#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
+<a name="layout-column">`*.itemId`</a> | | The ID of the prop or KPI item to be placed in a specific position within the layout. This property is required by a layout element of type `'item'`.
+<a name="layout-columns">`*.num_columns`</a> | `'auto'` | An integer for the number of columns or the keyword `'auto'`.
+<a name="layout-rows">`*.num_rows`</a> | `'auto'` | An integer for the number of rows or the keyword `'auto'`.
+<a name="layout-column">`*.style`</a> | `{}` | A dictionary object containing [CSS styles](https://developer.mozilla.org/en-US/docs/Web/CSS) to apply to a layout element of type `'item'`.
+<a name="layout-type">`*.type`</a> | Required | The type of layout. It can be `'grid'` or `'item'`.
+<a name="layout-width">`*.width`</a> | `'auto'` | Sets the width of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width). Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
+<a name="layout-column">`layout.data.*.column`</a> | | An integer for the grid column position starting from left to right.
+<a name="layout-row">`layout.data.*.row`</a> | | An integer for the grid row position starting from top to bottom.
+
+#### Examples
+To better illustrate various use cases for a `'grid'` layout, we will rely on the same `props` structure, shown below:
+
+```py
+'props': {
+    'solver_section': {
+        'name': 'Solver Section',
+        'type': 'head',
+        'help': 'Some help for the solver section',
+    },
+    'Solver': {
+        'name': 'Solver',
+        'type': 'selector',
+        'variant': 'dropdown',
+        'value': [
+            {'name': 'Gurobi', 'value': True},
+            {'name': 'Cplex', 'value': False},
+            {'name': 'CoinOR', 'value': False},
+        ],
+        'enabled': True,
+        'help': 'Select a solver type to use',
+        'reinit': True,
+    },
+    'optimality_section': {
+        'name': 'Optimality Section',
+        'type': 'head',
+        'help': 'Some help for the optimality section',
+        'order': 1,
+        'column': 2,
+    },
+    'Pct_Optimal': {
+        'name': 'Percent Optimal',
+        'type': 'num',
+        'value': 97,
+        'enabled': True,
+        'variant': 'slider',
+        'help': 'What percent of optimal would you like to sove to?',
+        'maxValue': 100,
+        'minValue': 0,
+    },
+    'distance_section': {
+        'name': 'Demand Served At Distances',
+        'type': 'head',
+        'help': 'How much demand do you expect to serve at the following distances?',
+    },
+    '50_miles': {
+        'name': '50 Miles',
+        'type': 'num',
+        'value': 45,
+        'enabled': True,
+        'variant': 'slider-condensed',
+        'help': 'Expected demand filled at 50 miles',
+        'maxValue': 100,
+        'minValue': 0,
+    },
+    '100_miles': {
+        'name': '100 Miles',
+        'type': 'num',
+        'value': 35,
+        'enabled': True,
+        'variant': 'slider-condensed',
+        'help': 'Expected demand filled at 100 miles',
+        'maxValue': 100,
+        'minValue': 0,
+    },
+    '150_miles': {
+        'name': '150 Miles',
+        'type': 'num',
+        'value': 25,
+        'enabled': True,
+        'variant': 'slider-condensed',
+        'help': 'Expected demand filled at 150 miles',
+        'maxValue': 100,
+        'minValue': 0,
+    },
+}
+```
+
+The following are different layout configurations based on the outer number of rows and columns, as well as different interior layout arrangements:
+
+<details>
+  <summary>Fixed number of columns and rows</summary>
+
+```py
+'layout': {
+    'type': 'grid',
+    'num_columns': 3,
+    'num_rows': 4,
+    'data': {
+        'col1_row1': {
+            'type': 'item',
+            'itemId': 'solver_section',
+            'column': 1,
+            'row': 1,
+        },
+        'col1_row2': {
+            'type': 'item',
+            'itemId': 'Solver',
+            'column': 1,
+            'row': 2,
+        },
+        'col2_row1': {
+            'type': 'item',
+            'itemId': 'optimality_section',
+            'column': 2,
+            'row': 1,
+        },
+        'col2_row2': {
+            'type': 'item',
+            'itemId': 'Pct_Optimal',
+            'column': 2,
+            'row': 2,
+        },
+        'col3_row1': {
+            'type': 'item',
+            'itemId': 'distance_section',
+            'column': 3,
+            'row': 1,
+        },
+        'col3_row2': {
+            'type': 'item',
+            'itemId': '50_miles',
+            'column': 3,
+            'row': 2,
+        },
+        'col3_row3': {
+            'type': 'item',
+            'itemId': '100_miles',
+            'column': 3,
+            'row': 3,
+        },
+        'col3_row4': {
+            'type': 'item',
+            'itemId': '150_miles',
+            'column': 3,
+            'row': 4,
+        },
+    },
+}
+```
+</details>
+
+<details>
+  <summary>Single-column</summary>
+
+```py
+# TODO
+```
+</details>
+
+<details>
+  <summary>Single-row</summary>
+
+```py
+# TODO
+```
+</details>
+
+<details>
+  <summary>Fixed number of columns</summary>
+
+```py
+'layout': {
+    'type': 'grid',
+    'num_columns': 2,
+    'num_rows': 'auto',
+    'data': {
+        'col1_row1': {
+            'type': 'item',
+            'itemId': 'solver_section',
+            'column': 1,
+        },
+        'col1_row2': {
+            'type': 'item',
+            'itemId': 'Solver',
+            'column': 1,
+        },
+        'col1_row3': {
+            'type': 'item',
+            'itemId': 'optimality_section',
+            'column': 1,
+        },
+        'col1_row4': {
+            'type': 'item',
+            'itemId': 'Pct_Optimal',
+            'column': 1,
+        },
+        'col2_row1': {
+            'type': 'item',
+            'itemId': 'distance_section',
+            'column': 2,
+        },
+        'col2_row2': {
+            'type': 'item',
+            'itemId': '50_miles',
+            'column': 2,
+        },
+        'col2_row3': {
+            'type': 'item',
+            'itemId': '100_miles',
+            'column': 2,
+        },
+        'col2_row4': {
+            'type': 'item',
+            'itemId': '150_miles',
+            'column': 2,
+        },
+    },
+}
+```
+</details>
+
+<details>
+  <summary>Fixed number of rows</summary>
+
+```py
+# TODO
+```
+</details>
+
+##### UI / UX tips
+> TODO
 
 #### timeObjects
 `timeObjects` can be used to replace numerical values displayed on the map or used as prop [`values`](#value) in [`geos`](#geos), [`arcs`](#arcs), or [`nodes`](#nodes). These objects contain a list of values that correspond to a specfic timestep. The user can step through these in order or select a specific timestep from a list. In order to use `timeObjects` a [`timeLength`](#timeLength) must be specified equal to the length of all `value` lists given. Optionally [`timeUnits`](#timeUnits) can be given to display the real world representation of each timestep.
 
-Below is an example of a `timeObject` with a `timeLength` of 5
+Below is an example of a `timeObject` with a `timeLength` of 5:
 ```py
 {
     'timeObject': True,
@@ -258,7 +509,7 @@ Below is the `settings` group with its sub-keys matched by typical values:
         "IconUrl": "https://react-icons.mitcave.com/0.0.1",
         "debug": True,
     },
-        },
+}
 ```
 
 ##### Common keys
@@ -441,11 +692,11 @@ Key | Default | Description
 </details>
 
 ### `appBar`
-The `appBar` key allows api designers to create a custom bar located on the left of the CAVE app. This bar allows for navigation between the different views of the app (e.g. Map, Dashboards), as well as interaction with panes. The appBar is split into 2 sections, `upper` and `lower`. Using both sections is not required, but it is generally recommeneded that `lower` be used for navigation and `upper` for interactive panes and buttons.
+The `appBar` key allows API designers to create a custom bar located on the left of the CAVE app. This bar allows for navigation between the different views of the app (e.g. Map, Dashboards), as well as interaction with panes. The appBar is split into 2 sections, `upper` and `lower`. Using both sections is not required, but it is generally recommeneded that `lower` be used for navigation and `upper` for interactive panes and buttons.
 
 Panes are primarily used to place UI controls (toggles, text and number fields, sliders, etc.), as well as buttons to allow interaction with actionable data. Therefore, custom panes can be designed to enable users to tune up the parameters of a simulation, navigate through different case study scenarios, reset the state of a simulation, synchronize data or settings with other users, and so on. The CAVE app also includes 2 built in pane variants `filter`, which provides tools to filter data from different categories and at different levels of granularity, and `appSettings`, which gives users the ability to control the appearance and overall behavior of the CAVE app.
 
-The structure of a `appBar` group looks as follows:
+The structure of the `appBar` group looks as follows:
 ```py
 'appBar': {
     'data': {
@@ -562,6 +813,7 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
         },
         # As many props as needed
     },
+    'layout': {...},
     'icon': 'IoOptions',
     'color': {
         'dark': 'rgb(64, 179, 54)',
@@ -630,13 +882,13 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
 ##### Common keys
 - [`allow_modification`](#allow_modification)
 - [`color`](#color)
-- [`column`](#column)
 - [`constraint`](#constraint)
 - [`data`](#data)
 - [`enabled`](#enabled)
 - [`help`](#help)
 - [`icon`](#icon)
 - [`label`](#label)
+- [`layout`](#layout)
 - [`maxValue`](#maxValue)
 - [`minValue`](#minValue)
 - [`name`](#name)
@@ -657,17 +909,17 @@ Key | Default | Description
 `custom_obj_key_*` | Required | A custom key wrapper for the custom pane.
 `custom_obj_key_*.type` | Required | The type of object shown - takes one of these values: `map`, `stat`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
 `custom_obj_key_*.bar` | Required | The section of the appbar to display the object in. Accepts either `upper` or `lower`. The use of both bar sections is not required, and any object can be shown in either bar.
-`custom_button_key_*.apiCommand`<br> | | A string to pass to the api when the button is pressed.
+`custom_button_key_*.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 `custom_button_key_*.dashboardLayout` | `[]` | A list of chart items (max of 4 items currently supported) that belong to the current dashboard. Each chart item contains the following keys: `chart`, `grouping`, `statistic`, `category`, `level`, `type`, and `lockedLayout`.
 `custom_button_key_*.dashboardLayout.*.*.category` | | The category selected from the "**Group By**" drop-down menu of a chart in a dashboard view. This key is different from the common key [`category`](#category).
 `custom_button_key_*.dashboardLayout.*.*.chart` | | The chart type selected from the top-left drop-down menu of a chart in a dashboard view. The `chart` key sets the type of chart to one of these values: [`'Bar'`], [`'Line'`], [`'Box Plot'`].
 `custom_button_key_*.dashboardLayout.*.*.grouping` | | A statistical or mathematical function selected by the user from a predefined set, to be applied over the data and rendered in a chart. It takes one of the following values: `'Sum'`, `'Average'`, `'Minimum'` or `'Maximum'`.
-`custom_button_key_*.dashboardLayout.*.*.kpi` | | The kpi selected from the "**KPIs**" drop-down menu of a chart in a dashboard view if the chart `type='kpis'`
+`custom_button_key_*.dashboardLayout.*.*.kpi` | | The KPI selected from the "**KPIs**" drop-down menu of a chart in a dashboard view if the chart `type='kpis'`
 `custom_button_key_*.dashboardLayout.*.*.level` | | The second-level aggregation selected from the "**Group By**" drop-down menu of a chart in a dashboard view.
-`custom_button_key_*.dashboardLayout.*.*.lockedLayout` | `false` | A boolean to indicate if the layout on this chart can be changed by users.
+`custom_button_key_*.dashboardLayout.*.*.lockedLayout` | `False` | A boolean to indicate if the layout on this chart can be changed by users.
 `custom_button_key_*.dashboardLayout.*.*.statistic` | | The statistic selected from the "**Statistic**" drop-down menu of a chart in a dashboard view if the chart `type='stats'`
 `custom_button_key_*.dashboardLayout.*.*.type` | `'stats'` | This has two options: `'stats'` or `'kpis'`
-`custom_button_key_*.lockedLayout` | `false` | If `true`, prevents users from modifying the layout of a dashboard view by adding or removing charts.
+`custom_button_key_*.lockedLayout` | `False` | If `True`, prevents users from modifying the layout of a dashboard view by adding or removing charts.
 `custom_context_pane_key_*.data.custom_context_data_*` | | This represents the data structure created by the client to store each context in a list of contexts. Initial values can be provided by the API designer if needed.
 `custom_context_pane_key_*.data.custom_context_data_*`&swarhk;<br>`.applyCategories` | | Used **only** with a [`context`](#context-pane) pane, it takes a dictionary of [`category_*`](#category_)s, each of which is paired with a partial list of its [`custom_data_chunk_*`](#custom_data_chunk_) keys. This data is normally generated by user interactions as they build out contexts and returned to the API on a `configure` or `solve` request. Initial values can be provided by the API designer if needed.
 `custom_context_pane_key_*.data.custom_context_data_*`&swarhk;<br>`.applyCategories.category_*.custom_data_chunk_*` | | See [`custom_data_chunk_*`](#custom_data_chunk_).
@@ -677,8 +929,8 @@ Key | Default | Description
 `custom_context_pane_key_*.props.custom_prop_key_*`&swarhk;<br>`.selectableCategories` | Required | Used in a [`context`](#context-pane) pane, it takes a list of [`category_*`](#category_) keys (**only**). These are the used to determine which categories this context can be applied to.
 `custom_pane_key_*.teamSync` | `False` | If `True`, creates a sync button on the top of the pane. When that sync button is clicked, everything in that pane is synced across all sessions for that team (or user if individual session) such that all other sessions for that team have the exact same pane as it exists in the current session.
 <a name="pane-variant">`custom_pane_key_*.variant`</a> | `'options'` | As a direct child of `custom_pane_key_*`, the `variant` key configures a pane to be an `'options'` or `'context'` pane. Each variant comes along with additional keys that add specific functionality to the pane.
-`paneState.open` | null | Takes a `custom_pane_key` to cause that pane to be open upon loading the app.
-`filtered` | {} | Takes key value pairs where the keys are category keys, and the values are lists of lowest level items in that category to be included (not filtered out). If a category is not included in this dictionary then all items in that category are displayed.
+`paneState.open` | | Takes a `custom_pane_key` to cause that pane to be open upon loading the app.
+`filtered` | `{}` | Takes key value pairs where the keys are category keys, and the values are lists of lowest level items in that category to be included (not filtered out). If a category is not included in this dictionary then all items in that category are displayed.
 
 #### Example
 
@@ -686,315 +938,295 @@ Key | Default | Description
   <summary>Click here to show / hide example</summary>
 
 ```py
-"appBar": {
-    "data": {
-        "button_1": {
-            "name": "Solve Button",
-            "icon": "BsLightningFill",
-            "color": {
-                "dark": "rgb(64, 179, 54)",
-                "light": "rgb(24, 73, 20)",
+'appBar': {
+    'data': {
+        'button_1': {
+            'name': 'Solve Button',
+            'icon': 'BsLightningFill',
+            'color': {
+                'dark': 'rgb(64, 179, 54)',
+                'light': 'rgb(24, 73, 20)',
             },
-            "apiCommand": "solve_session",
-            "type": "button",
-            "bar": "upper",
+            'apiCommand': 'solve_session',
+            'type': 'button',
+            'bar': 'upper',
         },
-        "settingsBig": {
-            "name": "Settings Big Pane",
-            "width": "100%",
-            "props": {
-                "solver_section": {
-                    "name": "Solver Section",
-                    "type": "head",
-                    "help": "Some help for the solver section",
-                    "order": 1,
-                    "column": 1,
+        'settingsBig': {
+            'name': 'Settings Big Pane',
+            'width': '100%',
+            'props': {
+                'solver_section': {
+                    'name': 'Solver Section',
+                    'type': 'head',
+                    'help': 'Some help for the solver section',
                 },
-                "Solver": {
-                    "name": "Solver",
-                    "type": "selector",
-                    "variant": "dropdown",
-                    "value": [
-                        {"name": "Gurobi", "value": True},
-                        {"name": "Cplex", "value": False},
-                        {"name": "CoinOR", "value": False},
+                'Solver': {
+                    'name': 'Solver',
+                    'type': 'selector',
+                    'variant': 'dropdown',
+                    'value': [
+                        {'name': 'Gurobi', 'value': True},
+                        {'name': 'Cplex', 'value': False},
+                        {'name': 'CoinOR', 'value': False},
                     ],
-                    "enabled": True,
-                    "help": "Select a solver type to use",
-                    "reinit": True,
-                    "order": 2,
-                    "column": 1,
+                    'enabled': True,
+                    'help': 'Select a solver type to use',
+                    'reinit': True,
                 },
-                "optimality_section": {
-                    "name": "Optimality Section",
-                    "type": "head",
-                    "help": "Some help for the optimality section",
-                    "order": 1,
-                    "column": 2,
+                'optimality_section': {
+                    'name': 'Optimality Section',
+                    'type': 'head',
+                    'help': 'Some help for the optimality section',
+                    'order': 1,
+                    'column': 2,
                 },
-                "Pct_Optimal": {
-                    "name": "Percent Optimal",
-                    "type": "num",
-                    "value": 97,
-                    "enabled": True,
-                    "variant": "slider",
-                    "help": "What percent of optimal would you like to sove to?",
-                    "maxValue": 100,
-                    "minValue": 0,
-                    "order": 2,
-                    "column": 2,
+                'Pct_Optimal': {
+                    'name': 'Percent Optimal',
+                    'type': 'num',
+                    'value': 97,
+                    'enabled': True,
+                    'variant': 'slider',
+                    'help': 'What percent of optimal would you like to sove to?',
+                    'maxValue': 100,
+                    'minValue': 0,
                 },
-                "distance_section": {
-                    "name": "Demand Served At Distances",
-                    "type": "head",
-                    "help": "How much demand do you expect to serve at the following distances?",
-                    "order": 1,
-                    "column": 3,
+                'distance_section': {
+                    'name': 'Demand Served At Distances',
+                    'type': 'head',
+                    'help': 'How much demand do you expect to serve at the following distances?',
                 },
-                "50_miles": {
-                    "name": "50 Miles",
-                    "type": "num",
-                    "value": 45,
-                    "enabled": True,
-                    "variant": "slider-condensed",
-                    "help": "Expected demand filled at 50 miles",
-                    "maxValue": 100,
-                    "minValue": 0,
-                    "order": 2,
-                    "column": 3,
+                '50_miles': {
+                    'name': '50 Miles',
+                    'type': 'num',
+                    'value': 45,
+                    'enabled': True,
+                    'variant': 'slider-condensed',
+                    'help': 'Expected demand filled at 50 miles',
+                    'maxValue': 100,
+                    'minValue': 0,
                 },
-                "100_miles": {
-                    "name": "100 Miles",
-                    "type": "num",
-                    "value": 35,
-                    "enabled": True,
-                    "variant": "slider-condensed",
-                    "help": "Expected demand filled at 100 miles",
-                    "maxValue": 100,
-                    "minValue": 0,
-                    "order": 3,
-                    "column": 3,
+                '100_miles': {
+                    'name': '100 Miles',
+                    'type': 'num',
+                    'value': 35,
+                    'enabled': True,
+                    'variant': 'slider-condensed',
+                    'help': 'Expected demand filled at 100 miles',
+                    'maxValue': 100,
+                    'minValue': 0,
                 },
-                "150_miles": {
-                    "name": "150 Miles",
-                    "type": "num",
-                    "value": 25,
-                    "enabled": True,
-                    "variant": "slider-condensed",
-                    "help": "Expected demand filled at 150 miles",
-                    "maxValue": 100,
-                    "minValue": 0,
-                    "order": 4,
-                    "column": 3,
+                '150_miles': {
+                    'name': '150 Miles',
+                    'type': 'num',
+                    'value': 25,
+                    'enabled': True,
+                    'variant': 'slider-condensed',
+                    'help': 'Expected demand filled at 150 miles',
+                    'maxValue': 100,
+                    'minValue': 0,
                 },
             },
-            "icon": "BsWrench",
-            "color": {
-                "dark": "rgb(46, 244, 208)",
-                "light": "rgb(17, 79, 68)",
+            'layout': {...},
+            'icon': 'BsWrench',
+            'color': {
+                'dark': 'rgb(46, 244, 208)',
+                'light': 'rgb(17, 79, 68)',
             },
-            "type": "pane",
-            "variant": "options",
-            "bar": "upper",
-            "order": 2,
+            'type': 'pane',
+            'variant': 'options',
+            'bar': 'upper',
+            'order': 2,
         },
-        "options": {
-            "name": "Options Pane",
-            "props": {
-                "Combine_Materials": {
-                    "type": "selector",
-                    "value": [
-                        {"name": "True", "value": True},
-                        {"name": "False", "value": False},
+        'options': {
+            'name': 'Options Pane',
+            'props': {
+                'Combine_Materials': {
+                    'type': 'selector',
+                    'value': [
+                        {'name': 'True', 'value': True},
+                        {'name': 'False', 'value': False},
                     ],
-                    "enabled": True,
-                    "help": "Do you want to combine materials and treat them equally when solving?",
-                    "variant": "radio",
-                    "order": 2,
+                    'enabled': True,
+                    'help': 'Do you want to combine materials and treat them equally when solving?',
+                    'variant': 'radio',
                 },
-                "Meet_Monthly_Demand": {
-                    "type": "selector",
-                    "value": [
-                        {"name": "True", "value": True},
-                        {"name": "False", "value": False},
+                'Meet_Monthly_Demand': {
+                    'type': 'selector',
+                    'value': [
+                        {'name': 'True', 'value': True},
+                        {'name': 'False', 'value': False},
                     ],
-                    "enabled": True,
-                    "help": "Do you want to force the solver to meet the monthly demand thresholds?",
-                    "variant": "radio",
-                    "order": 3,
+                    'enabled': True,
+                    'help': 'Do you want to force the solver to meet the monthly demand thresholds?',
+                    'variant': 'radio',
                 },
-                "Combined Options": {
-                    "name": "Combined Options",
-                    "type": "selector",
-                    "variant": "checkbox",
-                    "value": [
-                        {"name": "Meet Monthly Demand", "value": True},
-                        {"name": "Combine Materials", "value": False},
+                'Combined Options': {
+                    'name': 'Combined Options',
+                    'type': 'selector',
+                    'variant': 'checkbox',
+                    'value': [
+                        {'name': 'Meet Monthly Demand', 'value': True},
+                        {'name': 'Combine Materials', 'value': False},
                     ],
-                    "enabled": True,
-                    "help": "Help for both options",
-                    "reinit": True,
-                    "order": 2,
-                    "column": 1,
+                    'enabled': True,
+                    'help': 'Help for both options',
+                    'reinit': True,
                 },
             },
-            "icon": "MdSettings",
-            "type": "pane",
-            "variant": "options",
-            "bar": "upper",
-            "order": 1,
+            'icon': 'MdSettings',
+            'type': 'pane',
+            'variant': 'options',
+            'bar': 'upper',
+            'order': 1,
         },
-        "map_1": {
-            "type": "map",
-            "icon": "FaMapMarkedAlt",
-            "bar": "upper",
-            "color": {
-                "dark": "rgb(178, 179, 55)",
-                "light": "rgb(79, 79, 24)",
+        'map_1': {
+            'type': 'map',
+            'icon': 'FaMapMarkedAlt',
+            'bar': 'upper',
+            'color': {
+                'dark': 'rgb(178, 179, 55)',
+                'light': 'rgb(79, 79, 24)',
             },
         },
-        "filter": {
-            "icon": "FaFilter",
-            "type": "pane",
-            "variant": "filter",
-            "order": 6,
-            "bar": "upper",
+        'filter': {
+            'icon': 'FaFilter',
+            'type': 'pane',
+            'variant': 'filter',
+            'order': 6,
+            'bar': 'upper',
         },
-        "appSettings": {
-            "icon": "MdOutlineSettings",
-            "type": "pane",
-            "variant": "appSettings",
-            "bar": "upper",
+        'appSettings': {
+            'icon': 'MdOutlineSettings',
+            'type': 'pane',
+            'variant': 'appSettings',
+            'bar': 'upper',
         },
-        "context": {
-            "props": {
-                "Demand_Multiplier": {
-                    "type": "num",
-                    "value": 100,
-                    "enabled": True,
-                    "help": "Percentage multiplier times the base demand (100%=Given Demand)",
-                    "label": "%",
-                    "variant": "slider",
-                    "maxValue": 500,
-                    "minValue": 0,
-                    "selectableCategories": ["Location", "Product"],
+        'context': {
+            'props': {
+                'Demand_Multiplier': {
+                    'type': 'num',
+                    'value': 100,
+                    'enabled': True,
+                    'help': 'Percentage multiplier times the base demand (100%=Given Demand)',
+                    'label': '%',
+                    'variant': 'slider',
+                    'maxValue': 500,
+                    'minValue': 0,
+                    'selectableCategories': ['Location', 'Product'],
                 },
-                "Supply_Multiplier": {
-                    "type": "num",
-                    "value": 100,
-                    "enabled": True,
-                    "help": "Percentage multiplier times the base supply (100%=Given Supply)",
-                    "label": "%",
-                    "minValue": 0,
-                    "constraint": "int",
-                    "selectableCategories": ["Location", "Product"],
+                'Supply_Multiplier': {
+                    'type': 'num',
+                    'value': 100,
+                    'enabled': True,
+                    'help': 'Percentage multiplier times the base supply (100%=Given Supply)',
+                    'label': '%',
+                    'minValue': 0,
+                    'constraint': 'int',
+                    'selectableCategories': ['Location', 'Product'],
                 },
             },
-            "data": {
-                "context_1": {
-                    "prop": "Demand_Multiplier",
-                    "value": 110,
-                    "applyCategories": {"Location": ["loc_US_MI"]},
+            'data': {
+                'context_1': {
+                    'prop': 'Demand_Multiplier',
+                    'value': 110,
+                    'applyCategories': {'Location': ['loc_US_MI']},
                 }
             },
-            "icon": "BsInboxes",
-            "type": "pane",
-            "variant": "context",
-            "order": 4,
-            "bar": "upper",
+            'icon': 'BsInboxes',
+            'type': 'pane',
+            'variant': 'context',
+            'order': 4,
+            'bar': 'upper',
         },
-        "settings": {
-            "name": "Settings Pane",
-            "props": {
-                "Solver": {
-                    "name": "Solver",
-                    "type": "selector",
-                    "variant": "dropdown",
-                    "value": [
-                        {"name": "Gurobi", "value": True},
-                        {"name": "Cplex", "value": False},
-                        {"name": "CoinOR", "value": False},
+        'settings': {
+            'name': 'Settings Pane',
+            'props': {
+                'Solver': {
+                    'name': 'Solver',
+                    'type': 'selector',
+                    'variant': 'dropdown',
+                    'value': [
+                        {'name': 'Gurobi', 'value': True},
+                        {'name': 'Cplex', 'value': False},
+                        {'name': 'CoinOR', 'value': False},
                     ],
-                    "enabled": True,
-                    "help": "Select a solver type to use",
-                    "reinit": True,
-                    "order": 1,
+                    'enabled': True,
+                    'help': 'Select a solver type to use',
+                    'reinit': True,
                 },
-                "optimality_section": {
-                    "name": "Optimality Section",
-                    "type": "head",
-                    "help": "Some help for the optimality section",
-                    "order": 2,
+                'optimality_section': {
+                    'name': 'Optimality Section',
+                    'type': 'head',
+                    'help': 'Some help for the optimality section',
                 },
-                "Pct_Optimal": {
-                    "name": "Percent Optimal",
-                    "type": "num",
-                    "value": 97,
-                    "enabled": True,
-                    "help": "What percent of optimal would you like to sove to?",
-                    "maxValue": 100,
-                    "minValue": 0,
-                    "order": 3,
+                'Pct_Optimal': {
+                    'name': 'Percent Optimal',
+                    'type': 'num',
+                    'value': 97,
+                    'enabled': True,
+                    'help': 'What percent of optimal would you like to sove to?',
+                    'maxValue': 100,
+                    'minValue': 0,
                 },
             },
-            "icon": "BsWrench",
-            "color": {
-                "dark": "rgb(64, 179, 54)",
-                "light": "rgb(24, 73, 20)",
+            'icon': 'BsWrench',
+            'color': {
+                'dark': 'rgb(64, 179, 54)',
+                'light': 'rgb(24, 73, 20)',
             },
-            "type": "pane",
-            "variant": "options",
-            "teamSync": True,
-            "bar": "lower",
-            "order": 1,
+            'type': 'pane',
+            'variant': 'options',
+            'teamSync': True,
+            'bar': 'lower',
+            'order': 1,
         },
-        "dash_1": {
-            "icon": "BsCircleFill",
-            "name": "Dashboard 1",
-            "type": "stats",
-            "color": {
-                "dark": "rgb(178, 179, 55)",
-                "light": "rgb(79, 79, 24)",
+        'dash_1': {
+            'icon': 'BsCircleFill',
+            'name': 'Dashboard 1',
+            'type': 'stats',
+            'color': {
+                'dark': 'rgb(178, 179, 55)',
+                'light': 'rgb(79, 79, 24)',
             },
-            "order": 2,
-            "bar": "lower",
-            "dashboardLayout": [
+            'order': 2,
+            'bar': 'lower',
+            'dashboardLayout': [
                 {
-                    "chart": "Bar",
-                    "grouping": "Average",
-                    "statistic": "demand_met",
+                    'chart': 'Bar',
+                    'grouping': 'Average',
+                    'statistic': 'demand_met',
                 },
                 {
-                    "chart": "Line",
-                    "grouping": "Sum",
-                    "statistic": "demand_pct",
+                    'chart': 'Line',
+                    'grouping': 'Sum',
+                    'statistic': 'demand_pct',
                 },
                 {
-                    "chart": "Bar",
-                    "level": "Size",
-                    "category": "Product",
-                    "grouping": "Sum",
-                    "statistic": "demand_met",
+                    'chart': 'Bar',
+                    'level': 'Size',
+                    'category': 'Product',
+                    'grouping': 'Sum',
+                    'statistic': 'demand_met',
                 },
                 {
-                    "chart": "Bar",
-                    "grouping": "Minimum",
-                    "type": "kpis",
-                    "sessions": [],
-                    "kpi": "Really Big Number",
+                    'chart': 'Bar',
+                    'grouping': 'Minimum',
+                    'type': 'kpis',
+                    'sessions': [],
+                    'kpi': 'Really Big Number',
                 },
             ],
-            "lockedLayout": False,
+            'lockedLayout': False,
         },
-        "kpi_1": {
-            "type": "kpi",
-            "icon": "MdSpeed",
-            "bar": "lower",
-            "color": {
-                "dark": "rgb(224, 224, 224)",
-                "light": "rgb(32, 32, 32)",
+        'kpi_1': {
+            'type': 'kpi',
+            'icon': 'MdSpeed',
+            'bar': 'lower',
+            'color': {
+                'dark': 'rgb(224, 224, 224)',
+                'light': 'rgb(32, 32, 32)',
             },
-            "order": 3,
+            'order': 3,
         },
     }
 }
@@ -2355,7 +2587,7 @@ Key | Default | Description
 `types.custom_stat_key_*.unit` | | A unit displayed next to the stat calculation result.
 
 ##### `groupSum`
-`groupSum` is a special function provided by the CAVE app that takes an independent stat as input and outputs the sum of that stat across the level (or sub-level if present) specified by the user or api for that [dashboard](#dashboards) chart. Using `groupSum` is different than other `expr-eval` functions as the variable must be passed as a string rather than a literal (e.g. `groupSum("custom_stat")` not `groupSum(custom_stat)`). When using `groupSum` special consideration should be given to ensure the the dashboard grouping (sum, minimum, maximum, or average) makes it clear to users what the stat represents, as while `groupSum` sums across the level the stat calculation is still done to the individual stats which are then grouped.
+`groupSum` is a special function provided by the CAVE app that takes an independent stat as input and outputs the sum of that stat across the level (or sub-level if present) specified by the user or API for that [dashboard](#dashboards) chart. Using `groupSum` is different than other `expr-eval` functions as the variable must be passed as a string rather than a literal (e.g. `groupSum("custom_stat")` not `groupSum(custom_stat)`). When using `groupSum` special consideration should be given to ensure the the dashboard grouping (sum, minimum, maximum, or average) makes it clear to users what the stat represents, as while `groupSum` sums across the level the stat calculation is still done to the individual stats which are then grouped.
 
 #### Example
 
