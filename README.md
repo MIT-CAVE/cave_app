@@ -4,7 +4,7 @@ A Django server to host the an API and act as the Cave back end.
 # Getting Started
 
 1. Install the [Cave CLI](https://github.com/MIT-CAVE/cave_cli). See the full instructions how how to install the Cave CLI [here](https://github.com/MIT-CAVE/cave_cli).
-  - If you do not want to use the CLI, see the instructions [here](NON_CLI_README.md).
+    - If you do not want to use the CLI, see the instructions [here](NON_CLI_README.md).
 
 2. Create a new cave app:
     ```
@@ -32,21 +32,21 @@ A Django server to host the an API and act as the Cave back end.
       ```
 
 5. In Chrome, you can now open the web app:
-  - EG: If you use the standard settings
-  ```
-  http://localhost:8000
-  ```
+    - EG: If you use the standard settings
+    ```
+    http://localhost:8000
+    ```
 
 ## Admin Access
 1. Login as:
-  - Use the admin information that you used during setup (or look in the `./.env` file).
+    - Use the admin information that you used during setup (or look in the `./.env` file).
 
 2. To view the admin page navigate to: `localhost:8000/admin`
 
 ## Making API Changes
 See the API documentation:
-- [General API Topics](cave_api/README.md)
-- [API Structure](cave_api/README_API_STRUCTURE.md)
+    - [General API Topics](cave_api/README.md)
+    - [API Structure](cave_api/README_API_STRUCTURE.md)
 
 ### Prettify Code
 Use the CLI to keep your API code `pretty` and match cave coding format standards.
