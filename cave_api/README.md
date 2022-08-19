@@ -41,7 +41,7 @@ This structure guarantees some nice features for API developers who want forward
 To make changes to the `cave_api`, navigate to `<your_app>/cave_api/src/cave_api` and begin to make adjustments.
 
 By default the `cave_api` uses the `simple_model` listed in `src`. To change this over to the `static_model`:
-    - Edit `<your_app>/cave_api/src/__init__.py`
+    - Edit `<your_app>/cave_api/src/cave_api/__init__.py`
     - Replace `simple_model` with `static_model`
     - Save the file
 
@@ -64,7 +64,7 @@ As an example of how to do this, lets add a flag button to the static model that
     - Create a new session named `s1`
     - You should now be looking at the app for `static_model`
 5. Now edit the `static_model`:
-    - Edit `<your_app>/cave_api/src/static_model/api.py`
+    - Edit `<your_app>/cave_api/src/cave_api/static_model/api.py`
         - In this file, there is one large `example` variable (a python dictionary) that creates all the needed API values in one place.
         - In the `example` dictionary edit `appBar.data` to add the following key:
             ```
@@ -97,6 +97,11 @@ Python requirements can be added to the API by adding line items in `install_req
 - **NOTE**: These requirements should not be added in the `requirements.txt` or `utils/extra_requirements.txt` files as these are designed for server use.
 - **NOTE**: Pip installation requirements **need to be specified in `your_app/cave_api/setup.py`**.
     - See more [here](https://packaging.python.org/discussions/install-requires-vs-requirements/)
+
+Once added, you can update your python environment by running (in the root of your app):
+```
+cave update-environment
+```
 
 ## Adding Static Data to the API
 
