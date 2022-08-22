@@ -1,5 +1,11 @@
 from cave_api import execute_command
 
-initial_session_data=execute_command(session_data={}, command='init')
+init_session_data=execute_command(session_data={}, command='init')
 
-print(initial_session_data.get('settings',{}).get('data'))
+init_keys = init_session_data.keys()
+
+for check_key in ['appBar', 'arcs', 'categories', 'geos', 'kpis', 'map', 'nodes', 'settings', 'stats']:
+    if check_key not in init_keys:
+        raise Exception(f'Missing `{check_key}` top level key given empty session data and `init` command.')
+
+print('test_init.py passed!')
