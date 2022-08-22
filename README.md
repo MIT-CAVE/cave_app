@@ -59,6 +59,14 @@ Use the CLI to keep your API code `pretty` and match cave coding format standard
 
 **NOTE**: All prettify commands write over existing code (in place).
 
+## Project Contributors
+
+- Willem Guter - CAVE Developer
+- Luis Vasquez - CAVE Developer
+- Connor Makowski - CAVE Researcher / Project Manager / Developer
+- Tim Russell - CAVE Researcher
+- Matthias Winkenbach - CAVE Director
+
 ## License Notice
 
 Copyright 2022 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
