@@ -182,7 +182,7 @@ Since multiple selection is possible in the `checkbox` variant, one or more opti
 
 #### The `layout` key
 
-The `layout` key allows for use cases where you want to arrange components that are related or simply group them under a well-structured layout. The supported components for use with a layout structure are [props](#the-props-key) and [KPIs](#kpis). In addition to properly aligning a group of props or KPIs, an `style` prop is provided to act as a escape hatch for specifying CSS rules. Through these CSS rules, it is possible to modify the appereance of your prop components or KPIs and allows a way to make them more distinctive or visually appealing.
+The `layout` key allows for use cases where you want to arrange components that are related or simply group them under a well-structured layout. The supported components for use with a layout structure are [props](#the-props-key) and [KPIs](#kpis). In addition to properly aligning a group of props or KPIs, a `style` prop is provided to act as a escape hatch for specifying CSS rules. Through these CSS rules, it is possible to modify the appereance of your prop components or KPIs and allows a way to make them more distinctive or visually appealing.
 
 The `layout` structure is the same for `props` and `kpis` and looks as follows:
 ```py
@@ -241,15 +241,15 @@ The `layout` structure is the same for `props` and `kpis` and looks as follows:
 Key | Default | Description
 --- | ------- | -----------
 <a name="layout-data">`*.data`</a> | `{}` | A wrapper for layout elements that are contained in a `'grid'` layout type.
-<a name="layout-height">`*.height`</a> | `'auto'` | Sets the height of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `height` property](https://developer.mozilla.org/en-US/docs/Web/CSS/height). Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/height#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
-<a name="layout-column">`*.itemId`</a> | | The ID of the prop or KPI item to be placed in a specific position within the layout. This property is required by a layout element of type `'item'`.
+<a name="layout-height">`*.height`</a> | `'auto'` | Sets the height of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `height` property](https://developer.mozilla.org/en-US/docs/Web/CSS/height) and is a shortcut for the definition `style: { height: ... }`. Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/height#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
+<a name="layout-column">`*.itemId`</a> | | The ID of a prop or KPI item to be placed in a specific position within the layout. This property is required by a layout element of type `'item'`.
 <a name="layout-columns">`*.num_columns`</a> | `'auto'` | An integer for the number of columns or the keyword `'auto'`.
 <a name="layout-rows">`*.num_rows`</a> | `'auto'` | An integer for the number of rows or the keyword `'auto'`.
 <a name="layout-column">`*.style`</a> | `{}` | A dictionary object containing [CSS styles](https://developer.mozilla.org/en-US/docs/Web/CSS) to apply to a layout element of type `'item'`.
 <a name="layout-type">`*.type`</a> | Required | The type of layout. It can be `'grid'` or `'item'`.
-<a name="layout-width">`*.width`</a> | `'auto'` | Sets the width of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width). Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
-<a name="layout-column">`layout.data.*.column`</a> | | An integer for the grid column position starting from left to right.
-<a name="layout-row">`layout.data.*.row`</a> | | An integer for the grid row position starting from top to bottom.
+<a name="layout-width">`*.width`</a> | `'auto'` | Sets the width of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width) and is a shortcut for the definition `style: { width: ... }`. Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
+<a name="layout-column">`layout.data.*.column`</a> | | An integer for the grid column position starting from left to right. If omitted, the layout element will fill the first empty grid element found within the specified [`row`](#layout-row), starting from left to right. If the [`row`](#layout-row) property is also omitted, the search sequence for empty slots can continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. See [example for layout elements with unspecified position](#).
+<a name="layout-row">`layout.data.*.row`</a> | | An integer for the grid row position starting from top to bottom. If omitted, the layout element will fill the first empty grid element found within the specified [`column`](#layout-column), starting from top to bottom. If the [`column`](#layout-column) property is also omitted, the search sequence for empty slots will start from left to right and continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. See [example for layout elements with unspecified position](#).
 
 #### Examples
 To better illustrate various use cases for a `'grid'` layout, we will rely on the same `props` structure, shown below:
@@ -329,10 +329,12 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
 }
 ```
 
-The following are different layout configurations based on the outer number of rows and columns, as well as different interior layout arrangements:
+##### By number of rows and columns
+The following are different layout configurations based on the outer number of rows and columns, as well as different interior layout arrangements, contained in an [`options` pane](#panes):
 
 <details>
   <summary>Fixed number of columns and rows</summary>
+<br>The structure below contains all elements explicitly positioned within a `grid` layout. This is the recommended approach for most cases.<br><br>
 
 ```py
 'layout': {
@@ -391,26 +393,133 @@ The following are different layout configurations based on the outer number of r
     },
 }
 ```
+
+The visual result in the CAVE App is as follows:
+
+![fixed-number-of-columns-and-rows](https://utils.mitcave.com/docs/cave_app-0.1.0/fixed-number-of-columns-and-rows.png)
+
 </details>
 
 <details>
   <summary>Single-column</summary>
+<br>The structure below... **TODO**<br><br>
 
 ```py
-# TODO
+'layout': {
+    'type': 'grid',
+    'num_columns': 1,
+    'num_rows': 'auto',
+    'data': {
+        'row1': {
+            'row': 1,
+            'type': 'item',
+            'itemId': 'solver_section',
+        },
+        'row2': {
+            'row': 2,
+            'type': 'item',
+            'itemId': 'Solver',
+        },
+        'row3': {
+            'row': 3,
+            'type': 'item',
+            'itemId': 'optimality_section',
+        },
+        'row4': {
+            'row': 4,
+            'type': 'item',
+            'itemId': 'Pct_Optimal',
+        },
+        'row5': {
+            'row': 5,
+            'type': 'item',
+            'itemId': 'distance_section',
+        },
+        'row6': {
+            'row': 6,
+            'type': 'item',
+            'itemId': '50_miles',
+        },
+        'row7': {
+            'row': 7,
+            'type': 'item',
+            'itemId': '100_miles',
+        },
+        'row8': {
+            'row': 8,
+            'type': 'item',
+            'itemId': '150_miles',
+        },
+    },
+}
 ```
+
+The visual result in the CAVE App is as follows:
+
+![single-column](https://utils.mitcave.com/docs/cave_app-0.1.0/single-column.png)
 </details>
 
 <details>
   <summary>Single-row</summary>
+<br>The structure below... **TODO**<br><br>
 
 ```py
-# TODO
+'layout': {
+    'type': 'grid',
+    'num_columns': 'auto',
+    'num_rows': 1,
+    'data': {
+        'column1': {
+            'column': 1,
+            'type': 'item',
+            'itemId': 'solver_section',
+        },
+        'column2': {
+            'column': 2,
+            'type': 'item',
+            'itemId': 'Solver',
+        },
+        'column3': {
+            'column': 3,
+            'type': 'item',
+            'itemId': 'optimality_section',
+        },
+        'column4': {
+            'column': 4,
+            'type': 'item',
+            'itemId': 'Pct_Optimal',
+        },
+        'column5': {
+            'column': 5,
+            'type': 'item',
+            'itemId': 'distance_section',
+        },
+        'column6': {
+            'column': 6,
+            'type': 'item',
+            'itemId': '50_miles',
+        },
+        'column7': {
+            'column': 7,
+            'type': 'item',
+            'itemId': '100_miles',
+        },
+        'column8': {
+            'column': 8,
+            'type': 'item',
+            'itemId': '150_miles',
+        },
+    },
+}
 ```
+The visual result in the CAVE App is as follows:
+
+![single-row](https://utils.mitcave.com/docs/cave_app-0.1.0/single-row.png)
 </details>
 
 <details>
   <summary>Fixed number of columns</summary>
+<br>The structure below... **TODO**<br><br>
 
 ```py
 'layout': {
@@ -418,42 +527,42 @@ The following are different layout configurations based on the outer number of r
     'num_columns': 2,
     'num_rows': 'auto',
     'data': {
-        'col1_row1': {
+        'layout_key_1': {
             'type': 'item',
             'itemId': 'solver_section',
             'column': 1,
         },
-        'col1_row2': {
+        'layout_key_2': {
             'type': 'item',
             'itemId': 'Solver',
             'column': 1,
         },
-        'col1_row3': {
+        'layout_key_3': {
             'type': 'item',
             'itemId': 'optimality_section',
             'column': 1,
         },
-        'col1_row4': {
+        'layout_key_4': {
             'type': 'item',
             'itemId': 'Pct_Optimal',
             'column': 1,
         },
-        'col2_row1': {
+        'layout_key_5': {
             'type': 'item',
             'itemId': 'distance_section',
             'column': 2,
         },
-        'col2_row2': {
+        'layout_key_6': {
             'type': 'item',
             'itemId': '50_miles',
             'column': 2,
         },
-        'col2_row3': {
+        'layout_key_7': {
             'type': 'item',
             'itemId': '100_miles',
             'column': 2,
         },
-        'col2_row4': {
+        'layout_key_8': {
             'type': 'item',
             'itemId': '150_miles',
             'column': 2,
@@ -461,13 +570,257 @@ The following are different layout configurations based on the outer number of r
     },
 }
 ```
+The visual result in the CAVE App is as follows:
+
+![fixed-number-of-columns](https://utils.mitcave.com/docs/cave_app-0.1.0/fixed-number-of-columns.png)
 </details>
 
 <details>
   <summary>Fixed number of rows</summary>
+<br>The structure below... **TODO**<br><br>
 
 ```py
-# TODO
+'layout': {
+    'type': 'grid',
+    'num_columns': 'auto',
+    'num_rows': 2,
+    'data': {
+        'layout_key_1': {
+            'type': 'item',
+            'itemId': 'solver_section',
+            'row': 1,
+        },
+        'layout_key_2': {
+            'type': 'item',
+            'itemId': 'Solver',
+        },
+        'layout_key_3': {
+            'type': 'item',
+            'itemId': 'optimality_section',
+            'row': 1,
+        },
+        'layout_key_4': {
+            'type': 'item',
+            'itemId': 'Pct_Optimal',
+        },
+        'layout_key_5': {
+            'type': 'item',
+            'itemId': 'distance_section',
+            'row': 1,
+        },
+        'layout_key_6': {
+            'type': 'item',
+            'itemId': '50_miles',
+        },
+        'layout_key_7': {
+            'type': 'item',
+            'itemId': '100_miles',
+        },
+        'layout_key_8': {
+            'type': 'item',
+            'itemId': '150_miles',
+        },
+    },
+}
+```
+The visual result in the CAVE App is as follows:
+
+![fixed-number-of-rows](https://utils.mitcave.com/docs/cave_app-0.1.0/fixed-number-of-rows.png)
+</details>
+
+<details>
+  <summary>Unspecified number of rows and columns</summary>
+<br>The structure below... **TODO**<br><br>
+
+```py
+'layout': {
+    'type': 'grid',
+    'num_columns': 'auto',
+    'num_rows': 'auto',
+    'data': {
+        'layout_key_1': {
+            'type': 'item',
+            'itemId': 'solver_section',
+            'row': 1,
+            'column': 1,
+        },
+        'layout_key_2': {
+            'type': 'item',
+            'itemId': 'Solver',
+        },
+        'layout_key_3': {
+            'type': 'item',
+            'itemId': 'optimality_section',
+            'row': 1,
+            'column': 2,
+        },
+        'layout_key_4': {
+            'type': 'item',
+            'itemId': 'Pct_Optimal',
+        },
+        'layout_key_5': {
+            'type': 'item',
+            'itemId': 'distance_section',
+            'row': 1,
+            'column': 3,
+        },
+        'layout_key_6': {
+            'type': 'item',
+            'itemId': '50_miles',
+        },
+        'layout_key_7': {
+            'type': 'item',
+            'itemId': '100_miles',
+        },
+        'layout_key_8': {
+            'type': 'item',
+            'itemId': '150_miles',
+        },
+    },
+}
+```
+</details>
+
+##### By different values of [`column`](#layout-column) and [`row`](#layout-row)
+
+<details>
+  <summary>Unspecified `row`</summary>
+
+```py
+'layout': {
+    'type': 'grid',
+    'num_columns': 1,
+    'num_rows': 'auto',
+    'data': {
+        'row1': {
+            'type': 'item',
+            'itemId': 'solver_section',
+        },
+        'row2': {
+            'type': 'item',
+            'itemId': 'Solver',
+        },
+        'row3': {
+            'type': 'item',
+            'itemId': 'optimality_section',
+        },
+        'row4': {
+            'type': 'item',
+            'itemId': 'Pct_Optimal',
+        },
+        'row5': {
+            'type': 'item',
+            'itemId': 'distance_section',
+        },
+        'foo': {
+            'type': 'item',
+            'itemId': '50_miles',
+        },
+        'bar': {
+            'type': 'item',
+            'itemId': '100_miles',
+        },
+        'baz': {
+            'type': 'item',
+            'itemId': '150_miles',
+        },
+    },
+}
+```
+</details>
+
+<details>
+  <summary>Unspecified `column`</summary>
+
+```py
+'layout': {
+    'type': 'grid',
+    'num_columns': 1,
+    'num_rows': 'auto',
+    'data': {
+        'row1': {
+            'type': 'item',
+            'itemId': 'solver_section',
+        },
+        'row2': {
+            'type': 'item',
+            'itemId': 'Solver',
+        },
+        'row3': {
+            'type': 'item',
+            'itemId': 'optimality_section',
+            'row': 3,
+        },
+        'row4': {
+            'type': 'item',
+            'itemId': 'Pct_Optimal',
+            'row': 4,
+        },
+        'row5': {
+            'type': 'item',
+            'itemId': 'distance_section',
+            'row': 5,
+        },
+        'foo': {
+            'type': 'item',
+            'itemId': '50_miles',
+        },
+        'bar': {
+            'type': 'item',
+            'itemId': '100_miles',
+        },
+        'baz': {
+            'type': 'item',
+            'itemId': '150_miles',
+        },
+    },
+}
+```
+</details>
+
+<details>
+  <summary>Unspecified `row`s and `column`s</summary>
+
+```py
+'layout': {
+    'type': 'grid',
+    'num_columns': 3,
+    'num_rows': 3,
+    'data': {
+        'layout_key_1': {
+            'type': 'item',
+            'itemId': 'solver_section',
+        },
+        'layout_key_2': {
+            'type': 'item',
+            'itemId': 'Solver',
+        },
+        'layout_key_3': {
+            'type': 'item',
+            'itemId': 'optimality_section',
+        },
+        'layout_key_4': {
+            'type': 'item',
+            'itemId': 'Pct_Optimal',
+        },
+        'layout_key_5': {
+            'type': 'item',
+            'itemId': 'distance_section',
+        },
+        'layout_key_6': {
+            'type': 'item',
+            'itemId': '50_miles',
+        },
+        'layout_key_7': {
+            'type': 'item',
+            'itemId': '100_miles',
+        },
+        'layout_key_8': {
+            'type': 'item',
+            'itemId': '150_miles',
+        },
+    },
+}
 ```
 </details>
 
@@ -692,9 +1045,7 @@ Key | Default | Description
 </details>
 
 ### `appBar`
-The `appBar` key allows API designers to create a custom bar located on the left of the CAVE app. This bar allows for navigation between the different views of the app (e.g. Map, Dashboards), as well as interaction with panes. The appBar is split into 2 sections, `upper` and `lower`. Using both sections is not required, but it is generally recommeneded that `lower` be used for navigation and `upper` for interactive panes and buttons.
-
-Panes are primarily used to place UI controls (toggles, text and number fields, sliders, etc.), as well as buttons to allow interaction with actionable data. Therefore, custom panes can be designed to enable users to tune up the parameters of a simulation, navigate through different case study scenarios, reset the state of a simulation, synchronize data or settings with other users, and so on. The CAVE app also includes 2 built in pane variants `filter`, which provides tools to filter data from different categories and at different levels of granularity, and `appSettings`, which gives users the ability to control the appearance and overall behavior of the CAVE app.
+The `appBar` key allows API designers to create a custom bar located on the left of the CAVE app. This bar allows for navigation between the different views of the app (e.g. Map, Dashboards), as well as interaction with panes. The `appBar` is split into two sections: `upper` and `lower`. Using both sections is not required, but it is generally recommended that `lower` be used for navigation through the CAVE app views and `upper` for interactive panes and buttons.
 
 The structure of the `appBar` group looks as follows:
 ```py
@@ -712,7 +1063,7 @@ The structure of the `appBar` group looks as follows:
             'type': 'button',
             'order': 1,
         },
-        'custom_pane_1': {
+        'custom_pane_key_1': {
             'name': 'Settings Big Pane',
             'width': '100%',
             'bar': 'upper',
@@ -756,13 +1107,17 @@ The structure of the `appBar` group looks as follows:
         # As many custom objects as needed
     },
     'paneState':{
-        'open': 'custom_pane_key',
+        'open': 'custom_pane_key_1',
     },
     'filtered':{
         'category_1': 'custom_data_chunk_1',
     },
 }
 ```
+
+#### Panes
+Panes are subitems of the `appBar` group and are constructs primarily used to place UI controls (toggles, text and number fields, sliders, etc.), as well as buttons to allow interaction with actionable data. Therefore, custom panes can be designed to enable users to tune up the parameters of a simulation, navigate through different case study scenarios, reset the state of a simulation, synchronize data or settings with other users, and so on.
+
 Panes can be of different [`variant`](#pane-variant)s, so to keep the data structure examples simple and modular, you can examine each one at a time in the following switchables:
 
 <details>
@@ -879,6 +1234,8 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
 ```
 </details>
 
+The CAVE app also includes two built in pane variants: `filter`, which provides tools to filter data from different categories and at different levels of granularity, and `appSettings`, which gives users the ability to control the appearance and overall behavior of the CAVE app.
+
 ##### Common keys
 - [`allow_modification`](#allow_modification)
 - [`color`](#color)
@@ -929,7 +1286,7 @@ Key | Default | Description
 `custom_context_pane_key_*.props.custom_prop_key_*`&swarhk;<br>`.selectableCategories` | Required | Used in a [`context`](#context-pane) pane, it takes a list of [`category_*`](#category_) keys (**only**). These are the used to determine which categories this context can be applied to.
 `custom_pane_key_*.teamSync` | `False` | If `True`, creates a sync button on the top of the pane. When that sync button is clicked, everything in that pane is synced across all sessions for that team (or user if individual session) such that all other sessions for that team have the exact same pane as it exists in the current session.
 <a name="pane-variant">`custom_pane_key_*.variant`</a> | `'options'` | As a direct child of `custom_pane_key_*`, the `variant` key configures a pane to be an `'options'` or `'context'` pane. Each variant comes along with additional keys that add specific functionality to the pane.
-`paneState.open` | | Takes a `custom_pane_key` to cause that pane to be open upon loading the app.
+`paneState.open` | | Takes a `custom_pane_key_*` value to cause the referenced pane to open when the app loads.
 `filtered` | `{}` | Takes key value pairs where the keys are category keys, and the values are lists of lowest level items in that category to be included (not filtered out). If a category is not included in this dictionary then all items in that category are displayed.
 
 #### Example
