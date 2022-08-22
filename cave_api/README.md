@@ -100,7 +100,7 @@ Python requirements can be added to the API by adding line items in `install_req
 
 Once added, you can update your python environment by running (in the root of your app):
 ```
-cave update-environment
+cave install
 ```
 
 ## Adding Static Data to the API
