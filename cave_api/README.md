@@ -121,11 +121,11 @@ You can create test scripts that allow you to validate your API functionality.
 - An example test is found in `your_app/cave_api/tests/test_init.py`
 - To run tests (while in your project root):
 ```
-cave api-test <your-test>
+cave test <your-test>
 ```
 - Example:
 ```
-cave api-test test_init.py
+cave test test_init.py
 ```
 
 
