@@ -23,7 +23,7 @@
         ```
     - Install all requirements for development:
         ```
-        pip install -r requirements.txt
+        pip install --require-virtualenv -r requirements.txt
         ```
 
 ### Update the Server Environment Variables
