@@ -61,21 +61,21 @@ def execute_command(session_data, command="init"):
                 "syncToggles": {
                     "Map Layers": {
                         "ml1": ["map", "data", "enabledTypes"],
-                        "ml2": ["nodes","types"],
-                        "ml3": ["arcs","types"],
-                        "ml4": ["geos","types"],
+                        "ml2": ["nodes", "types"],
+                        "ml3": ["arcs", "types"],
+                        "ml4": ["geos", "types"],
                     },
                 },
                 "defaultDesync": {
                     "Map Layers": {
                         "ml1": ["map", "data", "enabledTypes"],
-                        "ml2": ["nodes","types"],
-                        "ml3": ["arcs","types"],
-                        "ml4": ["geos","types"],
+                        "ml2": ["nodes", "types"],
+                        "ml3": ["arcs", "types"],
+                        "ml4": ["geos", "types"],
                     },
                     "App Bar": {
                         "ab1": ["appBar", "data", "dashboardId"],
-                        "ab2": ["appBar", "paneState"]
+                        "ab2": ["appBar", "paneState"],
                     },
                 },
                 "IconUrl": "https://react-icons.mitcave.com/0.0.1",
@@ -130,7 +130,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                     "layoutDirection": "horizontal",
-                    "order": 0,
+                    "order": 1,
                 },
                 "Product": {
                     "data": {
@@ -162,7 +162,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                     "layoutDirection": "horizontal",
-                    "order": 1,
+                    "order": 2,
                 },
             },
         },
@@ -173,7 +173,7 @@ def execute_command(session_data, command="init"):
                     "type": "pane",
                     "variant": "appSettings",
                     "bar": "upper",
-                    "order":0,
+                    "order": 1,
                 },
                 "button_reset": {
                     "name": "Reset Button",
@@ -185,7 +185,7 @@ def execute_command(session_data, command="init"):
                     "apiCommand": "reset",
                     "type": "button",
                     "bar": "upper",
-                    "order":1,
+                    "order": 2,
                 },
                 "button_1": {
                     "name": "Solve Button",
@@ -197,7 +197,7 @@ def execute_command(session_data, command="init"):
                     "apiCommand": "solve_session",
                     "type": "button",
                     "bar": "upper",
-                    "order":1,
+                    "order": 2,
                 },
                 "settings": {
                     "name": "Settings Pane",
@@ -229,7 +229,7 @@ def execute_command(session_data, command="init"):
                     "variant": "options",
                     "teamSync": True,
                     "bar": "upper",
-                    "order": 2,
+                    "order": 3,
                 },
                 "settingsBig": {
                     "name": "A Big Settings Pane",
@@ -464,7 +464,7 @@ def execute_command(session_data, command="init"):
                     "type": "pane",
                     "variant": "options",
                     "bar": "upper",
-                    "order": 3,
+                    "order": 4,
                 },
                 "context": {
                     "name": "Context Pane",
@@ -501,21 +501,21 @@ def execute_command(session_data, command="init"):
                     "icon": "BsInboxes",
                     "type": "pane",
                     "variant": "context",
-                    "order": 4,
+                    "order": 5,
                     "bar": "upper",
                 },
                 "filter": {
                     "icon": "FaFilter",
                     "type": "pane",
                     "variant": "filter",
-                    "order": 5,
+                    "order": 6,
                     "bar": "upper",
                 },
                 "map_1": {
                     "type": "map",
                     "icon": "FaMapMarkedAlt",
                     "bar": "lower",
-                    "order":1,
+                    "order": 1,
                 },
                 "dash_1": {
                     "type": "stats",
@@ -663,14 +663,13 @@ def execute_command(session_data, command="init"):
                     "sizeBy": "Flow Capacity",
                     "startSize": "15px",
                     "endSize": "30px",
-                    "order": 0,
+                    "order": 1,
                     "props": {
                         "Flow Capacity": {
                             "name": "Flow Capacity (test)",
                             "type": "num",
                             "enabled": False,
                             "help": "Flow Capacity",
-                            "order": 1,
                             "unit": "units (test)",
                         },
                     },
@@ -712,15 +711,15 @@ def execute_command(session_data, command="init"):
                     "sizeBy": "Flow Capacity",
                     "startSize": "15px",
                     "endSize": "30px",
-                    "order": 1,
+                    "order": 2,
                     "props": {
                         "Flow Capacity": {
                             "name": "Flow Capacity (test)",
                             "type": "num",
                             "enabled": False,
                             "help": "Flow Capacity",
-                            "order": 1,
                             "unit": "units (test)",
+                            "value": 80,
                         },
                     },
                 },
@@ -748,7 +747,6 @@ def execute_command(session_data, command="init"):
                             "value": 40,
                             "enabled": False,
                             "help": "Flow",
-                            "order": 2,
                             "unit": "units (test)",
                         },
                         "Primary Type": {
@@ -764,7 +762,27 @@ def execute_command(session_data, command="init"):
                                 {"name": "Water", "value": False},
                             ],
                             "enabled": True,
-                            "order": 3,
+                        },
+                    },
+                    "layout": {
+                        "type": "grid",
+                        "num_columns": 1,
+                        "num_rows": "auto",
+                        "data": {
+                            "flow_capacity": {
+                                "type": "item",
+                                "itemId": "Flow Capacity",
+                                "row": 1,
+                            },
+                            "flow": {
+                                "type": "item",
+                                "itemId": "Flow",
+                                "row": 2,
+                            },
+                            "primary_type": {
+                                "type": "item",
+                                "itemId": "Primary Type",
+                            },
                         },
                     },
                 },
@@ -789,7 +807,22 @@ def execute_command(session_data, command="init"):
                             "value": 20,
                             "enabled": False,
                             "help": "Flow",
-                            "order": 2,
+                        },
+                    },
+                    "layout": {
+                        "type": "grid",
+                        "num_columns": 1,
+                        "num_rows": "auto",
+                        "data": {
+                            "flow_capacity": {
+                                "type": "item",
+                                "itemId": "Flow Capacity",
+                                "row": 1,
+                            },
+                            "flow": {
+                                "type": "item",
+                                "itemId": "Flow",
+                            },
                         },
                     },
                 },
@@ -814,7 +847,22 @@ def execute_command(session_data, command="init"):
                             "value": 14,
                             "enabled": False,
                             "help": "Flow",
-                            "order": 2,
+                        },
+                    },
+                    "layout": {
+                        "type": "grid",
+                        "num_columns": 1,
+                        "num_rows": "auto",
+                        "data": {
+                            "flow_capacity": {
+                                "type": "item",
+                                "itemId": "Flow Capacity",
+                                "row": 1,
+                            },
+                            "flow": {
+                                "type": "item",
+                                "itemId": "Flow",
+                            },
                         },
                     },
                 },
@@ -836,14 +884,12 @@ def execute_command(session_data, command="init"):
                             "value": 30,
                             "enabled": False,
                             "help": "Flow Capacity",
-                            "order": 1,
                         },
                         "Flow": {
                             "type": "num",
                             "value": 6,
                             "enabled": False,
                             "help": "Flow",
-                            "order": 2,
                         },
                     },
                 },
@@ -891,7 +937,7 @@ def execute_command(session_data, command="init"):
                     "startSize": "30px",
                     "endSize": "45px",
                     "icon": "MdStore",
-                    "order": 1,
+                    "order": 2,
                     "props": {
                         "Size": {
                             "type": "num",
@@ -939,7 +985,7 @@ def execute_command(session_data, command="init"):
                     "startSize": "30px",
                     "endSize": "45px",
                     "icon": "BsBuilding",
-                    "order": 0,
+                    "order": 1,
                     "props": {
                         "Size": {
                             "type": "num",
@@ -1378,7 +1424,7 @@ def execute_command(session_data, command="init"):
             "wipe_existing": True,
         },
     }
-    if command == 'reset':
+    if command == "reset":
         return example
     if session_data:
         for key, value in session_data.items():
