@@ -93,7 +93,6 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         'name': 'Section header',
         'type': 'head',
         'help': 'A help text for the section header',
-        'order': 0,
     },
     'custom_prop_key_2': {
         'enabled': True,
@@ -103,7 +102,6 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         'constraint': 'int',
         'unit': 'units',
         'help': 'A help text for the numeric input',
-        'order': 1,
     },
     'custom_prop_key_3': {
         'name': 'A name to be displayed in the UI',
@@ -114,7 +112,6 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         'maxValue': 100,
         'label': '%',
         'help': 'A help text for the slider',
-        'order': 2,
     },
     'custom_prop_key_4': {
         'enabled': True,
@@ -127,7 +124,6 @@ We dedicate a section to the `props` group, as it handles all of the user input 
             {'name':'custom_option_3', 'value': False},
         ],
         'help': 'A help text for the dropdown selector',
-        'order': 3,
     },
     # As many props as needed
 }
@@ -149,7 +145,7 @@ Key | Default | Description
 <a name="prop-unit">`custom_prop_key_*.unit`</a> | | A unit that is displayed next to the numeric value in a `props` element.
 <a name="value">`custom_prop_key_*.value`</a> | Required | The actual value for a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`toggle`), number (`'num'`), string (`'text'`), or an array of objects (`'selector'`).
 <a name="custom_option_">`custom_prop_key_*.value.custom_option_*`</a> | | Used along a `'selector'` prop, it takes a string value to be displayed as an option on the UI element.
-<a name="variant">`custom_prop_key_*.variant`</a> | | Used to modify the UI for a given prop `type`. For example, it can convert a numeric input to a slider input or a selector to a drop-down menu. The `value`s should remain the same structure, but the presentation to the end user changes. Add `-condensed` at the end of any variant or `condensed` for any standard variant to get a smaller UI footprint. For example: a `num` prop type could have the following `variant`s: `condensed`, `slider` and `slider-condensed`.
+<a name="variant">`custom_prop_key_*.variant`</a> | | Used to modify the UI for a given prop `type`. For example, it can convert a numeric input to a slider input or a selector to a drop-down menu. The `value`s should remain the same structure, but the presentation to the end user changes.
 
 ##### Prop `type`s and their `variant`s:
 
@@ -248,8 +244,9 @@ Key | Default | Description
 <a name="layout-column">`*.style`</a> | `{}` | A dictionary object containing [CSS styles](https://developer.mozilla.org/en-US/docs/Web/CSS) to apply to a layout element of type `'item'`.
 <a name="layout-type">`*.type`</a> | Required | The type of layout. It can be `'grid'` or `'item'`.
 <a name="layout-width">`*.width`</a> | `'auto'` | Sets the width of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width) and is a shortcut for the definition `style: { width: ... }`. Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
-<a name="layout-column">`layout.data.*.column`</a> | | An integer for the grid column position starting from left to right. If omitted, the layout element will fill the first empty grid element found within the specified [`row`](#layout-row), starting from left to right. If the [`row`](#layout-row) property is also omitted, the search sequence for empty slots can continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. See [example for layout elements with unspecified position](#).
-<a name="layout-row">`layout.data.*.row`</a> | | An integer for the grid row position starting from top to bottom. If omitted, the layout element will fill the first empty grid element found within the specified [`column`](#layout-column), starting from top to bottom. If the [`column`](#layout-column) property is also omitted, the search sequence for empty slots will start from left to right and continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. See [example for layout elements with unspecified position](#).
+<a name="layout-column">`layout.data.*.column`</a> | | An integer for the grid column position starting from left to right. If omitted, the layout element will fill the first empty grid element found within the specified [`row`](#layout-row), starting from left to right. If the [`row`](#layout-row) property is also omitted, the search sequence for empty slots can continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. <!-- TODO (0.2.0): See [example for layout elements with unspecified position](#). -->
+<a name="layout-container">`layout.data.*.container`</a> | `'vertical'`<br><br>or<br><br> `'none'`<br>(only for the [`head`](#head) prop) | A UI wrapper that modifies the appearance of an item by adding a title based on its [`name`](#name), a [`help`](#help) tooltip, and adjusting the position and size of its input controls. Available options are `'vertical'`, `'horizontal'`, `'titled'` and `'none'`. By default, the [`'head'`](#head) prop is set to have a `'none'` container.<br><br>This feature is currently only supported for [`props`](#the-props-key).
+<a name="layout-row">`layout.data.*.row`</a> | | An integer for the grid row position starting from top to bottom. If omitted, the layout element will fill the first empty grid element found within the specified [`column`](#layout-column), starting from top to bottom. If the [`column`](#layout-column) property is also omitted, the search sequence for empty slots will start from left to right and continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. <!-- TODO (0.2.0): See [example for layout elements with unspecified position](#). -->
 
 #### Examples
 To better illustrate various use cases for a `'grid'` layout, we will rely on the same `props` structure, shown below:
@@ -278,8 +275,6 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
         'name': 'Optimality Section',
         'type': 'head',
         'help': 'Some help for the optimality section',
-        'order': 1,
-        'column': 2,
     },
     'Pct_Optimal': {
         'name': 'Percent Optimal',
@@ -287,7 +282,7 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
         'value': 97,
         'enabled': True,
         'variant': 'slider',
-        'help': 'What percent of optimal would you like to sove to?',
+        'help': 'What percent of optimal would you like to solve to?',
         'maxValue': 100,
         'minValue': 0,
     },
@@ -301,7 +296,7 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
         'type': 'num',
         'value': 45,
         'enabled': True,
-        'variant': 'slider-condensed',
+        'variant': 'slider',
         'help': 'Expected demand filled at 50 miles',
         'maxValue': 100,
         'minValue': 0,
@@ -311,7 +306,7 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
         'type': 'num',
         'value': 35,
         'enabled': True,
-        'variant': 'slider-condensed',
+        'variant': 'slider',
         'help': 'Expected demand filled at 100 miles',
         'maxValue': 100,
         'minValue': 0,
@@ -321,7 +316,7 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
         'type': 'num',
         'value': 25,
         'enabled': True,
-        'variant': 'slider-condensed',
+        'variant': 'slider',
         'help': 'Expected demand filled at 150 miles',
         'maxValue': 100,
         'minValue': 0,
@@ -332,9 +327,11 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
 ##### By number of rows and columns
 The following are different layout configurations based on the outer number of rows and columns, as well as different interior layout arrangements, contained in an [`options` pane](#panes):
 
+###### Fixed number of columns and rows
+In this example, all elements are explicitly positioned within the layout. This is the recommended approach for most cases.
+
 <details>
-  <summary>Fixed number of columns and rows</summary>
-<br>The structure below contains all elements explicitly positioned within a `grid` layout. This is the recommended approach for most cases.<br><br>
+  <summary>Click here to show / hide example</summary>
 
 ```py
 'layout': {
@@ -400,9 +397,11 @@ The visual result in the CAVE App is as follows:
 
 </details>
 
+###### Single-column
+In this example, all items are arranged in a single column. Although the number of  rows are known, the `'auto'` feature helps you save time and effort when the number of items changes. Also, note that [`num_rows`](#layout_rows) is set to `'auto'` by default; However, it is recommended that you specify it explicitly in the layout to improve your code readability.
+
 <details>
-  <summary>Single-column</summary>
-<br>The structure below... **TODO**<br><br>
+  <summary>Click here to show / hide example</summary>
 
 ```py
 'layout': {
@@ -410,42 +409,42 @@ The visual result in the CAVE App is as follows:
     'num_columns': 1,
     'num_rows': 'auto',
     'data': {
-        'row1': {
+        'solver_section': {
             'row': 1,
             'type': 'item',
             'itemId': 'solver_section',
         },
-        'row2': {
+        'solver': {
             'row': 2,
             'type': 'item',
             'itemId': 'Solver',
         },
-        'row3': {
+        'optimality_section': {
             'row': 3,
             'type': 'item',
             'itemId': 'optimality_section',
         },
-        'row4': {
+        'pct_optimal': {
             'row': 4,
             'type': 'item',
             'itemId': 'Pct_Optimal',
         },
-        'row5': {
+        'distance_section': {
             'row': 5,
             'type': 'item',
             'itemId': 'distance_section',
         },
-        'row6': {
+        '50_miles': {
             'row': 6,
             'type': 'item',
             'itemId': '50_miles',
         },
-        'row7': {
+        '100_miles': {
             'row': 7,
             'type': 'item',
             'itemId': '100_miles',
         },
-        'row8': {
+        '150_miles': {
             'row': 8,
             'type': 'item',
             'itemId': '150_miles',
@@ -459,9 +458,11 @@ The visual result in the CAVE App is as follows:
 ![single-column](https://utils.mitcave.com/docs/cave_app-0.1.0/single-column.png)
 </details>
 
+###### Single-row
+In this example, all items are arranged in a single row. Like in the previous example, the `'auto'` feature helps you save time and effort when the number of items changes. The [`num_columns`](#layout-columns) is set to `'auto'` by default, but it is recommended that you specify it explicitly in the layout to improve your code readability.
+
 <details>
-  <summary>Single-row</summary>
-<br>The structure below... **TODO**<br><br>
+  <summary>Click here to show / hide example</summary>
 
 ```py
 'layout': {
@@ -517,9 +518,13 @@ The visual result in the CAVE App is as follows:
 ![single-row](https://utils.mitcave.com/docs/cave_app-0.1.0/single-row.png)
 </details>
 
+###### Fixed number of columns
+In this example, a fixed number of columns has been set, letting the CAVE App estimate the number of rows needed to contain the items specified in the layout. One possible use case is when two or more sections are clearly defined and should be kept as [`'head'`](#head)ers in the first row of the layout. Here, the rest of the items will be arranged to fill in the layout with their positions determined by their explicitly set [`column`](#layout-column)s or [`row`](#layout-row)s, or based on the `layout_key_*` names assigned to them.
+
+As in the previous examples, the `'auto'` feature helps you save time and effort when the number of items changes but the number of columns is known to be fixed. Keeping [`num_rows`](#layout-rows) explicitly set to `'auto'` is a good practice to improve your code readability.
+
 <details>
-  <summary>Fixed number of columns</summary>
-<br>The structure below... **TODO**<br><br>
+  <summary>Click here to show / hide example</summary>
 
 ```py
 'layout': {
@@ -575,9 +580,11 @@ The visual result in the CAVE App is as follows:
 ![fixed-number-of-columns](https://utils.mitcave.com/docs/cave_app-0.1.0/fixed-number-of-columns.png)
 </details>
 
+###### Fixed number of rows
+In this example, a fixed number of rows has been set, letting the CAVE App estimate the number of columns needed to contain the items specified in the layout. As in the previous examples, the `'auto'` feature helps you save time and effort when the number of items changes but the number of rows is known to be fixed. Keeping [`num_columns`](#layout-columns) explicitly set to `'auto'` is a good practice to improve your code readability.
+
 <details>
-  <summary>Fixed number of rows</summary>
-<br>The structure below... **TODO**<br><br>
+  <summary>Click here to show / hide example</summary>
 
 ```py
 'layout': {
@@ -628,9 +635,15 @@ The visual result in the CAVE App is as follows:
 ![fixed-number-of-rows](https://utils.mitcave.com/docs/cave_app-0.1.0/fixed-number-of-rows.png)
 </details>
 
+###### Auto-grid (or unspecified number of rows and columns)
+In this example, the number of rows and columns is unknown. Here, the CAVE App will estimate the number of rows and columns closest to a square-shaped grid needed to contain the elements specified in the layout. While this may be fairly uncommon, one possible use case is when two or more items that don't follow any logical order, need to be held together.
+
+As in the previous examples, the `'auto'` feature helps you save time and effort if the number of these grouped items changes. Setting both [`num_columns`](#layout-columns) and [`num_rows`](#layout-rows) to `'auto'` is still a good practice to improve your code readability.
+
+The _auto-grid_ rendering is also triggered when the `layout` property is empty or has not been specified along a [`props`](#the-props-key) or [`kpis`](#kpis) structure.
+
 <details>
-  <summary>Unspecified number of rows and columns</summary>
-<br>The structure below... **TODO**<br><br>
+  <summary>Click here to show / hide example</summary>
 
 ```py
 'layout': {
@@ -681,6 +694,7 @@ The visual result in the CAVE App is as follows:
 ```
 </details>
 
+<!-- TODO (0.2.0):
 ##### By different values of [`column`](#layout-column) and [`row`](#layout-row)
 
 <details>
@@ -825,9 +839,9 @@ The visual result in the CAVE App is as follows:
 </details>
 
 ##### UI / UX tips
-> TODO
+-->
 
-#### timeObjects
+#### `timeObjects`
 `timeObjects` can be used to replace numerical values displayed on the map or used as prop [`values`](#value) in [`geos`](#geos), [`arcs`](#arcs), or [`nodes`](#nodes). These objects contain a list of values that correspond to a specfic timestep. The user can step through these in order or select a specific timestep from a list. In order to use `timeObjects` a [`timeLength`](#timeLength) must be specified equal to the length of all `value` lists given. Optionally [`timeUnits`](#timeUnits) can be given to display the real world representation of each timestep.
 
 Below is an example of a `timeObject` with a `timeLength` of 5:
@@ -913,7 +927,7 @@ Below is an example of the `categories` group:
                         'data_value_1',
                         'data_value_2',
                     ],
-                    'order': 0,
+                    'order': 1,
                 },
                 'custom_data_key_2': {...},
                 'custom_data_key_3': {...},
@@ -1005,7 +1019,7 @@ Key | Default | Description
                 },
             },
             'layoutDirection': 'horizontal',
-            'order': 0,
+            'order': 1,
         },
         'Product': {
             'data': {
@@ -1037,7 +1051,7 @@ Key | Default | Description
                 },
             },
             'layoutDirection': 'horizontal',
-            'order': 1,
+            'order': 2,
         },
     },
 }
@@ -1072,11 +1086,12 @@ The structure of the `appBar` group looks as follows:
                     'name': 'Solver Section',
                     'type': 'head',
                     'help': 'Some help for the solver section',
-                    'order': 1,
-                    'column': 1,
                 },
                 'custom_prop_key_2': {...},
-                    # As many custom props as needed for this pane
+                # As many custom props as needed for this pane
+            },
+            'layout': {
+
             },
             'icon': 'BsWrench',
             'color': {
@@ -1334,8 +1349,6 @@ Key | Default | Description
                     'name': 'Optimality Section',
                     'type': 'head',
                     'help': 'Some help for the optimality section',
-                    'order': 1,
-                    'column': 2,
                 },
                 'Pct_Optimal': {
                     'name': 'Percent Optimal',
@@ -1343,7 +1356,7 @@ Key | Default | Description
                     'value': 97,
                     'enabled': True,
                     'variant': 'slider',
-                    'help': 'What percent of optimal would you like to sove to?',
+                    'help': 'What percent of optimal would you like to solve to?',
                     'maxValue': 100,
                     'minValue': 0,
                 },
@@ -1357,7 +1370,7 @@ Key | Default | Description
                     'type': 'num',
                     'value': 45,
                     'enabled': True,
-                    'variant': 'slider-condensed',
+                    'variant': 'slider',
                     'help': 'Expected demand filled at 50 miles',
                     'maxValue': 100,
                     'minValue': 0,
@@ -1367,7 +1380,7 @@ Key | Default | Description
                     'type': 'num',
                     'value': 35,
                     'enabled': True,
-                    'variant': 'slider-condensed',
+                    'variant': 'slider',
                     'help': 'Expected demand filled at 100 miles',
                     'maxValue': 100,
                     'minValue': 0,
@@ -1377,13 +1390,61 @@ Key | Default | Description
                     'type': 'num',
                     'value': 25,
                     'enabled': True,
-                    'variant': 'slider-condensed',
+                    'variant': 'slider',
                     'help': 'Expected demand filled at 150 miles',
                     'maxValue': 100,
                     'minValue': 0,
                 },
             },
-            'layout': {...},
+            'layout': {
+                'type': 'grid',
+                'num_columns': 3,
+                'num_rows': 'auto',
+                'data': {
+                    'col1_row1': {
+                        'type': 'item',
+                        'itemId': 'solver_section',
+                        'column': 1,
+                        'row': 1,
+                    },
+                    'Solver': {
+                        'type': 'item',
+                        'itemId': 'Solver',
+                        'column': 1,
+                    },
+                    'col2_row1': {
+                        'type': 'item',
+                        'itemId': 'optimality_section',
+                        'column': 2,
+                        'row': 1,
+                    },
+                    'Pct_Optimal': {
+                        'type': 'item',
+                        'itemId': 'Pct_Optimal',
+                        'column': 2,
+                    },
+                    'col3_row1': {
+                        'type': 'item',
+                        'itemId': 'distance_section',
+                        'column': 3,
+                        'row': 1,
+                    },
+                    '50_miles': {
+                        'type': 'item',
+                        'itemId': '50_miles',
+                        'column': 3,
+                    },
+                    '100_miles': {
+                        'type': 'item',
+                        'itemId': '100_miles',
+                        'column': 3,
+                    },
+                    '150_miles': {
+                        'type': 'item',
+                        'itemId': '150_miles',
+                        'column': 3,
+                    },
+                },
             'icon': 'BsWrench',
             'color': {
                 'dark': 'rgb(46, 244, 208)',
@@ -1521,7 +1582,7 @@ Key | Default | Description
                     'type': 'num',
                     'value': 97,
                     'enabled': True,
-                    'help': 'What percent of optimal would you like to sove to?',
+                    'help': 'What percent of optimal would you like to solve to?',
                     'maxValue': 100,
                     'minValue': 0,
                 },
@@ -1639,7 +1700,7 @@ The structure of an `arcs` group looks as follows:
             'sizeBy': 'custom_prop_key_10',
             'startSize': '15px',
             'endSize': '30px',
-            'order': 0,
+            'order': 1,
         },
         'custom_arc_type_2': {...},
         # As many arc types as needed
@@ -1650,10 +1711,8 @@ The structure of an `arcs` group looks as follows:
             'type': 'num',
             'enabled': False,
             'help': 'A help text for the numeric input',
-            'order': 1,
             'constraint': 'int',
             'unit': 'units',
-            'column': 2,
         },
         # As many propDefaults as needed
     },
@@ -1688,7 +1747,6 @@ The structure of an `arcs` group looks as follows:
                     'value': 40,
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'order': 2,
                     'unit': 'units',
                 },
             },
@@ -1726,7 +1784,6 @@ The structure of an `arcs` group looks as follows:
                     'value': 30,
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'order': 1,
                     'unit': 'units',
                 },
             },
@@ -1801,21 +1858,18 @@ Key | Default | Description
                 'Transportation Mode': {
                     'help': 'Transportation mode used.',
                     'type': 'text',
-                    'order': 1,
                     'value': 'Road',
                     'enabled': False,
                 },
                 'Throughput (pallets)': {
                     'help': 'Number of pallets shipped.',
                     'type': 'num',
-                    'order': 2,
                     'value': 500,
                     'enabled': False,
                 },
                 'Origin and destination': {
                     'help': 'City of origin and city of destination of the flow.',
                     'type': 'text',
-                    'order': 0,
                     'value': 'Campinas - Sao Paulo Airport',
                     'enabled': False,
                 },
@@ -1824,6 +1878,32 @@ Key | Default | Description
                     'type': 'num',
                     'value': 15,
                     'enabled': False,
+                },
+            },
+            'layout': {
+                'type': 'grid',
+                'num_columns': 1,
+                'num_rows': 'auto',
+                'data': {
+                    'transportation_mode': {
+                        'type': 'item',
+                        'itemId': 'Transportation Mode',
+                        'row': 2,
+                    },
+                    'throughput_pallets': {
+                        'type': 'item',
+                        'itemId': 'Throughput (pallets)',
+                        'row': 3,
+                    },
+                    'origin_and_destination': {
+                        'type': 'item',
+                        'itemId': 'Origin and destination',
+                        'row': 1,
+                    },
+                    'transportation_cost_k': {
+                        'type': 'item',
+                        'itemId': 'Transportation Cost (k$)',
+                    },
                 },
             },
             'category': {'Product': ['LowVal'], 'Location': ['loc_US_MI']},
@@ -1840,21 +1920,18 @@ Key | Default | Description
                 'Transportation Mode': {
                     'help': 'Transportation mode used.',
                     'type': 'text',
-                    'order': 1,
                     'value': 'Road',
                     'enabled': False,
                 },
                 'Throughput (pallets)': {
                     'help': 'Number of pallets shipped.',
                     'type': 'num',
-                    'order': 2,
                     'value': 1498.3,
                     'enabled': False,
                 },
                 'Origin and destination': {
                     'help': 'City of origin and city of destination of the flow.',
                     'type': 'text',
-                    'order': 0,
                     'value': 'Phoenix - Atlanta',
                     'enabled': False,
                 },
@@ -1863,6 +1940,32 @@ Key | Default | Description
                     'type': 'num',
                     'value': 292.2,
                     'enabled': False,
+                },
+            },
+            'layout': {
+                'type': 'grid',
+                'num_columns': 1,
+                'num_rows': 'auto',
+                'data': {
+                    'transportation_mode': {
+                        'type': 'item',
+                        'itemId': 'Transportation Mode',
+                        'row': 2,
+                    },
+                    'throughput_pallets': {
+                        'type': 'item',
+                        'itemId': 'Throughput (pallets)',
+                        'row': 3,
+                    },
+                    'origin_and_destination': {
+                        'type': 'item',
+                        'itemId': 'Origin and destination',
+                        'row': 1,
+                    },
+                    'transportation_cost_k': {
+                        'type': 'item',
+                        'itemId': 'Transportation Cost (k$)',
+                    },
                 },
             },
             'category': {'Product': ['HighVal'], 'Location': ['loc_US_MI']},
@@ -1879,21 +1982,18 @@ Key | Default | Description
                 'Transportation Mode': {
                     'help': 'Transportation mode used.',
                     'type': 'text',
-                    'order': 1,
                     'value': 'Road',
                     'enabled': False,
                 },
                 'Throughput (pallets)': {
                     'help': 'Number of pallets shipped.',
                     'type': 'num',
-                    'order': 2,
                     'value': 843.2,
                     'enabled': False,
                 },
                 'Origin and destination': {
                     'help': 'City of origin and city of destination of the flow.',
                     'type': 'text',
-                    'order': 0,
                     'value': 'Atlanta - Florence, South Carolina',
                     'enabled': False,
                 },
@@ -1902,6 +2002,32 @@ Key | Default | Description
                     'type': 'num',
                     'value': 27.6,
                     'enabled': False,
+                },
+            },
+            'layout': {
+                'type': 'grid',
+                'num_columns': 1,
+                'num_rows': 'auto',
+                'data': {
+                    'transportation_mode': {
+                        'type': 'item',
+                        'itemId': 'Transportation Mode',
+                        'row': 2,
+                    },
+                    'throughput_pallets': {
+                        'type': 'item',
+                        'itemId': 'Throughput (pallets)',
+                        'row': 3,
+                    },
+                    'origin_and_destination': {
+                        'type': 'item',
+                        'itemId': 'Origin and destination',
+                        'row': 1,
+                    },
+                    'transportation_cost_k': {
+                        'type': 'item',
+                        'itemId': 'Transportation Cost (k$)',
+                    },
                 },
             },
             'category': {
@@ -1921,21 +2047,18 @@ Key | Default | Description
                 'Transportation Mode': {
                     'help': 'Transportation mode used.',
                     'type': 'text',
-                    'order': 1,
                     'value': 'Road',
                     'enabled': False,
                 },
                 'Throughput (pallets)': {
                     'help': 'Number of pallets shipped.',
                     'type': 'num',
-                    'order': 2,
                     'value': 485.2,
                     'enabled': False,
                 },
                 'Origin and destination': {
                     'help': 'City of origin and city of destination of the flow.',
                     'type': 'text',
-                    'order': 0,
                     'value': 'Atlanta - Jacksonville',
                     'enabled': False,
                 },
@@ -1944,6 +2067,32 @@ Key | Default | Description
                     'type': 'num',
                     'value': 16.9,
                     'enabled': False,
+                },
+            },
+            'layout': {
+                'type': 'grid',
+                'num_columns': 1,
+                'num_rows': 'auto',
+                'data': {
+                    'transportation_mode': {
+                        'type': 'item',
+                        'itemId': 'Transportation Mode',
+                        'row': 2,
+                    },
+                    'throughput_pallets': {
+                        'type': 'item',
+                        'itemId': 'Throughput (pallets)',
+                        'row': 3,
+                    },
+                    'origin_and_destination': {
+                        'type': 'item',
+                        'itemId': 'Origin and destination',
+                        'row': 1,
+                    },
+                    'transportation_cost_k': {
+                        'type': 'item',
+                        'itemId': 'Transportation Cost (k$)',
+                    },
                 },
             },
             'category': {
@@ -2064,7 +2213,7 @@ The structure of a `nodes` group looks as follows:
             'startSize': '15px',
             'endSize': '30px',
             'icon': 'FaWarehouse',
-            'order': 0,
+            'order': 1,
         },
         'custom_node_type_2': {...},
         # As many node types as needed
@@ -2075,7 +2224,6 @@ The structure of a `nodes` group looks as follows:
             'type': 'num',
             'enabled': False,
             'help': 'A help text for the numeric input',
-            'order': 1,
             'constraint': 'int',
             'unit': 'units',
         },
@@ -2108,9 +2256,7 @@ The structure of a `nodes` group looks as follows:
                     'value': 40,
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'order': 2,
                     'unit': 'units',
-                    'column': 2,
                 },
                 'custom_prop_key_12': {
                     'type': 'toggle',
@@ -2119,6 +2265,7 @@ The structure of a `nodes` group looks as follows:
                     'help': 'A help text for this toggle'
                 },
             },
+            'layout': {...},
         },
         'custom_node_data_2': {...},
         # As many node data chunks as needed
@@ -2183,7 +2330,6 @@ Key | Default | Description
                 'Active': {
                     'help': 'The toggle button serves to activate or deactivate the manufacturer.',
                     'type': 'toggle',
-                    'order': 2,
                     'value': True,
                     'output': False,
                     'enabled': True,
@@ -2191,7 +2337,6 @@ Key | Default | Description
                 'Location': {
                     'help': 'City and country',
                     'type': 'text',
-                    'order': 0,
                     'value': 'Campinas, Brazil',
                     'output': False,
                     'enabled': False,
@@ -2199,7 +2344,6 @@ Key | Default | Description
                 'Product family': {
                     'help': 'Product family produced by the manufacturer.',
                     'type': 'text',
-                    'order': 1,
                     'value': 'LowVal',
                     'output': False,
                     'enabled': False,
@@ -2208,7 +2352,6 @@ Key | Default | Description
                     'cost': False,
                     'help': 'Type of transportation modes that can be used for the manufacturer.',
                     'type': 'selector',
-                    'order': 8,
                     'radio': True,
                     'value': {'Air': True, 'Sea': False},
                     'enabled': True,
@@ -2216,7 +2359,6 @@ Key | Default | Description
                 'Manufacturing Cost ($/pallet)': {
                     'help': 'Manufacturing cost per pallet.',
                     'type': 'num',
-                    'order': 4,
                     'value': 450,
                     'output': False,
                     'enabled': False,
@@ -2224,7 +2366,6 @@ Key | Default | Description
                 'Production acquired (pallets)': {
                     'help': 'Quantity purchased from the manufacturer, larger than or equal to the minimum order.',
                     'type': 'num',
-                    'order': 6,
                     'value': 500,
                     'output': True,
                     'enabled': False,
@@ -2232,10 +2373,49 @@ Key | Default | Description
                 'Min Order / Max Capacity (pallets)': {
                     'help': 'Minimum quantity to be purchased if active / Maximum production capacity.',
                     'type': 'num',
-                    'order': 4,
                     'value': '500 / 7000',
                     'output': False,
                     'enabled': False,
+                },
+            },
+            'layout': {
+                'type': 'grid',
+                'num_columns': 1,
+                'num_rows': 'auto',
+                'data': {
+                    'active': {
+                        'type': 'item',
+                        'itemId': 'Active',
+                        'row': 3,
+                    },
+                    'location': {
+                        'type': 'item',
+                        'itemId': 'Location',
+                        'row': 1,
+                    },
+                    'product_family': {
+                        'type': 'item',
+                        'itemId': 'Product family',
+                        'row': 2,
+                    },
+                    'transportation_modes': {
+                        'type': 'item',
+                        'itemId': 'Transportation Modes',
+                        'row': 7,
+                    },
+                    'manufacturing_cost_per_pallet': {
+                        'type': 'item',
+                        'itemId': 'Manufacturing Cost ($/pallet)',
+                    },
+                    'production_acquired': {
+                        'type': 'item',
+                        'itemId': 'Production acquired (pallets)',
+                        'row': 6,
+                    },
+                    'min_order_max_capacity': {
+                        'type': 'item',
+                        'itemId': 'Min Order / Max Capacity (pallets)',
+                    },
                 },
             },
             'category': {'Manufacturer': ['Brazilian']},
@@ -2248,7 +2428,6 @@ Key | Default | Description
                 'Active': {
                     'help': 'The toggle button serves to activate/open or deactivate/close the distribution center.',
                     'type': 'toggle',
-                    'order': 1,
                     'value': True,
                     'output': False,
                     'enabled': True,
@@ -2256,7 +2435,6 @@ Key | Default | Description
                 'Location': {
                     'help': 'City and country',
                     'type': 'text',
-                    'order': 0,
                     'value': 'Atlanta, US',
                     'output': False,
                     'enabled': False,
@@ -2264,7 +2442,6 @@ Key | Default | Description
                 'Fixed Cost (k$)': {
                     'help': 'Fixed cost of the distribution center.',
                     'type': 'num',
-                    'order': 2,
                     'value': '360.0',
                     'output': False,
                     'enabled': False,
@@ -2272,7 +2449,6 @@ Key | Default | Description
                 'Capacity (pallets)': {
                     'help': 'Maximum capacity of the distribution center.',
                     'type': 'num',
-                    'order': 2,
                     'value': 17000,
                     'output': False,
                     'enabled': False,
@@ -2280,7 +2456,6 @@ Key | Default | Description
                 'Inventory Cost (k$)': {
                     'help': 'Cost of inventory accounting for cycle stock and safety stock.',
                     'type': 'num',
-                    'order': 3,
                     'value': '6.5',
                     'output': True,
                     'enabled': False,
@@ -2288,7 +2463,6 @@ Key | Default | Description
                 'Demand Served (pallets)': {
                     'help': 'Total demand served from the distribution center.',
                     'type': 'num',
-                    'order': 2,
                     'value': 1998,
                     'output': True,
                     'enabled': False,
@@ -2296,7 +2470,6 @@ Key | Default | Description
                 'Capacity Utilization (%)': {
                     'help': 'Percentage of available capacity occupied.',
                     'type': 'num',
-                    'order': 3,
                     'value': 11.75,
                     'output': True,
                     'enabled': False,
@@ -2304,7 +2477,6 @@ Key | Default | Description
                 'Transportation cost (k$)': {
                     'help': 'Cost of delivery to warehouses for interfacility flows departing from the distribution center.',
                     'type': 'num',
-                    'order': 4,
                     'value': '56.5',
                     'output': True,
                     'enabled': False,
@@ -2320,7 +2492,6 @@ Key | Default | Description
                 'Active': {
                     'help': 'The toggle button serves to activate or deactivate the manufacturer.',
                     'type': 'toggle',
-                    'order': 2,
                     'value': False,
                     'output': False,
                     'enabled': True,
@@ -2328,7 +2499,6 @@ Key | Default | Description
                 'Location': {
                     'help': 'City and country',
                     'type': 'text',
-                    'order': 0,
                     'value': 'Daegu, Korea',
                     'output': False,
                     'enabled': False,
@@ -2336,7 +2506,6 @@ Key | Default | Description
                 'Product family': {
                     'help': 'Product family produced by the manufacturer.',
                     'type': 'text',
-                    'order': 1,
                     'value': 'LowVal',
                     'output': False,
                     'enabled': False,
@@ -2345,7 +2514,6 @@ Key | Default | Description
                     'cost': False,
                     'help': 'Type of transportation modes that can be used for the manufacturer.',
                     'type': 'selector',
-                    'order': 8,
                     'radio': True,
                     'value': {'Air': True, 'Sea': False},
                     'enabled': True,
@@ -2353,7 +2521,6 @@ Key | Default | Description
                 'Manufacturing Cost ($/pallet)': {
                     'help': 'Manufacturing cost per pallet.',
                     'type': 'num',
-                    'order': 4,
                     'value': 300,
                     'output': False,
                     'enabled': False,
@@ -2361,7 +2528,6 @@ Key | Default | Description
                 'Production acquired (pallets)': {
                     'help': 'Quantity purchased from the manufacturer, larger than or equal to the minimum order.',
                     'type': 'num',
-                    'order': 6,
                     'value': 0,
                     'output': True,
                     'enabled': False,
@@ -2369,7 +2535,6 @@ Key | Default | Description
                 'Min Order / Max Capacity (pallets)': {
                     'help': 'Minimum quantity to be purchased if active / Maximum production capacity.',
                     'type': 'num',
-                    'order': 4,
                     'value': '800 / 8000',
                     'output': False,
                     'enabled': False,
@@ -2385,7 +2550,6 @@ Key | Default | Description
                 'Active': {
                     'help': 'The toggle button serves to activate/open or deactivate/close the warehouse.',
                     'type': 'toggle',
-                    'order': 1,
                     'value': False,
                     'output': False,
                     'enabled': True,
@@ -2393,7 +2557,6 @@ Key | Default | Description
                 'Location': {
                     'help': 'City and country',
                     'type': 'text',
-                    'order': 0,
                     'value': 'Reno, Nevada, US',
                     'output': False,
                     'enabled': False,
@@ -2401,14 +2564,12 @@ Key | Default | Description
                 'Fixed Cost (k$)': {
                     'help': 'Fixed cost of the warehouse, depending on its capacity and accounting for economies of scale.',
                     'type': 'num',
-                    'order': 1,
                     'value': '264.2',
                     'output': True,
                     'enabled': False,
                 },
                 'Capacity (pallets)': {
                     'type': 'num',
-                    'order': 2,
                     'value': 4000,
                     'slider': True,
                     'enabled': True,
@@ -2418,7 +2579,6 @@ Key | Default | Description
                 'Inventory Cost (k$)': {
                     'help': 'Cost of inventory accounting for cycle stock and safety stock.',
                     'type': 'num',
-                    'order': 3,
                     'value': '0.0',
                     'output': True,
                     'enabled': False,
@@ -2426,7 +2586,6 @@ Key | Default | Description
                 'Demand Served (pallets)': {
                     'help': 'Total demand served from the warehouse.',
                     'type': 'num',
-                    'order': 2,
                     'value': 0,
                     'output': True,
                     'enabled': False,
@@ -2434,7 +2593,6 @@ Key | Default | Description
                 'Capacity Utilization (%)': {
                     'help': 'Percentage of available capacity occupied.',
                     'type': 'num',
-                    'order': 2,
                     'value': 0,
                     'output': True,
                     'enabled': False,
@@ -2442,7 +2600,6 @@ Key | Default | Description
                 'Last Mile Distribution Cost (k$)': {
                     'help': 'Cost of delivery to customer locations for routes departing from the warehouse.',
                     'type': 'num',
-                    'order': 5,
                     'value': '0.0',
                     'output': True,
                     'enabled': False,
@@ -2813,41 +2970,41 @@ This key group allows designers to specify information about the starting state 
 
 Below is the `map` group with its sub-keys matched by typical or placeholder values:
 ```py
-"map": {
-    "name": "map",
-    "data":{
-        "enabledArcTypes": {"arc": {"T1": True}},
-        "defaultViewport": {
-            "longitude": -75.44766721108091,
-            "latitude": 40.34530681636297,
-            "zoom": 4.657916626867326,
-            "pitch": 0,
-            "bearing": 0,
-            "height": 1287,
-            "altitude": 1.5,
-            "maxZoom": 12,
-            "minZoom": 2
+'map': {
+    'name': 'map',
+    'data':{
+        'enabledArcTypes': {'arc': {'T1': True}},
+        'defaultViewport': {
+            'longitude': -75.44766721108091,
+            'latitude': 40.34530681636297,
+            'zoom': 4.657916626867326,
+            'pitch': 0,
+            'bearing': 0,
+            'height': 1287,
+            'altitude': 1.5,
+            'maxZoom': 12,
+            'minZoom': 2
         },
-        "optionalViewports": {
-            "ov0": {
-                "icon": 'FaGlobeAsia',
-                "name": 'Asia',
-                "zoom": 4,
-                "order": 1,
-                "pitch": 0,
-                "bearing": 0,
-                "maxZoom": 12,
-                "minZoom": 2,
-                "latitude": 30,
-                "longitude": 121
+        'optionalViewports': {
+            'ov0': {
+                'icon': 'FaGlobeAsia',
+                'name': 'Asia',
+                'zoom': 4,
+                'order': 1,
+                'pitch': 0,
+                'bearing': 0,
+                'maxZoom': 12,
+                'minZoom': 2,
+                'latitude': 30,
+                'longitude': 121
             },
         },
-        "legendGroups": [
+        'legendGroups': [
             {
-                "name": "DC Delivery",
-                "nodeTypes": ["DC"],
-                "arcTypes": ["T1"],
-                "geoTypes": ["state", "country"]
+                'name': 'DC Delivery',
+                'nodeTypes': ['DC'],
+                'arcTypes': ['T1'],
+                'geoTypes': ['state', 'country']
             }
         ],
     },
@@ -2944,7 +3101,7 @@ Key | Default | Description
 `types.custom_stat_key_*.unit` | | A unit displayed next to the stat calculation result.
 
 ##### `groupSum`
-`groupSum` is a special function provided by the CAVE app that takes an independent stat as input and outputs the sum of that stat across the level (or sub-level if present) specified by the user or API for that [dashboard](#dashboards) chart. Using `groupSum` is different than other `expr-eval` functions as the variable must be passed as a string rather than a literal (e.g. `groupSum("custom_stat")` not `groupSum(custom_stat)`). When using `groupSum` special consideration should be given to ensure the the dashboard grouping (sum, minimum, maximum, or average) makes it clear to users what the stat represents, as while `groupSum` sums across the level the stat calculation is still done to the individual stats which are then grouped.
+`groupSum` is a special function provided by the CAVE app that takes an independent stat as input and outputs the sum of that stat across the level (or sub-level if present) specified by the user or API for that [dashboard](#dashboards) chart. Using `groupSum` is different than other [`expr-eval`](https://github.com/silentmatt/expr-eval) functions as the variable must be passed as a string rather than a literal, e.g. **`groupSum("custom_stat")`** (not `groupSum(custom_stat)`). When using `groupSum` special consideration should be given to ensure the the dashboard grouping (sum, minimum, maximum, or average) makes it clear to users what the stat represents, as while `groupSum` sums across the level the stat calculation is still done to the individual stats which are then grouped.
 
 #### Example
 
@@ -3031,12 +3188,11 @@ Let's look inside the structure of `kpis`:
             'name': 'A name to be displayed in the UI',
             'unit': 'Units',
             'icon': 'FaBox',
-            'order': 1,
-            'column': 1,
             'value': 100,
         },
         # As many custom KPIs as needed
     },
+    'layout': {...},
 }
 ```
 
@@ -3045,6 +3201,7 @@ Let's look inside the structure of `kpis`:
 - [`column`](#column)
 - [`data`](#data)
 - [`icon`](#icon)
+- [`layout`](#layout)
 - [`name`](#name)
 - [`order`](#order)
 - [`send_to_api`](#send_to_api)
@@ -3071,9 +3228,23 @@ Key | Default | Description
             'name': 'Global Demand',
             'unit': 'Units',
             'icon': 'FaBox',
-            'order': 1,
-            'column': 1,
             'value': 100,
+        },
+        'global_demand_met': {
+            'name': 'Global Demand Met',
+            'unit': 'units',
+            'value': 60,
+            'icon': 'BsInboxes',
+            'order': 1,
+            'map_kpi': True,
+        },
+        'customer_hapiness': {
+            'name': 'Customer Happiness',
+            'unit': 'smiles',
+            'value': 16,
+            'icon': 'BsFillEmojiSmileFill',
+            'order': 2,
+            'map_kpi': True,
         },
     },
 }
