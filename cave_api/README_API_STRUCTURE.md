@@ -50,7 +50,7 @@ There is a third type of keys ([custom keys](#custom-keys)), which depend on the
 
 Here, `custom_location`, `custom_loc_us_mi`, `custom_loc_us_ma`, `custom_region`, `custom_country`, and `custom_state` are all custom keys. These key names are not restricted and can be tied to the problem or use case data. These also do not need to be preceded by `custom_`, but this tag is used to indicate that they are custom keys for example purposes. (Throughout this document, if not explicitly mentioned, all custom keys are preceded by the `custom_` tag whenever they are found in an example.)
 
-Custom keys are always included as a direct child of common keys such as `data`, `props`, `types`, and `category`, but they also appear as a direct child of less frequent keys such as `nestedStructure`, `propDefaults`, or even within another custom key, as shown in the structure above.
+Custom keys are always included as a direct child of common keys such as `data`, `props`, `types`, and `category`, but they also appear as a direct child of less frequent keys such as `nestedStructure`, or even within another custom key, as shown in the structure above.
 
 ### Common keys
 #### At the Top level
@@ -76,8 +76,7 @@ Key | Default | Description
 <a name="layout">`layout`</a> | | A dictionary object that describes how [props](#the-props-key) or [KPIs](#kpis) are organized within their UI container components. See the [layout](#the-layout-key) section for a more detailed explanation of this group and some common use cases.
 <a name="name">`name`</a> | | The name of the element to be displayed as a label in the user interface. If omitted, the parent key of the **un`name`d** group is displayed.
 <a name="order">`order`</a> | | When specified in a key group, the `order` parameter sets the position in which the element is rendered in the UI, relative to its siblings. The `order` key takes integer values and the sibling elements will be sorted in ascending order. Since this parameter is optional, all **un`order`ed** items will be sorted alphabetically against each other and placed after the **`order`ed** items. Therefore, if you do not specify any `order` for a group of sibling keys, all of them will be sorted alphabetically according to their `name` values (or parent key when `name` is not specified).
-<a name="propDefaults">`propDefaults`</a> | | A dictionary object that contains one or more input control definitions (`props` items), to reduce the overhead caused by duplicate items. The `propDefaults` definitions can be overriden by `props` items.
-<a name="props">`props`</a> | Required | A dictionary object that contains the specification of the input controls in the UI. The `props` and `propDefaults` items are matched by their parent custom keys. The resulting prop from a match is a union of key-value pairs, with common keys between `props` and `propDefaults` overridden by `props`. See the [props](#the-props-key) section for a more detailed explanation of this group and its different `prop` items.
+<a name="props">`props`</a> | Required | A dictionary object that contains the specification of the input controls in the UI. See the [props](#the-props-key) section for a more detailed explanation of this group and its different `prop` items.
 <a name="sizeBy">`sizeBy`</a> | | The parameter selected to show its variation in terms of stroke width ([`arcs`](#arcs)) or icon size ([`nodes`](#nodes)). The size range is bounded by [`startSize`](#startSize) and [`endSize`](#endSize).
 <a name="sizeByOptions">`sizeByOptions`</a> | | An object with [parameters](#custom_data_key_) keys that are provided for the user to choose from a drop-down menu in the "**Map Legend**" and view their variation in terms of stroke width ([`arcs`](#arcs)) or icon size ([`nodes`](#nodes)). The associated value should be an object with shape `{"min": 0, "max": 0}` that contains the expected minimum and maximum values for the parameter.
 <a name="startSize">`startSize`</a> | | The starting dimension in pixels for a stroke width of an arc or the size of an icon on a node, which matches the minimum value of a given parameter in a set of data points. Used in [`arcs`](#arcs) and [`nodes`](#nodes).
@@ -143,7 +142,7 @@ Key | Default | Description
 <a name="reinit">`custom_prop_key_*.reinit`</a> | `False` | If `True`, any change of the prop will trigger the server to send all session data to the `configure_session` method of the API. This is useful for settings that should change which panes or options are available to the end user in the app.
 <a name="prop-type">`custom_prop_key_*.type`</a> | Required | As a direct child of `custom_prop_key_*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, or `'selector'`.
 <a name="prop-unit">`custom_prop_key_*.unit`</a> | | A unit that is displayed next to the numeric value in a `props` element.
-<a name="value">`custom_prop_key_*.value`</a> | Required | The actual value for a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`toggle`), number (`'num'`), string (`'text'`), or an array of objects (`'selector'`).
+<a name="value">`custom_prop_key_*.value`</a> | Required | The actual value for a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'`), number (`'num'`), string (`'text'`), or an array of objects (`'selector'`).
 <a name="custom_option_">`custom_prop_key_*.value.custom_option_*`</a> | | Used along a `'selector'` prop, it takes a string value to be displayed as an option on the UI element.
 <a name="variant">`custom_prop_key_*.variant`</a> | | Used to modify the UI for a given prop `type`. For example, it can convert a numeric input to a slider input or a selector to a drop-down menu. The `value`s should remain the same structure, but the presentation to the end user changes.
 
@@ -171,6 +170,9 @@ Allows end users to select options from a set. This `type` requires an array of 
 `'dropdown'`: Allows a compact way to display multiple options. The options appear upon interaction with an element (such as an icon or button) or when the user performs a specific action.<br>
 `'radio'`: Allows the user to select one option from a set of mutually exclusive options.<br><br>
 Since multiple selection is possible in the `checkbox` variant, one or more options in [`value`](#value) can be set to `True`, while in the `dropdown` and `radio` variants, only one option is allowed to be `True`.
+
+##### Default `props` values and overriding
+Very often, the `props` elements specified in `arcs`, `nodes`, and `geos` are the same for a large number of items at the _data-point level_ ([custom_arc_data_*](#arc-data-point), [custom_node_data_*](#node-data-point) or [custom_geo_data_*](#geo-data-point)). To reduce the overhead caused by duplicate `props` items and achieve a more lightweight data structure, it is possible to define a `props` dictionary at the _type level_ ([custom_arc_type_*](#arc-type), [custom_node_type_*](#node-type), or [custom_geo_type_*](#geo-type)) so that a prop can be reused and overridden at the data-point level. In this case, two `props` items match by sharing the same [custom prop key](#custom_prop_key_). The resulting prop from this match is a union of key-value pairs, where if a key exists in both `props` items, the value at the data-point level will be used.
 
 ##### UI / UX tips
 - When it comes to select multiple options from a set, you can save space by using `checkbox`es instead of on/off `toggle`s. However, if there is only one option, an on/off `toggle` is recommended instead.
@@ -1266,7 +1268,6 @@ The CAVE app also includes two built in pane variants: `filter`, which provides 
 - [`name`](#name)
 - [`order`](#order)
 - [`prop > type`](#prop-type)
-- [`propDefaults`](#propDefaults)
 - [`props`](#props)
 - [`reinit`](#reinit)
 - [`send_to_api`](#send_to_api)
@@ -1700,21 +1701,21 @@ The structure of an `arcs` group looks as follows:
             'sizeBy': 'custom_prop_key_10',
             'startSize': '15px',
             'endSize': '30px',
+            'props': {
+                'custom_prop_key_10': {
+                    'name': 'A name to be displayed in the UI',
+                    'type': 'num',
+                    'enabled': False,
+                    'help': 'A help text for the numeric input',
+                    'constraint': 'int',
+                    'unit': 'units',
+                },
+                # As many default props as needed
+            },
             'order': 1,
         },
         'custom_arc_type_2': {...},
         # As many arc types as needed
-    },
-    'propDefaults': {
-        'custom_prop_key_10': {
-            'name': 'A name to be displayed in the UI',
-            'type': 'num',
-            'enabled': False,
-            'help': 'A help text for the numeric input',
-            'constraint': 'int',
-            'unit': 'units',
-        },
-        # As many propDefaults as needed
     },
     'data': {
         'custom_arc_data_1': {
@@ -1809,7 +1810,6 @@ The structure of an `arcs` group looks as follows:
 - [`name`](#name)
 - [`order`](#order)
 - [`prop > type`](#prop-type)
-- [`propDefaults`](#propDefaults)
 - [`props`](#props)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
@@ -1824,7 +1824,7 @@ The structure of an `arcs` group looks as follows:
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-`data.custom_arc_data_*` | Required | A custom key wrapper for the parameters required to visualize an arc flow and the data associated with it in the "**Map**" view.
+<a name="arc-data-point">`data.custom_arc_data_*`</a> | Required | A custom key wrapper for the parameters required to visualize an arc flow and the data associated with it in the "**Map**" view.
 `data.custom_arc_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](#custom_data_chunk_).
 `data.custom_arc_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](#custom_data_key_).
 `data.custom_arc_data_*.endAltitude` | | The altitude (in meters) for the target location in the "**Map**" view. It takes a float value.
@@ -1841,7 +1841,7 @@ Key | Default | Description
 `data.custom_arc_data_*.startLongitude` | Required | The longitude for the source location in the "**Map**" view. It takes a float value.
 `data.custom_arc_data_*.type` | Required | The `type` key sets the arc type of `custom_arc_data_*` to a `custom_arc_type_*` key, to match specific visualization preferences for an arc flow.
 `types` | Required | The `types` key allows you to define different arc types in terms of styling and data viz settings.
-`types.custom_arc_type_*` | | A wrapper for key-value pairs that match a specific set of data viz preferences for an arc flow.
+<a name="arc-type">`types.custom_arc_type_*`</a> | | A wrapper for key-value pairs that match a specific set of data viz preferences for an arc flow.
 `types.custom_arc_type_*.lineBy` | `'solid'` | The pattern of dashes and gaps used to form the shape of an arc's stroke. It takes one of the following values: `'dashed'`, `'dotted'`, `'solid'`, or `'3d'`. This can be set in individual arcs to overwrite the default for the type.
 
 #### Example
@@ -2212,22 +2212,22 @@ The structure of a `nodes` group looks as follows:
             'sizeBy': 'custom_prop_key_11',
             'startSize': '15px',
             'endSize': '30px',
+            'props': {
+                'custom_prop_key_10': {
+                    'name': 'A name to be displayed in the UI',
+                    'type': 'num',
+                    'enabled': False,
+                    'help': 'A help text for the numeric input',
+                    'constraint': 'int',
+                    'unit': 'units',
+                },
+                # As many default props as needed
+            },
             'icon': 'FaWarehouse',
             'order': 1,
         },
         'custom_node_type_2': {...},
         # As many node types as needed
-    },
-    'propDefaults': {
-        'custom_prop_key_10': {
-            'name': 'A name to be displayed in the UI',
-            'type': 'num',
-            'enabled': False,
-            'help': 'A help text for the numeric input',
-            'constraint': 'int',
-            'unit': 'units',
-        },
-        # As many propDefaults as needed
     },
     'data': {
         'custom_node_data_1': {
@@ -2289,7 +2289,6 @@ The structure of a `nodes` group looks as follows:
 - [`name`](#name)
 - [`order`](#order)
 - [`prop > type`](#prop-type)
-- [`propDefaults`](#propDefaults)
 - [`props`](#props)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
@@ -2304,7 +2303,7 @@ The structure of a `nodes` group looks as follows:
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-`data.custom_node_data_*` | Required | A custom key wrapper for the parameters required to visualize a node and the data associated with it in the "**Map**" view.
+<a name="node-data-point">`data.custom_node_data_*`</a> | Required | A custom key wrapper for the parameters required to visualize a node and the data associated with it in the "**Map**" view.
 `data.custom_node_data_*.altitude` | `1` | The altitude of the node (in meters) above sea level. Defaults to 1 to appear on top of `geo` layers.
 `data.custom_node_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](#custom_data_chunk_).
 `data.custom_node_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](#custom_data_key_).
@@ -2314,7 +2313,7 @@ Key | Default | Description
 `data.custom_node_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](#custom_prop_key_).
 `data.custom_node_data_*.type` | Required | The `type` key sets the node type of `custom_node_data_*` to a `custom_node_type_*` key, to match specific visualization preferences for a node.
 `types` | Required | The `types` key allows you to define different types of nodes in terms of styling and data viz settings.
-`types.custom_node_type_*` | | A wrapper for key-value pairs that match a specific set of data viz preferences for a node.
+<a name="node-type">`types.custom_node_type_*`</a> | | A wrapper for key-value pairs that match a specific set of data viz preferences for a node.
 
 #### Example
 
@@ -2755,20 +2754,20 @@ Let's look inside the structure of `geos`:
                 'geoJsonLayer': 'https://cave-geojsons.s3.amazonaws.com/geojson_data_1.json',
                 'geoJsonProp': 'geojson_prop_1',
             },
+            'props': {
+                'custom_prop_key_1': {
+                    'type': 'num',
+                    'help': 'A help text for this numeric input',
+                    'unit': 'Units',
+                    'enabled': True,
+                },
+                'custom_prop_key_2': {...},
+                # As many default props as needed
+            }
             'icon': 'FaHexagon',
         },
         'custom_geo_type_2': {...},
         # As many geo types as needed
-    },
-    'propDefaults': {
-        'custom_prop_key_1': {
-            'type': 'num',
-            'help': 'A help text for this numeric input',
-            'unit': 'Units',
-            'enabled': True,
-        },
-        'custom_prop_key_2': {...},
-        # As many propDefaults as needed
     },
     'data': {
         'custom_geo_data_1': {
@@ -2811,7 +2810,6 @@ Let's look inside the structure of `geos`:
 - [`name`](#name)
 - [`order`](#order)
 - [`prop > type`](#prop-type)
-- [`propDefaults`](#propDefaults)
 - [`props`](#props)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
@@ -2823,7 +2821,7 @@ Let's look inside the structure of `geos`:
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-`data.custom_geo_data_*` | Required | A custom key wrapper for the parameters required to visualize a geo and the data associated with it on the "**Map**" view.
+<a name="geo-data-point">`data.custom_geo_data_*`</a> | Required | A custom key wrapper for the parameters required to visualize a geo and the data associated with it on the "**Map**" view.
 `data.custom_geo_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](#custom_data_chunk_).
 `data.custom_geo_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](#custom_data_key_).
 <a name="geojson-value">`data.custom_geo_data_*.geoJsonValue`</a> | | The value matched by [`geojson_prop_*`](#geojson_prop_) inside the GeoJSON data source. The CAVE App will aggregate all data matches found via the path: `features` &rarr; `<array-index>` &rarr; `properties` &rarr; `geojson_prop_*` &rarr; `geojson_value_*`.
@@ -2831,13 +2829,13 @@ Key | Default | Description
 `data.custom_geo_data_*.name` | | A name for the geo area that will be displayed as a title in the map modal.
 `data.custom_geo_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](#custom_prop_key_).
 `data.custom_geo_data_*.type` | Required | The `type` key sets the type of `custom_geo_data_*` to a `custom_geo_type_*` key, to match specific visualization preferences for a geo.
+`types` | Required | The `types` key allows you to define different types of geos in terms of styling and data viz settings.
+<a name="geo-type">`types.custom_geo_type_*`</a> | Required | A wrapper for key-value pairs that match a specific set of data viz preferences for a geo.
 <a name="geojson">`types.custom_geo_type_*.geoJson`</a> | | A wrapper for the [`geoJsonLayer`](#geojson_layer) and [`geoJsonProp`](#geojson_prop) keys in a geo type.
 <a name="geojson_layer">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonLayer`</a> | | Sets the GeoJSON data source of `custom_geo_type_*` to a URL of a GeoJSON data source. Note that this url is fetched on app startup or, if passed later, when the layer is enabled by the app user.
 `types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonLayer.custom_geojson_data_*` | Required | See [`custom_geojson_data_*`](#custom_geojson_data_).
 <a name="geojson_prop">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonProp`</a> | | Contains the name of a [GeoJSON property](#https://datatracker.ietf.org/doc/html/rfc7946#section-1.5) in the data source specified in `geoJsonLayer`.
 <a name="geojson_prop_">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonProp.geojson_prop_*`</a> | | The match value for the [geoJsonProp](#geojson_prop) key.
-`types` | Required | The `types` key allows you to define different types of geos in terms of styling and data viz settings.
-`types.custom_geo_type_*` | Required | A wrapper for key-value pairs that match a specific set of data viz preferences for a geo.
 
 > Please note that in the CAVE App, the maximum total size of the combined GeoJSON data sources is 50 MiB. Feel free to use a tool like [mapshaper](https://mapshaper.org/) to meet the size requirements.
 
@@ -2871,6 +2869,14 @@ Key | Default | Description
                 'geoJsonLayer': 'StateGeoJson',
                 'geoJsonProp': 'code_hasc',
             },
+            'props': {
+                'Demand': {
+                    'type': 'num',
+                    'enabled': True,
+                    'help': 'The Demand of this Geography',
+                    'unit': 'Units',
+                },
+            },
             'icon': 'FaHexagon',
         },
         'country': {
@@ -2902,15 +2908,15 @@ Key | Default | Description
                 'dark': 'rgb(20, 205, 20)',
                 'light': 'rgb(10, 100, 10)',
             },
+            'props': {
+                'Demand': {
+                    'type': 'num',
+                    'enabled': True,
+                    'help': 'The Demand of this Geography',
+                    'unit': 'Units',
+                },
+            },
             'icon': 'FaHexagon',
-        },
-    },
-    'propDefaults': {
-        'Demand': {
-            'type': 'num',
-            'enabled': True,
-            'help': 'The Demand of this Geography',
-            'unit': 'Units',
         },
     },
     'data': {
