@@ -859,7 +859,7 @@ Below is an example of a `timeObject` with a `timeLength` of 5:
 Now, it is time to take take a look at each of the key groups in detail, including the meaning of all their nested sub-keys and their innermost values.
 
 #### `settings`
-This key group allows designers to specify settings they want the site to use (overriding setting defaults. For example, designers can specify the URL where icons are fetched from. If this is not supplied, it defaults to the one specified in the static build (`./src/app/constants`)
+This key group allows designers to specify settings they want the site to use (overriding setting defaults. For example, designers can specify the URL where icons are fetched from. If this is not supplied, it defaults to the one specified in [cave_static constants](https://github.com/MIT-CAVE/cave_static/blob/0.1.0/src/utils/constants.js) for each version. 
 
 Below is the `settings` group with its sub-keys matched by typical values:
 ```py
@@ -869,11 +869,24 @@ Below is the `settings` group with its sub-keys matched by typical values:
     "send_to_client": True,
     "data": {
         "syncToggles": {
-            "Layers": {"custom_path_name_1": ["map", "data", "enabledTypes"]},
-            "Open pane": {"pane_path": ['appBar', 'paneState']},
+            "Map Layers": {
+                "ml1": ["map", "data", "enabledTypes"],
+                "ml2": ["nodes", "types"],
+                "ml3": ["arcs", "types"],
+                "ml4": ["geos", "types"],
+            },
         },
         "defaultDesync": {
-            "Open pane": {"pane_path": ['appBar', 'paneState']},
+            "Map Layers": {
+                "ml1": ["map", "data", "enabledTypes"],
+                "ml2": ["nodes", "types"],
+                "ml3": ["arcs", "types"],
+                "ml4": ["geos", "types"],
+            },
+            "App Bar": {
+                "ab1": ["appBar", "data", "dashboardId"],
+                "ab2": ["appBar", "paneState"],
+            },
         },
         "IconUrl": "https://react-icons.mitcave.com/0.0.1",
         "debug": True,
