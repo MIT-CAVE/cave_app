@@ -1,5 +1,5 @@
-# CAVE App design
-This document describes the data structure scheme used by a CAVE application to render custom user interfaces that accommodate to the use cases and preferences of a designer.
+# CAVE API Design
+This document describes the data structure scheme used by a CAVE application to render custom user interfaces that accommodate to the use cases and preferences of an API designer. For the purposes of this documentation, an API designer is any person using the CAVE API code to create a CAVE App user experience. 
 
 ## CAVE API Structure
 The CAVE API Structure is the core data structure required for user interface design of the CAVE App. Its primary purpose is to place, rearrange, style, and specify the behavior of most of the UI elements in a CAVE application.
@@ -859,7 +859,7 @@ Below is an example of a `timeObject` with a `timeLength` of 5:
 Now, it is time to take take a look at each of the key groups in detail, including the meaning of all their nested sub-keys and their innermost values.
 
 #### `settings`
-This key group allows designers to specify settings they want the site to use (overriding setting defaults. For example, designers can specify the URL where icons are fetched from. If this is not supplied, it defaults to the one specified in [cave_static constants](https://github.com/MIT-CAVE/cave_static/blob/0.1.0/src/utils/constants.js) for each version. 
+This key group allows designers to specify settings they want the site to use (overriding setting defaults. For example, designers can specify the URL where icons are fetched from. If this is not supplied, it defaults to the one specified in [cave_static constants](https://github.com/MIT-CAVE/cave_static/blob/0.1.0/src/utils/constants.js) for each version.
 
 Below is the `settings` group with its sub-keys matched by typical values:
 ```py
