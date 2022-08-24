@@ -1121,6 +1121,7 @@ The structure of the `appBar` group looks as follows:
             'type': 'map',
             'bar': 'lower',
             'icon': 'FaMapMarkedAlt',
+            'static': True,
             'color': {
                 'dark': 'rgb(178, 179, 55)',
                 'light': 'rgb(79, 79, 24)',
@@ -1295,6 +1296,7 @@ Key | Default | Description
 `custom_obj_key_*` | Required | A custom key wrapper for the custom pane.
 `custom_obj_key_*.type` | Required | The type of object shown - takes one of these values: `map`, `stat`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
 `custom_obj_key_*.bar` | Required | The section of the appbar to display the object in. Accepts either `upper` or `lower`. The use of both bar sections is not required, and any object can be shown in either bar.
+`custom_map_key_*.static` | False | If true, the viewport for this map cannot be manually modified, only switched between default and optional viewports given in the `map` top level key
 `custom_button_key_*.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 `custom_button_key_*.dashboardLayout` | `[]` | A list of chart items (max of 4 items currently supported) that belong to the current dashboard. Each chart item contains the following keys: `chart`, `grouping`, `statistic`, `category`, `level`, `type`, and `lockedLayout`.
 `custom_button_key_*.dashboardLayout.*.*.category` | | The category selected from the "**Group By**" drop-down menu of a chart in a dashboard view. This key is different from the common key [`category`](#category).
