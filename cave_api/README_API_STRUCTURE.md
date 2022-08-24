@@ -23,7 +23,7 @@ Throughout this documentation, we refer to the keys in the data structure above 
 
 Each top-level group might include unique elements or sub-keys that are specific to that group ([special keys](#special-keys)). However, other keys like `send_to_api` are meant to attach functionality that is more generic and therefore can be used in different top-level groups. To save time and [not repeat ourselves](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) throughout this documentation, we provide a "[Common keys](#common-keys)" section in advance, and any such keys found throughout this document are referred back to their definition.
 
-There is a third type of keys ([custom keys](#custom-keys)), which depend on the data and, therefore, their names vary according to the use case. The designer can name these keys in the data structure at their convenience. Let's take a look at the following example where custom keys are used:
+There is a third type of keys ([custom keys](#custom-keys)), which depend on the data and, therefore, their names vary according to the use case. The API designer can name these keys in the data structure at their convenience. Let's take a look at the following example where custom keys are used:
 ```py
 {
     'categories': {
@@ -58,8 +58,8 @@ Key | Default | Description
 --- | ------- | -----------
 <a name="allow_modification">`allow_modification`</a> | `True` | If `True`, end users can request changes to the data within the key group during user interaction with the CAVE app and the server will process the request. Note, this only blocks a user from being able to modify a server side structure for security reasons. To block client side interactions, see the [`enabled`](#enabled) key.
 <a name="data">`data`</a> | Required | Dictionary object that contains data related to this key group.
-<a name="send_to_api">`send_to_api`</a> | `True` | If `True`, the data will be serialized and sent when calling `solve` and `configure` in the API.
-<a name="send_to_client">`send_to_client`</a> | `True` | If `True`, the data will be sent to the requesting CAVE app client. (This is used for API state management.)
+<a name="send_to_api">`send_to_api`</a> | `True` | If `True`, the data will be serialized and sent as `session_data` when calling `execute_command`.
+<a name="send_to_client">`send_to_client`</a> | `True` | If `True`, the data will be sent to the requesting CAVE app client. While most of the time this should be `True`, there are use cases where the API designer might want to store some type of state that is not consumed directly (see [Top Level Custom Keys](#top-level-custom-keys)).
 
 #### Nested inside the `data` group
 Key | Default | Description
