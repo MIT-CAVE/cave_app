@@ -560,7 +560,6 @@ def execute_command(session_data, command="init"):
             }
         },
         "map": {
-            "name": "map",
             "data": {
                 "enabledTypes": {"arc": {"T1": True}},
                 "defaultViewport": {
@@ -616,7 +615,6 @@ def execute_command(session_data, command="init"):
             },
         },
         "arcs": {
-            "name": "Arcs",
             "types": {
                 "T1": {
                     "name": "Flow Type 1",
@@ -896,7 +894,6 @@ def execute_command(session_data, command="init"):
             },
         },
         "nodes": {
-            "name": "Nodes",
             "types": {
                 "DC": {
                     "name": "DCs",
@@ -1130,7 +1127,6 @@ def execute_command(session_data, command="init"):
             },
         },
         "geos": {
-            "name": "Geographies",
             "types": {
                 "state": {
                     "name": "State",
@@ -1283,7 +1279,6 @@ def execute_command(session_data, command="init"):
             },
         },
         "stats": {
-            "name": "Statistics",
             "types": {
                 "demand_met": {
                     "name": "Demand Met",

@@ -215,7 +215,6 @@ serialized_data = {
         }
     },
     "map": {
-        "name": "map",
         "data": {
             "enabledTypes": {
                 "arc": {"transport": True, "last_mile": True},
@@ -271,7 +270,6 @@ serialized_data = {
         },
     },
     "arcs": {
-        "name": "Transportation",
         "types": {
             "last_mile": {
                 "name": "Last Mile",
@@ -304,7 +302,6 @@ serialized_data = {
         "data": serializer.get_serialized_item_data(serializer.arcs),
     },
     "nodes": {
-        "name": "Nodes",
         "types": {
             "factory": {
                 "name": "Factories",
@@ -338,7 +335,6 @@ serialized_data = {
         ),
     },
     "geos": {
-        "name": "Demand",
         "types": {
             "demand": {
                 "name": "Regional Demand Zones",
@@ -356,7 +352,6 @@ serialized_data = {
         "data": serializer.get_serialized_item_data(serializer.demand_zones),
     },
     "stats": {
-        "name": "Statistics",
         "types": serializer.get_stats_types(),
     },
     "kpis": {
