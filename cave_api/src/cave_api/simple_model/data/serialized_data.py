@@ -1,4 +1,9 @@
-from .serializer import Serializer, product_unit, money_unit
+from .serializer import (
+    Serializer,
+    currency_format,
+    percent_format,
+    product_format,
+)
 
 serializer = Serializer()
 
@@ -11,24 +16,29 @@ serialized_data = {
             "syncToggles": {
                 "Map Layers": {
                     "ml1": ["map", "data", "enabledTypes"],
-                    "ml2": ["nodes","types"],
-                    "ml3": ["arcs","types"],
-                    "ml4": ["geos","types"],
+                    "ml2": ["nodes", "types"],
+                    "ml3": ["arcs", "types"],
+                    "ml4": ["geos", "types"],
                 },
             },
             "defaultDesync": {
                 "Map Layers": {
                     "ml1": ["map", "data", "enabledTypes"],
-                    "ml2": ["nodes","types"],
-                    "ml3": ["arcs","types"],
-                    "ml4": ["geos","types"],
+                    "ml2": ["nodes", "types"],
+                    "ml3": ["arcs", "types"],
+                    "ml4": ["geos", "types"],
                 },
                 "App Bar": {
                     "ab1": ["appBar", "data", "dashboardId"],
-                    "ab2": ["appBar", "paneState"]
+                    "ab2": ["appBar", "paneState"],
                 },
             },
             "IconUrl": "https://react-icons.mitcave.com/0.0.1",
+            "numberFormat": {
+                "precision": 2,
+                "trailingZeros": False,
+                "whenTyping": True,
+            },
             "debug": True,
         },
     },
@@ -273,7 +283,9 @@ serialized_data = {
         "types": {
             "last_mile": {
                 "name": "Last Mile",
-                "colorByOptions": serializer.get_dropdown_options(serializer.arcs, include_categorical=True),
+                "colorByOptions": serializer.get_dropdown_options(
+                    serializer.arcs, include_categorical=True
+                ),
                 "colorBy": "processing_capacity",
                 "lineBy": "solid",
                 "sizeByOptions": serializer.get_dropdown_options(serializer.arcs),
@@ -286,7 +298,9 @@ serialized_data = {
             },
             "transport": {
                 "name": "Transport",
-                "colorByOptions": serializer.get_dropdown_options(serializer.arcs, include_categorical=True),
+                "colorByOptions": serializer.get_dropdown_options(
+                    serializer.arcs, include_categorical=True
+                ),
                 "colorBy": "processing_capacity",
                 "lineBy": "solid",
                 "height": 0.3,
@@ -305,7 +319,9 @@ serialized_data = {
         "types": {
             "factory": {
                 "name": "Factories",
-                "colorByOptions": serializer.get_dropdown_options(serializer.factories, include_categorical=True),
+                "colorByOptions": serializer.get_dropdown_options(
+                    serializer.factories, include_categorical=True
+                ),
                 "colorBy": "open",
                 "sizeByOptions": serializer.get_dropdown_options(serializer.factories),
                 "sizeBy": "processing_capacity",
@@ -318,7 +334,9 @@ serialized_data = {
             },
             "warehouse": {
                 "name": "Warehouses",
-                "colorByOptions": serializer.get_dropdown_options(serializer.warehouses, include_categorical=True),
+                "colorByOptions": serializer.get_dropdown_options(
+                    serializer.warehouses, include_categorical=True
+                ),
                 "colorBy": "open",
                 "sizeByOptions": serializer.get_dropdown_options(serializer.warehouses),
                 "sizeBy": "processing_capacity",
@@ -338,7 +356,9 @@ serialized_data = {
         "types": {
             "demand": {
                 "name": "Regional Demand Zones",
-                "colorByOptions": serializer.get_dropdown_options(serializer.demand_zones, include_categorical=True),
+                "colorByOptions": serializer.get_dropdown_options(
+                    serializer.demand_zones, include_categorical=True
+                ),
                 "colorBy": "processing_capacity",
                 "geoJson": {
                     "geoJsonLayer": "https://cave-geojsons.s3.amazonaws.com/custom/example_app_continent_region.json",
@@ -364,32 +384,37 @@ serialized_data = {
             "num_open_factories": {
                 "name": "Open Factories",
                 "value": 0,
-                "unit": "factories",
+                "numberFormat": {
+                    "unit": "factories",
+                },
                 "icon": "AiOutlineNumber",
             },
             "factory_units_processed": {
                 "name": "Factory Units Processed",
                 "value": 0,
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
                 "icon": "FaBox",
             },
             "factory_processing_costs": {
                 "name": "Factory Processing Costs",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaMoneyBill",
             },
             "factory_fixed_costs": {
                 "name": "Factory Fixed Costs",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaMoneyBill",
             },
             "factory_processing_utilization": {
                 "name": "Factory Processing Utilization",
                 "value": 0,
                 "percentage": True,
-                "unit": f"%",
+                "numberFormat": {
+                    "unit": f"%",
+                    "unitSpace": False,
+                },
                 "icon": "MdDataUsage",
             },
             # Warehouses
@@ -400,32 +425,34 @@ serialized_data = {
             "num_open_warehouses": {
                 "name": "Open Warehouses",
                 "value": 0,
-                "unit": "warehouses",
+                "numberFormat": {
+                    "unit": "warehouses",
+                },
                 "icon": "AiOutlineNumber",
             },
             "warehouse_units_processed": {
                 "name": "Warehouse Units Processed",
                 "value": 0,
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
                 "icon": "FaBox",
             },
             "warehouse_processing_costs": {
                 "name": "Warehouse Processing Costs",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaMoneyBill",
             },
             "warehouse_fixed_costs": {
                 "name": "Warehouse Fixed Costs",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaMoneyBill",
             },
             "warehouse_processing_utilization": {
                 "name": "Warehouse Processing Utilization",
                 "value": 0,
                 "percentage": True,
-                "unit": f"%",
+                "numberFormat": percent_format,
                 "icon": "MdDataUsage",
             },
             # Demand Zones
@@ -436,26 +463,26 @@ serialized_data = {
             "total_demand": {
                 "name": "Total Units Demanded",
                 "value": 0,
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
                 "icon": "FaBox",
             },
             "total_demand_met": {
                 "name": "Total Demand Met",
                 "value": 0,
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
                 "icon": "FaBoxOpen",
             },
             "pct_total_demand_met": {
                 "name": "Percent Demand Met",
                 "value": 0,
                 "percentage": True,
-                "unit": "%",
+                "numberFormat": percent_format,
                 "icon": "FaPercent",
             },
             "revenue": {
                 "name": "Revenue",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaRegMoneyBillAlt",
             },
             # Totals
@@ -466,19 +493,19 @@ serialized_data = {
             "total_transportation_costs": {
                 "name": "Transportation Costs",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaMoneyBill",
             },
             "total_processing_costs": {
                 "name": "Processing Costs",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaMoneyBill",
             },
             "total_fixed_costs": {
                 "name": "Fixed Costs",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaMoneyBill",
             },
             "total_profit_header": {
@@ -488,21 +515,21 @@ serialized_data = {
             "total_costs": {
                 "name": "Total Costs",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaMoneyBill",
                 "map_kpi": True,
             },
             "total_revenue": {
                 "name": "Total Revenue",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaRegMoneyBillAlt",
                 "map_kpi": True,
             },
             "total_profit": {
                 "name": "Total Profit",
                 "value": 0,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "icon": "FaMoneyBillWave",
                 "map_kpi": True,
             },

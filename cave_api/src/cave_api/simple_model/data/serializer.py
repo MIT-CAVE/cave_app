@@ -4,9 +4,22 @@ import pkg_resources
 
 # For Pip based package resources see:
 # https://stackoverflow.com/questions/779495/access-data-in-package-subdirectory
-data_location = pkg_resources.resource_filename('cave_api', 'simple_model/data/')
+data_location = pkg_resources.resource_filename("cave_api", "simple_model/data/")
 product_unit = "unit"
 money_unit = "$"
+currency_format = {
+    "precision": 2,
+    "unit": f"{money_unit}",
+    "currency": True,
+}
+percent_format = {
+    "unit": "%",
+    "unitSpace": False,
+}
+product_format = {
+    "precision": 0,
+    "unit": f"{product_unit}s",
+}
 
 
 def cast_number(string):
@@ -89,7 +102,8 @@ class Node:
         options = {
             prop: self.get_dropdown_option_data(prop_dict)
             for prop, prop_dict in self.serialized_data["props"].items()
-            if "value" in prop_dict and (include_categorical or not isinstance(prop_dict.get("value"), bool) )
+            if "value" in prop_dict
+            and (include_categorical or not isinstance(prop_dict.get("value"), bool))
         }
         return dict(sorted(options.items()))
 
@@ -110,7 +124,9 @@ class Node:
             assert (
                 self.processing_cashflow_per_unit <= 0
             ), f"processing_cashflow_per_unit should be less than or equal to 0 for {self.type} nodes."
-            assert self.geoId == "", f"geoId must not be specified for {self.type} nodes."
+            assert (
+                self.geoId == ""
+            ), f"geoId must not be specified for {self.type} nodes."
             assert (
                 self.fixed_cashflow <= 0
             ), f"fixed_cashflow should be less than or equal to 0 for {self.type} type nodes"
@@ -200,7 +216,8 @@ class Arc:
         options = {
             prop: self.get_dropdown_option_data(prop_dict)
             for prop, prop_dict in self.serialized_data["props"].items()
-            if "value" in prop_dict and (include_categorical or not isinstance(prop_dict.get("value"), bool) )
+            if "value" in prop_dict
+            and (include_categorical or not isinstance(prop_dict.get("value"), bool))
         }
         return dict(sorted(options.items()))
 
@@ -248,16 +265,21 @@ class Arc:
 
 class Serializer:
     def __init__(self):
-        self.locations = {i["id"]: Location(**i) for i in read_csv(data_location + "locations.csv")}
+        self.locations = {
+            i["id"]: Location(**i) for i in read_csv(data_location + "locations.csv")
+        }
         self.nodes = {
             i["id"]: Node(**i, locations=self.locations)
             for i in read_csv(data_location + "nodes.csv")
         }
         self.arcs = {
-            i["id"]: Arc(**i, nodes=self.nodes) for i in read_csv(data_location + "arcs.csv")
+            i["id"]: Arc(**i, nodes=self.nodes)
+            for i in read_csv(data_location + "arcs.csv")
         }
         self.warehouses = {
-            key: value for key, value in self.nodes.items() if value.type in ["warehouse"]
+            key: value
+            for key, value in self.nodes.items()
+            if value.type in ["warehouse"]
         }
         self.factories = {
             key: value for key, value in self.nodes.items() if value.type in ["factory"]
@@ -279,7 +301,8 @@ class Serializer:
 
     def get_categories_location_data(self):
         return {
-            i.id: {"continent": i.continent, "region": i.region} for i in self.locations.values()
+            i.id: {"continent": i.continent, "region": i.region}
+            for i in self.locations.values()
         }
 
     def get_serialized_item_data(self, items_dict):
@@ -297,21 +320,23 @@ class Serializer:
                 "type": "num",
                 "enabled": True,
                 "help": f"The baseline processing capacity for this arc or node",
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
             },
             "cashflow_per_unit": {
                 "name": "Processing Cost Per Unit",
                 "type": "num",
                 "enabled": True,
                 "help": f"The processing cost per {product_unit} to flow through this arc or node",
-                "unit": f"{money_unit}/{product_unit}",
+                "numberFormat": {
+                    "unit": f"{money_unit}/{product_unit}",
+                },
             },
             "fixed_cashflow": {
                 "name": "Fixed Cost",
                 "type": "num",
                 "enabled": True,
                 "help": "The fixed cost to open this node",
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
             },
             "open": {
                 "name": "Open",
@@ -331,7 +356,7 @@ class Serializer:
                 "value": 0,
                 "enabled": False,
                 "help": "The total number of units processed for this arc or node after running this model",
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
             },
             "output_total_variable_cashflow": {
                 "name": "Total Processing Cost",
@@ -339,7 +364,7 @@ class Serializer:
                 "value": 0,
                 "enabled": False,
                 "help": "The total incurred processing cost for this arc or node after running this model",
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
             },
             "output_total_fixed_cashflow": {
                 "name": "Total Fixed Cost",
@@ -347,7 +372,7 @@ class Serializer:
                 "value": 0,
                 "enabled": False,
                 "help": "The incurred fixed cost for this arc or node after running this model",
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
             },
         }
 
@@ -430,7 +455,7 @@ class Serializer:
                 "help": f"The baseline demand for this demand zone",
                 "order": 1,
                 "column": 1,
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
             },
             "cashflow_per_unit": {
                 "name": f"Revenue Per {product_unit}",
@@ -439,7 +464,9 @@ class Serializer:
                 "help": f"The revenue generated per {product_unit} when satisfying demand in this demand zone",
                 "order": 2,
                 "column": 1,
-                "unit": f"{money_unit}/{product_unit}",
+                "numberFormat": {
+                    "unit": f"{money_unit}/{product_unit}",
+                },
             },
             "outputs": {
                 "name": "Output Totals",
@@ -456,7 +483,7 @@ class Serializer:
                 "help": "The total amount of demand filled for this demand zone after running this model",
                 "order": 1,
                 "column": 2,
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
             },
             "output_total_variable_cashflow": {
                 "name": "Total Revenue",
@@ -466,7 +493,7 @@ class Serializer:
                 "help": "The total revenue generated by this demand zone after running this model",
                 "order": 2,
                 "column": 2,
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
             },
         }
 
@@ -517,7 +544,9 @@ class Serializer:
 
     def get_dropdown_options(self, items_dict, include_categorical=False):
         try:
-            return list(items_dict.values())[0].get_dropdown_options(include_categorical)
+            return list(items_dict.values())[0].get_dropdown_options(
+                include_categorical
+            )
         except:
             return []
 
@@ -526,67 +555,67 @@ class Serializer:
             "cashflow": {
                 "name": "Cashflow",
                 "calculation": "total_cashflow",
-                "unit": f"{money_unit}",
+                "numberFormat": {"unit": f"{money_unit}", "currency": True},
                 "order": 0,
             },
             "demand": {
                 "name": "Demand",
                 "calculation": "demand",
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
                 "order": 1,
             },
             "demand_met": {
                 "name": "Demand Met",
                 "calculation": "demand_met",
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
                 "order": 2,
             },
             "pct_demand_met": {
                 "name": "Percent Demand Met",
                 "calculation": "demand_met / groupSum('demand') * 100",
-                "unit": "%",
+                "numberFormat": percent_format,
                 "order": 2,
             },
             "revenue": {
                 "name": "Revenue",
                 "calculation": "revenue",
-                "unit": f"{money_unit}",
+                "numberFormat": {"unit": f"{money_unit}", "currency": True},
                 "order": 3,
             },
             "units_processed": {
                 "name": "Units Processed",
                 "calculation": "units_processed",
-                "unit": f"{product_unit}s",
+                "numberFormat": product_format,
                 "order": 4,
             },
             "processing_cashflow": {
                 "name": "Processing Cost",
                 "calculation": "processing_cashflow",
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "order": 5,
             },
             "processing_capacity": {
                 "name": "Processing Capacity",
                 "calculation": "processing_capacity",
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "order": 5,
             },
             "processing_capacity_utilization": {
                 "name": "Processing Capacity Utilization",
                 "calculation": "units_processed / groupSum('processing_capacity') * 100",
-                "unit": "%",
+                "numberFormat": percent_format,
                 "order": 6,
             },
             "fixed_cashflow": {
                 "name": "Fixed Cost",
                 "calculation": "fixed_cashflow",
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "order": 10,
             },
             "total_costs": {
                 "name": "Total Cost",
                 "calculation": "total_costs",
-                "unit": f"{money_unit}",
+                "numberFormat": currency_format,
                 "order": 11,
             },
         }
