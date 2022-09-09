@@ -1,5 +1,5 @@
 # CAVE API Design
-This document describes the data structure scheme used by a CAVE application to render custom user interfaces that accommodate to the use cases and preferences of an API designer. For the purposes of this documentation, an API designer is any person using the CAVE API code to create a CAVE App user experience. 
+This document describes the data structure scheme used by a CAVE application to render custom user interfaces that accommodate to the use cases and preferences of an API designer. For the purposes of this documentation, an API designer is any person using the CAVE API code to create a CAVE App user experience.
 
 ## CAVE API Structure
 The CAVE API Structure is the core data structure required for user interface design of the CAVE App. Its primary purpose is to place, rearrange, style, and specify the behavior of most of the UI elements in a CAVE application.
@@ -69,17 +69,19 @@ Key | Default | Description
 <a name="colorBy">`colorBy`</a> | | The parameter selected to show its variation in terms of a color gradient. The color gradient is bounded by [`startGradientColor`](#startGradientColor) and [`endGradientColor`](#endGradientColor). Used in [`arcs`](#arcs), [`nodes`](#nodes) and [`geos`](#geos).
 <a name="colorByOptions">`colorByOptions`</a> | | A object with [parameters](#custom_data_key_) keys that are provided for the user to choose from a drop-down menu in the "**Map Legend**" and view their variation in terms of a color gradient. The associated value should be either an object with shape `{"min": 0, "max": 0, "startGradientColor": "rgb(0,0,0)", "endGradientColor": "rbg(0,0,0)"}` that contains the expected minimum and maximum values and color for the parameter Used in [`arcs`](#arcs), [`nodes`](#nodes) and [`geos`](#geos) or a dictionary with shape `{"custom_color_key_here":"rgb(233, 0, 0)"}` for discrete variables. Note: `min` and `max` are reserved keys and should not be provided as a `custom_color_key`.
 <a name="column">`column`</a>  | | A column position number (left to right) at which a UI element will be displayed when in a `grid` layout. This includes layouts for([`'options'` panes](#options-pane) or [KPIs](#kpis)) or a map modal ([`arcs`](#arcs), [`nodes`](#nodes), and [`geos`](#geos)). If omitted in a full-width view layout, the element will not be displayed in the UI.
-<a name="constraint">`constraint`</a> | `'float'` | Used along a `'num'` type, its value can be `'int'` or `'float'` to enforce integer or floating point values respectively, for a prop element in the UI.
+<a name="deprecat-constraint">`constraint`</a> (_Deprecated in `0.2.0`_) | `'float'` | Used along a `'num'` type, its value can be `'int'` or `'float'` to enforce integer or floating point values respectively, for a prop element in the UI.
 <a name="data">`data`</a> | | Dictionary object that contains data related to the use case.
 <a name="endSize">`endSize`</a> | | The end dimension in pixels for a stroke width of an arc or the size of an icon on a node, which matches the maximum value of a given parameter in a set of data points. Used in [`arcs`](#arcs) and [`nodes`](#nodes).
 <a name="icon">`icon`</a> | Required | The name of a [React Icon](https://react-icons.github.io/react-icons) that will be displayed in the UI. Currently icons are downloaded after the app has loaded (not in the build) and stored in a local cache. This reduces build size while allowing for all react-icons to be supported.
 <a name="layout">`layout`</a> | | A dictionary object that describes how [props](#the-props-key) or [KPIs](#kpis) are organized within their UI container components. See the [layout](#the-layout-key) section for a more detailed explanation of this group and some common use cases.
 <a name="name">`name`</a> | | The name of the element to be displayed as a label in the user interface. If omitted, the parent key of the **un`name`d** group is displayed.
+<a name="number-format">`numberFormat`</a> | | A dictionary object that contains properties to enable language-sensitive number formatting. See the [number formatting](#the-numberformat-key) section for a more detailed explanation of this group and different use cases.
 <a name="order">`order`</a> | | When specified in a key group, the `order` parameter sets the position in which the element is rendered in the UI, relative to its siblings. The `order` key takes integer values and the sibling elements will be sorted in ascending order. Since this parameter is optional, all **un`order`ed** items will be sorted alphabetically against each other and placed after the **`order`ed** items. Therefore, if you do not specify any `order` for a group of sibling keys, all of them will be sorted alphabetically according to their `name` values (or parent key when `name` is not specified).
 <a name="props">`props`</a> | Required | A dictionary object that contains the specification of the input controls in the UI. See the [props](#the-props-key) section for a more detailed explanation of this group and its different `prop` items.
 <a name="sizeBy">`sizeBy`</a> | | The parameter selected to show its variation in terms of stroke width ([`arcs`](#arcs)) or icon size ([`nodes`](#nodes)). The size range is bounded by [`startSize`](#startSize) and [`endSize`](#endSize).
 <a name="sizeByOptions">`sizeByOptions`</a> | | An object with [parameters](#custom_data_key_) keys that are provided for the user to choose from a drop-down menu in the "**Map Legend**" and view their variation in terms of stroke width ([`arcs`](#arcs)) or icon size ([`nodes`](#nodes)). The associated value should be an object with shape `{"min": 0, "max": 0}` that contains the expected minimum and maximum values for the parameter.
 <a name="startSize">`startSize`</a> | | The starting dimension in pixels for a stroke width of an arc or the size of an icon on a node, which matches the minimum value of a given parameter in a set of data points. Used in [`arcs`](#arcs) and [`nodes`](#nodes).
+<a name="deprecat-unit">`unit`</a> (_Deprecated in `0.2.0`_) | | A unit of measurement that is displayed next to the numeric value in an item ([`'num'` prop](#num), [KPI](#kpis), or [stat](#stats)). The use of this property is deprecated as of version `0.2.0` in favor of [`numberFormat.unit`](#unit). <!-- REVIEW: Update this note when dropping support for `unit` in 1.0.0 -->
 
 [^1]: This key matches a string that contains a [color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) or a dictionary object with color values per theme keys. The allowed theme keys in the current version are `'dark'` and `'light'`.
 
@@ -98,8 +100,10 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         'name': 'A name to be displayed in the UI',
         'type': 'num',
         'value': 1,
-        'constraint': 'int',
-        'unit': 'units',
+        'numberFormat': {              
+            'precision': 0,
+            'unit': 'units',
+        },
         'help': 'A help text for the numeric input',
     },
     'custom_prop_key_3': {
@@ -137,11 +141,10 @@ Key | Default | Description
 <a name="enabled">`custom_prop_key_*.enabled`</a> | `False` | Enable a `props` element in the UI. If `False`, users cannot interact with the element in the UI.
 <a name="help">`custom_prop_key_*.help`</a> | | A help message that is displayed in the UI, as a result of a mouseover or touch event on a `custom_prop_key_*` element.
 <a name="label">`custom_prop_key_*.label`</a> | | A label that is displayed in the UI next to the `custom_prop_key_*` element.
-<a name="maxValue">`custom_prop_key_*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
-<a name="minValue">`custom_prop_key_*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
+<a name="max-value">`custom_prop_key_*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
+<a name="min-value">`custom_prop_key_*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
 <a name="reinit">`custom_prop_key_*.reinit`</a> | `False` | If `True`, any change of the prop will trigger the server to send all session data to the `configure_session` method of the API. This is useful for settings that should change which panes or options are available to the end user in the app.
 <a name="prop-type">`custom_prop_key_*.type`</a> | Required | As a direct child of `custom_prop_key_*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, or `'selector'`.
-<a name="prop-unit">`custom_prop_key_*.unit`</a> | | A unit that is displayed next to the numeric value in a `props` element.
 <a name="value">`custom_prop_key_*.value`</a> | Required | The actual value for a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'`), number (`'num'`), string (`'text'`), or an array of objects (`'selector'`).
 <a name="custom_option_">`custom_prop_key_*.value.custom_option_*`</a> | | Used along a `'selector'` prop, it takes a string value to be displayed as an option on the UI element.
 <a name="variant">`custom_prop_key_*.variant`</a> | | Used to modify the UI for a given prop `type`. For example, it can convert a numeric input to a slider input or a selector to a drop-down menu. The `value`s should remain the same structure, but the presentation to the end user changes.
@@ -155,7 +158,7 @@ Allows users to place a header for an individual section, containing a title (vi
 Allows users to enter text in a UI field. Here, `value` takes a string.
 
 ##### `'num'`
-Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is validated against [`constraint`](#constraint).
+Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is validated against [`constraint`](#deprecat-constraint).
 ###### Variants:
 >`'slider'`: Places a range of values along a bar, from which users may select a single value.<br>
 
@@ -180,7 +183,7 @@ Very often, the `props` elements specified in `arcs`, `nodes`, and `geos` are th
 
 #### The `layout` key
 
-The `layout` key allows for use cases where you want to arrange components that are related or simply group them under a well-structured layout. The supported components for use with a layout structure are [props](#the-props-key) and [KPIs](#kpis). In addition to properly aligning a group of props or KPIs, a `style` prop is provided to act as a escape hatch for specifying CSS rules. Through these CSS rules, it is possible to modify the appereance of your prop components or KPIs and allows a way to make them more distinctive or visually appealing.
+The `layout` key allows for use cases where you want to arrange components that are related or simply group them under a well-structured layout. The supported components for use with a layout structure are [props](#the-props-key) and [KPIs](#kpis). In addition to properly aligning a group of props or KPIs, a `style` prop is provided to act as a escape hatch for specifying CSS rules. Through these CSS rules, it is possible to modify the appearance of your prop components or KPIs and allows a way to make them more distinctive or visually appealing.
 
 The `layout` structure is the same for `props` and `kpis` and looks as follows:
 ```py
@@ -246,9 +249,9 @@ Key | Default | Description
 <a name="layout-column">`*.style`</a> | `{}` | A dictionary object containing [CSS styles](https://developer.mozilla.org/en-US/docs/Web/CSS) to apply to a layout element of type `'item'`.
 <a name="layout-type">`*.type`</a> | Required | The type of layout. It can be `'grid'` or `'item'`.
 <a name="layout-width">`*.width`</a> | `'auto'` | Sets the width of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width) and is a shortcut for the definition `style: { width: ... }`. Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
-<a name="layout-column">`layout.data.*.column`</a> | | An integer for the grid column position starting from left to right. If omitted, the layout element will fill the first empty grid element found within the specified [`row`](#layout-row), starting from left to right. If the [`row`](#layout-row) property is also omitted, the search sequence for empty slots can continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. <!-- TODO (0.2.0): See [example for layout elements with unspecified position](#). -->
+<a name="layout-column">`layout.data.*.column`</a> | | An integer for the grid column position starting from left to right. If omitted, the layout element will fill the first empty grid element found within the specified [`row`](#layout-row), starting from left to right. If the [`row`](#layout-row) property is also omitted, the search sequence for empty slots can continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. <!-- TODO (0.3.0): See [example for layout elements with unspecified position](#). -->
 <a name="layout-container">`layout.data.*.container`</a> | `'vertical'`<br><br>or<br><br> `'none'`<br>(only for the [`head`](#head) prop) | A UI wrapper that modifies the appearance of an item by adding a title based on its [`name`](#name), a [`help`](#help) tooltip, and adjusting the position and size of its input controls. Available options are `'vertical'`, `'horizontal'`, `'titled'` and `'none'`. By default, the [`'head'`](#head) prop is set to have a `'none'` container.<br><br>This feature is currently only supported for [`props`](#the-props-key).
-<a name="layout-row">`layout.data.*.row`</a> | | An integer for the grid row position starting from top to bottom. If omitted, the layout element will fill the first empty grid element found within the specified [`column`](#layout-column), starting from top to bottom. If the [`column`](#layout-column) property is also omitted, the search sequence for empty slots will start from left to right and continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. <!-- TODO (0.2.0): See [example for layout elements with unspecified position](#). -->
+<a name="layout-row">`layout.data.*.row`</a> | | An integer for the grid row position starting from top to bottom. If omitted, the layout element will fill the first empty grid element found within the specified [`column`](#layout-column), starting from top to bottom. If the [`column`](#layout-column) property is also omitted, the search sequence for empty slots will start from left to right and continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. <!-- TODO (0.3.0): See [example for layout elements with unspecified position](#). -->
 
 #### Examples
 To better illustrate various use cases for a `'grid'` layout, we will rely on the same `props` structure, shown below:
@@ -696,7 +699,7 @@ The _auto-grid_ rendering is also triggered when the `layout` property is empty 
 ```
 </details>
 
-<!-- TODO (0.2.0):
+<!-- TODO (0.3.0):
 ##### By different values of [`column`](#layout-column) and [`row`](#layout-row)
 
 <details>
@@ -843,6 +846,35 @@ The _auto-grid_ rendering is also triggered when the `layout` property is empty 
 ##### UI / UX tips
 -->
 
+#### The `numberFormat` key
+The `numberFormat` key is used to define a custom format for numeric values based on attributes such as: the specific [locale](https://en.wikipedia.org/wiki/Locale_(computer_software)), the nature of the accompanying unit (if present), the number of decimal places, and the handling of trailing zeros. Additionally, it allows you to configure auto-formatting behavior when in a [numeric input field](#num).
+
+A `numberFormat` specification can be added to the top level `settings` to affect the displaying format of all the numeric data in the CAVE app. Also, it is possible to override its attributes by adding more `numberFormat` definitions at specific places within the CAVE API structure. Allowed locations for `numberFormat` are the [`settings.data`](#settings) group, within a [`'num'` prop](#num), within a [stat](#stats) element or within a [KPI](#kpis) element.
+
+The `numberFormat` structure with all its keys looks as follows:
+```py
+'numberFormat': {
+    'precision': 2,
+    'unit': '%',
+    'unitSpace': False,
+    'currency': False,
+    'trailingZeros': True,
+    'nilValue': 'N/A',
+    'locale': 'en-US',
+}
+```
+
+##### Nested inside the `numberFormat` group
+Key | Default | Description
+--- | ------- | -----------
+<a name="currency">`currency`</a> | `False` | If `True`, the specified unit is treated as a currency and placed before the number. Additionally, if the [`unitSpace`](#unit-space) key is not specified, there will be no space between the unit and the number when `currency` is `True`, or a space will be placed otherwise.
+<a name="precision">`precision`</a> | `2` | The number of fraction digits to use. Possible values are `0` to `20`. By setting the `precision` to `0`, you can attach an integer constraint on the element. This is the recommended approach for enabling an integer-only [`'num'` prop](#num), as opposed to using the [`constraint` key](#deprecat-constraint) which is deprecated in version `0.2.0`.<!-- REVIEW: Update this note when dropping support for `constraint` in 1.0.0 -->
+<a name="unit">`unit`</a> | | A unit of measurement displayed according to the unit formatting. (See [`unitSpace`](#unit-space) and [`currency`](#currency).) When used along a [`'num'` prop](#num), the unit is rendered as an [adornment](https://mui.com/material-ui/react-text-field/#input-adornments) at the beginning or end of the input field.
+<a name="unit-space">`unitSpace`</a> | | If `True`, a space will be placed between the unit and the number. If this key is not specified, the unit space will be determined by [`currency`](#currency).
+<a name="trailing-zeros">`trailingZeros`</a> | `True` | If `True`, trailing zeros are preserved based on the [`precision`](#precision) value.
+<a name="locale">`locale`</a> | `'en-US'` | A [locale identifier](https://en.wikipedia.org/wiki/IETF_language_tag).
+<a name="nil-value">`nilValue`</a> | `'N/A'` | A default output for undefined or invalid values.
+
 #### `timeObjects`
 `timeObjects` can be used to replace numerical values displayed on the map or used as prop [`values`](#value) in [`geos`](#geos), [`arcs`](#arcs), or [`nodes`](#nodes). These objects contain a list of values that correspond to a specfic timestep. The user can step through these in order or select a specific timestep from a list. In order to use `timeObjects` a [`timeLength`](#timeLength) must be specified equal to the length of all `value` lists given. Optionally [`timeUnits`](#timeUnits) can be given to display the real world representation of each timestep.
 
@@ -889,6 +921,12 @@ Below is the `settings` group with its sub-keys matched by typical values:
             },
         },
         "IconUrl": "https://react-icons.mitcave.com/0.0.1",
+        "numberFormat": {
+            "precision": 4,
+            "trailingZeros": True,
+            "whenTyping": False,
+            "unitSpace": True,
+        },
         "debug": True,
     },
 }
@@ -897,6 +935,7 @@ Below is the `settings` group with its sub-keys matched by typical values:
 ##### Common keys
 - [`allow_modification`](#allow_modification)
 - [`data`](#data)
+- [`numberFormat`](#number-format)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
 
@@ -1170,8 +1209,10 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
             'name': 'A name to be displayed in the UI',
             'type': 'num',
             'value': 1,
-            'constraint': 'int',
-            'unit': 'units',
+            'numberFormat': {              
+                'precision': 0,
+                'unit': 'units',
+            },
             'help': 'A help text for the numeric input',
         },
         'custom_prop_key_3': {
@@ -1238,7 +1279,9 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
             'help': 'A help text for the numeric input',
             'label': 'x',
             'minValue': 0,
-            'constraint': 'int',
+            'numberFormat': {              
+                'precision': 0,
+            },
             'selectableCategories': ['category_1', 'category_2'],
         },
         # As many props as needed
@@ -1270,15 +1313,14 @@ The CAVE app also includes two built in pane variants: `filter`, which provides 
 ##### Common keys
 - [`allow_modification`](#allow_modification)
 - [`color`](#color)
-- [`constraint`](#constraint)
 - [`data`](#data)
 - [`enabled`](#enabled)
 - [`help`](#help)
 - [`icon`](#icon)
 - [`label`](#label)
 - [`layout`](#layout)
-- [`maxValue`](#maxValue)
-- [`minValue`](#minValue)
+- [`maxValue`](#max-value)
+- [`minValue`](#min-value)
 - [`name`](#name)
 - [`order`](#order)
 - [`prop > type`](#prop-type)
@@ -1286,7 +1328,6 @@ The CAVE app also includes two built in pane variants: `filter`, which provides 
 - [`reinit`](#reinit)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
-- [`prop > unit`](#prop-unit)
 - [`value`](#value)
 - [`variant`](#variant)
 
@@ -1555,7 +1596,9 @@ Key | Default | Description
                     'help': 'Percentage multiplier times the base supply (100%=Given Supply)',
                     'label': '%',
                     'minValue': 0,
-                    'constraint': 'int',
+                    'numberFormat': {              
+                        'precision': 0,
+                    },
                     'selectableCategories': ['Location', 'Product'],
                 },
             },
@@ -1722,8 +1765,10 @@ The structure of an `arcs` group looks as follows:
                     'type': 'num',
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'constraint': 'int',
-                    'unit': 'units',
+                    'numberFormat': {              
+                        'precision': 0,
+                        'unit': 'units',
+                    },
                 },
                 # As many default props as needed
             },
@@ -1763,7 +1808,9 @@ The structure of an `arcs` group looks as follows:
                     'value': 40,
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'unit': 'units',
+                    'numberFormat': {              
+                        'unit': 'units',
+                    },
                 },
             },
         },
@@ -1800,7 +1847,9 @@ The structure of an `arcs` group looks as follows:
                     'value': 30,
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'unit': 'units',
+                    'numberFormat': {              
+                        'unit': 'units',
+                    },
                 },
             },
         },
@@ -1816,13 +1865,13 @@ The structure of an `arcs` group looks as follows:
 - [`colorBy`](#colorBy)
 - [`colorByOptions`](#colorByOptions)
 - [`column`](#column)
-- [`constraint`](#constraint)
 - [`data`](#data)
 - [`enabled`](#enabled)
 - [`endGradientColor`](#endGradientColor)
 - [`endSize`](#endSize)
 - [`help`](#help)
 - [`name`](#name)
+- [`numberFormat`](#number-format)
 - [`order`](#order)
 - [`prop > type`](#prop-type)
 - [`props`](#props)
@@ -1832,7 +1881,6 @@ The structure of an `arcs` group looks as follows:
 - [`sizeByOptions`](#sizeByOptions)
 - [`startSize`](#startSize)
 - [`startGradientColor`](#startGradientColor)
-- [`prop > unit`](#prop-unit)
 - [`value`](#value)
 - [`variant`](#variant)
 
@@ -2233,8 +2281,10 @@ The structure of a `nodes` group looks as follows:
                     'type': 'num',
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'constraint': 'int',
-                    'unit': 'units',
+                    'numberFormat': {              
+                        'precision': 0,
+                        'unit': 'units',
+                    },
                 },
                 # As many default props as needed
             },
@@ -2271,7 +2321,9 @@ The structure of a `nodes` group looks as follows:
                     'value': 40,
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'unit': 'units',
+                    'numberFormat': {              
+                        'unit': 'units',
+                    },
                 },
                 'custom_prop_key_12': {
                     'type': 'toggle',
@@ -2294,7 +2346,6 @@ The structure of a `nodes` group looks as follows:
 - [`colorBy`](#colorBy)
 - [`colorByOptions`](#colorByOptions)
 - [`column`](#column)
-- [`constraint`](#constraint)
 - [`data`](#data)
 - [`enabled`](#enabled)
 - [`endGradientColor`](#endGradientColor)
@@ -2302,6 +2353,7 @@ The structure of a `nodes` group looks as follows:
 - [`help`](#help)
 - [`icon`](#icon)
 - [`name`](#name)
+- [`numberFormat`](#number-format)
 - [`order`](#order)
 - [`prop > type`](#prop-type)
 - [`props`](#props)
@@ -2311,7 +2363,6 @@ The structure of a `nodes` group looks as follows:
 - [`sizeByOptions`](#sizeByOptions)
 - [`startSize`](#startSize)
 - [`startGradientColor`](#startGradientColor)
-- [`prop > unit`](#prop-unit)
 - [`value`](#value)
 - [`variant`](#variant)
 
@@ -2773,7 +2824,9 @@ Let's look inside the structure of `geos`:
                 'custom_prop_key_1': {
                     'type': 'num',
                     'help': 'A help text for this numeric input',
-                    'unit': 'Units',
+                    'numberFormat': {              
+                        'unit': 'units',
+                    },
                     'enabled': True,
                 },
                 'custom_prop_key_2': {...},
@@ -2816,20 +2869,19 @@ Let's look inside the structure of `geos`:
 - [`colorBy`](#colorBy)
 - [`colorByOptions`](#colorByOptions)
 - [`column`](#column)
-- [`constraint`](#constraint)
 - [`data`](#data)
 - [`enabled`](#enabled)
 - [`endGradientColor`](#endGradientColor)
 - [`help`](#help)
 - [`icon`](#icon)
 - [`name`](#name)
+- [`numberFormat`](#number-format)
 - [`order`](#order)
 - [`prop > type`](#prop-type)
 - [`props`](#props)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
 - [`startGradientColor`](#startGradientColor)
-- [`prop > unit`](#prop-unit)
 - [`value`](#value)
 - [`variant`](#variant)
 
@@ -2889,7 +2941,9 @@ Key | Default | Description
                     'type': 'num',
                     'enabled': True,
                     'help': 'The Demand of this Geography',
-                    'unit': 'Units',
+                    'numberFormat': {              
+                        'unit': 'units',
+                    },
                 },
             },
             'icon': 'FaHexagon',
@@ -2928,7 +2982,9 @@ Key | Default | Description
                     'type': 'num',
                     'enabled': True,
                     'help': 'The Demand of this Geography',
-                    'unit': 'Units',
+                    'numberFormat': {              
+                        'unit': 'units',
+                    },
                 },
             },
             'icon': 'FaHexagon',
@@ -3069,7 +3125,9 @@ Let's look inside the structure of `stats`:
         'custom_stat_key_1': {
             'name': 'A name to be displayed in the UI',
             'calculation': 'custom_stat_key_1 / custom_stat_key_2',
-            'unit': 'Units',
+            'numberFormat': {              
+                'unit': 'units',
+            },
             'order': 1,
         },
         'custom_stat_key_2': {...},
@@ -3105,6 +3163,7 @@ Let's look inside the structure of `stats`:
 - [`category`](#category)
 - [`data`](#data)
 - [`name`](#name)
+- [`numberFormat`](#number-format)
 - [`order`](#order)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
@@ -3119,7 +3178,6 @@ Key | Default | Description
 <a name="custom_stat_key_">`types.custom_stat_key_*`</a> | Required | A key used to identify a parameter in a `calculation` expression and be referenced by the `values` group.
 `types` | Required | The `types` key allows you to define the appearance and logic of the `custom_stat_key_*` parameters.
 `types.custom_stat_key_*.calculation` | Required | Defines a math expression that allows the calculation of a `custom_stat_key_*` parameter that depends on the value of others. The expression is used to dynamically estimate the value of a parameter when the data containing its independent stats used in the calculation, has changed, e.g. after applying a filter. When a custom stat is independent, the math expression must match its own `custom_stat_key_*`. The CAVE App comes with a software package that provides built-in support for common math functions and operators. For a list of the available operators and examples of math expressions, see the [`expr-eval` documentation](https://github.com/silentmatt/expr-eval#documentation) and [`groupSum`](#groupsum) below.
-`types.custom_stat_key_*.unit` | | A unit displayed next to the stat calculation result.
 
 ##### `groupSum`
 `groupSum` is a special function provided by the CAVE app that takes an independent stat as input and outputs the sum of that stat across the level (or sub-level if present) specified by the user or API for that [dashboard](#dashboards) chart. Using `groupSum` is different than other [`expr-eval`](https://github.com/silentmatt/expr-eval) functions as the variable must be passed as a string rather than a literal, e.g. **`groupSum("custom_stat")`** (not `groupSum(custom_stat)`). When using `groupSum` special consideration should be given to ensure the the dashboard grouping (sum, minimum, maximum, or average) makes it clear to users what the stat represents, as while `groupSum` sums across the level the stat calculation is still done to the individual stats which are then grouped.
@@ -3136,19 +3194,26 @@ Key | Default | Description
         'demand_met': {
             'name': 'Demand Met',
             'calculation': 'demand_met',
-            'unit': 'units',
+            'numberFormat': {              
+                'unit': 'units',
+            },
             'order': 1,
         },
         'demand_tot': {
             'name': 'Demand Total',
             'calculation': 'demand_tot',
-            'unit': 'units',
+            'numberFormat': {              
+                'unit': 'units',
+            },
             'order': 2,
         },
         'demand_pct': {
             'name': 'Demand Percentage',
             'calculation': 'demand_met / groupSum("demand_tot")',
-            'unit': '%',
+            'numberFormat': {              
+                'unit': '%',
+                'unitSpace': False,
+            },
             'order': 3,
         },
     },
@@ -3207,7 +3272,9 @@ Let's look inside the structure of `kpis`:
     'data': {
         'custom_kpi_1': {
             'name': 'A name to be displayed in the UI',
-            'unit': 'Units',
+            'numberFormat': {              
+                'unit': 'units',
+            },
             'icon': 'FaBox',
             'value': 100,
         },
@@ -3224,6 +3291,7 @@ Let's look inside the structure of `kpis`:
 - [`icon`](#icon)
 - [`layout`](#layout)
 - [`name`](#name)
+- [`numberFormat`](#number-format)
 - [`order`](#order)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
@@ -3232,7 +3300,6 @@ Let's look inside the structure of `kpis`:
 Key | Default | Description
 --- | ------- | -----------
 `custom_kpi_*` | Required | A custom key wrapper for the KPI data.
-`custom_kpi_*.unit` | | A unit displayed next to the KPI value.
 `custom_kpi_*.value` | | The actual value of the KPI. **If not specified, this item will be a KPI header**.
 `custom_kpi_*.map_kpi` | False | The `map_kpi` flag allows designers to specify up to six parameters that are displayed on a permanent grid in the "**Map**" view. The grid layout (rows *x* columns) changes with the number of parameters present in the data, scaling up to 2 rows and 3 columns.
 
@@ -3247,22 +3314,28 @@ Key | Default | Description
     'data': {
         'demand': {
             'name': 'Global Demand',
-            'unit': 'Units',
-            'icon': 'FaBox',
             'value': 100,
+            'numberFormat': {              
+                'unit': 'units',
+            },
+            'icon': 'FaBox',
         },
         'global_demand_met': {
             'name': 'Global Demand Met',
-            'unit': 'units',
             'value': 60,
+            'numberFormat': {              
+                'unit': 'units',
+            },
             'icon': 'BsInboxes',
             'order': 1,
             'map_kpi': True,
         },
         'customer_hapiness': {
             'name': 'Customer Happiness',
-            'unit': 'smiles',
             'value': 16,
+            'numberFormat': {              
+                'unit': 'smiles',
+            },
             'icon': 'BsFillEmojiSmileFill',
             'order': 2,
             'map_kpi': True,
