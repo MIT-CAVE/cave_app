@@ -100,7 +100,7 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         'name': 'A name to be displayed in the UI',
         'type': 'num',
         'value': 1,
-        'numberFormat': {              
+        'numberFormat': {
             'precision': 0,
             'unit': 'units',
         },
@@ -871,7 +871,7 @@ Key | Default | Description
 <a name="precision">`precision`</a> | `2` | The number of fraction digits to use. Possible values are `0` to `20`. By setting the `precision` to `0`, you can attach an integer constraint on the element. This is the recommended approach for enabling an integer-only [`'num'` prop](#num), as opposed to using the [`constraint` key](#deprecat-constraint) which is deprecated in version `0.2.0`.<!-- REVIEW: Update this note when dropping support for `constraint` in 1.0.0 -->
 <a name="unit">`unit`</a> | | A unit of measurement displayed according to the unit formatting. (See [`unitSpace`](#unit-space) and [`currency`](#currency).) When used along a [`'num'` prop](#num), the unit is rendered as an [adornment](https://mui.com/material-ui/react-text-field/#input-adornments) at the beginning or end of the input field.
 <a name="unit-space">`unitSpace`</a> | | If `True`, a space will be placed between the unit and the number. If this key is not specified, the unit space will be determined by [`currency`](#currency).
-<a name="trailing-zeros">`trailingZeros`</a> | `True` | If `True`, trailing zeros are preserved based on the [`precision`](#precision) value.
+<a name="trailing-zeros">`trailingZeros`</a> | `True` | If `True`, trailing zeros are displayed based on the [`precision`](#precision) value.
 <a name="locale">`locale`</a> | `'en-US'` | A [locale identifier](https://en.wikipedia.org/wiki/IETF_language_tag).
 <a name="nil-value">`nilValue`</a> | `'N/A'` | A default output for undefined or invalid values.
 
@@ -1209,7 +1209,7 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
             'name': 'A name to be displayed in the UI',
             'type': 'num',
             'value': 1,
-            'numberFormat': {              
+            'numberFormat': {
                 'precision': 0,
                 'unit': 'units',
             },
@@ -1279,7 +1279,7 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
             'help': 'A help text for the numeric input',
             'label': 'x',
             'minValue': 0,
-            'numberFormat': {              
+            'numberFormat': {
                 'precision': 0,
             },
             'selectableCategories': ['category_1', 'category_2'],
@@ -1358,6 +1358,7 @@ Key | Default | Description
 `custom_context_pane_key_*.props.custom_prop_key_*`&swarhk;<br>`.selectableCategories` | Required | Used in a [`context`](#context-pane) pane, it takes a list of [`category_*`](#category_) keys (**only**). These are the used to determine which categories this context can be applied to.
 `custom_pane_key_*.teamSync` | `False` | If `True`, creates a sync button on the top of the pane. When that sync button is clicked, everything in that pane is synced across all sessions for that team (or user if individual session) such that all other sessions for that team have the exact same pane as it exists in the current session.
 <a name="pane-variant">`custom_pane_key_*.variant`</a> | `'options'` | As a direct child of `custom_pane_key_*`, the `variant` key configures a pane to be an `'options'` or `'context'` pane. Each variant comes along with additional keys that add specific functionality to the pane.
+`custom_pane_key_*.width` | `'450px'` | Sets the width of the pane. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width). If set to `'auto'`, the width of the pane will adjust to fit its content. If the specified width exceeds the width of the viewport, the pane will match the width of the viewport.
 `paneState.open` | | Takes a `custom_pane_key_*` value to cause the referenced pane to open when the app loads.
 `filtered` | `{}` | Takes key value pairs where the keys are category keys, and the values are lists of lowest level items in that category to be included (not filtered out). If a category is not included in this dictionary then all items in that category are displayed.
 
@@ -1596,7 +1597,7 @@ Key | Default | Description
                     'help': 'Percentage multiplier times the base supply (100%=Given Supply)',
                     'label': '%',
                     'minValue': 0,
-                    'numberFormat': {              
+                    'numberFormat': {
                         'precision': 0,
                     },
                     'selectableCategories': ['Location', 'Product'],
@@ -1765,7 +1766,7 @@ The structure of an `arcs` group looks as follows:
                     'type': 'num',
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'numberFormat': {              
+                    'numberFormat': {
                         'precision': 0,
                         'unit': 'units',
                     },
@@ -1808,7 +1809,7 @@ The structure of an `arcs` group looks as follows:
                     'value': 40,
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'numberFormat': {              
+                    'numberFormat': {
                         'unit': 'units',
                     },
                 },
@@ -1847,7 +1848,7 @@ The structure of an `arcs` group looks as follows:
                     'value': 30,
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'numberFormat': {              
+                    'numberFormat': {
                         'unit': 'units',
                     },
                 },
@@ -2281,7 +2282,7 @@ The structure of a `nodes` group looks as follows:
                     'type': 'num',
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'numberFormat': {              
+                    'numberFormat': {
                         'precision': 0,
                         'unit': 'units',
                     },
@@ -2321,7 +2322,7 @@ The structure of a `nodes` group looks as follows:
                     'value': 40,
                     'enabled': False,
                     'help': 'A help text for the numeric input',
-                    'numberFormat': {              
+                    'numberFormat': {
                         'unit': 'units',
                     },
                 },
@@ -2824,7 +2825,7 @@ Let's look inside the structure of `geos`:
                 'custom_prop_key_1': {
                     'type': 'num',
                     'help': 'A help text for this numeric input',
-                    'numberFormat': {              
+                    'numberFormat': {
                         'unit': 'units',
                     },
                     'enabled': True,
@@ -2941,7 +2942,7 @@ Key | Default | Description
                     'type': 'num',
                     'enabled': True,
                     'help': 'The Demand of this Geography',
-                    'numberFormat': {              
+                    'numberFormat': {
                         'unit': 'units',
                     },
                 },
@@ -2982,7 +2983,7 @@ Key | Default | Description
                     'type': 'num',
                     'enabled': True,
                     'help': 'The Demand of this Geography',
-                    'numberFormat': {              
+                    'numberFormat': {
                         'unit': 'units',
                     },
                 },
@@ -3125,7 +3126,7 @@ Let's look inside the structure of `stats`:
         'custom_stat_key_1': {
             'name': 'A name to be displayed in the UI',
             'calculation': 'custom_stat_key_1 / custom_stat_key_2',
-            'numberFormat': {              
+            'numberFormat': {
                 'unit': 'units',
             },
             'order': 1,
@@ -3194,7 +3195,7 @@ Key | Default | Description
         'demand_met': {
             'name': 'Demand Met',
             'calculation': 'demand_met',
-            'numberFormat': {              
+            'numberFormat': {
                 'unit': 'units',
             },
             'order': 1,
@@ -3202,7 +3203,7 @@ Key | Default | Description
         'demand_tot': {
             'name': 'Demand Total',
             'calculation': 'demand_tot',
-            'numberFormat': {              
+            'numberFormat': {
                 'unit': 'units',
             },
             'order': 2,
@@ -3210,7 +3211,7 @@ Key | Default | Description
         'demand_pct': {
             'name': 'Demand Percentage',
             'calculation': 'demand_met / groupSum("demand_tot")',
-            'numberFormat': {              
+            'numberFormat': {
                 'unit': '%',
                 'unitSpace': False,
             },
@@ -3272,7 +3273,7 @@ Let's look inside the structure of `kpis`:
     'data': {
         'custom_kpi_1': {
             'name': 'A name to be displayed in the UI',
-            'numberFormat': {              
+            'numberFormat': {
                 'unit': 'units',
             },
             'icon': 'FaBox',
@@ -3315,7 +3316,7 @@ Key | Default | Description
         'demand': {
             'name': 'Global Demand',
             'value': 100,
-            'numberFormat': {              
+            'numberFormat': {
                 'unit': 'units',
             },
             'icon': 'FaBox',
@@ -3323,7 +3324,7 @@ Key | Default | Description
         'global_demand_met': {
             'name': 'Global Demand Met',
             'value': 60,
-            'numberFormat': {              
+            'numberFormat': {
                 'unit': 'units',
             },
             'icon': 'BsInboxes',
@@ -3333,7 +3334,7 @@ Key | Default | Description
         'customer_hapiness': {
             'name': 'Customer Happiness',
             'value': 16,
-            'numberFormat': {              
+            'numberFormat': {
                 'unit': 'smiles',
             },
             'icon': 'BsFillEmojiSmileFill',
