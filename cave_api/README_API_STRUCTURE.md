@@ -863,6 +863,7 @@ The `numberFormat` structure with all its keys looks as follows:
     'trailingZeros': True,
     'nilValue': 'N/A',
     'locale': 'en-US',
+    'whenTyping': False,
 }
 ```
 
@@ -876,6 +877,7 @@ Key | Default | Description
 <a name="trailing-zeros">`trailingZeros`</a> | `True` | If `True`, trailing zeros are displayed based on the [`precision`](#precision) value.
 <a name="locale">`locale`</a> | `'en-US'` | A [locale identifier](https://en.wikipedia.org/wiki/IETF_language_tag).
 <a name="nil-value">`nilValue`</a> | `'N/A'` | A default output for undefined or invalid values.
+<a name="when-typing">`whenTyping`</a> | `False` | If `True`, enable live number formatting, that is, when the user is typing a number in a [`'num'` prop](#num). Otherwise, the number will only be formatted in the field when not in focus.<br><br>This feature is only supported for [`'num'` props](#num).
 
 #### `timeObjects`
 `timeObjects` can be used to replace numerical values displayed on the map or used as prop [`values`](#value) in [`geos`](#geos), [`arcs`](#arcs), or [`nodes`](#nodes). These objects contain a list of values that correspond to a specfic timestep. The user can step through these in order or select a specific timestep from a list. In order to use `timeObjects` a [`timeLength`](#timeLength) must be specified equal to the length of all `value` lists given. Optionally [`timeUnits`](#timeUnits) can be given to display the real world representation of each timestep.
