@@ -1341,7 +1341,7 @@ Key | Default | Description
 `custom_obj_key_*` | Required | A custom key wrapper for the custom pane.
 `custom_obj_key_*.type` | Required | The type of object shown - takes one of these values: `map`, `stat`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
 `custom_obj_key_*.bar` | Required | The section of the appbar to display the object in. Accepts either `upper` or `lower`. The use of both bar sections is not required, and any object can be shown in either bar.
-`custom_map_key_*.static` | False | If true, the viewport for this map cannot be manually modified, only switched between default and optional viewports given in the `map` top level key
+`custom_map_key_*.static` | `False` | If `True`, the viewport of this map cannot be changed manually, but can only be switched between the default and optional viewports given in the `map` top-level key.
 `custom_button_key_*.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 `custom_button_key_*.dashboardLayout` | `[]` | A list of chart items (max of 4 items currently supported) that belong to the current dashboard. Each chart item contains the following keys: `chart`, `grouping`, `statistic`, `category`, `level`, `type`, and `lockedLayout`.
 `custom_button_key_*.dashboardLayout.*.*.category` | | The category selected from the "**Group By**" drop-down menu of a chart in a dashboard view. This key is different from the common key [`category`](#category).
@@ -3104,20 +3104,20 @@ Below is the `map` group with its sub-keys matched by typical or placeholder val
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-<a name="enabledTypes">`enabledTypes`</a> | {} | An object with keys `arc`, `node`, and `geo`. Each value should be an object with each key in the object representing an type that should be enabled by default and all values set to true.
+<a name="enabledTypes">`enabledTypes`</a> | `{}` | An object with keys `arc`, `node`, and `geo`. Each value should be an object with each key in the object representing a type that should be enabled by default and all values set to `True`.
 <a name="defaultViewport">`defaultViewport`</a> | | A dictionary object containing geo properties that set the map's default field of view. Also used by the "home" button in the app.
 `defaultViewport.bearing` | `0` | The initial bearing (rotation) of the map, measured in degrees counter-clockwise from north.
 `defaultViewport.pitch` | `0` | The initial pitch (*tilt*) of the viewport in the "**Map**" view, measured in degrees away from the plane of the screen (0&deg; - 85&deg;). A pitch of 0&deg; results in a two-dimensional map, as if your line of sight forms a perpendicular angle with the earth's surface, while a greater value like 60&deg; looks ahead towards the horizon.
-`defaultViewport.latitude` | 42.36157 | The center latitude of the viewport in the "**Map**" view. It takes a float value.
-`defaultViewport.longitude` | -71.08463 | The center longitude of the viewport in the "**Map**" view. It takes a float value.
+`defaultViewport.latitude` | `42.36157` | The center latitude of the viewport in the "**Map**" view. It takes a float value.
+`defaultViewport.longitude` | `-71.08463` | The center longitude of the viewport in the "**Map**" view. It takes a float value.
 `defaultViewport.maxZoom` | `22` | The maximum zoom level of the viewport in the "**Map**" view. It takes an integer value.
 `defaultViewport.minZoom` | `1.5` | The minimum zoom level of the viewport in the "**Map**" view. It takes an integer value.
 `defaultViewport.zoom` | `13` | The initial zoom level of the viewport in the "**Map**" view. It takes an integer value. Learn more about the zoom levels [here](#https://docs.mapbox.com/help/glossary/zoom-level/).
 <a name="optionalViewports">`optionalViewports`</a> | | A dictionary of optional viewports that can be jumped to by users. Each optional viewport should contain the same keys as `defaultViewport` as well as `name` and `icon` keys.
-<a name="legendGroups">`legendGroups`</a> | [] | A list of all groupings to be shown in the map legend. Groups are displayed in list order with each group having an internal order of nodes, arcs, then geos. Types not included in any legendGroup cannot be toggled.
-`legendGroups[i].nodeTypes` | | A list of all node types to include in the legendGroup. Note that settings (colorBy, sizeBy) are syncronized across the same type in multiple groups.
-`legendGroups[i].arcTypes` | | A list of all arc types to include in the legendGroup. Note that settings (colorBy, sizeBy) are syncronized across the same type in multiple groups.
-`legendGroups[i].geoTypes` | | A list of all geo types to include in the legendGroup. Note that settings (colorBy, sizeBy) are syncronized across the same type in multiple groups.
+<a name="legendGroups">`legendGroups`</a> | `[]` | A list of all groupings to be shown in the map legend. Groups are displayed in list order with each group having an internal order of `nodes`, `arcs`, then `geos`. Types not included in any legend group cannot be toggled.
+`legendGroups[i].nodeTypes` | | A list of all node types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+`legendGroups[i].arcTypes` | | A list of all arc types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+`legendGroups[i].geoTypes` | | A list of all geo types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
 
 ### `stats`
 The `stats` group takes parameter data that can be combined with geospatial data to represent it in the "**Map**" view or simply use its raw values to display in a dashboard view.
@@ -3306,7 +3306,7 @@ Key | Default | Description
 --- | ------- | -----------
 `custom_kpi_*` | Required | A custom key wrapper for the KPI data.
 `custom_kpi_*.value` | | The actual value of the KPI. **If not specified, this item will be a KPI header**.
-`custom_kpi_*.map_kpi` | False | The `map_kpi` flag allows designers to specify up to six parameters that are displayed on a permanent grid in the "**Map**" view. The grid layout (rows *x* columns) changes with the number of parameters present in the data, scaling up to 2 rows and 3 columns.
+`custom_kpi_*.map_kpi` | `False` | The `map_kpi` flag allows designers to specify up to six parameters that are displayed on a permanent grid in the "**Map**" view. The grid layout (rows *x* columns) changes with the number of parameters present in the data, scaling up to 2 rows and 3 columns.
 
 
 #### Example
@@ -3364,9 +3364,7 @@ Let's look inside the structure of `kwargs`:
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-`wipe_existing` | True | Indicate if all current session data (the current session of the requesting user) should be wiped before overwriting all currently passed data. This can be used to reduce server load. For example given a specific command, if only a single top_level_key should be updated, you can simply pass that top_level_key dictionary and set `wipe_existing` to `False`. in this case, you would only overwrite that single top_level_key and leave the rest unchanged.
-
-
+`wipe_existing` | `True` | Indicate if all current session data (the current session of the requesting user) should be wiped before overwriting all currently passed data. This can be used to reduce server load. For example given a specific command, if only a single top-level key should be updated, you can simply pass the top-level key dictionary and set `wipe_existing` to `False`. In this case, you would only overwrite that single top-level key and leave the rest unchanged.
 
 #### Example
 
