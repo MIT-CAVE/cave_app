@@ -1387,7 +1387,6 @@ def execute_command(session_data, command="init"):
                     "name": "Global Demand Met",
                     "value": 18,
                     "icon": "BsInboxes",
-                    "order": 1,
                     "map_kpi": True,
                     "numberFormat": {
                         "precision": 0,
@@ -1398,7 +1397,6 @@ def execute_command(session_data, command="init"):
                     "name": "Customer Happiness",
                     "value": 16,
                     "icon": "BsFillEmojiSmileFill",
-                    "order": 2,
                     "map_kpi": True,
                     "numberFormat": {
                         "precision": 0,

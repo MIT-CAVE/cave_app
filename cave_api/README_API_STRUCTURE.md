@@ -3297,7 +3297,6 @@ Let's look inside the structure of `kpis`:
 - [`layout`](#layout)
 - [`name`](#name)
 - [`numberFormat`](#number-format)
-- [`order`](#order)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
 
@@ -3332,7 +3331,6 @@ Key | Default | Description
                 'unit': 'units',
             },
             'icon': 'BsInboxes',
-            'order': 1,
             'map_kpi': True,
         },
         'customer_hapiness': {
@@ -3342,7 +3340,6 @@ Key | Default | Description
                 'unit': 'smiles',
             },
             'icon': 'BsFillEmojiSmileFill',
-            'order': 2,
             'map_kpi': True,
         },
     },
