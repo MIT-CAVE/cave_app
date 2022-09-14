@@ -1,5 +1,5 @@
 # Cave App
-A Django server to host the an API and act as the Cave back end.
+A Django server to host the API and act as the Cave back end.
 
 # Getting Started
 
