@@ -20,7 +20,7 @@ A Django server to host the API and act as the Cave back end.
     ```
     cave run
     ```
-    - Optional: Run the app on `<your-ip>:8000` with development settings:
+    <!-- - Optional: Run the app on `<your-ip>:8000` with development settings:
       ```
       cave run <your-ip>:8000
       ```
@@ -29,7 +29,7 @@ A Django server to host the API and act as the Cave back end.
     - Optional: Run the app on `<any-ip>:8000` that points to your machine with development settings:
       ```
       cave run 0.0.0.0:8000
-      ```
+      ``` -->
 
 5. In Chrome, you can now open the web app:
     - EG: If you use the standard settings

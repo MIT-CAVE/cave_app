@@ -10,5 +10,6 @@ pamda==0.0.13
 Pillow==9.2.0
 psycopg2-binary==2.9.3
 python-decouple==3.6
+whitenoise==6.2.0
 -e ./cave_api
 -r ./utils/extra_requirements.txt

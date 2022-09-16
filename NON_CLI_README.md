@@ -73,14 +73,33 @@
     ```
     python manage.py runserver
     ```
-    - Optional: Run the app on `<your-ip>:8000` with development settings:
+3. Run the app on a LAN (local area network):
+    - Note: To run on LAN, you must use an SSL connection.
+    - Note: This uses a self signed and insecure certificate for SSL/TLS reasons
+        - The certificates are self signed and shared openly in the cave open source project
+        - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
+    - Note: This uses the `daphne` production server.
+        - You will need to `collectstatic` in order for your staticfiles to load properly.
         ```
-        python manage.py runserver <your-ip>:8000
+        python manage.py collectstatic
         ```
-    - Optional: Run the app on `<any-ip>:8000` that points to your machine with development settings:
-        ```
-        python manage.py runserver 0.0.0.0:8000
-        ```
+    - To run the server:
+    ```
+    daphne -e ssl:8000:privateKey=utils/lan_hosting/LAN.key:certKey=utils/lan_hosting/LAN.crt cave_app.asgi:application -p 8001 -b 0.0.0.0
+    ```
+        - Note: You will need to access the app from the ssl port (in the above case `8000`) and not the port specified by `-p`.
+        - Note: You can specify the LAN IP with
+            - Wildcard: `-b 0.0.0.0`
+                - This allows you to access the sever from any IP that points to your machine
+            - Specific: `-b 192.168.1.100`
+                - Note: Replace `192.168.1.100` with your local IP address
+                - This allows you to access the sever from a specific IP that points to your machine
+    - To access the server go to:
+    ```
+    https://192.168.1.100:8000
+    ```
+      - Note: Replace `192.168.1.100` with your local IP address
+
 
 ### Prettify Code
 NOTE: All prettify commands write over existing code.
