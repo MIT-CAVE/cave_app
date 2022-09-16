@@ -3,8 +3,8 @@ from setuptools import find_packages
 
 setup(
     name="cave_api",
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
+    packages=find_packages("src"),
+    package_dir={"": "src"},
     include_package_data=True,
     version="0.0.1",
     license="MIT",

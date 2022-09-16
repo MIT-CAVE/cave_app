@@ -124,9 +124,7 @@ class Node:
             assert (
                 self.processing_cashflow_per_unit <= 0
             ), f"processing_cashflow_per_unit should be less than or equal to 0 for {self.type} nodes."
-            assert (
-                self.geoId == ""
-            ), f"geoId must not be specified for {self.type} nodes."
+            assert self.geoId == "", f"geoId must not be specified for {self.type} nodes."
             assert (
                 self.fixed_cashflow <= 0
             ), f"fixed_cashflow should be less than or equal to 0 for {self.type} type nodes"
@@ -265,21 +263,16 @@ class Arc:
 
 class Serializer:
     def __init__(self):
-        self.locations = {
-            i["id"]: Location(**i) for i in read_csv(data_location + "locations.csv")
-        }
+        self.locations = {i["id"]: Location(**i) for i in read_csv(data_location + "locations.csv")}
         self.nodes = {
             i["id"]: Node(**i, locations=self.locations)
             for i in read_csv(data_location + "nodes.csv")
         }
         self.arcs = {
-            i["id"]: Arc(**i, nodes=self.nodes)
-            for i in read_csv(data_location + "arcs.csv")
+            i["id"]: Arc(**i, nodes=self.nodes) for i in read_csv(data_location + "arcs.csv")
         }
         self.warehouses = {
-            key: value
-            for key, value in self.nodes.items()
-            if value.type in ["warehouse"]
+            key: value for key, value in self.nodes.items() if value.type in ["warehouse"]
         }
         self.factories = {
             key: value for key, value in self.nodes.items() if value.type in ["factory"]
@@ -301,8 +294,7 @@ class Serializer:
 
     def get_categories_location_data(self):
         return {
-            i.id: {"continent": i.continent, "region": i.region}
-            for i in self.locations.values()
+            i.id: {"continent": i.continent, "region": i.region} for i in self.locations.values()
         }
 
     def get_serialized_item_data(self, items_dict):
@@ -544,9 +536,7 @@ class Serializer:
 
     def get_dropdown_options(self, items_dict, include_categorical=False):
         try:
-            return list(items_dict.values())[0].get_dropdown_options(
-                include_categorical
-            )
+            return list(items_dict.values())[0].get_dropdown_options(include_categorical)
         except:
             return []
 
