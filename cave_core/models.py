@@ -157,23 +157,13 @@ class CustomUser(AbstractUser):
             )
         else:
             team_users = []
-
-        people_info = {}
+        team_info={}
         for i in team_users:
-            people_info = pamda.assocPathComplex(
-                default=[],
-                default_fn=lambda x: x + [i.user],
-                path=["Team", i.team.name],
-                data=people_info,
-            )
+            team_info[i.team.name]=team_info.get(i.team.name, [])+[i.user]
+        group_info={}
         for i in group_users:
-            people_info = pamda.assocPathComplex(
-                default=[],
-                default_fn=lambda x: x + [i.user],
-                path=["Group", i.group.name],
-                data=people_info,
-            )
-        return people_info
+            group_info[i.group.name]=group_info.get(i.group.name, [])+[i.user]
+        return {"Team":team_info,"Group":group_info}
 
     def get_personal_sessions(self):
         """
