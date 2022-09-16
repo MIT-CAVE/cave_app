@@ -20,6 +20,7 @@ class CustomUser(AbstractUser):
     """
     Extends the standard django user class to allow for additional fields for each user.
     """
+
     # Overwrite email field at django.contrib.auth.models.AbstractUser
     # Force email field to exist and to be unique
     email = models.EmailField(
@@ -157,13 +158,13 @@ class CustomUser(AbstractUser):
             )
         else:
             team_users = []
-        team_info={}
+        team_info = {}
         for i in team_users:
-            team_info[i.team.name]=team_info.get(i.team.name, [])+[i.user]
-        group_info={}
+            team_info[i.team.name] = team_info.get(i.team.name, []) + [i.user]
+        group_info = {}
         for i in group_users:
-            group_info[i.group.name]=group_info.get(i.group.name, [])+[i.user]
-        return {"Team":team_info,"Group":group_info}
+            group_info[i.group.name] = group_info.get(i.group.name, []) + [i.user]
+        return {"Team": team_info, "Group": group_info}
 
     def get_personal_sessions(self):
         """
