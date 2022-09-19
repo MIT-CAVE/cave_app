@@ -380,6 +380,7 @@ serialized_data = {
             "factory_header": {
                 "name": "Factory KPIs",
                 "icon": "GiFactory",
+                "type": "head",
             },
             "num_open_factories": {
                 "name": "Open Factories",
@@ -421,6 +422,7 @@ serialized_data = {
             "warehouse_header": {
                 "name": "Warehouse KPIs",
                 "icon": "FaWarehouse",
+                "type": "head",
             },
             "num_open_warehouses": {
                 "name": "Open Warehouses",
@@ -459,6 +461,7 @@ serialized_data = {
             "demand_header": {
                 "name": "Demand Zone KPIs",
                 "icon": "FaBoxOpen",
+                "type": "head",
             },
             "total_demand": {
                 "name": "Total Units Demanded",
@@ -489,6 +492,7 @@ serialized_data = {
             "total_costs_header": {
                 "name": "Total Costs",
                 "icon": "FaMoneyBill",
+                "type": "head",
             },
             "total_transportation_costs": {
                 "name": "Transportation Costs",
@@ -511,6 +515,7 @@ serialized_data = {
             "total_profit_header": {
                 "name": "Total Profits",
                 "icon": "FaRegMoneyBillAlt",
+                "type": "head",
             },
             "total_costs": {
                 "name": "Total Costs",

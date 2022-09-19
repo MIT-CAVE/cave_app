@@ -3280,8 +3280,10 @@ Let's look inside the structure of `kpis`:
             'numberFormat': {
                 'unit': 'units',
             },
+            'type': 'num',
             'icon': 'FaBox',
             'value': 100,
+            'map_kpi': True,
         },
         # As many custom KPIs as needed
     },
@@ -3304,9 +3306,9 @@ Let's look inside the structure of `kpis`:
 Key | Default | Description
 --- | ------- | -----------
 `custom_kpi_*` | Required | A custom key wrapper for the KPI data.
-`custom_kpi_*.value` | | The actual value of the KPI. **If not specified, this item will be a KPI header**.
 `custom_kpi_*.map_kpi` | `False` | The `map_kpi` flag allows designers to specify up to six parameters that are displayed on a permanent grid in the "**Map**" view. The grid layout (rows *x* columns) changes with the number of parameters present in the data, scaling up to 2 rows and 3 columns.
-
+`custom_kpi_*.type` | `'num'` | As a direct child of `custom_kpi_*`, the `type` key defines the UI construct used to render the KPI and restricts the set of key-value pairs that can be used with this type. The `type` key takes one of the following values:<br><br>`'head'`: the `map_kpi`, [`numberFormat`](#numberFormat), and `value` keys are ignored when used along this type.<br>`'num'`: all keys are valid to use with this type.<br>`'text'`: the [`numberFormat`](#numberFormat) key is ignored when used along this type.<br>
+`custom_kpi_*.value` | | The actual value of the KPI.
 
 #### Example
 
@@ -3324,13 +3326,15 @@ Key | Default | Description
             },
             'icon': 'FaBox',
         },
-        'global_demand_met': {
-            'name': 'Global Demand Met',
-            'value': 60,
-            'numberFormat': {
-                'unit': 'units',
-            },
+        'demand_header': {
+            'type': 'head',
+            'name': 'Demand Section',
             'icon': 'BsInboxes',
+        },
+        'month_highest_demand': {
+            'name': 'Month of highest demand',
+            'value': 'December',
+            'type': 'text',
             'map_kpi': True,
         },
         'customer_hapiness': {
@@ -3341,6 +3345,30 @@ Key | Default | Description
             },
             'icon': 'BsFillEmojiSmileFill',
             'map_kpi': True,
+        },
+    },
+    'layout': {
+        'type': 'grid',
+        'num_columns': 1,
+        'num_rows': 'auto',
+        'data': {
+            'row1': {
+                'type': 'item',
+                'itemId': 'demand_header',
+                'row': 1,
+            },
+            'row2': {
+                'type': 'item',
+                'itemId': 'demand',
+            },
+            'row3': {
+                'type': 'item',
+                'itemId': 'month_highest_demand',
+            },
+            'row4': {
+                'type': 'item',
+                'itemId': 'customer_hapiness',
+            },            
         },
     },
 }

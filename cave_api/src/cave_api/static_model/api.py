@@ -1404,6 +1404,7 @@ def execute_command(session_data, command="init"):
                     },
                 },
                 "demand_header": {
+                    "type": "head",
                     "name": "Demand Section",
                     "icon": "BsInboxes",
                 },
@@ -1418,6 +1419,7 @@ def execute_command(session_data, command="init"):
                     "value": 100,
                 },
                 "supply_header": {
+                    "type": "head",
                     "name": "Supply Section",
                     "icon": "BsTruck",
                 },
@@ -1476,6 +1478,14 @@ def execute_command(session_data, command="init"):
                         "itemId": "supply",
                         "column": 2,
                         "row": 3,
+                    },
+                    "key_1": {
+                        "type": "item",
+                        "itemId": "key_1",
+                    },
+                    "key_2": {
+                        "type": "item",
+                        "itemId": "key_2",
                     },
                 },
             },
