@@ -19,8 +19,8 @@ A Django server to host the API and act as the Cave back end.
 4. Run the app at `localhost:8000` (while in `my_app`):
     ```
     cave run
-    ```
-    <!-- - Optional: Run the app on `<your-ip>:8000` with development settings:
+    ```    
+    - Optional: Run the app on `<your-ip>:8000` with development settings:
       ```
       cave run <your-ip>:8000
       ```
@@ -29,7 +29,7 @@ A Django server to host the API and act as the Cave back end.
     - Optional: Run the app on `<any-ip>:8000` that points to your machine with development settings:
       ```
       cave run 0.0.0.0:8000
-      ``` -->
+      ```
 
 5. In Chrome, you can now open the web app:
     - EG: If you use the standard settings
@@ -37,12 +37,40 @@ A Django server to host the API and act as the Cave back end.
     http://localhost:8000
     ```
 
-## Admin Access
-1. Login as:
+![login page](/media/screenshots/login.png)
+You should now see the above page displayed. You can log in by clicking the top right button on the screen, and entering your login information.
 
-    - Use the admin information that you used during setup (or look in the `./.env` file).
+## Login as Admin
+1. Use the admin information that you used during setup, or look in the `.env` file in the root of this directory).
 
 2. To view the admin page navigate to: `localhost:8000/admin`
+![admin page](/media/screenshots/admin.png)
+This is the automatic Django admin interface that allows you to manage all your models across the app and edit the content of the website. See [this explanation](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site#logging_in_and_using_the_site) for more information on how to use the admin interface. 
+
+## Main Features
+### Create a session
+To access the main features of the CAVE app, first create a new session by clicking the fourth button on the top left corner.
+<img src="./media/screenshots/session.png" width=50%>
+
+Creating a new session will launch whichever model is called in `/cave_api/src/cave_api/__init__.py` file. We supply two example models for users to reference and/or build upon. In this tutorial, we will demonstrate the features of the `simple_model`, which demonstrates good practices for researchers using the CAVE API. The other model, `static_model`, contains examples of the whole API structure, and is useful for developers to debug, experiment with new features, etc. You can build on top of whichever model is more applicable to your research, or create your own model.
+
+### Map View
+
+Once you're in your new session, you will see the Map view.
+![map view](/media/screenshots/map.jpg)
+
+You can click on each of the warehouses and factories to toggle open, and click the lightning bolt button on the left sidebar to calculate the statistics and KPI of the model. 
+
+<img src="./media/screenshots/map1.png" width=50%>
+
+
+### Dashboard View
+Click the lower right buttons on the left sidebar to toggle between Map, Dashboard, and KPI view. In the Dashboard view, you can generate charts based on the statistics and KPI of the model. You can adjust various elements of the charts, such as type of chart, statistic, groupings, etc.
+![dashboard view](/media/screenshots/dashboard.jpg)
+
+### KPI View
+In KPI view, you can see the list of all the KPI and their values. 
+![dashboard view](/media/screenshots/kpi.jpg)
 
 ## Making API Changes
 See the API documentation:
