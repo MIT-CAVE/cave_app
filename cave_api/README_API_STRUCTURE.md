@@ -54,36 +54,36 @@ Custom keys are always included as a direct child of common keys such as `data`,
 
 ### [Common keys](docs/common_keys/common_keys.md)
 
-- #### [props](docs/common_keys/props.md)
+- #### [`props`](docs/common_keys/props.md)
 
-- #### [layout](docs/common_keys/layout.md)
+- #### [`layout`](docs/common_keys/layout.md)
 
-- #### [numberFormat](docs/common_keys/numberFormat.md)
+- #### [`numberFormat`](docs/common_keys/numberFormat.md)
 
-- #### [timeObject](docs/common_keys/timeObject.md)
+- #### [`timeObject`](docs/common_keys/timeObject.md)
 
 
-### [Top-Level keys](docs/all_keys/toplevel_keys.md)
+### [Top-Level keys](docs/all_keys/top_level_keys.md)
 
-- #### [settings](docs/all_keys/settings.md)
+- #### [`settings`](docs/all_keys/settings.md)
 
-- #### [categories](docs/all_keys/categories.md)
+- #### [`categories`](docs/all_keys/categories.md)
 
-- #### [appBar](docs/all_keys/appBar.md)
+- #### [`appBar`](docs/all_keys/app_bar.md)
 
-- #### [arcs](docs/all_keys/arcs.md)
+- #### [`arcs`](docs/all_keys/arcs.md)
 
-- #### [nodes](docs/all_keys/nodes.md)
+- #### [`nodes`](docs/all_keys/nodes.md)
 
-- #### [geos](docs/all_keys/geos.md)
+- #### [`geos`](docs/all_keys/geos.md)
 
-- #### [map](docs/all_keys/map.md)
+- #### [`map`](docs/all_keys/map.md)
 
-- #### [stats](docs/all_keys/stats.md)
+- #### [`stats`](docs/all_keys/stats.md)
 
-- #### [kpis](docs/all_keys/kpis.md)
+- #### [`kpis`](docs/all_keys/kpis.md)
 
-- #### [kwargs](docs/all_keys/kwargs.md)
+- #### [`kwargs`](docs/all_keys/kwargs.md)
 
 
 ### [Top-level custom keys](docs/custom_keys.md)

@@ -5,7 +5,7 @@ Now, it is time to take take a look at each of the key groups in detail, includi
 
 - #### [categories](categories.md)
 
-- #### [appBar](appBar.md)
+- #### [appBar](app_bar.md)
 
 - #### [arcs](arcs.md)
 
