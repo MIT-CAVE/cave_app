@@ -21,9 +21,9 @@ At first glance, the top-level keys in the data structure look like this:
 ```
 Throughout this documentation, we refer to the keys in the data structure above as _top-level keys_ (or _top-level groups_ to point out that these keys contain other key-value pairs).
 
-Each top-level group might include unique elements or sub-keys that are specific to that group ([special keys](#special-keys)). However, other keys like `send_to_api` are meant to attach functionality that is more generic and therefore can be used in different top-level groups. To save time and [not repeat ourselves](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) throughout this documentation, we provide a "[Common keys](#common-keys)" section, and any such keys found in the documentation are referred back to their definition.
+Each top-level group might include unique elements or sub-keys that are specific to that group (**special keys**). However, other keys like `send_to_api` are meant to attach functionality that is more generic and therefore can be used in different top-level groups. To save time and [not repeat ourselves](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) throughout this documentation, we provide a "[Common keys](#common-keys)" section, and any such keys found in the documentation are referred back to their definition.
 
-There is a third type of keys ([custom keys](#custom-keys)), which depend on the data and, therefore, their names vary according to the use case. The API designer can name these keys in the data structure at their convenience. Let's take a look at the following example where custom keys are used:
+There is a third type of keys (**custom keys**), which depend on the data and, therefore, their names vary according to the use case. The API designer can name these keys in the data structure at their convenience. Let's take a look at the following example where custom keys are used:
 ```py
 {
     'categories': {
