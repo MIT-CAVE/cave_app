@@ -251,5 +251,3 @@ def get_associated_session_data(request):
         hashes=session.hashes,
         data=session.get_client_data(keys=["associated"]),
     )
-
-    # Return the response
