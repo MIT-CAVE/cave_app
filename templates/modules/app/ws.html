@@ -1,33 +1,39 @@
 <script>
-  function socketConnect() {
-    var ws_scheme = window.location.protocol == "https:" ? "wss://" : "ws://";
-    var ws = new WebSocket(ws_scheme + window.location.host + '/ws/');
-    ws.onopen = function() {
-      console.log("Socket Connection Established!")
+  class socket {
+    connect() {
+      var ws_scheme = window.location.protocol == "https:" ? "wss://" : "ws://";
+      this.ws = new WebSocket(ws_scheme + window.location.host + '/ws/');
+
+      this.ws.onopen = () => {
+        console.log("Socket Connection Established!")
+      };
+
+      this.ws.onmessage = (e) => {
+        // Listner to take in messages from the websocket consumer
+        // parse the sent message and forward it to the app iframe or
+        // container
+        // NOTE: The WS consumer auto formats the sent message payload
+        // in a json string as `e.data` so we parse that out here
+        var payload = JSON.parse(e.data)
+        handleMessaging(payload)
+      };
+
+      this.ws.onclose = (e) => {
+        console.log('App Socket disconnected. Attempting to reconnect in 3 seconds...');
+        setTimeout(() => { this.connect() }, 3000);
+      };
+
+      this.ws.onerror = (err) => {
+        console.error('App Socket encountered an error: ', err.message, 'Closing...');
+        this.ws.close();
+      };
     };
 
-    ws.onmessage = function(e) {
-      // Listner to take in messages from the websocket consumer
-      // parse the sent message and forward it to the app iframe or
-      // container
-      // NOTE: The WS consumer auto formats the sent message payload
-      // in a json string as `e.data` se we parse that out here
-      var payload = JSON.parse(e.data)
-      handleMessaging(payload)
-    };
-
-    ws.onclose = function(e) {
-      console.log('App Socket disconnected. Attempting to reconnect in 3 seconds...');
-      setTimeout(function() {
-        socketConnect();
-      }, 3000);
-    };
-
-    ws.onerror = function(err) {
-      console.error('App Socket encountered an error: ', err.message, 'Closing...');
-      ws.close();
+    send(data) {
+      this.ws.send(JSON.stringify(data))
     };
   };
 
-  socketConnect();
+  const websocket = new socket();
+  websocket.connect()
 </script>
