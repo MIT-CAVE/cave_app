@@ -8,15 +8,7 @@ def execute_command(session_data, command="init"):
     - `session_data`:
         - Type: dict
         - What: A dict of `session_data` objects to use when configuring this session
-        - Example:
-            ```
-            {
-                'data_name_here': {"current":"data object here"},
-                'data2_name_here': {"current":"data 2 object here"},
-            }
-            ```
-        - Note: This method should accept any dict (including empty) and fill in default data
-        - Note: This method should also fix any missing or incorrect data
+        - See: https://github.com/MIT-CAVE/cave_app/blob/0.2.0/cave_api/README_API_STRUCTURE.md
 
     Optional:
 
@@ -29,28 +21,7 @@ def execute_command(session_data, command="init"):
     - `output`:
         - Type: dict of dicts
         - What: A dict of dictionaries to mutate the current session given the current `session_data`
-        - Example:
-            ```
-            {
-                'data_name_here':{
-                    'data':{"new":"data object here"},
-                    'allow_modification':True,
-                    'send_to_api':True,
-                    'send_to_client':True
-                },
-                'data2_name_here':{
-                    'data':{"new":"data 2 object here"},
-                    'allow_modification':False,
-                    'send_to_api':False,
-                    'send_to_client':True
-                }
-                ...
-            }
-            ```
-        - Note: `send_to_api`=False data will not be serialzed and sent to the api when a command is executed
-        - Note: `allow_modification`=False data can not be modified by users
-        - Note: `send_to_client`=False data will not be sent to any users (this can be used for api state management)
-        - Note: Only what is returned from `execute_command` will be available for end users after execution (previous data will be removed)
+        - See: https://github.com/MIT-CAVE/cave_app/blob/0.2.0/cave_api/README_API_STRUCTURE.md
     """
     example = {
         "settings": {
