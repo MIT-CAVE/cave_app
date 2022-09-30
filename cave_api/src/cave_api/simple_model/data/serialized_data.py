@@ -666,27 +666,33 @@ serialized_data = {
                 },
                 "col4_row5": {
                     "type": "item",
-                    "itemId": "total_profit_header",
+                    "itemId": "total_costs",
                     "column": 4,
                     "row": 5,
                 },
-                "col4_row6": {
+                "col5_row1": {
                     "type": "item",
-                    "itemId": "total_costs",
-                    "column": 4,
-                    "row": 6,
+                    "itemId": "total_profit_header",
+                    "column": 5,
+                    "row": 1,
                 },
-                "col4_row7": {
+                "col5_row2": {
                     "type": "item",
                     "itemId": "total_revenue",
-                    "column": 4,
-                    "row": 7,
+                    "column": 5,
+                    "row": 2,
                 },
-                "col4_row8": {
+                "col5_row3": {
+                    "type": "item",
+                    "itemId": "total_costs",
+                    "column": 5,
+                    "row": 3,
+                },
+                "col5_row4": {
                     "type": "item",
                     "itemId": "total_profit",
-                    "column": 4,
-                    "row": 8,
+                    "column": 5,
+                    "row": 4,
                 },
             },
         },
