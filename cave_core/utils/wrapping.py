@@ -94,3 +94,27 @@ def cache_data_hash(fn):
             fn(request)
 
     return wrap
+
+
+def api_app_ws(fn):
+    """
+    API view wrapper to handle processing exceptions for async api app ws calls
+
+    This allows exceptions to be raised anywhere server or api side that can pass information on to end users.
+    """
+
+    @wraps(fn)
+    def wrap(request):
+        try:
+            fn(request)
+        except Exception as e:
+            traceback_str = format_exception(e)
+            if settings.DEBUG:
+                print(traceback_str)
+            utils.broadcasting.ws_broadcast_user(
+                user=request.user,
+                type="app",
+                event="error",
+                data={"message": str(e), "duration": 5, "traceback": traceback_str},
+            )
+    return wrap

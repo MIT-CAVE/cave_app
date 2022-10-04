@@ -3,6 +3,19 @@ import json
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 
+from cave_core.views.api_app_ws_views import get_session_data, mutate_session, get_associated_session_data
+
+commands = {
+    'get_session_data': get_session_data,
+    'get_associated_session_data': get_associated_session_data,
+    'mutate_session':mutate_session
+}
+
+class Request:
+    def __init__(self, user, data):
+        self.user = user
+        self.data = data
+
 
 class AppMessageConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -23,8 +36,11 @@ class AppMessageConsumer(AsyncWebsocketConsumer):
 
     # Receive app messages from clients
     async def receive(self, text_data):
-        data = json.loads(text_data)
-        #TODO: Use Data to do things
+        parsed_data = json.loads(text_data)
+        command = commands.get(parsed_data.get('command'))
+        request = Request(self.scope['user'],parsed_data.get('data'))
+        await command(request)
+
 
 
 websocket_urlpatterns = [
