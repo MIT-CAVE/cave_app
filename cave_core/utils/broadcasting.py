@@ -6,6 +6,7 @@ from asgiref.sync import async_to_sync
 import json
 
 channel_layer = get_channel_layer()
+sync_send = async_to_sync(channel_layer.group_send)
 
 
 def format_broadcast_payload(type, event, data, hashes):
@@ -21,7 +22,7 @@ def format_broadcast_payload(type, event, data, hashes):
 
 def ws_raw_broadcast(user_id, payload):
     assert isinstance(payload, str)
-    async_to_sync(channel_layer.group_send)(str(user_id), {"type": "broadcast", "payload": payload})
+    sync_send(str(user_id), {"type": "broadcast", "payload": payload})
 
 
 def ws_broadcast_user(user, type, event, data, hashes={}):
