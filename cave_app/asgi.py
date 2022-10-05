@@ -10,17 +10,18 @@ if os.environ.get("DJANGO_SETTINGS_MODULE") is None:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cave_app.settings.development")
 
 from django.core.asgi import get_asgi_application
-from channels.auth import AuthMiddlewareStack
-from channels.routing import ProtocolTypeRouter, URLRouter
+from channels.routing import ProtocolTypeRouter
 
-from cave_app.urls import websocket_urlpatterns
+from cave_core.websockets import get_ws_asgi_application
 
-# Initialize all app items before calling any local imports
+# Initialize asgi app items before calling any local imports
+# get_asgi_application should always be called before local import here
 django_asgi_app = get_asgi_application()
+ws_asgi_app = get_ws_asgi_application()
 
 application = ProtocolTypeRouter(
     {
         "http": django_asgi_app,
-        "websocket": AuthMiddlewareStack(URLRouter(websocket_urlpatterns)),
+        "websocket":ws_asgi_app,
     }
 )

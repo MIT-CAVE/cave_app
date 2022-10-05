@@ -8,11 +8,6 @@ from django.urls import path
 from cave_core import url_helpers
 from cave_core.admin import staff_site
 from cave_core.views import site_views, api_util_views, api_app_views
-from cave_core.websockets import WebsocketConsumer
-
-websocket_urlpatterns = [
-    path("ws/", WebsocketConsumer.as_asgi()),
-]
 
 urlpatterns = [
     # Main Pages
