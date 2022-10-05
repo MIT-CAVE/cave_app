@@ -2,7 +2,7 @@
   class socket {
     connect() {
       var ws_scheme = window.location.protocol == "https:" ? "wss://" : "ws://";
-      this.ws = new WebSocket(ws_scheme + window.location.host + '/ws/');
+      this.ws = new WebSocket(ws_scheme + window.location.host + '/ws/?user_token={{ user_token }}');
 
       this.ws.onopen = () => {
         console.log("Socket Connection Established!")

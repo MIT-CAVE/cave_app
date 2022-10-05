@@ -1,4 +1,5 @@
 # Framework Imports
+from channels.db import database_sync_to_async
 from django.conf import settings
 from django.core.cache import cache
 from rest_framework.response import Response
@@ -94,3 +95,24 @@ def cache_data_hash(fn):
             fn(request)
 
     return wrap
+
+
+def async_api_app_ws(fn):
+    """
+    API view wrapper to process websocket api app calls asynchronously and handle exceptions that are raised sending them back to the end user.
+    """
+    @wraps(fn)
+    def wrap(request):
+        try:
+            fn(request)
+        except Exception as e:
+            traceback_str = format_exception(e)
+            if settings.DEBUG:
+                print(traceback_str)
+            utils.broadcasting.ws_broadcast_user(
+                user=request.user,
+                type="app",
+                event="error",
+                data={"message": str(e), "duration": 5, "traceback": traceback_str},
+            )
+    return database_sync_to_async(wrap)
