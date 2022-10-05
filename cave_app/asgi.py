@@ -13,9 +13,10 @@ from django.core.asgi import get_asgi_application
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 
+from cave_app.urls import websocket_urlpatterns
+
 # Initialize all app items before calling any local imports
 django_asgi_app = get_asgi_application()
-from .websockets import websocket_urlpatterns
 
 application = ProtocolTypeRouter(
     {

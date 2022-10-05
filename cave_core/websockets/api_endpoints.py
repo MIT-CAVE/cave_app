@@ -1,12 +1,10 @@
 # Framework Imports
-from channels.db import database_sync_to_async
 
 # Internal Imports
 from cave_core import models, utils
 
-# Views
-@database_sync_to_async
-@utils.wrapping.api_app_ws
+# Websocket API Command Endpoints
+@utils.wrapping.async_api_app_ws
 @utils.wrapping.cache_data_hash
 def get_session_data(request):
     """
@@ -40,8 +38,7 @@ def get_session_data(request):
         data=data,
     )
 
-@database_sync_to_async
-@utils.wrapping.api_app_ws
+@utils.wrapping.async_api_app_ws
 def mutate_session(request):
     """
     API endpoint to mutate session data
@@ -179,8 +176,7 @@ def mutate_session(request):
                 data=mutate_dict,
             )
 
-@database_sync_to_async
-@utils.wrapping.api_app_ws
+@utils.wrapping.async_api_app_ws
 def get_associated_session_data(request):
     """
     API endpoint to generate associated data and push it out to the current session
