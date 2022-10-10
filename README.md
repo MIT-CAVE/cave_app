@@ -1,5 +1,7 @@
 # Cave App
-A Django server to host the API and act as the Cave back end.
+A Django server to host the API and act as the Cave back end. 
+![map view](https://utils.mitcave.com/docs/cave_app-0.3.0/map.jpg)
+This is the type of interactive data models that you can create with the CAVE API.
 
 # Getting Started
 
@@ -37,9 +39,6 @@ A Django server to host the API and act as the Cave back end.
     http://localhost:8000
     ```
 
-![login page](https://utils.mitcave.com/docs/cave_app-0.3.0/login.png)
-You should now see the above page displayed. You can log in by clicking the top right button on the screen, and entering your login information.
-
 ## Login as Admin
 1. Use the admin information that you used during setup, or look in the `.env` file in the root of this directory).
 
@@ -47,30 +46,34 @@ You should now see the above page displayed. You can log in by clicking the top 
 ![admin page](https://utils.mitcave.com/docs/cave_app-0.3.0/admin.png)
 This is the automatic Django admin interface that allows you to manage all your models across the app and edit the content of the website. See [this explanation](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site#logging_in_and_using_the_site) for more information on how to use the admin interface. 
 
-## Main Features
-### Create a session
-To access the main features of the CAVE app, first create a new session by clicking the fourth button on the top left corner.
+## Example App
+### Adding Pages and Content
+From the Admin page, you can add pages and content to your website. This following is an example of the types of content you can render, including photos, videos, breaks, headers, HTML content, quotes, resources, and FAQs.
+![example page](https://utils.mitcave.com/docs/cave_app-0.3.0/example_page.png)
+
+You can also create your own customized front-end features, like [adding buttons to the `appBar`](/cave_api/docs/all_keys/app_bar.md), by editing the API of your model. See the [Cave API](/cave_api) for step-by-step details on how to get started on API development with the CAVE App.
+
+### Creating a session
+To access the main features of the CAVE app, first create a new session. In the example app, the fourth button on the top left corner is the button that allows users to create a new session.
+
 <img src="https://utils.mitcave.com/docs/cave_app-0.3.0/session.png" width=50%>
 
-Creating a new session will launch whichever model is called in `/cave_api/src/cave_api/__init__.py` file. We supply two example models for users to reference and/or build upon. In this tutorial, we will demonstrate the features of the `simple_model`, which demonstrates good practices for researchers using the CAVE API. The other model, `static_model`, contains examples of the whole API structure, and is useful for developers to debug, experiment with new features, etc. You can build on top of whichever model is more applicable to your research, or create your own model.
+Creating a new session will launch whichever model is called in `/cave_api/src/cave_api/__init__.py` file. We supply two example models for users to reference and/or build upon. The `simple_model` demonstrates good practices for researchers using the CAVE API. The `static_model` contains examples of the whole API structure, and is useful for developers to debug and experiment with new features. You can build on top of whichever model is more applicable to your research, or create your own model.
 
-### Map View
+### Customizing Interactive Data
+You can customize the interactive data you want to render in your model, and display them in three types of views: Map View, Dashboard View, and KPI View. 
 
-Once you're in your new session, you will see the Map view.
+In the `simple_model`, for instance, we render the following Map view. You can click on each of the warehouses and factories to toggle open and calculate the statistics and KPI of the model. 
 ![map view](https://utils.mitcave.com/docs/cave_app-0.3.0/map.jpg)
 
-You can click on each of the warehouses and factories to toggle open, and click the lightning bolt button on the left sidebar to calculate the statistics and KPI of the model. 
-
-<img src="https://utils.mitcave.com/docs/cave_app-0.3.0/map1.png" width=50%>
-
-
-### Dashboard View
-Click the lower right buttons on the left sidebar to toggle between Map, Dashboard, and KPI view. In the Dashboard view, you can generate charts based on the statistics and KPI of the model. You can adjust various elements of the charts, such as type of chart, statistic, groupings, etc.
+In the `simple_model` Dashboard view, you can generate charts based on the statistics and KPI of the model. You can adjust various elements of the charts, such as type of chart, statistic, groupings, etc.
 ![dashboard view](https://utils.mitcave.com/docs/cave_app-0.3.0/dashboard.jpg)
 
-### KPI View
-In KPI view, you can see the list of all the KPI and their values. 
+In the `simple_model` KPI view, you can see the list of all the KPI and their values. 
 ![kpi view](https://utils.mitcave.com/docs/cave_app-0.3.0/kpi.jpg)
+
+These functions are all programmed in `/cave_api/src/cave_api/simple_model`. The CAVE [API Structure](cave_api/README_API_STRUCTURE.md) gives developers many capabilities to edit and create their own models. For instance, you can [change levels of data aggregation](/cave_api/docs/all_keys/categories.md) in Dashboard view or [edit the map legend](/cave_api/docs/all_keys/arcs.md) displayed in Map view.
+
 
 ## Making API Changes
 See the API documentation:
