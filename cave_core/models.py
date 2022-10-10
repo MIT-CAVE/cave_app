@@ -1049,7 +1049,7 @@ class SessionData(models.Model):
             - What: The key to look up in the object
         ```
         """
-        if not isinstance(object.get(key), dict):
+        if not isinstance(object.get(key), (dict,list)):
             object.__setitem__(key, {})
         return object.get(key)
 

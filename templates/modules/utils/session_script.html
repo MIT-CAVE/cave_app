@@ -75,6 +75,7 @@
               alert("Error: "+response.error);
             }
             else {
+              websocket.send({'command':'get_session_data', 'data':{}})
               switchSessions(response.session_id)
             }
         }
