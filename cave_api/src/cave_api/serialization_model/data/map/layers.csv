@@ -1,0 +1,6 @@
+type,id,enabled,legendGroup
+arc,transport,True,Transportation
+arc,last_mile,True,Transportation
+node,factory,True,Facilities
+node,warehouse,True,Facilities
+geo,demand,true,Demand
