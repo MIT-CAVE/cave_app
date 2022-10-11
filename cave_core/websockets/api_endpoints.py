@@ -117,7 +117,7 @@ def mutate_session(request):
         sessions = session.get_associated_sessions()
         # Used to make sure current session is the first item in the list
         if sessions is not None:
-            sessions = [session] + list(sessions.exclude(session.id))
+            sessions = [session] + list(sessions.exclude(id=session.id))
     else:
         sessions = [session]
 
