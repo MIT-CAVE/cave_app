@@ -121,7 +121,6 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
                 'custom_option_2': True,
                 'custom_option_3': False,
             },
-            'reinit': True,
             'help': 'A help text for the dropdown selector',
         },
         # As many props as needed
@@ -211,7 +210,6 @@ The CAVE app also includes two built in pane variants: `filter`, which provides 
 - [`order`](#order)
 - [`prop > type`](#prop-type)
 - [`props`](#props)
-- [`reinit`](#reinit)
 - [`send_to_api`](#send_to_api)
 - [`send_to_client`](#send_to_client)
 - [`value`](#value)
@@ -243,6 +241,8 @@ Key | Default | Description
 `custom_pane_key_*.props.custom_prop_key_*`&swarhk;<br>`.value.custom_option_*` | | See [`custom_option_*`](#custom_option_).
 `custom_context_pane_key_*.props.custom_prop_key_*`&swarhk;<br>`.selectableCategories` | Required | Used in a [`context`](#context-pane) pane, it takes a list of [`category_*`](#category_) keys (**only**). These are the used to determine which categories this context can be applied to.
 `custom_pane_key_*.teamSync` | `False` | If `True`, creates a sync button on the top of the pane. When that sync button is clicked, everything in that pane is synced across all sessions for that team (or user if individual session) such that all other sessions for that team have the exact same pane as it exists in the current session.
+`custom_pane_key_*.teamSyncCommand` | | If specified, passes an api command argument along with a mutation request. This command will be passed to `execute_command` for each session to be synced.
+`custom_pane_key_*.teamSyncCommandKeys` | | If specified, only passes specific session keys over to `execute_command` for each session to be synced.
 <a name="pane-variant">`custom_pane_key_*.variant`</a> | `'options'` | As a direct child of `custom_pane_key_*`, the `variant` key configures a pane to be an `'options'` or `'context'` pane. Each variant comes along with additional keys that add specific functionality to the pane.
 `custom_pane_key_*.width` | `'450px'` | Sets the width of the pane. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width). If set to `'auto'`, the width of the pane will adjust to fit its content. If the specified width exceeds the width of the viewport, the pane will match the width of the viewport.
 `paneState.open` | | Takes a `custom_pane_key_*` value to cause the referenced pane to open when the app loads.
@@ -287,7 +287,6 @@ Key | Default | Description
                     ],
                     'enabled': True,
                     'help': 'Select a solver type to use',
-                    'reinit': True,
                 },
                 'optimality_section': {
                     'name': 'Optimality Section',
@@ -432,7 +431,6 @@ Key | Default | Description
                     ],
                     'enabled': True,
                     'help': 'Help for both options',
-                    'reinit': True,
                 },
             },
             'icon': 'MdSettings',
@@ -515,8 +513,7 @@ Key | Default | Description
                         {'name': 'CoinOR', 'value': False},
                     ],
                     'enabled': True,
-                    'help': 'Select a solver type to use',
-                    'reinit': True,
+                    'help': 'Select a solver type to use'
                 },
                 'optimality_section': {
                     'name': 'Optimality Section',

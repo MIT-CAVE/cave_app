@@ -1,0 +1,4 @@
+id,name,icon,longitude,latitude,zoom,pitch,bearing,maxZoom,minZoom
+default,Default,FaGlobe,40,0,2,0,0,12,2
+ov1,Europe,FaGlobeEurope,14,47,4,0,0,12,2
+ov2,Americas,FaGlobeAmericas,-94,39,4,0,0,12,2

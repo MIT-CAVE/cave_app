@@ -93,7 +93,6 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
         ],
         'enabled': True,
         'help': 'Select a solver type to use',
-        'reinit': True,
     },
     'optimality_section': {
         'name': 'Optimality Section',

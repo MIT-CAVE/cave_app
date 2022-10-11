@@ -1,0 +1,34 @@
+"settings": {
+    "allow_modification": false,
+    "send_to_api": false,
+    "send_to_client": true,
+    "data": {
+        "syncToggles": {
+            "Map Layers": {
+                "ml1": ["map", "data", "enabledTypes"],
+                "ml2": ["nodes", "types"],
+                "ml3": ["arcs", "types"],
+                "ml4": ["geos", "types"],
+            },
+        },
+        "defaultDesync": {
+            "Map Layers": {
+                "ml1": ["map", "data", "enabledTypes"],
+                "ml2": ["nodes", "types"],
+                "ml3": ["arcs", "types"],
+                "ml4": ["geos", "types"],
+            },
+            "App Bar": {
+                "ab1": ["appBar", "data", "dashboardId"],
+                "ab2": ["appBar", "paneState"],
+            },
+        },
+        "IconUrl": "https://react-icons.mitcave.com/0.0.1",
+        "numberFormat": {
+            "precision": 2,
+            "trailingZeros": false,
+            "whenTyping": true,
+        },
+        "debug": true,
+    },
+}

@@ -51,12 +51,13 @@ Aside from [`name`](#name) and [`order`](#order) all the keys and values in the 
 Key | Default | Description
 --- | ------- | -----------
 <a name="custom_prop_key_">`custom_prop_key_*`</a> | | A custom key wrapper for a `props` item.
+<a name="apiCommand">`custom_prop_key_*.apiCommand`</a> | | If specified, passes an api command argument along with a mutation request. This command will be passed to `execute_command` for each session to be synced.
+<a name="apiCommandKeys">`custom_prop_key_*.apiCommandKeys`</a> | | If specified, only passes specific session keys over to `execute_command` for each session to be synced.
 <a name="enabled">`custom_prop_key_*.enabled`</a> | `False` | Enable a `props` element in the UI. If `False`, users cannot interact with the element in the UI.
 <a name="help">`custom_prop_key_*.help`</a> | | A help message that is displayed in the UI, as a result of a mouseover or touch event on a `custom_prop_key_*` element.
 <a name="label">`custom_prop_key_*.label`</a> | | A label that is displayed in the UI next to the `custom_prop_key_*` element.
 <a name="max-value">`custom_prop_key_*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
 <a name="min-value">`custom_prop_key_*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
-<a name="reinit">`custom_prop_key_*.reinit`</a> | `False` | If `True`, any change of the prop will trigger the server to send all session data to the `configure_session` method of the API. This is useful for settings that should change which panes or options are available to the end user in the app.
 <a name="prop-type">`custom_prop_key_*.type`</a> | Required | As a direct child of `custom_prop_key_*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, or `'selector'`.
 <a name="value">`custom_prop_key_*.value`</a> | Required | The actual value for a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'`), number (`'num'`), string (`'text'`), or an array of objects (`'selector'`).
 <a name="custom_option_">`custom_prop_key_*.value.custom_option_*`</a> | | Used along a `'selector'` prop, it takes a string value to be displayed as an option on the UI element.
