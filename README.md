@@ -94,6 +94,8 @@ Use the CLI to keep your API code `pretty` and match cave coding format standard
 
 - Willem Guter - CAVE Developer
 - Luis Vasquez - CAVE Developer
+- Erin Liu - CAVE Developer
+- Jean Billa - CAVE Developer
 - Connor Makowski - CAVE Researcher / Project Manager / Developer
 - Tim Russell - CAVE Researcher
 - Matthias Winkenbach - CAVE Director
