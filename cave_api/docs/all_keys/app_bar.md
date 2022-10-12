@@ -196,35 +196,35 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
 The CAVE app also includes two built in pane variants: `filter`, which provides tools to filter data from different categories and at different levels of granularity, and `appSettings`, which gives users the ability to control the appearance and overall behavior of the CAVE app.
 
 ##### Common keys
-- [`allow_modification`](#allow_modification)
-- [`color`](#color)
-- [`data`](#data)
-- [`enabled`](#enabled)
-- [`help`](#help)
-- [`icon`](#icon)
-- [`label`](#label)
-- [`layout`](#layout)
-- [`maxValue`](#max-value)
-- [`minValue`](#min-value)
-- [`name`](#name)
-- [`order`](#order)
-- [`prop > type`](#prop-type)
-- [`props`](#props)
-- [`send_to_api`](#send_to_api)
-- [`send_to_client`](#send_to_client)
-- [`value`](#value)
-- [`variant`](#variant)
+- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`color`](../common_keys/common_keys.md#color)
+- [`data`](../common_keys/common_keys.md#data)
+- [`enabled`](../common_keys/common_keys.md#enabled)
+- [`help`](../common_keys/common_keys.md#help)
+- [`icon`](../common_keys/common_keys.md#icon)
+- [`label`](../common_keys/common_keys.md#label)
+- [`layout`](../common_keys/common_keys.md#layout)
+- [`maxValue`](../common_keys/common_keys.md#max-value)
+- [`minValue`](../common_keys/common_keys.md#min-value)
+- [`name`](../common_keys/common_keys.md#name)
+- [`order`](../common_keys/common_keys.md#order)
+- [`prop > type`](../common_keys/common_keys.md#prop-type)
+- [`props`](../common_keys/common_keys.md#props)
+- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
+- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`value`](../common_keys/common_keys.md#value)
+- [`variant`](../common_keys/common_keys.md#variant)
 
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
 `custom_obj_key_*` | Required | A custom key wrapper for the custom pane.
 `custom_obj_key_*.type` | Required | The type of object shown - takes one of these values: `map`, `stat`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
-`custom_obj_key_*.bar` | Required | The section of the appbar to display the object in. Accepts either `upper` or `lower`. The use of both bar sections is not required, and any object can be shown in either bar.
+`custom_obj_key_*.bar` | Required | The section of the `appBar` to display the object in. Accepts either `upper` or `lower`. The use of both bar sections is not required, and any object can be shown in either bar.
 `custom_map_key_*.static` | `False` | If `True`, the viewport of this map cannot be changed manually, but can only be switched between the default and optional viewports given in the `map` top-level key.
 `custom_button_key_*.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 `custom_button_key_*.dashboardLayout` | `[]` | A list of chart items (max of 4 items currently supported) that belong to the current dashboard. Each chart item contains the following keys: `chart`, `grouping`, `statistic`, `category`, `level`, `type`, and `lockedLayout`.
-`custom_button_key_*.dashboardLayout.*.*.category` | | The category selected from the "**Group By**" drop-down menu of a chart in a dashboard view. This key is different from the common key [`category`](#category).
+`custom_button_key_*.dashboardLayout.*.*.category` | | The category selected from the "**Group By**" drop-down menu of a chart in a dashboard view. This key is different from the common key [`category`](../common_keys/common_keys.md#category).
 `custom_button_key_*.dashboardLayout.*.*.chart` | | The chart type selected from the top-left drop-down menu of a chart in a dashboard view. The `chart` key sets the type of chart to one of these values: [`'Bar'`], [`'Line'`], [`'Box Plot'`].
 `custom_button_key_*.dashboardLayout.*.*.grouping` | | A statistical or mathematical function selected by the user from a predefined set, to be applied over the data and rendered in a chart. It takes one of the following values: `'Sum'`, `'Average'`, `'Minimum'` or `'Maximum'`.
 `custom_button_key_*.dashboardLayout.*.*.kpi` | | The KPI selected from the "**KPIs**" drop-down menu of a chart in a dashboard view if the chart `type='kpis'`
@@ -234,14 +234,14 @@ Key | Default | Description
 `custom_button_key_*.dashboardLayout.*.*.type` | `'stats'` | This has two options: `'stats'` or `'kpis'`
 `custom_button_key_*.lockedLayout` | `False` | If `True`, prevents users from modifying the layout of a dashboard view by adding or removing charts.
 `custom_context_pane_key_*.data.custom_context_data_*` | | This represents the data structure created by the client to store each context in a list of contexts. Initial values can be provided by the API designer if needed.
-`custom_context_pane_key_*.data.custom_context_data_*`&swarhk;<br>`.applyCategories` | | Used **only** with a [`context`](#context-pane) pane, it takes a dictionary of [`category_*`](#category_)s, each of which is paired with a partial list of its [`custom_data_chunk_*`](#custom_data_chunk_) keys. This data is normally generated by user interactions as they build out contexts and returned to the API on a `configure` or `solve` request. Initial values can be provided by the API designer if needed.
-`custom_context_pane_key_*.data.custom_context_data_*`&swarhk;<br>`.applyCategories.category_*.custom_data_chunk_*` | | See [`custom_data_chunk_*`](#custom_data_chunk_).
+`custom_context_pane_key_*.data.custom_context_data_*`&swarhk;<br>`.applyCategories` | | Used **only** with a [`context`](#context-pane) pane, it takes a dictionary of [`category_*`](#category_)s, each of which is paired with a partial list of its [`custom_data_chunk_*`](../all_keys/categories.md#custom_data_chunk_) keys. This data is normally generated by user interactions as they build out contexts and returned to the API on a `configure` or `solve` request. Initial values can be provided by the API designer if needed.
+`custom_context_pane_key_*.data.custom_context_data_*`&swarhk;<br>`.applyCategories.category_*.custom_data_chunk_*` | | See [`custom_data_chunk_*`](../all_keys/categories.md#custom_data_chunk_).
 `custom_context_pane_key_*.data.custom_context_data_*`&swarhk;<br>`.prop` | | Used in the `data` portion of a [`context`](#context-pane) pane to note which prop the current context is altering. Takes a `custom_prop_key_*`.
-`custom_pane_key_*.props.custom_prop_key_*` | | See [`custom_prop_key_*`](#custom_prop_key_).
-`custom_pane_key_*.props.custom_prop_key_*`&swarhk;<br>`.value.custom_option_*` | | See [`custom_option_*`](#custom_option_).
+`custom_pane_key_*.props.custom_prop_key_*` | | See [`custom_prop_key_*`](../common_keys/props.md#custom_prop_key_).
+`custom_pane_key_*.props.custom_prop_key_*`&swarhk;<br>`.value.custom_option_*` | | See [`custom_option_*`](../common_keys/props.md#custom_option_).
 `custom_context_pane_key_*.props.custom_prop_key_*`&swarhk;<br>`.selectableCategories` | Required | Used in a [`context`](#context-pane) pane, it takes a list of [`category_*`](#category_) keys (**only**). These are the used to determine which categories this context can be applied to.
 `custom_pane_key_*.teamSync` | `False` | If `True`, creates a sync button on the top of the pane. When that sync button is clicked, everything in that pane is synced across all sessions for that team (or user if individual session) such that all other sessions for that team have the exact same pane as it exists in the current session.
-`custom_pane_key_*.teamSyncCommand` | | If specified, passes an api command argument along with a mutation request. This command will be passed to `execute_command` for each session to be synced.
+`custom_pane_key_*.teamSyncCommand` | | If specified, passes an API command argument along with a mutation request. This command will be passed to `execute_command` for each session to be synced.
 `custom_pane_key_*.teamSyncCommandKeys` | | If specified, only passes specific session keys over to `execute_command` for each session to be synced.
 <a name="pane-variant">`custom_pane_key_*.variant`</a> | `'options'` | As a direct child of `custom_pane_key_*`, the `variant` key configures a pane to be an `'options'` or `'context'` pane. Each variant comes along with additional keys that add specific functionality to the pane.
 `custom_pane_key_*.width` | `'450px'` | Sets the width of the pane. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width). If set to `'auto'`, the width of the pane will adjust to fit its content. If the specified width exceeds the width of the viewport, the pane will match the width of the viewport.
