@@ -23,15 +23,21 @@ This is the type of interactive data models that you can create with the CAVE AP
     cave run
     ```    
     - Optional: Run the app on `<your-ip>:8000` with development settings:
-      ```
-      cave run <your-ip>:8000
-      ```
-      - Replace <your-ip> with an IP address that points to your machine
+        - Note: To run on LAN, you must use an SSL connection.
+        - Note: This uses a self signed and insecure certificate for SSL/TLS reasons
+        - The certificates are self signed and shared openly in the cave open source project
+        - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
 
-    - Optional: Run the app on `<any-ip>:8000` that points to your machine with development settings:
-      ```
-      cave run 0.0.0.0:8000
-      ```
+        ```
+        cave run <your-ip>:8000
+        ```
+        - Note: This requires one free port above the specified port to run the server.
+        - Note: You can specify the LAN IP with
+            - Wildcard: `-b 0.0.0.0`
+                - This allows you to access the sever from any IP that points to your machine
+            - Specific: `-b 192.168.1.100`
+                - Note: Replace `192.168.1.100` with your local IP address
+                - This allows you to access the sever from a specific IP that points to your machine
 
 5. In Chrome, you can now open the web app:
     - EG: If you use the standard settings
