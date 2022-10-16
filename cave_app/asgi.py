@@ -12,11 +12,12 @@ if os.environ.get("DJANGO_SETTINGS_MODULE") is None:
 from django.core.asgi import get_asgi_application
 from channels.routing import ProtocolTypeRouter
 
+django_asgi_app = get_asgi_application()
+
 from cave_core.websockets import get_ws_asgi_application
 
 # Initialize asgi app items before calling any local imports
 # get_asgi_application should always be called before local import here
-django_asgi_app = get_asgi_application()
 ws_asgi_app = get_ws_asgi_application()
 
 application = ProtocolTypeRouter(
