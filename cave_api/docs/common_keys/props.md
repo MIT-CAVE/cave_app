@@ -46,7 +46,7 @@ We dedicate a section to the `props` group, as it handles all of the user input 
 ```
 
 ##### Nested inside the `props` group
-Aside from [`name`](#name) and [`order`](#order) all the keys and values in the above structure are specific to the `props` group and therefore explained below:
+Aside from [`name`](common_keys.md#name) and [`order`](common_keys.md#order) all the keys and values in the above structure are specific to the `props` group and therefore explained below:
 
 Key | Default | Description
 --- | ------- | -----------
@@ -66,13 +66,13 @@ Key | Default | Description
 ##### Prop `type`s and their `variant`s:
 
 ##### `'head'`
-Allows users to place a header for an individual section, containing a title (via [`name`](#name)) and a [`help`](#help) message. The [`value`](#value) key is not used with this type.
+Allows users to place a header for an individual section, containing a title (via [`name`](common_keys.md#name)) and a [`help`](#help) message. The [`value`](#value) key is not used with this type.
 
 ##### `'text'`
 Allows users to enter text in a UI field. Here, `value` takes a string.
 
 ##### `'num'`
-Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is validated against [`constraint`](#deprecat-constraint).
+Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is validated against [`constraint`](common_keys.md#deprecat-constraint).
 ###### Variants:
 >`'slider'`: Places a range of values along a bar, from which users may select a single value.<br>
 
@@ -89,7 +89,7 @@ Allows end users to select options from a set. This `type` requires an array of 
 Since multiple selection is possible in the `checkbox` variant, one or more options in [`value`](#value) can be set to `True`, while in the `dropdown` and `radio` variants, only one option is allowed to be `True`.
 
 ##### Default `props` values and overriding
-Very often, the `props` elements specified in `arcs`, `nodes`, and `geos` are the same for a large number of items at the _data-point level_ ([custom_arc_data_*](#arc-data-point), [custom_node_data_*](#node-data-point) or [custom_geo_data_*](#geo-data-point)). To reduce the overhead caused by duplicate `props` items and achieve a more lightweight data structure, it is possible to define a `props` dictionary at the _type level_ ([custom_arc_type_*](#arc-type), [custom_node_type_*](#node-type), or [custom_geo_type_*](#geo-type)) so that a prop can be reused and overridden at the data-point level. In this case, two `props` items match by sharing the same [custom prop key](#custom_prop_key_). The resulting prop from this match is a union of key-value pairs, where if a key exists in both `props` items, the value at the data-point level will be used.
+Very often, the `props` elements specified in [`arcs`](../all_keys/arcs.md), [`nodes`](../all_keys/nodes.md), and [`geos`](../all_keys/geos.md) are the same for a large number of items at the _data-point level_ ([custom_arc_data_*](../all_keys/arcs.md#arc-data-point), [custom_node_data_*](../all_keys/nodes.md#node-data-point) or [custom_geo_data_*](../all_keys/geos.md#geo-data-point)). To reduce the overhead caused by duplicate `props` items and achieve a more lightweight data structure, it is possible to define a `props` dictionary at the _type level_ ([custom_arc_type_*](../all_keys/arcs.md#arc-type), [custom_node_type_*](../all_keys/nodes.md#node-type), or [custom_geo_type_*](../all_keys/geos.md#geo-type)) so that a prop can be reused and overridden at the data-point level. In this case, two `props` items match by sharing the same [custom prop key](#custom_prop_key_). The resulting prop from this match is a union of key-value pairs, where if a key exists in both `props` items, the value at the data-point level will be used.
 
 ##### UI / UX tips
 - When it comes to select multiple options from a set, you can save space by using `checkbox`es instead of on/off `toggle`s. However, if there is only one option, an on/off `toggle` is recommended instead.

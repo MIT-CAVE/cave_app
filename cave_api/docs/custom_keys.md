@@ -1,5 +1,5 @@
 ### Top-level custom keys
-In addition to the standard CAVE [top-level keys](all_keys/toplevel_keys.md), API designers can add custom top-level keys that allow them to persist data that is computed as a result of a user-side action. This emulates (on the back-end side) a pattern widely used in front-end development, called [state management](#https://en.wikipedia.org/wiki/State_management).
+In addition to the standard CAVE [top-level keys](all_keys/top_level_keys.md), API designers can add custom top-level keys that allow them to persist data that is computed as a result of a user-side action. This emulates (on the back-end side) a pattern widely used in front-end development, called [state management](https://en.wikipedia.org/wiki/State_management).
 
 A fairly common use case for this approach is to persist data that may need to be invisible to users based on other user selections. For example, an app that has options that toggle other options might want to store any choices users have made when those options are not currently presented to the user. While designers could explore other solutions for data persistence, we believe that top-level custom keys provide an easy escape hatch for organizing and accessing a persistent data state in the CAVE API structure.
 

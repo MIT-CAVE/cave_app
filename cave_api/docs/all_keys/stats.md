@@ -43,21 +43,21 @@ Let's look inside the structure of `stats`:
 ```
 
 ##### Common keys
-- [`allow_modification`](#allow_modification)
-- [`category`](#category)
-- [`data`](#data)
-- [`name`](#name)
-- [`numberFormat`](#number-format)
-- [`order`](#order)
-- [`send_to_api`](#send_to_api)
-- [`send_to_client`](#send_to_client)
+- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`category`](../common_keys/common_keys.md#category)
+- [`data`](../common_keys/common_keys.md#data)
+- [`name`](../common_keys/common_keys.md#name)
+- [`numberFormat`](../common_keys/common_keys.md#number-format)
+- [`order`](../common_keys/common_keys.md#order)
+- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
+- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
 
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-`data.custom_stat_data_*` | Required | A custom key wrapper for the [`category`](#category) and [`values`](#values) keys.
-`data.custom_stat_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](#custom_data_chunk_).
-`data.custom_stat_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](#custom_data_key_).
+`data.custom_stat_data_*` | Required | A custom key wrapper for the [`category`](../common_keys/common_keys.md#category) and [`values`](#values) keys.
+`data.custom_stat_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](categories.md#custom_data_chunk_).
+`data.custom_stat_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](categories.md#custom_data_key_).
 <a name="values">`data.custom_stat_data_*.values`</a> | Required | A wrapper for independent `custom_stat_key_*`s and their values.
 <a name="custom_stat_key_">`types.custom_stat_key_*`</a> | Required | A key used to identify a parameter in a `calculation` expression and be referenced by the `values` group.
 `types` | Required | The `types` key allows you to define the appearance and logic of the `custom_stat_key_*` parameters.

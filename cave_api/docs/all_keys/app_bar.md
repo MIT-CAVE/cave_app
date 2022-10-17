@@ -209,7 +209,7 @@ The CAVE app also includes two built in pane variants: `filter`, which provides 
 - [`name`](../common_keys/common_keys.md#name)
 - [`order`](../common_keys/common_keys.md#order)
 - [`prop > type`](../common_keys/common_keys.md#prop-type)
-- [`props`](../common_keys/common_keys.md#props)
+- [`props`](../common_keys/common_keys.md#props-short)
 - [`send_to_api`](../common_keys/common_keys.md#send_to_api)
 - [`send_to_client`](../common_keys/common_keys.md#send_to_client)
 - [`value`](../common_keys/common_keys.md#value)

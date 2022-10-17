@@ -45,12 +45,12 @@ Below is the `map` group with its sub-keys matched by typical or placeholder val
 ```
 
 ##### Common keys
-- [`allow_modification`](#allow_modification)
-- [`data`](#data)
-- [`send_to_api`](#send_to_api)
-- [`send_to_client`](#send_to_client)
-- [`name`](#name)
-- [`icon`](#icon)
+- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`data`](../common_keys/common_keys.md#data)
+- [`icon`](../common_keys/common_keys.md#icon)
+- [`name`](../common_keys/common_keys.md#name)
+- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
+- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
 
 ##### Special and custom keys
 Key | Default | Description

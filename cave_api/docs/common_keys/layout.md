@@ -1,6 +1,6 @@
 #### The `layout` key
 
-The `layout` key allows for use cases where you want to arrange components that are related or simply group them under a well-structured layout. The supported components for use with a layout structure are [props](#the-props-key) and [KPIs](#kpis). In addition to properly aligning a group of props or KPIs, a `style` prop is provided to act as a escape hatch for specifying CSS rules. Through these CSS rules, it is possible to modify the appearance of your prop components or KPIs and allows a way to make them more distinctive or visually appealing.
+The `layout` key allows for use cases where you want to arrange components that are related or simply group them under a well-structured layout. The supported components for use with a layout structure are [props](props.md) and [KPIs](../all_keys/kpis.md). In addition to properly aligning a group of props or KPIs, a `style` prop is provided to act as a escape hatch for specifying CSS rules. Through these CSS rules, it is possible to modify the appearance of your prop components or KPIs and allows a way to make them more distinctive or visually appealing.
 
 The `layout` structure is the same for `props` and `kpis` and looks as follows:
 ```py
@@ -65,7 +65,7 @@ Key | Default | Description
 <a name="layout-type">`*.type`</a> | Required | The type of layout. It can be `'grid'` or `'item'`.
 <a name="layout-width">`*.width`</a> | `'auto'` | Sets the width of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width) and is a shortcut for the definition `style: { width: ... }`. Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
 <a name="layout-column">`layout.data.*.column`</a> | | An integer for the grid column position starting from left to right. If omitted, the layout element will fill the first empty grid element found within the specified [`row`](#layout-row), starting from left to right. If the [`row`](#layout-row) property is also omitted, the search sequence for empty slots can continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. <!-- TODO (0.3.0): See [example for layout elements with unspecified position](#). -->
-<a name="layout-container">`layout.data.*.container`</a> | `'vertical'`<br><br>or<br><br> `'none'`<br>(only for the [`head`](#head) prop) | A UI wrapper that modifies the appearance of an item by adding a title based on its [`name`](#name), a [`help`](#help) tooltip, and adjusting the position and size of its input controls. Available options are `'vertical'`, `'horizontal'`, `'titled'` and `'none'`. By default, the [`'head'`](#head) prop is set to have a `'none'` container.<br><br>This feature is currently only supported for [`props`](#the-props-key).
+<a name="layout-container">`layout.data.*.container`</a> | `'vertical'`<br><br>or<br><br> `'none'`<br>(only for the [`head`](props.md#head) prop) | A UI wrapper that modifies the appearance of an item by adding a title based on its [`name`](common_keys.md#name), a [`help`](props.md#help) tooltip, and adjusting the position and size of its input controls. Available options are `'vertical'`, `'horizontal'`, `'titled'` and `'none'`. By default, the [`'head'`](props.md#head) prop is set to have a `'none'` container.<br><br>This feature is currently only supported for [`props`](props.md).
 <a name="elevation">`layout.data.*.elevation`</a> | `1` | Used in conjunction with a [`container`](#layout-container) definition, `elevation` controls the size of the shadow applied to the surface to visually differentiate or highlight the item from others of the same container type. Possible values are `0` to `24`.
 <a name="layout-item-id">`layout.data.*.itemId`</a> | | The ID of a prop or KPI item to be placed in a specific position within the layout. This property is required by a layout element of type `'item'`.
 <a name="marquee">`layout.data.*.marquee`</a> | `False`<br><br>or<br><br> `True`<br>(only for [`'horizontal'` `container`](#layout-container)s) | Used in conjunction with a [`container`](#layout-container) definition, `marquee` sets the behavior of the container title so that, if `True`, the title is displayed as a marquee when the length of the title exceeds its reserved width in the container; otherwise, the title wraps vertically. Unless set to `False`, a `'horizontal'` `container` has `marquee` enabled by default.
@@ -148,7 +148,7 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
 ```
 
 ##### By number of rows and columns
-The following are different layout configurations based on the outer number of rows and columns, as well as different interior layout arrangements, contained in an [`options` pane](#panes):
+The following are different layout configurations based on the outer number of rows and columns, as well as different interior layout arrangements, contained in an [`options` pane](../all_keys/app_bar.md#panes):
 
 ###### Fixed number of columns and rows
 In this example, all elements are explicitly positioned within the layout. This is the recommended approach for most cases.
@@ -221,7 +221,7 @@ The visual result in the CAVE App is as follows:
 </details>
 
 ###### Single-column
-In this example, all items are arranged in a single column. Although the number of  rows are known, the `'auto'` feature helps you save time and effort when the number of items changes. Also, note that [`num_rows`](#layout_rows) is set to `'auto'` by default; However, it is recommended that you specify it explicitly in the layout to improve your code readability.
+In this example, all items are arranged in a single column. Although the number of  rows are known, the `'auto'` feature helps you save time and effort when the number of items changes. Also, note that [`num_rows`](#layout-rows) is set to `'auto'` by default; However, it is recommended that you specify it explicitly in the layout to improve your code readability.
 
 <details>
   <summary>Click here to show / hide example</summary>
@@ -342,7 +342,7 @@ The visual result in the CAVE App is as follows:
 </details>
 
 ###### Fixed number of columns
-In this example, a fixed number of columns has been set, letting the CAVE App estimate the number of rows needed to contain the items specified in the layout. One possible use case is when two or more sections are clearly defined and should be kept as [`'head'`](#head)ers in the first row of the layout. Here, the rest of the items will be arranged to fill in the layout with their positions determined by their explicitly set [`column`](#layout-column)s or [`row`](#layout-row)s, or based on the `layout_key_*` names assigned to them.
+In this example, a fixed number of columns has been set, letting the CAVE App estimate the number of rows needed to contain the items specified in the layout. One possible use case is when two or more sections are clearly defined and should be kept as [`'head'`](props.md#head)ers in the first row of the layout. Here, the rest of the items will be arranged to fill in the layout with their positions determined by their explicitly set [`column`](#layout-column)s or [`row`](#layout-row)s, or based on the `layout_key_*` names assigned to them.
 
 As in the previous examples, the `'auto'` feature helps you save time and effort when the number of items changes but the number of columns is known to be fixed. Keeping [`num_rows`](#layout-rows) explicitly set to `'auto'` is a good practice to improve your code readability.
 
@@ -463,7 +463,7 @@ In this example, the number of rows and columns is unknown. Here, the CAVE App w
 
 As in the previous examples, the `'auto'` feature helps you save time and effort if the number of these grouped items changes. Setting both [`num_columns`](#layout-columns) and [`num_rows`](#layout-rows) to `'auto'` is still a good practice to improve your code readability.
 
-The _auto-grid_ rendering is also triggered when the `layout` property is empty or has not been specified along a [`props`](#the-props-key) or [`kpis`](#kpis) structure.
+The _auto-grid_ rendering is also triggered when the `layout` property is empty or has not been specified along a [`props`](props.md) or [`kpis`](../all_keys/kpis.md) structure.
 
 <details>
   <summary>Click here to show / hide example</summary>

@@ -148,36 +148,38 @@ The structure of an `arcs` group looks as follows:
 ```
 
 ##### Common keys
-- [`allow_modification`](#allow_modification)
-- [`category`](#category)
-- [`colorBy`](#colorBy)
-- [`colorByOptions`](#colorByOptions)
-- [`column`](#column)
-- [`data`](#data)
-- [`enabled`](#enabled)
-- [`endGradientColor`](#endGradientColor)
-- [`endSize`](#endSize)
-- [`help`](#help)
-- [`name`](#name)
-- [`numberFormat`](#number-format)
-- [`order`](#order)
-- [`prop > type`](#prop-type)
-- [`props`](#props)
-- [`send_to_api`](#send_to_api)
-- [`send_to_client`](#send_to_client)
-- [`sizeBy`](#sizeBy)
-- [`sizeByOptions`](#sizeByOptions)
-- [`startSize`](#startSize)
-- [`startGradientColor`](#startGradientColor)
-- [`value`](#value)
-- [`variant`](#variant)
+- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`category`](../common_keys/common_keys.md#category)
+- [`colorBy`](../common_keys/common_keys.md#colorBy)
+- [`colorByOptions`](../common_keys/common_keys.md#colorByOptions)
+- [`column`](../common_keys/common_keys.md#column)
+- [`data`](../common_keys/common_keys.md#data)
+- [`enabled`](../common_keys/common_keys.md#enabled)
+- [`endGradientColor`](../common_keys/common_keys.md#end-gradient)
+- [`endSize`](../common_keys/common_keys.md#endSize)
+- [`help`](../common_keys/props.md#help)
+- [`max`](../common_keys/common_keys.md#color-by-max)
+- [`min`](../common_keys/common_keys.md#color-by-min)
+- [`name`](../common_keys/common_keys.md#name)
+- [`numberFormat`](../common_keys/common_keys.md#number-format)
+- [`order`](../common_keys/common_keys.md#order)
+- [`prop > type`](../common_keys/props.md#prop-type)
+- [`props`](../common_keys/common_keys.md#props-short)
+- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
+- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`sizeBy`](../common_keys/common_keys.md#sizeBy)
+- [`sizeByOptions`](../common_keys/common_keys.md#sizeByOptions)
+- [`startSize`](../common_keys/common_keys.md#startSize)
+- [`startGradientColor`](../common_keys/common_keys.md#start-gradient)
+- [`value`](../common_keys/props.md#value)
+- [`variant`](../common_keys/props.md#variant)
 
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
 <a name="arc-data-point">`data.custom_arc_data_*`</a> | Required | A custom key wrapper for the parameters required to visualize an arc flow and the data associated with it in the "**Map**" view.
-`data.custom_arc_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](#custom_data_chunk_).
-`data.custom_arc_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](#custom_data_key_).
+`data.custom_arc_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](../all_keys/categories.md#custom_data_chunk_).
+`data.custom_arc_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](../all_keys/categories.md#custom_data_key_).
 `data.custom_arc_data_*.endAltitude` | | The altitude (in meters) for the target location in the "**Map**" view. It takes a float value.
 `data.custom_arc_data_*.endClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
 `data.custom_arc_data_*.endLatitude` | Required | The latitude for the target location in the "**Map**" view. It takes a float value.
@@ -185,7 +187,7 @@ Key | Default | Description
 `data.custom_arc_data_*.height` | `1` | The height multiplier relative to the distance between two points for the apex of a `3d` (lineBy) arc. For example, a value of `0` would turn a `3d` (lineBy) arc into the equivalent to a `solid` (lineBy) arc.
 `data.custom_arc_data_*.name` | | A name for the arc flow that will be displayed as a title in the map modal.
 <a name="path">`data.custom_arc_data_*.path`</a> | | A list of coordinate points (`[<longitude>, <latitude>]`), such that every two consecutive coordinates represent an arc segment of a path to be rendered in the "**Map**" view. Additionally, a third position can be added to each coordinate (`[<longitude>, <latitude>, <altitude>]`), to visually represent altitude on the map.<br><br>Please note that `path` is not supported for `3d` arcs. If you need to create a "`3d` path", you can do so by joining multiple arcs which start and end coordinates match the segments of the intended path.<br><br>The use of `path` overrides any behavior resulting from the use of the following `data.custom_arc_data_*.` keys: `startLongitude`, `startLatitude`, `startAltitude`, `endLongitude`, `endLatitude`, and `endAltitude`.
-`data.custom_arc_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](#custom_prop_key_).
+`data.custom_arc_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](../common_keys/props.md#custom_prop_key_).
 `data.custom_arc_data_*.startAltitude` | | The altitude (in meters) for the source location in the "**Map**" view. It takes a float value.
 `data.custom_arc_data_*.startClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
 `data.custom_arc_data_*.startLatitude` | Required | The latitude for the source location in the "**Map**" view. It takes a float value.

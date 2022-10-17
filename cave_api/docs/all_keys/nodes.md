@@ -112,42 +112,42 @@ The structure of a `nodes` group looks as follows:
 ```
 
 ##### Common keys
-- [`allow_modification`](#allow_modification)
-- [`category`](#category)
-- [`colorBy`](#colorBy)
-- [`colorByOptions`](#colorByOptions)
-- [`column`](#column)
-- [`data`](#data)
-- [`enabled`](#enabled)
-- [`endGradientColor`](#endGradientColor)
-- [`endSize`](#endSize)
-- [`help`](#help)
-- [`icon`](#icon)
-- [`name`](#name)
-- [`numberFormat`](#number-format)
-- [`order`](#order)
-- [`prop > type`](#prop-type)
-- [`props`](#props)
-- [`send_to_api`](#send_to_api)
-- [`send_to_client`](#send_to_client)
-- [`sizeBy`](#sizeBy)
-- [`sizeByOptions`](#sizeByOptions)
-- [`startSize`](#startSize)
-- [`startGradientColor`](#startGradientColor)
-- [`value`](#value)
-- [`variant`](#variant)
+- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`category`](../common_keys/common_keys.md#category)
+- [`colorBy`](../common_keys/common_keys.md#colorBy)
+- [`colorByOptions`](../common_keys/common_keys.md#colorByOptions)
+- [`column`](../common_keys/common_keys.md#column)
+- [`data`](../common_keys/common_keys.md#data)
+- [`enabled`](../common_keys/common_keys.md#enabled)
+- [`endGradientColor`](../common_keys/common_keys.md#endGradientColor)
+- [`endSize`](../common_keys/common_keys.md#endSize)
+- [`help`](../common_keys/props.md#help)
+- [`icon`](../common_keys/common_keys.md#icon)
+- [`name`](../common_keys/common_keys.md#name)
+- [`numberFormat`](../common_keys/common_keys.md#number-format)
+- [`order`](../common_keys/common_keys.md#order)
+- [`prop > type`](../common_keys/props.md#prop-type)
+- [`props`](../common_keys/common_keys.md#props-short)
+- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
+- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`sizeBy`](../common_keys/common_keys.md#sizeBy)
+- [`sizeByOptions`](../common_keys/common_keys.md#sizeByOptions)
+- [`startSize`](../common_keys/common_keys.md#startSize)
+- [`startGradientColor`](../common_keys/common_keys.md#startGradientColor)
+- [`value`](../common_keys/props.md#value)
+- [`variant`](../common_keys/props.md#variant)
 
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
 <a name="node-data-point">`data.custom_node_data_*`</a> | Required | A custom key wrapper for the parameters required to visualize a node and the data associated with it in the "**Map**" view.
 `data.custom_node_data_*.altitude` | `1` | The altitude of the node (in meters) above sea level. Defaults to 1 to appear on top of `geo` layers.
-`data.custom_node_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](#custom_data_chunk_).
-`data.custom_node_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](#custom_data_key_).
+`data.custom_node_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](categories.md#custom_data_chunk_).
+`data.custom_node_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](categories.md#custom_data_key_).
 `data.custom_node_data_*.latitude` | Required | The latitude of the node location in the "**Map**" view. It takes a float value.
 `data.custom_node_data_*.longitude` | Required | The longitude of the node location in the "**Map**" view. It takes a float value.
 `data.custom_node_data_*.name` | | A name for the node location that will be displayed as a title in the map modal.
-`data.custom_node_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](#custom_prop_key_).
+`data.custom_node_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](../common_keys/props.md#custom_prop_key_).
 `data.custom_node_data_*.type` | Required | The `type` key sets the node type of `custom_node_data_*` to a `custom_node_type_*` key, to match specific visualization preferences for a node.
 `types` | Required | The `types` key allows you to define different types of nodes in terms of styling and data viz settings.
 <a name="node-type">`types.custom_node_type_*`</a> | | A wrapper for key-value pairs that match a specific set of data viz preferences for a node.

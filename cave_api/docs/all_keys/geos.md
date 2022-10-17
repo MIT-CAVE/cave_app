@@ -1,7 +1,7 @@
 ### `geos`
 The `geos` group takes in data and renders it as geographic areas on the "**Map**" view, to visualize spatial distribution of parameters.
 
-The internal structure of `geos` is very similar to that of the `arcs` and `nodes` groups. The most relevant discrepancy is the addition of a special key `geoJson` that is closely related to the GeoJSON data retrieved from the [`geoJsons`](#geoJsons) group.
+The internal structure of `geos` is very similar to that of the `arcs` and `nodes` groups. The most relevant discrepancy is the addition of the special key `geoJson`.
 
 Let's look inside the structure of `geos`:
 ```py
@@ -56,7 +56,7 @@ Let's look inside the structure of `geos`:
                 },
                 'custom_prop_key_2': {...},
                 # As many default props as needed
-            }
+            },
             'icon': 'FaHexagon',
         },
         'custom_geo_type_2': {...},
@@ -89,43 +89,42 @@ Let's look inside the structure of `geos`:
 ```
 
 ##### Common keys
-- [`allow_modification`](#allow_modification)
-- [`category`](#category)
-- [`colorBy`](#colorBy)
-- [`colorByOptions`](#colorByOptions)
-- [`column`](#column)
-- [`data`](#data)
-- [`enabled`](#enabled)
-- [`endGradientColor`](#endGradientColor)
-- [`help`](#help)
-- [`icon`](#icon)
-- [`name`](#name)
-- [`numberFormat`](#number-format)
-- [`order`](#order)
-- [`prop > type`](#prop-type)
-- [`props`](#props)
-- [`send_to_api`](#send_to_api)
-- [`send_to_client`](#send_to_client)
-- [`startGradientColor`](#startGradientColor)
-- [`value`](#value)
-- [`variant`](#variant)
+- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`category`](../common_keys/common_keys.md#category)
+- [`colorBy`](../common_keys/common_keys.md#colorBy)
+- [`colorByOptions`](../common_keys/common_keys.md#colorByOptions)
+- [`column`](../common_keys/common_keys.md#column)
+- [`data`](../common_keys/common_keys.md#data)
+- [`enabled`](../common_keys/common_keys.md#enabled)
+- [`endGradientColor`](../common_keys/common_keys.md#end-gradient)
+- [`help`](../common_keys/props.md#help)
+- [`icon`](../common_keys/common_keys.md#icon)
+- [`name`](../common_keys/common_keys.md#name)
+- [`numberFormat`](../common_keys/common_keys.md#number-format)
+- [`order`](../common_keys/common_keys.md#order)
+- [`prop > type`](../common_keys/props.md#prop-type)
+- [`props`](../common_keys/common_keys.md#props-short)
+- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
+- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`startGradientColor`](../common_keys/common_keys.md#start-gradient)
+- [`value`](../common_keys/props.md#value)
+- [`variant`](../common_keys/props.md#variant)
 
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
 <a name="geo-data-point">`data.custom_geo_data_*`</a> | Required | A custom key wrapper for the parameters required to visualize a geo and the data associated with it on the "**Map**" view.
-`data.custom_geo_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](#custom_data_chunk_).
-`data.custom_geo_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](#custom_data_key_).
+`data.custom_geo_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](categories.md#custom_data_chunk_).
+`data.custom_geo_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](categories.md#custom_data_key_).
 <a name="geojson-value">`data.custom_geo_data_*.geoJsonValue`</a> | | The value matched by [`geojson_prop_*`](#geojson_prop_) inside the GeoJSON data source. The CAVE App will aggregate all data matches found via the path: `features` &rarr; `<array-index>` &rarr; `properties` &rarr; `geojson_prop_*` &rarr; `geojson_value_*`.
 <a name="geojson_value_">`data.custom_geo_data_*.geoJsonValue`&swarhk;<br>`.geojson_value_*`</a> | | The match value for the [geoJsonValue](#geojson-value) key.
 `data.custom_geo_data_*.name` | | A name for the geo area that will be displayed as a title in the map modal.
-`data.custom_geo_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](#custom_prop_key_).
+`data.custom_geo_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](../common_keys/props.md#custom_prop_key_).
 `data.custom_geo_data_*.type` | Required | The `type` key sets the type of `custom_geo_data_*` to a `custom_geo_type_*` key, to match specific visualization preferences for a geo.
 `types` | Required | The `types` key allows you to define different types of geos in terms of styling and data viz settings.
 <a name="geo-type">`types.custom_geo_type_*`</a> | Required | A wrapper for key-value pairs that match a specific set of data viz preferences for a geo.
 <a name="geojson">`types.custom_geo_type_*.geoJson`</a> | | A wrapper for the [`geoJsonLayer`](#geojson_layer) and [`geoJsonProp`](#geojson_prop) keys in a geo type.
-<a name="geojson_layer">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonLayer`</a> | | Sets the GeoJSON data source of `custom_geo_type_*` to a URL of a GeoJSON data source. Note that this url is fetched on app startup or, if passed later, when the layer is enabled by the app user.
-`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonLayer.custom_geojson_data_*` | Required | See [`custom_geojson_data_*`](#custom_geojson_data_).
+<a name="geojson_layer">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonLayer`</a> | | Sets the GeoJSON data source of `custom_geo_type_*` to a URL of a GeoJSON data source. Note that this URL is fetched on app startup or, if passed later, when the layer is enabled by the app user.
 <a name="geojson_prop">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonProp`</a> | | Contains the name of a [GeoJSON property](#https://datatracker.ietf.org/doc/html/rfc7946#section-1.5) in the data source specified in `geoJsonLayer`.
 <a name="geojson_prop_">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonProp.geojson_prop_*`</a> | | The match value for the [geoJsonProp](#geojson_prop) key.
 

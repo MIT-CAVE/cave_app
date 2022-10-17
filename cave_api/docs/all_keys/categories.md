@@ -47,12 +47,12 @@ Below is an example of the `categories` group:
 ```
 
 ##### Common keys
-- [`allow_modification`](#allow_modification)
-- [`data`](#data)
-- [`name`](#name)
-- [`order`](#order)
-- [`send_to_api`](#send_to_api)
-- [`send_to_client`](#send_to_client)
+- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`data`](../common_keys/common_keys.md#data)
+- [`name`](../common_keys/common_keys.md#name)
+- [`order`](../common_keys/common_keys.md#order)
+- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
+- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
 
 ##### Special and custom keys
 Key | Default | Description
