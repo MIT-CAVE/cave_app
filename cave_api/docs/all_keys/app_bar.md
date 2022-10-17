@@ -225,10 +225,12 @@ Key | Default | Description
 `custom_button_key_*.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 `custom_button_key_*.dashboardLayout` | `[]` | A list of chart items (max of 4 items currently supported) that belong to the current dashboard. Each chart item contains the following keys: `chart`, `grouping`, `statistic`, `category`, `level`, `type`, and `lockedLayout`.
 `custom_button_key_*.dashboardLayout.*.*.category` | | The category selected from the "**Group By**" drop-down menu of a chart in a dashboard view. This key is different from the common key [`category`](../common_keys/common_keys.md#category).
+`custom_button_key_*.dashboardLayout.*.*.category2` | | The category selected from the "**Sub Group**" drop-down menu of a chart in a dashboard view. This uses the data resulting from "**Group By**" as input and allows you to further divide it based on the selected `category2` and [`level2`](#level2).
 `custom_button_key_*.dashboardLayout.*.*.chart` | | The chart type selected from the top-left drop-down menu of a chart in a dashboard view. The `chart` key sets the type of chart to one of these values: [`'Bar'`], [`'Line'`], [`'Box Plot'`].
 `custom_button_key_*.dashboardLayout.*.*.grouping` | | A statistical or mathematical function selected by the user from a predefined set, to be applied over the data and rendered in a chart. It takes one of the following values: `'Sum'`, `'Average'`, `'Minimum'` or `'Maximum'`.
 `custom_button_key_*.dashboardLayout.*.*.kpi` | | The KPI selected from the "**KPIs**" drop-down menu of a chart in a dashboard view if the chart `type='kpis'`
 `custom_button_key_*.dashboardLayout.*.*.level` | | The second-level aggregation selected from the "**Group By**" drop-down menu of a chart in a dashboard view.
+<a name="level2">`custom_button_key_*.dashboardLayout.*.*.level2`</a> | | The second-level aggregation selected from the "**Sub Group**" drop-down menu of a chart in a dashboard view.
 `custom_button_key_*.dashboardLayout.*.*.lockedLayout` | `False` | A boolean to indicate if the layout on this chart can be changed by users.
 `custom_button_key_*.dashboardLayout.*.*.statistic` | | The statistic selected from the "**Statistic**" drop-down menu of a chart in a dashboard view if the chart `type='stats'`
 `custom_button_key_*.dashboardLayout.*.*.type` | `'stats'` | This has two options: `'stats'` or `'kpis'`
