@@ -1,0 +1,103 @@
+{
+    "DC": {
+        "name": "DCs",
+        "colorByOptions": {
+            "Size": {
+                "min": 0,
+                "max": 80,
+                "startGradientColor": {
+                    "dark": "rgb(233, 0, 0)",
+                    "light": "rgb(52, 52, 236)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(96, 2, 2)",
+                    "light": "rgb(23, 23, 126)"
+                }
+            },
+            "Capacity": {
+                "min": 0,
+                "max": 50,
+                "startGradientColor": {
+                    "dark": "rgb(233, 0, 0)",
+                    "light": "rgb(52, 52, 236)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(96, 2, 2)",
+                    "light": "rgb(23, 23, 126)"
+                }
+            },
+            "Active": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"}
+        },
+        "colorBy": "Size",
+        "minSizeRange": 0,
+        "sizeByOptions": {
+            "Size": {"min": 0, "max": 80},
+            "Capacity": {"min": 0, "max": 50}
+        },
+        "sizeBy": "Capacity",
+        "startSize": "30px",
+        "endSize": "45px",
+        "icon": "MdStore",
+        "order": 2,
+        "props": {
+            "Size": {
+                "type": "num",
+                "enabled": true,
+                "help": "The Size in SQ Meters",
+                "numberFormat": {
+                    "unit": "Sq Meters"
+                }
+            }
+        }
+    },
+    "Store": {
+        "name": "Stores",
+        "colorByOptions": {
+            "Size": {
+                "min": 0,
+                "max": 1000,
+                "startGradientColor": {
+                    "dark": "rgb(233, 0, 0)",
+                    "light": "rgb(52, 52, 236)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(96, 2, 2)",
+                    "light": "rgb(23, 23, 126)"
+                }
+            },
+            "Capacity": {
+                "min": 0,
+                "max": 50,
+                "startGradientColor": {
+                    "dark": "rgb(233, 0, 0)",
+                    "light": "rgb(52, 52, 236)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(96, 2, 2)",
+                    "light": "rgb(23, 23, 126)"
+                }
+            },
+            "Active": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"}
+        },
+        "colorBy": "Size",
+        "sizeByOptions": {
+            "Size": {"min": 0, "max": 100},
+            "Capacity": {"min": 0, "max": 250}
+        },
+        "sizeBy": "Capacity",
+        "startSize": "30px",
+        "endSize": "45px",
+        "icon": "BsBuilding",
+        "order": 1,
+        "props": {
+            "Size": {
+                "type": "num",
+                "enabled": true,
+                "help": "The Size in SQ Meters",
+                "numberFormat": {
+                    "unit": "Sq Meters"
+                }
+            }
+        }
+    }
+}

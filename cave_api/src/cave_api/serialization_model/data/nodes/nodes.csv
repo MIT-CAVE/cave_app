@@ -1,9 +1,3 @@
-id,name,type,fixed_cashflow,processing_cashflow_per_unit,processing_capacity,latitude,longitude,altitude,location,geoId
-DEM_EUWS,EU West,demand,0,52,13861,47.25,2.496,0,EUWS,EUWS
-DEM_EUSW,EU Southwest,demand,0,52,5766,39.974,-4.42,0,EUSW,EUSW
-DEM_EUSO,EU South,demand,0,52,7015,40.648,15.746,0,EUSO,EUSO
-DEM_EUCT,EU Central,demand,0,52,15793,50.798,14.488,0,EUCT,EUCT
-FACT_SGZH,Shengzhou Factory,factory,-5200000,-37,40000,29.5,121,0,CHNA,
-FACT_POL,Poland Factory,factory,-8600000,-41,35000,51.1592133026972,16.7174453856181,0,EUCT,
-WHR_PAR,Paris Warehouse,warehouse,-1200000,-0.82,110000,48.9055782461715,2.74412150074233,0,EUWS,
-WHR_ROM,Rome Warehouse,warehouse,-950000,-0.71,75000,41.8878676257862,12.6057362191448,0,EUSO,
+id,type,latitude,longitude,Size,Capacity,Active,Locations,Products
+node_1,DC,43.78,-79.63,100,50,True,loc_CA_ON,prd_def456 prd_abc123
+node_2,DC, 39.82,-86.18,80,40,True,loc_US_IN,prd_def456 prd_abc123
