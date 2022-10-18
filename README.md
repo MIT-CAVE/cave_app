@@ -39,7 +39,7 @@ This is the type of interactive data models that you can create with the CAVE AP
             - This uses a self signed and insecure certificate for SSL/TLS reasons
             - The certificates are self signed and shared openly in the cave open source project
             - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
-        - Note: When LAN hosting, a production `daphne` server is used. This requires proper static file serving. To achieve this, `cave_cli` will automatically `collectstatic` when a specific ip and port are provided
+        - Note: When LAN hosting, a production `daphne` server is started. This requires proper static file serving. To achieve this, `cave_cli` will automatically `collectstatic` when a specific ip and port are provided
 
 5. In Chrome, you can now open the web app:
     - EG: If you use the standard settings

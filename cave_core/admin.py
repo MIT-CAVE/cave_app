@@ -187,37 +187,18 @@ class CustomTeamUserAdmin(admin.ModelAdmin):
     ]
 
 
+class CustomPageSectionInline(admin.StackedInline):
+    model = models.PageSections
+    ordering = ("-priority",)
+    extra = 0
+
+
 class CustomPageAdmin(admin.ModelAdmin):
     model = models.Pages
     list_display = ["id", "name", "url_name", "show", "require_acceptance"]
     list_filter = ["show", "require_acceptance"]
     list_editable = ["name", "url_name", "show", "require_acceptance"]
-
-
-class CustomPageSectionAdmin(admin.ModelAdmin):
-    model = models.PageSections
-    list_display = [
-        "id",
-        "header",
-        "page",
-        "section_type",
-        "priority",
-        "show",
-    ]
-    list_filter = [
-        "page",
-        "section_type",
-    ]
-    list_editable = [
-        "priority",
-        "show",
-        "page",
-    ]
-
-
-class CustomSectionTypeAdmin(admin.ModelAdmin):
-    model = models.SectionTypes
-    list_display = ["id", "name"]
+    inlines = [CustomPageSectionInline]
 
 
 class CustomTeamUserInline(admin.TabularInline):
@@ -245,6 +226,7 @@ class CustomGroupUserAdmin(admin.ModelAdmin):
     model = models.GroupUsers
     list_display = ["id", "user", "group", "is_group_manager"]
     list_editable = ["user", "group", "is_group_manager"]
+    list_filter = ["is_group_manager","group__name"]
     search_fields = [
         "user__username",
         "user__first_name",
@@ -275,9 +257,7 @@ class CustomGroupAdmin(admin.ModelAdmin):
 
 admin.site.register(models.CustomUserFull, CustomUserFullAdmin)
 admin.site.register(models.Globals, CustomGlobalsAdmin)
-admin.site.register(models.SectionTypes, CustomSectionTypeAdmin)
 admin.site.register(models.Pages, CustomPageAdmin)
-admin.site.register(models.PageSections, CustomPageSectionAdmin)
 admin.site.register(models.Groups, CustomGroupAdmin)
 admin.site.register(models.GroupUsers, CustomGroupUserAdmin)
 admin.site.register(models.Teams, CustomTeamAdmin)
@@ -318,7 +298,6 @@ staff_site = StaffSite(name="simple_admin")
 staff_site.register(models.CustomUser, CustomStaffUserAdmin)
 staff_site.register(models.Globals, CustomGlobalsAdmin)
 staff_site.register(models.Pages, CustomStaffPageAdmin)
-staff_site.register(models.PageSections, CustomPageSectionAdmin)
 staff_site.register(models.Groups, CustomGroupAdmin)
 staff_site.register(models.GroupUsers, CustomGroupUserAdmin)
 staff_site.register(models.Teams, CustomTeamAdmin)
