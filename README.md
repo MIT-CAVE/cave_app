@@ -1,5 +1,5 @@
 # Cave App
-A Django server to host the API and act as the Cave back end. 
+A Django server to host the API and act as the Cave back end.
 ![map view](https://utils.mitcave.com/docs/cave_app-0.3.0/map.jpg)
 This is the type of interactive data models that you can create with the CAVE API.
 
@@ -22,22 +22,24 @@ This is the type of interactive data models that you can create with the CAVE AP
     ```
     cave run
     ```    
-    - Optional: Run the app on `<your-ip>:8000` with development settings:
-        - Note: To run on LAN, you must use an SSL connection.
-        - Note: This uses a self signed and insecure certificate for SSL/TLS reasons
-        - The certificates are self signed and shared openly in the cave open source project
-        - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
-
+    - Optional: Run the app on `<your-ip>:<your-port>` with development settings:
         ```
-        cave run <your-ip>:8000
+        cave run <your-ip>:<your-port>
         ```
-        - Note: This requires one free port above the specified port to run the server.
-        - Note: You can specify the LAN IP with
-            - Wildcard: `-b 0.0.0.0`
-                - This allows you to access the sever from any IP that points to your machine
-            - Specific: `-b 192.168.1.100`
-                - Note: Replace `192.168.1.100` with your local IP address
-                - This allows you to access the sever from a specific IP that points to your machine
+        - Example on ip `192.168.1.00` with port `8000`:
+          ```
+          cave run 192.168.1.100:8000
+          ```
+        - Example for a wildcard ip (any network ip that routes to your machine):
+          ```
+          cave run 0.0.0.0:8000
+          ```
+        - Note: This requires one free port above the specified port to run the server
+        - Note: When LAN hosting, an SSL connection is required. The `cave_cli` does this automatically, however there are a few caveats:
+            - This uses a self signed and insecure certificate for SSL/TLS reasons
+            - The certificates are self signed and shared openly in the cave open source project
+            - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
+        - Note: When LAN hosting, a production `daphne` server is used. This requires proper static file serving. To achieve this, `cave_cli` will automatically `collectstatic` when a specific ip and port are provided
 
 5. In Chrome, you can now open the web app:
     - EG: If you use the standard settings
@@ -50,7 +52,7 @@ This is the type of interactive data models that you can create with the CAVE AP
 
 2. To view the admin page navigate to: `localhost:8000/admin`
 ![admin page](https://utils.mitcave.com/docs/cave_app-0.3.0/admin.png)
-This is the automatic Django admin interface that allows you to manage all your models across the app and edit the content of the website. See [this explanation](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site#logging_in_and_using_the_site) for more information on how to use the admin interface. 
+This is the automatic Django admin interface that allows you to manage all your models across the app and edit the content of the website. See [this explanation](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site#logging_in_and_using_the_site) for more information on how to use the admin interface.
 
 ## Example App
 ### Adding Pages and Content
@@ -67,15 +69,15 @@ To access the main features of the CAVE app, first create a new session. In the 
 Creating a new session will launch whichever model is called in `/cave_api/src/cave_api/__init__.py` file. We supply two example models for users to reference and/or build upon. The `simple_model` demonstrates good practices for researchers using the CAVE API. The `static_model` contains examples of the whole API structure, and is useful for developers to debug and experiment with new features. You can build on top of whichever model is more applicable to your research, or create your own model.
 
 ### Customizing Interactive Data
-You can customize the interactive data you want to render in your model, and display them in three types of views: Map View, Dashboard View, and KPI View. 
+You can customize the interactive data you want to render in your model, and display them in three types of views: Map View, Dashboard View, and KPI View.
 
-In the `simple_model`, for instance, we render the following Map view. You can click on each of the warehouses and factories to toggle open and calculate the statistics and KPI of the model. 
+In the `simple_model`, for instance, we render the following Map view. You can click on each of the warehouses and factories to toggle open and calculate the statistics and KPI of the model.
 ![map view](https://utils.mitcave.com/docs/cave_app-0.3.0/map.jpg)
 
 In the `simple_model` Dashboard view, you can generate charts based on the statistics and KPI of the model. You can adjust various elements of the charts, such as type of chart, statistic, groupings, etc.
 ![dashboard view](https://utils.mitcave.com/docs/cave_app-0.3.0/dashboard.jpg)
 
-In the `simple_model` KPI view, you can see the list of all the KPI and their values. 
+In the `simple_model` KPI view, you can see the list of all the KPI and their values.
 ![kpi view](https://utils.mitcave.com/docs/cave_app-0.3.0/kpi.jpg)
 
 These functions are all programmed in `/cave_api/src/cave_api/simple_model`. The CAVE [API Structure](cave_api/README_API_STRUCTURE.md) gives developers many capabilities to edit and create their own models. For instance, you can [change levels of data aggregation](/cave_api/docs/all_keys/categories.md) in Dashboard view or [edit the map legend](/cave_api/docs/all_keys/arcs.md) displayed in Map view.
