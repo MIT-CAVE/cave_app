@@ -43,10 +43,10 @@ nuke_db() { # Check the OS and nuke the db using the relevant process.
     printf "- MacOS\n- Linux\n- Windows (Using Ubuntu 20.04 on Windows Subsystem for Linux 2 - WSL2)"
     exit 1
   elif [ $machine = "Linux" ]; then
-    printf "\nLinux recognized. Attempting to Nuke your db...\n"
+    printf "\nLinux recognized. Attempting to Nuke your db (sudo required)...\n"
     nuke_linux_db
   elif [ $machine = "Mac" ]; then
-    printf "\nMac recognized. Attempting to Nuke your db...\n"
+    printf "\nMac recognized. Attempting to Nuke your db (sudo required)...\n"
     nuke_mac_db
   else
     printf "Error: Reset DB failed.\n"
@@ -56,7 +56,7 @@ nuke_db() { # Check the OS and nuke the db using the relevant process.
 }
 
 clear_pycache() {
-  printf "Cleaning Pycache...\n"
+  printf "Cleaning Pycache (sudo required)...\n"
   sudo rm -r "./cave_core/__pycache__"
   sudo rm -r "./cave_core/migrations/__pycache__"
   sudo rm -r "./cave_app/settings/__pycache__"
