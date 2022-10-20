@@ -53,7 +53,6 @@ def execute_command(session_data, command="init"):
                 "numberFormat": {
                     "precision": 4,
                     "trailingZeros": False,
-                    "whenTyping": False,
                     "unitSpace": True,
                 },
                 "debug": True,
@@ -217,7 +216,6 @@ def execute_command(session_data, command="init"):
                             "numberFormat": {
                                 "precision": 0,
                                 "trailingZeros": False,
-                                "whenTyping": True,
                                 "currency": True,
                                 "unit": "$",
                             },

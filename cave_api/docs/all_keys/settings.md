@@ -32,7 +32,6 @@ Below is the `settings` group with its sub-keys matched by typical values:
         "numberFormat": {
             "precision": 4,
             "trailingZeros": True,
-            "whenTyping": False,
             "unitSpace": True,
         },
         "debug": True,

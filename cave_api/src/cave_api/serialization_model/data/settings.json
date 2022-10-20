@@ -27,7 +27,6 @@
         "numberFormat": {
             "precision": 2,
             "trailingZeros": false,
-            "whenTyping": true,
         },
         "debug": true,
     },

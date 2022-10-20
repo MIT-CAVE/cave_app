@@ -13,7 +13,6 @@ The `numberFormat` structure with all its keys looks as follows:
     'trailingZeros': True,
     'nilValue': 'N/A',
     'locale': 'en-US',
-    'whenTyping': False,
 }
 ```
 
@@ -27,4 +26,3 @@ Key | Default | Description
 <a name="trailing-zeros">`trailingZeros`</a> | `True` | If `True`, trailing zeros are displayed based on the [`precision`](#precision) value.
 <a name="locale">`locale`</a> | `'en-US'` | A [locale identifier](https://en.wikipedia.org/wiki/IETF_language_tag).
 <a name="nil-value">`nilValue`</a> | `'N/A'` | A default output for undefined or invalid values.
-<a name="when-typing">`whenTyping`</a> | `False` | If `True`, enable live number formatting, that is, when the user is typing a number in a [`'num'` prop](props.md#num). Otherwise, the number will only be formatted in the field when not in focus.<br><br>This feature is only supported for [`'num'` props](props.md#num).

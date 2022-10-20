@@ -37,7 +37,6 @@ serialized_data = {
             "numberFormat": {
                 "precision": 2,
                 "trailingZeros": False,
-                "whenTyping": True,
             },
             "debug": True,
         },
