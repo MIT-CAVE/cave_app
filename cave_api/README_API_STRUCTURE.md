@@ -58,9 +58,9 @@ Custom keys are always included as a direct child of common keys such as `data`,
 
 - #### [`layout`](docs/common_keys/layout.md)
 
-- #### [`numberFormat`](docs/common_keys/numberFormat.md)
+- #### [`numberFormat`](docs/common_keys/number_format.md)
 
-- #### [`timeObject`](docs/common_keys/timeObject.md)
+- #### [`timeObject`](docs/common_keys/time_object.md)
 
 
 ### [Top-Level keys](docs/all_keys/top_level_keys.md)
