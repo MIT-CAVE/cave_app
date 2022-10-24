@@ -1,0 +1,8 @@
+id,name,geoJsonValue,type,Locations,Demand
+geo_1,"Ontario, Canada",CA.ON,state,loc_CA_ON,50
+geo_2,"Michigan, USA",US.MI,state,loc_US_MI,300
+geo_3,"Massachusetts, USA",US.MA,state,loc_US_MI,250
+geo_4,"Florida, USA",US.FL,state,loc_US_MI,100
+geo_5,"Indiana, USA",US.FL,state,loc_US_MI,200
+geo_c_1,Canada,CA,country,loc_CA_ON,50
+geo_c_2,USA,US,country,loc_US_FL loc_US_MA loc_US_IN loc_US_MI,800

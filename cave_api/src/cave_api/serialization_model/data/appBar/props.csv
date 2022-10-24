@@ -1,0 +1,4 @@
+appBarID,propID,name,type,variant,value,enabled,help,maxValue,minValue,numberFormat
+settings,Solver,Solver,selector,dropdown,?,True,Select a solver type to use,,,
+settings,Pct_Optimal,Percent Optimal,num,,97,True,What percent of optimal would you like to solve to?,100,0,?
+settings,min_profit,Minimum profit,num,field,10000,True,The minimum intended profit,999999999999999,-999999999999999,?

@@ -1,0 +1,111 @@
+{
+    "T1": {
+        "name": "Flow Type 1",
+        "colorByOptions": {
+            "Primary Type": {
+                "Air": "rgb(128,255,255)",
+                "Mixed": "rgb(0,153,51)",
+                "Water": "rgb(0,0,128)",
+                "Train": "rgb(204,0,0)",
+                "Truck": "rgb(153,77,0)",
+                "3rd Party": "rgb(255,25,255)"
+            },
+            "Flow Capacity": {
+                "min": 0,
+                "max": 50,
+                "startGradientColor": {
+                    "dark": "rgb(233, 0, 0)",
+                    "light": "rgb(52, 52, 236)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(96, 2, 2)",
+                    "light": "rgb(23, 23, 126)"
+                }
+            },
+            "Flow": {
+                "min": 0,
+                "max": 40,
+                "startGradientColor": {
+                    "dark": "rgb(233, 0, 0)",
+                    "light": "rgb(52, 52, 236)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(96, 2, 2)",
+                    "light": "rgb(23, 23, 126)"
+                }
+            }
+        },
+        "colorBy": "Flow",
+        "lineBy": "solid",
+        "sizeByOptions": {
+            "Flow Capacity": {"min": 0, "max": 50},
+            "Flow": {"min": 0, "max": 40}
+        },
+        "sizeBy": "Flow Capacity",
+        "startSize": "15px",
+        "endSize": "30px",
+        "order": 1,
+        "props": {
+            "Flow Capacity": {
+                "name": "Flow Capacity (test)",
+                "type": "num",
+                "enabled": false,
+                "help": "Flow Capacity",
+                "numberFormat": {
+                    "unit": "units (test)"
+                }
+            }
+        }
+    },
+    "T2": {
+        "name": "Flow Type 2",
+        "colorByOptions": {
+            "Flow Capacity": {
+                "min": 0,
+                "max": 50,
+                "startGradientColor": {
+                    "dark": "rgb(233, 0, 0)",
+                    "light": "rgb(52, 52, 236)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(96, 2, 2)",
+                    "light": "rgb(23, 23, 126)"
+                }
+            },
+            "Flow": {
+                "min": 0,
+                "max": 40,
+                "startGradientColor": {
+                    "dark": "rgb(233, 0, 0)",
+                    "light": "rgb(52, 52, 236)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(96, 2, 2)",
+                    "light": "rgb(23, 23, 126)"
+                }
+            }
+        },
+        "colorBy": "Flow",
+        "lineBy": "dotted",
+        "sizeByOptions": {
+            "Flow Capacity": {"min": 0, "max": 50},
+            "Flow": {"min": 0, "max": 40}
+        },
+        "sizeBy": "Flow Capacity",
+        "startSize": "15px",
+        "endSize": "30px",
+        "order": 2,
+        "props": {
+            "Flow Capacity": {
+                "name": "Flow Capacity (test)",
+                "type": "num",
+                "enabled": false,
+                "help": "Flow Capacity",
+                "numberFormat": {
+                    "unit": "units (test)"
+                },
+                "value": 80
+            }
+        }
+    }
+}

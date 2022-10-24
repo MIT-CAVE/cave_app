@@ -12,6 +12,6 @@ specified_keys = {
     },
     'geos': {
         'required_keys': ['type'],
-        'optional_keys': ['geoJsonValue']
+        'optional_keys': ['geoJsonValue', 'name']
     }
 }

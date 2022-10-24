@@ -4,8 +4,10 @@ def cast_properly(input):
     if isinstance(input, str):
         if input =='':
             return None
-        if input.lower() in ['true','false']:
-            return bool(input)
+        if input.lower() == 'true':
+            return True
+        if input.lower() == 'false':
+            return False
         try:
             float_input = float(input)
             return int(float_input) if float_input == int(float_input) else float_input

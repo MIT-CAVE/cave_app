@@ -1,6 +1,7 @@
 type,id,enabled,legendGroup
-arc,transport,True,Transportation
-arc,last_mile,True,Transportation
-node,factory,True,Facilities
-node,warehouse,True,Facilities
-geo,demand,true,Demand
+arc,T1,True,DC Delivery
+arc,T2,False,Store Delivery
+node,DC,False,DC Delivery
+node,Store,False,Store Delivery
+geo,state,False,Demand Geography
+geo,country,False,Demand Geography

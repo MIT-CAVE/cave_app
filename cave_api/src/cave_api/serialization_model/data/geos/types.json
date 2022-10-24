@@ -1,0 +1,68 @@
+{
+    "state": {
+        "name": "State",
+        "colorByOptions": {
+            "Demand": {
+                "min": 0,
+                "max": 300,
+                "startGradientColor": {
+                    "dark": "rgb(100, 100, 100)",
+                    "light": "rgb(200, 200, 200)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(20, 205, 20)",
+                    "light": "rgb(10, 100, 10)"
+                }
+            }
+        },
+        "colorBy": "Demand",
+        "geoJson": {
+            "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
+            "geoJsonProp": "code_hasc"
+        },
+        "icon": "BsHexagon",
+        "props": {
+            "Demand": {
+                "type": "num",
+                "enabled": true,
+                "help": "The Demand of this Geography",
+                "numberFormat": {
+                    "unit": "units"
+                }
+            }
+        }
+    },
+    "country": {
+        "name": "Country",
+        "colorByOptions": {
+            "Demand": {
+                "min": 0,
+                "max": 800,
+                "startGradientColor": {
+                    "dark": "rgb(100, 100, 100)",
+                    "light": "rgb(200, 200, 200)"
+                },
+                "endGradientColor": {
+                    "dark": "rgb(20, 205, 20)",
+                    "light": "rgb(10, 100, 10)"
+                }
+            }
+        },
+        "colorBy": "Demand",
+        "geoJson": {
+            "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
+            "geoJsonProp": "FIPS_10"
+        },
+        "icon": "BsHexagon",
+        "props": {
+            "Demand": {
+                "type": "num",
+                "enabled": true,
+                "help": "The Demand of this Geography",
+                "numberFormat": {
+                    "unit": "units"
+                }
+            }
+        }
+    }
+}
