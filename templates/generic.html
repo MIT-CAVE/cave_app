@@ -6,25 +6,25 @@
 {% block content %}
   {% include "modules/generic/utils/container_start.html" %}
   {% for page_section in page_sections %}
-    {% if page_section.section_type.name == "photo_only" %}
+    {% if page_section.section_type == "photo_only" %}
       {% include "modules/generic/photo_only.html" %}
-    {% elif page_section.section_type.name == "video_only" %}
+    {% elif page_section.section_type == "video_only" %}
       {% include "modules/generic/video_only.html" %}
-    {% elif page_section.section_type.name == "photo_header" %}
+    {% elif page_section.section_type == "photo_header" %}
       {% include "modules/generic/photo_header.html" %}
-    {% elif page_section.section_type.name == "photo_header_left" %}
+    {% elif page_section.section_type == "photo_header_left" %}
       {% include "modules/generic/photo_header_left.html" %}
-    {% elif page_section.section_type.name == "photo_header_right" %}
+    {% elif page_section.section_type == "photo_header_right" %}
       {% include "modules/generic/photo_header_right.html" %}
-    {% elif page_section.section_type.name == "html_content" %}
+    {% elif page_section.section_type == "html_content" %}
       {% include "modules/generic/html_content.html" %}
-    {% elif page_section.section_type.name == "photo_quote" %}
+    {% elif page_section.section_type == "photo_quote" %}
       {% include "modules/generic/photo_quote.html" %}
-    {% elif page_section.section_type.name == "photo_resource" %}
+    {% elif page_section.section_type == "photo_resource" %}
       {% include "modules/generic/photo_resource.html" %}
-    {% elif page_section.section_type.name == "faq" %}
+    {% elif page_section.section_type == "faq" %}
       {% include "modules/generic/faq.html" %}
-    {% elif page_section.section_type.name == "break" %}
+    {% elif page_section.section_type == "break" %}
       {% include "modules/generic/break.html" %}
     {% endif %}
   {% endfor %}

@@ -388,23 +388,6 @@ class Globals(SingletonModel):
         return _("{}").format(self.site_name)
 
 
-class SectionTypes(models.Model):
-    """
-    Model for storing section types
-    """
-
-    name = models.CharField(_("Name"), max_length=128, help_text=_("Name of the section type"))
-
-    # Metadata
-    class Meta:
-        verbose_name = _("Section Type")
-        verbose_name_plural = _("Section Types")
-
-    # Methods
-    def __str__(self):
-        return self.name
-
-
 class Pages(models.Model):
     """
     Model for storing page types
@@ -462,13 +445,23 @@ class PageSections(models.Model):
             "The page to assign this section to - Used in Page Sections to link a page to a section"
         ),
     )
-    section_type = models.ForeignKey(
-        SectionTypes,
-        on_delete=models.CASCADE,
-        verbose_name=_("Section Type"),
-        help_text=_(
-            "The section type to create - Used in all types of sections (photo, photo_quote, video, html_content, break, photo_resource, etc.) to determine the type of section to display"
-        ),
+    section_type = models.CharField(
+        _("Section Type"),
+        max_length=32,
+        help_text=_("The section type to determine the type of section to display"),
+        choices=[
+            ("photo_only", "Photo Only"),
+            ("video_only", "Video Only"),
+            ("break", "Break"),
+            ("photo_header", "Photo Header"),
+            ("photo_header_left","Photo Header Left"),
+            ("photo_header_right","Photo Header Right"),
+            ("html_content","HTML Content"),
+            ("photo_quote","Photo Quote"),
+            ("photo_resource","Photo Resource"),
+            ("faq","FAQ"),
+        ],
+        default="photo_only",
     )
     header = models.CharField(
         _("Header"),

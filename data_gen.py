@@ -66,31 +66,13 @@ def generate():
 
     home_page = Pages.objects.get_or_create(name="Home", url_name="home")[0]
 
-    # Section Options
-    photo_only_section = SectionTypes.objects.get_or_create(name="photo_only")[0]
-    video_only_section = SectionTypes.objects.get_or_create(name="video_only")[0]
-    break_section = SectionTypes.objects.get_or_create(name="break")[0]
-    photo_header_section = SectionTypes.objects.get_or_create(name="photo_header")[0]
-    photo_header_left_section = SectionTypes.objects.get_or_create(
-        name="photo_header_left"
-    )[0]
-    photo_header_right_section = SectionTypes.objects.get_or_create(
-        name="photo_header_right"
-    )[0]
-    html_content_section = SectionTypes.objects.get_or_create(name="html_content")[0]
-    photo_quote_section = SectionTypes.objects.get_or_create(name="photo_quote")[0]
-    photo_resource_section = SectionTypes.objects.get_or_create(name="photo_resource")[
-        0
-    ]
-    faq_section = SectionTypes.objects.get_or_create(name="faq")[0]
-
     # Home Page
     first_home_section = PageSections.objects.filter(page__url_name="home").first()
     if not first_home_section:
         # Photo Header
         PageSections.objects.get_or_create(
             page=home_page,
-            section_type=photo_only_section,
+            section_type="photo_only",
             header="Main Site Photo",
             photo="page_section_photos/cave_wallpaper.jpg",
             priority=100,
@@ -98,7 +80,7 @@ def generate():
         # Example Quote
         PageSections.objects.get_or_create(
             page=home_page,
-            section_type=photo_quote_section,
+            section_type="photo_quote",
             header="Welcome Quote",
             subheader="Connor Makowski - MIT CAVE Researcher",
             content="Welcome to the CAVE App!",
@@ -108,7 +90,7 @@ def generate():
         # Introduction
         PageSections.objects.get_or_create(
             page=home_page,
-            section_type=photo_resource_section,
+            section_type="photo_resource",
             header="Cave CLI",
             subheader="A link to the Cave CLI repo",
             photo="page_section_photos/cli.jpg",
@@ -117,7 +99,7 @@ def generate():
         )
         PageSections.objects.get_or_create(
             page=home_page,
-            section_type=photo_resource_section,
+            section_type="photo_resource",
             header="Cave App",
             subheader="A link to the Cave App repo",
             photo="page_section_photos/cave.png",
@@ -126,7 +108,7 @@ def generate():
         )
         PageSections.objects.get_or_create(
             page=home_page,
-            section_type=photo_resource_section,
+            section_type="photo_resource",
             header="Cave Static",
             subheader="A link to the Cave Static repo",
             photo="page_section_photos/data_storage.jpg",
@@ -135,7 +117,7 @@ def generate():
         )
         PageSections.objects.get_or_create(
             page=home_page,
-            section_type=faq_section,
+            section_type="faq",
             header="Installing the CLI",
             subheader="How can I install and use the CLI?",
             content="Make sure to install python3.9+ and postgresql on a unix based system<br/><br/>Then install the cli by running:<br/><br/><div style='background:rgb(75, 75, 75);color:rgb(134, 236, 148);padding:10px;'>bash -c \"$(curl https://raw.githubusercontent.com/MIT-CAVE/cave_cli/main/install.sh)\"</div><br/><br/>To see cave cli functions, run:<br/><br/><div style='background:rgb(75, 75, 75);color:rgb(134, 236, 148);padding:10px;'>cave help</div>",
@@ -156,7 +138,7 @@ def generate():
         # Photo Only
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_only_section,
+            section_type="photo_only",
             header="Main Site Photo",
             photo="page_section_photos/road.jpeg",
             priority=100,
@@ -164,7 +146,7 @@ def generate():
         # Example photo header
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_header_section,
+            section_type="photo_header",
             header="Example photo header",
             subheader="Example Subheader Here",
             content=lorem,
@@ -174,7 +156,7 @@ def generate():
         # Example Video Only Section
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=video_only_section,
+            section_type="video_only",
             header="Video Only Section",
             photo="page_section_photos/data_storage.jpg",
             video_embed_link="https://youtube.com/embed/C0DPdy98e4c",
@@ -183,7 +165,7 @@ def generate():
         # Example Header Photo Left
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_header_left_section,
+            section_type="photo_header_left",
             header="Example Header Photo Left",
             subheader="Example Subheader Here",
             content=lorem,
@@ -194,7 +176,7 @@ def generate():
         # Example Header Photo right
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_header_right_section,
+            section_type="photo_header_right",
             header="Example Header Photo Right",
             subheader="Example Subheader Here",
             content=lorem,
@@ -205,7 +187,7 @@ def generate():
         # Example Quote
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_quote_section,
+            section_type="photo_quote",
             header="Photo Quote",
             subheader="Connor Makowski - MIT CAVE Researcher",
             content="Welcome to the CAVE App!",
@@ -215,7 +197,7 @@ def generate():
         # Example Content Only
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=html_content_section,
+            section_type="html_content",
             header="HTML Content Example",
             content=f'<h1 class="text-center">Custom html content here</h1><br/><p class="text-center">{lorem}</p>',
             photo="page_section_photos/data_glasses.png",
@@ -224,13 +206,13 @@ def generate():
         # Header
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=break_section,
+            section_type="break",
             header="Resources break section",
             priority=55,
         )
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_header_section,
+            section_type="photo_header",
             header="Resources",
             subheader="Resources to get you going",
             priority=54,
@@ -238,7 +220,7 @@ def generate():
         # Example File Section
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_resource_section,
+            section_type="photo_resource",
             header="File Example",
             subheader="A File Example section",
             content="Download the data_storage.jpg photo",
@@ -249,7 +231,7 @@ def generate():
         # Example Link Section
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_resource_section,
+            section_type="photo_resource",
             header="Link Example",
             subheader="A Link Example section",
             content="Go to the home page",
@@ -259,7 +241,7 @@ def generate():
         )
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_resource_section,
+            section_type="photo_resource",
             header="Example Link To Google",
             content="A link to google.com",
             photo="page_section_photos/data_glasses.jpg",
@@ -269,20 +251,20 @@ def generate():
         # FAQ Header
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=break_section,
+            section_type="break",
             header="FAQ break section",
             priority=31,
         )
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=photo_header_section,
+            section_type="photo_header",
             header="FAQs",
             subheader="Frequently Asked Questions",
             priority=30,
         )
         PageSections.objects.get_or_create(
             page=gs_page,
-            section_type=faq_section,
+            section_type="faq",
             header="Access",
             subheader="How can I access the app?",
             content="Click on the App button on the top of this page.",
