@@ -34,7 +34,7 @@ def get_session_data(request):
     # Get passed data hashes
     data_hashes = request.data.get("data_hashes", {})
     # Session validation
-    session = request.user.get_current_session()
+    session = request.user.session
     # get_changed_data needs to be executed prior to session.hashes since it can mutate them
     data = session.get_changed_data(previous_hashes=data_hashes)
     utils.broadcasting.ws_broadcast_user(
@@ -121,7 +121,7 @@ def mutate_session(request):
     }
 
     # Session validation
-    session = request.user.get_current_session()
+    session = request.user.session
 
     if team_sync:
         sessions = session.get_associated_sessions()
@@ -212,7 +212,7 @@ def get_associated_session_data(request):
     data_names = request.data.get("data_names")
 
     # Session validation
-    session = request.user.get_current_session()
+    session = request.user.session
     # Get associated sessions
     associated_sessions = session.get_associated_sessions(user=request.user)
     # Session data

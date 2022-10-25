@@ -104,7 +104,7 @@ def app(request):
         return redirect(access_dict.get("link"))
     if not globals.show_app_page:
         return redirect("/")
-    current_session = request.user.get_current_session()
+    current_session = request.user.session
     if not current_session:
         return redirect("/")
     if request.method == "GET":

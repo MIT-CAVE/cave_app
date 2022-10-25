@@ -70,6 +70,21 @@ class CustomUser(AbstractUser):
         null=True,
         unique=True,
     )
+    session = models.ForeignKey(
+        "Sessions", # Must stay a string since Sessions is not yet defined
+        on_delete=models.SET_NULL,
+        verbose_name=_("session"),
+        help_text=_("This User's current session"),
+        blank=True,
+        null=True,
+    )
+
+    def join_session(self, session):
+        if isinstance(session, int):
+            session = Sessions.objects.filter(id=session).first()
+        session.validate_access(self)
+        self.session = session
+        self.save()
 
     def gen_new_email_validation_code(self):
         """
@@ -129,6 +144,9 @@ class CustomUser(AbstractUser):
                 # Force aggregate teams to not have duplicates and return it
                 return list({i["team__id"]: i for i in aggregate_teams}.values())
         return user_teams
+
+    def get_team_ids(self):
+        return [i.get("team__id") for i in self.get_teams()]
 
     def get_people_info(self):
         """
@@ -207,24 +225,6 @@ class CustomUser(AbstractUser):
             return token
         except:
             return "none"
-
-    def get_current_session(self):
-        """
-        Returns the current session for this user
-        """
-        user_session = UserSessions.objects.filter(user=self).select_related("session").first()
-        if user_session:
-            return user_session.session
-        return None
-
-    def get_current_session_id(self):
-        """
-        Returns the current session id for this user
-        """
-        user_session = UserSessions.objects.filter(user=self).first()
-        if user_session:
-            return user_session.session.id
-        return None
 
     def __str__(self):
         """
@@ -925,34 +925,26 @@ class Sessions(models.Model):
         else:
             return None
 
-    def get_user_sessions(self):
+    def get_users(self):
         """
         Gets all other users in this session
 
         - Used to determine which users are in this session
         - EG to prevent deletion if more than one user is in the session
         """
-        return UserSessions.objects.filter(session=self)
+        return CustomUser.objects.filter(session=self)
 
     def is_user_valid(self, user):
         """
         Validates that the specified user has permissions to access this session
         """
-        if self.team is not None:
+        if self.team:
             if len(TeamUsers.objects.filter(team=self.team, user=user)) == 1:
                 return True
             else:
                 return False
-        elif self.user is not None:
+        elif self.user:
             return user == self.user
-
-    def is_team(self):
-        """
-        Returns a boolean true if this session is a team session otherwise false
-        """
-        if self.team is not None:
-            return True
-        return False
 
     def get_short_name(self):
         """
@@ -980,6 +972,10 @@ class Sessions(models.Model):
             data.pk = None
             data.save()
         return new_session
+
+    def validate_access(self, user):
+        if not self.is_user_valid(user):
+            raise Exception("Session Access Denied")
 
     # Metadata
     class Meta:
@@ -1155,31 +1151,3 @@ class SessionData(models.Model):
     # Methods
     def __str__(self):
         return _("{}").format(str(self.session.name) + str(self.data_name))
-
-
-class UserSessions(models.Model):
-    """
-    Model for storing User Sessions
-    """
-
-    session = models.ForeignKey(
-        Sessions,
-        on_delete=models.CASCADE,
-        verbose_name=_("session"),
-        help_text=_("The associated session"),
-    )
-    user = models.OneToOneField(
-        CustomUser,
-        on_delete=models.CASCADE,
-        verbose_name=_("user"),
-        help_text=_("The associated user"),
-    )
-    # Metadata
-    class Meta:
-        verbose_name = _("User Session")
-        verbose_name_plural = _("User Sessions")
-        constraints = [models.UniqueConstraint(fields=["session", "user"], name="unq_user_session")]
-
-    # Methods
-    def __str__(self):
-        return _("{}").format(str(self.user) + " - " + str(self.session))

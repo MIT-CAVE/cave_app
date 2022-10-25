@@ -33,7 +33,7 @@ def except_on_team_id_session_limit(globals, user, team_id):
 
 
 def except_on_session_limit(globals, session):
-    if session.is_team():
+    if session.team:
         limit = globals.limit_team_sessions
         type = "team"
     else:
@@ -43,14 +43,9 @@ def except_on_session_limit(globals, session):
         raise Exception(f"Oops! Your {type} session limit ({limit}) has been reached.")
 
 
-def except_on_no_session_access(session, user):
-    if not session.is_user_valid(user) and not user.is_staff:
-        raise Exception("Oops! You do not have access to this session.")
-
-
 def except_on_session_not_empty(session):
-    user_sessions = session.get_user_sessions()
-    if len(user_sessions) > 0:
+    users = session.get_users()
+    if len(users) > 0:
         raise Exception(
             "Oops! Someone is still in this session. All users must join another session before this session can be deleted."
         )

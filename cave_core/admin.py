@@ -158,12 +158,6 @@ class CustomSessionAdmin(admin.ModelAdmin):
     search_fields = ["name", "team__name", "user__email"]
 
 
-class CustomUserSessionAdmin(admin.ModelAdmin):
-    model = models.UserSessions
-    list_display = ["id", "session", "user"]
-    search_fields = ["user__email", "session__name"]
-
-
 class CustomSessionDataAdmin(admin.ModelAdmin):
     model = models.SessionData
     list_display = ["id", "session", "data_name", "data_hash"]
@@ -264,7 +258,6 @@ admin.site.register(models.Teams, CustomTeamAdmin)
 admin.site.register(models.TeamUsers, CustomTeamUserAdmin)
 admin.site.register(models.Sessions, CustomSessionAdmin)
 admin.site.register(models.SessionData, CustomSessionDataAdmin)
-admin.site.register(models.UserSessions, CustomUserSessionAdmin)
 
 # Create a special Staff Admin Site
 class StaffSite(admin.AdminSite):

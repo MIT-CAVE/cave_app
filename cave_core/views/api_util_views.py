@@ -100,7 +100,7 @@ def sessions(request):
         output[id]["under_limit"] = len(data.get("sessions")) < data.get("limit", 0)
     return {
         "teams": list(output.values()),
-        "active_session": request.user.get_current_session_id(),
+        "active_session": request.user.session.id if request.user.session else None,
     }
 
 
@@ -207,7 +207,7 @@ def copy_session(request):
     # Get Session
     session = models.Sessions.objects.filter(id=session_id).first()
     # Validate (cont)
-    utils.validating.except_on_no_session_access(session, request.user)
+    session.validate_access(request.user)
     utils.validating.except_on_session_limit(globals, session)
 
     # Execute View Procedures
@@ -256,7 +256,7 @@ def delete_session(request):
     # Get Session
     session = models.Sessions.objects.filter(id=session_id).first()
     # Validate (cont)
-    utils.validating.except_on_no_session_access(session, request.user)
+    session.validate_access(request.user)
     utils.validating.except_on_session_not_empty(session)
 
     # Execute View Procedures
@@ -310,7 +310,7 @@ def edit_session(request):
     # Get Session
     session = models.Sessions.objects.filter(id=request.data.get("session_id")).first()
     # Validate (cont)
-    utils.validating.except_on_no_session_access(session, request.user)
+    session.validate_access(request.user)
 
     # Execute View Procedures
     # Edit the session name
@@ -363,17 +363,9 @@ def switch_session(request):
     utils.validating.except_on_no_access(globals, request.user)
     # Get Session
     session = models.Sessions.objects.filter(id=session_id).first()
-    # Validate (cont)
-    utils.validating.except_on_no_session_access(session, request.user)
 
     # Execute View Procedures
-    # Update User Session
-    user_session = models.UserSessions.objects.filter(user=request.user).first()
-    if user_session:
-        user_session.session = session
-        user_session.save()
-    else:
-        user_session = models.UserSessions.objects.get_or_create(session=session, user=request.user)
+    request.user.join_session(session)
 
     # Return All Session Data Hashes To User Instances
     # get_changed_data needs to be executed prior to session.hashes since it can mutate them
