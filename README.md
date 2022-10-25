@@ -106,7 +106,7 @@ To fully understand how the cave app works, it is best to dive into our default 
       - The `static_model` contains examples of the whole API structure, and is useful for developers to debug and experiment with new features
       - You can build on top of whichever model is more applicable to your research, or create your own model
 
-  - <details>
+  <details>
   <summary>Simple Model Walk Through</summary>
 
     - You can customize the interactive data you want to render in your model, and display them in three types of views
