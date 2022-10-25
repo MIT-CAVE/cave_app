@@ -1,12 +1,11 @@
 # Cave App
-A Django server to host the API and act as the Cave back end.
+Quickly create interactive web applications for python based models.
 ![map view](https://utils.mitcave.com/docs/cave_app-0.3.0/map.jpg)
-This is the type of interactive data models that you can create with the CAVE API.
 
 # Getting Started
 
 1. Install the [Cave CLI](https://github.com/MIT-CAVE/cave_cli). See the full instructions how how to install the Cave CLI [here](https://github.com/MIT-CAVE/cave_cli).
-    - If you do not want to use the CLI, see the instructions [here](NON_CLI_README.md).
+    - If you do not want to use the CLI (or for production deployments), see the instructions [here](NON_CLI_README.md).
 
 2. Create a new cave app:
     ```
@@ -21,11 +20,15 @@ This is the type of interactive data models that you can create with the CAVE AP
 4. Run the app at `localhost:8000` (while in `my_app`):
     ```
     cave run
-    ```    
+    ```
+    <details>
+    <summary>More hosting options</summary>
+
     - Optional: Run the app on `<your-ip>:<your-port>` with development settings:
         ```
         cave run <your-ip>:<your-port>
         ```
+
         - Example on ip `192.168.1.00` with port `8000`:
           ```
           cave run 192.168.1.100:8000
@@ -40,6 +43,7 @@ This is the type of interactive data models that you can create with the CAVE AP
             - The certificates are self signed and shared openly in the cave open source project
             - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
         - Note: When LAN hosting, a production `daphne` server is started. This requires proper static file serving. To achieve this, `cave_cli` will automatically `collectstatic` when a specific ip and port are provided
+    </details>
 
 5. In Chrome, you can now open the web app:
     - EG: If you use the standard settings
@@ -47,17 +51,28 @@ This is the type of interactive data models that you can create with the CAVE AP
     http://localhost:8000
     ```
 
-## Login as Admin
-1. Use the admin information that you used during setup, or look in the `.env` file in the root of this directory).
+## Cave App Components
+The cave app includes a variety of core components to allow for rapid prototyping and development. The main components include:
+- Customizable web pages that allow for creating and modifying simple information based web content on the fly
+  - Managed by a simple admin interface after deployment
+  - Content scales seamlessly between mobile and desktop
+- Admin features to control access to content, accounts, access and more
+  <details>
+  <summary>Admin Getting Started</summary>
 
-2. To view the admin page navigate to: `localhost:8000/admin`
-![admin page](https://utils.mitcave.com/docs/cave_app-0.3.0/admin.png)
-This is the automatic Django admin interface that allows you to manage all your models across the app and edit the content of the website. See [this explanation](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site#logging_in_and_using_the_site) for more information on how to use the admin interface.
+  1. Login using the admin information that you used during setup, or look in the `.env` file in the root of your app directory).
+
+  2. To view the admin page navigate to: `localhost:8000/admin`
+  ![admin page](https://utils.mitcave.com/docs/cave_app-0.3.0/admin.png)
+
+  3. From the Admin page, you can add pages and content to your website
+    - The following content types are supported: photos, videos, breaks, headers, HTML content, quotes, resources, and FAQs
+    - As an example, a created page can look like:
+    ![example page](https://utils.mitcave.com/docs/cave_app-0.3.0/example_page.png)
+  </details>
+- API based Application page
 
 ## Example App
-### Adding Pages and Content
-From the Admin page, you can add pages and content to your website. This following is an example of the types of content you can render, including photos, videos, breaks, headers, HTML content, quotes, resources, and FAQs.
-![example page](https://utils.mitcave.com/docs/cave_app-0.3.0/example_page.png)
 
 You can also create your own customized front-end features, like [adding buttons to the `appBar`](/cave_api/docs/all_keys/app_bar.md), by editing the API of your model. See the [Cave API](/cave_api) for step-by-step details on how to get started on API development with the CAVE App.
 
