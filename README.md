@@ -52,11 +52,21 @@ Quickly create interactive web applications for python based models.
     ```
 
 ## Cave App Components
-The cave app includes a variety of core components to allow for rapid prototyping and development. The main components include:
+The cave app includes a variety of core components to allow for rapid prototyping, development and testing. The main components include:
+
 - Customizable web pages that allow for creating and modifying simple information based web content on the fly
   - Managed by a simple admin interface after deployment
   - Content scales seamlessly between mobile and desktop
-- Admin features to control access to content, accounts, access and more
+
+
+- Interactive Application
+  - You can create unique user experiences quickly using the CAVE API
+    - EG: [Adding buttons to the `appBar`](/cave_api/docs/all_keys/app_bar.md)
+  - This contains built in session management for synchronous multi window or multi user access
+  - See the [Cave API folder](/cave_api) for step-by-step details on how to get started on API development with the CAVE App.
+
+
+- Admin features to control accounts, access, groups, teams, site content and more
   <details>
   <summary>Admin Getting Started</summary>
 
@@ -70,32 +80,51 @@ The cave app includes a variety of core components to allow for rapid prototypin
     - As an example, a created page can look like:
     ![example page](https://utils.mitcave.com/docs/cave_app-0.3.0/example_page.png)
   </details>
-- API based Application page
 
-## Example App
+## Using The Example App
+To fully understand how the cave app works, it is best to dive into our default example application.
 
-You can also create your own customized front-end features, like [adding buttons to the `appBar`](/cave_api/docs/all_keys/app_bar.md), by editing the API of your model. See the [Cave API](/cave_api) for step-by-step details on how to get started on API development with the CAVE App.
+- Ensure the app is running:
+  ```
+  cave run
+  ```
+- Login (or create an account)
+  - For example purposes, we recommend you login as the default admin
+    - Use the info from when you created the cave app.
+    - This can also be found in `your_app/.env`
+  - The login button appears in the main app bar (or menu if on mobile)
+- Create a session:
+  - Click on the app page icon (A square with spaces along its edges)
+  - This will show your current sessions and allow you to create new sessions
+    <details>
+    <summary>Example image</summary>
+    <img src="https://utils.mitcave.com/docs/cave_app-0.3.0/session.png" width=50%>
+    </details>
+  - Creating a new session will initialize whichever model is specified in the `/cave_api/src/cave_api/__init__.py` file
+    - We supply multiple example models for users to reference and/or build upon.
+      - The `simple_model` demonstrates good practices for researchers using the CAVE API
+      - The `static_model` contains examples of the whole API structure, and is useful for developers to debug and experiment with new features
+      - You can build on top of whichever model is more applicable to your research, or create your own model
 
-### Creating a session
-To access the main features of the CAVE app, first create a new session. In the example app, the fourth button on the top left corner is the button that allows users to create a new session.
+  - <details>
+  <summary>Simple Model Walk Through</summary>
 
-<img src="https://utils.mitcave.com/docs/cave_app-0.3.0/session.png" width=50%>
+    - You can customize the interactive data you want to render in your model, and display them in three types of views
+      - Map View
+      - Dashboard View
+      - KPI View.
+    - In the `simple_model`, we render the following Map view. You can click on each of the warehouses and factories to toggle open and calculate the statistics and KPI of the model.
+    ![map view](https://utils.mitcave.com/docs/cave_app-0.3.0/map.jpg)
 
-Creating a new session will launch whichever model is called in `/cave_api/src/cave_api/__init__.py` file. We supply two example models for users to reference and/or build upon. The `simple_model` demonstrates good practices for researchers using the CAVE API. The `static_model` contains examples of the whole API structure, and is useful for developers to debug and experiment with new features. You can build on top of whichever model is more applicable to your research, or create your own model.
+    - In the `simple_model` Dashboard view, you can generate charts based on the statistics and KPI of the model. You can adjust various elements of the charts, such as type of chart, statistic, groupings, etc.
+    ![dashboard view](https://utils.mitcave.com/docs/cave_app-0.3.0/dashboard.jpg)
 
-### Customizing Interactive Data
-You can customize the interactive data you want to render in your model, and display them in three types of views: Map View, Dashboard View, and KPI View.
+    - In the `simple_model` KPI view, you can see the list of all the KPI and their values.
+    ![kpi view](https://utils.mitcave.com/docs/cave_app-0.3.0/kpi.jpg)
 
-In the `simple_model`, for instance, we render the following Map view. You can click on each of the warehouses and factories to toggle open and calculate the statistics and KPI of the model.
-![map view](https://utils.mitcave.com/docs/cave_app-0.3.0/map.jpg)
+    - These functions are all programmed in `/cave_api/src/cave_api/simple_model`. The CAVE [API Structure](cave_api/README_API_STRUCTURE.md) gives developers many capabilities to edit and create their own models. For instance, you can [change levels of data aggregation](/cave_api/docs/all_keys/categories.md) in Dashboard view or [edit the map legend](/cave_api/docs/all_keys/arcs.md) displayed in Map view.
 
-In the `simple_model` Dashboard view, you can generate charts based on the statistics and KPI of the model. You can adjust various elements of the charts, such as type of chart, statistic, groupings, etc.
-![dashboard view](https://utils.mitcave.com/docs/cave_app-0.3.0/dashboard.jpg)
-
-In the `simple_model` KPI view, you can see the list of all the KPI and their values.
-![kpi view](https://utils.mitcave.com/docs/cave_app-0.3.0/kpi.jpg)
-
-These functions are all programmed in `/cave_api/src/cave_api/simple_model`. The CAVE [API Structure](cave_api/README_API_STRUCTURE.md) gives developers many capabilities to edit and create their own models. For instance, you can [change levels of data aggregation](/cave_api/docs/all_keys/categories.md) in Dashboard view or [edit the map legend](/cave_api/docs/all_keys/arcs.md) displayed in Map view.
+  </details>
 
 
 ## Making API Changes
