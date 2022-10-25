@@ -7,13 +7,13 @@ from cave_api.serialization_model.serializers import (
     get_data
 )
 
-from pprint import pp as print
-
-
 data_location = pkg_resources.resource_filename("cave_api", "serialization_model/data/")
 
 def get_api_object():
     with open(data_location+'settings.json') as f: settings = json.load(f)
+    with open(data_location+'stats.json') as f: stats = json.load(f)
+    with open(data_location+'kpis.json') as f: kpis = json.load(f)
+    with open(data_location+'kwargs.json') as f: kwargs = json.load(f)
     example = {
         'settings':settings,
         'categories':get_categories_data(data_location+'categories/'),
@@ -21,13 +21,16 @@ def get_api_object():
         'map':get_map_data(data_location+'map/'),
         'arcs':get_data(data_location+'arcs/'),
         'nodes':get_data(data_location+'nodes/'),
-        'geos':get_data(data_location+'geos/')
+        'geos':get_data(data_location+'geos/'),
+        'stats':stats,
+        'kpis':kpis,
+        'kwargs':kwargs
     }
     return example
     
-
+from pprint import pp as print
 # print(get_categories_data(data_location+'categories/'))
 # print(get_app_bar_data(data_location+'appBar/'))
 # print(get_map_data(data_location+'map/'))
-# print(get_data(data_location+'nodes/'))
-# print(get_api_object())
+# print(get_data(data_location+'arcs/'))
+print(get_api_object())

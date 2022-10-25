@@ -41,10 +41,10 @@ def get_data(data_dir):
                 element_dict['category'][key] = item.split()
             else: 
                 if 'props' not in element_dict.keys(): element_dict['props'] = {}
-                element_dict['props'][key] = {'value': item}
+                try: element_dict['props'][key] = {'value': json.loads(item)}
+                except: element_dict['props'][key] = {'value': item}
         data[element_id] = element_dict
         
     validate_required_keys(required_keys, data)
     returnable['data'] = data
     return returnable
-

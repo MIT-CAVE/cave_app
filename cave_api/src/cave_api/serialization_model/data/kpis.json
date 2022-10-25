@@ -1,0 +1,109 @@
+{
+    "data": {
+        "key_1": {
+            "name": "Global Demand Met",
+            "value": 18,
+            "icon": "BsInboxes",
+            "map_kpi": true,
+            "numberFormat": {
+                "precision": 0,
+                "unit": "units"
+            }
+        },
+        "key_2": {
+            "name": "Customer Happiness",
+            "value": 16,
+            "icon": "BsFillEmojiSmileFill",
+            "map_kpi": true,
+            "numberFormat": {
+                "precision": 0,
+                "unit": "smiles"
+            }
+        },
+        "demand_header": {
+            "type": "head",
+            "name": "Demand Section",
+            "icon": "BsInboxes"
+        },
+        "demand": {
+            "name": "Global Demand",
+            "icon": "BsInboxes",
+            "numberFormat": {
+                "precision": 4,
+                "trailingZeros": true,
+                "unit": "units"
+            },
+            "value": 100
+        },
+        "supply_header": {
+            "type": "head",
+            "name": "Supply Section",
+            "icon": "BsTruck"
+        },
+        "big_number": {
+            "name": "Big Number",
+            "icon": "BsTruck",
+            "value": 10000000000000,
+            "numberFormat": {
+                "precision": 0,
+                "unit": "units"
+            }
+        },
+        "supply": {
+            "name": "Really Big Number",
+            "icon": "BsTruck",
+            "value": 9007199254740991,
+            "numberFormat": {
+                "precision": 2,
+                "unit": "$",
+                "currency": true,
+                "trailingZeros": false
+            }
+        }
+    },
+    "layout": {
+        "type": "grid",
+        "num_columns": "auto",
+        "num_rows": "auto",
+        "data": {
+            "col1_row1": {
+                "type": "item",
+                "itemId": "demand_header",
+                "column": 1,
+                "row": 1
+            },
+            "col1_row2": {
+                "type": "item",
+                "itemId": "demand",
+                "column": 1,
+                "row": 2
+            },
+            "col2_row1": {
+                "type": "item",
+                "itemId": "supply_header",
+                "column": 2,
+                "row": 1
+            },
+            "col2_row2": {
+                "type": "item",
+                "itemId": "big_number",
+                "column": 2,
+                "row": 2
+            },
+            "col2_row3": {
+                "type": "item",
+                "itemId": "supply",
+                "column": 2,
+                "row": 3
+            },
+            "key_1": {
+                "type": "item",
+                "itemId": "key_1"
+            },
+            "key_2": {
+                "type": "item",
+                "itemId": "key_2"
+            }
+        }
+    }
+}

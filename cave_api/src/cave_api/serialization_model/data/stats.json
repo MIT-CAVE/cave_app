@@ -1,0 +1,61 @@
+{
+    "types": {
+        "demand_met": {
+            "name": "Demand Met",
+            "calculation": "demand_met",
+            "numberFormat": {
+                "unit": "units"
+            },
+            "order": 1
+        },
+        "demand_tot": {
+            "name": "Demand Total",
+            "calculation": "demand_tot",
+            "numberFormat": {
+                "unit": "units"
+            },
+            "order": 2
+        },
+        "demand_pct": {
+            "name": "Demand Percentage",
+            "calculation": "demand_met / groupSum(\"demand_tot\")",
+            "numberFormat": {
+                "precision": 2,
+                "trailingZeros": true,
+                "unitSpace": false,
+                "unit": "%"
+            },
+            "order": 3
+        }
+    },
+    "data": {
+        "d1": {
+            "category": {
+                "Location": ["loc_CA_ON"],
+                "Product": ["prd_abc123"]
+            },
+            "values": {"demand_met": 5, "demand_tot": 10}
+        },
+        "d2": {
+            "category": {
+                "Location": ["loc_CA_ON"],
+                "Product": ["prd_def456"]
+            },
+            "values": {"demand_met": 4, "demand_tot": 5}
+        },
+        "d3": {
+            "category": {
+                "Location": ["loc_US_MI"],
+                "Product": ["prd_abc123"]
+            },
+            "values": {"demand_met": 6, "demand_tot": 7}
+        },
+        "d4": {
+            "category": {
+                "Location": ["loc_US_MI"],
+                "Product": ["prd_def456"]
+            },
+            "values": {"demand_met": 3, "demand_tot": 5}
+        }
+    }
+}

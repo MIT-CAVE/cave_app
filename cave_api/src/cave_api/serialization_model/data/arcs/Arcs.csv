@@ -1,5 +1,5 @@
 id,startLatitude,startLongitude,endLatitude,endLongitude,startClick,endClick,type,Locations,Products,Flow Capacity,Flow,Primary Type
-arc_1,43.78,-79.63,39.82,-86.18,800,1600,T1,loc_CA_ON loc_US_IN,prd_def456 prd_abc123,50,40,?
+arc_1,43.78,-79.63,39.82,-86.18,800,1600,T1,loc_CA_ON loc_US_IN,prd_def456 prd_abc123,50,40,"[{""name"": ""Air"", ""value"": false},{""name"": ""Train"", ""value"": true},{""name"": ""Truck"", ""value"": false},{""name"": ""3rd Party"", ""value"": false},{""name"": ""Mixed"", ""value"": false},{""name"": ""Water"", ""value"": false}]"
 arc_2,39.82,-86.18,42.89,-85.68,1600,2000,T2,loc_US_MI loc_US_IN,prd_def456 prd_abc123,30,20,
 arc_3,39.82,-86.18,28.49,-81.56,1600,2000,T2,loc_US_FL loc_US_IN,prd_def456 prd_abc123,30,14,
 arc_4,39.82,-86.18,42.361176,-71.084707,1600,2000,T2,loc_US_MA loc_US_IN,prd_def456 prd_abc123,30,6,
