@@ -22,6 +22,8 @@ PRODUCTION_MODE = False
 ## Debug
 ### NOTE: Debug should be False in a production environment
 DEBUG = True
+## USE LOGGING
+USE_LOGGING = True
 ################################################################
 
 
@@ -151,10 +153,8 @@ REST_FRAMEWORK = {
 ################################################################
 
 
-# Django Channels and Caching
+# Django Channels
 ################################################################
-### NOTE: This is not suitable for multi machine production environments
-## NOTE: For production, switch to a network based memcache or redis envronment
 ## Channels Layer Support
 INSTALLED_APPS += ["channels"]
 CHANNEL_LAYERS = {
@@ -162,6 +162,40 @@ CHANNEL_LAYERS = {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
     },
 }
-## General Cache support
+################################################################
+
+
+# Caching
+################################################################
+## NOTE: This is not suitable for multi machine production environments
+## while using channels
+## NOTE: For production, switch to a network based memcache or redis envronment
 CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
+################################################################
+
+
+# Configure logging if USE_LOGGING is True
+################################################################
+if USE_LOGGING:
+    LOGGING = {
+        'version': 1,
+        'filters': {
+            'require_debug_true': {
+                '()': 'django.utils.log.RequireDebugTrue',
+            }
+        },
+        'handlers': {
+            'console': {
+                'level': 'DEBUG',
+                'filters': ['require_debug_true'],
+                'class': 'logging.StreamHandler',
+            }
+        },
+        'loggers': {
+            'django.db.backends': {
+                'level': 'DEBUG',
+                'handlers': ['console'],
+            }
+        }
+    }
 ################################################################
