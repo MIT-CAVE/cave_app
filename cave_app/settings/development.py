@@ -23,7 +23,7 @@ PRODUCTION_MODE = False
 ### NOTE: Debug should be False in a production environment
 DEBUG = True
 ## USE LOGGING
-USE_LOGGING = True
+USE_LOGGING = False
 ################################################################
 
 

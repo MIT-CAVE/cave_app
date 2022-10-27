@@ -238,3 +238,115 @@ def get_associated_session_data(request):
         hashes=session.hashes,
         data=session.get_client_data(keys=["associated"]),
     )
+
+@utils.wrapping.async_api_app_ws
+def session_management(request):
+    """
+    API endpoint handle session management
+
+    Requires:
+    - `command`:
+    ----- What: The name of the session command to execute
+    ----- Type: str
+    - `command_data`:
+    ----- What: A json string (dict) representing the needed kwargs
+    ----- Type: str
+
+
+    Commands via WS Message:
+
+    - create
+        - Requires:
+            - session_name: str
+        - Optional:
+            - team_id: int
+                - id of team for which to add the session
+
+    -----------------------------------
+    {
+        "command":"create",
+        "command_data":{
+            "session_name":"new_name_here",
+            "team_id": 1
+        }
+    }
+    -----------------------------------
+
+    - join
+        - Requires:
+            - session_id: int
+
+    -----------------------------------
+    {
+        "command":"join",
+        "command_data":{
+            "session_id":1
+        }
+    }
+    -----------------------------------
+
+    - copy
+        - Requires:
+            - session_id: int
+                - The id of the session to copy
+            - session_name: str
+                - The name of the new copied session
+
+    -----------------------------------
+    {
+        "command":"copy",
+        "command_data":{
+            "session_name":"copied_name_here",
+            "session_id": 1
+        }
+    }
+    -----------------------------------
+
+    # delete
+        - Requires:
+            - session_id: int
+
+    -----------------------------------
+    {
+        "command":"delete",
+        "command_data":{
+            "session_id":1
+        }
+    }
+    -----------------------------------
+
+    - edit
+        - Requires:
+            - session_id: int
+                - The id of the session to edit
+            - session_name: str
+                - The new name of this session
+
+    -----------------------------------
+    {
+        "command":"edit",
+        "command_data":{
+            "session_name":"edited_name_here",
+            "session_id": 1
+        }
+    }
+    -----------------------------------
+    """
+    command = request.data.get("command", None)
+    command_data = request.data.get("command_data")
+    print(f"\n\{command.title()} Session\n")
+
+    user = request.user
+
+    if command == 'create':
+        user.create_session(**command_data)
+    elif command == 'join':
+        user.join_session(**command_data)
+    elif command == 'copy':
+        user.copy_session(**command_data)
+    elif command == 'delete':
+        user.delete_session(**command_data)
+    elif command == 'edit':
+        user.edit_session(**command_data)
+    else:
+        raise Exception(f'Command `{command}` does not match any commands.')

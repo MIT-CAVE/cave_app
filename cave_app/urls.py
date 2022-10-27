@@ -24,7 +24,7 @@ urlpatterns = [
     path("health/", api_util_views.health),
     path("custom_pages/", api_util_views.custom_pages),
     path("sessions/", api_util_views.sessions),
-    path("switch_session/", api_util_views.switch_session),
+    path("join_session/", api_util_views.join_session),
     path("create_session/", api_util_views.create_session),
     path("copy_session/", api_util_views.copy_session),
     path("edit_session/", api_util_views.edit_session),

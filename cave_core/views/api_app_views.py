@@ -31,6 +31,7 @@ def get_session_data(request):
     {"data_hashes":{"top_level_key_1":"1234567890ab"}}
     -----------------------------------
     """
+    print("\n\nGet Session Data\n")
     # Get passed data hashes
     data_hashes = request.data.get("data_hashes", {})
     # Session validation
@@ -107,6 +108,7 @@ def mutate_session(request):
     }
     -----------------------------------
     """
+    print("\n\nMutate Session\n")
     api_command = request.data.get("api_command")
     api_command_keys = request.data.get("api_command_keys")
     team_sync = request.data.get("team_sync", False)
@@ -209,6 +211,7 @@ def get_associated_session_data(request):
     {"data_names":["kpis"]}
     -----------------------------------
     """
+    print("\n\nGet Associated Session Data\n")
     data_names = request.data.get("data_names")
 
     # Session validation

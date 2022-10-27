@@ -312,13 +312,13 @@ def generate():
     group_one = Groups.objects.get_or_create(name="Group One")[0]
 
     group_one.add_user(ex_one)
-    ex_two.add_group(group_one)
+    group_one.add_user(ex_two)
 
     # Teams
     team_one = Teams.objects.get_or_create(name="Team One", group=group_one)[0]
 
     team_one.add_user(ex_one)
-    ex_two.add_team(team_one)
+    team_one.add_user(ex_two)
 
 
 if __name__ == "__main__":
