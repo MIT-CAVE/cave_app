@@ -34,14 +34,10 @@ def custom_pages(request):
     Does not take in parameters
     """
     print("\n\nCustom Pages\n")
-    # Globals
-    globals = models.Globals.get_solo()
-
     # Execute View Procedures
     filter_vars = {"show": True}
-    if globals.use_status_acceptance:
-        if request.user.status != "accepted":
-            filter_vars["require_acceptance"] = False
+    if request.user.status != "accepted":
+        filter_vars["require_acceptance"] = False
     custom_pages = [
         {"name": i.name, "url_name": i.url_name}
         for i in models.Pages.objects.filter(**filter_vars)
@@ -62,32 +58,28 @@ def sessions(request):
 
     Does not take in parameters
     """
-    request.user.error_on_no_access()
     print("\n\nSessions\n")
+    request.user.error_on_no_access()
 
     teams = request.user.get_teams()
+    sessions = request.user.get_sessions()
     output = {}
-    if len(teams)==0:
-        sessions = []
-    else:
-        sessions = request.user.get_sessions()
-        for team in teams:
-            group_name = team.get('group__name')
-            name = team.get('name')
-            name = group_name + ' -> ' + name if group_name else name
-            output[team.get('id')]={
-                'id': team.get('id'),
-                'name': team.get('name'),
-                'sessions' : [],
-                'limit': team.get('limit_sessions'),
-                'under_limit': team.get('limit_sessions')>team.get('count_sessions')
-            }
-    if len(sessions)>0:
-        for session in sessions:
-            output[session.get('team__id')]['sessions'].append({
-                'id': session.get('id'),
-                'name': session.get('name')
-            })
+    for team in teams:
+        group_name = team.get('group__name')
+        name = team.get('name')
+        name = group_name + ' -> ' + name if group_name else name
+        output[team.get('id')]={
+            'id': team.get('id'),
+            'name': team.get('name'),
+            'sessions' : [],
+            'limit': team.get('limit_sessions'),
+            'under_limit': team.get('limit_sessions')>team.get('count_sessions')
+        }
+    for session in sessions:
+        output[session.get('team__id')]['sessions'].append({
+            'id': session.get('id'),
+            'name': session.get('name')
+        })
     return {
         "teams": list(output.values()),
         "active_session": request.user.session.id if request.user.session else None,
@@ -134,11 +126,10 @@ def create_session(request):
     -----------------------------------
     """
     print("\n\Create Session\n")
-    # Inputs
-    team_id = request.data.get("team_id", None)
-    session_name = request.data.get("session_name")
-    # Process
-    request.user.create_session(session_name, team_id)
+    request.user.create_session(
+        request.data.get("session_name"),
+        request.data.get("team_id", None)
+    )
 
 
 @api_view(["POST"])
@@ -168,12 +159,10 @@ def copy_session(request):
     -----------------------------------
     """
     print("\n\nCopy Session\n")
-    # Inputs
-    session_name = request.data.get("session_name")
-    session_id = request.data.get("session_id")
-    # Process
-    request.user.copy_session(session_id, session_name)
-
+    request.user.copy_session(
+        request.data.get("session_id"),
+        request.data.get("session_name")
+    )
 
 
 @api_view(["POST"])
@@ -208,11 +197,7 @@ def delete_session(request):
     -----------------------------------
     """
     print("\n\nDelete Session\n")
-    # Inputs
-    session_id = request.data.get("session_id")
-    # Process
-    request.user.delete_session(session_id)
-
+    request.user.delete_session(request.data.get("session_id"))
 
 
 @api_view(["POST"])
@@ -251,11 +236,10 @@ def edit_session(request):
     -----------------------------------
     """
     print("\n\nEdit Session\n")
-    # Inputs
-    session_name = request.data.get("session_name")
-    session_id = request.data.get("session_id")
-    # Process
-    request.user.edit_session(session_name, session_id)
+    request.user.edit_session(
+        request.data.get("session_name"),
+        request.data.get("session_id")
+    )
 
 
 @api_view(["POST"])
@@ -287,10 +271,7 @@ def join_session(request):
     -----------------------------------
     """
     print("\n\nJoin Session\n")
-    # Inputs
-    session_id = request.data.get("session_id")
-    # Process
-    request.user.join_session(session_id)
+    request.user.join_session(request.data.get("session_id"))
 
 
 @api_view(["POST"])

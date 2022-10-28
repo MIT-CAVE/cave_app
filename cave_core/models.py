@@ -96,7 +96,7 @@ class CustomUser(AbstractUser):
         self.session = session
         self.save()
         # Query all session data:
-        # Note: get_changed_data needs to be executed prior to session.hashes since it can mutate them
+        # Note: get_changed_data needs to be executed prior to calling session.hashes since it can mutate them
         data = session.get_changed_data(previous_hashes={})
         utils.broadcasting.ws_broadcast_user(
             user=self,
@@ -402,34 +402,6 @@ class Globals(SingletonModel):
         _("Allow anyone to create a user"),
         help_text=_(
             "Should anyone be allowed to create a user? - Used in non authenticated nav pages to allow/disallow account creation"
-        ),
-        default=False,
-    )
-    use_status_acceptance = models.BooleanField(
-        _("Use Status Acceptance"),
-        help_text=_(
-            "Should the site rquire users to have an accepted status to use the site? - Used in views to enable/disable check for accepted status"
-        ),
-        default=False,
-    )
-    limit_personal_sessions = models.IntegerField(
-        _("Limit for Personal Sessions"),
-        help_text=_(
-            "Integer. The amount of personal sessions a user can have - Used in views to enable/disable session limit"
-        ),
-        default=2,
-    )
-    limit_team_sessions = models.IntegerField(
-        _("Limit for Team Sessions"),
-        help_text=_(
-            "Integer. The amount of sessions a team can have - Used in views to enable/disable session limit for teams"
-        ),
-        default=2,
-    )
-    require_email_validation = models.BooleanField(
-        _("Require Email Validation"),
-        help_text=_(
-            "Require users to validate their emails before accessing the app? - Used in app login to enable/disable email validation"
         ),
         default=False,
     )
@@ -782,7 +754,7 @@ class Teams(models.Model):
 
     def error_on_session_limit(self):
         if self.count_sessions>=self.limit_sessions:
-            raise Exception("Oops! It looks like you have reached your session limit.")
+            raise Exception(f"Oops! It looks like you have reached your session limit for the session `{self.name}`.")
 
     def increment_session_count(self, amt):
         self.count_sessions += amt

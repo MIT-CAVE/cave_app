@@ -18,7 +18,7 @@ def get_session_data(request):
     ----- Note: If an empty dictionary, all hashes will be synced
 
 
-    Example input (POST JSON):
+    Example input (WS Send):
 
     -----------------------------------
     {"data_hashes":{"top_level_key_1":"1234567890ab"}}
@@ -84,7 +84,7 @@ def mutate_session(request):
     ----- Note: Only sessions associated to the same team (or individual) will get this sync
 
 
-    Example input (POST JSON):
+    Example input (WS Send):
 
     -----------------------------------
     {
@@ -190,7 +190,7 @@ def get_associated_session_data(request):
     ----- Note: This can not be an empty list
 
 
-    Example input (POST JSON):
+    Example input (WS Send):
 
     -----------------------------------
     {"data_names":["kpis"]}
@@ -245,15 +245,15 @@ def session_management(request):
     API endpoint handle session management
 
     Requires:
-    - `command`:
+    - `session_command`:
     ----- What: The name of the session command to execute
     ----- Type: str
-    - `command_data`:
-    ----- What: A json string (dict) representing the needed kwargs
+    - `session_command_data`:
+    ----- What: A python dict representing the needed kwargs
     ----- Type: str
 
 
-    Commands via WS Message:
+    Commands (WS Send):
 
     - create
         - Requires:
@@ -264,8 +264,8 @@ def session_management(request):
 
     -----------------------------------
     {
-        "command":"create",
-        "command_data":{
+        "session_command":"create",
+        "session_command_data":{
             "session_name":"new_name_here",
             "team_id": 1
         }
@@ -278,8 +278,8 @@ def session_management(request):
 
     -----------------------------------
     {
-        "command":"join",
-        "command_data":{
+        "session_command":"join",
+        "session_command_data":{
             "session_id":1
         }
     }
@@ -294,8 +294,8 @@ def session_management(request):
 
     -----------------------------------
     {
-        "command":"copy",
-        "command_data":{
+        "session_command":"copy",
+        "session_command_data":{
             "session_name":"copied_name_here",
             "session_id": 1
         }
@@ -308,8 +308,8 @@ def session_management(request):
 
     -----------------------------------
     {
-        "command":"delete",
-        "command_data":{
+        "session_command":"delete",
+        "session_command_data":{
             "session_id":1
         }
     }
@@ -324,16 +324,16 @@ def session_management(request):
 
     -----------------------------------
     {
-        "command":"edit",
-        "command_data":{
+        "session_command":"edit",
+        "session_command_data":{
             "session_name":"edited_name_here",
             "session_id": 1
         }
     }
     -----------------------------------
     """
-    command = request.data.get("command", None)
-    command_data = request.data.get("command_data")
+    command = request.data.get("session_command", None)
+    command_data = request.data.get("session_command_data")
     print(f"\n\{command.title()} Session\n")
 
     user = request.user
@@ -349,4 +349,4 @@ def session_management(request):
     elif command == 'edit':
         user.edit_session(**command_data)
     else:
-        raise Exception(f'Command `{command}` does not match any commands.')
+        raise Exception(f'A `session_command` ({command}) was passed, but it does not match any available `session_command`s.')
