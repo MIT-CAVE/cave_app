@@ -31,29 +31,29 @@
     "data": {
         "d1": {
             "category": {
-                "Location": ["loc_CA_ON"],
-                "Product": ["prd_abc123"]
+                "Locations": ["loc_CA_ON"],
+                "Products": ["prd_abc123"]
             },
             "values": {"demand_met": 5, "demand_tot": 10}
         },
         "d2": {
             "category": {
-                "Location": ["loc_CA_ON"],
-                "Product": ["prd_def456"]
+                "Locations": ["loc_CA_ON"],
+                "Products": ["prd_def456"]
             },
             "values": {"demand_met": 4, "demand_tot": 5}
         },
         "d3": {
             "category": {
-                "Location": ["loc_US_MI"],
-                "Product": ["prd_abc123"]
+                "Locations": ["loc_US_MI"],
+                "Products": ["prd_abc123"]
             },
             "values": {"demand_met": 6, "demand_tot": 7}
         },
         "d4": {
             "category": {
-                "Location": ["loc_US_MI"],
-                "Product": ["prd_def456"]
+                "Locations": ["loc_US_MI"],
+                "Products": ["prd_def456"]
             },
             "values": {"demand_met": 3, "demand_tot": 5}
         }

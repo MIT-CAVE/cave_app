@@ -4,4 +4,4 @@ solveButton,,BsLightningFill,Solve,button,upper,solve
 map_1,,FaMapMarkedAlt,Map,map,lower,
 dash_1,,GoPackage,Dashboard,stats,lower,
 kpi_1,,MdSpeed,KPI Dashboard,kpi,lower,
-settings,,,Settings Pane,,,
+settings,options,MdSettings,Settings Pane,pane,upper,

@@ -1,5 +1,5 @@
 dashboardId,chart,grouping,statistic,category,level,category2,level2
-dash_1,Bar,Sum,pct_demand_met,demand,item,,
-dash_1,Bar,Sum,revenue,demand,item,,
-dash_1,Bar,Sum,fixed_cashflow,network_object,type,,
-dash_1,Bar,Sum,processing_cashflow,network_object,type,,
+dash_1,Bar,Sum,demand_tot,Products,size,Locations,state
+dash_1,Bar,Sum,demand_met,Products,size,,
+dash_1,Bar,Sum,demand_pct,Locations,country,,
+dash_1,Bar,Sum,demand_met,Locations,state,,

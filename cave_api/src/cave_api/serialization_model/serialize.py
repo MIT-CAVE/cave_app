@@ -27,10 +27,3 @@ def get_api_object():
         'kwargs':kwargs
     }
     return example
-    
-from pprint import pp as print
-# print(get_categories_data(data_location+'categories/'))
-# print(get_app_bar_data(data_location+'appBar/'))
-# print(get_map_data(data_location+'map/'))
-# print(get_data(data_location+'arcs/'))
-print(get_api_object())
