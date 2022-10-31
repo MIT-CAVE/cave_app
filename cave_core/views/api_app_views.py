@@ -31,10 +31,11 @@ def get_session_data(request):
     {"data_hashes":{"top_level_key_1":"1234567890ab"}}
     -----------------------------------
     """
+    #print("\n\nGet Session Data\n")
     # Get passed data hashes
     data_hashes = request.data.get("data_hashes", {})
     # Session validation
-    session = request.user.get_current_session()
+    session = request.user.session
     # get_changed_data needs to be executed prior to session.hashes since it can mutate them
     data = session.get_changed_data(previous_hashes=data_hashes)
     utils.broadcasting.ws_broadcast_user(
@@ -107,6 +108,7 @@ def mutate_session(request):
     }
     -----------------------------------
     """
+    #print("\n\nMutate Session\n")
     api_command = request.data.get("api_command")
     api_command_keys = request.data.get("api_command_keys")
     team_sync = request.data.get("team_sync", False)
@@ -121,7 +123,7 @@ def mutate_session(request):
     }
 
     # Session validation
-    session = request.user.get_current_session()
+    session = request.user.session
 
     if team_sync:
         sessions = session.get_associated_sessions()
@@ -209,10 +211,11 @@ def get_associated_session_data(request):
     {"data_names":["kpis"]}
     -----------------------------------
     """
+    #print("\n\nGet Associated Session Data\n")
     data_names = request.data.get("data_names")
 
     # Session validation
-    session = request.user.get_current_session()
+    session = request.user.session
     # Get associated sessions
     associated_sessions = session.get_associated_sessions(user=request.user)
     # Session data

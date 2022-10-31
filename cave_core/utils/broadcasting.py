@@ -34,5 +34,5 @@ def ws_broadcast_user(user, type, event, data, hashes={}):
 
 def ws_broadcast_session(session, type, event, data, hashes={}):
     payload = format_broadcast_payload(type=type, event=event, data=data, hashes=hashes)
-    for user_session in session.get_user_sessions():
-        ws_raw_broadcast(user_id=user_session.user.id, payload=payload)
+    for user in session.get_users():
+        ws_raw_broadcast(user_id=user.id, payload=payload)

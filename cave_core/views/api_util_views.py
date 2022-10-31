@@ -33,14 +33,11 @@ def custom_pages(request):
 
     Does not take in parameters
     """
-    # Globals
-    globals = models.Globals.get_solo()
-
+    #print("\n\nCustom Pages\n")
     # Execute View Procedures
     filter_vars = {"show": True}
-    if globals.use_status_acceptance:
-        if request.user.status != "accepted":
-            filter_vars["require_acceptance"] = False
+    if request.user.status != "accepted":
+        filter_vars["require_acceptance"] = False
     custom_pages = [
         {"name": i.name, "url_name": i.url_name}
         for i in models.Pages.objects.filter(**filter_vars)
@@ -61,46 +58,31 @@ def sessions(request):
 
     Does not take in parameters
     """
-    # Globals
-    globals = models.Globals.get_solo()
-    # Validate
-    utils.validating.except_on_no_access(globals, request.user)
+    #print("\n\nSessions\n")
+    request.user.error_on_no_access()
 
-    # Execute View Procedures
-    personal_sessions = request.user.get_personal_sessions()
-    output = {
-        "personal": {
-            "id": None,
-            "name": "Personal",
-            "sessions": personal_sessions,
-            "limit": globals.limit_personal_sessions,
-        }
-    }
     teams = request.user.get_teams()
-    if len(teams) > 0:
-        for team in teams:
-            output[team.get("team__id")] = {
-                "id": team.get("team__id"),
-                "name": team.get("team__group__name") + " --> " + team.get("team__name")
-                if request.user.is_staff
-                else team.get("team__name"),
-                "sessions": [],
-                "limit": globals.limit_team_sessions,
-            }
-        team_ids = [team.get("team__id") for team in teams]
-        team_sessions = request.user.get_team_sessions(team_ids)
-        for team_session in team_sessions:
-            output[team_session.get("team__id")]["sessions"].append(
-                {
-                    "id": team_session.get("id"),
-                    "name": team_session.get("name"),
-                }
-            )
-    for id, data in output.items():
-        output[id]["under_limit"] = len(data.get("sessions")) < data.get("limit", 0)
+    sessions = request.user.get_sessions()
+    output = {}
+    for team in teams:
+        group_name = team.get('group__name')
+        name = team.get('name')
+        name = group_name + ' -> ' + name if group_name else name
+        output[team.get('id')]={
+            'id': team.get('id'),
+            'name': team.get('name'),
+            'sessions' : [],
+            'limit': team.get('limit_sessions'),
+            'under_limit': team.get('limit_sessions')>team.get('count_sessions')
+        }
+    for session in sessions:
+        output[session.get('team__id')]['sessions'].append({
+            'id': session.get('id'),
+            'name': session.get('name')
+        })
     return {
         "teams": list(output.values()),
-        "active_session": request.user.get_current_session_id(),
+        "active_session": request.user.session.id if request.user.session else None,
     }
 
 
@@ -143,22 +125,11 @@ def create_session(request):
     }
     -----------------------------------
     """
-    # Globals
-    globals = models.Globals.get_solo()
-    # Inputs
-    team_id = request.data.get("team_id", None)
-    session_name = request.data.get("session_name")
-    # Validate
-    utils.validating.except_on_no_access(globals, request.user)
-    utils.validating.except_bad_session_name(session_name)
-    utils.validating.except_on_team_id_session_limit(globals, request.user, team_id)
-    # Execute View Procedures
-    if team_id == None:
-        params = {"user": request.user}
-    else:
-        params = {"team_id": team_id}
-    session_obj, created = models.Sessions.objects.get_or_create(name=session_name, **params)
-    return {"session_id": session_obj.id}
+    #print("\n\Create Session\n")
+    request.user.create_session(
+        request.data.get("session_name"),
+        request.data.get("team_id", None)
+    )
 
 
 @api_view(["POST"])
@@ -186,34 +157,12 @@ def copy_session(request):
     "session_id":1
     }
     -----------------------------------
-
-    Example output (JSON):
-
-    -----------------------------------
-    {
-    "success":true,
-    "session_id":2
-    }
-    -----------------------------------
     """
-    # Globals
-    globals = models.Globals.get_solo()
-    # Inputs
-    session_name = request.data.get("session_name")
-    session_id = request.data.get("session_id")
-    # Validate
-    utils.validating.except_on_no_access(globals, request.user)
-    utils.validating.except_bad_session_name(session_name)
-    # Get Session
-    session = models.Sessions.objects.filter(id=session_id).first()
-    # Validate (cont)
-    utils.validating.except_on_no_session_access(session, request.user)
-    utils.validating.except_on_session_limit(globals, session)
-
-    # Execute View Procedures
-    # Create New Session
-    new_session = session.copy(session_name)
-    return {"session_id": new_session.id}
+    #print("\n\nCopy Session\n")
+    request.user.copy_session(
+        request.data.get("session_id"),
+        request.data.get("session_name")
+    )
 
 
 @api_view(["POST"])
@@ -247,21 +196,8 @@ def delete_session(request):
     }
     -----------------------------------
     """
-    # Globals
-    globals = models.Globals.get_solo()
-    # Inputs
-    session_id = request.data.get("session_id")
-    # Validate
-    utils.validating.except_on_no_access(globals, request.user)
-    # Get Session
-    session = models.Sessions.objects.filter(id=session_id).first()
-    # Validate (cont)
-    utils.validating.except_on_no_session_access(session, request.user)
-    utils.validating.except_on_session_not_empty(session)
-
-    # Execute View Procedures
-    # Delete the session
-    session.delete()
+    #print("\n\nDelete Session\n")
+    request.user.delete_session(request.data.get("session_id"))
 
 
 @api_view(["POST"])
@@ -299,40 +235,19 @@ def edit_session(request):
     }
     -----------------------------------
     """
-    # Globals
-    globals = models.Globals.get_solo()
-    # Inputs
-    session_name = request.data.get("session_name")
-    session_id = request.data.get("session_id")
-    # Validate
-    utils.validating.except_on_no_access(globals, request.user)
-    utils.validating.except_bad_session_name(session_name)
-    # Get Session
-    session = models.Sessions.objects.filter(id=request.data.get("session_id")).first()
-    # Validate (cont)
-    utils.validating.except_on_no_session_access(session, request.user)
-
-    # Execute View Procedures
-    # Edit the session name
-    session.name = session_name
-    session.save()
-
-    utils.broadcasting.ws_broadcast_session(
-        session=session,
-        type="container",
-        event="change_session_name",
-        data={"sessionName": session.get_short_name()},
+    #print("\n\nEdit Session\n")
+    request.user.edit_session(
+        request.data.get("session_name"),
+        request.data.get("session_id")
     )
-
-    return {"session_id": session.id}
 
 
 @api_view(["POST"])
 @authentication_classes((SessionAuthentication,))
 @utils.wrapping.api_util_response
-def switch_session(request):
+def join_session(request):
     """
-    API endpoint to switch to a different session
+    API endpoint to join to a different session
 
     Requires:
     - `session_id`:
@@ -355,42 +270,8 @@ def switch_session(request):
     { "success":true }
     -----------------------------------
     """
-    # Globals
-    globals = models.Globals.get_solo()
-    # Inputs
-    session_id = request.data.get("session_id")
-    # Validate
-    utils.validating.except_on_no_access(globals, request.user)
-    # Get Session
-    session = models.Sessions.objects.filter(id=session_id).first()
-    # Validate (cont)
-    utils.validating.except_on_no_session_access(session, request.user)
-
-    # Execute View Procedures
-    # Update User Session
-    user_session = models.UserSessions.objects.filter(user=request.user).first()
-    if user_session:
-        user_session.session = session
-        user_session.save()
-    else:
-        user_session = models.UserSessions.objects.get_or_create(session=session, user=request.user)
-
-    # Return All Session Data Hashes To User Instances
-    # get_changed_data needs to be executed prior to session.hashes since it can mutate them
-    data = session.get_changed_data(previous_hashes={})
-    utils.broadcasting.ws_broadcast_user(
-        user=request.user,
-        type="app",
-        event="overwrite",
-        hashes=session.hashes,
-        data=data,
-    )
-    utils.broadcasting.ws_broadcast_user(
-        user=request.user,
-        type="container",
-        event="change_session_name",
-        data={"sessionName": session.get_short_name()},
-    )
+    #print("\n\nJoin Session\n")
+    request.user.join_session(request.data.get("session_id"))
 
 
 @api_view(["POST"])
@@ -410,10 +291,12 @@ def send_email_validation_code(request):
     }
     -----------------------------------
     """
+    #print("\n\nSend Email Validation Code\n")
     # Globals
     globals = models.Globals.get_solo()
     # Validate
-    utils.validating.except_on_email_validated(request.user)
+    if request.user.email_validated:
+        raise Exception("Oops! Your email is already validated.")
 
     # Execute View Procedures
     code = request.user.gen_new_email_validation_code()

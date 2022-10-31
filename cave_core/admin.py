@@ -36,13 +36,12 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
     fieldsets = (
         (
             "Authentication",
-            {"fields": ("username", "email", "password", "email_validated")},
+            {"fields": ("username", "email", "password", "email_validated", "status",)},
         ),
         (
             "Personal Info",
             {"fields": ("first_name", "last_name", "photo", "bio")},
         ),
-        ("Status", {"fields": ("status",)}),
     )
     add_fieldsets = (
         (
@@ -54,6 +53,7 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
                     "password1",
                     "password2",
                     "email_validated",
+                    "status",
                 )
             },
         ),
@@ -61,7 +61,6 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
             "Personal Info",
             {"fields": ("first_name", "last_name", "photo", "bio")},
         ),
-        ("Status", {"fields": ("status",)}),
     )
     ordering = ("email",)
     resource_class = resources.CustomUserResource
@@ -113,20 +112,9 @@ class CustomGlobalsAdmin(SingletonModelAdmin):
             {
                 "fields": (
                     "allow_anyone_create_user",
-                    "use_status_acceptance",
-                    "require_email_validation",
                     "allow_user_edit_info",
                     "allow_user_edit_bio",
                     "allow_user_edit_photo",
-                )
-            },
-        ),
-        (
-            "Sessions",
-            {
-                "fields": (
-                    "limit_personal_sessions",
-                    "limit_team_sessions",
                 )
             },
         ),
@@ -152,16 +140,9 @@ class CustomSessionAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "name",
-        "user",
         "team",
     ]
-    search_fields = ["name", "team__name", "user__email"]
-
-
-class CustomUserSessionAdmin(admin.ModelAdmin):
-    model = models.UserSessions
-    list_display = ["id", "session", "user"]
-    search_fields = ["user__email", "session__name"]
+    search_fields = ["name", "team__name"]
 
 
 class CustomSessionDataAdmin(admin.ModelAdmin):
@@ -185,6 +166,10 @@ class CustomTeamUserAdmin(admin.ModelAdmin):
         "user__email",
         "team__name",
     ]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.exclude(team__name__icontains='Personal (')
 
 
 class CustomPageSectionInline(admin.StackedInline):
@@ -220,6 +205,10 @@ class CustomTeamAdmin(admin.ModelAdmin):
     inlines = [
         CustomTeamUserInline,
     ]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.exclude(name__icontains='Personal (')
 
 
 class CustomGroupUserAdmin(admin.ModelAdmin):
@@ -264,7 +253,6 @@ admin.site.register(models.Teams, CustomTeamAdmin)
 admin.site.register(models.TeamUsers, CustomTeamUserAdmin)
 admin.site.register(models.Sessions, CustomSessionAdmin)
 admin.site.register(models.SessionData, CustomSessionDataAdmin)
-admin.site.register(models.UserSessions, CustomUserSessionAdmin)
 
 # Create a special Staff Admin Site
 class StaffSite(admin.AdminSite):

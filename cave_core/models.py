@@ -1,6 +1,8 @@
 # Framework Imports
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.db.models.signals import post_save,post_delete
+from django.dispatch import receiver
 from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authtoken.models import Token
@@ -14,7 +16,6 @@ from functools import reduce
 from cave_core import utils
 from cave_api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
-
 
 class CustomUser(AbstractUser):
     """
@@ -70,7 +71,195 @@ class CustomUser(AbstractUser):
         null=True,
         unique=True,
     )
+    session = models.ForeignKey(
+        "Sessions", # Must stay a string since Sessions is not yet defined
+        on_delete=models.SET_NULL,
+        verbose_name=_("session"),
+        help_text=_("This User's current session"),
+        blank=True,
+        null=True,
+    )
+    team_ids = models.JSONField(
+        _("team_ids"),
+        help_text=_("A list of team_ids for this user"),
+        default=list
+    )
 
+    #############################################
+    # User Session Management
+    #############################################
+    def switch_session_no_validation(self, session_obj):
+        session = session_obj
+        if self.session == session:
+            return
+        # Query CustomUsers -> Update session
+        self.session = session
+        self.save()
+        # Query all session data:
+        # Note: get_changed_data needs to be executed prior to calling session.hashes since it can mutate them
+        data = session.get_changed_data(previous_hashes={})
+        utils.broadcasting.ws_broadcast_user(
+            user=self,
+            type="app",
+            event="overwrite",
+            hashes=session.hashes,
+            data=data,
+        )
+        utils.broadcasting.ws_broadcast_user(
+            user=self,
+            type="container",
+            event="change_session_name",
+            data={"sessionName": session.get_short_name()},
+        )
+
+    def create_session(self, session_name, team_id=None):
+        self.error_on_no_access()
+        Sessions.error_on_invalid_name(session_name)
+        if team_id:
+            # Query TeamUsers
+            self.error_on_no_team_access(team_id)
+            # Query Teams
+            appropriation_obj = Teams.objects.filter(id=team_id).first()
+            params = {"team":appropriation_obj}
+        else:
+            appropriation_obj = self
+            params = {"user": appropriation_obj}
+        appropriation_obj.error_on_session_limit()
+        # Query -> Create Session
+        session, created = Sessions.objects.get_or_create(name=session_name, **params)
+        if not created:
+            raise Exception("Oops! Unable to create that session.")
+        # Query -> Update Session Count
+        appropriation_obj.increment_session_count(1)
+        # Queries -> Switch to the session
+        self.switch_session_no_validation(session)
+
+    def join_session(self, session_id):
+        self.error_on_no_access()
+        # Query Sessions
+        session = Sessions.objects.filter(id=session_id).first()
+        # Query TeamUsers (only if a team session)
+        self.error_on_no_team_access(session.team)
+        # Queries -> Switch to the session
+        self.switch_session_no_validation(session)
+
+    def copy_session(self, session_id, session_name):
+        self.error_on_no_access()
+        Sessions.error_on_invalid_name(session_name)
+        # Query Sessions
+        session = Sessions.objects.filter(id=session_id).first()
+        # Query TeamUsers (only if a team session)
+        self.error_on_no_team_access(session.team)
+        if session.team:
+            # Query if the session is a team obj
+            appropriation_obj = session.team
+        else:
+            appropriation_obj = self
+        appropriation_obj.error_on_session_limit()
+        # Queries -> Duplicates this session and session data
+        session_obj = session.copy(session_name)
+        # Query -> Update Session Count
+        appropriation_obj.increment_session_count(1)
+        # Queries -> Switch to the session
+        self.switch_session_no_validation(session)
+
+    def delete_session(self, session_id):
+        self.error_on_no_access()
+        # Query Sessions
+        session = Sessions.objects.filter(id=session_id).first()
+        # Query TeamUsers (only if a team session)
+        self.error_on_no_team_access(session.team)
+        # Query CustomUsers to make sure that no one is in the session
+        session.error_on_session_not_empty()
+        if session.team:
+            # Query if the session is a team obj
+            appropriation_obj = session.team
+        else:
+            appropriation_obj = self
+        # Query -> Delete Session
+        session.delete()
+        # Query -> Update Session Count
+        appropriation_obj.increment_session_count(-1)
+
+    def edit_session(self, session_name, session_id):
+        self.error_on_no_access()
+        Sessions.error_on_invalid_name(session_name)
+        # Query Sessions
+        session = Sessions.objects.filter(id=session_id).first()
+        # Query TeamUsers (only if a team session)
+        self.error_on_no_team_access(session.team)
+        session.name = session_name
+        session.save()
+        if self.session == session:
+            utils.broadcasting.ws_broadcast_session(
+                session=session,
+                type="container",
+                event="change_session_name",
+                data={"sessionName": session.get_short_name()},
+            )
+        else:
+            # Queries -> Switch to the session
+            self.switch_session_no_validation(session)
+
+    #############################################
+    # Session and Team Utils
+    #############################################
+    def get_team_ids(self):
+        team_ids = self.team_ids
+        if self.is_staff:
+            groups = GroupUsers.objects.filter(user=self, is_group_manager=True).values("group__id")
+            if len(groups)>0:
+                team_ids+=list(Teams.objects.filter(group__in=groups).values_list("team__id", flat=True))
+            team_ids = list(set(team_ids))
+        return team_ids
+
+    def get_teams(self):
+        team_ids = self.get_team_ids()
+        args = ["name", "id", "limit_sessions", "count_sessions"]
+        if self.is_staff:
+            args.append("group__name")
+        return list(
+            Teams.objects.filter(id__in=team_ids)
+            .values(*args)
+            .order_by("name")
+        )
+
+    def get_sessions(self):
+        team_ids = self.get_team_ids()
+        return list(
+            Sessions.objects.filter(team__in=team_ids)
+            .values("team__id", "id", "name")
+            .order_by("name")
+        )
+
+    #############################################
+    # Access Utils
+    #############################################
+    def error_on_no_team_access(self, team_id):
+        """
+        Checks to make sure a user has access to a given team's data
+
+        Requires:
+
+        - `team`:
+            - Type: int
+            - What: The team id to check if the current user belongs
+        """
+        if self.is_staff:
+            return
+        if team_id not in self.get_team_ids():
+            raise Exception('Oops! You do not have access to data from the specified team.')
+
+    def error_on_no_access(self):
+        if self.is_staff:
+            return
+        if self.email_validated and self.status=='accepted':
+            return
+        raise Exception("Oops! Access denied.")
+
+    #############################################
+    # Authentication Utils
+    #############################################
     def gen_new_email_validation_code(self):
         """
         Generates and returns an email validation code if the requesting user has not yet validated their email
@@ -81,58 +270,22 @@ class CustomUser(AbstractUser):
         self.save()
         return self.email_validation_code
 
-    def add_team(self, team):
+    def get_token(self):
         """
-        Adds the current user to a team
-
-        Requires:
-
-        - `team`:
-            - Type: Team object
-            - What: The team that the user will be joining
+        Returns the token for this user
         """
-        TeamUsers.objects.get_or_create(team=team, user=self)
+        try:
+            token, created = Token.objects.get_or_create(user=self)
+            return token
+        except:
+            return "none"
 
-    def add_group(self, group):
-        """
-        Adds the current user to a group
-
-        Requires:
-
-        - `group`:
-            - Type: Group object
-            - What: The group that the user will be joining
-        """
-        GroupUsers.objects.get_or_create(group=group, user=self)
-
-    def get_teams(self):
-        """
-        Gets all teams to which this user belongs
-        - If this user is staff, gets all teams for groups that this user is a group admin
-        """
-        user_teams = list(
-            TeamUsers.objects.filter(user=self).values(
-                "team__id", "team__name", "team__group__name"
-            )
-        )
-        if self.is_staff:
-            groups = GroupUsers.objects.filter(user=self, is_group_manager=True).values("group__id")
-            if len(groups) > 0:
-                group_teams = list(
-                    Teams.objects.filter(group__in=groups).values(
-                        team__id=models.F("id"),
-                        team__name=models.F("name"),
-                        team__group__name=models.F("group__name"),
-                    )
-                )
-                aggregate_teams = user_teams + group_teams
-                # Force aggregate teams to not have duplicates and return it
-                return list({i["team__id"]: i for i in aggregate_teams}.values())
-        return user_teams
-
+    #############################################
+    # Misc Utils
+    #############################################
     def get_people_info(self):
         """
-        Gets all people info as a formateed dictionary to populate the people page
+        Gets all people info as a formatted dictionary to populate the people page
         """
         group_ids = list(GroupUsers.objects.filter(user=self).values_list("group__id", flat=True))
         team_ids = list(TeamUsers.objects.filter(user=self).values_list("team__id", flat=True))
@@ -165,66 +318,6 @@ class CustomUser(AbstractUser):
         for i in group_users:
             group_info[i.group.name] = group_info.get(i.group.name, []) + [i.user]
         return {"Team": team_info, "Group": group_info}
-
-    def get_personal_sessions(self):
-        """
-        Returns all personal sessions for this user
-        """
-        return list(Sessions.objects.filter(user=self).values("id", "name").order_by("name"))
-
-    def get_team_sessions(self, team_ids=None):
-        """
-        Returns all team sessions associated to teams to which this user belongs
-        """
-        if team_ids == None:
-            team_ids = [i.get("team__id") for i in self.get_teams()]
-        return list(
-            Sessions.objects.filter(team__in=team_ids)
-            .values("team__name", "team__id", "id", "name")
-            .order_by("name")
-        )
-
-    def is_on_team(self, team):
-        """
-        Checks to make sure a user is on a given team
-
-        Requires:
-
-        - `team`:
-            - Type: Team object
-            - What: The team to check if the current user belongs
-        """
-        if len(TeamUsers.objects.filter(team=team, user=self)) >= 1:
-            return True
-        return False
-
-    def get_token(self):
-        """
-        Returns the token for this user
-        """
-        try:
-            token, created = Token.objects.get_or_create(user=self)
-            return token
-        except:
-            return "none"
-
-    def get_current_session(self):
-        """
-        Returns the current session for this user
-        """
-        user_session = UserSessions.objects.filter(user=self).select_related("session").first()
-        if user_session:
-            return user_session.session
-        return None
-
-    def get_current_session_id(self):
-        """
-        Returns the current session id for this user
-        """
-        user_session = UserSessions.objects.filter(user=self).first()
-        if user_session:
-            return user_session.session.id
-        return None
 
     def __str__(self):
         """
@@ -312,34 +405,6 @@ class Globals(SingletonModel):
         ),
         default=False,
     )
-    use_status_acceptance = models.BooleanField(
-        _("Use Status Acceptance"),
-        help_text=_(
-            "Should the site rquire users to have an accepted status to use the site? - Used in views to enable/disable check for accepted status"
-        ),
-        default=False,
-    )
-    limit_personal_sessions = models.IntegerField(
-        _("Limit for Personal Sessions"),
-        help_text=_(
-            "Integer. The amount of personal sessions a user can have - Used in views to enable/disable session limit"
-        ),
-        default=2,
-    )
-    limit_team_sessions = models.IntegerField(
-        _("Limit for Team Sessions"),
-        help_text=_(
-            "Integer. The amount of sessions a team can have - Used in views to enable/disable session limit for teams"
-        ),
-        default=2,
-    )
-    require_email_validation = models.BooleanField(
-        _("Require Email Validation"),
-        help_text=_(
-            "Require users to validate their emails before accessing the app? - Used in app login to enable/disable email validation"
-        ),
-        default=False,
-    )
     primary_color = models.CharField(
         _("Primary Color"),
         help_text=_("The primary color for the website - Used for the general style on all pages"),
@@ -386,23 +451,6 @@ class Globals(SingletonModel):
     # Methods
     def __str__(self):
         return _("{}").format(self.site_name)
-
-
-class SectionTypes(models.Model):
-    """
-    Model for storing section types
-    """
-
-    name = models.CharField(_("Name"), max_length=128, help_text=_("Name of the section type"))
-
-    # Metadata
-    class Meta:
-        verbose_name = _("Section Type")
-        verbose_name_plural = _("Section Types")
-
-    # Methods
-    def __str__(self):
-        return self.name
 
 
 class Pages(models.Model):
@@ -462,13 +510,23 @@ class PageSections(models.Model):
             "The page to assign this section to - Used in Page Sections to link a page to a section"
         ),
     )
-    section_type = models.ForeignKey(
-        SectionTypes,
-        on_delete=models.CASCADE,
-        verbose_name=_("Section Type"),
-        help_text=_(
-            "The section type to create - Used in all types of sections (photo, photo_quote, video, html_content, break, photo_resource, etc.) to determine the type of section to display"
-        ),
+    section_type = models.CharField(
+        _("Section Type"),
+        max_length=32,
+        help_text=_("The section type to determine the type of section to display"),
+        choices=[
+            ("photo_only", "Photo Only"),
+            ("video_only", "Video Only"),
+            ("break", "Break"),
+            ("photo_header", "Photo Header"),
+            ("photo_header_left","Photo Header Left"),
+            ("photo_header_right","Photo Header Right"),
+            ("html_content","HTML Content"),
+            ("photo_quote","Photo Quote"),
+            ("photo_resource","Photo Resource"),
+            ("faq","FAQ"),
+        ],
+        default="photo_only",
     )
     header = models.CharField(
         _("Header"),
@@ -652,13 +710,34 @@ class Teams(models.Model):
     Model for storing Teams
     """
 
-    name = models.CharField(_("name"), max_length=128, help_text=_("Name of the team"), unique=True)
-
+    name = models.CharField(
+        _("name"),
+        max_length=128,
+        help_text=_("Name of the team"),
+        unique=True
+    )
     group = models.ForeignKey(
         Groups,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_DEFAULT,
         verbose_name=_("group"),
         help_text=_("The group to which this team belongs"),
+        blank=True,
+        null=True,
+        default=None
+    )
+    limit_sessions = models.IntegerField(
+        _("Limit for Team Sessions"),
+        help_text=_(
+            "Integer. The amount of sessions this team can have - Used in views to enable/disable session limit"
+        ),
+        default=3,
+    )
+    count_sessions = models.IntegerField(
+        _("Count of Team Sessions"),
+        help_text=_(
+            "Integer. The amount sessions this team currently has"
+        ),
+        default=0,
     )
 
     def add_user(self, user):
@@ -672,6 +751,14 @@ class Teams(models.Model):
             - What: The user that will be joining this team
         """
         TeamUsers.objects.get_or_create(team=self, user=user)
+
+    def error_on_session_limit(self):
+        if self.count_sessions>=self.limit_sessions:
+            raise Exception(f"Oops! It looks like you have reached your session limit for the session `{self.name}`.")
+
+    def increment_session_count(self, amt):
+        self.count_sessions += amt
+        self.save()
 
     # Metadata
     class Meta:
@@ -702,6 +789,7 @@ class TeamUsers(models.Model):
         help_text=_("The associated user"),
     )
 
+
     # Metadata
     class Meta:
         verbose_name = _("Team User")
@@ -725,16 +813,6 @@ class Sessions(models.Model):
         on_delete=models.CASCADE,
         verbose_name=_("team"),
         help_text=_("The associated team"),
-        blank=True,
-        null=True,
-    )
-    user = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,
-        verbose_name=_("user"),
-        help_text=_("The associated user"),
-        blank=True,
-        null=True,
     )
     hashes = models.JSONField(_("hashes"), help_text=_("The session hashes"), blank=True, null=True)
 
@@ -913,46 +991,19 @@ class Sessions(models.Model):
                 - If so: This request will also return related group team sessions
             - Default: None
         """
-        if user is not None and self.team is not None:
-            # Logic for attempting to get all group associated sessions as a staff
+        if user is not None:
             if user.is_staff:
-                team_ids = [i.get("team__id") for i in user.get_teams()]
-                return Sessions.objects.filter(team__in=team_ids)
-        if self.team is not None:
-            return Sessions.objects.filter(team=self.team)
-        elif self.user is not None:
-            return Sessions.objects.filter(user=self.user)
-        else:
-            return None
+                return Sessions.objects.filter(team__in=user.get_team_ids())
+        return Sessions.objects.filter(team=self.team)
 
-    def get_user_sessions(self):
+    def get_users(self):
         """
         Gets all other users in this session
 
         - Used to determine which users are in this session
         - EG to prevent deletion if more than one user is in the session
         """
-        return UserSessions.objects.filter(session=self)
-
-    def is_user_valid(self, user):
-        """
-        Validates that the specified user has permissions to access this session
-        """
-        if self.team is not None:
-            if len(TeamUsers.objects.filter(team=self.team, user=user)) == 1:
-                return True
-            else:
-                return False
-        elif self.user is not None:
-            return user == self.user
-
-    def is_team(self):
-        """
-        Returns a boolean true if this session is a team session otherwise false
-        """
-        if self.team is not None:
-            return True
-        return False
+        return CustomUser.objects.filter(session=self)
 
     def get_short_name(self):
         """
@@ -980,6 +1031,17 @@ class Sessions(models.Model):
             data.pk = None
             data.save()
         return new_session
+
+    def error_on_session_not_empty(self):
+        if len(self.get_users()) > 0:
+            raise Exception(
+                "Oops! That session still has users in it."
+            )
+
+    @staticmethod
+    def error_on_invalid_name(name):
+        if name == None or len(str(name)) < 1:
+            raise Exception("Oops! You need to provide a valid session name.")
 
     # Metadata
     class Meta:
@@ -1156,30 +1218,19 @@ class SessionData(models.Model):
     def __str__(self):
         return _("{}").format(str(self.session.name) + str(self.data_name))
 
-
-class UserSessions(models.Model):
-    """
-    Model for storing User Sessions
-    """
-
-    session = models.ForeignKey(
-        Sessions,
-        on_delete=models.CASCADE,
-        verbose_name=_("session"),
-        help_text=_("The associated session"),
+# Signals
+@receiver(post_save, sender=TeamUsers, dispatch_uid="update_team_ids_on_save")
+@receiver(post_delete, sender=TeamUsers, dispatch_uid="update_team_ids_on_delete")
+def update_team_ids(sender, instance, **kwargs):
+    instance.user.team_ids = list(
+        TeamUsers.objects.filter(user=instance.user)
+        .values_list('team', flat=True)
     )
-    user = models.OneToOneField(
-        CustomUser,
-        on_delete=models.CASCADE,
-        verbose_name=_("user"),
-        help_text=_("The associated user"),
-    )
-    # Metadata
-    class Meta:
-        verbose_name = _("User Session")
-        verbose_name_plural = _("User Sessions")
-        constraints = [models.UniqueConstraint(fields=["session", "user"], name="unq_user_session")]
+    instance.user.save()
 
-    # Methods
-    def __str__(self):
-        return _("{}").format(str(self.user) + " - " + str(self.session))
+@receiver(post_save, sender=CustomUser, dispatch_uid="create_personal_team")
+def create_personal_team(sender, instance, created, **kwargs):
+    if created:
+        team, team_created = Teams.objects.get_or_create(name=f'Personal ({instance.username})')
+        if team_created:
+            team.add_user(instance)

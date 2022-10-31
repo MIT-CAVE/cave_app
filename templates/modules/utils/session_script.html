@@ -23,7 +23,9 @@
               alert("Error: "+response.error);
             }
             else {
-              switchSessions(response.session_id)
+              if (window.location.pathname!="/app/"){
+                window.location.pathname = "app"
+              }
             }
         }
         else{
@@ -49,7 +51,9 @@
               alert("Error: "+response.error);
             }
             else {
-              switchSessions(response.session_id)
+              if (window.location.pathname!="/app/"){
+                window.location.pathname = "app"
+              }
             }
         }
         else{
@@ -75,8 +79,9 @@
               alert("Error: "+response.error);
             }
             else {
-              websocket.send({'command':'get_session_data', 'data':{}})
-              switchSessions(response.session_id)
+              if (window.location.pathname!="/app/"){
+                window.location.pathname = "app"
+              }
             }
         }
         else{
@@ -102,9 +107,6 @@
               if (response.error){
                 alert("Error: "+response.error);
               }
-              else {
-                // console.log(response);
-              }
           }
           else{
             alert('Something went wrong during session deletion.');
@@ -115,9 +117,9 @@
     }
   }
 
-  function switchSessions(session_id){
+  function joinSession(session_id){
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', `/switch_session/`);
+    xhr.open('POST', `/join_session/`);
     const postData = new FormData();
     postData.append("session_id", session_id)
     postData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
@@ -165,7 +167,7 @@
                         <button
                           id="switch-to-session-${session.id}"
                           class="btn btn-block ${session.id==response.active_session ? "btn-primary" : "btn-outline-secondary"} px-0  full-width btn-material-icon"
-                          onclick="switchSessions(${session.id})"
+                          onclick="joinSession(${session.id})"
                         >
                           <div class="wrap-on-hover margin-5-on-hover">
                             ${session.name}
