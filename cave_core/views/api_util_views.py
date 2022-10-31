@@ -33,7 +33,7 @@ def custom_pages(request):
 
     Does not take in parameters
     """
-    print("\n\nCustom Pages\n")
+    #print("\n\nCustom Pages\n")
     # Execute View Procedures
     filter_vars = {"show": True}
     if request.user.status != "accepted":
@@ -58,7 +58,7 @@ def sessions(request):
 
     Does not take in parameters
     """
-    print("\n\nSessions\n")
+    #print("\n\nSessions\n")
     request.user.error_on_no_access()
 
     teams = request.user.get_teams()
@@ -125,7 +125,7 @@ def create_session(request):
     }
     -----------------------------------
     """
-    print("\n\Create Session\n")
+    #print("\n\Create Session\n")
     request.user.create_session(
         request.data.get("session_name"),
         request.data.get("team_id", None)
@@ -158,7 +158,7 @@ def copy_session(request):
     }
     -----------------------------------
     """
-    print("\n\nCopy Session\n")
+    #print("\n\nCopy Session\n")
     request.user.copy_session(
         request.data.get("session_id"),
         request.data.get("session_name")
@@ -196,7 +196,7 @@ def delete_session(request):
     }
     -----------------------------------
     """
-    print("\n\nDelete Session\n")
+    #print("\n\nDelete Session\n")
     request.user.delete_session(request.data.get("session_id"))
 
 
@@ -235,7 +235,7 @@ def edit_session(request):
     }
     -----------------------------------
     """
-    print("\n\nEdit Session\n")
+    #print("\n\nEdit Session\n")
     request.user.edit_session(
         request.data.get("session_name"),
         request.data.get("session_id")
@@ -270,7 +270,7 @@ def join_session(request):
     { "success":true }
     -----------------------------------
     """
-    print("\n\nJoin Session\n")
+    #print("\n\nJoin Session\n")
     request.user.join_session(request.data.get("session_id"))
 
 
@@ -291,7 +291,7 @@ def send_email_validation_code(request):
     }
     -----------------------------------
     """
-    print("\n\nSend Email Validation Code\n")
+    #print("\n\nSend Email Validation Code\n")
     # Globals
     globals = models.Globals.get_solo()
     # Validate

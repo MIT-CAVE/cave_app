@@ -15,7 +15,7 @@ def index(request):
 
     Render the server configured index page
     """
-    print("\n\nIndex\n")
+    #print("\n\nIndex\n")
     globals = models.Globals.get_solo()
     access_dict = utils.accessing.get_access(globals, request.user)
     page = models.Pages.objects.filter(url_name="home").first()
@@ -40,7 +40,7 @@ def page(request):
 
     Users can see generic pages with this view
     """
-    print("\n\nPage\n")
+    #print("\n\nPage\n")
     if request.method == "GET":
         globals = models.Globals.get_solo()
         access_dict = utils.accessing.get_access(globals, request.user)
@@ -72,7 +72,7 @@ def people(request):
 
     Users can see their groups and teams with this view
     """
-    print("\n\nPeople\n")
+    #print("\n\nPeople\n")
     globals = models.Globals.get_solo()
     access_dict = utils.accessing.get_access(globals, request.user)
     if not access_dict.get("access"):
@@ -101,7 +101,7 @@ def app(request):
 
     Users can see the app with this view
     """
-    print("\n\nApp\n")
+    #print("\n\nApp\n")
     globals = models.Globals.get_solo()
     access_dict = utils.accessing.get_access(globals, request.user)
     if not access_dict.get("access"):
