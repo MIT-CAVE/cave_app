@@ -57,8 +57,6 @@ def generate():
         globals = Globals.objects.get_or_create(
             site_name="CAVE App",
             mapbox_token=config("MAPBOX_TOKEN"),
-            limit_team_sessions=3,
-            limit_personal_sessions=3,
             static_app_url_path=config("STATIC_APP_URL_PATH"),
         )[0]
 
