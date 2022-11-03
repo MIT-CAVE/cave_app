@@ -102,6 +102,7 @@ To fully understand how the cave app works, it is best to dive into our default 
     </details>
   - Creating a new session will initialize whichever model is specified in the `/cave_api/src/cave_api/__init__.py` file
     - We supply multiple example models for users to reference and/or build upon.
+      - The `serialization_model` shows how you can easily convert csv and json objects for CAVE API use
       - The `simple_model` demonstrates good practices for researchers using the CAVE API
       - The `static_model` contains examples of the whole API structure, and is useful for developers to debug and experiment with new features
       - You can build on top of whichever model is more applicable to your research, or create your own model
