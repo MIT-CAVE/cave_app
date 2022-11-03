@@ -58,8 +58,8 @@ Key | Default | Description
 <a name="label">`custom_prop_key_*.label`</a> | | A label that is displayed in the UI next to the `custom_prop_key_*` element.
 <a name="max-value">`custom_prop_key_*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
 <a name="min-value">`custom_prop_key_*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
-<a name="prop-type">`custom_prop_key_*.type`</a> | Required | As a direct child of `custom_prop_key_*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, or `'selector'`.
-<a name="value">`custom_prop_key_*.value`</a> | Required | The actual value for a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'`), number (`'num'`), string (`'text'`), or an array of objects (`'selector'`).
+<a name="prop-type">`custom_prop_key_*.type`</a> | Required | As a direct child of `custom_prop_key_*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, `'button'`, or `'selector'`.
+<a name="value">`custom_prop_key_*.value`</a> | Required | The actual value for a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'` \| `'button'`), number (`'num'` \| `'button'`), string (`'text'` \| `'button'`), or an array of objects (`'selector'`).
 <a name="custom_option_">`custom_prop_key_*.value.custom_option_*`</a> | | Used along a `'selector'` prop, it takes a string value to be displayed as an option on the UI element.
 <a name="variant">`custom_prop_key_*.variant`</a> | | Used to modify the UI for a given prop `type`. For example, it can convert a numeric input to a slider input or a selector to a drop-down menu. The `value`s should remain the same structure, but the presentation to the end user changes.
 
@@ -78,6 +78,9 @@ Allows users to enter a numeric value in a UI field. The `value` receives a nume
 
 ##### `'toggle'`
 Allows to enable or disable the status of a single setting. Here, `value` receives a boolean value.
+
+##### `'button'`
+Does not actually allow users to directly change a value. Instead,this allows users to trigger the `custom_prop_key_*.apiCommand` on the server.
 
 ##### `'selector'`
 Allows end users to select options from a set. This `type` requires an array of dictionary objects for its [`value`](#value) key and a `variant` must be specified.
