@@ -220,6 +220,18 @@ def execute_command(session_data, command="init"):
                                 "unit": "$",
                             },
                         },
+                        "test_button": {
+                            "name": "Test button",
+                            "type": "button",
+                            "value": "Click me",
+                            "enabled": True,
+                            "apiCommand": "test_command",
+                            "help": "An action button that triggers `test_command`",
+                        },
+                    },
+                    "layout": {
+                        "type": "grid",
+                        "num_columns": 1,
                     },
                     "icon": "BsWrench",
                     "type": "pane",
@@ -1465,6 +1477,8 @@ def execute_command(session_data, command="init"):
     }
     if command == "reset":
         return example
+    elif command == "test_command":
+        print("The test button has been pressed by the user!")
     if session_data:
         for key, value in session_data.items():
             example[key] = value
