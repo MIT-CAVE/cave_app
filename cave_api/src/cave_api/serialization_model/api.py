@@ -27,4 +27,4 @@ def execute_command(session_data, command="init"):
     """
     if command == "init":
         return get_api_object()
-    raise Exception("Command not found")
+    raise Exception(f"Command not found: `{command}`")
