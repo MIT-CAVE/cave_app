@@ -229,10 +229,6 @@ def execute_command(session_data, command="init"):
                             "help": "An action button that triggers `test_command`",
                         },
                     },
-                    "layout": {
-                        "type": "grid",
-                        "num_columns": 1,
-                    },
                     "icon": "BsWrench",
                     "type": "pane",
                     "variant": "options",
@@ -242,7 +238,6 @@ def execute_command(session_data, command="init"):
                 },
                 "settingsBig": {
                     "name": "A Big Settings Pane",
-                    "width": "100%",
                     "props": {
                         "solver_section": {
                             "name": "Solver Section",
