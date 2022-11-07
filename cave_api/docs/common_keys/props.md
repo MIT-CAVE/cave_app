@@ -72,7 +72,7 @@ Allows users to place a header for an individual section, containing a title (vi
 Allows users to enter text in a UI field. Here, `value` takes a string.
 
 ##### `'num'`
-Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is validated against [`constraint`](common_keys.md#deprecat-constraint).
+Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is formatted according to [`numberFormat`](number_format.md).
 ###### Variants:
 >`'slider'`: Places a range of values along a bar, from which users may select a single value.<br>
 

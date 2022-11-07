@@ -484,7 +484,9 @@ def execute_command(session_data, command="init"):
                             "help": "Percentage multiplier times the base supply (100%=Given Supply)",
                             "label": "%",
                             "minValue": 0,
-                            "constraint": "int",
+                            "numberFormat": {
+                                "precision": 0,
+                            },
                             "selectableCategories": ["Location", "Product"],
                         },
                     },
