@@ -350,3 +350,13 @@ def session_management(request):
         user.edit_session(**command_data)
     else:
         raise Exception(f'A `session_command` ({command}) was passed, but it does not match any available `session_command`s.')
+
+@utils.wrapping.async_api_app_ws
+def get_sessions_list(request):
+    """
+    API endpoint to populate available sessions
+
+    Does not take in parameters
+    """
+    request.user.error_on_no_access()
+    [team.update_sessions_list() for team in request.user.get_teams()]
