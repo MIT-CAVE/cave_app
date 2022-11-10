@@ -1,4 +1,5 @@
-appBarID,propID,name,type,variant,value,enabled,help,maxValue,minValue,numberFormat
-settings,Solver,Solver,selector,dropdown,"[{""name"": ""Gurobi"", ""value"": true},{""name"": ""Cplex"", ""value"": false},{""name"": ""CoinOR"", ""value"": false}]",TRUE,Select a solver type to use,,,
-settings,Pct_Optimal,Percent Optimal,num,,97,TRUE,What percent of optimal would you like to solve to?,100,0,"{""unit"": ""%"", ""unitSpace"": false,""trailingZeros"": true}"
-settings,min_profit,Minimum profit,num,field,10000,TRUE,The minimum intended profit,1.00E+15,-1.00E+15,"{""precision"": 0,""trailingZeros"": false,""currency"": true,""unit"": ""$""}"
+appBarID,propID,name,type,variant,value,enabled,help,maxValue,minValue,numberFormat,apiCommand
+settings,Solver,Solver,selector,dropdown,"[{""name"": ""Gurobi"", ""value"": true},{""name"": ""Cplex"", ""value"": false},{""name"": ""CoinOR"", ""value"": false}]",TRUE,Select a solver type to use,,,,
+settings,Pct_Optimal,Percent Optimal,num,,97,TRUE,What percent of optimal would you like to solve to?,100,0,"{""unit"": ""%"", ""unitSpace"": false,""trailingZeros"": true}",
+settings,min_profit,Minimum profit,num,field,10000,TRUE,The minimum intended profit,1.00E+15,-1.00E+15,"{""precision"": 0,""trailingZeros"": false,""currency"": true,""unit"": ""$""}",
+settings,settings_save,Save Settings,button,,"""Value Here""",TRUE,Save your settings,,,,settings_save
