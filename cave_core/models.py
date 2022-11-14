@@ -100,16 +100,14 @@ class CustomUser(AbstractUser):
         data = session.get_changed_data(previous_hashes={})
         utils.broadcasting.ws_broadcast_object(
             object=self,
-            type="app",
             event="overwrite",
             hashes=session.hashes,
             data=data,
         )
         utils.broadcasting.ws_broadcast_object(
             object=self,
-            type="session_management",
             event="update_current_session",
-            data={"id": session.id},
+            data={"session_id": session.id},
         )
 
     def create_session(self, session_name, team_id):
@@ -124,6 +122,7 @@ class CustomUser(AbstractUser):
         team.update_sessions_list()
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
+        return session
 
     def join_session(self, session_id):
         self.error_on_no_access()
@@ -247,11 +246,12 @@ class CustomUser(AbstractUser):
     def get_or_create_personal_session(self):
         team = self.get_or_create_personal_team()
         team_sessions = team.get_sessions()
-        if len(team_sessions)==0:
-            self.create_session(
-                session_name = f'Initial Session',
-                team_id = team.id
-            )
+        if len(team_sessions)>0:
+            return team_sessions[0]
+        return self.create_session(
+            session_name = f'Initial Session',
+            team_id = team.id
+        )
     #############################################
     # Access Utils
     #############################################
@@ -792,7 +792,6 @@ class Teams(models.Model):
         self.set_session_count(len(sessions))
         utils.broadcasting.ws_broadcast_object(
             object=self,
-            type="session_management",
             event="update_sessions_list",
             data={
                 'team__id':self.id,

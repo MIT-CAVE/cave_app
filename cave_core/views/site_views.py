@@ -102,7 +102,7 @@ def app(request):
     if not globals.show_app_page:
         return redirect("/")
     if request.user.session == None:
-        request.user.get_or_create_personal_session()
+        request.user.session = request.user.get_or_create_personal_session()
     if request.method == "GET":
         return render(
             request,
@@ -112,6 +112,7 @@ def app(request):
                 "access_dict": request.user.get_access_dict(),
                 "user_token": request.user.get_token(),
                 "static_url": settings.STATIC_APP_URL,
+                "session": request.user.session,
                 "app_active": "active",
             },
         )

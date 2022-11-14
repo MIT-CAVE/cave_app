@@ -18,16 +18,16 @@
   ></iframe>
 </div>
 <script>
-  const onIframeLoad = (frame) =>
-    handleMessaging({
-      type: 'app',
-      event: 'set_tokens',
+  const onIframeLoad = (frame) => {
+    sendToApp({
+      event: 'initialize',
       data:{
         user_token: '{{ user_token }}',
-        mapbox_token: '{{ globals.mapbox_token }}'
-      },
-      hashes: {}
+        mapbox_token: '{{ globals.mapbox_token }}',
+        session_id: {{ session.id }}
+      }
     })
+  }
 
   const setAppDivWidth = () => {
     var widthMin = {{ globals.app_screen_width }};

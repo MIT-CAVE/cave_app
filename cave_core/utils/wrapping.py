@@ -84,7 +84,6 @@ def async_api_app_ws(fn):
                 print(traceback_str)
             utils.broadcasting.ws_broadcast_object(
                 object=request.user,
-                type="app",
                 event="error",
                 data={"message": str(e), "duration": 5, "traceback": traceback_str},
             )

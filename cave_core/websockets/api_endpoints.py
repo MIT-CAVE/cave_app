@@ -30,7 +30,6 @@ def get_session_data(request):
     data = session.get_changed_data(previous_hashes=data_hashes)
     utils.broadcasting.ws_broadcast_object(
         object=request.user,
-        type="app",
         event="overwrite",
         hashes=session.hashes,
         data=data,
@@ -134,7 +133,6 @@ def mutate_session(request):
                 if response.get("synch_error"):
                     utils.broadcasting.ws_broadcast_object(
                         object=request.user,
-                        type="app",
                         event="error",
                         data={
                             "message": "Oops! You are out of sync. Fix in progress...",
@@ -146,7 +144,6 @@ def mutate_session(request):
                     data = session_i.get_changed_data(data_hashes)
                     utils.broadcasting.ws_broadcast_object(
                         object=request.user,
-                        type="app",
                         event="overwrite",
                         hashes=session_i.hashes,
                         data=data,
@@ -159,7 +156,6 @@ def mutate_session(request):
             data = session_i.get_changed_data(previous_hashes=session_i_pre_hashes)
             utils.broadcasting.ws_broadcast_object(
                 object=session_i,
-                type="app",
                 event="overwrite",
                 hashes=session_i.hashes,
                 data=data,
@@ -168,7 +164,6 @@ def mutate_session(request):
         else:
             utils.broadcasting.ws_broadcast_object(
                 object=session_i,
-                type="app",
                 event="mutation",
                 hashes=session_i.hashes,
                 data=mutate_dict,
@@ -231,7 +226,6 @@ def get_associated_session_data(request):
     # Notify users of updates
     utils.broadcasting.ws_broadcast_object(
         object=session,
-        type="app",
         event="overwrite",
         hashes=session.hashes,
         data=session.get_client_data(keys=["associated"]),
