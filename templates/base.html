@@ -49,7 +49,6 @@
   {% block scripts %}{% endblock %}
   <!-- The following are loaded as a django modules  -->
   <!-- Do not convert to static as CSRF tokens need to be injected into the script -->
-  {% include "modules/utils/session_script.html" %}
   {% include "modules/utils/custom_page_script.html" %}
 </body>
 </html>

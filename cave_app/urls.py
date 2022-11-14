@@ -7,7 +7,7 @@ from django.urls import path
 
 from cave_core import url_helpers
 from cave_core.admin import staff_site
-from cave_core.views import site_views, api_util_views, api_app_views
+from cave_core.views import site_views, api_util_views
 
 urlpatterns = [
     # Main Pages
@@ -23,20 +23,7 @@ urlpatterns = [
     # General API Pages
     path("health/", api_util_views.health),
     path("custom_pages/", api_util_views.custom_pages),
-    path("sessions/", api_util_views.sessions),
-    path("join_session/", api_util_views.join_session),
-    path("create_session/", api_util_views.create_session),
-    path("copy_session/", api_util_views.copy_session),
-    path("edit_session/", api_util_views.edit_session),
-    path("delete_session/", api_util_views.delete_session),
     path("send_email_validation_code/", api_util_views.send_email_validation_code),
-    # App API Pages
-    path("get_session_data/", api_app_views.get_session_data),
-    path("mutate_session/", api_app_views.mutate_session),
-    path(
-        "get_associated_session_data/",
-        api_app_views.get_associated_session_data,
-    ),
     # User Authentication
     path(
         "login/",

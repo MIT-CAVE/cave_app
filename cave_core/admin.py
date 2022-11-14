@@ -180,9 +180,9 @@ class CustomPageSectionInline(admin.StackedInline):
 
 class CustomPageAdmin(admin.ModelAdmin):
     model = models.Pages
-    list_display = ["id", "name", "url_name", "show", "require_acceptance"]
-    list_filter = ["show", "require_acceptance"]
-    list_editable = ["name", "url_name", "show", "require_acceptance"]
+    list_display = ["id", "name", "url_name", "show", "require_access"]
+    list_filter = ["show", "require_access"]
+    list_editable = ["name", "url_name", "show", "require_access"]
     inlines = [CustomPageSectionInline]
 
 

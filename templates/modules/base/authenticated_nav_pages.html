@@ -24,7 +24,7 @@
       </div>
     </li>
     {% endif %}
-    {% if access %}
+    {% if access_dict.access %}
 
       {% if globals.show_people_page %}
       <li class="nav-item">
@@ -36,26 +36,11 @@
       {% endif %}
 
       {% if globals.show_app_page %}
-      <li class="nav-item d-inline dropdown">
-        <a
-          class="nav-link {{app_active}}"
-          href="#"
-          id="SessionDropdown"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
+      <li class="nav-item">
+        <a class="nav-link {{ app_active }}" href="/app/">
           <span class="material-icons">pages</span>
-          {% if sessionName %}
-            <p id="SessionDropdownSessionName" class="mx-1 mb-0">({{ sessionName }})</p>
-          {% else %}
-            <p class="d-inline d-lg-none mx-3">App</p>
-          {% endif %}
+          <p class="d-inline d-lg-none mx-3">App</p>
         </a>
-        <div class="dropdown-menu dropdown-menu-left" style="min-width:400px;" aria-labelledby="SessionDropdown" id="SessionDropdownItems">
-
-        </div>
       </li>
       {% endif %}
     {% else %}

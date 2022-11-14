@@ -392,7 +392,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "require_acceptance",
+                    "require_access",
                     models.BooleanField(
                         default=False,
                         help_text="Require a user to be accepted to see this page",

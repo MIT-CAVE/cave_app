@@ -24,33 +24,6 @@ def format_exception(e):
         return "".join(traceback.format_exception(e))
 
 
-def api_app_response(fn):
-    """
-    API view wrapper to handle processing exceptions for api app views
-
-    This allows exceptions to be raised anywhere server or api side that can pass information on to end users.
-    """
-
-    @wraps(fn)
-    def wrap(request):
-        try:
-            fn(request)
-            return Response({"success": True})
-        except Exception as e:
-            traceback_str = format_exception(e)
-            if settings.DEBUG:
-                print(traceback_str)
-            utils.broadcasting.ws_broadcast_user(
-                user=request.user,
-                type="app",
-                event="error",
-                data={"message": str(e), "duration": 5, "traceback": traceback_str},
-            )
-            return Response({"success": False})
-
-    return wrap
-
-
 def api_util_response(fn):
     """
     API view wrapper to handle processing exceptions for api util views
@@ -109,8 +82,8 @@ def async_api_app_ws(fn):
             traceback_str = format_exception(e)
             if settings.DEBUG:
                 print(traceback_str)
-            utils.broadcasting.ws_broadcast_user(
-                user=request.user,
+            utils.broadcasting.ws_broadcast_object(
+                object=request.user,
                 type="app",
                 event="error",
                 data={"message": str(e), "duration": 5, "traceback": traceback_str},

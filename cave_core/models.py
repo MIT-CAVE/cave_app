@@ -50,7 +50,7 @@ class CustomUser(AbstractUser):
     status = models.CharField(
         _("Status"),
         max_length=16,
-        help_text=_("The Status of this User (assuming use_status_acceptance is true in Globals)"),
+        help_text=_("The Status of this User"),
         choices=[
             ("pending", "pending"),
             ("accepted", "accepted"),
@@ -98,39 +98,30 @@ class CustomUser(AbstractUser):
         # Query all session data:
         # Note: get_changed_data needs to be executed prior to calling session.hashes since it can mutate them
         data = session.get_changed_data(previous_hashes={})
-        utils.broadcasting.ws_broadcast_user(
-            user=self,
+        utils.broadcasting.ws_broadcast_object(
+            object=self,
             type="app",
             event="overwrite",
             hashes=session.hashes,
             data=data,
         )
-        utils.broadcasting.ws_broadcast_user(
-            user=self,
-            type="container",
-            event="change_session_name",
-            data={"sessionName": session.get_short_name()},
+        utils.broadcasting.ws_broadcast_object(
+            object=self,
+            type="session_management",
+            event="update_current_session",
+            data={"id": session.id},
         )
 
-    def create_session(self, session_name, team_id=None):
+    def create_session(self, session_name, team_id):
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
-        if team_id:
-            # Query TeamUsers
-            self.error_on_no_team_access(team_id)
-            # Query Teams
-            appropriation_obj = Teams.objects.filter(id=team_id).first()
-            params = {"team":appropriation_obj}
-        else:
-            appropriation_obj = self
-            params = {"user": appropriation_obj}
-        appropriation_obj.error_on_session_limit()
-        # Query -> Create Session
-        session, created = Sessions.objects.get_or_create(name=session_name, **params)
+        team = self.get_team(team_id)
+        team.error_on_session_limit()
+        session, created = Sessions.objects.get_or_create(name=session_name, team=team)
         if not created:
             raise Exception("Oops! Unable to create that session.")
-        # Query -> Update Session Count
-        appropriation_obj.increment_session_count(1)
+        # Query -> Update Session List
+        team.update_sessions_list()
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
 
@@ -150,16 +141,12 @@ class CustomUser(AbstractUser):
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers (only if a team session)
         self.error_on_no_team_access(session.team)
-        if session.team:
-            # Query if the session is a team obj
-            appropriation_obj = session.team
-        else:
-            appropriation_obj = self
-        appropriation_obj.error_on_session_limit()
+        # Validate session limit
+        session.team.error_on_session_limit()
         # Queries -> Duplicates this session and session data
         session_obj = session.copy(session_name)
-        # Query -> Update Session Count
-        appropriation_obj.increment_session_count(1)
+        # Query -> Update Sessions List
+        session.team.update_sessions_list()
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
 
@@ -169,17 +156,14 @@ class CustomUser(AbstractUser):
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers (only if a team session)
         self.error_on_no_team_access(session.team)
+        # Get the session team for session count incrementation
+        team = session.team
         # Query CustomUsers to make sure that no one is in the session
         session.error_on_session_not_empty()
-        if session.team:
-            # Query if the session is a team obj
-            appropriation_obj = session.team
-        else:
-            appropriation_obj = self
         # Query -> Delete Session
         session.delete()
-        # Query -> Update Session Count
-        appropriation_obj.increment_session_count(-1)
+        # Query -> Update Sessions List
+        team.update_sessions_list()
 
     def edit_session(self, session_name, session_id):
         self.error_on_no_access()
@@ -190,19 +174,15 @@ class CustomUser(AbstractUser):
         self.error_on_no_team_access(session.team)
         session.name = session_name
         session.save()
-        if self.session == session:
-            utils.broadcasting.ws_broadcast_session(
-                session=session,
-                type="container",
-                event="change_session_name",
-                data={"sessionName": session.get_short_name()},
-            )
-        else:
-            # Queries -> Switch to the session
-            self.switch_session_no_validation(session)
+        session.team.update_sessions_list()
+        self.switch_session_no_validation(session)
+
+    def refresh_session_lists(self):
+        self.error_on_no_access()
+        [team.update_sessions_list() for team in self.get_teams()]
 
     #############################################
-    # Session and Team Utils
+    # Session, Team And Broadcasting Utils
     #############################################
     def get_team_ids(self):
         team_ids = self.team_ids
@@ -224,38 +204,78 @@ class CustomUser(AbstractUser):
             .order_by("name")
         )
 
-    def get_sessions(self):
-        team_ids = self.get_team_ids()
-        return list(
-            Sessions.objects.filter(team__in=team_ids)
-            .values("team__id", "id", "name")
-            .order_by("name")
-        )
+    def get_team(self, team_id):
+        """
+        Gets the team for a user only if that user has access to the team
+        Otherwise, raises an exception
 
+        Requires:
+
+        - `team_id`:
+            - Type: int
+            - What: The team id to check if the current user belongs
+        """
+        self.error_on_no_team_access(team_id)
+        team_obj = Teams.objects.filter(id=team_id).first()
+        if team_obj is None:
+            raise Exception('Oops! The associated team for that item does not exist.')
+        return team_obj
+
+    def get_user_ids(self):
+        """
+        Used to get the current user id in a list by itself.
+
+        Required by ws_broadcast_object for generic functionaility.
+        """
+        return [self.id]
+
+    def create_personal_team(self):
+        team, team_created = Teams.objects.get_or_create(name=f'Personal ({self.username})')
+        if team_created:
+            team.add_user(self)
+        return team
+
+    def get_or_create_personal_team(self):
+        team = Teams.objects.filter(
+            id__in = self.team_ids,
+            name = f'Personal ({self.username})'
+        ).first()
+        if team is None:
+            team = self.create_personal_team()
+        return team
+
+    def get_or_create_personal_session(self):
+        team = self.get_or_create_personal_team()
+        team_sessions = team.get_sessions()
+        if len(team_sessions)==0:
+            self.create_session(
+                session_name = f'Initial Session',
+                team_id = team.id
+            )
     #############################################
     # Access Utils
     #############################################
     def error_on_no_team_access(self, team_id):
-        """
-        Checks to make sure a user has access to a given team's data
-
-        Requires:
-
-        - `team`:
-            - Type: int
-            - What: The team id to check if the current user belongs
-        """
-        if self.is_staff:
-            return
-        if team_id not in self.get_team_ids():
+        if (team_id not in self.get_team_ids()) and (not self.is_staff):
             raise Exception('Oops! You do not have access to data from the specified team.')
 
     def error_on_no_access(self):
+        if not self.has_access():
+            raise Exception("Oops! Access denied.")
+
+    def has_access(self):
         if self.is_staff:
-            return
+            return True
         if self.email_validated and self.status=='accepted':
-            return
-        raise Exception("Oops! Access denied.")
+            return True
+        return False
+
+    def get_access_dict(self):
+        return {
+            'access':self.has_access(),
+            'email_validated': self.email_validated or self.is_staff,
+            'status': 'accepted' if self.is_staff else self.status
+        }
 
     #############################################
     # Authentication Utils
@@ -291,7 +311,6 @@ class CustomUser(AbstractUser):
         team_ids = list(TeamUsers.objects.filter(user=self).values_list("team__id", flat=True))
         if (len(group_ids) == 0) and (len(team_ids) == 0):
             return None
-
         if len(group_ids) > 0:
             group_users = list(
                 GroupUsers.objects.filter(group__in=group_ids)
@@ -317,6 +336,8 @@ class CustomUser(AbstractUser):
         group_info = {}
         for i in group_users:
             group_info[i.group.name] = group_info.get(i.group.name, []) + [i.user]
+        if team_info=={} and group_info=={}:
+            return None
         return {"Team": team_info, "Group": group_info}
 
     def __str__(self):
@@ -475,9 +496,9 @@ class Pages(models.Model):
         help_text=_("Should this page be showed"),
         default=True,
     )
-    require_acceptance = models.BooleanField(
-        _("Require Acceptance"),
-        help_text=_("Require a user to be accepted to see this page"),
+    require_access = models.BooleanField(
+        _("Require Access"),
+        help_text=_("Require a user to have app access to see this page"),
         default=False,
     )
 
@@ -756,9 +777,34 @@ class Teams(models.Model):
         if self.count_sessions>=self.limit_sessions:
             raise Exception(f"Oops! It looks like you have reached your session limit for the session `{self.name}`.")
 
-    def increment_session_count(self, amt):
-        self.count_sessions += amt
+    def set_session_count(self, amt):
+        self.count_sessions = amt
         self.save()
+
+    def get_user_ids(self):
+        return list(TeamUsers.objects.filter(team=self).values_list("user__id", flat=True))
+
+    def get_sessions(self):
+        return Sessions.objects.filter(team=self)
+
+    def update_sessions_list(self):
+        sessions = self.get_sessions()
+        self.set_session_count(len(sessions))
+        utils.broadcasting.ws_broadcast_object(
+            object=self,
+            type="session_management",
+            event="update_sessions_list",
+            data={
+                'team__id':self.id,
+                'team__name':self.name,
+                'team__limit_sessions':self.limit_sessions,
+                'team__count_sessions':self.count_sessions,
+                'sessions': {
+                    session.id:{'session__id':session.id, 'session__name':session.name}
+                    for session in sessions
+                }
+            }
+        )
 
     # Metadata
     class Meta:
@@ -806,7 +852,6 @@ class Sessions(models.Model):
     """
     Model for storing Sessions
     """
-
     name = models.CharField(_("name"), max_length=128, help_text=_("Name of the session"))
     team = models.ForeignKey(
         Teams,
@@ -996,14 +1041,14 @@ class Sessions(models.Model):
                 return Sessions.objects.filter(team__in=user.get_team_ids())
         return Sessions.objects.filter(team=self.team)
 
-    def get_users(self):
+    def get_user_ids(self):
         """
-        Gets all other users in this session
+        Gets all user ids for users currently in this session
 
         - Used to determine which users are in this session
         - EG to prevent deletion if more than one user is in the session
         """
-        return CustomUser.objects.filter(session=self)
+        return list(CustomUser.objects.filter(session=self).values_list("user__id", flat=True))
 
     def get_short_name(self):
         """
@@ -1033,7 +1078,7 @@ class Sessions(models.Model):
         return new_session
 
     def error_on_session_not_empty(self):
-        if len(self.get_users()) > 0:
+        if len(self.get_user_ids()) > 0:
             raise Exception(
                 "Oops! That session still has users in it."
             )
@@ -1231,6 +1276,4 @@ def update_team_ids(sender, instance, **kwargs):
 @receiver(post_save, sender=CustomUser, dispatch_uid="create_personal_team")
 def create_personal_team(sender, instance, created, **kwargs):
     if created:
-        team, team_created = Teams.objects.get_or_create(name=f'Personal ({instance.username})')
-        if team_created:
-            team.add_user(instance)
+        instance.create_personal_team()

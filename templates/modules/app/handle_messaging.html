@@ -1,9 +1,5 @@
 <script>
   function handleMessaging(payload){
-    if (payload.type==="container") {
-      // console.log("Container Message: ",payload)
-      handleContainerMessage(payload)
-    }
     if (payload.type==='app'){
       // console.log("App Message: ",payload)
       try {
