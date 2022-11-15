@@ -200,16 +200,14 @@ def get_associated_session_data(request):
         session__in=associated_sessions, data_name__in=data_names
     )
     # Associated Data
-    if request.user.is_staff and session.team is not None:
+    if request.user.is_staff:
         associated = {
             obj.id: {
-                "name": obj.team.group.name + " -> " + obj.team.name + " -> " + obj.name,
+                "name": obj.team.group.name if obj.team.group is not None else 'Personal' + " -> " + obj.team.name + " -> " + obj.name,
                 "data": {},
             }
             for obj in associated_sessions
         }
-    else:
-        associated = {obj.id: {"name": obj.name, "data": {}} for obj in associated_sessions}
     for obj in session_data:
         associated[obj.session.id]["data"][obj.data_name] = obj.get_py_data()
 
