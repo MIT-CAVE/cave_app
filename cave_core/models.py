@@ -1047,7 +1047,7 @@ class Sessions(models.Model):
         - Used to determine which users are in this session
         - EG to prevent deletion if more than one user is in the session
         """
-        return list(CustomUser.objects.filter(session=self).values_list("user__id", flat=True))
+        return list(CustomUser.objects.filter(session=self).values_list("id", flat=True))
 
     def get_short_name(self):
         """
