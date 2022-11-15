@@ -18,15 +18,19 @@ def index(request):
     #print("\n\nIndex\n")
     globals = models.Globals.get_solo()
     page = models.Pages.objects.filter(url_name="home").first()
+    try:
+        access_kwargs = {'access_dict': request.user.get_access_dict()}
+    except:
+        access_kwargs = {}
     return render(
         request,
         "generic.html",
         {
             "globals": globals,
-            "access_dict": request.user.get_access_dict(),
             "page": page.name,
             "page_sections": page.get_sections(),
             "home_active": "active",
+            **access_kwargs
         },
     )
 
