@@ -193,15 +193,7 @@ class CustomUser(AbstractUser):
         return team_ids
 
     def get_teams(self):
-        team_ids = self.get_team_ids()
-        args = ["name", "id", "limit_sessions", "count_sessions"]
-        if self.is_staff:
-            args.append("group__name")
-        return list(
-            Teams.objects.filter(id__in=team_ids)
-            .values(*args)
-            .order_by("name")
-        )
+        return Teams.objects.filter(id__in=self.get_team_ids())
 
     def get_team(self, team_id):
         """
