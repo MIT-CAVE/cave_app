@@ -23,8 +23,11 @@ def execute_command(session_data, command="init"):
     - `output`:
         - Type: dict of dicts
         - What: A dict of dictionaries to mutate the current session given the current `session_data`
-        - See: https://github.com/MIT-CAVE/cave_app/blob/0.2.0/cave_api/README_API_STRUCTURE.md
+        - See: https://github.com/MIT-CAVE/cave_app/blob/1.0.0-dev/cave_api/README_API_STRUCTURE.md
     """
     if command == "init":
         return get_api_object()
+    if command == "button_event":
+        print('The settings pane button has been pressed!')
+        return {}
     raise Exception(f"Command not found: `{command}`")
