@@ -17,18 +17,20 @@ def index(request):
     """
     #print("\n\nIndex\n")
     globals = models.Globals.get_solo()
-    access_dict = utils.accessing.get_access(globals, request.user)
     page = models.Pages.objects.filter(url_name="home").first()
+    try:
+        access_kwargs = {'access_dict': request.user.get_access_dict()}
+    except:
+        access_kwargs = {}
     return render(
         request,
         "generic.html",
         {
             "globals": globals,
-            "access": access_dict.get("access"),
-            "warning_page": access_dict.get("warning_page"),
             "page": page.name,
             "page_sections": page.get_sections(),
             "home_active": "active",
+            **access_kwargs
         },
     )
 
@@ -43,19 +45,18 @@ def page(request):
     #print("\n\nPage\n")
     if request.method == "GET":
         globals = models.Globals.get_solo()
-        access_dict = utils.accessing.get_access(globals, request.user)
-        if not access_dict.get("access"):
-            return redirect(access_dict.get("link"))
         page = models.Pages.objects.filter(show=True, url_name=request.GET.get("page")).first()
         if page == None:
+            return redirect("/")
+        if (not request.user.has_access()) and page.require_access:
             return redirect("/")
         return render(
             request,
             "generic.html",
             {
                 "globals": globals,
+                "access_dict": request.user.get_access_dict(),
                 "page": page.name,
-                "access": access_dict.get("access"),
                 "page_sections": page.get_sections(),
                 "custom_page_active": "active",
                 f"{page.url_name}_active": "active",
@@ -74,10 +75,7 @@ def people(request):
     """
     #print("\n\nPeople\n")
     globals = models.Globals.get_solo()
-    access_dict = utils.accessing.get_access(globals, request.user)
-    if not access_dict.get("access"):
-        return redirect(access_dict.get("link"))
-    if not globals.show_people_page:
+    if not request.user.has_access() or not globals.show_people_page:
         return redirect("/")
     if request.method == "GET":
         return render(
@@ -85,7 +83,7 @@ def people(request):
             "people.html",
             {
                 "globals": globals,
-                "access": access_dict.get("access"),
+                "access_dict": request.user.get_access_dict(),
                 "people_info": request.user.get_people_info(),
                 "people_active": "active",
             },
@@ -103,29 +101,27 @@ def app(request):
     """
     #print("\n\nApp\n")
     globals = models.Globals.get_solo()
-    access_dict = utils.accessing.get_access(globals, request.user)
-    if not access_dict.get("access"):
-        return redirect(access_dict.get("link"))
+    if not request.user.has_access():
+        return redirect("/")
     if not globals.show_app_page:
         return redirect("/")
-    current_session = request.user.session
-    if not current_session:
-        return redirect("/")
+    if request.user.session == None:
+        request.user.session = request.user.get_or_create_personal_session()
     if request.method == "GET":
         return render(
             request,
             "app.html",
             {
                 "globals": globals,
-                "access": access_dict.get("access"),
+                "access_dict": request.user.get_access_dict(),
                 "user_token": request.user.get_token(),
                 "static_url": settings.STATIC_APP_URL,
-                "sessionName": current_session.get_short_name(),
+                "session": request.user.session,
                 "app_active": "active",
             },
         )
     else:
-        return redirect("/faqs")
+        return redirect("/")
 
 
 @login_required(login_url="/login")
@@ -145,14 +141,13 @@ def profile(request):
             user = form.save()
         return redirect("/profile")
     else:
-        access_dict = utils.accessing.get_access(globals, request.user)
         form = UpdateUserForm(instance=request.user)
         return render(
             request,
             "form.html",
             {
                 "globals": globals,
-                "access": access_dict.get("access"),
+                "access_dict": request.user.get_access_dict(),
                 "form": form,
                 "form_title": "Update Your Profile",
                 "submit_button": "Update Profile",
@@ -174,14 +169,13 @@ def change_password(request):
             update_session_auth_hash(request, user)  # Important!
             return redirect("/")
     else:
-        access_dict = utils.accessing.get_access(globals, request.user)
         form = PasswordChangeForm(request.user)
     return render(
         request,
         "form.html",
         {
             "globals": models.Globals.get_solo(),
-            "access": access_dict.get("access"),
+            "access_dict": request.user.get_access_dict(),
             "form": form,
             "form_title": "Change Your Password",
             "submit_button": "Change Password",
@@ -246,13 +240,10 @@ def validate_email(request):
             user.save()
         return redirect("/")
     globals = models.Globals.get_solo()
-    access_dict = utils.accessing.get_access(globals, request.user)
     return render(
         request,
         "validation_email_failed.html",
         {
-            "globals": globals,
-            "access": access_dict.get("access"),
-            "warning_page": access_dict.get("warning_page"),
+            "globals": globals
         },
     )

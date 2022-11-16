@@ -1,5 +1,3 @@
-# Framework Imports
-
 # Internal Imports
 from cave_core import models, utils
 
@@ -30,9 +28,8 @@ def get_session_data(request):
     session = request.user.session
     # get_changed_data needs to be executed prior to session.hashes since it can mutate them
     data = session.get_changed_data(previous_hashes=data_hashes)
-    utils.broadcasting.ws_broadcast_user(
-        user=request.user,
-        type="app",
+    utils.broadcasting.ws_broadcast_object(
+        object=request.user,
         event="overwrite",
         hashes=session.hashes,
         data=data,
@@ -134,9 +131,8 @@ def mutate_session(request):
                 # In the case of a synch_error broadcast a hash fix to the user
                 # and break from any more session work
                 if response.get("synch_error"):
-                    utils.broadcasting.ws_broadcast_user(
-                        user=request.user,
-                        type="app",
+                    utils.broadcasting.ws_broadcast_object(
+                        object=request.user,
                         event="error",
                         data={
                             "message": "Oops! You are out of sync. Fix in progress...",
@@ -146,9 +142,8 @@ def mutate_session(request):
                     )
                     # get_changed_data needs to be executed prior to session.hashes since it can mutate them
                     data = session_i.get_changed_data(data_hashes)
-                    utils.broadcasting.ws_broadcast_user(
-                        user=request.user,
-                        type="app",
+                    utils.broadcasting.ws_broadcast_object(
+                        object=request.user,
                         event="overwrite",
                         hashes=session_i.hashes,
                         data=data,
@@ -159,18 +154,16 @@ def mutate_session(request):
             session_i.execute_api_command(command=api_command, command_keys=api_command_keys)
             # get_changed_data needs to be executed prior to session.hashes since it can mutate them
             data = session_i.get_changed_data(previous_hashes=session_i_pre_hashes)
-            utils.broadcasting.ws_broadcast_session(
-                session=session_i,
-                type="app",
+            utils.broadcasting.ws_broadcast_object(
+                object=session_i,
                 event="overwrite",
                 hashes=session_i.hashes,
                 data=data,
             )
         # If no api command is provided, apply the mutation
         else:
-            utils.broadcasting.ws_broadcast_session(
-                session=session_i,
-                type="app",
+            utils.broadcasting.ws_broadcast_object(
+                object=session_i,
                 event="mutation",
                 hashes=session_i.hashes,
                 data=mutate_dict,
@@ -207,16 +200,14 @@ def get_associated_session_data(request):
         session__in=associated_sessions, data_name__in=data_names
     )
     # Associated Data
-    if request.user.is_staff and session.team is not None:
+    if request.user.is_staff:
         associated = {
             obj.id: {
-                "name": obj.team.group.name + " -> " + obj.team.name + " -> " + obj.name,
+                "name": obj.team.group.name if obj.team.group is not None else 'Personal' + " -> " + obj.team.name + " -> " + obj.name,
                 "data": {},
             }
             for obj in associated_sessions
         }
-    else:
-        associated = {obj.id: {"name": obj.name, "data": {}} for obj in associated_sessions}
     for obj in session_data:
         associated[obj.session.id]["data"][obj.data_name] = obj.get_py_data()
 
@@ -231,9 +222,8 @@ def get_associated_session_data(request):
     session.replace_data(data=associated_data_object, wipe_existing=False)
 
     # Notify users of updates
-    utils.broadcasting.ws_broadcast_session(
-        session=session,
-        type="app",
+    utils.broadcasting.ws_broadcast_object(
+        object=session,
         event="overwrite",
         hashes=session.hashes,
         data=session.get_client_data(keys=["associated"]),
@@ -331,10 +321,19 @@ def session_management(request):
         }
     }
     -----------------------------------
+
+    - refresh
+        - Refreshes (via websocket messages) the session data for all teams related to the requesting user
+
+    -----------------------------------
+    {
+        "session_command":"refresh"
+    }
+    -----------------------------------
     """
     command = request.data.get("session_command", None)
     command_data = request.data.get("session_command_data")
-    print(f"\n\{command.title()} Session\n")
+    # print(f"\n\{command.title()} Session\n")
 
     user = request.user
 
@@ -348,15 +347,7 @@ def session_management(request):
         user.delete_session(**command_data)
     elif command == 'edit':
         user.edit_session(**command_data)
+    elif command == 'refresh':
+        user.refresh_session_lists()
     else:
         raise Exception(f'A `session_command` ({command}) was passed, but it does not match any available `session_command`s.')
-
-@utils.wrapping.async_api_app_ws
-def get_sessions_list(request):
-    """
-    API endpoint to populate available sessions
-
-    Does not take in parameters
-    """
-    request.user.error_on_no_access()
-    [team.update_sessions_list() for team in request.user.get_teams()]

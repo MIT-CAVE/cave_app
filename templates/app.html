@@ -6,12 +6,57 @@
 {% block header_text %}{{globals.site_name}}{% endblock %}
 
 {% block content %}
-  {% include "modules/app/core.html" %}
+  <div id="main-app-window-div" style="
+    --widthMultiplier: 1;
+    height: calc( 100vh - 56px );
+    width: 100vw;
+    overflow:hidden;
+  ">
+    <iframe
+      id="app-frame"
+      src="{{ static_url }}/{{ globals.static_app_url_path }}"
+      onload="onIframeLoad(this)"
+      frameBorder="0"
+      style="
+        width: calc(100% / var(--widthMultiplier) );
+        height: calc( 100% / var(--widthMultiplier) );
+        transform: scale(var(--widthMultiplier));
+        transform-origin: 0 0;
+      "
+    ></iframe>
+  </div>
 {% endblock %}
 
 {% block scripts %}
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  {% include "modules/app/handle_container_messages.html" %}
-  {% include "modules/app/handle_messaging.html" %}
-  {% include "modules/app/ws.html" %}
+  <script>
+    function sendToApp(payload){
+      // console.log("App Message: ",payload)
+      try {
+        const frame = document.getElementById("app-frame")
+        frame.contentWindow.postMessage(payload, '{{ static_url }}')
+      } catch(error) {
+        console.log('App not in page')
+      }
+    };
+
+    const onIframeLoad = (frame) => {
+      sendToApp({
+        event: 'initialize',
+        data:{
+          user_token: '{{ user_token }}',
+          mapbox_token: '{{ globals.mapbox_token }}',
+          session_id: {{ session.id }}
+        }
+      })
+    }
+
+    const setAppDivWidth = () => {
+      var widthMin = {{ globals.app_screen_width }};
+      var widthMultiplier=Math.min(window.innerWidth, widthMin)/widthMin
+      document.getElementById("main-app-window-div").style.setProperty('--widthMultiplier', widthMultiplier)
+    }
+    window.addEventListener('resize', setAppDivWidth);
+    window.addEventListener('load', setAppDivWidth);
+  </script>
 {% endblock %}

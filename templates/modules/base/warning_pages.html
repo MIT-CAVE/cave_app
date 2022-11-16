@@ -1,4 +1,4 @@
-{% if warning_page == 'email_validation' %}
+{% if not access_dict.email_validated %}
 <li class="nav-item">
   <a class="nav-link btn btn-warning" href="#" id="accessDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Validate Your Email
@@ -11,7 +11,7 @@
 </li>
 {% include "modules/base/resend_validation_email_script.html" %}
 {% endif %}
-{% if warning_page == 'access_pending' %}
+{% if access_dict.status == 'pending' %}
 <li class="nav-item">
   <a class="nav-link btn btn-warning" href="#" id="accessPendingDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Access Pending
@@ -21,7 +21,7 @@
   </div>
 </li>
 {% endif %}
-{% if warning_page == 'access_denied' %}
+{% if access_dict.status == 'denied' %}
 <li class="nav-item">
   <a class="nav-link btn btn-danger" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Access Denied

@@ -10,7 +10,7 @@
     <a class="dropdown-item" href="/change_password/">Change Password</a>
   </div>
 </li>
-{% if warning_page %}
+{% if access_dict %}
   {% include "modules/base/warning_pages.html" %}
 {% endif %}
 {% if user.is_staff %}
