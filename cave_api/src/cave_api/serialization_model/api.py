@@ -1,5 +1,6 @@
-from logging import raiseExceptions
 from cave_api.serialization_model.serialize import get_api_object
+
+
 def execute_command(session_data, command="init"):
     """
     Usage:
@@ -28,6 +29,6 @@ def execute_command(session_data, command="init"):
     if command == "init":
         return get_api_object()
     if command == "button_event":
-        print('The settings pane button has been pressed!')
+        print("The settings pane button has been pressed!")
         return {}
     raise Exception(f"Command not found: `{command}`")
