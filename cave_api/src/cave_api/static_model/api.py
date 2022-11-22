@@ -29,6 +29,28 @@ def execute_command(session_data, command="init"):
             "send_to_api": False,
             "send_to_client": True,
             "data": {
+                "sync":{
+                    "mapLayers":{
+                        "name": "Map Layers",
+                        "showToggle": True,
+                        "value": False,
+                        "data":{
+                            "ml1": ["map", "data", "enabledTypes"],
+                            "ml2": ["nodes", "types"],
+                            "ml3": ["arcs", "types"],
+                            "ml4": ["geos", "types"],
+                        }
+                    },
+                    "appBar": {
+                        "name": "App Bar",
+                        "showToggle": True,
+                        "value": False,
+                        "data": {
+                            "ab1": ["appBar", "data", "dashboardId"],
+                            "ab2": ["appBar", "paneState"],
+                        } 
+                    },
+                },
                 "syncToggles": {
                     "Map Layers": {
                         "ml1": ["map", "data", "enabledTypes"],
