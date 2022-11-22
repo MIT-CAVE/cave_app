@@ -86,8 +86,8 @@ def async_api_app_ws(fn):
                 print(traceback_str)
             utils.broadcasting.ws_broadcast_object(
                 object=session,
-                event="error",
-                data={"message": str(e), "duration": 5, "traceback": traceback_str},
+                event="message",
+                data={"snackbarShow": True, "snackbarType": "error", "message": str(e), "duration": 5, "traceback": traceback_str},
             )
             # Stop any loading that might exist for the session
             session.set_loading(False)
