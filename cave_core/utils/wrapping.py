@@ -76,6 +76,8 @@ def async_api_app_ws(fn):
     """
     @wraps(fn)
     def wrap(request):
+        # Store the session of the user at request time for long running sessions
+        session = request.user.session
         try:
             fn(request)
         except Exception as e:
@@ -83,8 +85,10 @@ def async_api_app_ws(fn):
             if settings.DEBUG:
                 print(traceback_str)
             utils.broadcasting.ws_broadcast_object(
-                object=request.user,
+                object=session,
                 event="error",
                 data={"message": str(e), "duration": 5, "traceback": traceback_str},
             )
+            # Stop any loading that might exist for the session
+            session.set_loading(False)
     return database_sync_to_async(wrap)

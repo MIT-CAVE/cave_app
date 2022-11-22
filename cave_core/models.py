@@ -90,11 +90,16 @@ class CustomUser(AbstractUser):
     #############################################
     def switch_session_no_validation(self, session_obj):
         session = session_obj
+        prev_session = self.session
         if self.session == session:
             return
         # Query CustomUsers -> Update session
         self.session = session
         self.save()
+        # Update user id lists for the previous and current sessions
+        session.update_user_ids()
+        if prev_session is not None:
+            prev_session.update_user_ids()
         # Query all session data:
         # Note: get_changed_data needs to be executed prior to calling session.hashes since it can mutate them
         data = session.get_changed_data(previous_hashes={})
@@ -104,11 +109,7 @@ class CustomUser(AbstractUser):
             hashes=session.hashes,
             data=data,
         )
-        utils.broadcasting.ws_broadcast_object(
-            object=self,
-            event="update_current_session",
-            data={"session_id": session.id},
-        )
+        session.broadcast_session_info()
 
     def create_session(self, session_name, team_id):
         self.error_on_no_access()
@@ -851,6 +852,16 @@ class Sessions(models.Model):
         help_text=_("The associated team"),
     )
     hashes = models.JSONField(_("hashes"), help_text=_("The session hashes"), blank=True, null=True)
+    loading = models.BooleanField(
+        _("Loading"),
+        help_text=_("Is this session currently loading?"),
+        default=False,
+    )
+    user_ids = models.JSONField(
+        _("user_ids"),
+        help_text=_("A list of user_ids for this session"),
+        default=list
+    )
 
     def update_hashes(self):
         """
@@ -957,6 +968,7 @@ class Sessions(models.Model):
             - What: Queryset of SessionData objects
             - Default: All SessionData objects related to this session object
         """
+        self.set_loading(True)
         if data_queryset == None:
             data_queryset = SessionData.objects.filter(session=self)
         if isinstance(command_keys, list):
@@ -967,6 +979,7 @@ class Sessions(models.Model):
         command_output = execute_command(session_data=session_data, command=command)
         kwargs = command_output.pop("kwargs", {})
         self.replace_data(data=command_output, wipe_existing=kwargs.get("wipe_existing", True))
+        self.set_loading(False)
 
     def mutate(self, data_hash, data_name, data_path, data_value=None, ignore_hash=False):
         """
@@ -1039,13 +1052,14 @@ class Sessions(models.Model):
         - Used to determine which users are in this session
         - EG to prevent deletion if more than one user is in the session
         """
-        return list(CustomUser.objects.filter(session=self).values_list("id", flat=True))
+        return self.user_ids
 
-    def get_short_name(self):
+    def update_user_ids(self):
         """
-        Gets a shortened name for this session to be displayed in the UI
+        Gets all user ids for users currently in this session and stores it as a json object in self.user_ids to reduce query loads
         """
-        return self.name if len(self.name) < 13 else self.name[:12] + "..."
+        self.user_ids = list(CustomUser.objects.filter(session=self).values_list("id", flat=True))
+        self.save()
 
     def copy(self, name):
         """
@@ -1073,6 +1087,22 @@ class Sessions(models.Model):
             raise Exception(
                 "Oops! That session still has users in it."
             )
+
+    def set_loading(self, loading):
+        if loading != self.loading:
+            self.loading = loading
+            self.save()
+            self.broadcast_session_info()
+    
+    def broadcast_session_info(self):
+        utils.broadcasting.ws_broadcast_object(
+            object=self,
+            event="update_current_session",
+            data={
+                "session_id": self.id,
+                # "session_loading": self.loading,
+            },
+        )
 
     @staticmethod
     def error_on_invalid_name(name):

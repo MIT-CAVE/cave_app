@@ -241,12 +241,12 @@ def execute_command(session_data, command="init"):
                             "help": "Help for the toggle input example",
                         },
                         "buttonInputExample": {
-                            "name": "Button Input Example",
+                            "name": "Button Input Example (Creates an Error)",
                             "value": "Press Me!",
                             "type": "button",
-                            "apiCommand": "customCommandHere",
+                            "apiCommand": "test",
                             "enabled": True,
-                            "help": "Help for the button input example",
+                            "help": "Press this button to create an error",
                         },
                         "textInputExample": {
                             "name": "Text Input Example",
@@ -1430,8 +1430,11 @@ def execute_command(session_data, command="init"):
     if command == "reset":
         print("The `reset` button has been pressed by the user!")
         return example
+    elif command == "solve":
+        print("The `solve` button has been pressed by the user!")
     elif command == "test":
         print("The `test` button has been pressed by the user!")
+        raise Exception('Test Exception!')
     if session_data:
         for key, value in session_data.items():
             example[key] = value
