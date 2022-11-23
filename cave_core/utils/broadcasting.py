@@ -13,9 +13,8 @@ def format_broadcast_payload(event, data, **kwargs):
     assert event in [
         "mutation",
         "overwrite",
-        "error",
-        "update_sessions_list",
-        "update_current_session"
+        "message",
+        "localMutation",
     ]
     assert isinstance(data, dict)
     return json.dumps({"event": event, "data": data, **kwargs})

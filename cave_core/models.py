@@ -785,15 +785,18 @@ class Teams(models.Model):
         self.set_session_count(len(sessions))
         utils.broadcasting.ws_broadcast_object(
             object=self,
-            event="update_sessions_list",
+            event="localMutation",
             data={
-                'team__id':self.id,
-                'team__name':self.name,
-                'team__limit_sessions':self.limit_sessions,
-                'team__count_sessions':self.count_sessions,
-                'sessions': {
-                    session.id:{'session__id':session.id, 'session__name':session.name}
-                    for session in sessions
+                'data_path': ['sessions', 'data', self.id],
+                'data': {
+                    'team__id':self.id,
+                    'team__name':self.name,
+                    'team__limit_sessions':self.limit_sessions,
+                    'team__count_sessions':self.count_sessions,
+                    'sessions': {
+                        session.id:{'session__id':session.id, 'session__name':session.name}
+                        for session in sessions
+                    }
                 }
             }
         )
@@ -1089,18 +1092,23 @@ class Sessions(models.Model):
             )
 
     def set_loading(self, loading):
+        if self.loading and loading:
+            raise Exception('Oops! This session is locked while long running request is being processed.')
         if loading != self.loading:
             self.loading = loading
             self.save()
             self.broadcast_session_info()
-    
+
     def broadcast_session_info(self):
         utils.broadcasting.ws_broadcast_object(
             object=self,
-            event="update_current_session",
+            event="localMutation",
             data={
-                "session_id": self.id,
-                # "session_loading": self.loading,
+                "data_path": ['sessions'],
+                "data":{
+                    "session_id": self.id,
+                    "session_loading": self.loading,
+                }
             },
         )
 
