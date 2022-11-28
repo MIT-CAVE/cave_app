@@ -89,6 +89,8 @@ make_django_migrations() {
   python3 manage.py makemigrations cave_core --deployment_type development
   # Apply the migrations
   python3 manage.py migrate --deployment_type development
+  # Create the cache table
+  python3 manage.py createcachetable
   # Store all new migrations in the temporary directory
   get_migrations "all_migrations"
   # Determine new migrations that have been applied

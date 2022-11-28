@@ -22,8 +22,6 @@ PRODUCTION_MODE = False
 ## Debug
 ### NOTE: Debug should be False in a production environment
 DEBUG = True
-## USE LOGGING
-USE_LOGGING = False
 ################################################################
 
 
@@ -167,16 +165,18 @@ CHANNEL_LAYERS = {
 
 # Caching
 ################################################################
-## NOTE: This is not suitable for multi machine production environments
-## while using channels
+## NOTE: This is not efficient for production environments
 ## NOTE: For production, switch to a network based memcache or redis envronment
-CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
+CACHES = {"default": {
+    "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+    "LOCATION": "development_cache_table"
+}}
 ################################################################
 
 
 # Configure logging if USE_LOGGING is True
 ################################################################
-if USE_LOGGING:
+if config("USE_LOGGING", default=False, cast=bool):
     LOGGING = {
         'version': 1,
         'filters': {

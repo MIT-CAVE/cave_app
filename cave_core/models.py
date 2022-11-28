@@ -1,5 +1,6 @@
 # Framework Imports
 from django.contrib.auth.models import AbstractUser
+from django.core.cache import cache
 from django.db import models
 from django.db.models.signals import post_save,post_delete
 from django.dispatch import receiver
@@ -883,7 +884,7 @@ class Sessions(models.Model):
         if session_data == None:
             session_data = SessionData.objects.filter(session=self)
         return {
-            obj.data_name: obj.data
+            obj.data_name: obj.get_json_data()
             for obj in session_data.filter(data_name__in=keys, send_to_client=True)
         }
 
@@ -912,7 +913,7 @@ class Sessions(models.Model):
         """
         Removes all data from the current session
         """
-        SessionData.objects.filter(session=self).delete()
+        [i.delete() for i in SessionData.objects.filter(session=self)]
 
     def replace_data(self, data, wipe_existing):
         """
@@ -1139,7 +1140,6 @@ class SessionData(models.Model):
         help_text=_("The associated session"),
     )
     data_name = models.CharField(_("data_name"), max_length=32, help_text=_("Name of the data"))
-    data = models.TextField(_("data"), help_text=_("The data"), blank=True, null=True)
     allow_modification = models.BooleanField(
         _("allow_modification"),
         help_text=_("Allow this data to be modified?"),
@@ -1163,11 +1163,27 @@ class SessionData(models.Model):
         null=True,
     )
 
-    def calc_data_hash(self):
+    def delete(self):
+        cache.delete(self.get_cache_data_id())
+        super().delete()
+
+    def get_cache_data_id(self):
+        return f'data:{self.session.id}:{self.id}'
+
+    def get_json_data(self):
+        return cache.get(self.get_cache_data_id())
+
+    def get_py_data(self):
+        """
+        Serialize the current data object as a python dict
+        """
+        return json.loads(self.get_json_data())
+
+    def calc_data_hash(self, data:str):
         """
         returns the first 12 characters from the hex digested utf-8 hash256 of self.data
         """
-        self.data_hash = hashlib.sha256(self.data.encode("utf-8")).hexdigest()[:12]
+        return hashlib.sha256(data.encode("utf-8")).hexdigest()[:12]
 
     def get_force_dict(self, object, key):
         """
@@ -1263,7 +1279,7 @@ class SessionData(models.Model):
             - What: Send this data to the api when executing an api command
             - Default: The current database setting
         """
-        self.data = utils.data_encoding.json_like_js(data)
+        data = utils.data_encoding.json_like_js(data)
         if allow_modification is not None:
             self.allow_modification = allow_modification
         if send_to_client is not None:
@@ -1271,14 +1287,9 @@ class SessionData(models.Model):
         if send_to_api is not None:
             self.send_to_api = send_to_api
         if self.send_to_client:
-            self.calc_data_hash()
+            self.data_hash = self.calc_data_hash(data)
+        cache.set(self.get_cache_data_id(),data)
         self.save()
-
-    def get_py_data(self):
-        """
-        Serialize the current data object as a python dict
-        """
-        return json.loads(self.data)
 
     # Metadata
     class Meta:
