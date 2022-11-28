@@ -29,6 +29,28 @@ def execute_command(session_data, command="init"):
             "send_to_api": False,
             "send_to_client": True,
             "data": {
+                "sync":{
+                    "mapLayers":{
+                        "name": "Map Layers",
+                        "showToggle": True,
+                        "value": False,
+                        "data":{
+                            "ml1": ["map", "data", "enabledTypes"],
+                            "ml2": ["nodes", "types"],
+                            "ml3": ["arcs", "types"],
+                            "ml4": ["geos", "types"],
+                        }
+                    },
+                    "appBar": {
+                        "name": "App Bar",
+                        "showToggle": True,
+                        "value": False,
+                        "data": {
+                            "ab1": ["appBar", "data", "dashboardId"],
+                            "ab2": ["appBar", "paneState"],
+                        } 
+                    },
+                },
                 "syncToggles": {
                     "Map Layers": {
                         "ml1": ["map", "data", "enabledTypes"],
@@ -61,46 +83,46 @@ def execute_command(session_data, command="init"):
         "categories": {
             "allow_modification": False,
             "data": {
-                "Location": {
+                "location": {
                     "data": {
-                        "loc_US_MI": {
-                            "Region": "North America",
-                            "Country": "USA",
-                            "State": "Michigan",
+                        "locUsMi": {
+                            "region": "North America",
+                            "country": "USA",
+                            "state": "Michigan",
                         },
-                        "loc_US_MA": {
-                            "Region": "North America",
-                            "Country": "USA",
-                            "State": "Massachusetts",
+                        "locUsMa": {
+                            "region": "North America",
+                            "country": "USA",
+                            "state": "Massachusetts",
                         },
-                        "loc_US_FL": {
-                            "Region": "North America",
-                            "Country": "USA",
-                            "State": "Florida",
+                        "locUsFl": {
+                            "region": "North America",
+                            "country": "USA",
+                            "state": "Florida",
                         },
-                        "loc_US_IN": {
-                            "Region": "North America",
-                            "Country": "USA",
-                            "State": "Indiana",
+                        "locUsIn": {
+                            "region": "North America",
+                            "country": "USA",
+                            "state": "Indiana",
                         },
-                        "loc_CA_ON": {
-                            "Region": "North America",
-                            "Country": "Canada",
-                            "State": "Ontario",
+                        "locCaOn": {
+                            "region": "North America",
+                            "country": "Canada",
+                            "state": "Ontario",
                         },
                     },
                     "name": "Locations",
                     "nestedStructure": {
-                        "Region": {
+                        "region": {
                             "name": "Regions",
                             "order": 1,
                         },
-                        "Country": {
+                        "country": {
                             "name": "Countries",
                             "ordering": ["USA", "Canada"],
                             "order": 2,
                         },
-                        "State": {
+                        "state": {
                             "name": "States",
                             "order": 3,
                         },
@@ -108,32 +130,32 @@ def execute_command(session_data, command="init"):
                     "layoutDirection": "horizontal",
                     "order": 1,
                 },
-                "Product": {
+                "sku": {
                     "data": {
-                        "prd_abc123": {
-                            "Type": "Fruit",
-                            "Size": "Big",
-                            "Product": "Apple",
+                        "SKU1": {
+                            "type": "Type A",
+                            "size": "Size A",
+                            "sku": "SKU1",
                         },
-                        "prd_def456": {
-                            "Type": "Fruit",
-                            "Size": "Small",
-                            "Product": "Grape",
+                        "SKU2": {
+                            "type": "Type A",
+                            "size": "Size B",
+                            "sku": "SKU2",
                         },
                     },
-                    "name": "Products",
+                    "name": "SKUs",
                     "nestedStructure": {
-                        "Type": {
+                        "type": {
                             "name": "Types",
                             "order": 1,
                         },
-                        "Size": {
+                        "size": {
                             "name": "Sizing",
-                            "ordering": ["Small", "Big"],
+                            "ordering": ["Type B", "Type A"],
                             "order": 2,
                         },
-                        "Product": {
-                            "name": "Products",
+                        "sku": {
+                            "name": "SKU",
                             "order": 3,
                         },
                     },
@@ -151,7 +173,7 @@ def execute_command(session_data, command="init"):
                     "bar": "upper",
                     "order": 1,
                 },
-                "button_reset": {
+                "resetButton": {
                     "name": "Reset Button",
                     "icon": "MdSync",
                     "color": {
@@ -163,168 +185,116 @@ def execute_command(session_data, command="init"):
                     "bar": "upper",
                     "order": 2,
                 },
-                "button_1": {
+                "buttonSolve": {
                     "name": "Solve Button",
                     "icon": "BsLightningFill",
                     "color": {
                         "dark": "rgb(178, 179, 55)",
                         "light": "rgb(79, 79, 24)",
                     },
-                    "apiCommand": "solve_session",
+                    "apiCommand": "solve",
                     "type": "button",
                     "bar": "upper",
                     "order": 2,
                 },
-                "settings": {
-                    "name": "Settings Pane",
+                "examplePropsPane": {
+                    "name": "Example Props Pane",
                     "props": {
-                        "Solver": {
-                            "name": "Solver",
-                            "type": "selector",
-                            "variant": "dropdown",
-                            "value": [
-                                {"name": "Gurobi", "value": True},
-                                {"name": "Cplex", "value": False},
-                                {"name": "CoinOR", "value": False},
-                            ],
-                            "enabled": True,
-                            "help": "Select a solver type to use",
+                        "numericHeader": {
+                            "name": "Numeric Props",
+                            "type": "head",
+                            "help": "Some help for numeric props",
                         },
-                        "Pct_Optimal": {
-                            "name": "Percent Optimal",
+                        "numericInputExample": {
+                            "name": "Numeric Input Example",
                             "type": "num",
-                            "value": 97,
+                            "value": 50,
                             "enabled": True,
-                            "help": "What percent of optimal would you like to solve to?",
+                            "help": "Help for the numeric input example",
                             "maxValue": 100,
                             "minValue": 0,
-                            "numberFormat": {
-                                "unit": "%",
-                                "unitSpace": False,
-                                "trailingZeros": True,
-                            },
-                        },
-                        "min_profit": {
-                            "name": "Minimum profit",
-                            "type": "num",
-                            "value": 10000,
-                            "enabled": True,
-                            "variant": "field",
-                            "help": "The minimum intended profit",
-                            "maxValue": 999999999999999,
-                            "minValue": -999999999999999,
                             "numberFormat": {
                                 "precision": 0,
-                                "trailingZeros": False,
-                                "currency": True,
-                                "unit": "$",
+                                "unit": "units",
                             },
                         },
-                        "test_button": {
-                            "name": "Test button",
-                            "type": "button",
-                            "value": "Click me",
+                        "numericSliderExample": {
+                            "name": "Numeric Slider Example",
+                            "type": "num",
+                            "value": 50,
                             "enabled": True,
-                            "apiCommand": "test_command",
-                            "help": "An action button that triggers `test_command`",
+                            "variant": "slider",
+                            "help": "Help for the numeric slider example",
+                            "maxValue": 100,
+                            "minValue": 0,
                         },
-                    },
-                    "icon": "BsWrench",
-                    "type": "pane",
-                    "variant": "options",
-                    "teamSync": True,
-                    "bar": "upper",
-                    "order": 3,
-                },
-                "settingsBig": {
-                    "name": "A Big Settings Pane",
-                    "props": {
-                        "solver_section": {
-                            "name": "Solver Section",
+                        "miscHeader": {
+                            "name": "Misc Props",
                             "type": "head",
-                            "help": "Some help for the solver section",
+                            "help": "Some help for miscelanous props",
                         },
-                        "Solver": {
-                            "name": "Solver",
+                        "toggleInputExample": {
+                            "name": "Toggle Input Example",
+                            "type": "toggle",
+                            "value": True,
+                            "enabled": True,
+                            "help": "Help for the toggle input example",
+                        },
+                        "buttonInputExample": {
+                            "name": "Button Input Example (Creates an Error)",
+                            "value": "Press Me!",
+                            "type": "button",
+                            "apiCommand": "test",
+                            "enabled": True,
+                            "help": "Press this button to create an error",
+                        },
+                        "textInputExample": {
+                            "name": "Text Input Example",
+                            "type": "text",
+                            "value": "Example Text Here",
+                            "enabled": True,
+                            "help": "Help for the text input example",
+                        },
+                        "selectorHeader": {
+                            "name": "Selection Props",
+                            "type": "head",
+                            "help": "Some help for Selection Props",
+                        },
+                        "dropdownItemExample": {
+                            "name": "Dropdown Item Example",
                             "type": "selector",
                             "variant": "dropdown",
                             "value": [
-                                {"name": "Gurobi", "value": True},
-                                {"name": "Cplex", "value": False},
-                                {"name": "CoinOR", "value": False},
+                                {"name": "Option A", "value": False},
+                                {"name": "Option B", "value": False},
+                                {"name": "Option C", "value": True},
                             ],
                             "enabled": True,
-                            "help": "Select a solver type to use",
+                            "help": "Select an option from the dropdown",
                         },
-                        "optimality_section": {
-                            "name": "Optimality Section",
-                            "type": "head",
-                            "help": "Some help for the optimality section",
-                        },
-                        "Pct_Optimal": {
-                            "name": "Percent Optimal",
-                            "type": "num",
-                            "value": 97,
+                        "checkboxItemExample": {
+                            "name": "Checkbox Item Example",
+                            "type": "selector",
+                            "variant": "checkbox",
+                            "value": [
+                                {"name": "Option A", "value": True},
+                                {"name": "Option B", "value": False},
+                                {"name": "Option C", "value": True},
+                            ],
                             "enabled": True,
-                            "variant": "slider",
-                            "help": "What percent of optimal would you like to solve to?",
-                            "maxValue": 100,
-                            "minValue": 0,
+                            "help": "Select all relevant items",
                         },
-                        "distance_section": {
-                            "name": "Demand Served At Distances",
-                            "type": "head",
-                            "help": "How much demand do you expect to serve at the following distances?",
-                        },
-                        "50_miles": {
-                            "name": "50 Miles",
-                            "type": "num",
-                            "value": 45,
+                        "radioItemExample": {
+                            "name": "Radio Item Example",
+                            "type": "selector",
+                            "variant": "radio",
+                            "value": [
+                                {"name": "Option A", "value": True},
+                                {"name": "Option B", "value": False},
+                                {"name": "Option C", "value": False},
+                            ],
                             "enabled": True,
-                            "variant": "slider",
-                            "help": "Expected demand filled at 50 miles",
-                            "maxValue": 100,
-                            "minValue": 0,
-                        },
-                        "100_miles": {
-                            "name": "100 Miles",
-                            "type": "num",
-                            "value": 35,
-                            "enabled": True,
-                            "variant": "slider",
-                            "help": "Expected demand filled at 100 miles",
-                            "maxValue": 100,
-                            "minValue": 0,
-                        },
-                        "150_miles": {
-                            "name": "150 Miles",
-                            "type": "num",
-                            "value": 25,
-                            "enabled": True,
-                            "variant": "slider",
-                            "help": "Expected demand filled at 150 miles",
-                            "maxValue": 100,
-                            "minValue": 0,
-                        },
-                        "200_miles": {
-                            "name": "200 Miles",
-                            "type": "num",
-                            "value": 45,
-                            "enabled": True,
-                            "variant": "slider",
-                            "help": "Expected demand filled at 200 miles",
-                            "maxValue": 120,
-                            "minValue": 0,
-                        },
-                        "250_miles": {
-                            "name": "250 Miles",
-                            "type": "num",
-                            "value": 75,
-                            "enabled": True,
-                            "variant": "slider",
-                            "help": "Expected demand filled at 250 miles",
-                            "maxValue": 120,
-                            "minValue": 0,
+                            "help": "Select one item from the list",
                         },
                     },
                     "layout": {
@@ -332,135 +302,71 @@ def execute_command(session_data, command="init"):
                         "num_columns": 3,
                         "num_rows": "auto",
                         "data": {
-                            "col1_row1": {
+                            "col1Row1": {
                                 "type": "item",
                                 "column": 1,
                                 "row": 1,
-                                "itemId": "solver_section",
+                                "itemId": "numericHeader",
                             },
-                            "col1_row2": {
+                            "col1Row2": {
                                 "type": "item",
                                 "column": 1,
                                 "row": 2,
-                                "itemId": "Solver",
+                                "itemId": "numericInputExample",
                             },
-                            "col3_row2": {
+                            "col1Row3": {
                                 "type": "item",
-                                "column": 3,
-                                "row": 2,
-                                "itemId": "Pct_Optimal",
-                                "container": "horizontal",
+                                "column": 1,
+                                "row": 3,
+                                "itemId": "numericSliderExample",
                             },
-                            "col3_row1": {
+                            "col2Row1": {
+                                "type": "item",
+                                "column": 2,
+                                "row": 1,
+                                "itemId": "miscHeader",
+                            },
+                            "col2Row2": {
+                                "type": "item",
+                                "column": 2,
+                                "row": 2,
+                                "itemId": "toggleInputExample",
+                            },
+                            "col2Row3": {
+                                "type": "item",
+                                "column": 2,
+                                "row": 3,
+                                "itemId": "buttonInputExample",
+                            },
+                            "col2Row4": {
+                                "type": "item",
+                                "column": 2,
+                                "row": 4,
+                                "itemId": "textInputExample",
+                            },
+                            "col3Row1": {
                                 "type": "item",
                                 "column": 3,
                                 "row": 1,
-                                "itemId": "optimality_section",
+                                "itemId": "selectorHeader",
                             },
-                            "col3_row3": {
-                                "type": "grid",
-                                "num_columns": 7,
-                                "num_rows": 1,
+                            "col3Row2": {
+                                "type": "item",
+                                "column": 3,
+                                "row": 2,
+                                "itemId": "dropdownItemExample",
+                            },
+                            "col3Row3": {
+                                "type": "item",
                                 "column": 3,
                                 "row": 3,
-                                "data": {
-                                    "col1": {
-                                        "type": "item",
-                                        "column": 1,
-                                        "itemId": "50_miles",
-                                    },
-                                    "col2": {
-                                        "type": "item",
-                                        "column": 2,
-                                        "container": "titled",
-                                        "itemId": "150_miles",
-                                    },
-                                    "col3": {
-                                        "type": "item",
-                                        "column": 3,
-                                        "itemId": "50_miles",
-                                    },
-                                    "col4": {
-                                        "type": "item",
-                                        "column": 4,
-                                        "itemId": "200_miles",
-                                    },
-                                    "id_11": {
-                                        "type": "item",
-                                        "container": "titled",
-                                        "itemId": "Pct_Optimal",
-                                    },
-                                    "id_12": {
-                                        "type": "item",
-                                        "container": "titled",
-                                        "itemId": "150_miles",
-                                    },
-                                    "id_13": {
-                                        "type": "item",
-                                        "itemId": "50_miles",
-                                    },
-                                },
+                                "itemId": "checkboxItemExample",
                             },
-                            "col3_row4": {
-                                "type": "grid",
-                                "num_columns": 7,
-                                "num_rows": 1,
+                            "col3Row4": {
+                                "type": "item",
                                 "column": 3,
                                 "row": 4,
-                                "data": {
-                                    "col1": {
-                                        "type": "item",
-                                        "column": 1,
-                                        "itemId": "100_miles",
-                                    },
-                                    "col2": {
-                                        "type": "item",
-                                        "column": 2,
-                                        "itemId": "50_miles",
-                                    },
-                                    "col3": {
-                                        "type": "item",
-                                        "column": 3,
-                                        "itemId": "150_miles",
-                                    },
-                                    "col4": {
-                                        "type": "item",
-                                        "column": 4,
-                                        "itemId": "200_miles",
-                                    },
-                                    "id_21": {
-                                        "type": "item",
-                                        "container": "titled",
-                                        "itemId": "100_miles",
-                                    },
-                                    "id_22": {
-                                        "type": "item",
-                                        "container": "titled",
-                                        "itemId": "250_miles",
-                                    },
-                                    "id_23": {
-                                        "type": "item",
-                                        "itemId": "Pct_Optimal",
-                                    },
-                                },
-                            },
-                            "col2_row1": {
-                                "type": "item",
-                                "column": 2,
-                                "row": 1,
-                                "itemId": "distance_section",
-                            },
-                            "col2_row3": {
-                                "type": "item",
-                                "row": 3,
-                                "column": 2,
-                                "itemId": "200_miles",
-                            },
-                            "col2_row2": {
-                                "type": "item",
-                                "row": 2,
-                                "column": 2,
-                                "itemId": "250_miles",
+                                "itemId": "radioItemExample",
                             },
                         },
                     },
@@ -468,51 +374,41 @@ def execute_command(session_data, command="init"):
                     "type": "pane",
                     "variant": "options",
                     "bar": "upper",
-                    "order": 4,
+                    "order": 3,
                 },
                 "context": {
                     "name": "Context Pane",
                     "props": {
-                        "Demand_Multiplier": {
+                        "numericContextProp": {
                             "type": "num",
                             "value": 100,
                             "enabled": True,
-                            "help": "Percentage multiplier times the base demand (100%=Given Demand)",
+                            "help": "Numeric Context Prop Help",
                             "label": "%",
                             "variant": "slider",
                             "maxValue": 500,
                             "minValue": 0,
-                            "selectableCategories": ["Location", "Product"],
-                        },
-                        "Supply_Multiplier": {
-                            "type": "num",
-                            "value": 100,
-                            "enabled": True,
-                            "help": "Percentage multiplier times the base supply (100%=Given Supply)",
-                            "label": "%",
-                            "minValue": 0,
-                            "constraint": "int",
-                            "selectableCategories": ["Location", "Product"],
+                            "selectableCategories": ["location", "sku"],
                         },
                     },
                     "data": {
                         "context_1": {
-                            "prop": "Demand_Multiplier",
+                            "prop": "numericContextProp",
                             "value": 110,
-                            "applyCategories": {"Location": ["loc_US_MI"]},
+                            "applyCategories": {"location": ["locUsMi"]},
                         }
                     },
                     "icon": "BsInboxes",
                     "type": "pane",
                     "variant": "context",
-                    "order": 5,
+                    "order": 4,
                     "bar": "upper",
                 },
                 "filter": {
                     "icon": "FaFilter",
                     "type": "pane",
                     "variant": "filter",
-                    "order": 6,
+                    "order": 5,
                     "bar": "upper",
                 },
                 "map_1": {
@@ -531,26 +427,26 @@ def execute_command(session_data, command="init"):
                         {
                             "chart": "Bar",
                             "grouping": "Average",
-                            "statistic": "demand_met",
+                            "statistic": "numericStatExampleA",
                         },
                         {
                             "chart": "Line",
                             "grouping": "Sum",
-                            "statistic": "demand_pct",
+                            "statistic": "numericStatExampleB",
                         },
                         {
                             "chart": "Bar",
-                            "level": "Size",
-                            "category": "Product",
+                            "level": "size",
+                            "category": "sku",
                             "grouping": "Sum",
-                            "statistic": "demand_met",
+                            "statistic": "numericExampleCalculationStat",
                         },
                         {
-                            "chart": "Bar",
-                            "grouping": "Minimum",
                             "type": "kpis",
+                            "chart": "Bar",
+                            "grouping": "Sum",
                             "sessions": [],
-                            "kpi": "Really Big Number",
+                            "kpi": "kpi5",
                         },
                     ],
                     "lockedLayout": False,
@@ -565,7 +461,11 @@ def execute_command(session_data, command="init"):
         },
         "map": {
             "data": {
-                "enabledTypes": {"arc": {"T1": True}},
+                "enabledTypes": {
+                    "arc": {"T1": True, "T2": True},
+                    "node": {"nodeTypeA": True, "nodeTypeB": True},
+                    "geo": {"state": True},
+                },
                 "defaultViewport": {
                     "longitude": -75.44766721108091,
                     "latitude": 40.34530681636297,
@@ -605,16 +505,16 @@ def execute_command(session_data, command="init"):
                 },
                 "legendGroups": [
                     {
-                        "name": "DC Delivery",
-                        "nodeTypes": ["DC"],
+                        "name": "Legend Group A",
+                        "nodeTypes": ["nodeTypeA"],
                         "arcTypes": ["T1"],
                     },
                     {
-                        "name": "Store Delivery",
-                        "nodeTypes": ["Store"],
+                        "name": "Legend Group B",
+                        "nodeTypes": ["nodeTypeB"],
                         "arcTypes": ["T2"],
+                        "geoTypes": ["state", "country"],
                     },
-                    {"name": "Demand Geography", "geoTypes": ["state", "country"]},
                 ],
             },
         },
@@ -623,15 +523,15 @@ def execute_command(session_data, command="init"):
                 "T1": {
                     "name": "Flow Type 1",
                     "colorByOptions": {
-                        "Primary Type": {
-                            "Air": "rgb(128,255,255)",
-                            "Mixed": "rgb(0,153,51)",
-                            "Water": "rgb(0,0,128)",
-                            "Train": "rgb(204,0,0)",
-                            "Truck": "rgb(153,77,0)",
-                            "3rd Party": "rgb(255,25,255)",
+                        "selectorPropForColor": {
+                            "A": "rgb(128,255,255)",
+                            "B": "rgb(0,153,51)",
+                            "C": "rgb(0,0,128)",
+                            "D": "rgb(204,0,0)",
+                            "E": "rgb(153,77,0)",
+                            "F": "rgb(255,25,255)",
                         },
-                        "Flow Capacity": {
+                        "numericPropExampleA": {
                             "min": 0,
                             "max": 50,
                             "startGradientColor": {
@@ -643,7 +543,7 @@ def execute_command(session_data, command="init"):
                                 "light": "rgb(23, 23, 126)",
                             },
                         },
-                        "Flow": {
+                        "numericPropExampleB": {
                             "min": 0,
                             "max": 40,
                             "startGradientColor": {
@@ -656,24 +556,65 @@ def execute_command(session_data, command="init"):
                             },
                         },
                     },
-                    "colorBy": "Flow",
+                    "colorBy": "numericPropExampleA",
                     "lineBy": "solid",
                     "sizeByOptions": {
-                        "Flow Capacity": {"min": 0, "max": 50},
-                        "Flow": {"min": 0, "max": 40},
+                        "numericPropExampleA": {"min": 0, "max": 50},
+                        "numericPropExampleB": {"min": 0, "max": 40},
                     },
-                    "sizeBy": "Flow Capacity",
+                    "sizeBy": "numericPropExampleB",
                     "startSize": "15px",
                     "endSize": "30px",
                     "order": 1,
                     "props": {
-                        "Flow Capacity": {
-                            "name": "Flow Capacity (test)",
+                        "numericPropExampleA": {
+                            "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": False,
-                            "help": "Flow Capacity",
+                            "enabled": True,
+                            "help": "Help for numeric prop example A",
                             "numberFormat": {
-                                "unit": "units (test)",
+                                "unit": "A units",
+                            },
+                        },
+                        "numericPropExampleB": {
+                            "name": "Numeric Prop Example B",
+                            "type": "num",
+                            "enabled": True,
+                            "help": "Help for numeric prop example B",
+                            "numberFormat": {
+                                "unit": "B units",
+                            },
+                        },
+                        "selectorPropForColor": {
+                            "name": "Example Categorical Prop",
+                            "type": "selector",
+                            "variant": "dropdown",
+                            "value": [
+                                {"name": "A", "value": True},
+                                {"name": "B", "value": False},
+                                {"name": "C", "value": False},
+                                {"name": "D", "value": False},
+                                {"name": "E", "value": False},
+                                {"name": "F", "value": False},
+                            ],
+                            "enabled": True,
+                        },
+                    },
+                    "layout": {
+                        "type": "grid",
+                        "num_columns": "auto",
+                        "num_rows": 1,
+                        "data": {
+                            "col1": {"type": "item", "itemId": "numericPropExampleA", "col": 1},
+                            "col2": {
+                                "type": "item",
+                                "itemId": "numericPropExampleB",
+                                "col": 2,
+                            },
+                            "col3": {
+                                "type": "item",
+                                "itemId": "selectorPropForColor",
+                                "col": 3,
                             },
                         },
                     },
@@ -681,7 +622,15 @@ def execute_command(session_data, command="init"):
                 "T2": {
                     "name": "Flow Type 2",
                     "colorByOptions": {
-                        "Flow Capacity": {
+                        "selectorPropForColor": {
+                            "A": "rgb(128,255,255)",
+                            "B": "rgb(0,153,51)",
+                            "C": "rgb(0,0,128)",
+                            "D": "rgb(204,0,0)",
+                            "E": "rgb(153,77,0)",
+                            "F": "rgb(255,25,255)",
+                        },
+                        "numericPropExampleA": {
                             "min": 0,
                             "max": 50,
                             "startGradientColor": {
@@ -693,7 +642,7 @@ def execute_command(session_data, command="init"):
                                 "light": "rgb(23, 23, 126)",
                             },
                         },
-                        "Flow": {
+                        "numericPropExampleB": {
                             "min": 0,
                             "max": 40,
                             "startGradientColor": {
@@ -706,26 +655,70 @@ def execute_command(session_data, command="init"):
                             },
                         },
                     },
-                    "colorBy": "Flow",
+                    "colorBy": "numericPropExampleA",
                     "lineBy": "dotted",
                     "sizeByOptions": {
-                        "Flow Capacity": {"min": 0, "max": 50},
-                        "Flow": {"min": 0, "max": 40},
+                        "numericPropExampleA": {"min": 0, "max": 50},
+                        "numericPropExampleB": {"min": 0, "max": 40},
                     },
-                    "sizeBy": "Flow Capacity",
+                    "sizeBy": "numericPropExampleB",
                     "startSize": "15px",
                     "endSize": "30px",
                     "order": 2,
                     "props": {
-                        "Flow Capacity": {
-                            "name": "Flow Capacity (test)",
+                        "numericPropExampleA": {
+                            "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": False,
-                            "help": "Flow Capacity",
+                            "enabled": True,
+                            "help": "Help for numeric prop example A",
                             "numberFormat": {
-                                "unit": "units (test)",
+                                "unit": "A units",
                             },
-                            "value": 80,
+                        },
+                        "numericPropExampleB": {
+                            "name": "Numeric Prop Example B",
+                            "type": "num",
+                            "enabled": True,
+                            "help": "Help for numeric prop example B",
+                            "numberFormat": {
+                                "unit": "B units",
+                            },
+                        },
+                        "selectorPropForColor": {
+                            "name": "Example Categorical Prop",
+                            "type": "selector",
+                            "variant": "dropdown",
+                            "value": [
+                                {"name": "A", "value": True},
+                                {"name": "B", "value": False},
+                                {"name": "C", "value": False},
+                                {"name": "D", "value": False},
+                                {"name": "E", "value": False},
+                                {"name": "F", "value": False},
+                            ],
+                            "enabled": True,
+                        },
+                    },
+                    "layout": {
+                        "type": "grid",
+                        "num_columns": 1,
+                        "num_rows": "auto",
+                        "data": {
+                            "row1": {
+                                "type": "item",
+                                "itemId": "numericPropExampleA",
+                                "row": 1,
+                            },
+                            "row2": {
+                                "type": "item",
+                                "itemId": "numericPropExampleB",
+                                "row": 2,
+                            },
+                            "row3": {
+                                "type": "item",
+                                "itemId": "selectorPropForColor",
+                                "row": 3,
+                            },
                         },
                     },
                 },
@@ -740,57 +733,25 @@ def execute_command(session_data, command="init"):
                     "endClick": 1600,
                     "type": "T1",
                     "category": {
-                        "Location": ["loc_CA_ON", "loc_US_IN"],
-                        "Product": ["prd_def456", "prd_abc123"],
+                        "location": ["locCaOn", "locUsIn"],
+                        "sku": ["SKU2", "SKU1"],
                     },
                     "props": {
-                        "Flow Capacity": {
+                        "numericPropExampleA": {
                             "value": 50,
                         },
-                        "Flow": {
-                            "name": "Flow (test)",
-                            "type": "num",
+                        "numericPropExampleB": {
                             "value": 40,
-                            "enabled": False,
-                            "help": "Flow",
-                            "numberFormat": {
-                                "unit": "units (test)",
-                            },
                         },
-                        "Primary Type": {
-                            "name": "Primary Type",
-                            "type": "selector",
-                            "variant": "dropdown",
+                        "selectorPropForColor": {
                             "value": [
-                                {"name": "Air", "value": False},
-                                {"name": "Train", "value": True},
-                                {"name": "Truck", "value": False},
-                                {"name": "3rd Party", "value": False},
-                                {"name": "Mixed", "value": False},
-                                {"name": "Water", "value": False},
+                                {"name": "A", "value": False},
+                                {"name": "B", "value": True},
+                                {"name": "C", "value": False},
+                                {"name": "D", "value": False},
+                                {"name": "E", "value": False},
+                                {"name": "F", "value": False},
                             ],
-                            "enabled": True,
-                        },
-                    },
-                    "layout": {
-                        "type": "grid",
-                        "num_columns": 1,
-                        "num_rows": "auto",
-                        "data": {
-                            "flow_capacity": {
-                                "type": "item",
-                                "itemId": "Flow Capacity",
-                                "row": 1,
-                            },
-                            "flow": {
-                                "type": "item",
-                                "itemId": "Flow",
-                                "row": 2,
-                            },
-                            "primary_type": {
-                                "type": "item",
-                                "itemId": "Primary Type",
-                            },
                         },
                     },
                 },
@@ -803,34 +764,25 @@ def execute_command(session_data, command="init"):
                     "endClick": 2000,
                     "type": "T2",
                     "category": {
-                        "Location": ["loc_US_MI", "loc_US_IN"],
-                        "Product": ["prd_def456", "prd_abc123"],
+                        "location": ["locUsMi", "locUsIn"],
+                        "sku": ["SKU2", "SKU1"],
                     },
                     "props": {
-                        "Flow Capacity": {
+                        "numericPropExampleA": {
                             "value": 30,
                         },
-                        "Flow": {
-                            "type": "num",
+                        "numericPropExampleB": {
                             "value": 20,
-                            "enabled": False,
-                            "help": "Flow",
                         },
-                    },
-                    "layout": {
-                        "type": "grid",
-                        "num_columns": 1,
-                        "num_rows": "auto",
-                        "data": {
-                            "flow_capacity": {
-                                "type": "item",
-                                "itemId": "Flow Capacity",
-                                "row": 1,
-                            },
-                            "flow": {
-                                "type": "item",
-                                "itemId": "Flow",
-                            },
+                        "selectorPropForColor": {
+                            "value": [
+                                {"name": "A", "value": False},
+                                {"name": "B", "value": False},
+                                {"name": "C", "value": False},
+                                {"name": "D", "value": False},
+                                {"name": "E", "value": True},
+                                {"name": "F", "value": False},
+                            ],
                         },
                     },
                 },
@@ -843,34 +795,25 @@ def execute_command(session_data, command="init"):
                     "endClick": 2000,
                     "type": "T2",
                     "category": {
-                        "Location": ["loc_US_FL", "loc_US_IN"],
-                        "Product": ["prd_def456", "prd_abc123"],
+                        "location": ["locUsFl", "locUsIn"],
+                        "sku": ["SKU2", "SKU1"],
                     },
                     "props": {
-                        "Flow Capacity": {
+                        "numericPropExampleA": {
                             "value": 30,
                         },
-                        "Flow": {
-                            "type": "num",
+                        "numericPropExampleB": {
                             "value": 14,
-                            "enabled": False,
-                            "help": "Flow",
                         },
-                    },
-                    "layout": {
-                        "type": "grid",
-                        "num_columns": 1,
-                        "num_rows": "auto",
-                        "data": {
-                            "flow_capacity": {
-                                "type": "item",
-                                "itemId": "Flow Capacity",
-                                "row": 1,
-                            },
-                            "flow": {
-                                "type": "item",
-                                "itemId": "Flow",
-                            },
+                        "selectorPropForColor": {
+                            "value": [
+                                {"name": "A", "value": False},
+                                {"name": "B", "value": False},
+                                {"name": "C", "value": False},
+                                {"name": "D", "value": True},
+                                {"name": "E", "value": False},
+                                {"name": "F", "value": False},
+                            ],
                         },
                     },
                 },
@@ -883,21 +826,25 @@ def execute_command(session_data, command="init"):
                     "endClick": 2000,
                     "type": "T2",
                     "category": {
-                        "Location": ["loc_US_MA", "loc_US_IN"],
-                        "Product": ["prd_def456", "prd_abc123"],
+                        "location": ["locUsMa", "locUsIn"],
+                        "sku": ["SKU2", "SKU1"],
                     },
                     "props": {
-                        "Flow Capacity": {
-                            "type": "num",
+                        "numericPropExampleA": {
                             "value": 30,
-                            "enabled": False,
-                            "help": "Flow Capacity",
                         },
-                        "Flow": {
-                            "type": "num",
+                        "numericPropExampleB": {
                             "value": 6,
-                            "enabled": False,
-                            "help": "Flow",
+                        },
+                        "selectorPropForColor": {
+                            "value": [
+                                {"name": "A", "value": False},
+                                {"name": "B", "value": False},
+                                {"name": "C", "value": False},
+                                {"name": "D", "value": False},
+                                {"name": "E", "value": False},
+                                {"name": "F", "value": True},
+                            ],
                         },
                     },
                 },
@@ -905,10 +852,10 @@ def execute_command(session_data, command="init"):
         },
         "nodes": {
             "types": {
-                "DC": {
-                    "name": "DCs",
+                "nodeTypeA": {
+                    "name": "Node Type A",
                     "colorByOptions": {
-                        "Size": {
+                        "numericPropExampleA": {
                             "min": 0,
                             "max": 80,
                             "startGradientColor": {
@@ -920,7 +867,7 @@ def execute_command(session_data, command="init"):
                                 "light": "rgb(23, 23, 126)",
                             },
                         },
-                        "Capacity": {
+                        "numericPropExampleB": {
                             "min": 0,
                             "max": 50,
                             "startGradientColor": {
@@ -932,34 +879,51 @@ def execute_command(session_data, command="init"):
                                 "light": "rgb(23, 23, 126)",
                             },
                         },
-                        "Active": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"},
+                        "booleanPropExample": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"},
                     },
-                    "colorBy": "Size",
+                    "colorBy": "booleanPropExample",
                     "minSizeRange": 0,
                     "sizeByOptions": {
-                        "Size": {"min": 0, "max": 80},
-                        "Capacity": {"min": 0, "max": 50},
+                        "numericPropExampleA": {"min": 0, "max": 80},
+                        "numericPropExampleB": {"min": 0, "max": 50},
                     },
-                    "sizeBy": "Capacity",
+                    "sizeBy": "numericPropExampleA",
                     "startSize": "30px",
                     "endSize": "45px",
                     "icon": "MdStore",
                     "order": 2,
                     "props": {
-                        "Size": {
+                        "numericPropExampleA": {
+                            "name": "Numeric Prop Example A",
                             "type": "num",
                             "enabled": True,
-                            "help": "The Size in SQ Meters",
+                            "help": "Help for numeric prop example A",
                             "numberFormat": {
-                                "unit": "Sq Meters",
+                                "unit": "A units",
                             },
+                        },
+                        "numericPropExampleB": {
+                            "name": "Numeric Prop Example B",
+                            "type": "num",
+                            "enabled": True,
+                            "help": "Help for numeric prop example B",
+                            "numberFormat": {
+                                "unit": "B units",
+                            },
+                        },
+                        "booleanPropExample": {
+                            "name": "Boolean Prop Example",
+                            "type": "toggle",
+                            "value": True,
+                            "enabled": True,
+                            "help": "Help for boolean prop",
                         },
                     },
                 },
-                "Store": {
-                    "name": "Stores",
+                "nodeTypeB": {
+                    "name": "Node Type B",
                     "colorByOptions": {
-                        "Size": {
+                        "numericPropExampleA": {
                             "min": 0,
                             "max": 1000,
                             "startGradientColor": {
@@ -971,7 +935,7 @@ def execute_command(session_data, command="init"):
                                 "light": "rgb(23, 23, 126)",
                             },
                         },
-                        "Capacity": {
+                        "numericPropExampleB": {
                             "min": 0,
                             "max": 50,
                             "startGradientColor": {
@@ -983,26 +947,43 @@ def execute_command(session_data, command="init"):
                                 "light": "rgb(23, 23, 126)",
                             },
                         },
-                        "Active": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"},
+                        "booleanPropExample": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"},
                     },
-                    "colorBy": "Size",
+                    "colorBy": "numericPropExampleA",
                     "sizeByOptions": {
-                        "Size": {"min": 0, "max": 100},
-                        "Capacity": {"min": 0, "max": 250},
+                        "numericPropExampleA": {"min": 0, "max": 100},
+                        "numericPropExampleB": {"min": 0, "max": 250},
                     },
-                    "sizeBy": "Capacity",
+                    "sizeBy": "numericPropExampleB",
                     "startSize": "30px",
                     "endSize": "45px",
                     "icon": "BsBuilding",
                     "order": 1,
                     "props": {
-                        "Size": {
+                        "numericPropExampleA": {
+                            "name": "Numeric Prop Example A",
                             "type": "num",
                             "enabled": True,
-                            "help": "The Size in SQ Meters",
+                            "help": "Help for numeric prop example A",
                             "numberFormat": {
-                                "unit": "Sq Meters",
+                                "unit": "A units",
                             },
+                        },
+                        "numericPropExampleB": {
+                            "name": "Numeric Prop Example B",
+                            "type": "num",
+                            "enabled": True,
+                            "help": "Help for numeric prop example B",
+                            "numberFormat": {
+                                "unit": "B units",
+                            },
+                        },
+                        "booleanPropExample": {
+                            "name": "Boolean Prop Example",
+                            "type": "toggle",
+                            "value": True,
+                            "enabled": True,
+                            "help": "Help for boolean prop",
                         },
                     },
                 },
@@ -1011,130 +992,100 @@ def execute_command(session_data, command="init"):
                 "node_1": {
                     "latitude": 43.78,
                     "longitude": -79.63,
-                    "type": "DC",
+                    "type": "nodeTypeA",
                     "category": {
-                        "Location": ["loc_CA_ON"],
-                        "Product": ["prd_def456", "prd_abc123"],
+                        "location": ["locCaOn"],
+                        "sku": ["SKU2", "SKU1"],
                     },
                     "props": {
-                        "Size": {
+                        "numericPropExampleA": {
                             "value": 100,
                         },
-                        "Capacity": {
-                            "type": "num",
+                        "numericPropExampleB": {
                             "value": 50,
-                            "enabled": False,
-                            "help": "The capacity in units",
                         },
-                        "Active": {
-                            "type": "toggle",
+                        "booleanPropExample": {
                             "value": True,
-                            "enabled": True,
-                            "help": "The active status of this location",
                         },
                     },
                 },
                 "node_2": {
                     "latitude": 39.82,
                     "longitude": -86.18,
-                    "type": "DC",
+                    "type": "nodeTypeA",
                     "category": {
-                        "Location": ["loc_US_IN"],
-                        "Product": ["prd_def456", "prd_abc123"],
+                        "location": ["locUsIn"],
+                        "sku": ["SKU2", "SKU1"],
                     },
                     "props": {
-                        "Size": {
+                        "numericPropExampleA": {
                             "value": 80,
                         },
-                        "Capacity": {
-                            "type": "num",
+                        "numericPropExampleB": {
                             "value": 40,
-                            "enabled": False,
-                            "help": "The capacity in units",
                         },
-                        "Active": {
-                            "type": "toggle",
+                        "booleanPropExample": {
                             "value": True,
-                            "enabled": True,
-                            "help": "The active status of this location",
                         },
                     },
                 },
                 "node_3": {
                     "latitude": 42.89,
                     "longitude": -85.68,
-                    "type": "Store",
+                    "type": "nodeTypeB",
                     "category": {
-                        "Location": ["loc_US_MI"],
-                        "Product": ["prd_def456", "prd_abc123"],
+                        "location": ["locUsMi"],
+                        "sku": ["SKU2", "SKU1"],
                     },
                     "props": {
-                        "Size": {
+                        "numericPropExampleA": {
                             "value": 500,
                         },
-                        "Capacity": {
-                            "type": "num",
+                        "numericPropExampleB": {
                             "value": 150,
-                            "enabled": False,
-                            "help": "The capacity in units",
                         },
-                        "Active": {
-                            "type": "toggle",
+                        "booleanPropExample": {
                             "value": True,
-                            "enabled": True,
-                            "help": "The active status of this location",
                         },
                     },
                 },
                 "node_4": {
                     "latitude": 28.49,
                     "longitude": -81.56,
-                    "type": "Store",
+                    "type": "nodeTypeB",
                     "category": {
-                        "Location": ["loc_US_FL"],
-                        "Product": ["prd_def456", "prd_abc123"],
+                        "location": ["locUsFl"],
+                        "sku": ["SKU2", "SKU1"],
                     },
                     "props": {
-                        "Size": {
+                        "numericPropExampleA": {
                             "value": 1000,
                         },
-                        "Capacity": {
-                            "type": "num",
+                        "numericPropExampleB": {
                             "value": 250,
-                            "enabled": False,
-                            "help": "The capacity in units",
                         },
-                        "Active": {
-                            "type": "toggle",
+                        "booleanPropExample": {
                             "value": True,
-                            "enabled": True,
-                            "help": "The active status of this location",
                         },
                     },
                 },
                 "node_5": {
                     "latitude": 42.361176,
                     "longitude": -71.084707,
-                    "type": "Store",
+                    "type": "nodeTypeB",
                     "category": {
-                        "Location": ["loc_US_MA"],
-                        "Product": ["prd_def456", "prd_abc123"],
+                        "location": ["locUsMa"],
+                        "sku": ["SKU2", "SKU1"],
                     },
                     "props": {
-                        "Size": {
+                        "numericPropExampleA": {
                             "value": 1000,
                         },
-                        "Capacity": {
-                            "type": "num",
+                        "numericPropExampleB": {
                             "value": 250,
-                            "enabled": False,
-                            "help": "The capacity in units",
                         },
-                        "Active": {
-                            "type": "toggle",
+                        "booleanPropExample": {
                             "value": True,
-                            "enabled": True,
-                            "help": "The active status of this location",
                         },
                     },
                 },
@@ -1145,7 +1096,7 @@ def execute_command(session_data, command="init"):
                 "state": {
                     "name": "State",
                     "colorByOptions": {
-                        "Demand": {
+                        "numericPropExampleC": {
                             "min": 0,
                             "max": 300,
                             "startGradientColor": {
@@ -1158,19 +1109,20 @@ def execute_command(session_data, command="init"):
                             },
                         }
                     },
-                    "colorBy": "Demand",
+                    "colorBy": "numericPropExampleC",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
                         "geoJsonProp": "code_hasc",
                     },
                     "icon": "BsHexagon",
                     "props": {
-                        "Demand": {
+                        "numericPropExampleC": {
+                            "name": "Numeric Prop Example C",
                             "type": "num",
                             "enabled": True,
-                            "help": "The Demand of this Geography",
+                            "help": "Help with the example numeric prop for this State",
                             "numberFormat": {
-                                "unit": "units",
+                                "unit": "C units",
                             },
                         },
                     },
@@ -1178,7 +1130,7 @@ def execute_command(session_data, command="init"):
                 "country": {
                     "name": "Country",
                     "colorByOptions": {
-                        "Demand": {
+                        "numericPropExampleC": {
                             "min": 0,
                             "max": 800,
                             "startGradientColor": {
@@ -1191,17 +1143,18 @@ def execute_command(session_data, command="init"):
                             },
                         }
                     },
-                    "colorBy": "Demand",
+                    "colorBy": "numericPropExampleC",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
                         "geoJsonProp": "FIPS_10",
                     },
                     "icon": "BsHexagon",
                     "props": {
-                        "Demand": {
+                        "numericPropExampleC": {
+                            "name": "Numeric Prop Example C",
                             "type": "num",
                             "enabled": True,
-                            "help": "The Demand of this Geography",
+                            "help": "Help with the example numeric prop for this Country",
                             "numberFormat": {
                                 "unit": "units",
                             },
@@ -1210,86 +1163,86 @@ def execute_command(session_data, command="init"):
                 },
             },
             "data": {
-                "geo_1": {
+                "geo1": {
                     "name": "Ontario, Canada",
                     "geoJsonValue": "CA.ON",
                     "type": "state",
-                    "category": {"Location": ["loc_CA_ON"]},
+                    "category": {"location": ["locCaOn"]},
                     "props": {
-                        "Demand": {
+                        "numericPropExampleC": {
                             "value": 50,
                         }
                     },
                 },
-                "geo_2": {
+                "geo2": {
                     "name": "Michigan, USA",
                     "geoJsonValue": "US.MI",
                     "type": "state",
-                    "category": {"Location": ["loc_US_MI"]},
+                    "category": {"location": ["locUsMi"]},
                     "props": {
-                        "Demand": {
+                        "numericPropExampleC": {
                             "value": 300,
                         }
                     },
                 },
-                "geo_3": {
+                "geo3": {
                     "name": "Massachusetts, USA",
                     "geoJsonValue": "US.MA",
                     "type": "state",
-                    "category": {"Location": ["loc_US_MI"]},
+                    "category": {"location": ["locUsMi"]},
                     "props": {
-                        "Demand": {
+                        "numericPropExampleC": {
                             "value": 250,
                         }
                     },
                 },
-                "geo_4": {
+                "geo4": {
                     "name": "Florida, USA",
                     "geoJsonValue": "US.FL",
                     "type": "state",
-                    "category": {"Location": ["loc_US_MI"]},
+                    "category": {"location": ["locUsMi"]},
                     "props": {
-                        "Demand": {
+                        "numericPropExampleC": {
                             "value": 100,
                         }
                     },
                 },
-                "geo_5": {
+                "geo5": {
                     "name": "Indiana, USA",
                     "geoJsonValue": "US.FL",
                     "type": "state",
-                    "category": {"Location": ["loc_US_MI"]},
+                    "category": {"location": ["locUsMi"]},
                     "props": {
-                        "Demand": {
+                        "numericPropExampleC": {
                             "value": 200,
                         }
                     },
                 },
-                "geo_c_1": {
+                "geoCountry1": {
                     "name": "Canada",
                     "geoJsonValue": "CA",
                     "type": "country",
-                    "category": {"Location": ["loc_CA_ON"]},
+                    "category": {"location": ["locCaOn"]},
                     "props": {
-                        "Demand": {
+                        "numericPropExampleC": {
                             "value": 50,
                         }
                     },
                 },
-                "geo_c_2": {
+                "geoCountry2": {
                     "name": "USA",
                     "geoJsonValue": "US",
                     "type": "country",
                     "category": {
-                        "Location": [
-                            "loc_US_FL",
-                            "loc_US_MA",
-                            "loc_US_IN",
-                            "loc_US_MI",
+                        "location": [
+                            "locUsFl",
+                            "locUsMa",
+                            "locUsIn",
+                            "locUsMi",
                         ]
                     },
                     "props": {
-                        "Demand": {
+                        "numericPropExampleC": {
                             "value": 800,
                         }
                     },
@@ -1298,25 +1251,25 @@ def execute_command(session_data, command="init"):
         },
         "stats": {
             "types": {
-                "demand_met": {
-                    "name": "Demand Met",
-                    "calculation": "demand_met",
+                "numericStatExampleA": {
+                    "name": "Stat Example A",
+                    "calculation": "numericStatExampleA",
                     "numberFormat": {
                         "unit": "units",
                     },
                     "order": 1,
                 },
-                "demand_tot": {
-                    "name": "Demand Total",
-                    "calculation": "demand_tot",
+                "numericStatExampleB": {
+                    "name": "Stat Example B",
+                    "calculation": "numericStatExampleB",
                     "numberFormat": {
                         "unit": "units",
                     },
                     "order": 2,
                 },
-                "demand_pct": {
-                    "name": "Demand Percentage",
-                    "calculation": 'demand_met / groupSum("demand_tot")',
+                "numericExampleCalculationStat": {
+                    "name": "Stat A as a percentage of Stat B",
+                    "calculation": 'numericStatExampleA / groupSum("numericStatExampleB")',
                     "numberFormat": {
                         "precision": 2,
                         "trailingZeros": True,
@@ -1329,49 +1282,59 @@ def execute_command(session_data, command="init"):
             "data": {
                 "d1": {
                     "category": {
-                        "Location": ["loc_CA_ON"],
-                        "Product": ["prd_abc123"],
+                        "location": ["locCaOn"],
+                        "sku": ["SKU1"],
                     },
-                    "values": {"demand_met": 5, "demand_tot": 10},
+                    "values": {"numericStatExampleA": 5, "numericStatExampleB": 10},
                 },
                 "d2": {
                     "category": {
-                        "Location": ["loc_CA_ON"],
-                        "Product": ["prd_def456"],
+                        "location": ["locCaOn"],
+                        "sku": ["SKU2"],
                     },
-                    "values": {"demand_met": 4, "demand_tot": 5},
+                    "values": {"numericStatExampleA": 4, "numericStatExampleB": 5},
                 },
                 "d3": {
                     "category": {
-                        "Location": ["loc_US_MI"],
-                        "Product": ["prd_abc123"],
+                        "location": ["locUsMi"],
+                        "sku": ["SKU1"],
                     },
-                    "values": {"demand_met": 6, "demand_tot": 7},
+                    "values": {"numericStatExampleA": 6, "numericStatExampleB": 7},
                 },
                 "d4": {
                     "category": {
-                        "Location": ["loc_US_MI"],
-                        "Product": ["prd_def456"],
+                        "location": ["locUsMi"],
+                        "sku": ["SKU2"],
                     },
-                    "values": {"demand_met": 3, "demand_tot": 5},
+                    "values": {"numericStatExampleA": 3, "numericStatExampleB": 5},
                 },
             },
         },
         "kpis": {
             "data": {
-                "key_1": {
-                    "name": "Global Demand Met",
-                    "value": 18,
+                "kpiHeader1": {
+                    "type": "head",
+                    "name": "Example KPI Header 1",
                     "icon": "BsInboxes",
+                },
+                "kpiHeader2": {
+                    "type": "head",
+                    "name": "Example KPI Header 2",
+                    "icon": "BsTruck",
+                },
+                "key1": {
+                    "name": "KPI Example 1",
+                    "value": 18,
+                    "icon": "BsFillEmojiFrownFill",
                     "map_kpi": True,
                     "numberFormat": {
                         "precision": 0,
-                        "unit": "units",
+                        "unit": "frowns",
                     },
                 },
-                "key_2": {
-                    "name": "Customer Happiness",
-                    "value": 16,
+                "key2": {
+                    "name": "KPI Example 2",
+                    "value": 32,
                     "icon": "BsFillEmojiSmileFill",
                     "map_kpi": True,
                     "numberFormat": {
@@ -1379,13 +1342,8 @@ def execute_command(session_data, command="init"):
                         "unit": "smiles",
                     },
                 },
-                "demand_header": {
-                    "type": "head",
-                    "name": "Demand Section",
-                    "icon": "BsInboxes",
-                },
-                "demand": {
-                    "name": "Global Demand",
+                "key3": {
+                    "name": "KPI Example 3",
                     "icon": "BsInboxes",
                     "numberFormat": {
                         "precision": 4,
@@ -1394,13 +1352,8 @@ def execute_command(session_data, command="init"):
                     },
                     "value": 100,
                 },
-                "supply_header": {
-                    "type": "head",
-                    "name": "Supply Section",
-                    "icon": "BsTruck",
-                },
-                "big_number": {
-                    "name": "Big Number",
+                "key4": {
+                    "name": "A Big Number",
                     "icon": "BsTruck",
                     "value": 10000000000000,
                     "numberFormat": {
@@ -1408,9 +1361,9 @@ def execute_command(session_data, command="init"):
                         "unit": "units",
                     },
                 },
-                "supply": {
-                    "name": "Really Big Number",
-                    "icon": "BsTruck",
+                "key5": {
+                    "name": "A Really Big Number",
+                    "icon": "MdExpand",
                     "value": 9007199254740991,
                     "numberFormat": {
                         "precision": 2,
@@ -1425,43 +1378,47 @@ def execute_command(session_data, command="init"):
                 "num_columns": "auto",
                 "num_rows": "auto",
                 "data": {
-                    "col1_row1": {
+                    "col1Row1": {
                         "type": "item",
-                        "itemId": "demand_header",
+                        "itemId": "kpiHeader1",
                         "column": 1,
                         "row": 1,
                     },
-                    "col1_row2": {
+                    "col1Row2": {
                         "type": "item",
-                        "itemId": "demand",
+                        "itemId": "key1",
                         "column": 1,
                         "row": 2,
                     },
-                    "col2_row1": {
+                    "col1Row3": {
                         "type": "item",
-                        "itemId": "supply_header",
-                        "column": 2,
-                        "row": 1,
-                    },
-                    "col2_row2": {
-                        "type": "item",
-                        "itemId": "big_number",
-                        "column": 2,
-                        "row": 2,
-                    },
-                    "col2_row3": {
-                        "type": "item",
-                        "itemId": "supply",
-                        "column": 2,
+                        "itemId": "key4",
+                        "column": 1,
                         "row": 3,
                     },
-                    "key_1": {
+                    "col1Row4": {
                         "type": "item",
-                        "itemId": "key_1",
+                        "itemId": "key5",
+                        "column": 1,
+                        "row": 4,
                     },
-                    "key_2": {
+                    "col2Row1": {
                         "type": "item",
-                        "itemId": "key_2",
+                        "itemId": "kpiHeader2",
+                        "column": 2,
+                        "row": 1,
+                    },
+                    "col2Row2": {
+                        "type": "item",
+                        "itemId": "key2",
+                        "column": 2,
+                        "row": 2,
+                    },
+                    "col2Row3": {
+                        "type": "item",
+                        "itemId": "key3",
+                        "column": 2,
+                        "row": 3,
                     },
                 },
             },
@@ -1471,9 +1428,13 @@ def execute_command(session_data, command="init"):
         },
     }
     if command == "reset":
+        print("The `reset` button has been pressed by the user!")
         return example
-    elif command == "test_command":
-        print("The test button has been pressed by the user!")
+    elif command == "solve":
+        print("The `solve` button has been pressed by the user!")
+    elif command == "test":
+        print("The `test` button has been pressed by the user!")
+        raise Exception('Test Exception!')
     if session_data:
         for key, value in session_data.items():
             example[key] = value
