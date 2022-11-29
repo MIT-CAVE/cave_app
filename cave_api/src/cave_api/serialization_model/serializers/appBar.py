@@ -10,9 +10,7 @@ def get_app_bar_data(data_dir):
     except: pass
     try: prop_data = group_list(read_csv(data_dir + "/props.csv"), "appBarID")
     except: pass
-    try: layout_data = group_list(read_csv(data_dir + "/layout.csv"), "appBarID")
-    except: pass
-    grids_data = group_list(read_csv(data_dir + "/grids.csv"), "appBarID")
+    layouts_data = group_list(read_csv(data_dir + "/layouts.csv"), "appBarID")
     data_data = group_list(read_csv(data_dir + "/data.csv"), "appBarID")
 
     for i in data:
@@ -29,23 +27,23 @@ def get_app_bar_data(data_dir):
                     try: prop_dict[k] = json.loads(v)
                     except: prop_dict[k] = v
                 data[key]["props"][prop_id] = prop_dict
-    
-    for key, value in layout_data.items():
-        if data.get(key, False):
-            data[key]["layout"] = {}
-            for i in value:
-                for k, v in i.items():
-                    data[key]["layout"][k] = v
 
-    for key, value in grids_data.items():
-        if data.get(key, False) and data.get(key).get("layout", False):
-            data[key]["layout"]["data"] = {}
+    for key, value in layouts_data.items():
+        if isinstance(data.get(key),dict):
+            data[key]['layout']={
+                'type': 'grid',
+                'num_columns': 'auto',
+                'num_rows': 'auto',
+                'data': {}
+            }
             for i in value:
-                grid_id, grid_dict = i.pop("gridID"), {}
-                for k, v in i.items():
-                    try: grid_dict[k] = json.loads(v)
-                    except: grid_dict[k] = v
-                data[key]["layout"]["data"][grid_id] = grid_dict
+                grid_id=f"col{i.get('column')}Row{i.get('row')}"
+                data[key]['layout']['data'][grid_id] = {
+                    'type': 'item',
+                    'column': i.get('column'),
+                    'row': i.get('row'),
+                    'itemId': i.get('itemId')
+                }
 
     for key, value in data_data.items():
         if data.get(key, False):
