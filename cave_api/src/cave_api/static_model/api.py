@@ -166,6 +166,13 @@ def execute_command(session_data, command="init"):
         },
         "appBar": {
             "data": {
+                "session": {
+                    "icon": "MdApi",
+                    "type": "pane",
+                    "variant": "session",
+                    "bar": "upper",
+                    "order": 0,
+                },
                 "appSettings": {
                     "icon": "MdOutlineSettings",
                     "type": "pane",
