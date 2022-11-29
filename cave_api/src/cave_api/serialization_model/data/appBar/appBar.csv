@@ -1,7 +1,10 @@
-id,variant,icon,name,type,bar,apiCommand
-appSettings,appSettings,MdOutlineSettings,App Settings,pane,upper,
-solveButton,,BsLightningFill,Solve,button,upper,solve
-map_1,,FaMapMarkedAlt,Map,map,lower,
-dash_1,,GoPackage,Dashboard,stats,lower,
-kpi_1,,MdSpeed,KPI Dashboard,kpi,lower,
-settings,options,MdSettings,Settings Pane,pane,upper,
+id,variant,icon,name,type,bar,apiCommand,order,color,lockedLayout
+appSettings,appSettings,MdOutlineSettings,,pane,upper,,1,,
+buttonSolve,,BsLightningFill,Solve Button,button,upper,solve,2,"{""dark"": ""rgb(178, 179, 55)"", ""light"": ""rgb(79, 79, 24)""}",
+resetButton,,MdSync,Reset Button,button,upper,reset,2,"{""dark"": ""rgb(255, 101, 101)"", ""light"": ""rgb(212, 0, 0)""}",
+examplePropsPane,options,FaCogs,Example Props Pane,pane,upper,,3,,
+context,context,BsInboxes,Context Pane,pane,upper,,4,,
+filter,filter,FaFilter,,pane,upper,,5,,
+map_1,,FaMapMarkedAlt,,map,lower,,1,,
+dash_1,,MdInsertChart,Dashboard 1,stats,lower,,2,,FALSE
+kpi_1,,MdSpeed,,kpi,lower,,3,,

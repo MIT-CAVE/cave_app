@@ -1,5 +1,5 @@
-id,startLatitude,startLongitude,endLatitude,endLongitude,startClick,endClick,type,Locations,Products,Flow Capacity,Flow,Primary Type
-arc_1,43.78,-79.63,39.82,-86.18,800,1600,T1,loc_CA_ON loc_US_IN,prd_def456 prd_abc123,50,40,"[{""name"": ""Air"", ""value"": false},{""name"": ""Train"", ""value"": true},{""name"": ""Truck"", ""value"": false},{""name"": ""3rd Party"", ""value"": false},{""name"": ""Mixed"", ""value"": false},{""name"": ""Water"", ""value"": false}]"
-arc_2,39.82,-86.18,42.89,-85.68,1600,2000,T2,loc_US_MI loc_US_IN,prd_def456 prd_abc123,30,20,
-arc_3,39.82,-86.18,28.49,-81.56,1600,2000,T2,loc_US_FL loc_US_IN,prd_def456 prd_abc123,30,14,
-arc_4,39.82,-86.18,42.361176,-71.084707,1600,2000,T2,loc_US_MA loc_US_IN,prd_def456 prd_abc123,30,6,
+id,startLatitude,startLongitude,endLatitude,endLongitude,startClick,endClick,type,location,sku,numericPropExampleA,numericPropExampleB,selectorPropForColor
+arc_1,43.78,-79.63,39.82,-86.18,800,1600,T1,locCaOn locUsIn,SKU2 SKU1,50,40,"[{""name"": ""A"", ""value"": false},{""name"": ""B"", ""value"": true},{""name"": ""C"", ""value"": false},{""name"": ""D"", ""value"": false},{""name"": ""E"", ""value"": false},{""name"": ""F"", ""value"": false}]"
+arc_2,39.82,-86.18,42.89,-85.68,1600,2000,T2,locUsMi locUsIn,SKU2 SKU1,30,20,"[{""name"": ""A"", ""value"": false},{""name"": ""B"", ""value"": false},{""name"": ""C"", ""value"": false},{""name"": ""D"", ""value"": false},{""name"": ""E"", ""value"": true},{""name"": ""F"", ""value"": false}]"
+arc_3,39.82,-86.18,28.49,-81.56,1600,2000,T2,locUsFl locUsIn,SKU2 SKU1,30,14,"[{""name"": ""A"", ""value"": false},{""name"": ""B"", ""value"": false},{""name"": ""C"", ""value"": false},{""name"": ""D"", ""value"": true},{""name"": ""E"", ""value"": false},{""name"": ""F"", ""value"": false}]"
+arc_4,39.82,-86.18,42.361176,-71.084707,1600,2000,T2,locUsMa locUsIn,SKU2 SKU1,30,6,"[{""name"": ""A"", ""value"": false},{""name"": ""B"", ""value"": false},{""name"": ""C"", ""value"": false},{""name"": ""D"", ""value"": false},{""name"": ""E"", ""value"": false},{""name"": ""F"", ""value"": true}]"

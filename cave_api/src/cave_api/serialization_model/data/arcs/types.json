@@ -2,15 +2,15 @@
     "T1": {
         "name": "Flow Type 1",
         "colorByOptions": {
-            "Primary Type": {
-                "Air": "rgb(128,255,255)",
-                "Mixed": "rgb(0,153,51)",
-                "Water": "rgb(0,0,128)",
-                "Train": "rgb(204,0,0)",
-                "Truck": "rgb(153,77,0)",
-                "3rd Party": "rgb(255,25,255)"
+            "selectorPropForColor": {
+                "A": "rgb(128,255,255)",
+                "B": "rgb(0,153,51)",
+                "C": "rgb(0,0,128)",
+                "D": "rgb(204,0,0)",
+                "E": "rgb(153,77,0)",
+                "F": "rgb(255,25,255)"
             },
-            "Flow Capacity": {
+            "numericPropExampleA": {
                 "min": 0,
                 "max": 50,
                 "startGradientColor": {
@@ -22,7 +22,7 @@
                     "light": "rgb(23, 23, 126)"
                 }
             },
-            "Flow": {
+            "numericPropExampleB": {
                 "min": 0,
                 "max": 40,
                 "startGradientColor": {
@@ -35,24 +35,65 @@
                 }
             }
         },
-        "colorBy": "Flow",
+        "colorBy": "numericPropExampleA",
         "lineBy": "solid",
         "sizeByOptions": {
-            "Flow Capacity": {"min": 0, "max": 50},
-            "Flow": {"min": 0, "max": 40}
+            "numericPropExampleA": {"min": 0, "max": 50},
+            "numericPropExampleB": {"min": 0, "max": 40}
         },
-        "sizeBy": "Flow Capacity",
+        "sizeBy": "numericPropExampleB",
         "startSize": "15px",
         "endSize": "30px",
         "order": 1,
         "props": {
-            "Flow Capacity": {
-                "name": "Flow Capacity (test)",
+            "numericPropExampleA": {
+                "name": "Numeric Prop Example A",
                 "type": "num",
-                "enabled": false,
-                "help": "Flow Capacity",
+                "enabled": true,
+                "help": "Help for numeric prop example A",
                 "numberFormat": {
-                    "unit": "units (test)"
+                    "unit": "A units"
+                }
+            },
+            "numericPropExampleB": {
+                "name": "Numeric Prop Example B",
+                "type": "num",
+                "enabled": true,
+                "help": "Help for numeric prop example B",
+                "numberFormat": {
+                    "unit": "B units"
+                }
+            },
+            "selectorPropForColor": {
+                "name": "Example Categorical Prop",
+                "type": "selector",
+                "variant": "dropdown",
+                "value": [
+                    {"name": "A", "value": true},
+                    {"name": "B", "value": false},
+                    {"name": "C", "value": false},
+                    {"name": "D", "value": false},
+                    {"name": "E", "value": false},
+                    {"name": "F", "value": false}
+                ],
+                "enabled": true
+            }
+        },
+        "layout": {
+            "type": "grid",
+            "num_columns": "auto",
+            "num_rows": 1,
+            "data": {
+                "col1": {"type": "item", "itemId": "numericPropExampleA", "col": 1},
+                "col2": {
+                    "type": "item",
+                    "itemId": "numericPropExampleB",
+                    "col": 2
+                },
+                "col3": {
+                    "type": "item",
+                    "itemId": "selectorPropForColor",
+                    "col": 3
                 }
             }
         }
@@ -60,7 +101,15 @@
     "T2": {
         "name": "Flow Type 2",
         "colorByOptions": {
-            "Flow Capacity": {
+            "selectorPropForColor": {
+                "A": "rgb(128,255,255)",
+                "B": "rgb(0,153,51)",
+                "C": "rgb(0,0,128)",
+                "D": "rgb(204,0,0)",
+                "E": "rgb(153,77,0)",
+                "F": "rgb(255,25,255)"
+            },
+            "numericPropExampleA": {
                 "min": 0,
                 "max": 50,
                 "startGradientColor": {
@@ -72,7 +121,7 @@
                     "light": "rgb(23, 23, 126)"
                 }
             },
-            "Flow": {
+            "numericPropExampleB": {
                 "min": 0,
                 "max": 40,
                 "startGradientColor": {
@@ -85,26 +134,70 @@
                 }
             }
         },
-        "colorBy": "Flow",
+        "colorBy": "numericPropExampleA",
         "lineBy": "dotted",
         "sizeByOptions": {
-            "Flow Capacity": {"min": 0, "max": 50},
-            "Flow": {"min": 0, "max": 40}
+            "numericPropExampleA": {"min": 0, "max": 50},
+            "numericPropExampleB": {"min": 0, "max": 40}
         },
-        "sizeBy": "Flow Capacity",
+        "sizeBy": "numericPropExampleB",
         "startSize": "15px",
         "endSize": "30px",
         "order": 2,
         "props": {
-            "Flow Capacity": {
-                "name": "Flow Capacity (test)",
+            "numericPropExampleA": {
+                "name": "Numeric Prop Example A",
                 "type": "num",
-                "enabled": false,
-                "help": "Flow Capacity",
+                "enabled": true,
+                "help": "Help for numeric prop example A",
                 "numberFormat": {
-                    "unit": "units (test)"
+                    "unit": "A units"
+                }
+            },
+            "numericPropExampleB": {
+                "name": "Numeric Prop Example B",
+                "type": "num",
+                "enabled": true,
+                "help": "Help for numeric prop example B",
+                "numberFormat": {
+                    "unit": "B units"
+                }
+            },
+            "selectorPropForColor": {
+                "name": "Example Categorical Prop",
+                "type": "selector",
+                "variant": "dropdown",
+                "value": [
+                    {"name": "A", "value": true},
+                    {"name": "B", "value": false},
+                    {"name": "C", "value": false},
+                    {"name": "D", "value": false},
+                    {"name": "E", "value": false},
+                    {"name": "F", "value": false}
+                ],
+                "enabled": true
+            }
+        },
+        "layout": {
+            "type": "grid",
+            "num_columns": 1,
+            "num_rows": "auto",
+            "data": {
+                "row1": {
+                    "type": "item",
+                    "itemId": "numericPropExampleA",
+                    "row": 1
                 },
-                "value": 80
+                "row2": {
+                    "type": "item",
+                    "itemId": "numericPropExampleB",
+                    "row": 2
+                },
+                "row3": {
+                    "type": "item",
+                    "itemId": "selectorPropForColor",
+                    "row": 3
+                }
             }
         }
     }
