@@ -1,8 +1,8 @@
 example = {
     "settings": {
-        "allow_modification": False,
-        "send_to_api": False,
-        "send_to_client": True,
+        "allowModification": False,
+        "sendToApi": False,
+        "sendToClient": True,
         "data": {
             "sync":{
                 "mapLayers":{
@@ -46,7 +46,7 @@ example = {
                     "ab2": ["appBar", "paneState"],
                 },
             },
-            "IconUrl": "https://react-icons.mitcave.com/0.0.1",
+            "iconUrl": "https://react-icons.mitcave.com/0.0.1",
             "numberFormat": {
                 "precision": 4,
                 "trailingZeros": False,
@@ -56,7 +56,7 @@ example = {
         },
     },
     "categories": {
-        "allow_modification": False,
+        "allowModification": False,
         "data": {
             "location": {
                 "data": {
@@ -281,8 +281,8 @@ example = {
                 },
                 "layout": {
                     "type": "grid",
-                    "num_columns": 3,
-                    "num_rows": "auto",
+                    "numColumns": 3,
+                    "numRows": "auto",
                     "data": {
                         "col1Row1": {
                             "type": "item",
@@ -374,7 +374,7 @@ example = {
                     },
                 },
                 "data": {
-                    "context_1": {
+                    "context1": {
                         "prop": "numericContextProp",
                         "value": 110,
                         "applyCategories": {"location": ["locUsMi"]},
@@ -393,13 +393,13 @@ example = {
                 "order": 5,
                 "bar": "upper",
             },
-            "map_1": {
+            "map1": {
                 "type": "map",
                 "icon": "FaMapMarkedAlt",
                 "bar": "lower",
                 "order": 1,
             },
-            "dash_1": {
+            "dash1": {
                 "type": "stats",
                 "icon": "MdInsertChart",
                 "name": "Dashboard 1",
@@ -433,7 +433,7 @@ example = {
                 ],
                 "lockedLayout": False,
             },
-            "kpi_1": {
+            "kpi1": {
                 "type": "kpi",
                 "icon": "MdSpeed",
                 "bar": "lower",
@@ -584,8 +584,8 @@ example = {
                 },
                 "layout": {
                     "type": "grid",
-                    "num_columns": "auto",
-                    "num_rows": 1,
+                    "numColumns": "auto",
+                    "numRows": 1,
                     "data": {
                         "col1": {"type": "item", "itemId": "numericPropExampleA", "col": 1},
                         "col2": {
@@ -683,8 +683,8 @@ example = {
                 },
                 "layout": {
                     "type": "grid",
-                    "num_columns": 1,
-                    "num_rows": "auto",
+                    "numColumns": 1,
+                    "numRows": "auto",
                     "data": {
                         "row1": {
                             "type": "item",
@@ -706,7 +706,7 @@ example = {
             },
         },
         "data": {
-            "arc_1": {
+            "arc1": {
                 "startLatitude": 43.78,
                 "startLongitude": -79.63,
                 "endLatitude": 39.82,
@@ -737,7 +737,7 @@ example = {
                     },
                 },
             },
-            "arc_2": {
+            "arc2": {
                 "startLatitude": 39.82,
                 "startLongitude": -86.18,
                 "endLatitude": 42.89,
@@ -768,7 +768,7 @@ example = {
                     },
                 },
             },
-            "arc_3": {
+            "arc3": {
                 "startLatitude": 39.82,
                 "startLongitude": -86.18,
                 "endLatitude": 28.49,
@@ -799,7 +799,7 @@ example = {
                     },
                 },
             },
-            "arc_4": {
+            "arc4": {
                 "startLatitude": 39.82,
                 "startLongitude": -86.18,
                 "endLatitude": 42.361176,
@@ -971,7 +971,7 @@ example = {
             },
         },
         "data": {
-            f"node_{i}_{j}": {
+            f"node{i}x{j}": {
                 "latitude": j,
                 "longitude": i,
                 "type": "nodeTypeA",
@@ -1228,7 +1228,7 @@ example = {
                 "name": "KPI Example 1",
                 "value": 18,
                 "icon": "BsFillEmojiFrownFill",
-                "map_kpi": True,
+                "mapKpi": True,
                 "numberFormat": {
                     "precision": 0,
                     "unit": "frowns",
@@ -1238,7 +1238,7 @@ example = {
                 "name": "KPI Example 2",
                 "value": 32,
                 "icon": "BsFillEmojiSmileFill",
-                "map_kpi": True,
+                "mapKpi": True,
                 "numberFormat": {
                     "precision": 0,
                     "unit": "smiles",
@@ -1277,8 +1277,8 @@ example = {
         },
         "layout": {
             "type": "grid",
-            "num_columns": "auto",
-            "num_rows": "auto",
+            "numColumns": "auto",
+            "numRows": "auto",
             "data": {
                 "col1Row1": {
                     "type": "item",
@@ -1326,7 +1326,7 @@ example = {
         },
     },
     "kwargs": {
-        "wipe_existing": True,
+        "wipeExisting": True,
     },
 }
 

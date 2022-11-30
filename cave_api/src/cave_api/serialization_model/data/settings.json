@@ -1,7 +1,7 @@
 {
-    "allow_modification": false,
-    "send_to_api": false,
-    "send_to_client": true,
+    "allowModification": false,
+    "sendToApi": false,
+    "sendToClient": true,
     "data": {
         "sync":{
             "mapLayers":{
@@ -45,7 +45,7 @@
                 "ab2": ["appBar", "paneState"]
             }
         },
-        "IconUrl": "https://react-icons.mitcave.com/0.0.1",
+        "iconUrl": "https://react-icons.mitcave.com/0.0.1",
         "numberFormat": {
             "precision": 4,
             "trailingZeros": false,

@@ -1,18 +1,18 @@
-### Common keys
-#### At the Top level
+# Common keys
+## At the Top level
 Key | Default | Description
 --- | ------- | -----------
-<a name="allow_modification">`allow_modification`</a> | `True` | If `True`, end users can request changes to the data within the key group during user interaction with the CAVE app and the server will process the request. Note, this only blocks a user from being able to modify a server side structure for security reasons. To block client side interactions, see the [`enabled`](props.md#enabled) key.
+<a name="allowModification">`allowModification`</a> | `True` | If `True`, end users can request changes to the data within the key group during user interaction with the CAVE app and the server will process the request. Note, this only blocks a user from being able to modify a server side structure for security reasons. To block client side interactions, see the [`enabled`](props.md#enabled) key.
 <a name="data">`data`</a> | Required | Dictionary object that contains data related to this key group.
-<a name="send_to_api">`send_to_api`</a> | `True` | If `True`, the data will be serialized and sent as `session_data` when calling `execute_command`.
-<a name="send_to_client">`send_to_client`</a> | `True` | If `True`, the data will be sent to the requesting CAVE app client. While most of the time this should be `True`, there are use cases where the API designer might want to store some type of state that is not consumed directly (see [Top Level Custom Keys](../custom_keys.md)).
+<a name="sendToApi">`sendToApi`</a> | `True` | If `True`, the data will be serialized and sent as `session_data` when calling `execute_command`.
+<a name="sendToClient">`sendToClient`</a> | `True` | If `True`, the data will be sent to the requesting CAVE app client. While most of the time this should be `True`, there are use cases where the API designer might want to store some type of state that is not consumed directly (see [Top Level Custom Keys](../custom_keys.md)).
 
-#### Nested inside the `data` group
+## Nested inside the `data` group
 Key | Default | Description
 --- | ------- | -----------
 <a name="category">`category`</a> | | A dictionary of category custom keys appropriated to a string or list of strings (custom keys inside each custom category). This is used in an object to associate categories for aggregation and filtering purposes.
 <a name="color">`color`</a> | | The color to be appropriated to the current object.[^1]
-<a name="colorBy">`colorBy`</a> | | Specifies a [`custom_prop_key_*`](props.md#custom_prop_key_), which variation of its values is visualized through a color gradient. The color gradient is bounded by [`startGradientColor`](#start-gradient) and [`endGradientColor`](#end-gradient), and is specified in [`colorByOptions`](#colorByOptions).<br><br>Used in [`arcs`](../all_keys/arcs.md), [`nodes`](../all_keys/nodes.md) and [`geos`](../all_keys/geos.md).
+<a name="colorBy">`colorBy`</a> | | Specifies a [`customPropKey*`](props.md#customPropKey), which variation of its values is visualized through a color gradient. The color gradient is bounded by [`startGradientColor`](#start-gradient) and [`endGradientColor`](#end-gradient), and is specified in [`colorByOptions`](#colorByOptions).<br><br>Used in [`arcs`](../all_keys/arcs.md), [`nodes`](../all_keys/nodes.md) and [`geos`](../all_keys/geos.md).
 <a name="colorByOptions">`colorByOptions`</a> | | An object with [parameters](../all_keys/categories.md#custom_data_key_) keys that are provided for the user to choose from a drop-down menu in the "**Map Legend**" and view their variation in terms of a color gradient.<br><br>The associated value should be either an object with shape `{"min": 0, "max": 0, "startGradientColor": "rgb(0,0,0)", "endGradientColor": "rbg(0,0,0)"}` that contains the expected [`min`](#color-by-min) and [`max`](#color-by-max) values and color gradient for the parameter or a dictionary with shape `{"custom_color_key_1": "rgb(233, 0, 0)"}` for parameters with discrete values. Note that `min` and `max` are reserved keys and should not be provided as `custom_color_key_*`s.<br><br>Used in [`arcs`](../all_keys/arcs.md), [`nodes`](../all_keys/nodes.md) and [`geos`](../all_keys/geos.md).
 <a name="end-gradient">`colorByOptions.endGradientColor`</a> | | The final color in a color gradient that matches the maximum value specified in [`colorByOptions.max`](#color-by-max).
 <a name="color-by-max">`colorByOptions.max`</a> | | The maximum value that a parameter can take in.
@@ -33,11 +33,11 @@ Key | Default | Description
 
 [^1]: This key matches a string that contains a [color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) or a dictionary object with color values per theme keys. The allowed theme keys in the current version are `'dark'` and `'light'`.
 
-#### Important Common Keys
-- #### [`props`](props.md)
+## Important Common Keys
+- ## [`props`](props.md)
 
-- #### [`layout`](layout.md)
+- ## [`layout`](layout.md)
 
-- #### [`numberFormat`](numberFormat.md)
+- ## [`numberFormat`](numberFormat.md)
 
-- #### [`timeObject`](timeObject.md)
+- ## [`timeObject`](timeObject.md)

@@ -790,12 +790,12 @@ class Teams(models.Model):
             data={
                 'data_path': ['sessions', 'data', self.id],
                 'data': {
-                    'team__id':self.id,
-                    'team__name':self.name,
-                    'team__limit_sessions':self.limit_sessions,
-                    'team__count_sessions':self.count_sessions,
+                    'teamId':str(self.id),
+                    'teamName':str(self.name),
+                    'teamLimitSessions':str(self.limit_sessions),
+                    'teamCountSessions':str(self.count_sessions),
                     'sessions': {
-                        session.id:{'session__id':session.id, 'session__name':session.name}
+                        str(session.id):{'sessionId':str(session.id), 'sessionName':str(session.name)}
                         for session in sessions
                     }
                 }
@@ -873,19 +873,19 @@ class Sessions(models.Model):
         """
         self.hashes = {
             obj.data_name: obj.data_hash
-            for obj in SessionData.objects.filter(session=self, send_to_client=True)
+            for obj in SessionData.objects.filter(session=self, sendToClient=True)
         }
         self.save()
 
     def get_client_data(self, keys, session_data=None):
         """
-        Returns all data that is marked as send_to_client in this session
+        Returns all data that is marked as sendToClient in this session
         """
         if session_data == None:
             session_data = SessionData.objects.filter(session=self)
         return {
             obj.data_name: obj.get_json_data()
-            for obj in session_data.filter(data_name__in=keys, send_to_client=True)
+            for obj in session_data.filter(data_name__in=keys, sendToClient=True)
         }
 
     def get_changed_data(self, previous_hashes):
@@ -915,14 +915,14 @@ class Sessions(models.Model):
         """
         [i.delete() for i in SessionData.objects.filter(session=self)]
 
-    def replace_data(self, data, wipe_existing):
+    def replace_data(self, data, wipeExisting):
         """
         Replaces data in this session
 
         Requires:
 
         - `data`: The data to be replaced (a json serializable python dictionary)
-        - `wipe_existing`: Boolean to indicate if previously existing data should be wiped
+        - `wipeExisting`: Boolean to indicate if previously existing data should be wiped
 
         `data` Example:
         ```
@@ -932,23 +932,23 @@ class Sessions(models.Model):
             },
             'data2_name_here':{
                 'data':{"desired":"data 2 object here"},
-                'allow_modification':False,
-                'send_to_api':False,
-                'send_to_client':True
+                'allowModification':False,
+                'sendToApi':False,
+                'sendToClient':True
             }
             ...
         }
         ```
         """
-        if wipe_existing:
+        if wipeExisting:
             self.wipe_data()
         for key, value in data.items():
             obj, created = SessionData.objects.get_or_create(session=self, data_name=key)
             obj.save_data(
                 data=value,
-                allow_modification=value.get("allow_modification", obj.allow_modification),
-                send_to_client=value.get("send_to_client", obj.send_to_client),
-                send_to_api=value.get("send_to_api", obj.send_to_api),
+                allowModification=value.get("allowModification", obj.allowModification),
+                sendToClient=value.get("sendToClient", obj.sendToClient),
+                sendToApi=value.get("sendToApi", obj.sendToApi),
             )
         # Update hashes post replacement
         self.update_hashes()
@@ -967,7 +967,7 @@ class Sessions(models.Model):
         - `command_keys`:
             - What: List of strings to determine which top level keys should be passed with the command
             - Default: None
-            - Note: If None, only top level keys marked as `send_to_api` are sent to the api
+            - Note: If None, only top level keys marked as `sendToApi` are sent to the api
         - `data_queryset`:
             - What: Queryset of SessionData objects
             - Default: All SessionData objects related to this session object
@@ -978,11 +978,11 @@ class Sessions(models.Model):
         if isinstance(command_keys, list):
             data_queryset = data_queryset.filter(data_name__in=command_keys)
         else:
-            data_queryset = data_queryset.filter(send_to_api=True)
+            data_queryset = data_queryset.filter(sendToApi=True)
         session_data = {i.data_name: i.get_py_data() for i in data_queryset}
         command_output = execute_command(session_data=session_data, command=command)
         kwargs = command_output.pop("kwargs", {})
-        self.replace_data(data=command_output, wipe_existing=kwargs.get("wipe_existing", True))
+        self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
         self.set_loading(False)
 
     def mutate(self, data_hash, data_name, data_path, data_value=None, ignore_hash=False):
@@ -1017,13 +1017,13 @@ class Sessions(models.Model):
             raise Exception(
                 "Session Error: No session data found. This could be caused by an incorrect `data_name` or not being in a session."
             )
-        if not session_data.allow_modification:
+        if not session_data.allowModification:
             raise Exception(
-                "Session Error: Attempting to mutate a data that does not `allow_modification`"
+                "Session Error: Attempting to mutate a data that does not `allowModification`"
             )
         if not ignore_hash and session_data.data_hash != data_hash:
             return {"synch_error": True}
-
+        
         # Apply the mutation
         session_data.mutate(data_path=data_path, data_value=data_value)
         # Update hashes post mutation
@@ -1140,18 +1140,18 @@ class SessionData(models.Model):
         help_text=_("The associated session"),
     )
     data_name = models.CharField(_("data_name"), max_length=32, help_text=_("Name of the data"))
-    allow_modification = models.BooleanField(
-        _("allow_modification"),
+    allowModification = models.BooleanField(
+        _("allowModification"),
         help_text=_("Allow this data to be modified?"),
         default=True,
     )
-    send_to_client = models.BooleanField(
-        _("send_to_client"),
+    sendToClient = models.BooleanField(
+        _("sendToClient"),
         help_text=_("Should this data be sent to the client?"),
         default=True,
     )
-    send_to_api = models.BooleanField(
-        _("send_to_api"),
+    sendToApi = models.BooleanField(
+        _("sendToApi"),
         help_text=_("Should this data be sent to the api? (for solve and configure)"),
         default=True,
     )
@@ -1251,9 +1251,9 @@ class SessionData(models.Model):
     def save_data(
         self,
         data,
-        allow_modification=None,
-        send_to_client=None,
-        send_to_api=None,
+        allowModification=None,
+        sendToClient=None,
+        sendToApi=None,
     ):
         """
         Updates / saves data to this current session data object
@@ -1266,27 +1266,27 @@ class SessionData(models.Model):
 
         Optional:
 
-        - `allow_modification`:
+        - `allowModification`:
             - Type: Boolean
             - What: Allow this data to be modified by mutation requests
             - Default: The current database setting
-        - `send_to_client`:
+        - `sendToClient`:
             - Type: Boolean
             - What: Send this object to the client when a client connects
             - Default: The current database setting
-        - `send_to_api`:
+        - `sendToApi`:
             - Type: Boolean
             - What: Send this data to the api when executing an api command
             - Default: The current database setting
         """
         data = utils.data_encoding.json_like_js(data)
-        if allow_modification is not None:
-            self.allow_modification = allow_modification
-        if send_to_client is not None:
-            self.send_to_client = send_to_client
-        if send_to_api is not None:
-            self.send_to_api = send_to_api
-        if self.send_to_client:
+        if allowModification is not None:
+            self.allowModification = allowModification
+        if sendToClient is not None:
+            self.sendToClient = sendToClient
+        if sendToApi is not None:
+            self.sendToApi = sendToApi
+        if self.sendToClient:
             self.data_hash = self.calc_data_hash(data)
         cache.set(self.get_cache_data_id(),data)
         self.save()

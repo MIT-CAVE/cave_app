@@ -21,24 +21,24 @@ At first glance, the top-level keys in the data structure look like this:
 ```
 Throughout this documentation, we refer to the keys in the data structure above as _top-level keys_ (or _top-level groups_ to point out that these keys contain other key-value pairs).
 
-Each top-level group might include unique elements or sub-keys that are specific to that group (**special keys**). However, other keys like `send_to_api` are meant to attach functionality that is more generic and therefore can be used in different top-level groups. To save time and [not repeat ourselves](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) throughout this documentation, we provide a "[Common keys](#common-keys)" section, and any such keys found in the documentation are referred back to their definition.
+Each top-level group might include unique elements or sub-keys that are specific to that group (**special keys**). However, other keys like `sendToApi` are meant to attach functionality that is more generic and therefore can be used in different top-level groups. To save time and [not repeat ourselves](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) throughout this documentation, we provide a "[Common keys](#common-keys)" section, and any such keys found in the documentation are referred back to their definition.
 
 There is a third type of keys (**custom keys**), which depend on the data and, therefore, their names vary according to the use case. The API designer can name these keys in the data structure at their convenience. Let's take a look at the following example where custom keys are used:
 ```py
 {
     'categories': {
         'data':{
-            'custom_location': {
+            'customLocation': {
                 'data': {
-                    'custom_loc_us_mi': {
-                        'custom_region': 'North America',
-                        'custom_country': 'USA',
-                        'custom_state': 'Michigan'
+                    'customLocUsMi': {
+                        'customRegion': 'North America',
+                        'customCountry': 'USA',
+                        'customState': 'Michigan'
                     },
-                    'custom_loc_us_ma': {
-                        'custom_region': 'North America',
-                        'custom_country': 'USA',
-                        'custom_state': 'Massachusetts'
+                    'customLocUsMa': {
+                        'customRegion': 'North America',
+                        'customCountry': 'USA',
+                        'customState': 'Massachusetts'
                     },
                 ...
                 },
@@ -48,7 +48,7 @@ There is a third type of keys (**custom keys**), which depend on the data and, t
 }
 ```
 
-Here, `custom_location`, `custom_loc_us_mi`, `custom_loc_us_ma`, `custom_region`, `custom_country`, and `custom_state` are all custom keys. These key names are not restricted and can be tied to the problem or use case data. These also do not need to be preceded by `custom_`, but this tag is used to indicate that they are custom keys for example purposes. (Throughout these docs, if not explicitly mentioned, all custom keys are preceded by the `custom_` tag whenever they are found in an example.)
+Here, `customLocation`, `customLocUsMi`, `customLocUsMa`, `customRegion`, `customCountry`, and `customState` are all custom keys. These key names are not restricted and can be tied to the problem or use case data. These also do not need to be preceded by `custom_`, but this tag is used to indicate that they are custom keys for example purposes. (Throughout these docs, if not explicitly mentioned, all custom keys are preceded by the `custom` tag whenever they are found in an example.)
 
 Custom keys are always included as a direct child of common keys such as `data`, `props`, `types`, and `category`, but they also appear as a direct child of less frequent keys such as `nestedStructure`, or even within another custom key, as shown in the structure above.
 

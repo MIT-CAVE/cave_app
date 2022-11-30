@@ -14,7 +14,7 @@
             "name": "KPI Example 1",
             "value": 18,
             "icon": "BsFillEmojiFrownFill",
-            "map_kpi": true,
+            "mapKpi": true,
             "numberFormat": {
                 "precision": 0,
                 "unit": "frowns"
@@ -24,7 +24,7 @@
             "name": "KPI Example 2",
             "value": 32,
             "icon": "BsFillEmojiSmileFill",
-            "map_kpi": true,
+            "mapKpi": true,
             "numberFormat": {
                 "precision": 0,
                 "unit": "smiles"
@@ -63,8 +63,8 @@
     },
     "layout": {
         "type": "grid",
-        "num_columns": "auto",
-        "num_rows": "auto",
+        "numColumns": "auto",
+        "numRows": "auto",
         "data": {
             "col1Row1": {
                 "type": "item",

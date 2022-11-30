@@ -9,9 +9,9 @@ serializer = Serializer()
 
 serialized_data = {
     "settings": {
-        "allow_modification": False,
-        "send_to_api": False,
-        "send_to_client": True,
+        "allowModification": False,
+        "sendToApi": False,
+        "sendToClient": True,
         "data": {
             "syncToggles": {
                 "Map Layers": {
@@ -33,7 +33,7 @@ serialized_data = {
                     "ab2": ["appBar", "paneState"],
                 },
             },
-            "IconUrl": "https://react-icons.mitcave.com/0.0.1",
+            "iconUrl": "https://react-icons.mitcave.com/0.0.1",
             "numberFormat": {
                 "precision": 2,
                 "trailingZeros": False,
@@ -42,7 +42,7 @@ serialized_data = {
         },
     },
     "categories": {
-        "allow_modification": False,
+        "allowModification": False,
         "data": {
             "network_object": {
                 "data": serializer.get_categories_item_data(
@@ -528,27 +528,27 @@ serialized_data = {
                 "value": 0,
                 "numberFormat": currency_format,
                 "icon": "FaMoneyBill",
-                "map_kpi": True,
+                "mapKpi": True,
             },
             "total_revenue": {
                 "name": "Total Revenue",
                 "value": 0,
                 "numberFormat": currency_format,
                 "icon": "FaRegMoneyBillAlt",
-                "map_kpi": True,
+                "mapKpi": True,
             },
             "total_profit": {
                 "name": "Total Profit",
                 "value": 0,
                 "numberFormat": currency_format,
                 "icon": "FaMoneyBillWave",
-                "map_kpi": True,
+                "mapKpi": True,
             },
         },
         "layout": {
             "type": "grid",
-            "num_columns": "4",
-            "num_rows": "auto",
+            "numColumns": "4",
+            "numRows": "auto",
             "data": {
                 "col1_row1": {
                     "type": "item",

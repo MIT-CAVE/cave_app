@@ -1,4 +1,4 @@
-#### `timeObject`
+# `timeObject`
 `timeObject`s can be used to replace numerical values displayed on the map or used as prop [`values`](#value) in [`arcs`](../all_keys/arcs.md), [`nodes`](#../all_keys/nodes.md) or [`geos`](../all_keys/geos.md). These objects contain a list of values that correspond to a specfic timestep. The user can step through these in order or select a specific timestep from a list. In order to use `timeObject`, a [`timeLength`](../all_keys/settings.md#timeLength) must be specified equal to the length of all `value` lists given. Optionally, [`timeUnits`](../all_keys/settings.md#timeUnits) can be given to display the real world representation of each timestep.
 
 Below is an example of a `timeObject` with a `timeLength` of 5:

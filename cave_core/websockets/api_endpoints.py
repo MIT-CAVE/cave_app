@@ -214,12 +214,12 @@ def get_associated_session_data(request):
     associated_data_object = {
         "associated": {
             "data": associated,
-            "send_to_api": False,
-            "allow_modification": False,
+            "sendToApi": False,
+            "allowModification": False,
         }
     }
 
-    session.replace_data(data=associated_data_object, wipe_existing=False)
+    session.replace_data(data=associated_data_object, wipeExisting=False)
 
     # Notify users of updates
     utils.broadcasting.ws_broadcast_object(

@@ -32,8 +32,8 @@ def get_app_bar_data(data_dir):
         if isinstance(data.get(key),dict):
             data[key]['layout']={
                 'type': 'grid',
-                'num_columns': 'auto',
-                'num_rows': 'auto',
+                'numColumns': 'auto',
+                'numRows': 'auto',
                 'data': {}
             }
             for i in value:

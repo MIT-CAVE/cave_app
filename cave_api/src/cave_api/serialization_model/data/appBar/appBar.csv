@@ -6,6 +6,6 @@ resetButton,,MdSync,Reset Button,button,upper,reset,2,"{""dark"": ""rgb(255, 101
 examplePropsPane,options,FaCogs,Example Props Pane,pane,upper,,3,,
 context,context,BsInboxes,Context Pane,pane,upper,,4,,
 filter,filter,FaFilter,,pane,upper,,5,,
-map_1,,FaMapMarkedAlt,,map,lower,,1,,
-dash_1,,MdInsertChart,Dashboard 1,stats,lower,,2,,FALSE
-kpi_1,,MdSpeed,,kpi,lower,,3,,
+map1,,FaMapMarkedAlt,,map,lower,,1,,
+dash1,,MdInsertChart,Dashboard 1,stats,lower,,2,,FALSE
+kpi1,,MdSpeed,,kpi,lower,,3,,
