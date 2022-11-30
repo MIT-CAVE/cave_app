@@ -371,8 +371,8 @@ class Serializer:
     def get_general_prop_layout(self):
         return {
             "type": "grid",
-            "num_columns": 2,
-            "num_rows": 5,
+            "numColumns": 2,
+            "numRows": 5,
             "data": {
                 "col1_row1": {
                     "type": "item",
@@ -492,8 +492,8 @@ class Serializer:
     def get_geo_prop_layout(self):
         return {
             "type": "grid",
-            "num_columns": 2,
-            "num_rows": 3,
+            "numColumns": 2,
+            "numRows": 3,
             "data": {
                 "col1_row1": {
                     "type": "item",

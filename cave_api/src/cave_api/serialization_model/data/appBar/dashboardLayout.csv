@@ -1,5 +1,5 @@
 dashboardId,chart,grouping,statistic,category,level,category2,level2,sessions,kpi,type
-dash_1,Bar,Average,numericStatExampleA,,,,,,,
-dash_1,Line,Sum,numericStatExampleB,,,,,,,
-dash_1,Bar,Sum,numericExampleCalculationStat,sku,size,,,,,
-dash_1,Bar,Sum,,,,,,[],kpi5,kpis
+dash1,Bar,Average,numericStatExampleA,,,,,,,
+dash1,Line,Sum,numericStatExampleB,,,,,,,
+dash1,Bar,Sum,numericExampleCalculationStat,sku,size,,,,,
+dash1,Bar,Sum,,,,,,[],kpi5,kpis

@@ -22,7 +22,7 @@ A CAVE API structure with top-level custom keys looks as follows:
     'kpis': {...},
     'kwargs':{...},
     'custom_top_level_key_1': {
-        'send_to_client': False,
+        'sendToClient': False,
         'custom_persisted_data_key_1': 10,
         'custom_persisted_data_key_2': [-1, 3],
         'custom_persisted_data_key_3': {...},
@@ -33,4 +33,4 @@ A CAVE API structure with top-level custom keys looks as follows:
 }
 ```
 
-It is worth noting that the client will ignore any keys not in the aforementioned sections. If you plan to use additional top-level keys, it is advised that `send_to_client=False` to prevent unnecessary data overhead. Also note: in order to access these for persistent state, you should set `send_to_api=True`.
+It is worth noting that the client will ignore any keys not in the aforementioned sections. If you plan to use additional top-level keys, it is advised that `sendToClient=False` to prevent unnecessary data overhead. Also note: in order to access these for persistent state, you should set `sendToApi=True`.

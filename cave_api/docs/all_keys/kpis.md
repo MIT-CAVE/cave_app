@@ -13,7 +13,7 @@ Let's look inside the structure of `kpis`:
             'type': 'num',
             'icon': 'FaBox',
             'value': 100,
-            'map_kpi': True,
+            'mapKpi': True,
         },
         # As many custom KPIs as needed
     },
@@ -22,22 +22,22 @@ Let's look inside the structure of `kpis`:
 ```
 
 ##### Common keys
-- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`column`](../common_keys/common_keys.md#column)
 - [`data`](../common_keys/common_keys.md#data)
 - [`icon`](../common_keys/common_keys.md#icon)
 - [`layout`](../common_keys/layout.md)
 - [`name`](../common_keys/common_keys.md#name)
 - [`numberFormat`](../common_keys/common_keys.md#number-format)
-- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
-- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`sendToApi`](../common_keys/common_keys.md#sendToApi)
+- [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 
 ##### Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
 `custom_kpi_*` | Required | A custom key wrapper for the KPI data.
-`custom_kpi_*.map_kpi` | `False` | The `map_kpi` flag allows designers to specify up to six parameters that are displayed on a permanent grid in the "**Map**" view. The grid layout (rows *x* columns) changes with the number of parameters present in the data, scaling up to 2 rows and 3 columns.
-`custom_kpi_*.type` | `'num'` | As a direct child of `custom_kpi_*`, the `type` key defines the UI construct used to render the KPI and restricts the set of key-value pairs that can be used with this type. The `type` key takes one of the following values:<br><br>`'head'`: the `map_kpi`, [`numberFormat`](../common_keys/common_keys.md#number-format), and `value` keys are ignored when used along this type.<br>`'num'`: all keys are valid to use with this type.<br>`'text'`: the [`numberFormat`](../common_keys/common_keys.md#number-format) key is ignored when used along this type.<br>
+`custom_kpi_*.mapKpi` | `False` | The `mapKpi` flag allows designers to specify up to six parameters that are displayed on a permanent grid in the "**Map**" view. The grid layout (rows *x* columns) changes with the number of parameters present in the data, scaling up to 2 rows and 3 columns.
+`custom_kpi_*.type` | `'num'` | As a direct child of `custom_kpi_*`, the `type` key defines the UI construct used to render the KPI and restricts the set of key-value pairs that can be used with this type. The `type` key takes one of the following values:<br><br>`'head'`: the `mapKpi`, [`numberFormat`](../common_keys/common_keys.md#number-format), and `value` keys are ignored when used along this type.<br>`'num'`: all keys are valid to use with this type.<br>`'text'`: the [`numberFormat`](../common_keys/common_keys.md#number-format) key is ignored when used along this type.<br>
 `custom_kpi_*.value` | | The actual value of the KPI.
 
 #### Example
@@ -65,7 +65,7 @@ Key | Default | Description
             'name': 'Month of highest demand',
             'value': 'December',
             'type': 'text',
-            'map_kpi': True,
+            'mapKpi': True,
         },
         'customer_hapiness': {
             'name': 'Customer Happiness',
@@ -74,13 +74,13 @@ Key | Default | Description
                 'unit': 'smiles',
             },
             'icon': 'BsFillEmojiSmileFill',
-            'map_kpi': True,
+            'mapKpi': True,
         },
     },
     'layout': {
         'type': 'grid',
-        'num_columns': 1,
-        'num_rows': 'auto',
+        'numColumns': 1,
+        'numRows': 'auto',
         'data': {
             'row1': {
                 'type': 'item',

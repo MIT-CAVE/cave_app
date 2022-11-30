@@ -6,8 +6,8 @@ The `layout` structure is the same for `props` and `kpis` and looks as follows:
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 2,
-    'num_rows': 'auto',
+    'numColumns': 2,
+    'numRows': 'auto',
     'data': {
         'col1_row1': {
             'type': 'item',
@@ -17,8 +17,8 @@ The `layout` structure is the same for `props` and `kpis` and looks as follows:
         },
         'col2_row1': {
             'type': 'grid',
-            'num_columns': 'auto',
-            'num_rows': 1,
+            'numColumns': 'auto',
+            'numRows': 1,
             'column': 2,
             'row': 1,
             'data': {
@@ -60,8 +60,8 @@ Key | Default | Description
 --- | ------- | -----------
 <a name="layout-data">`*.data`</a> | `{}` | A wrapper for layout elements that are contained in a `'grid'` layout type.
 <a name="layout-height">`*.height`</a> | `'auto'` | Sets the height of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `height` property](https://developer.mozilla.org/en-US/docs/Web/CSS/height) and is a shortcut for the definition `style: { height: ... }`. Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/height#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
-<a name="layout-columns">`*.num_columns`</a> | `'auto'`<br><br>or<br><br>`1`<br>(only for the root of an [`'options'` pane](../all_keys/app_bar.md#panes)) | An integer for the number of columns or the keyword `'auto'`.
-<a name="layout-rows">`*.num_rows`</a> | `'auto'` | An integer for the number of rows or the keyword `'auto'`.
+<a name="layout-columns">`*.numColumns`</a> | `'auto'`<br><br>or<br><br>`1`<br>(only for the root of an [`'options'` pane](../all_keys/app_bar.md#panes)) | An integer for the number of columns or the keyword `'auto'`.
+<a name="layout-rows">`*.numRows`</a> | `'auto'` | An integer for the number of rows or the keyword `'auto'`.
 <a name="layout-type">`*.type`</a> | Required | The type of layout. It can be `'grid'` or `'item'`.
 <a name="layout-width">`*.width`</a> | `'auto'` | Sets the width of a layout element: `'grid'` or `'item'`. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width) and is a shortcut for the definition `style: { width: ... }`. Typical values are in [length](https://developer.mozilla.org/en-US/docs/Web/CSS/length) or [percentage](https://developer.mozilla.org/en-US/docs/Web/CSS/percentage) units, e.g. `'300px'`, `'80%'`, or `'20em'`. Other [valid formats](https://developer.mozilla.org/en-US/docs/Web/CSS/width#values) can be used, although they are rather uncommon for most use cases in CAVE App design.
 <a name="layout-column">`layout.data.*.column`</a> | | An integer for the grid column position starting from left to right. If omitted, the layout element will fill the first empty grid element found within the specified [`row`](#layout-row), starting from left to right. If the [`row`](#layout-row) property is also omitted, the search sequence for empty slots can continue from top to bottom.<br><br>Note that if multiple sibling layout elements (i.e. sharing the same `data` parent) are missing `column` and/or `row` properties, the insert sequence between them will be determined by their wrapper key names in alphabetical order. <!-- TODO (0.3.0): See [example for layout elements with unspecified position](#). -->
@@ -159,8 +159,8 @@ In this example, all elements are explicitly positioned within the layout. This 
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 3,
-    'num_rows': 4,
+    'numColumns': 3,
+    'numRows': 4,
     'data': {
         'col1_row1': {
             'type': 'item',
@@ -221,7 +221,7 @@ The visual result in the CAVE App is as follows:
 </details>
 
 ###### Single-column
-In this example, all items are arranged in a single column. Although the number of  rows are known, the `'auto'` feature helps you save time and effort when the number of items changes. Also, note that [`num_rows`](#layout-rows) is set to `'auto'` by default; However, it is recommended that you specify it explicitly in the layout to improve your code readability.
+In this example, all items are arranged in a single column. Although the number of  rows are known, the `'auto'` feature helps you save time and effort when the number of items changes. Also, note that [`numRows`](#layout-rows) is set to `'auto'` by default; However, it is recommended that you specify it explicitly in the layout to improve your code readability.
 
 <details>
   <summary>Click here to show / hide example</summary>
@@ -229,8 +229,8 @@ In this example, all items are arranged in a single column. Although the number 
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 1,
-    'num_rows': 'auto',
+    'numColumns': 1,
+    'numRows': 'auto',
     'data': {
         'solver_section': {
             'row': 1,
@@ -282,7 +282,7 @@ The visual result in the CAVE App is as follows:
 </details>
 
 ###### Single-row
-In this example, all items are arranged in a single row. Like in the previous example, the `'auto'` feature helps you save time and effort when the number of items changes. The [`num_columns`](#layout-columns) is set to `'auto'` by default, but it is recommended that you specify it explicitly in the layout to improve your code readability.
+In this example, all items are arranged in a single row. Like in the previous example, the `'auto'` feature helps you save time and effort when the number of items changes. The [`numColumns`](#layout-columns) is set to `'auto'` by default, but it is recommended that you specify it explicitly in the layout to improve your code readability.
 
 <details>
   <summary>Click here to show / hide example</summary>
@@ -290,8 +290,8 @@ In this example, all items are arranged in a single row. Like in the previous ex
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 'auto',
-    'num_rows': 1,
+    'numColumns': 'auto',
+    'numRows': 1,
     'data': {
         'column1': {
             'column': 1,
@@ -344,7 +344,7 @@ The visual result in the CAVE App is as follows:
 ###### Fixed number of columns
 In this example, a fixed number of columns has been set, letting the CAVE App estimate the number of rows needed to contain the items specified in the layout. One possible use case is when two or more sections are clearly defined and should be kept as [`'head'`](props.md#head)ers in the first row of the layout. Here, the rest of the items will be arranged to fill in the layout with their positions determined by their explicitly set [`column`](#layout-column)s or [`row`](#layout-row)s, or based on the `layout_key_*` names assigned to them.
 
-As in the previous examples, the `'auto'` feature helps you save time and effort when the number of items changes but the number of columns is known to be fixed. Keeping [`num_rows`](#layout-rows) explicitly set to `'auto'` is a good practice to improve your code readability.
+As in the previous examples, the `'auto'` feature helps you save time and effort when the number of items changes but the number of columns is known to be fixed. Keeping [`numRows`](#layout-rows) explicitly set to `'auto'` is a good practice to improve your code readability.
 
 <details>
   <summary>Click here to show / hide example</summary>
@@ -352,8 +352,8 @@ As in the previous examples, the `'auto'` feature helps you save time and effort
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 2,
-    'num_rows': 'auto',
+    'numColumns': 2,
+    'numRows': 'auto',
     'data': {
         'layout_key_1': {
             'type': 'item',
@@ -404,7 +404,7 @@ The visual result in the CAVE App is as follows:
 </details>
 
 ###### Fixed number of rows
-In this example, a fixed number of rows has been set, letting the CAVE App estimate the number of columns needed to contain the items specified in the layout. As in the previous examples, the `'auto'` feature helps you save time and effort when the number of items changes but the number of rows is known to be fixed. Keeping [`num_columns`](#layout-columns) explicitly set to `'auto'` is a good practice to improve your code readability.
+In this example, a fixed number of rows has been set, letting the CAVE App estimate the number of columns needed to contain the items specified in the layout. As in the previous examples, the `'auto'` feature helps you save time and effort when the number of items changes but the number of rows is known to be fixed. Keeping [`numColumns`](#layout-columns) explicitly set to `'auto'` is a good practice to improve your code readability.
 
 <details>
   <summary>Click here to show / hide example</summary>
@@ -412,8 +412,8 @@ In this example, a fixed number of rows has been set, letting the CAVE App estim
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 'auto',
-    'num_rows': 2,
+    'numColumns': 'auto',
+    'numRows': 2,
     'data': {
         'layout_key_1': {
             'type': 'item',
@@ -461,7 +461,7 @@ The visual result in the CAVE App is as follows:
 ###### Auto-grid (or unspecified number of rows and columns)
 In this example, the number of rows and columns is unknown. Here, the CAVE App will estimate the number of rows and columns closest to a square-shaped grid needed to contain the elements specified in the layout. While this may be fairly uncommon, one possible use case is when two or more items that don't follow any logical order, need to be held together.
 
-As in the previous examples, the `'auto'` feature helps you save time and effort if the number of these grouped items changes. Setting both [`num_columns`](#layout-columns) and [`num_rows`](#layout-rows) to `'auto'` is still a good practice to improve your code readability.
+As in the previous examples, the `'auto'` feature helps you save time and effort if the number of these grouped items changes. Setting both [`numColumns`](#layout-columns) and [`numRows`](#layout-rows) to `'auto'` is still a good practice to improve your code readability.
 
 The _auto-grid_ rendering is also triggered when the `layout` property is empty or has not been specified along a [`props`](props.md) or [`kpis`](../all_keys/kpis.md) structure.
 
@@ -471,8 +471,8 @@ The _auto-grid_ rendering is also triggered when the `layout` property is empty 
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 'auto',
-    'num_rows': 'auto',
+    'numColumns': 'auto',
+    'numRows': 'auto',
     'data': {
         'layout_key_1': {
             'type': 'item',
@@ -526,8 +526,8 @@ The _auto-grid_ rendering is also triggered when the `layout` property is empty 
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 1,
-    'num_rows': 'auto',
+    'numColumns': 1,
+    'numRows': 'auto',
     'data': {
         'row1': {
             'type': 'item',
@@ -572,8 +572,8 @@ The _auto-grid_ rendering is also triggered when the `layout` property is empty 
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 1,
-    'num_rows': 'auto',
+    'numColumns': 1,
+    'numRows': 'auto',
     'data': {
         'row1': {
             'type': 'item',
@@ -621,8 +621,8 @@ The _auto-grid_ rendering is also triggered when the `layout` property is empty 
 ```py
 'layout': {
     'type': 'grid',
-    'num_columns': 3,
-    'num_rows': 3,
+    'numColumns': 3,
+    'numRows': 3,
     'data': {
         'layout_key_1': {
             'type': 'item',

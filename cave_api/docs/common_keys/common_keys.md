@@ -2,10 +2,10 @@
 #### At the Top level
 Key | Default | Description
 --- | ------- | -----------
-<a name="allow_modification">`allow_modification`</a> | `True` | If `True`, end users can request changes to the data within the key group during user interaction with the CAVE app and the server will process the request. Note, this only blocks a user from being able to modify a server side structure for security reasons. To block client side interactions, see the [`enabled`](props.md#enabled) key.
+<a name="allowModification">`allowModification`</a> | `True` | If `True`, end users can request changes to the data within the key group during user interaction with the CAVE app and the server will process the request. Note, this only blocks a user from being able to modify a server side structure for security reasons. To block client side interactions, see the [`enabled`](props.md#enabled) key.
 <a name="data">`data`</a> | Required | Dictionary object that contains data related to this key group.
-<a name="send_to_api">`send_to_api`</a> | `True` | If `True`, the data will be serialized and sent as `session_data` when calling `execute_command`.
-<a name="send_to_client">`send_to_client`</a> | `True` | If `True`, the data will be sent to the requesting CAVE app client. While most of the time this should be `True`, there are use cases where the API designer might want to store some type of state that is not consumed directly (see [Top Level Custom Keys](../custom_keys.md)).
+<a name="sendToApi">`sendToApi`</a> | `True` | If `True`, the data will be serialized and sent as `session_data` when calling `execute_command`.
+<a name="sendToClient">`sendToClient`</a> | `True` | If `True`, the data will be sent to the requesting CAVE app client. While most of the time this should be `True`, there are use cases where the API designer might want to store some type of state that is not consumed directly (see [Top Level Custom Keys](../custom_keys.md)).
 
 #### Nested inside the `data` group
 Key | Default | Description

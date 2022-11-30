@@ -112,7 +112,7 @@ The structure of a `nodes` group looks as follows:
 ```
 
 ##### Common keys
-- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`category`](../common_keys/common_keys.md#category)
 - [`colorBy`](../common_keys/common_keys.md#colorBy)
 - [`colorByOptions`](../common_keys/common_keys.md#colorByOptions)
@@ -128,8 +128,8 @@ The structure of a `nodes` group looks as follows:
 - [`order`](../common_keys/common_keys.md#order)
 - [`prop > type`](../common_keys/props.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
-- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
-- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`sendToApi`](../common_keys/common_keys.md#sendToApi)
+- [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 - [`sizeBy`](../common_keys/common_keys.md#sizeBy)
 - [`sizeByOptions`](../common_keys/common_keys.md#sizeByOptions)
 - [`startSize`](../common_keys/common_keys.md#startSize)
@@ -216,8 +216,8 @@ Key | Default | Description
             },
             'layout': {
                 'type': 'grid',
-                'num_columns': 1,
-                'num_rows': 'auto',
+                'numColumns': 1,
+                'numRows': 'auto',
                 'data': {
                     'active': {
                         'type': 'item',

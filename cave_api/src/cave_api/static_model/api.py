@@ -25,9 +25,9 @@ def execute_command(session_data, command="init"):
     """
     example = {
         "settings": {
-            "allow_modification": False,
-            "send_to_api": False,
-            "send_to_client": True,
+            "allowModification": False,
+            "sendToApi": False,
+            "sendToClient": True,
             "data": {
                 "sync":{
                     "mapLayers":{
@@ -71,7 +71,7 @@ def execute_command(session_data, command="init"):
                         "ab2": ["appBar", "paneState"],
                     },
                 },
-                "IconUrl": "https://react-icons.mitcave.com/0.0.1",
+                "iconUrl": "https://react-icons.mitcave.com/0.0.1",
                 "numberFormat": {
                     "precision": 4,
                     "trailingZeros": False,
@@ -81,7 +81,7 @@ def execute_command(session_data, command="init"):
             },
         },
         "categories": {
-            "allow_modification": False,
+            "allowModification": False,
             "data": {
                 "location": {
                     "data": {
@@ -306,8 +306,8 @@ def execute_command(session_data, command="init"):
                     },
                     "layout": {
                         "type": "grid",
-                        "num_columns": 3,
-                        "num_rows": "auto",
+                        "numColumns": 3,
+                        "numRows": "auto",
                         "data": {
                             "col1Row1": {
                                 "type": "item",
@@ -399,7 +399,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                     "data": {
-                        "context_1": {
+                        "context1": {
                             "prop": "numericContextProp",
                             "value": 110,
                             "applyCategories": {"location": ["locUsMi"]},
@@ -418,13 +418,13 @@ def execute_command(session_data, command="init"):
                     "order": 5,
                     "bar": "upper",
                 },
-                "map_1": {
+                "map1": {
                     "type": "map",
                     "icon": "FaMapMarkedAlt",
                     "bar": "lower",
                     "order": 1,
                 },
-                "dash_1": {
+                "dash1": {
                     "type": "stats",
                     "icon": "MdInsertChart",
                     "name": "Dashboard 1",
@@ -458,7 +458,7 @@ def execute_command(session_data, command="init"):
                     ],
                     "lockedLayout": False,
                 },
-                "kpi_1": {
+                "kpi1": {
                     "type": "kpi",
                     "icon": "MdSpeed",
                     "bar": "lower",
@@ -609,8 +609,8 @@ def execute_command(session_data, command="init"):
                     },
                     "layout": {
                         "type": "grid",
-                        "num_columns": "auto",
-                        "num_rows": 1,
+                        "numColumns": "auto",
+                        "numRows": 1,
                         "data": {
                             "col1": {"type": "item", "itemId": "numericPropExampleA", "col": 1},
                             "col2": {
@@ -708,8 +708,8 @@ def execute_command(session_data, command="init"):
                     },
                     "layout": {
                         "type": "grid",
-                        "num_columns": 1,
-                        "num_rows": "auto",
+                        "numColumns": 1,
+                        "numRows": "auto",
                         "data": {
                             "row1": {
                                 "type": "item",
@@ -731,7 +731,7 @@ def execute_command(session_data, command="init"):
                 },
             },
             "data": {
-                "arc_1": {
+                "arc1": {
                     "startLatitude": 43.78,
                     "startLongitude": -79.63,
                     "endLatitude": 39.82,
@@ -762,7 +762,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                 },
-                "arc_2": {
+                "arc2": {
                     "startLatitude": 39.82,
                     "startLongitude": -86.18,
                     "endLatitude": 42.89,
@@ -793,7 +793,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                 },
-                "arc_3": {
+                "arc3": {
                     "startLatitude": 39.82,
                     "startLongitude": -86.18,
                     "endLatitude": 28.49,
@@ -824,7 +824,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                 },
-                "arc_4": {
+                "arc4": {
                     "startLatitude": 39.82,
                     "startLongitude": -86.18,
                     "endLatitude": 42.361176,
@@ -996,7 +996,7 @@ def execute_command(session_data, command="init"):
                 },
             },
             "data": {
-                "node_1": {
+                "node1": {
                     "latitude": 43.78,
                     "longitude": -79.63,
                     "type": "nodeTypeA",
@@ -1016,7 +1016,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                 },
-                "node_2": {
+                "node2": {
                     "latitude": 39.82,
                     "longitude": -86.18,
                     "type": "nodeTypeA",
@@ -1036,7 +1036,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                 },
-                "node_3": {
+                "node3": {
                     "latitude": 42.89,
                     "longitude": -85.68,
                     "type": "nodeTypeB",
@@ -1056,7 +1056,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                 },
-                "node_4": {
+                "node4": {
                     "latitude": 28.49,
                     "longitude": -81.56,
                     "type": "nodeTypeB",
@@ -1076,7 +1076,7 @@ def execute_command(session_data, command="init"):
                         },
                     },
                 },
-                "node_5": {
+                "node5": {
                     "latitude": 42.361176,
                     "longitude": -71.084707,
                     "type": "nodeTypeB",
@@ -1333,7 +1333,7 @@ def execute_command(session_data, command="init"):
                     "name": "KPI Example 1",
                     "value": 18,
                     "icon": "BsFillEmojiFrownFill",
-                    "map_kpi": True,
+                    "mapKpi": True,
                     "numberFormat": {
                         "precision": 0,
                         "unit": "frowns",
@@ -1343,7 +1343,7 @@ def execute_command(session_data, command="init"):
                     "name": "KPI Example 2",
                     "value": 32,
                     "icon": "BsFillEmojiSmileFill",
-                    "map_kpi": True,
+                    "mapKpi": True,
                     "numberFormat": {
                         "precision": 0,
                         "unit": "smiles",
@@ -1382,8 +1382,8 @@ def execute_command(session_data, command="init"):
             },
             "layout": {
                 "type": "grid",
-                "num_columns": "auto",
-                "num_rows": "auto",
+                "numColumns": "auto",
+                "numRows": "auto",
                 "data": {
                     "col1Row1": {
                         "type": "item",
@@ -1431,7 +1431,7 @@ def execute_command(session_data, command="init"):
             },
         },
         "kwargs": {
-            "wipe_existing": True,
+            "wipeExisting": True,
         },
     }
     if command == "reset":

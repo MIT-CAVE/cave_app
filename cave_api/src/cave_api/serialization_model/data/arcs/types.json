@@ -81,8 +81,8 @@
         },
         "layout": {
             "type": "grid",
-            "num_columns": "auto",
-            "num_rows": 1,
+            "numColumns": "auto",
+            "numRows": 1,
             "data": {
                 "col1": {"type": "item", "itemId": "numericPropExampleA", "col": 1},
                 "col2": {
@@ -180,8 +180,8 @@
         },
         "layout": {
             "type": "grid",
-            "num_columns": 1,
-            "num_rows": "auto",
+            "numColumns": 1,
+            "numRows": "auto",
             "data": {
                 "row1": {
                     "type": "item",

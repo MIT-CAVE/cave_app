@@ -196,7 +196,7 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
 The CAVE app also includes two built in pane variants: `filter`, which provides tools to filter data from different categories and at different levels of granularity, and `appSettings`, which gives users the ability to control the appearance and overall behavior of the CAVE app.
 
 ##### Common keys
-- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`color`](../common_keys/common_keys.md#color)
 - [`data`](../common_keys/common_keys.md#data)
 - [`enabled`](../common_keys/common_keys.md#enabled)
@@ -210,8 +210,8 @@ The CAVE app also includes two built in pane variants: `filter`, which provides 
 - [`order`](../common_keys/common_keys.md#order)
 - [`prop > type`](../common_keys/common_keys.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
-- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
-- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`sendToApi`](../common_keys/common_keys.md#sendToApi)
+- [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 - [`value`](../common_keys/common_keys.md#value)
 - [`variant`](../common_keys/common_keys.md#variant)
 
@@ -343,8 +343,8 @@ Key | Default | Description
             },
             'layout': {
                 'type': 'grid',
-                'num_columns': 3,
-                'num_rows': 'auto',
+                'numColumns': 3,
+                'numRows': 'auto',
                 'data': {
                     'col1_row1': {
                         'type': 'item',

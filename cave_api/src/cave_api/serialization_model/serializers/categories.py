@@ -18,4 +18,4 @@ def get_categories_data(data_dir):
         get_category_file_data(data_dir, filename, order)
         for order, filename in enumerate_dir(data_dir)
     ]
-    return {"allow_modification": False, "data": {i["name"]: i for i in data_list}}
+    return {"allowModification": False, "data": {i["name"]: i for i in data_list}}

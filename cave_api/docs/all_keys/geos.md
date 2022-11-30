@@ -89,7 +89,7 @@ Let's look inside the structure of `geos`:
 ```
 
 ##### Common keys
-- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`category`](../common_keys/common_keys.md#category)
 - [`colorBy`](../common_keys/common_keys.md#colorBy)
 - [`colorByOptions`](../common_keys/common_keys.md#colorByOptions)
@@ -104,8 +104,8 @@ Let's look inside the structure of `geos`:
 - [`order`](../common_keys/common_keys.md#order)
 - [`prop > type`](../common_keys/props.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
-- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
-- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`sendToApi`](../common_keys/common_keys.md#sendToApi)
+- [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 - [`startGradientColor`](../common_keys/common_keys.md#start-gradient)
 - [`value`](../common_keys/props.md#value)
 - [`variant`](../common_keys/props.md#variant)

@@ -4,9 +4,9 @@ Both designers and users often need to work with different levels of data aggreg
 Below is an example of the `categories` group:
 ```py
 'categories': {
-    'allow_modification': False,
-    'send_to_api': False,
-    'send_to_client': True,
+    'allowModification': False,
+    'sendToApi': False,
+    'sendToClient': True,
     'data': {
         'custom_category_1': {  # Inside a category group
             'data': {
@@ -47,12 +47,12 @@ Below is an example of the `categories` group:
 ```
 
 ##### Common keys
-- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`data`](../common_keys/common_keys.md#data)
 - [`name`](../common_keys/common_keys.md#name)
 - [`order`](../common_keys/common_keys.md#order)
-- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
-- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`sendToApi`](../common_keys/common_keys.md#sendToApi)
+- [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 
 ##### Special and custom keys
 Key | Default | Description
@@ -73,9 +73,9 @@ Key | Default | Description
 
 ```py
 'categories': {
-    'allow_modification': False,
-    'send_to_api': False,
-    'send_to_client': True,
+    'allowModification': False,
+    'sendToApi': False,
+    'sendToClient': True,
     'data': {
         'Location': {
             'data': {

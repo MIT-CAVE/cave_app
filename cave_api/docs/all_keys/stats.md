@@ -43,14 +43,14 @@ Let's look inside the structure of `stats`:
 ```
 
 ##### Common keys
-- [`allow_modification`](../common_keys/common_keys.md#allow_modification)
+- [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`category`](../common_keys/common_keys.md#category)
 - [`data`](../common_keys/common_keys.md#data)
 - [`name`](../common_keys/common_keys.md#name)
 - [`numberFormat`](../common_keys/common_keys.md#number-format)
 - [`order`](../common_keys/common_keys.md#order)
-- [`send_to_api`](../common_keys/common_keys.md#send_to_api)
-- [`send_to_client`](../common_keys/common_keys.md#send_to_client)
+- [`sendToApi`](../common_keys/common_keys.md#sendToApi)
+- [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 
 ##### Special and custom keys
 Key | Default | Description

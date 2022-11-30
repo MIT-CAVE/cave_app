@@ -569,27 +569,27 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "allow_modification",
+                    "allowModification",
                     models.BooleanField(
                         default=True,
                         help_text="Allow this data to be modified?",
-                        verbose_name="allow_modification",
+                        verbose_name="allowModification",
                     ),
                 ),
                 (
-                    "send_to_client",
+                    "sendToClient",
                     models.BooleanField(
                         default=True,
                         help_text="Should this data be sent to the client?",
-                        verbose_name="send_to_client",
+                        verbose_name="sendToClient",
                     ),
                 ),
                 (
-                    "send_to_api",
+                    "sendToApi",
                     models.BooleanField(
                         default=True,
                         help_text="Should this data be sent to the api? (for solve and configure)",
-                        verbose_name="send_to_api",
+                        verbose_name="sendToApi",
                     ),
                 ),
                 (
