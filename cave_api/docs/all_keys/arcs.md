@@ -1,153 +1,145 @@
-### `arcs`
-The `arcs` group contains data that is typically used to visualize information flows between two locations in the "**Map**" view. Depending on the nature of the flows and the purpose of the visualization, the flows between two locations can be represented by a single arc (source and destination) or a sequence of arc segments representing a [`path`](#path).
+# `arcs`
+The `arcs` group contains data that is typically used to visualize flows between two points on the "**Map**" view. Depending on the nature of the flows and the purpose of the visualization, the flows between two locations can be represented by a single arc (source and destination) or a sequence of arc segments representing a [`path`](#path).
 
 The structure of an `arcs` group looks as follows:
 ```py
-'arcs': {
-    'name': 'A name that will be displayed in the map legend.',
-    'types': {
-        'custom_arc_type_1': {
-            'name': 'A name to be displayed in the UI',
-            'colorByOptions': {
-              'custom_prop_key_10': {
-                'min': 0,
-                'max': 25,
-                'startGradientColor': {
-                    'dark': 'rgb(233, 0, 0)',
-                    'light': 'rgb(52, 52, 236)',
+"arcs": {
+    "types": {
+        "customType1": {
+            "name": "Flow Type 1",
+            "colorByOptions": {
+                "customPropKey8": {
+                    "A": "rgb(128,255,255)",
+                    "B": "rgb(0,153,51)",
+                    "C": "rgb(0,0,128)",
+                    "D": "rgb(204,0,0)",
+                    "E": "rgb(153,77,0)",
+                    "F": "rgb(255,25,255)",
                 },
-                'endGradientColor': {
-                    'dark': 'rgb(96, 2, 2)',
-                    'light': 'rgb(23, 23, 126)',
-                },
-              },
-              'custom_prop_key_11': {
-                'min': 0,
-                'max': 35,
-                'startGradientColor': {
-                    'dark': 'rgb(233, 0, 0)',
-                    'light': 'rgb(52, 52, 236)',
-                },
-                'endGradientColor': {
-                    'dark': 'rgb(96, 2, 2)',
-                    'light': 'rgb(23, 23, 126)',
-                },
-              },
-              'custom_prop_key_12': {
-                'custom_color_key_1':'rgb(233,0,0)',
-                'custom_color_key_2':'rgb(0,233,0)'
-              }
-            },
-            'colorBy': 'custom_prop_key_10',
-            'lineBy': 'dotted',
-            'sizeByOptions': {
-              'custom_prop_key_10': {'min': 0, 'max': 25},
-              'custom_prop_key_11': {'min': 0, 'max': 35}
-            },
-            'sizeBy': 'custom_prop_key_10',
-            'startSize': '15px',
-            'endSize': '30px',
-            'props': {
-                'custom_prop_key_10': {
-                    'name': 'A name to be displayed in the UI',
-                    'type': 'num',
-                    'enabled': False,
-                    'help': 'A help text for the numeric input',
-                    'numberFormat': {
-                        'precision': 0,
-                        'unit': 'units',
+                "customPropKey9": {
+                    "min": 0,
+                    "max": 50,
+                    "startGradientColor": {
+                        "dark": "rgb(233, 0, 0)",
+                        "light": "rgb(52, 52, 236)",
+                    },
+                    "endGradientColor": {
+                        "dark": "rgb(96, 2, 2)",
+                        "light": "rgb(23, 23, 126)",
                     },
                 },
-                # As many default props as needed
+                "customPropKey10": {
+                    "min": 0,
+                    "max": 40,
+                    "startGradientColor": {
+                        "dark": "rgb(233, 0, 0)",
+                        "light": "rgb(52, 52, 236)",
+                    },
+                    "endGradientColor": {
+                        "dark": "rgb(96, 2, 2)",
+                        "light": "rgb(23, 23, 126)",
+                    },
+                },
             },
-            'order': 1,
-        },
-        'custom_arc_type_2': {...},
-        # As many arc types as needed
+            "colorBy": "customPropKey9",
+            "lineBy": "solid",
+            "sizeByOptions": {
+                "customPropKey9": {"min": 0, "max": 50},
+                "customPropKey10": {"min": 0, "max": 40},
+            },
+            "sizeBy": "customPropKey10",
+            "startSize": "15px",
+            "endSize": "30px",
+            "order": 1,
+            "props": {
+                "customPropKey9": {
+                    "name": "Numeric Prop Example A",
+                    "type": "num",
+                    "help": "Help for numeric prop example A",
+                    "numberFormat": {
+                        "unit": "A units",
+                    },
+                },
+                "customPropKey10": {
+                    "name": "Numeric Prop Example B",
+                    "type": "num",
+                    "help": "Help for numeric prop example B",
+                    "numberFormat": {
+                        "unit": "B units",
+                    },
+                },
+                "customPropKey8": {
+                    "name": "Example Categorical Prop",
+                    "type": "selector",
+                    "variant": "dropdown",
+                    "value": [
+                        {"name": "A", "value": True},
+                        {"name": "B", "value": False},
+                        {"name": "C", "value": False},
+                        {"name": "D", "value": False},
+                        {"name": "E", "value": False},
+                        {"name": "F", "value": False},
+                    ],
+                },
+            },
+            "layout": {
+                "type": "grid",
+                "numColumns": "auto",
+                "numRows": 1,
+                "data": {
+                    "col1": {"type": "item", "itemId": "customPropKey9", "col": 1},
+                    "col2": {
+                        "type": "item",
+                        "itemId": "customPropKey10",
+                        "col": 2,
+                    },
+                    "col3": {
+                        "type": "item",
+                        "itemId": "customPropKey8",
+                        "col": 3,
+                    },
+                },
+            },
+        },  
     },
-    'data': {
-        'custom_arc_data_1': {
-            'startLatitude': 43.78,
-            'startLongitude': -79.63,
-            'endLatitude': 39.82,
-            'endLongitude': -86.18,
-            'startClick': 800,
-            'endClick': 1600,
-            'type': 'custom_arc_type_1',
-            'category': {
-                'custom_data_chunk_1': [
-                    'custom_data_key_2',
-                    'custom_data_key_3'
-                ],
-                'custom_data_chunk_2': [
-                    'custom_data_key_1',
-                    'custom_data_key_4',
-                ],
-                # As many data chunks as needed
+    "data": {
+        "arc1": {
+            "startLatitude": 43.78,
+            "startLongitude": -79.63,
+            "endLatitude": 39.82,
+            "endLongitude": -86.18,
+            "startClick": 800,
+            "endClick": 1600,
+            "type": "T1",
+            "category": {
+                "customLocation": ["locCaOn", "locUsIn"],
+                "customSku": ["SKU2", "SKU1"],
             },
-            'props': {
-                'custom_prop_key_10': {
-                    'value': 50,
-                    'variant': 'slider',
+            "props": {
+                "customPropKey9": {
+                    "value": 50,
                 },
-                'custom_prop_key_11': {
-                    'name': 'A name to be displayed in the UI',
-                    'type': 'num',
-                    'value': 40,
-                    'enabled': False,
-                    'help': 'A help text for the numeric input',
-                    'numberFormat': {
-                        'unit': 'units',
-                    },
+                "customPropKey10": {
+                    "value": 40,
+                },
+                "customPropKey8": {
+                    "value": [
+                        {"name": "A", "value": False},
+                        {"name": "B", "value": True},
+                        {"name": "C", "value": False},
+                        {"name": "D", "value": False},
+                        {"name": "E", "value": False},
+                        {"name": "F", "value": False},
+                    ],
                 },
             },
         },
-        'custom_arc_data_2': {
-            'path': [
-                [-122.3535851, 37.9360513, 1],
-                [-122.3179784, 37.9249513, 1.2],
-                [-122.300284, 37.902646, 1.4],
-                [-122.2843653, 37.8735039, 1.65],
-                [-122.269058, 37.8694562, 2],
-            ],
-            'startClick': 200,
-            'endClick': 1000,
-            'type': 'custom_arc_type_2',
-            'category': {
-                'custom_data_chunk_1': [
-                    'custom_data_key_1',
-                    'custom_data_key_3'
-                ],
-                'custom_data_chunk_2': [
-                    'custom_data_key_2',
-                    'custom_data_key_4',
-                ],
-                # As many data chunks as needed
-            },
-            'props': {
-                'custom_prop_key_10': {
-                    'value': 20,
-                    'variant': 'slider',
-                },
-                'custom_prop_key_12': {
-                    'name': 'A name to be displayed in the UI',
-                    'type': 'num',
-                    'value': 30,
-                    'enabled': False,
-                    'help': 'A help text for the numeric input',
-                    'numberFormat': {
-                        'unit': 'units',
-                    },
-                },
-            },
-        },
-        'custom_arc_data_3': {...},
-        # As many arc data chunks as needed
+        # As many arcs as needed
     },
-}
+},
 ```
 
-##### Common keys
+## Common keys
 - [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`category`](../common_keys/common_keys.md#category)
 - [`colorBy`](../common_keys/common_keys.md#colorBy)
@@ -174,345 +166,366 @@ The structure of an `arcs` group looks as follows:
 - [`value`](../common_keys/props.md#value)
 - [`variant`](../common_keys/props.md#variant)
 
-##### Special and custom keys
+## Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-<a name="arc-data-point">`data.custom_arc_data_*`</a> | Required | A custom key wrapper for the parameters required to visualize an arc flow and the data associated with it in the "**Map**" view.
-`data.custom_arc_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](../all_keys/categories.md#custom_data_chunk_).
-`data.custom_arc_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](../all_keys/categories.md#custom_data_key_).
-`data.custom_arc_data_*.endAltitude` | | The altitude (in meters) for the target location in the "**Map**" view. It takes a float value.
-`data.custom_arc_data_*.endClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
-`data.custom_arc_data_*.endLatitude` | Required | The latitude for the target location in the "**Map**" view. It takes a float value.
-`data.custom_arc_data_*.endLongitude` | Required | The longitude for the target location in the "**Map**" view. It takes a float value.
-`data.custom_arc_data_*.height` | `1` | The height multiplier relative to the distance between two points for the apex of a `3d` (lineBy) arc. For example, a value of `0` would turn a `3d` (lineBy) arc into the equivalent to a `solid` (lineBy) arc.
-`data.custom_arc_data_*.name` | | A name for the arc flow that will be displayed as a title in the map modal.
-<a name="path">`data.custom_arc_data_*.path`</a> | | A list of coordinate points (`[<longitude>, <latitude>]`), such that every two consecutive coordinates represent an arc segment of a path to be rendered in the "**Map**" view. Additionally, a third position can be added to each coordinate (`[<longitude>, <latitude>, <altitude>]`), to visually represent altitude on the map.<br><br>Please note that `path` is not supported for `3d` arcs. If you need to create a "`3d` path", you can do so by joining multiple arcs which start and end coordinates match the segments of the intended path.<br><br>The use of `path` overrides any behavior resulting from the use of the following `data.custom_arc_data_*.` keys: `startLongitude`, `startLatitude`, `startAltitude`, `endLongitude`, `endLatitude`, and `endAltitude`.
-`data.custom_arc_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](../common_keys/props.md#custom_prop_key_).
-`data.custom_arc_data_*.startAltitude` | | The altitude (in meters) for the source location in the "**Map**" view. It takes a float value.
-`data.custom_arc_data_*.startClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
-`data.custom_arc_data_*.startLatitude` | Required | The latitude for the source location in the "**Map**" view. It takes a float value.
-`data.custom_arc_data_*.startLongitude` | Required | The longitude for the source location in the "**Map**" view. It takes a float value.
-`data.custom_arc_data_*.type` | Required | The `type` key sets the arc type of `custom_arc_data_*` to a `custom_arc_type_*` key, to match specific visualization preferences for an arc flow.
+<a name="arc-data-point">`data.customArcData*`</a> | Required | A custom key wrapper for the parameters required to visualize an arc flow and the data associated with it in the "**Map**" view.
+`data.customArcData*.category`&swarhk;<br>`.customDataChunck*` | | See [`customDataChunck*`](../all_keys/categories.md#customDataChunck).
+`data.customArcData*.category`&swarhk;<br>`.customDataChunck*.customDataKey*` | | See [`customDataKey*`](../all_keys/categories.md#customDataKey).
+`data.customArcData*.endAltitude` | | The altitude (in meters) for the target location in the "**Map**" view. It takes a float value.
+`data.customArcData*.endClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
+`data.customArcData*.endLatitude` | Required | The latitude for the target location in the "**Map**" view. It takes a float value.
+`data.customArcData*.endLongitude` | Required | The longitude for the target location in the "**Map**" view. It takes a float value.
+`data.customArcData*.height` | `1` | The height multiplier relative to the distance between two points for the apex of a `3d` (lineBy) arc. For example, a value of `0` would turn a `3d` (lineBy) arc into the equivalent to a `solid` (lineBy) arc.
+`data.customArcData*.name` | | A name for the arc flow that will be displayed as a title in the map modal.
+<a name="path">`data.customArcData*.path`</a> | | A list of coordinate points (`[<longitude>, <latitude>]`), such that every two consecutive coordinates represent an arc segment of a path to be rendered in the "**Map**" view. Additionally, a third position can be added to each coordinate (`[<longitude>, <latitude>, <altitude>]`), to visually represent altitude on the map.<br><br>Please note that `path` is not supported for `3d` arcs. If you need to create a "`3d` path", you can do so by joining multiple arcs which start and end coordinates match the segments of the intended path.<br><br>The use of `path` overrides any behavior resulting from the use of the following `data.customArcData*.` keys: `startLongitude`, `startLatitude`, `startAltitude`, `endLongitude`, `endLatitude`, and `endAltitude`.
+`data.customArcData*.props`&swarhk;<br>`.customdPropKey*` | | See [`customdPropKey*`](../common_keys/props.md#customdPropKey).
+`data.customArcData*.startAltitude` | | The altitude (in meters) for the source location in the "**Map**" view. It takes a float value.
+`data.customArcData*.startClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
+`data.customArcData*.startLatitude` | Required | The latitude for the source location in the "**Map**" view. It takes a float value.
+`data.customArcData*.startLongitude` | Required | The longitude for the source location in the "**Map**" view. It takes a float value.
+`data.customArcData*.type` | Required | The `type` key sets the arc type of `customArcData*` to a `customArcType*` key, to match specific visualization preferences for an arc flow.
 `types` | Required | The `types` key allows you to define different arc types in terms of styling and data viz settings.
-<a name="arc-type">`types.custom_arc_type_*`</a> | | A wrapper for key-value pairs that match a specific set of data viz preferences for an arc flow.
-`types.custom_arc_type_*.lineBy` | `'solid'` | The pattern of dashes and gaps used to form the shape of an arc's stroke. It takes one of the following values: `'dashed'`, `'dotted'`, `'solid'`, or `'3d'`. This can be set in individual arcs to overwrite the default for the type.
+<a name="arc-type">`types.customArcType*`</a> | | A wrapper for key-value pairs that match a specific set of data viz preferences for an arc flow.
+`types.customArcType*.lineBy` | `'solid'` | The pattern of dashes and gaps used to form the shape of an arc's stroke. It takes one of the following values: `'dashed'`, `'dotted'`, `'solid'`, or `'3d'`. This can be set in individual arcs to overwrite the default for the type.
 
-#### Example
+## Example
 
 <details>
   <summary>Click here to show / hide example</summary>
 
 ```py
-'arcs': {
-    'data': {
-        'arc_1': {
-            'type': 'Supply',
-            'props': {
-                'Transportation Mode': {
-                    'help': 'Transportation mode used.',
-                    'type': 'text',
-                    'value': 'Road',
-                    'enabled': False,
+"arcs": {
+    "types": {
+        "T1": {
+            "name": "Flow Type 1",
+            "colorByOptions": {
+                "selectorPropForColor": {
+                    "A": "rgb(128,255,255)",
+                    "B": "rgb(0,153,51)",
+                    "C": "rgb(0,0,128)",
+                    "D": "rgb(204,0,0)",
+                    "E": "rgb(153,77,0)",
+                    "F": "rgb(255,25,255)",
                 },
-                'Throughput (pallets)': {
-                    'help': 'Number of pallets shipped.',
-                    'type': 'num',
-                    'value': 500,
-                    'enabled': False,
-                },
-                'Origin and destination': {
-                    'help': 'City of origin and city of destination of the flow.',
-                    'type': 'text',
-                    'value': 'Campinas - Sao Paulo Airport',
-                    'enabled': False,
-                },
-                'Transportation Cost (k$)': {
-                    'help': 'Cost of transportation.',
-                    'type': 'num',
-                    'value': 15,
-                    'enabled': False,
-                },
-            },
-            'layout': {
-                'type': 'grid',
-                'numColumns': 1,
-                'numRows': 'auto',
-                'data': {
-                    'transportation_mode': {
-                        'type': 'item',
-                        'itemId': 'Transportation Mode',
-                        'row': 2,
+                "numericPropExampleA": {
+                    "min": 0,
+                    "max": 50,
+                    "startGradientColor": {
+                        "dark": "rgb(233, 0, 0)",
+                        "light": "rgb(52, 52, 236)",
                     },
-                    'throughput_pallets': {
-                        'type': 'item',
-                        'itemId': 'Throughput (pallets)',
-                        'row': 3,
+                    "endGradientColor": {
+                        "dark": "rgb(96, 2, 2)",
+                        "light": "rgb(23, 23, 126)",
                     },
-                    'origin_and_destination': {
-                        'type': 'item',
-                        'itemId': 'Origin and destination',
-                        'row': 1,
+                },
+                "numericPropExampleB": {
+                    "min": 0,
+                    "max": 40,
+                    "startGradientColor": {
+                        "dark": "rgb(233, 0, 0)",
+                        "light": "rgb(52, 52, 236)",
                     },
-                    'transportation_cost_k': {
-                        'type': 'item',
-                        'itemId': 'Transportation Cost (k$)',
+                    "endGradientColor": {
+                        "dark": "rgb(96, 2, 2)",
+                        "light": "rgb(23, 23, 126)",
                     },
                 },
             },
-            'category': {'Product': ['LowVal'], 'Location': ['loc_US_MI']},
-            'endClick': 2000,
-            'startClick': 1600,
-            'endLatitude': -23.565,
-            'endLongitude': -46.632,
-            'startLatitude': -22.934,
-            'startLongitude': -47.093,
-        },
-        'arc_2': {
-            'type': 'Supply',
-            'props': {
-                'Transportation Mode': {
-                    'help': 'Transportation mode used.',
-                    'type': 'text',
-                    'value': 'Road',
-                    'enabled': False,
+            "colorBy": "numericPropExampleA",
+            "lineBy": "solid",
+            "sizeByOptions": {
+                "numericPropExampleA": {"min": 0, "max": 50},
+                "numericPropExampleB": {"min": 0, "max": 40},
+            },
+            "sizeBy": "numericPropExampleB",
+            "startSize": "15px",
+            "endSize": "30px",
+            "order": 1,
+            "props": {
+                "numericPropExampleA": {
+                    "name": "Numeric Prop Example A",
+                    "type": "num",
+                    "enabled": True,
+                    "help": "Help for numeric prop example A",
+                    "numberFormat": {
+                        "unit": "A units",
+                    },
                 },
-                'Throughput (pallets)': {
-                    'help': 'Number of pallets shipped.',
-                    'type': 'num',
-                    'value': 1498.3,
-                    'enabled': False,
+                "numericPropExampleB": {
+                    "name": "Numeric Prop Example B",
+                    "type": "num",
+                    "enabled": True,
+                    "help": "Help for numeric prop example B",
+                    "numberFormat": {
+                        "unit": "B units",
+                    },
                 },
-                'Origin and destination': {
-                    'help': 'City of origin and city of destination of the flow.',
-                    'type': 'text',
-                    'value': 'Phoenix - Atlanta',
-                    'enabled': False,
-                },
-                'Transportation Cost (k$)': {
-                    'help': 'Cost of transportation.',
-                    'type': 'num',
-                    'value': 292.2,
-                    'enabled': False,
+                "selectorPropForColor": {
+                    "name": "Example Categorical Prop",
+                    "type": "selector",
+                    "variant": "dropdown",
+                    "value": [
+                        {"name": "A", "value": True},
+                        {"name": "B", "value": False},
+                        {"name": "C", "value": False},
+                        {"name": "D", "value": False},
+                        {"name": "E", "value": False},
+                        {"name": "F", "value": False},
+                    ],
+                    "enabled": True,
                 },
             },
-            'layout': {
-                'type': 'grid',
-                'numColumns': 1,
-                'numRows': 'auto',
-                'data': {
-                    'transportation_mode': {
-                        'type': 'item',
-                        'itemId': 'Transportation Mode',
-                        'row': 2,
+            "layout": {
+                "type": "grid",
+                "numColumns": "auto",
+                "numRows": 1,
+                "data": {
+                    "col1": {"type": "item", "itemId": "numericPropExampleA", "col": 1},
+                    "col2": {
+                        "type": "item",
+                        "itemId": "numericPropExampleB",
+                        "col": 2,
                     },
-                    'throughput_pallets': {
-                        'type': 'item',
-                        'itemId': 'Throughput (pallets)',
-                        'row': 3,
-                    },
-                    'origin_and_destination': {
-                        'type': 'item',
-                        'itemId': 'Origin and destination',
-                        'row': 1,
-                    },
-                    'transportation_cost_k': {
-                        'type': 'item',
-                        'itemId': 'Transportation Cost (k$)',
+                    "col3": {
+                        "type": "item",
+                        "itemId": "selectorPropForColor",
+                        "col": 3,
                     },
                 },
-            },
-            'category': {'Product': ['HighVal'], 'Location': ['loc_US_MI']},
-            'endClick': 2000,
-            'startClick': 1600,
-            'endLatitude': 34.037,
-            'endLongitude': -84.235,
-            'startLatitude': 33.448,
-            'startLongitude': -112.074,
-        },
-        'arc_3': {
-            'type': 'Interfacility',
-            'props': {
-                'Transportation Mode': {
-                    'help': 'Transportation mode used.',
-                    'type': 'text',
-                    'value': 'Road',
-                    'enabled': False,
-                },
-                'Throughput (pallets)': {
-                    'help': 'Number of pallets shipped.',
-                    'type': 'num',
-                    'value': 843.2,
-                    'enabled': False,
-                },
-                'Origin and destination': {
-                    'help': 'City of origin and city of destination of the flow.',
-                    'type': 'text',
-                    'value': 'Atlanta - Florence, South Carolina',
-                    'enabled': False,
-                },
-                'Transportation Cost (k$)': {
-                    'help': 'Cost of transportation.',
-                    'type': 'num',
-                    'value': 27.6,
-                    'enabled': False,
-                },
-            },
-            'layout': {
-                'type': 'grid',
-                'numColumns': 1,
-                'numRows': 'auto',
-                'data': {
-                    'transportation_mode': {
-                        'type': 'item',
-                        'itemId': 'Transportation Mode',
-                        'row': 2,
-                    },
-                    'throughput_pallets': {
-                        'type': 'item',
-                        'itemId': 'Throughput (pallets)',
-                        'row': 3,
-                    },
-                    'origin_and_destination': {
-                        'type': 'item',
-                        'itemId': 'Origin and destination',
-                        'row': 1,
-                    },
-                    'transportation_cost_k': {
-                        'type': 'item',
-                        'itemId': 'Transportation Cost (k$)',
-                    },
-                },
-            },
-            'category': {
-                'Product': ['LowVal', 'HighVal'],
-                'Location': ['loc_US_MI'],
-            },
-            'endClick': 2000,
-            'startClick': 1600,
-            'endLatitude': 34.198,
-            'endLongitude': -79.767,
-            'startLatitude': 34.037,
-            'startLongitude': -84.235,
-        },
-        'arc_4': {
-            'type': 'Interfacility',
-            'props': {
-                'Transportation Mode': {
-                    'help': 'Transportation mode used.',
-                    'type': 'text',
-                    'value': 'Road',
-                    'enabled': False,
-                },
-                'Throughput (pallets)': {
-                    'help': 'Number of pallets shipped.',
-                    'type': 'num',
-                    'value': 485.2,
-                    'enabled': False,
-                },
-                'Origin and destination': {
-                    'help': 'City of origin and city of destination of the flow.',
-                    'type': 'text',
-                    'value': 'Atlanta - Jacksonville',
-                    'enabled': False,
-                },
-                'Transportation Cost (k$)': {
-                    'help': 'Cost of transportation.',
-                    'type': 'num',
-                    'value': 16.9,
-                    'enabled': False,
-                },
-            },
-            'layout': {
-                'type': 'grid',
-                'numColumns': 1,
-                'numRows': 'auto',
-                'data': {
-                    'transportation_mode': {
-                        'type': 'item',
-                        'itemId': 'Transportation Mode',
-                        'row': 2,
-                    },
-                    'throughput_pallets': {
-                        'type': 'item',
-                        'itemId': 'Throughput (pallets)',
-                        'row': 3,
-                    },
-                    'origin_and_destination': {
-                        'type': 'item',
-                        'itemId': 'Origin and destination',
-                        'row': 1,
-                    },
-                    'transportation_cost_k': {
-                        'type': 'item',
-                        'itemId': 'Transportation Cost (k$)',
-                    },
-                },
-            },
-            'category': {
-                'Product': ['LowVal', 'HighVal'],
-                'Location': ['loc_US_MI'],
-            },
-            'endClick': 2000,
-            'startClick': 1600,
-            'endLatitude': 30.332,
-            'endLongitude': -81.656,
-            'startLatitude': 34.037,
-            'startLongitude': -84.235,
-        },
-    },
-    'name': 'Transportation flows',
-    'types': {
-        'Supply': {
-            'lineBy': 'solid',
-            'sizeBy': 'Transportation Cost (k$)',
-            'colorBy': 'Throughput (pallets)',
-            'endSize': '10px',
-            'startSize': '7px',
-            'sizeByOptions': {
-              'Throughput (pallets)': {'min': 0, 'max': 5000},
-              'Transportation Cost (k$)': {'min': 5, 'max': 2000}
-            },
-            'colorByOptions': {
-              'Throughput (pallets)': {
-                'min': 0,
-                'max': 5000,
-                'endGradientColor': 'rgb(255, 153, 51)',
-                'startGradientColor': 'rgb(102, 255, 102)',
-              },
-              'Transportation Cost (k$)': {
-                'min': 5,
-                'max': 2000,
-                'endGradientColor': 'rgb(255, 153, 51)',
-                'startGradientColor': 'rgb(102, 255, 102)',
-              }
             },
         },
-        'Interfacility': {
-            'lineBy': 'solid',
-            'sizeBy': 'Transportation Cost (k$)',
-            'colorBy': 'Throughput (pallets)',
-            'endSize': '7px',
-            'startSize': '3px',
-            'sizeByOptions': {
-              'Throughput (pallets)': {'min': 0, 'max': 2000},
-              'Transportation Cost (k$)': {'min': 5, 'max': 1000}
+        "T2": {
+            "name": "Flow Type 2",
+            "colorByOptions": {
+                "selectorPropForColor": {
+                    "A": "rgb(128,255,255)",
+                    "B": "rgb(0,153,51)",
+                    "C": "rgb(0,0,128)",
+                    "D": "rgb(204,0,0)",
+                    "E": "rgb(153,77,0)",
+                    "F": "rgb(255,25,255)",
+                },
+                "numericPropExampleA": {
+                    "min": 0,
+                    "max": 50,
+                    "startGradientColor": {
+                        "dark": "rgb(233, 0, 0)",
+                        "light": "rgb(52, 52, 236)",
+                    },
+                    "endGradientColor": {
+                        "dark": "rgb(96, 2, 2)",
+                        "light": "rgb(23, 23, 126)",
+                    },
+                },
+                "numericPropExampleB": {
+                    "min": 0,
+                    "max": 40,
+                    "startGradientColor": {
+                        "dark": "rgb(233, 0, 0)",
+                        "light": "rgb(52, 52, 236)",
+                    },
+                    "endGradientColor": {
+                        "dark": "rgb(96, 2, 2)",
+                        "light": "rgb(23, 23, 126)",
+                    },
+                },
             },
-            'colorByOptions': {
-              'Throughput (pallets)': {
-                'min': 0,
-                'max': 2000,
-                'endGradientColor': 'rgb(255, 153, 51)',
-                'startGradientColor': 'rgb(102, 255, 102)',
-              },
-              'Transportation Cost (k$)': {
-                'min': 5,
-                'max': 1000,
-                'endGradientColor': 'rgb(255, 153, 51)',
-                'startGradientColor': 'rgb(102, 255, 102)',
-              }
+            "colorBy": "numericPropExampleA",
+            "lineBy": "dotted",
+            "sizeByOptions": {
+                "numericPropExampleA": {"min": 0, "max": 50},
+                "numericPropExampleB": {"min": 0, "max": 40},
+            },
+            "sizeBy": "numericPropExampleB",
+            "startSize": "15px",
+            "endSize": "30px",
+            "order": 2,
+            "props": {
+                "numericPropExampleA": {
+                    "name": "Numeric Prop Example A",
+                    "type": "num",
+                    "enabled": True,
+                    "help": "Help for numeric prop example A",
+                    "numberFormat": {
+                        "unit": "A units",
+                    },
+                },
+                "numericPropExampleB": {
+                    "name": "Numeric Prop Example B",
+                    "type": "num",
+                    "enabled": True,
+                    "help": "Help for numeric prop example B",
+                    "numberFormat": {
+                        "unit": "B units",
+                    },
+                },
+                "selectorPropForColor": {
+                    "name": "Example Categorical Prop",
+                    "type": "selector",
+                    "variant": "dropdown",
+                    "value": [
+                        {"name": "A", "value": True},
+                        {"name": "B", "value": False},
+                        {"name": "C", "value": False},
+                        {"name": "D", "value": False},
+                        {"name": "E", "value": False},
+                        {"name": "F", "value": False},
+                    ],
+                    "enabled": True,
+                },
+            },
+            "layout": {
+                "type": "grid",
+                "numColumns": 1,
+                "numRows": "auto",
+                "data": {
+                    "row1": {
+                        "type": "item",
+                        "itemId": "numericPropExampleA",
+                        "row": 1,
+                    },
+                    "row2": {
+                        "type": "item",
+                        "itemId": "numericPropExampleB",
+                        "row": 2,
+                    },
+                    "row3": {
+                        "type": "item",
+                        "itemId": "selectorPropForColor",
+                        "row": 3,
+                    },
+                },
             },
         },
     },
-}
+    "data": {
+        "arc1": {
+            "startLatitude": 43.78,
+            "startLongitude": -79.63,
+            "endLatitude": 39.82,
+            "endLongitude": -86.18,
+            "startClick": 800,
+            "endClick": 1600,
+            "type": "T1",
+            "category": {
+                "location": ["locCaOn", "locUsIn"],
+                "sku": ["SKU2", "SKU1"],
+            },
+            "props": {
+                "numericPropExampleA": {
+                    "value": 50,
+                },
+                "numericPropExampleB": {
+                    "value": 40,
+                },
+                "selectorPropForColor": {
+                    "value": [
+                        {"name": "A", "value": False},
+                        {"name": "B", "value": True},
+                        {"name": "C", "value": False},
+                        {"name": "D", "value": False},
+                        {"name": "E", "value": False},
+                        {"name": "F", "value": False},
+                    ],
+                },
+            },
+        },
+        "arc2": {
+            "startLatitude": 39.82,
+            "startLongitude": -86.18,
+            "endLatitude": 42.89,
+            "endLongitude": -85.68,
+            "startClick": 1600,
+            "endClick": 2000,
+            "type": "T2",
+            "category": {
+                "location": ["locUsMi", "locUsIn"],
+                "sku": ["SKU2", "SKU1"],
+            },
+            "props": {
+                "numericPropExampleA": {
+                    "value": 30,
+                },
+                "numericPropExampleB": {
+                    "value": 20,
+                },
+                "selectorPropForColor": {
+                    "value": [
+                        {"name": "A", "value": False},
+                        {"name": "B", "value": False},
+                        {"name": "C", "value": False},
+                        {"name": "D", "value": False},
+                        {"name": "E", "value": True},
+                        {"name": "F", "value": False},
+                    ],
+                },
+            },
+        },
+        "arc3": {
+            "startLatitude": 39.82,
+            "startLongitude": -86.18,
+            "endLatitude": 28.49,
+            "endLongitude": -81.56,
+            "startClick": 1600,
+            "endClick": 2000,
+            "type": "T2",
+            "category": {
+                "location": ["locUsFl", "locUsIn"],
+                "sku": ["SKU2", "SKU1"],
+            },
+            "props": {
+                "numericPropExampleA": {
+                    "value": 30,
+                },
+                "numericPropExampleB": {
+                    "value": 14,
+                },
+                "selectorPropForColor": {
+                    "value": [
+                        {"name": "A", "value": False},
+                        {"name": "B", "value": False},
+                        {"name": "C", "value": False},
+                        {"name": "D", "value": True},
+                        {"name": "E", "value": False},
+                        {"name": "F", "value": False},
+                    ],
+                },
+            },
+        },
+        "arc4": {
+            "startLatitude": 39.82,
+            "startLongitude": -86.18,
+            "endLatitude": 42.361176,
+            "endLongitude": -71.084707,
+            "startClick": 1600,
+            "endClick": 2000,
+            "type": "T2",
+            "category": {
+                "location": ["locUsMa", "locUsIn"],
+                "sku": ["SKU2", "SKU1"],
+            },
+            "props": {
+                "numericPropExampleA": {
+                    "value": 30,
+                },
+                "numericPropExampleB": {
+                    "value": 6,
+                },
+                "selectorPropForColor": {
+                    "value": [
+                        {"name": "A", "value": False},
+                        {"name": "B", "value": False},
+                        {"name": "C", "value": False},
+                        {"name": "D", "value": False},
+                        {"name": "E", "value": False},
+                        {"name": "F", "value": True},
+                    ],
+                },
+            },
+        },
+    },
+},
 ```
 </details>

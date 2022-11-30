@@ -1,4 +1,4 @@
-### `geos`
+# `geos`
 The `geos` group takes in data and renders it as geographic areas on the "**Map**" view, to visualize spatial distribution of parameters.
 
 The internal structure of `geos` is very similar to that of the `arcs` and `nodes` groups. The most relevant discrepancy is the addition of the special key `geoJson`.
@@ -8,10 +8,10 @@ Let's look inside the structure of `geos`:
 'geos': {
     'name': 'A name that will be displayed in the map legend.',
     'types': {
-        'custom_geo_type_1': {
+        'customGeoType1': {
             'name': 'A name to be displayed in the UI',
             'colorByOptions': {
-                'custom_prop_key_1': {
+                'customPropKey1': {
                     'min': 0,
                     'max': 60,
                     'startGradientColor': {
@@ -23,7 +23,7 @@ Let's look inside the structure of `geos`:
                         'light': 'rgb(23, 23, 126)',
                     },
                 },
-                'custom_prop_key_2': {
+                'customPropKey2': {
                     'min': 0,
                     'max': 40,
                     'startGradientColor': {
@@ -35,18 +35,18 @@ Let's look inside the structure of `geos`:
                         'light': 'rgb(23, 23, 126)',
                     },
                 },
-                'custom_prop_key_3': {
-                  'custom_color_key_1':'rgb(233,0,0)',
-                  'custom_color_key_2':'rgb(0,233,0)'
+                'customPropKey3': {
+                  'customColorKey1':'rgb(233,0,0)',
+                  'customColorKey2':'rgb(0,233,0)'
                 }
             },
-            'colorBy': 'custom_prop_key_1',
+            'colorBy': 'customPropKey1',
             'geoJson': {
                 'geoJsonLayer': 'https://cave-geojsons.s3.amazonaws.com/geojson_data_1.json',
-                'geoJsonProp': 'geojson_prop_1',
+                'geoJsonProp': 'geojsonProp1',
             },
             'props': {
-                'custom_prop_key_1': {
+                'customPropKey1': {
                     'type': 'num',
                     'help': 'A help text for this numeric input',
                     'numberFormat': {
@@ -54,41 +54,36 @@ Let's look inside the structure of `geos`:
                     },
                     'enabled': True,
                 },
-                'custom_prop_key_2': {...},
-                # As many default props as needed
+                'customPropKey2': {...},
+                'customPropKey3': {...},
             },
             'icon': 'FaHexagon',
         },
-        'custom_geo_type_2': {...},
-        # As many geo types as needed
+        'customGeoType2': {...},
     },
     'data': {
-        'custom_geo_data_1': {
+        'customGeoData1': {
             'name': 'A name to be displayed in the UI',
             'geoJsonValue': 'geojson_value_1',
-            'type': 'custom_geo_type_1',
+            'type': 'customGeoType1',
             'category': {
-                'custom_data_chunk_1': ['custom_data_key_1']
-                # As many data chunks as needed
+                'customDataChunck1': ['customDataKey1']
             },
             'props': {
-                'custom_prop_key_1': {
+                'customPropKey1': {
                     'value': 60,
                 },
-                'custom_prop_key_2': {
-                    'value': 9.5,
-                },
-                'custom_prop_key_3': {...},
-                # As many custom props as needed
+                'customPropKey2': {...},
+                'customPropKey3': {...},
             },
         },
-        'custom_geo_data_2': {...},
+        'customGeoData2': {...},
         # As many geo data chunks as needed
     },
 }
 ```
 
-##### Common keys
+## Common keys
 - [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`category`](../common_keys/common_keys.md#category)
 - [`colorBy`](../common_keys/common_keys.md#colorBy)
@@ -110,158 +105,186 @@ Let's look inside the structure of `geos`:
 - [`value`](../common_keys/props.md#value)
 - [`variant`](../common_keys/props.md#variant)
 
-##### Special and custom keys
+## Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-<a name="geo-data-point">`data.custom_geo_data_*`</a> | Required | A custom key wrapper for the parameters required to visualize a geo and the data associated with it on the "**Map**" view.
-`data.custom_geo_data_*.category`&swarhk;<br>`.custom_data_chunk_*` | | See [`custom_data_chunk_*`](categories.md#custom_data_chunk_).
-`data.custom_geo_data_*.category`&swarhk;<br>`.custom_data_chunk_*.custom_data_key_*` | | See [`custom_data_key_*`](categories.md#custom_data_key_).
-<a name="geojson-value">`data.custom_geo_data_*.geoJsonValue`</a> | | The value matched by [`geojson_prop_*`](#geojson_prop_) inside the GeoJSON data source. The CAVE App will aggregate all data matches found via the path: `features` &rarr; `<array-index>` &rarr; `properties` &rarr; `geojson_prop_*` &rarr; `geojson_value_*`.
-<a name="geojson_value_">`data.custom_geo_data_*.geoJsonValue`&swarhk;<br>`.geojson_value_*`</a> | | The match value for the [geoJsonValue](#geojson-value) key.
-`data.custom_geo_data_*.name` | | A name for the geo area that will be displayed as a title in the map modal.
-`data.custom_geo_data_*.props`&swarhk;<br>`.custom_prop_key_*` | | See [`custom_prop_key_*`](../common_keys/props.md#custom_prop_key_).
-`data.custom_geo_data_*.type` | Required | The `type` key sets the type of `custom_geo_data_*` to a `custom_geo_type_*` key, to match specific visualization preferences for a geo.
+`data.customGeoData*.category`&swarhk;<br>`.customDataChunck*` | | See [`customDataChunck*`](categories.md#customDataChunck).
+`data.customGeoData*.category`&swarhk;<br>`.customDataChunck*.customDataKey*` | | See [`customDataKey*`](categories.md#customDataKey).
+<a name="geojson-value">`data.customGeoData*.geoJsonValue`</a> | required | The identifier for this geo as identified in the specified geoJson object. This identifier is matched to the `types.customGeoType*.geoJson.geoJsonProp` as it relates to each geoJson object in the file specified at `types.customGeoType*.geoJson.geoJsonLayer`.
+`data.customGeoData*.name` | | A name for the geo area that will be displayed as a title in the map modal.
+`data.customGeoData*.props`&swarhk;<br>`.customPropKey*` | | See [`customPropKey*`](../common_keys/props.md#customPropKey).
+`data.customGeoData*.type` | Required | The `type` key sets the type of `customGeoData*` to a `customGeoType*` key, to match specific visualization preferences for a geo.
 `types` | Required | The `types` key allows you to define different types of geos in terms of styling and data viz settings.
-<a name="geo-type">`types.custom_geo_type_*`</a> | Required | A wrapper for key-value pairs that match a specific set of data viz preferences for a geo.
-<a name="geojson">`types.custom_geo_type_*.geoJson`</a> | | A wrapper for the [`geoJsonLayer`](#geojson_layer) and [`geoJsonProp`](#geojson_prop) keys in a geo type.
-<a name="geojson_layer">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonLayer`</a> | | Sets the GeoJSON data source of `custom_geo_type_*` to a URL of a GeoJSON data source. Note that this URL is fetched on app startup or, if passed later, when the layer is enabled by the app user.
-<a name="geojson_prop">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonProp`</a> | | Contains the name of a [GeoJSON property](#https://datatracker.ietf.org/doc/html/rfc7946#section-1.5) in the data source specified in `geoJsonLayer`.
-<a name="geojson_prop_">`types.custom_geo_type_*.geoJson`&swarhk;<br>`.geoJsonProp.geojson_prop_*`</a> | | The match value for the [geoJsonProp](#geojson_prop) key.
+<a name="geo-type">`types.customGeoType*`</a> | Required | A wrapper for key-value pairs that match a specific set of data viz preferences for a geo.
+<a name="geoJson">`types.customGeoType*.geoJson`</a> | | A wrapper for the [`geoJsonLayer`](#geojson_layer) and [`geoJsonProp`](#geojson_prop) keys in a geo type.
+<a name="geoJsonLayer">`types.customGeoType*.geoJson`&swarhk;<br>`.geoJsonLayer`</a> | | Sets the GeoJSON data source of `customGeoType*` to a URL of a GeoJSON data source. Note that this URL is fetched on app startup or, if passed later, when the layer is enabled by the app user.
+<a name="geoJsonProp">`types.customGeoType*.geoJson`&swarhk;<br>`.geoJsonProp`</a> | | Contains the name of a [GeoJSON property](#https://datatracker.ietf.org/doc/html/rfc7946#section-1.5) in the data source specified in `geoJsonLayer`.
 
-> Please note that in the CAVE App, the maximum total size of the combined GeoJSON data sources is 50 MiB. Feel free to use a tool like [mapshaper](https://mapshaper.org/) to meet the size requirements.
+> Please note that in the CAVE App, the maximum total size of all combined GeoJSON data sources is 50 MiB. Feel free to use a tool like [mapshaper](https://mapshaper.org/) to meet the size requirements.
 
-#### Example
+## Example
 
 <details>
   <summary>Click here to show / hide example</summary>
 
 ```py
-'geos': {
-    'name': 'Geographies',
-    'types': {
-        'state': {
-            'name': 'State',
-            'colorByOptions': {
-                'Demand': {
-                    'min': 50,
-                    'max': 250,
-                    'startGradientColor': {
-                        'dark': 'rgb(100, 100, 100)',
-                        'light': 'rgb(200, 200, 200)',
+"geos": {
+    "types": {
+        "state": {
+            "name": "State",
+            "colorByOptions": {
+                "numericPropExampleC": {
+                    "min": 0,
+                    "max": 300,
+                    "startGradientColor": {
+                        "dark": "rgb(100, 100, 100)",
+                        "light": "rgb(200, 200, 200)",
                     },
-                    'endGradientColor': {
-                        'dark': 'rgb(20, 205, 20)',
-                        'light': 'rgb(10, 100, 10)',
-                    },
-                }
-            },
-            'colorBy': 'Demand',
-            'geoJson': {
-                'geoJsonLayer': 'StateGeoJson',
-                'geoJsonProp': 'code_hasc',
-            },
-            'props': {
-                'Demand': {
-                    'type': 'num',
-                    'enabled': True,
-                    'help': 'The Demand of this Geography',
-                    'numberFormat': {
-                        'unit': 'units',
-                    },
-                },
-            },
-            'icon': 'FaHexagon',
-        },
-        'country': {
-            'name': 'Country',
-            'colorByOptions': {
-                'Demand': {
-                    'min': 0,
-                    'max': 800,
-                    'startGradientColor': {
-                        'dark': 'rgb(100, 100, 100)',
-                        'light': 'rgb(200, 200, 200)',
-                    },
-                    'endGradientColor': {
-                        'dark': 'rgb(20, 205, 20)',
-                        'light': 'rgb(10, 100, 10)',
+                    "endGradientColor": {
+                        "dark": "rgb(20, 205, 20)",
+                        "light": "rgb(10, 100, 10)",
                     },
                 }
             },
-            'colorBy': 'Demand',
-            'geoJson': {
-                'geoJsonLayer': 'CountryGeoJson',
-                'geoJsonProp': 'FIPS_10',
+            "colorBy": "numericPropExampleC",
+            "geoJson": {
+                "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
+                "geoJsonProp": "code_hasc",
             },
-            'startGradientColor': {
-                'dark': 'rgb(100, 100, 100)',
-                'light': 'rgb(200, 200, 200)',
-            },
-            'endGradientColor': {
-                'dark': 'rgb(20, 205, 20)',
-                'light': 'rgb(10, 100, 10)',
-            },
-            'props': {
-                'Demand': {
-                    'type': 'num',
-                    'enabled': True,
-                    'help': 'The Demand of this Geography',
-                    'numberFormat': {
-                        'unit': 'units',
+            "icon": "BsHexagon",
+            "props": {
+                "numericPropExampleC": {
+                    "name": "Numeric Prop Example C",
+                    "type": "num",
+                    "enabled": True,
+                    "help": "Help with the example numeric prop for this State",
+                    "numberFormat": {
+                        "unit": "C units",
                     },
                 },
             },
-            'icon': 'FaHexagon',
         },
-    },
-    'data': {
-        'geo_1': {
-            'name': 'Ontario, Canada',
-            'geoJsonValue': 'CA.ON',
-            'type': 'state',
-            'category': {'Location': ['loc_CA_ON']},
-            'props': {
-                'Demand': {
-                    'value': 50,
+        "country": {
+            "name": "Country",
+            "colorByOptions": {
+                "numericPropExampleC": {
+                    "min": 0,
+                    "max": 800,
+                    "startGradientColor": {
+                        "dark": "rgb(100, 100, 100)",
+                        "light": "rgb(200, 200, 200)",
+                    },
+                    "endGradientColor": {
+                        "dark": "rgb(20, 205, 20)",
+                        "light": "rgb(10, 100, 10)",
+                    },
                 }
             },
-        },
-        'geo_2': {
-            'name': 'Michigan, USA',
-            'geoJsonValue': 'US.MI',
-            'type': 'state',
-            'category': {'Location': ['loc_US_MI']},
-            'props': {
-                'Demand': {
-                    'value': 300,
-                }
+            "colorBy": "numericPropExampleC",
+            "geoJson": {
+                "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
+                "geoJsonProp": "FIPS_10",
             },
-        },
-        'geo_c_1': {
-            'name': 'Canada',
-            'geoJsonValue': 'CA',
-            'type': 'country',
-            'category': {'Location': ['loc_CA_ON']},
-            'props': {
-                'Demand': {
-                    'value': 50,
-                }
-            },
-        },
-        'geo_c_2': {
-            'name': 'USA',
-            'geoJsonValue': 'US',
-            'type': 'country',
-            'category': {
-                'Location': ['loc_US_FL', 'loc_US_MA', 'loc_US_IN', 'loc_US_MI']
-            },
-            'props': {
-                'Demand': {
-                    'value': 800,
-                }
+            "icon": "BsHexagon",
+            "props": {
+                "numericPropExampleC": {
+                    "name": "Numeric Prop Example C",
+                    "type": "num",
+                    "enabled": True,
+                    "help": "Help with the example numeric prop for this Country",
+                    "numberFormat": {
+                        "unit": "units",
+                    },
+                },
             },
         },
     },
-}
+    "data": {
+        "geo1": {
+            "name": "Ontario, Canada",
+            "geoJsonValue": "CA.ON",
+            "type": "state",
+            "category": {"location": ["locCaOn"]},
+            "props": {
+                "numericPropExampleC": {
+                    "value": 50,
+                }
+            },
+        },
+        "geo2": {
+            "name": "Michigan, USA",
+            "geoJsonValue": "US.MI",
+            "type": "state",
+            "category": {"location": ["locUsMi"]},
+            "props": {
+                "numericPropExampleC": {
+                    "value": 300,
+                }
+            },
+        },
+        "geo3": {
+            "name": "Massachusetts, USA",
+            "geoJsonValue": "US.MA",
+            "type": "state",
+            "category": {"location": ["locUsMi"]},
+            "props": {
+                "numericPropExampleC": {
+                    "value": 250,
+                }
+            },
+        },
+        "geo4": {
+            "name": "Florida, USA",
+            "geoJsonValue": "US.FL",
+            "type": "state",
+            "category": {"location": ["locUsMi"]},
+            "props": {
+                "numericPropExampleC": {
+                    "value": 100,
+                }
+            },
+        },
+        "geo5": {
+            "name": "Indiana, USA",
+            "geoJsonValue": "US.FL",
+            "type": "state",
+            "category": {"location": ["locUsMi"]},
+            "props": {
+                "numericPropExampleC": {
+                    "value": 200,
+                }
+            },
+        },
+        "geoCountry1": {
+            "name": "Canada",
+            "geoJsonValue": "CA",
+            "type": "country",
+            "category": {"location": ["locCaOn"]},
+            "props": {
+                "numericPropExampleC": {
+                    "value": 50,
+                }
+            },
+        },
+        "geoCountry2": {
+            "name": "USA",
+            "geoJsonValue": "US",
+            "type": "country",
+            "category": {
+                "location": [
+                    "locUsFl",
+                    "locUsMa",
+                    "locUsIn",
+                    "locUsMi",
+                ]
+            },
+            "props": {
+                "numericPropExampleC": {
+                    "value": 800,
+                }
+            },
+        },
+    },
+},
 ```
 </details>

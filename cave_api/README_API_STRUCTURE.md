@@ -28,17 +28,17 @@ There is a third type of keys (**custom keys**), which depend on the data and, t
 {
     'categories': {
         'data':{
-            'custom_location': {
+            'customLocation': {
                 'data': {
-                    'custom_loc_us_mi': {
-                        'custom_region': 'North America',
-                        'custom_country': 'USA',
-                        'custom_state': 'Michigan'
+                    'customLocUsMi': {
+                        'customRegion': 'North America',
+                        'customCountry': 'USA',
+                        'customState': 'Michigan'
                     },
-                    'custom_loc_us_ma': {
-                        'custom_region': 'North America',
-                        'custom_country': 'USA',
-                        'custom_state': 'Massachusetts'
+                    'customLocUsMa': {
+                        'customRegion': 'North America',
+                        'customCountry': 'USA',
+                        'customState': 'Massachusetts'
                     },
                 ...
                 },
@@ -48,7 +48,7 @@ There is a third type of keys (**custom keys**), which depend on the data and, t
 }
 ```
 
-Here, `custom_location`, `custom_loc_us_mi`, `custom_loc_us_ma`, `custom_region`, `custom_country`, and `custom_state` are all custom keys. These key names are not restricted and can be tied to the problem or use case data. These also do not need to be preceded by `custom_`, but this tag is used to indicate that they are custom keys for example purposes. (Throughout these docs, if not explicitly mentioned, all custom keys are preceded by the `custom_` tag whenever they are found in an example.)
+Here, `customLocation`, `customLocUsMi`, `customLocUsMa`, `customRegion`, `customCountry`, and `customState` are all custom keys. These key names are not restricted and can be tied to the problem or use case data. These also do not need to be preceded by `custom_`, but this tag is used to indicate that they are custom keys for example purposes. (Throughout these docs, if not explicitly mentioned, all custom keys are preceded by the `custom` tag whenever they are found in an example.)
 
 Custom keys are always included as a direct child of common keys such as `data`, `props`, `types`, and `category`, but they also appear as a direct child of less frequent keys such as `nestedStructure`, or even within another custom key, as shown in the structure above.
 

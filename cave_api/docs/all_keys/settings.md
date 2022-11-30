@@ -1,4 +1,4 @@
-#### `settings`
+# `settings`
 This key group allows designers to specify settings they want the site to use (overriding setting defaults. For example, designers can specify the URL where icons are fetched from. If this is not supplied, it defaults to the one specified in [`cave_static` constants](https://github.com/MIT-CAVE/cave_static/blob/0.3.0-dev/src/utils/constants.js) for each version.
 
 Below is the `settings` group with its sub-keys matched by typical values:
@@ -39,14 +39,14 @@ Below is the `settings` group with its sub-keys matched by typical values:
 }
 ```
 
-##### Common keys
+## Common keys
 - [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`data`](../common_keys/common_keys.md#data)
 - [`numberFormat`](../common_keys/common_keys.md#number-format)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 
-##### Special and custom keys
+## Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
 <a name="iconUrl">`iconUrl`</a> | | The URL of SVG icon sources to be fetched into the CAVE app. Please note all icons specified in the CAVE API are fetched by end users from this URL when an instance of the CAVE app start running in their browsers.
@@ -55,3 +55,69 @@ Key | Default | Description
 <a name="syncToggles">`syncToggles`</a> | `{}` | A dictionary with key value pairs that allow app users to switch API state into a local state. Keys are the toggle labels displayed to users, and values are dictionaries containing key value pairs. The keys in these dictionaries must be unique, and the values are arrays representing the paths to be controlled by that toggle. When toggled back into an API synced state the local data is removed, so this option isn't fully supported for some data inputs (e.g. [`props`](../common_keys/common_keys.md#props-short)).
 <a name="timeLength">`timeLength`</a> | | An integer representing the length of all `value` lists found in any supplied [`timeObject`](../common_keys/time_object.md)s. If no `timeObject`s are used, this key can be omitted to hide the time selector in the app.
 <a name="timeUnits">`timeUnits`</a> | `'units'` | A string used to describe each unit of time between steps in [`timeObject`](../common_keys/time_object.md)s (e.g. 'day', 'week', 'month', etc.). This is only used for display purposes.
+
+
+## Example
+
+<details>
+  <summary>Click here to show / hide example</summary>
+
+```py
+"settings": {
+    "allowModification": False,
+    "sendToApi": False,
+    "sendToClient": True,
+    "data": {
+        "sync":{
+            "mapLayers":{
+                "name": "Map Layers",
+                "showToggle": True,
+                "value": False,
+                "data":{
+                    "ml1": ["map", "data", "enabledTypes"],
+                    "ml2": ["nodes", "types"],
+                    "ml3": ["arcs", "types"],
+                    "ml4": ["geos", "types"],
+                }
+            },
+            "appBar": {
+                "name": "App Bar",
+                "showToggle": True,
+                "value": False,
+                "data": {
+                    "ab1": ["appBar", "data", "dashboardId"],
+                    "ab2": ["appBar", "paneState"],
+                } 
+            },
+        },
+        "syncToggles": {
+            "Map Layers": {
+                "ml1": ["map", "data", "enabledTypes"],
+                "ml2": ["nodes", "types"],
+                "ml3": ["arcs", "types"],
+                "ml4": ["geos", "types"],
+            },
+        },
+        "defaultDesync": {
+            "Map Layers": {
+                "ml1": ["map", "data", "enabledTypes"],
+                "ml2": ["nodes", "types"],
+                "ml3": ["arcs", "types"],
+                "ml4": ["geos", "types"],
+            },
+            "App Bar": {
+                "ab1": ["appBar", "data", "dashboardId"],
+                "ab2": ["appBar", "paneState"],
+            },
+        },
+        "iconUrl": "https://react-icons.mitcave.com/0.0.1",
+        "numberFormat": {
+            "precision": 4,
+            "trailingZeros": False,
+            "unitSpace": True,
+        },
+        "debug": True,
+    },
+},
+```
+</details>

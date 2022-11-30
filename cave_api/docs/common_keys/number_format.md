@@ -1,4 +1,4 @@
-#### The `numberFormat` key
+# `numberFormat`
 The `numberFormat` key is used to define a custom format for numeric values based on attributes such as: the specific [locale](https://en.wikipedia.org/wiki/Locale_(computer_software)), the nature of the accompanying unit (if present), the number of decimal places, and the handling of trailing zeros. Additionally, it allows you to configure auto-formatting behavior when in a [numeric input field](props.md#num).
 
 A `numberFormat` specification can be added to the top level [`settings`](../all_keys/settings.md) to affect the displaying format of all the numeric data in the CAVE app. Also, it is possible to override its attributes by adding more `numberFormat` definitions at specific places within the CAVE API structure. Allowed locations for `numberFormat` are the [`settings.data`](../all_keys/settings.md) group, within a [`'num'` prop](props.md#num), within a [stat](../all_keys/stats.md) element or within a [KPI](../all_keys/kpis.md) element.
@@ -16,7 +16,7 @@ The `numberFormat` structure with all its keys looks as follows:
 }
 ```
 
-##### Nested inside the `numberFormat` group
+## Nested inside the `numberFormat` group
 Key | Default | Description
 --- | ------- | -----------
 <a name="currency">`currency`</a> | `False` | If `True`, the specified unit is treated as a currency and placed before the number. Additionally, if the [`unitSpace`](#unit-space) key is not specified, there will be no space between the unit and the number when `currency` is `True`, or a space will be placed otherwise.

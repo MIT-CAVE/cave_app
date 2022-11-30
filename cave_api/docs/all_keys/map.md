@@ -35,16 +35,16 @@ Below is the `map` group with its sub-keys matched by typical or placeholder val
         'legendGroups': [
             {
                 'name': 'DC Delivery',
-                'nodeTypes': ['DC'],
-                'arcTypes': ['T1'],
-                'geoTypes': ['state', 'country']
+                'nodeTypes': ['customNodeType1'],
+                'arcTypes': ['customArcType1'],
+                'geoTypes': ['customGeoType1', 'customGeoType2']
             }
         ],
     },
 }
 ```
 
-##### Common keys
+## Common keys
 - [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`data`](../common_keys/common_keys.md#data)
 - [`icon`](../common_keys/common_keys.md#icon)
@@ -52,10 +52,10 @@ Below is the `map` group with its sub-keys matched by typical or placeholder val
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 
-##### Special and custom keys
+## Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-<a name="defaultViewport">`defaultViewport`</a> | | A dictionary object containing geo properties that set the map's default field of view. Also used by the "home" button in the app.
+<a name="defaultViewport">`defaultViewport`</a> | | A dictionary object containing geo properties that set the map's default field of view. Also used by the "home" viewport button in the app.
 `defaultViewport.bearing` | `0` | The initial bearing (rotation) of the map, measured in degrees counter-clockwise from north.
 `defaultViewport.pitch` | `0` | The initial pitch (*tilt*) of the viewport in the "**Map**" view, measured in degrees away from the plane of the screen (0&deg; - 85&deg;). A pitch of 0&deg; results in a two-dimensional map, as if your line of sight forms a perpendicular angle with the earth's surface, while a greater value like 60&deg; looks ahead towards the horizon.
 `defaultViewport.latitude` | `42.36157` | The center latitude of the viewport in the "**Map**" view. It takes a float value.
@@ -69,6 +69,74 @@ Key | Default | Description
 <a name="geo">`enabledTypes.geo`</a> | | A dictionary object containing [geo types](geos.md#geo-type) as keys mapped to boolean values to enable or disable the visualization of geo types in the "**Map**" view.
 <a name="optionalViewports">`optionalViewports`</a> | | A dictionary of optional viewports that can be jumped to by users. Each optional viewport should contain the same keys as `defaultViewport` as well as `name` and `icon` keys.
 <a name="legendGroups">`legendGroups`</a> | `[]` | A list of all groupings to be shown in the map legend. Groups are displayed in list order with each group having an internal order of `nodes`, `arcs`, then `geos`. Types not included in any legend group cannot be toggled.
-`legendGroups[i].nodeTypes` | | A list of all node types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
-`legendGroups[i].arcTypes` | | A list of all arc types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
-`legendGroups[i].geoTypes` | | A list of all geo types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+`legendGroups.*.nodeTypes` | | A list of all node types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+`legendGroups.*.arcTypes` | | A list of all arc types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+`legendGroups.*.geoTypes` | | A list of all geo types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+
+## Example
+
+<details>
+  <summary>Click here to show / hide example</summary>
+
+```py
+"map": {
+    "data": {
+        "enabledTypes": {
+            "arc": {"T1": True, "T2": True},
+            "node": {"nodeTypeA": True, "nodeTypeB": True},
+            "geo": {"state": True},
+        },
+        "defaultViewport": {
+            "longitude": -75.44766721108091,
+            "latitude": 40.34530681636297,
+            "zoom": 4.657916626867326,
+            "pitch": 0,
+            "bearing": 0,
+            "height": 1287,
+            "altitude": 1.5,
+            "maxZoom": 12,
+            "minZoom": 2,
+        },
+        "optionalViewports": {
+            "ov0": {
+                "icon": "FaGlobeAsia",
+                "name": "Asia",
+                "zoom": 4,
+                "order": 1,
+                "pitch": 0,
+                "bearing": 0,
+                "maxZoom": 12,
+                "minZoom": 2,
+                "latitude": 30,
+                "longitude": 121,
+            },
+            "ov1": {
+                "icon": "FaGlobeEurope",
+                "name": "EMEA",
+                "zoom": 4,
+                "order": 1,
+                "pitch": 0,
+                "bearing": 0,
+                "maxZoom": 12,
+                "minZoom": 2,
+                "latitude": 47,
+                "longitude": 14,
+            },
+        },
+        "legendGroups": [
+            {
+                "name": "Legend Group A",
+                "nodeTypes": ["nodeTypeA"],
+                "arcTypes": ["T1"],
+            },
+            {
+                "name": "Legend Group B",
+                "nodeTypes": ["nodeTypeB"],
+                "arcTypes": ["T2"],
+                "geoTypes": ["state", "country"],
+            },
+        ],
+    },
+},
+```
+</details>
