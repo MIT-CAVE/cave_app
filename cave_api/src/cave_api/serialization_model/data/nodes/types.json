@@ -1,8 +1,8 @@
 {
-    "DC": {
-        "name": "DCs",
+    "nodeTypeA": {
+        "name": "Node Type A",
         "colorByOptions": {
-            "Size": {
+            "numericPropExampleA": {
                 "min": 0,
                 "max": 80,
                 "startGradientColor": {
@@ -14,7 +14,7 @@
                     "light": "rgb(23, 23, 126)"
                 }
             },
-            "Capacity": {
+            "numericPropExampleB": {
                 "min": 0,
                 "max": 50,
                 "startGradientColor": {
@@ -26,34 +26,51 @@
                     "light": "rgb(23, 23, 126)"
                 }
             },
-            "Active": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"}
+            "booleanPropExample": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"}
         },
-        "colorBy": "Size",
+        "colorBy": "booleanPropExample",
         "minSizeRange": 0,
         "sizeByOptions": {
-            "Size": {"min": 0, "max": 80},
-            "Capacity": {"min": 0, "max": 50}
+            "numericPropExampleA": {"min": 0, "max": 80},
+            "numericPropExampleB": {"min": 0, "max": 50}
         },
-        "sizeBy": "Capacity",
+        "sizeBy": "numericPropExampleA",
         "startSize": "30px",
         "endSize": "45px",
         "icon": "MdStore",
         "order": 2,
         "props": {
-            "Size": {
+            "numericPropExampleA": {
+                "name": "Numeric Prop Example A",
                 "type": "num",
                 "enabled": true,
-                "help": "The Size in SQ Meters",
+                "help": "Help for numeric prop example A",
                 "numberFormat": {
-                    "unit": "Sq Meters"
+                    "unit": "A units"
                 }
+            },
+            "numericPropExampleB": {
+                "name": "Numeric Prop Example B",
+                "type": "num",
+                "enabled": true,
+                "help": "Help for numeric prop example B",
+                "numberFormat": {
+                    "unit": "B units"
+                }
+            },
+            "booleanPropExample": {
+                "name": "Boolean Prop Example",
+                "type": "toggle",
+                "value": true,
+                "enabled": true,
+                "help": "Help for boolean prop"
             }
         }
     },
-    "Store": {
-        "name": "Stores",
+    "nodeTypeB": {
+        "name": "Node Type B",
         "colorByOptions": {
-            "Size": {
+            "numericPropExampleA": {
                 "min": 0,
                 "max": 1000,
                 "startGradientColor": {
@@ -65,7 +82,7 @@
                     "light": "rgb(23, 23, 126)"
                 }
             },
-            "Capacity": {
+            "numericPropExampleB": {
                 "min": 0,
                 "max": 50,
                 "startGradientColor": {
@@ -77,26 +94,43 @@
                     "light": "rgb(23, 23, 126)"
                 }
             },
-            "Active": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"}
+            "booleanPropExample": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"}
         },
-        "colorBy": "Size",
+        "colorBy": "numericPropExampleA",
         "sizeByOptions": {
-            "Size": {"min": 0, "max": 100},
-            "Capacity": {"min": 0, "max": 250}
+            "numericPropExampleA": {"min": 0, "max": 100},
+            "numericPropExampleB": {"min": 0, "max": 250}
         },
-        "sizeBy": "Capacity",
+        "sizeBy": "numericPropExampleB",
         "startSize": "30px",
         "endSize": "45px",
         "icon": "BsBuilding",
         "order": 1,
         "props": {
-            "Size": {
+            "numericPropExampleA": {
+                "name": "Numeric Prop Example A",
                 "type": "num",
                 "enabled": true,
-                "help": "The Size in SQ Meters",
+                "help": "Help for numeric prop example A",
                 "numberFormat": {
-                    "unit": "Sq Meters"
+                    "unit": "A units"
                 }
+            },
+            "numericPropExampleB": {
+                "name": "Numeric Prop Example B",
+                "type": "num",
+                "enabled": true,
+                "help": "Help for numeric prop example B",
+                "numberFormat": {
+                    "unit": "B units"
+                }
+            },
+            "booleanPropExample": {
+                "name": "Boolean Prop Example",
+                "type": "toggle",
+                "value": true,
+                "enabled": true,
+                "help": "Help for boolean prop"
             }
         }
     }

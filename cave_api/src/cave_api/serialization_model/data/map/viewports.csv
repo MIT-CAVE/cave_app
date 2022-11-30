@@ -1,4 +1,4 @@
-id,name,icon,longitude,latitude,zoom,pitch,bearing,altitude,maxZoom,minZoom
-default,Default,,-75.44766721108091,40.34530681636297,4.657916626867326,0,0,1.5,12,2
-ov0,Asia,FaGlobeAsia,121,30,4,0,0,,12,2
-ov1,EMEA,FaGlobeEurope,14,47,4,0,0,,12,2
+id,name,icon,longitude,latitude,zoom,pitch,bearing,height,altitude,maxZoom,minZoom,order
+default,,,-75.44766721,40.34530682,4.657916627,0,0,1287,1.5,12,2,
+ov0,Asia,FaGlobeAsia,121,30,4,0,0,,,12,2,1
+ov1,EMEA,FaGlobeEurope,14,47,4,0,0,,,12,2,1

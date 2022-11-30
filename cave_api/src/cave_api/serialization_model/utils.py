@@ -1,12 +1,13 @@
 import csv, os
 
+
 def cast_properly(input):
     if isinstance(input, str):
-        if input =='':
+        if input == "":
             return None
-        if input.lower() == 'true':
+        if input.lower() == "true":
             return True
-        if input.lower() == 'false':
+        if input.lower() == "false":
             return False
         try:
             float_input = float(input)
@@ -15,9 +16,10 @@ def cast_properly(input):
             pass
     return input
 
+
 def serializeRow(headers, values):
     values = [cast_properly(i) for i in values]
-    return {headers[i]:values[i] for i in range(len(headers)) if values[i]!=None}
+    return {headers[i]: values[i] for i in range(len(headers)) if values[i] != None}
 
 
 def read_csv(filename):
@@ -26,12 +28,14 @@ def read_csv(filename):
         headers = next(file_data)
         return [serializeRow(headers, i) for i in file_data]
 
+
 def enumerate_dir(directory):
     return enumerate(sorted(os.listdir(directory)))
+
 
 def group_list(lst, key):
     output = {}
     for i in lst:
         key_value = i.pop(key)
-        output[key_value]=output.get(key_value,[])+[i]
+        output[key_value] = output.get(key_value, []) + [i]
     return output

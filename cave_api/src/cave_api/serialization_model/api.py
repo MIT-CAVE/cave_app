@@ -1,5 +1,6 @@
-from logging import raiseExceptions
 from cave_api.serialization_model.serialize import get_api_object
+
+
 def execute_command(session_data, command="init"):
     """
     Usage:
@@ -23,8 +24,18 @@ def execute_command(session_data, command="init"):
     - `output`:
         - Type: dict of dicts
         - What: A dict of dictionaries to mutate the current session given the current `session_data`
-        - See: https://github.com/MIT-CAVE/cave_app/blob/0.2.0/cave_api/README_API_STRUCTURE.md
+        - See: https://github.com/MIT-CAVE/cave_app/blob/1.0.0-dev/cave_api/README_API_STRUCTURE.md
     """
+    initial_data=get_api_object()
     if command == "init":
-        return get_api_object()
+        return initial_data
+    if command == "reset":
+        print("The `reset` button has been pressed by the user!")
+        return initial_data
+    elif command == "solve":
+        print("The `solve` button has been pressed by the user!")
+        return initial_data
+    elif command == "test":
+        print("The `test` button has been pressed by the user!")
+        raise Exception('Test Exception!')
     raise Exception(f"Command not found: `{command}`")

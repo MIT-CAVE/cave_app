@@ -1,8 +1,8 @@
-id,name,geoJsonValue,type,Locations,Demand
-geo_1,"Ontario, Canada",CA.ON,state,loc_CA_ON,50
-geo_2,"Michigan, USA",US.MI,state,loc_US_MI,300
-geo_3,"Massachusetts, USA",US.MA,state,loc_US_MI,250
-geo_4,"Florida, USA",US.FL,state,loc_US_MI,100
-geo_5,"Indiana, USA",US.FL,state,loc_US_MI,200
-geo_c_1,Canada,CA,country,loc_CA_ON,50
-geo_c_2,USA,US,country,loc_US_FL loc_US_MA loc_US_IN loc_US_MI,800
+id,name,geoJsonValue,type,location,numericPropExampleC
+geo1,"Ontario, Canada",CA.ON,state,locCaOn,50
+geo2,"Michigan, USA",US.MI,state,locUsMi,300
+geo3,"Massachusetts, USA",US.MA,state,locUsMi,250
+geo4,"Florida, USA",US.FL,state,locUsMi,100
+geo5,"Indiana, USA",US.FL,state,locUsMi,200
+geoCountry1,Canada,CA,country,locCaOn,50
+geoCountry2,USA,US,country,locUsFl locUsMa locUsIn locUsMi,800

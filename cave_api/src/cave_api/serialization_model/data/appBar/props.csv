@@ -1,5 +1,13 @@
-appBarID,propID,name,type,variant,value,enabled,help,maxValue,minValue,numberFormat,apiCommand
-settings,Solver,Solver,selector,dropdown,"[{""name"": ""Gurobi"", ""value"": true},{""name"": ""Cplex"", ""value"": false},{""name"": ""CoinOR"", ""value"": false}]",TRUE,Select a solver type to use,,,,
-settings,Pct_Optimal,Percent Optimal,num,,97,TRUE,What percent of optimal would you like to solve to?,100,0,"{""unit"": ""%"", ""unitSpace"": false,""trailingZeros"": true}",
-settings,min_profit,Minimum profit,num,field,10000,TRUE,The minimum intended profit,1.00E+15,-1.00E+15,"{""precision"": 0,""trailingZeros"": false,""currency"": true,""unit"": ""$""}",
-settings,settings_save,Save Settings,button,,"""Value Here""",TRUE,Save your settings,,,,settings_save
+appBarID,propID,name,type,variant,value,enabled,help,maxValue,minValue,numberFormat,apiCommand,label,selectableCategories
+examplePropsPane,numericHeader,Numeric Props,head,,,,Some help for numeric props,,,,,,
+examplePropsPane,numericInputExample,Numeric Input Example,num,,50,TRUE,Help for the numeric input example,100,0,"{""precision"": 0,""unit"": ""units""}",,,
+examplePropsPane,numericSliderExample,Numeric Slider Example,num,slider,50,TRUE,Help for the numeric slider example,100,0,,,,
+examplePropsPane,miscHeader,Misc Props,head,,,,Some help for miscelanous props,,,,,,
+examplePropsPane,toggleInputExample,Toggle Input Example,toggle,,TRUE,TRUE,Help for the toggle input example,,,,,,
+examplePropsPane,buttonInputExample,Button Input Example (Creates an Error),button,,Press Me!,TRUE,Press this button to create an error,,,,test,,
+examplePropsPane,textInputExample,Text Input Example,text,,Example Text Here,TRUE,Help for the text input example,,,,,,
+examplePropsPane,selectorHeader,Selection Props,head,,,,Some help for Selection Props,,,,,,
+examplePropsPane,dropdownItemExample,Dropdown Item Example,selector,dropdown,"[{""name"": ""Option A"", ""value"": false},{""name"": ""Option B"", ""value"": false},{""name"": ""Option C"", ""value"": true}]",TRUE,Select an option from the dropdown,,,,,,
+examplePropsPane,checkboxItemExample,Checkbox Item Example,selector,checkbox,"[{""name"": ""Option A"", ""value"": true}, {""name"": ""Option B"", ""value"": false},{""name"": ""Option C"", ""value"": true}]",TRUE,Select all relevant items,,,,,,
+examplePropsPane,radioItemExample,Radio Item Example,selector,radio,"[{""name"": ""Option A"", ""value"": true}, {""name"": ""Option B"", ""value"": false},{""name"": ""Option C"", ""value"": false}]",TRUE,Select one item from the list,,,,,,
+context,numericContextProp,,num,slider,100,TRUE,Numeric Context Prop Help,500,0,,,%,"[""location"",""sku""]"

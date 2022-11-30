@@ -1,24 +1,24 @@
 {
     "types": {
-        "demand_met": {
-            "name": "Demand Met",
-            "calculation": "demand_met",
+        "numericStatExampleA": {
+            "name": "Stat Example A",
+            "calculation": "numericStatExampleA",
             "numberFormat": {
                 "unit": "units"
             },
             "order": 1
         },
-        "demand_tot": {
-            "name": "Demand Total",
-            "calculation": "demand_tot",
+        "numericStatExampleB": {
+            "name": "Stat Example B",
+            "calculation": "numericStatExampleB",
             "numberFormat": {
                 "unit": "units"
             },
             "order": 2
         },
-        "demand_pct": {
-            "name": "Demand Percentage",
-            "calculation": "demand_met / groupSum(\"demand_tot\")",
+        "numericExampleCalculationStat": {
+            "name": "Stat A as a percentage of Stat B",
+            "calculation": "numericStatExampleA / groupSum(\"numericStatExampleB\")",
             "numberFormat": {
                 "precision": 2,
                 "trailingZeros": true,
@@ -31,31 +31,31 @@
     "data": {
         "d1": {
             "category": {
-                "Locations": ["loc_CA_ON"],
-                "Products": ["prd_abc123"]
+                "location": ["locCaOn"],
+                "sku": ["SKU1"]
             },
-            "values": {"demand_met": 5, "demand_tot": 10}
+            "values": {"numericStatExampleA": 5, "numericStatExampleB": 10}
         },
         "d2": {
             "category": {
-                "Locations": ["loc_CA_ON"],
-                "Products": ["prd_def456"]
+                "location": ["locCaOn"],
+                "sku": ["SKU2"]
             },
-            "values": {"demand_met": 4, "demand_tot": 5}
+            "values": {"numericStatExampleA": 4, "numericStatExampleB": 5}
         },
         "d3": {
             "category": {
-                "Locations": ["loc_US_MI"],
-                "Products": ["prd_abc123"]
+                "location": ["locUsMi"],
+                "sku": ["SKU1"]
             },
-            "values": {"demand_met": 6, "demand_tot": 7}
+            "values": {"numericStatExampleA": 6, "numericStatExampleB": 7}
         },
         "d4": {
             "category": {
-                "Locations": ["loc_US_MI"],
-                "Products": ["prd_def456"]
+                "location": ["locUsMi"],
+                "sku": ["SKU2"]
             },
-            "values": {"demand_met": 3, "demand_tot": 5}
+            "values": {"numericStatExampleA": 3, "numericStatExampleB": 5}
         }
     }
 }

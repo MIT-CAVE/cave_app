@@ -2,7 +2,7 @@
     "state": {
         "name": "State",
         "colorByOptions": {
-            "Demand": {
+            "numericPropExampleC": {
                 "min": 0,
                 "max": 300,
                 "startGradientColor": {
@@ -15,19 +15,20 @@
                 }
             }
         },
-        "colorBy": "Demand",
+        "colorBy": "numericPropExampleC",
         "geoJson": {
             "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
             "geoJsonProp": "code_hasc"
         },
         "icon": "BsHexagon",
         "props": {
-            "Demand": {
+            "numericPropExampleC": {
+                "name": "Numeric Prop Example C",
                 "type": "num",
                 "enabled": true,
-                "help": "The Demand of this Geography",
+                "help": "Help with the example numeric prop for this State",
                 "numberFormat": {
-                    "unit": "units"
+                    "unit": "C units"
                 }
             }
         }
@@ -35,7 +36,7 @@
     "country": {
         "name": "Country",
         "colorByOptions": {
-            "Demand": {
+            "numericPropExampleC": {
                 "min": 0,
                 "max": 800,
                 "startGradientColor": {
@@ -48,17 +49,18 @@
                 }
             }
         },
-        "colorBy": "Demand",
+        "colorBy": "numericPropExampleC",
         "geoJson": {
             "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
             "geoJsonProp": "FIPS_10"
         },
         "icon": "BsHexagon",
         "props": {
-            "Demand": {
+            "numericPropExampleC": {
+                "name": "Numeric Prop Example C",
                 "type": "num",
                 "enabled": true,
-                "help": "The Demand of this Geography",
+                "help": "Help with the example numeric prop for this Country",
                 "numberFormat": {
                     "unit": "units"
                 }

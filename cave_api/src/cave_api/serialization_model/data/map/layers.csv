@@ -1,7 +1,7 @@
 type,id,enabled,legendGroup
-arc,T1,True,DC Delivery
-arc,T2,False,Store Delivery
-node,DC,False,DC Delivery
-node,Store,False,Store Delivery
-geo,state,False,Demand Geography
-geo,country,False,Demand Geography
+arc,T1,True,Legend Group A
+arc,T2,True,Legend Group B
+node,nodeTypeA,True,Legend Group A
+node,nodeTypeB,True,Legend Group B
+geo,state,True,Legend Group B
+geo,country,False,Legend Group B

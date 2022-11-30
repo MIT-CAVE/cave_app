@@ -1,6 +1,6 @@
-id,type,latitude,longitude,Size,Capacity,Active,Locations,Products
-node_1,DC,43.78,-79.63,100,50,True,loc_CA_ON,prd_def456 prd_abc123
-node_2,DC, 39.82,-86.18,80,40,True,loc_US_IN,prd_def456 prd_abc123
-node_3,Store,42.89,-85.68,500,150,True,loc_US_MI,prd_def456 prd_abc123
-node_4,Store,28.49,-81.56,1000,250,True,loc_US_FL,prd_def456 prd_abc123
-node_5,Store,42.361176,-71.084707,1000,250,True,loc_US_MA,prd_def456 prd_abc123
+id,type,latitude,longitude,numericPropExampleA,numericPropExampleB,booleanPropExample,location,sku
+node_1,nodeTypeA,43.78,-79.63,100,50,TRUE,locCaOn,SKU2 SKU1
+node_2,nodeTypeA,39.82,-86.18,80,40,TRUE,locUsIn,SKU2 SKU1
+node_3,nodeTypeB,42.89,-85.68,500,150,TRUE,locUsMi,SKU2 SKU1
+node_4,nodeTypeB,28.49,-81.56,1000,250,TRUE,locUsFl,SKU2 SKU1
+node_5,nodeTypeB,42.361176,-71.084707,1000,250,TRUE,locUsMa,SKU2 SKU1
