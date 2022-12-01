@@ -126,7 +126,7 @@ example = {
                     },
                     "size": {
                         "name": "Sizing",
-                        "ordering": ["Type B", "Type A"],
+                        "ordering": ["Size B", "Size A"],
                         "order": 2,
                     },
                     "sku": {
@@ -1209,6 +1209,20 @@ example = {
                     "sku": ["SKU2"],
                 },
                 "values": {"numericStatExampleA": 3, "numericStatExampleB": 5},
+            },
+            "d5": {
+                "category": {
+                    "location": ["locUsIn"],
+                    "sku": ["SKU2"],
+                },
+                "values": {"numericStatExampleA": -3, "numericStatExampleB": -2},
+            },
+            "d6": {
+                "category": {
+                    "location": ["locUsFl"],
+                    "sku": ["SKU2"],
+                },
+                "values": {"numericStatExampleA": 1, "numericStatExampleB": -1},
             },
         },
     },

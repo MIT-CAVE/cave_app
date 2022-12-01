@@ -28,7 +28,13 @@ def execute_command(session_data, command="init"):
     """
     if command == "init":
         return get_api_object()
-    if command == "button_event":
-        print("The settings pane button has been pressed!")
-        return {}
+    elif command == "reset":
+        print("The `reset` button has been pressed by the user!")
+        return get_api_object()
+    elif command == "solve":
+        print("The `solve` button has been pressed by the user!")
+        return get_api_object()
+    elif command == "test":
+        print("The `test` button has been pressed by the user!")
+        raise Exception('Test Exception!')
     raise Exception(f"Command not found: `{command}`")
