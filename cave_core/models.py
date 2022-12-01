@@ -1288,7 +1288,7 @@ class SessionData(models.Model):
             self.sendToApi = sendToApi
         if self.sendToClient:
             self.data_hash = self.calc_data_hash(data)
-        cache.set(self.get_cache_data_id(),data)
+        cache.set(self.get_cache_data_id(),data, None)
         self.save()
 
     # Metadata
