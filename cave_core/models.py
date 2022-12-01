@@ -913,7 +913,7 @@ class Sessions(models.Model):
         """
         Removes all data from the current session
         """
-        [i.delete() for i in SessionData.objects.filter(session=self)]
+        SessionData.objects.filter(session=self).delete()
 
     def replace_data(self, data, wipeExisting):
         """
@@ -1163,10 +1163,6 @@ class SessionData(models.Model):
         null=True,
     )
 
-    def delete(self):
-        cache.delete(self.get_cache_data_id())
-        super().delete()
-
     def get_cache_data_id(self):
         return f'data:{self.session.id}:{self.id}'
 
@@ -1304,6 +1300,13 @@ class SessionData(models.Model):
         return _("{}").format(str(self.session.name) + str(self.data_name))
 
 # Signals
+@receiver(post_delete, sender=SessionData, dispatch_uid="update_team_ids_on_delete")
+def remove_session_data_from_cache(sender, instance, **kwargs):
+    """
+    When a session data object is deleted, remove the session data from the cache
+    """
+    cache.delete(instance.get_cache_data_id())
+
 @receiver(post_save, sender=TeamUsers, dispatch_uid="update_team_ids_on_save")
 @receiver(post_delete, sender=TeamUsers, dispatch_uid="update_team_ids_on_delete")
 def update_team_ids(sender, instance, **kwargs):
