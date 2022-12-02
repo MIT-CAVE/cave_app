@@ -519,12 +519,12 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "hashes",
+                    "versions",
                     models.JSONField(
                         blank=True,
-                        help_text="The session hashes",
+                        help_text="The session versions",
                         null=True,
-                        verbose_name="hashes",
+                        verbose_name="versions",
                     ),
                 ),
                 (
@@ -593,13 +593,13 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "data_hash",
+                    "data_version",
                     models.CharField(
                         blank=True,
-                        help_text="Hash of the data",
+                        help_text="Version of the data",
                         max_length=12,
                         null=True,
-                        verbose_name="data_hash",
+                        verbose_name="data_version",
                     ),
                 ),
                 (

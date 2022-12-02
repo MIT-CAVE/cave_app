@@ -47,11 +47,11 @@ def api_util_response(fn):
     return wrap
 
 
-def cache_data_hash(fn):
+def cache_data_version(fn):
     """
-    API view wrapper to add a cached input hash check prior to executing a view
+    API view wrapper to add a cached input version check prior to executing a view
 
-    This is used to block multi window users from resolving out of sync hashes individually
+    This is used to block multi window users from resolving out of sync versions individually
 
     For low level docs on django's cache framework see
     https://docs.djangoproject.com/en/4.0/topics/cache/
@@ -59,12 +59,11 @@ def cache_data_hash(fn):
 
     @wraps(fn)
     def wrap(request):
-        data_hashes = str(request.data.get("data_hashes", {}))
-        cache_hashes_key = "input_hashes_" + request.user.username
-        prev_hashes = cache.get(cache_hashes_key)
-        if prev_hashes != data_hashes:
-            if data_hashes != "{}":
-                cache.set(cache_hashes_key, str(data_hashes), 2)
+        data_versions = str(request.data.get("data_versions", {}))
+        cache_versions_key = f"versionRequest:{request.user.id}"
+        if cache.get(cache_versions_key) != data_versions:
+            if data_versions != "{}":
+                cache.set(cache_versions_key, str(data_versions), 2)
             fn(request)
 
     return wrap

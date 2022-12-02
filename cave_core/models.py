@@ -9,10 +9,6 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.authtoken.models import Token
 from solo.models import SingletonModel
 
-# External Imports
-import hashlib, json
-from functools import reduce
-
 # Internal Imports
 from cave_core import utils
 from cave_api import execute_command
@@ -102,12 +98,12 @@ class CustomUser(AbstractUser):
         if prev_session is not None:
             prev_session.update_user_ids()
         # Query all session data:
-        # Note: get_changed_data needs to be executed prior to calling session.hashes since it can mutate them
-        data = session.get_changed_data(previous_hashes={})
+        # Note: get_changed_data needs to be executed prior to calling session.versions since it can mutate them
+        data = session.get_changed_data(previous_versions={})
         utils.broadcasting.ws_broadcast_object(
             object=self,
             event="overwrite",
-            hashes=session.hashes,
+            versions=session.versions,
             data=data,
         )
         session.broadcast_session_info()
@@ -855,7 +851,7 @@ class Sessions(models.Model):
         verbose_name=_("team"),
         help_text=_("The associated team"),
     )
-    hashes = models.JSONField(_("hashes"), help_text=_("The session hashes"), blank=True, null=True)
+    versions = models.JSONField(_("versions"), help_text=_("The session versions"), blank=True, null=True)
     loading = models.BooleanField(
         _("Loading"),
         help_text=_("Is this session currently loading?"),
@@ -867,12 +863,12 @@ class Sessions(models.Model):
         default=list
     )
 
-    def update_hashes(self):
+    def update_versions(self):
         """
-        Updates the database stored hashes object for this session given the current data items
+        Updates the database stored versions object for this session given the current data items
         """
-        self.hashes = {
-            obj.data_name: obj.data_hash
+        self.versions = {
+            obj.data_name: obj.data_version
             for obj in SessionData.objects.filter(session=self, sendToClient=True)
         }
         self.save()
@@ -884,19 +880,19 @@ class Sessions(models.Model):
         if session_data == None:
             session_data = SessionData.objects.filter(session=self)
         return {
-            obj.data_name: obj.get_json_data()
+            obj.data_name: obj.get_data()
             for obj in session_data.filter(data_name__in=keys, sendToClient=True)
         }
 
-    def get_changed_data(self, previous_hashes):
+    def get_changed_data(self, previous_versions):
         """
-        Returns all data that has changed given some set of previous hashes
+        Returns all data that has changed given some set of previous versions
 
         Requires:
 
-        - `previous_hashes`:
+        - `previous_versions`:
             - Type: dict
-            - What: The endpoint provided previous hashes to check vs the current server hashes to determine which data has changed
+            - What: The endpoint provided previous versions to check vs the current server versions to determine which data has changed
         """
         # Fill in missing session data if none is present
         session_data = SessionData.objects.filter(session=self)
@@ -904,7 +900,7 @@ class Sessions(models.Model):
             self.execute_api_command(command="init", data_queryset=session_data)
 
         updated_keys = [
-            key for key, value in self.hashes.items() if previous_hashes.get(key) != value
+            key for key, value in self.versions.items() if previous_versions.get(key) != value
         ]
 
         return self.get_client_data(keys=updated_keys, session_data=session_data)
@@ -921,7 +917,7 @@ class Sessions(models.Model):
 
         Requires:
 
-        - `data`: The data to be replaced (a json serializable python dictionary)
+        - `data`: The data to be replaced (a python dictionary)
         - `wipeExisting`: Boolean to indicate if previously existing data should be wiped
 
         `data` Example:
@@ -950,8 +946,8 @@ class Sessions(models.Model):
                 sendToClient=value.get("sendToClient", obj.sendToClient),
                 sendToApi=value.get("sendToApi", obj.sendToApi),
             )
-        # Update hashes post replacement
-        self.update_hashes()
+        # Update versions post replacement
+        self.update_versions()
 
     def execute_api_command(self, command, command_keys=None, data_queryset=None):
         """
@@ -979,21 +975,21 @@ class Sessions(models.Model):
             data_queryset = data_queryset.filter(data_name__in=command_keys)
         else:
             data_queryset = data_queryset.filter(sendToApi=True)
-        session_data = {i.data_name: i.get_py_data() for i in data_queryset}
+        session_data = {i.data_name: i.get_data() for i in data_queryset}
         command_output = execute_command(session_data=session_data, command=command)
         kwargs = command_output.pop("kwargs", {})
         self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
         self.set_loading(False)
 
-    def mutate(self, data_hash, data_name, data_path, data_value=None, ignore_hash=False):
+    def mutate(self, data_version, data_name, data_path, data_value=None, ignore_version=False):
         """
         Mutate a specific data_name inside of this session
 
         Requires:
 
-        - `data_hash`:
+        - `data_version`:
             - Type: str
-            - What: The current data hash to validate synchronization before processing the mutation request
+            - What: The current data version to validate synchronization before processing the mutation request
         - `data_name`:
             - Type: str
             - What: The name of the data to mutate
@@ -1004,12 +1000,12 @@ class Sessions(models.Model):
         Optional:
 
         - `data_value`:
-            - Type: json serializable object
+            - Type: dict | list
             - What: data to assign to the end of the `data_path` for the item specified by `data_name`
             - Default: None
-        - `ignore_hash`:
+        - `ignore_version`:
             - Type: bool
-            - What: A boolean indicator to specify if the current data hash should be considered before processing the mutation request
+            - What: A boolean indicator to specify if the current data version should be considered before processing the mutation request
             - Default: False
         """
         session_data = SessionData.objects.filter(session=self, data_name=data_name).first()
@@ -1021,13 +1017,13 @@ class Sessions(models.Model):
             raise Exception(
                 "Session Error: Attempting to mutate a data that does not `allowModification`"
             )
-        if not ignore_hash and session_data.data_hash != data_hash:
+        if not ignore_version and session_data.data_version != data_version:
             return {"synch_error": True}
         
         # Apply the mutation
         session_data.mutate(data_path=data_path, data_value=data_value)
-        # Update hashes post mutation
-        self.update_hashes()
+        # Update versions post mutation
+        self.update_versions()
 
     def get_associated_sessions(self, user=None):
         """
@@ -1155,75 +1151,17 @@ class SessionData(models.Model):
         help_text=_("Should this data be sent to the api? (for solve and configure)"),
         default=True,
     )
-    data_hash = models.CharField(
-        _("data_hash"),
-        max_length=12,
-        help_text=_("Hash of the data"),
-        blank=True,
-        null=True,
+    data_version = models.IntegerField(
+        _("data_version"),
+        help_text=_("Version of the data"),
+        default=0,
     )
 
     def get_cache_data_id(self):
-        return f'data:{self.session.id}:{self.id}'
+        return f'data:{self.id}'
 
-    def get_json_data(self):
+    def get_data(self):
         return cache.get(self.get_cache_data_id())
-
-    def get_py_data(self):
-        """
-        Serialize the current data object as a python dict
-        """
-        return json.loads(self.get_json_data())
-
-    def calc_data_hash(self, data:str):
-        """
-        returns the first 12 characters from the hex digested utf-8 hash256 of self.data
-        """
-        return hashlib.sha256(data.encode("utf-8")).hexdigest()[:12]
-
-    def get_force_dict(self, object, key):
-        """
-        Code from Pamda: https://github.com/connor-makowski/pamda
-        - Returns a value from a dictionary given a key and forces that value to be a dictionary
-        - Note: This updates the object in place to force the value from the key to be a dictionary
-
-        Requires:
-
-        - `object`:
-            - Type: dict
-            - What: The object from which to look for a key
-        - `key`:
-            - Type: str
-            - What: The key to look up in the object
-        ```
-        """
-        if not isinstance(object.get(key), (dict,list)):
-            object.__setitem__(key, {})
-        return object.get(key)
-
-    def assoc_path(self, path, value, data):
-        """
-        Code from Pamda: https://github.com/connor-makowski/pamda
-
-        - Ensures a path exists within a nested dictionary
-
-        Requires:
-
-        - `path`:
-            - Type: list of strs | str
-            - What: The path to check
-            - Note: If a string is passed, assumes a single item path list with that string
-        - `value`:
-            - Type: any
-            - What: The value to appropriate to the end of the path
-        - `data`:
-            - Type: dict
-            - What: A dictionary in which to associate the given value to the given path
-        """
-        if isinstance(path, str):
-            path = [path]
-        reduce(self.get_force_dict, path[:-1], data).__setitem__(path[-1], value)
-        return data
 
     def mutate(self, data_path, data_value=None):
         """
@@ -1238,11 +1176,11 @@ class SessionData(models.Model):
         Optional:
 
         - `data_value`:
-            - Type: any json serializable object
+            - Type: dict | list
             - What: The data value to assign to the end of the provided path
             - Default: None
         """
-        self.save_data(self.assoc_path(path=data_path, value=data_value, data=self.get_py_data()))
+        self.save_data(utils.functional.assoc_path(path=data_path, value=data_value, data=self.get_data()))
 
     def save_data(
         self,
@@ -1257,7 +1195,7 @@ class SessionData(models.Model):
         Requires:
 
         - `data`:
-            - Type: any json serializable object
+            - Type: dict | list
             - What: The data to save
 
         Optional:
@@ -1275,15 +1213,13 @@ class SessionData(models.Model):
             - What: Send this data to the api when executing an api command
             - Default: The current database setting
         """
-        data = utils.data_encoding.json_like_js(data)
         if allowModification is not None:
             self.allowModification = allowModification
         if sendToClient is not None:
             self.sendToClient = sendToClient
         if sendToApi is not None:
             self.sendToApi = sendToApi
-        if self.sendToClient:
-            self.data_hash = self.calc_data_hash(data)
+        self.data_version += self.data_version
         cache.set(self.get_cache_data_id(),data, None)
         self.save()
 
@@ -1300,7 +1236,7 @@ class SessionData(models.Model):
         return _("{}").format(str(self.session.name) + str(self.data_name))
 
 # Signals
-@receiver(post_delete, sender=SessionData, dispatch_uid="update_team_ids_on_delete")
+@receiver(post_delete, sender=SessionData, dispatch_uid="remove_session_data_from_cache_on_delete")
 def remove_session_data_from_cache(sender, instance, **kwargs):
     """
     When a session data object is deleted, remove the session data from the cache
@@ -1316,7 +1252,7 @@ def update_team_ids(sender, instance, **kwargs):
     )
     instance.user.save()
 
-@receiver(post_save, sender=CustomUser, dispatch_uid="create_personal_team")
+@receiver(post_save, sender=CustomUser, dispatch_uid="create_personal_team_on_creation")
 def create_personal_team(sender, instance, created, **kwargs):
     if created:
         instance.create_personal_team()

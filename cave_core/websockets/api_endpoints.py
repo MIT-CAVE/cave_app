@@ -3,35 +3,35 @@ from cave_core import models, utils
 
 # Websocket API Command Endpoints
 @utils.wrapping.async_api_app_ws
-@utils.wrapping.cache_data_hash
+@utils.wrapping.cache_data_version
 def get_session_data(request):
     """
-    API endpoint to get session data that is not in sync with the current data_hashes
+    API endpoint to get session data that is not in sync with the current data_versions
 
     Optional:
-    - `data_hashes`:
-    ----- What: A dictionary of top_level_keys and their associated hashes
+    - `data_versions`:
+    ----- What: A dictionary of top_level_keys and their associated versions
     ----- Type: dict of sha256f12 strs
     ----- Default: {}
-    ----- Note: If an empty dictionary, all hashes will be synced
+    ----- Note: If an empty dictionary, all versions will be synced
 
 
     Example input (WS Send):
 
     -----------------------------------
-    {"data_hashes":{"top_level_key_1":"1234567890ab"}}
+    {"data_versions":{"top_level_key_1":"1234567890ab"}}
     -----------------------------------
     """
-    # Get passed data hashes
-    data_hashes = request.data.get("data_hashes", {})
+    # Get passed data versions
+    data_versions = request.data.get("data_versions", {})
     # Session validation
     session = request.user.session
-    # get_changed_data needs to be executed prior to session.hashes since it can mutate them
-    data = session.get_changed_data(previous_hashes=data_hashes)
+    # get_changed_data needs to be executed prior to session.versions since it can mutate them
+    data = session.get_changed_data(previous_versions=data_versions)
     utils.broadcasting.ws_broadcast_object(
         object=request.user,
         event="overwrite",
-        hashes=session.hashes,
+        versions=session.versions,
         data=data,
     )
 
@@ -41,8 +41,8 @@ def mutate_session(request):
     API endpoint to mutate session data
 
     Required:
-    - `data_hashes`:
-    ----- What: The current set of data_hashes for the requesting entity
+    - `data_versions`:
+    ----- What: The current set of data_versions for the requesting entity
     ----- Type: str
     ----- Default: None
     ----- Note: If None, no mutation is fired (used to fire an api command)
@@ -87,7 +87,7 @@ def mutate_session(request):
     {
     "data_name":"localSync",
     "data_path":["test"],
-    "data_hash":"44136fa355b3",
+    "data_version":"44136fa355b3",
     "data_value":"Example",
     "api_command":None,
     "team_sync":true
@@ -98,7 +98,7 @@ def mutate_session(request):
     api_command_keys = request.data.get("api_command_keys")
     team_sync = request.data.get("team_sync", False)
 
-    data_hashes = request.data.get("data_hashes", {})
+    data_versions = request.data.get("data_versions", {})
     data_name = request.data.get("data_name")
 
     mutate_dict = {
@@ -120,44 +120,44 @@ def mutate_session(request):
 
     for session_i in sessions:
         # Apply the mutation only if a `data_name` is provided
-        session_i_pre_hashes = session_i.hashes
+        session_i_pre_versions = session_i.versions
         if data_name is not None:
             response = session_i.mutate(
-                ignore_hash=session_i.id != session.id,
-                data_hash=data_hashes.get(data_name),
+                ignore_version=session_i.id != session.id,
+                data_version=data_versions.get(data_name),
                 **mutate_dict,
             )
             if response:
-                # In the case of a synch_error broadcast a hash fix to the user
+                # In the case of a synch_error broadcast a version fix to the user
                 # and break from any more session work
                 if response.get("synch_error"):
                     utils.broadcasting.ws_broadcast_object(
                         object=request.user,
-                        event="error",
+                        event="message",
                         data={
                             "message": "Oops! You are out of sync. Fix in progress...",
                             "duration": 5,
                             "traceback": "",
                         },
                     )
-                    # get_changed_data needs to be executed prior to session.hashes since it can mutate them
-                    data = session_i.get_changed_data(data_hashes)
+                    # get_changed_data needs to be executed prior to session.versions since it can mutate them
+                    data = session_i.get_changed_data(data_versions)
                     utils.broadcasting.ws_broadcast_object(
                         object=request.user,
                         event="overwrite",
-                        hashes=session_i.hashes,
+                        versions=session_i.versions,
                         data=data,
                     )
                     break
         # Apply an api command if provided and push updated output
         if api_command is not None:
             session_i.execute_api_command(command=api_command, command_keys=api_command_keys)
-            # get_changed_data needs to be executed prior to session.hashes since it can mutate them
-            data = session_i.get_changed_data(previous_hashes=session_i_pre_hashes)
+            # get_changed_data needs to be executed prior to session.versions since it can mutate them
+            data = session_i.get_changed_data(previous_versions=session_i_pre_versions)
             utils.broadcasting.ws_broadcast_object(
                 object=session_i,
                 event="overwrite",
-                hashes=session_i.hashes,
+                versions=session_i.versions,
                 data=data,
             )
         # If no api command is provided, apply the mutation
@@ -165,7 +165,7 @@ def mutate_session(request):
             utils.broadcasting.ws_broadcast_object(
                 object=session_i,
                 event="mutation",
-                hashes=session_i.hashes,
+                versions=session_i.versions,
                 data=mutate_dict,
             )
 
@@ -209,7 +209,7 @@ def get_associated_session_data(request):
             for obj in associated_sessions
         }
     for obj in session_data:
-        associated[obj.session.id]["data"][obj.data_name] = obj.get_py_data()
+        associated[obj.session.id]["data"][obj.data_name] = obj.get_data()
 
     associated_data_object = {
         "associated": {
@@ -225,7 +225,7 @@ def get_associated_session_data(request):
     utils.broadcasting.ws_broadcast_object(
         object=session,
         event="overwrite",
-        hashes=session.hashes,
+        versions=session.versions,
         data=session.get_client_data(keys=["associated"]),
     )
 
