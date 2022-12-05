@@ -35,6 +35,7 @@ def get_session_data(request):
         data=data,
     )
 
+
 @utils.wrapping.async_api_app_ws
 def mutate_session(request):
     """
@@ -169,6 +170,7 @@ def mutate_session(request):
                 data=mutate_dict,
             )
 
+
 @utils.wrapping.async_api_app_ws
 def get_associated_session_data(request):
     """
@@ -203,7 +205,9 @@ def get_associated_session_data(request):
     if request.user.is_staff:
         associated = {
             obj.id: {
-                "name": obj.team.group.name if obj.team.group is not None else 'Personal' + " -> " + obj.team.name + " -> " + obj.name,
+                "name": obj.team.group.name
+                if obj.team.group is not None
+                else "Personal" + " -> " + obj.team.name + " -> " + obj.name,
                 "data": {},
             }
             for obj in associated_sessions
@@ -228,6 +232,7 @@ def get_associated_session_data(request):
         versions=session.versions,
         data=session.get_client_data(keys=["associated"]),
     )
+
 
 @utils.wrapping.async_api_app_ws
 def session_management(request):
@@ -353,17 +358,19 @@ def session_management(request):
 
     user = request.user
 
-    if command == 'create':
+    if command == "create":
         user.create_session(**command_data)
-    elif command == 'join':
+    elif command == "join":
         user.join_session(**command_data)
-    elif command == 'copy':
+    elif command == "copy":
         user.copy_session(**command_data)
-    elif command == 'delete':
+    elif command == "delete":
         user.delete_session(**command_data)
-    elif command == 'edit':
+    elif command == "edit":
         user.edit_session(**command_data)
-    elif command == 'refresh':
+    elif command == "refresh":
         user.refresh_session_lists()
     else:
-        raise Exception(f'A `session_command` ({command}) was passed, but it does not match any available `session_command`s.')
+        raise Exception(
+            f"A `session_command` ({command}) was passed, but it does not match any available `session_command`s."
+        )

@@ -4,10 +4,12 @@ import json
 
 from .commands import get_command
 
+
 class Request:
     """
     A simple request object class to mimic the behavior of the request object passed by DRF
     """
+
     def __init__(self, user, data):
         self.data = data
         self.user = user
@@ -58,7 +60,7 @@ class WebsocketConsumer(AsyncWebsocketConsumer):
         """
         parsed_data = json.loads(text_data)
         if settings.DEBUG:
-            print("WS RECEIVE ",parsed_data.get('command'))
-        request = Request(self.scope.get('user'), parsed_data.get('data'))
-        command = get_command(parsed_data.get('command'))
+            print("WS RECEIVE ", parsed_data.get("command"))
+        request = Request(self.scope.get("user"), parsed_data.get("data"))
+        command = get_command(parsed_data.get("command"))
         await command(request)

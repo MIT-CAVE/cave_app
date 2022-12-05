@@ -33,7 +33,7 @@ def custom_pages(request):
 
     Does not take in parameters
     """
-    #print("\n\nCustom Pages\n")
+    # print("\n\nCustom Pages\n")
     # Execute View Procedures
     filter_vars = {"show": True}
     if not request.user.has_access():
@@ -66,7 +66,7 @@ def send_email_validation_code(request):
     }
     -----------------------------------
     """
-    #print("\n\nSend Email Validation Code\n")
+    # print("\n\nSend Email Validation Code\n")
     # Globals
     globals = models.Globals.get_solo()
     # Validate

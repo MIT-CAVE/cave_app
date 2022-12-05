@@ -1,5 +1,6 @@
 from functools import reduce
 
+
 def get_force_dict(object, key):
     """
     Code from Pamda: https://github.com/connor-makowski/pamda
@@ -16,9 +17,10 @@ def get_force_dict(object, key):
         - What: The key to look up in the object
     ```
     """
-    if not isinstance(object.get(key), (dict,list)):
+    if not isinstance(object.get(key), (dict, list)):
         object.__setitem__(key, {})
     return object.get(key)
+
 
 def assoc_path(path, value, data):
     """

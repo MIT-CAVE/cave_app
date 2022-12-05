@@ -73,6 +73,7 @@ def async_api_app_ws(fn):
     """
     API view wrapper to process websocket api app calls asynchronously and handle exceptions that are raised sending them back to the end user.
     """
+
     @wraps(fn)
     def wrap(request):
         # Store the session of the user at request time for long running sessions
@@ -86,8 +87,15 @@ def async_api_app_ws(fn):
             utils.broadcasting.ws_broadcast_object(
                 object=session,
                 event="message",
-                data={"snackbarShow": True, "snackbarType": "error", "message": str(e), "duration": 5, "traceback": traceback_str},
+                data={
+                    "snackbarShow": True,
+                    "snackbarType": "error",
+                    "message": str(e),
+                    "duration": 5,
+                    "traceback": traceback_str,
+                },
             )
             # Stop any loading that might exist for the session
             session.set_loading(False)
+
     return database_sync_to_async(wrap)

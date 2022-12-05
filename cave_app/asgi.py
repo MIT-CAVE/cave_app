@@ -23,6 +23,6 @@ ws_asgi_app = get_ws_asgi_application()
 application = ProtocolTypeRouter(
     {
         "http": django_asgi_app,
-        "websocket":ws_asgi_app,
+        "websocket": ws_asgi_app,
     }
 )

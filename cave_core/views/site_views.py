@@ -6,7 +6,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 
 # Internal Imports
-from cave_core import forms, models, utils
+from cave_core import forms, models
 
 # Views
 def index(request):
@@ -15,11 +15,11 @@ def index(request):
 
     Render the server configured index page
     """
-    #print("\n\nIndex\n")
+    # print("\n\nIndex\n")
     globals = models.Globals.get_solo()
     page = models.Pages.objects.filter(url_name="home").first()
     try:
-        access_kwargs = {'access_dict': request.user.get_access_dict()}
+        access_kwargs = {"access_dict": request.user.get_access_dict()}
     except:
         access_kwargs = {}
     return render(
@@ -30,7 +30,7 @@ def index(request):
             "page": page.name,
             "page_sections": page.get_sections(),
             "home_active": "active",
-            **access_kwargs
+            **access_kwargs,
         },
     )
 
@@ -42,7 +42,7 @@ def page(request):
 
     Users can see generic pages with this view
     """
-    #print("\n\nPage\n")
+    # print("\n\nPage\n")
     if request.method == "GET":
         globals = models.Globals.get_solo()
         page = models.Pages.objects.filter(show=True, url_name=request.GET.get("page")).first()
@@ -73,7 +73,7 @@ def people(request):
 
     Users can see their groups and teams with this view
     """
-    #print("\n\nPeople\n")
+    # print("\n\nPeople\n")
     globals = models.Globals.get_solo()
     if not request.user.has_access() or not globals.show_people_page:
         return redirect("/")
@@ -99,7 +99,7 @@ def app(request):
 
     Users can see the app with this view
     """
-    #print("\n\nApp\n")
+    # print("\n\nApp\n")
     globals = models.Globals.get_solo()
     if not request.user.has_access():
         return redirect("/")
@@ -243,7 +243,5 @@ def validate_email(request):
     return render(
         request,
         "validation_email_failed.html",
-        {
-            "globals": globals
-        },
+        {"globals": globals},
     )

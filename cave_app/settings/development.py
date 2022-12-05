@@ -167,10 +167,12 @@ CHANNEL_LAYERS = {
 ################################################################
 ## NOTE: This is not efficient for production environments
 ## NOTE: For production, switch to a network based memcache or redis envronment
-CACHES = {"default": {
-    "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-    "LOCATION": "development_cache_table"
-}}
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "development_cache_table",
+    }
+}
 ################################################################
 
 
@@ -178,24 +180,24 @@ CACHES = {"default": {
 ################################################################
 if config("USE_LOGGING", default=False, cast=bool):
     LOGGING = {
-        'version': 1,
-        'filters': {
-            'require_debug_true': {
-                '()': 'django.utils.log.RequireDebugTrue',
+        "version": 1,
+        "filters": {
+            "require_debug_true": {
+                "()": "django.utils.log.RequireDebugTrue",
             }
         },
-        'handlers': {
-            'console': {
-                'level': 'DEBUG',
-                'filters': ['require_debug_true'],
-                'class': 'logging.StreamHandler',
+        "handlers": {
+            "console": {
+                "level": "DEBUG",
+                "filters": ["require_debug_true"],
+                "class": "logging.StreamHandler",
             }
         },
-        'loggers': {
-            'django.db.backends': {
-                'level': 'DEBUG',
-                'handlers': ['console'],
+        "loggers": {
+            "django.db.backends": {
+                "level": "DEBUG",
+                "handlers": ["console"],
             }
-        }
+        },
     }
 ################################################################
