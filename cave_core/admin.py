@@ -36,7 +36,15 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
     fieldsets = (
         (
             "Authentication",
-            {"fields": ("username", "email", "password", "email_validated", "status",)},
+            {
+                "fields": (
+                    "username",
+                    "email",
+                    "password",
+                    "email_validated",
+                    "status",
+                )
+            },
         ),
         (
             "Personal Info",
@@ -169,7 +177,7 @@ class CustomTeamUserAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.exclude(team__name__icontains='Personal (')
+        return qs.exclude(team__name__icontains="Personal (")
 
 
 class CustomPageSectionInline(admin.StackedInline):
@@ -208,14 +216,14 @@ class CustomTeamAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.exclude(name__icontains='Personal (')
+        return qs.exclude(name__icontains="Personal (")
 
 
 class CustomGroupUserAdmin(admin.ModelAdmin):
     model = models.GroupUsers
     list_display = ["id", "user", "group", "is_group_manager"]
     list_editable = ["user", "group", "is_group_manager"]
-    list_filter = ["is_group_manager","group__name"]
+    list_filter = ["is_group_manager", "group__name"]
     search_fields = [
         "user__username",
         "user__first_name",

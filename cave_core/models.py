@@ -2,7 +2,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.cache import cache
 from django.db import models
-from django.db.models.signals import post_save,post_delete
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
@@ -13,6 +13,7 @@ from solo.models import SingletonModel
 from cave_core import utils
 from cave_api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
+
 
 class CustomUser(AbstractUser):
     """
@@ -69,7 +70,7 @@ class CustomUser(AbstractUser):
         unique=True,
     )
     session = models.ForeignKey(
-        "Sessions", # Must stay a string since Sessions is not yet defined
+        "Sessions",  # Must stay a string since Sessions is not yet defined
         on_delete=models.SET_NULL,
         verbose_name=_("session"),
         help_text=_("This User's current session"),
@@ -77,9 +78,7 @@ class CustomUser(AbstractUser):
         null=True,
     )
     team_ids = models.JSONField(
-        _("team_ids"),
-        help_text=_("A list of team_ids for this user"),
-        default=list
+        _("team_ids"), help_text=_("A list of team_ids for this user"), default=list
     )
 
     #############################################
@@ -108,12 +107,14 @@ class CustomUser(AbstractUser):
         )
         session.broadcast_session_info()
 
-    def create_session(self, session_name, team_id):
+    def create_session(self, session_name, team_id, session_description=""):
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
         team = self.get_team(team_id)
         team.error_on_session_limit()
-        session, created = Sessions.objects.get_or_create(name=session_name, team=team)
+        session, created = Sessions.objects.get_or_create(
+            name=session_name, description=session_description, team=team
+        )
         if not created:
             raise Exception("Oops! Unable to create that session.")
         # Query -> Update Session List
@@ -131,7 +132,7 @@ class CustomUser(AbstractUser):
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
 
-    def copy_session(self, session_id, session_name):
+    def copy_session(self, session_id, session_name, session_description=""):
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
         # Query Sessions
@@ -141,7 +142,7 @@ class CustomUser(AbstractUser):
         # Validate session limit
         session.team.error_on_session_limit()
         # Queries -> Duplicates this session and session data
-        session_obj = session.copy(session_name)
+        session_obj = session.copy(session_name, session_description)
         # Query -> Update Sessions List
         session.team.update_sessions_list()
         # Queries -> Switch to the session
@@ -162,7 +163,7 @@ class CustomUser(AbstractUser):
         # Query -> Update Sessions List
         team.update_sessions_list()
 
-    def edit_session(self, session_name, session_id):
+    def edit_session(self, session_id, session_name, session_description=""):
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
         # Query Sessions
@@ -170,6 +171,7 @@ class CustomUser(AbstractUser):
         # Query TeamUsers (only if a team session)
         self.error_on_no_team_access(session.team)
         session.name = session_name
+        session.description = session_description
         session.save()
         session.team.update_sessions_list()
         self.switch_session_no_validation(session)
@@ -185,8 +187,10 @@ class CustomUser(AbstractUser):
         team_ids = self.team_ids
         if self.is_staff:
             groups = GroupUsers.objects.filter(user=self, is_group_manager=True).values("group__id")
-            if len(groups)>0:
-                team_ids+=list(Teams.objects.filter(group__in=groups).values_list("team__id", flat=True))
+            if len(groups) > 0:
+                team_ids += list(
+                    Teams.objects.filter(group__in=groups).values_list("team__id", flat=True)
+                )
             team_ids = list(set(team_ids))
         return team_ids
 
@@ -207,7 +211,7 @@ class CustomUser(AbstractUser):
         self.error_on_no_team_access(team_id)
         team_obj = Teams.objects.filter(id=team_id).first()
         if team_obj is None:
-            raise Exception('Oops! The associated team for that item does not exist.')
+            raise Exception("Oops! The associated team for that item does not exist.")
         return team_obj
 
     def get_user_ids(self):
@@ -219,15 +223,14 @@ class CustomUser(AbstractUser):
         return [self.id]
 
     def create_personal_team(self):
-        team, team_created = Teams.objects.get_or_create(name=f'Personal ({self.username})')
+        team, team_created = Teams.objects.get_or_create(name=f"Personal ({self.username})")
         if team_created:
             team.add_user(self)
         return team
 
     def get_or_create_personal_team(self):
         team = Teams.objects.filter(
-            id__in = self.team_ids,
-            name = f'Personal ({self.username})'
+            id__in=self.team_ids, name=f"Personal ({self.username})"
         ).first()
         if team is None:
             team = self.create_personal_team()
@@ -236,18 +239,16 @@ class CustomUser(AbstractUser):
     def get_or_create_personal_session(self):
         team = self.get_or_create_personal_team()
         team_sessions = team.get_sessions()
-        if len(team_sessions)>0:
+        if len(team_sessions) > 0:
             return team_sessions[0]
-        return self.create_session(
-            session_name = f'Initial Session',
-            team_id = team.id
-        )
+        return self.create_session(session_name=f"Initial Session", team_id=team.id)
+
     #############################################
     # Access Utils
     #############################################
     def error_on_no_team_access(self, team_id):
         if (team_id not in self.get_team_ids()) and (not self.is_staff):
-            raise Exception('Oops! You do not have access to data from the specified team.')
+            raise Exception("Oops! You do not have access to data from the specified team.")
 
     def error_on_no_access(self):
         if not self.has_access():
@@ -256,15 +257,15 @@ class CustomUser(AbstractUser):
     def has_access(self):
         if self.is_staff:
             return True
-        if self.email_validated and self.status=='accepted':
+        if self.email_validated and self.status == "accepted":
             return True
         return False
 
     def get_access_dict(self):
         return {
-            'access':self.has_access(),
-            'email_validated': self.email_validated or self.is_staff,
-            'status': 'accepted' if self.is_staff else self.status
+            "access": self.has_access(),
+            "email_validated": self.email_validated or self.is_staff,
+            "status": "accepted" if self.is_staff else self.status,
         }
 
     #############################################
@@ -326,7 +327,7 @@ class CustomUser(AbstractUser):
         group_info = {}
         for i in group_users:
             group_info[i.group.name] = group_info.get(i.group.name, []) + [i.user]
-        if team_info=={} and group_info=={}:
+        if team_info == {} and group_info == {}:
             return None
         return {"Team": team_info, "Group": group_info}
 
@@ -530,12 +531,12 @@ class PageSections(models.Model):
             ("video_only", "Video Only"),
             ("break", "Break"),
             ("photo_header", "Photo Header"),
-            ("photo_header_left","Photo Header Left"),
-            ("photo_header_right","Photo Header Right"),
-            ("html_content","HTML Content"),
-            ("photo_quote","Photo Quote"),
-            ("photo_resource","Photo Resource"),
-            ("faq","FAQ"),
+            ("photo_header_left", "Photo Header Left"),
+            ("photo_header_right", "Photo Header Right"),
+            ("html_content", "HTML Content"),
+            ("photo_quote", "Photo Quote"),
+            ("photo_resource", "Photo Resource"),
+            ("faq", "FAQ"),
         ],
         default="photo_only",
     )
@@ -721,12 +722,7 @@ class Teams(models.Model):
     Model for storing Teams
     """
 
-    name = models.CharField(
-        _("name"),
-        max_length=128,
-        help_text=_("Name of the team"),
-        unique=True
-    )
+    name = models.CharField(_("name"), max_length=128, help_text=_("Name of the team"), unique=True)
     group = models.ForeignKey(
         Groups,
         on_delete=models.SET_DEFAULT,
@@ -734,7 +730,7 @@ class Teams(models.Model):
         help_text=_("The group to which this team belongs"),
         blank=True,
         null=True,
-        default=None
+        default=None,
     )
     limit_sessions = models.IntegerField(
         _("Limit for Team Sessions"),
@@ -745,9 +741,7 @@ class Teams(models.Model):
     )
     count_sessions = models.IntegerField(
         _("Count of Team Sessions"),
-        help_text=_(
-            "Integer. The amount sessions this team currently has"
-        ),
+        help_text=_("Integer. The amount sessions this team currently has"),
         default=0,
     )
 
@@ -764,8 +758,10 @@ class Teams(models.Model):
         TeamUsers.objects.get_or_create(team=self, user=user)
 
     def error_on_session_limit(self):
-        if self.count_sessions>=self.limit_sessions:
-            raise Exception(f"Oops! It looks like you have reached your session limit for the session `{self.name}`.")
+        if self.count_sessions >= self.limit_sessions:
+            raise Exception(
+                f"Oops! It looks like you have reached your session limit for the session `{self.name}`."
+            )
 
     def set_session_count(self, amt):
         self.count_sessions = amt
@@ -784,18 +780,22 @@ class Teams(models.Model):
             object=self,
             event="localMutation",
             data={
-                'data_path': ['sessions', 'data', self.id],
-                'data': {
-                    'teamId':str(self.id),
-                    'teamName':str(self.name),
-                    'teamLimitSessions':str(self.limit_sessions),
-                    'teamCountSessions':str(self.count_sessions),
-                    'sessions': {
-                        str(session.id):{'sessionId':str(session.id), 'sessionName':str(session.name)}
+                "data_path": ["sessions", "data", self.id],
+                "data": {
+                    "teamId": str(self.id),
+                    "teamName": str(self.name),
+                    "teamLimitSessions": str(self.limit_sessions),
+                    "teamCountSessions": str(self.count_sessions),
+                    "sessions": {
+                        str(session.id): {
+                            "sessionId": str(session.id),
+                            "sessionName": str(session.name),
+                            "sessionDescription": str(session.description),
+                        }
                         for session in sessions
-                    }
-                }
-            }
+                    },
+                },
+            },
         )
 
     # Metadata
@@ -827,7 +827,6 @@ class TeamUsers(models.Model):
         help_text=_("The associated user"),
     )
 
-
     # Metadata
     class Meta:
         verbose_name = _("Team User")
@@ -844,6 +843,7 @@ class Sessions(models.Model):
     """
     Model for storing Sessions
     """
+
     name = models.CharField(_("name"), max_length=128, help_text=_("Name of the session"))
     team = models.ForeignKey(
         Teams,
@@ -851,16 +851,19 @@ class Sessions(models.Model):
         verbose_name=_("team"),
         help_text=_("The associated team"),
     )
-    versions = models.JSONField(_("versions"), help_text=_("The session versions"), blank=True, null=True)
+    description = models.TextField(
+        _("description"), max_length=512, help_text=_("Description for the session"), default=""
+    )
+    versions = models.JSONField(
+        _("versions"), help_text=_("The session versions"), blank=True, null=True
+    )
     loading = models.BooleanField(
         _("Loading"),
         help_text=_("Is this session currently loading?"),
         default=False,
     )
     user_ids = models.JSONField(
-        _("user_ids"),
-        help_text=_("A list of user_ids for this session"),
-        default=list
+        _("user_ids"), help_text=_("A list of user_ids for this session"), default=list
     )
 
     def update_versions(self):
@@ -1019,7 +1022,7 @@ class Sessions(models.Model):
             )
         if not ignore_version and session_data.data_version != data_version:
             return {"synch_error": True}
-        
+
         # Apply the mutation
         session_data.mutate(data_path=data_path, data_value=data_value)
         # Update versions post mutation
@@ -1061,7 +1064,7 @@ class Sessions(models.Model):
         self.user_ids = list(CustomUser.objects.filter(session=self).values_list("id", flat=True))
         self.save()
 
-    def copy(self, name):
+    def copy(self, name, description):
         """
         Copies the current session to a new session
 
@@ -1074,6 +1077,7 @@ class Sessions(models.Model):
         session_data = SessionData.objects.filter(session=self)
         new_session = self
         new_session.name = str(name)
+        new_session.description = str(description)
         new_session.pk = None
         new_session.save()
         for data in session_data:
@@ -1084,13 +1088,13 @@ class Sessions(models.Model):
 
     def error_on_session_not_empty(self):
         if len(self.get_user_ids()) > 0:
-            raise Exception(
-                "Oops! That session still has users in it."
-            )
+            raise Exception("Oops! That session still has users in it.")
 
     def set_loading(self, loading):
         if self.loading and loading:
-            raise Exception('Oops! This session is locked while long running request is being processed.')
+            raise Exception(
+                "Oops! This session is locked while long running request is being processed."
+            )
         if loading != self.loading:
             self.loading = loading
             self.save()
@@ -1101,11 +1105,11 @@ class Sessions(models.Model):
             object=self,
             event="localMutation",
             data={
-                "data_path": ['sessions'],
-                "data":{
+                "data_path": ["sessions"],
+                "data": {
                     "session_id": self.id,
                     "session_loading": self.loading,
-                }
+                },
             },
         )
 
@@ -1158,7 +1162,7 @@ class SessionData(models.Model):
     )
 
     def get_cache_data_id(self):
-        return f'data:{self.id}'
+        return f"data:{self.id}"
 
     def get_data(self):
         return cache.get(self.get_cache_data_id())
@@ -1180,7 +1184,9 @@ class SessionData(models.Model):
             - What: The data value to assign to the end of the provided path
             - Default: None
         """
-        self.save_data(utils.functional.assoc_path(path=data_path, value=data_value, data=self.get_data()))
+        self.save_data(
+            utils.functional.assoc_path(path=data_path, value=data_value, data=self.get_data())
+        )
 
     def save_data(
         self,
@@ -1220,7 +1226,7 @@ class SessionData(models.Model):
         if sendToApi is not None:
             self.sendToApi = sendToApi
         self.data_version += 1
-        cache.set(self.get_cache_data_id(),data, None)
+        cache.set(self.get_cache_data_id(), data, None)
         self.save()
 
     # Metadata
@@ -1235,6 +1241,7 @@ class SessionData(models.Model):
     def __str__(self):
         return _("{}").format(str(self.session.name) + str(self.data_name))
 
+
 # Signals
 @receiver(post_delete, sender=SessionData, dispatch_uid="remove_session_data_from_cache_on_delete")
 def remove_session_data_from_cache(sender, instance, **kwargs):
@@ -1243,14 +1250,15 @@ def remove_session_data_from_cache(sender, instance, **kwargs):
     """
     cache.delete(instance.get_cache_data_id())
 
+
 @receiver(post_save, sender=TeamUsers, dispatch_uid="update_team_ids_on_save")
 @receiver(post_delete, sender=TeamUsers, dispatch_uid="update_team_ids_on_delete")
 def update_team_ids(sender, instance, **kwargs):
     instance.user.team_ids = list(
-        TeamUsers.objects.filter(user=instance.user)
-        .values_list('team', flat=True)
+        TeamUsers.objects.filter(user=instance.user).values_list("team", flat=True)
     )
     instance.user.save()
+
 
 @receiver(post_save, sender=CustomUser, dispatch_uid="create_personal_team_on_creation")
 def create_personal_team(sender, instance, created, **kwargs):

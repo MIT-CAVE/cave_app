@@ -248,15 +248,21 @@ def session_management(request):
     - create
         - Requires:
             - session_name: str
-        - Optional:
+                - name of the new session to create
             - team_id: int
                 - id of team for which to add the session
+                - if not provided, session will be added to the user's personal team
+        - Optional:
+            - session_description: str
+                - the description of the session
+                - if not provided, will be set to an empty string
 
     -----------------------------------
     {
         "session_command":"create",
         "session_command_data":{
             "session_name":"new_name_here",
+            "session_description":"new_description_here",
             "team_id": 1
         }
     }
@@ -281,12 +287,17 @@ def session_management(request):
                 - The id of the session to copy
             - session_name: str
                 - The name of the new copied session
+        - Optional:
+            - session_description: str
+                - the description of the session
+                - if not provided, will be set to an empty string
 
     -----------------------------------
     {
         "session_command":"copy",
         "session_command_data":{
             "session_name":"copied_name_here",
+            "session_description":"copied_description_here",
             "session_id": 1
         }
     }
@@ -311,12 +322,17 @@ def session_management(request):
                 - The id of the session to edit
             - session_name: str
                 - The new name of this session
+        - Optional:
+            - session_description: str
+                - the description of the session
+                - if not provided, will be set to an empty string
 
     -----------------------------------
     {
         "session_command":"edit",
         "session_command_data":{
             "session_name":"edited_name_here",
+            "session_description":"edited_description_here",
             "session_id": 1
         }
     }
