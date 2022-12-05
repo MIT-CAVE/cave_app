@@ -147,7 +147,7 @@ class CustomSessionAdmin(admin.ModelAdmin):
 
 class CustomSessionDataAdmin(admin.ModelAdmin):
     model = models.SessionData
-    list_display = ["id", "session", "data_name", "data_hash"]
+    list_display = ["id", "session", "data_name", "data_version"]
     search_fields = [
         "session__name",
         "session__team__name",

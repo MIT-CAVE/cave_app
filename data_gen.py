@@ -1,4 +1,4 @@
-import sys, os, json
+import sys, os
 
 def get_value(key, arg_dict, default, acceptable_values=None):
     out_val=arg_dict.get(key, default)
