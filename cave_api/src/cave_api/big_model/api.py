@@ -4,17 +4,17 @@ example = {
         "sendToApi": False,
         "sendToClient": True,
         "data": {
-            "sync":{
-                "mapLayers":{
+            "sync": {
+                "mapLayers": {
                     "name": "Map Layers",
                     "showToggle": True,
                     "value": False,
-                    "data":{
+                    "data": {
                         "ml1": ["map", "data", "enabledTypes"],
                         "ml2": ["nodes", "types"],
                         "ml3": ["arcs", "types"],
                         "ml4": ["geos", "types"],
-                    }
+                    },
                 },
                 "appBar": {
                     "name": "App Bar",
@@ -23,7 +23,7 @@ example = {
                     "data": {
                         "ab1": ["appBar", "data", "dashboardId"],
                         "ab2": ["appBar", "paneState"],
-                    } 
+                    },
                 },
             },
             "syncToggles": {
@@ -990,7 +990,9 @@ example = {
                         "value": True,
                     },
                 },
-            } for i in range(-50,50) for j in range (-50, 50)
+            }
+            for i in range(-50, 50)
+            for j in range(-50, 50)
         },
     },
     "geos": {
@@ -1344,6 +1346,7 @@ example = {
     },
 }
 
+
 def execute_command(session_data, command="init"):
     """
     Usage:
@@ -1376,7 +1379,7 @@ def execute_command(session_data, command="init"):
         print("The `solve` button has been pressed by the user!")
     elif command == "test":
         print("The `test` button has been pressed by the user!")
-        raise Exception('Test Exception!')
+        raise Exception("Test Exception!")
     if session_data:
         for key, value in session_data.items():
             example[key] = value

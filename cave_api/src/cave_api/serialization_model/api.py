@@ -36,5 +36,5 @@ def execute_command(session_data, command="init"):
         return get_api_object()
     elif command == "test":
         print("The `test` button has been pressed by the user!")
-        raise Exception('Test Exception!')
+        raise Exception("Test Exception!")
     raise Exception(f"Command not found: `{command}`")
