@@ -1219,7 +1219,7 @@ class SessionData(models.Model):
             self.sendToClient = sendToClient
         if sendToApi is not None:
             self.sendToApi = sendToApi
-        self.data_version += self.data_version
+        self.data_version += 1
         cache.set(self.get_cache_data_id(),data, None)
         self.save()
 
