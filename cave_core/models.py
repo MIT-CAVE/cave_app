@@ -855,7 +855,7 @@ class Sessions(models.Model):
         _("description"), max_length=512, help_text=_("Description for the session"), default=""
     )
     versions = models.JSONField(
-        _("versions"), help_text=_("The session versions"), blank=True, null=True
+        _("versions"), help_text=_("The session versions"), default=dict
     )
     loading = models.BooleanField(
         _("Loading"),
