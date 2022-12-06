@@ -948,6 +948,7 @@ class Sessions(models.Model):
                 allowModification=value.get("allowModification", obj.allowModification),
                 sendToClient=value.get("sendToClient", obj.sendToClient),
                 sendToApi=value.get("sendToApi", obj.sendToApi),
+                data_version=self.versions.get(key, 0)+1
             )
         # Update versions post replacement
         self.update_versions()
@@ -1194,6 +1195,7 @@ class SessionData(models.Model):
         allowModification=None,
         sendToClient=None,
         sendToApi=None,
+        data_version=None,
     ):
         """
         Updates / saves data to this current session data object
@@ -1225,7 +1227,10 @@ class SessionData(models.Model):
             self.sendToClient = sendToClient
         if sendToApi is not None:
             self.sendToApi = sendToApi
-        self.data_version += 1
+        if data_version is not None:
+            self.data_version = data_version
+        else:
+            self.data_version += 1
         cache.set(self.get_cache_data_id(), data, None)
         self.save()
 
