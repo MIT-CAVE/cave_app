@@ -437,9 +437,11 @@ def execute_command(session_data, command="init"):
                             "statistic": "numericStatExampleA",
                         },
                         {
+                            "type": "kpis",
                             "chart": "Line",
                             "grouping": "Sum",
-                            "statistic": "numericStatExampleB",
+                            "sessions": [],
+                            "kpi": "KPI Example 1",
                         },
                         {
                             "chart": "Bar",
@@ -449,11 +451,13 @@ def execute_command(session_data, command="init"):
                             "statistic": "numericExampleCalculationStat",
                         },
                         {
-                            "type": "kpis",
-                            "chart": "Bar",
-                            "grouping": "Sum",
-                            "sessions": [],
-                            "kpi": "kpi5",
+                            "chart": 'Stacked Waterfall',
+                            "grouping": 'Sum',
+                            "statistic": 'numericStatExampleA',
+                            "category": 'location',
+                            "level": 'state',
+                            "category2": 'sku',
+                            "level2": 'sku'
                         },
                     ],
                     "lockedLayout": False,
@@ -1313,7 +1317,7 @@ def execute_command(session_data, command="init"):
                         "location": ["locUsMi"],
                         "sku": ["SKU2"],
                     },
-                    "values": {"numericStatExampleA": 3, "numericStatExampleB": 5},
+                    "values": {"numericStatExampleA": -3, "numericStatExampleB": 5},
                 },
                 "d5": {
                     "category": {
