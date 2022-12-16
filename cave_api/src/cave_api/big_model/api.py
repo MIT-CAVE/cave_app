@@ -547,7 +547,6 @@ example = {
                 "sizeBy": "numericPropExampleB",
                 "startSize": "15px",
                 "endSize": "30px",
-                "order": 1,
                 "props": {
                     "numericPropExampleA": {
                         "name": "Numeric Prop Example A",
@@ -646,7 +645,6 @@ example = {
                 "sizeBy": "numericPropExampleB",
                 "startSize": "15px",
                 "endSize": "30px",
-                "order": 2,
                 "props": {
                     "numericPropExampleA": {
                         "name": "Numeric Prop Example A",
@@ -873,7 +871,6 @@ example = {
                 "startSize": "30px",
                 "endSize": "45px",
                 "icon": "MdStore",
-                "order": 2,
                 "props": {
                     "numericPropExampleA": {
                         "name": "Numeric Prop Example A",
@@ -940,7 +937,6 @@ example = {
                 "startSize": "30px",
                 "endSize": "45px",
                 "icon": "BsBuilding",
-                "order": 1,
                 "props": {
                     "numericPropExampleA": {
                         "name": "Numeric Prop Example A",

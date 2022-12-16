@@ -50,7 +50,6 @@ The structure of an `arcs` group looks as follows:
             "sizeBy": "customPropKey10",
             "startSize": "15px",
             "endSize": "30px",
-            "order": 1,
             "props": {
                 "customPropKey9": {
                     "name": "Numeric Prop Example A",
@@ -154,7 +153,6 @@ The structure of an `arcs` group looks as follows:
 - [`min`](../common_keys/common_keys.md#color-by-min)
 - [`name`](../common_keys/common_keys.md#name)
 - [`numberFormat`](../common_keys/common_keys.md#number-format)
-- [`order`](../common_keys/common_keys.md#order)
 - [`prop > type`](../common_keys/props.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
@@ -242,7 +240,6 @@ Key | Default | Description
             "sizeBy": "numericPropExampleB",
             "startSize": "15px",
             "endSize": "30px",
-            "order": 1,
             "props": {
                 "numericPropExampleA": {
                     "name": "Numeric Prop Example A",
@@ -341,7 +338,6 @@ Key | Default | Description
             "sizeBy": "numericPropExampleB",
             "startSize": "15px",
             "endSize": "30px",
-            "order": 2,
             "props": {
                 "numericPropExampleA": {
                     "name": "Numeric Prop Example A",

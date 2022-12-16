@@ -44,7 +44,6 @@
         "sizeBy": "numericPropExampleB",
         "startSize": "15px",
         "endSize": "30px",
-        "order": 1,
         "props": {
             "numericPropExampleA": {
                 "name": "Numeric Prop Example A",
@@ -143,7 +142,6 @@
         "sizeBy": "numericPropExampleB",
         "startSize": "15px",
         "endSize": "30px",
-        "order": 2,
         "props": {
             "numericPropExampleA": {
                 "name": "Numeric Prop Example A",

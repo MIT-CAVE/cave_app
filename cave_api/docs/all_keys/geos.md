@@ -96,7 +96,6 @@ Let's look inside the structure of `geos`:
 - [`icon`](../common_keys/common_keys.md#icon)
 - [`name`](../common_keys/common_keys.md#name)
 - [`numberFormat`](../common_keys/common_keys.md#number-format)
-- [`order`](../common_keys/common_keys.md#order)
 - [`prop > type`](../common_keys/props.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)

@@ -44,7 +44,6 @@ The structure of a `nodes` group looks as follows:
             "startSize": "30px",
             "endSize": "45px",
             "icon": "MdStore",
-            "order": 2,
             "props": {
                 "customPropKey1": {
                     "name": "Numeric Prop Example A",
@@ -113,7 +112,6 @@ The structure of a `nodes` group looks as follows:
 - [`icon`](../common_keys/common_keys.md#icon)
 - [`name`](../common_keys/common_keys.md#name)
 - [`numberFormat`](../common_keys/common_keys.md#number-format)
-- [`order`](../common_keys/common_keys.md#order)
 - [`prop > type`](../common_keys/props.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
@@ -187,7 +185,6 @@ Key | Default | Description
             "startSize": "30px",
             "endSize": "45px",
             "icon": "MdStore",
-            "order": 2,
             "props": {
                 "numericPropExampleA": {
                     "name": "Numeric Prop Example A",
@@ -254,7 +251,6 @@ Key | Default | Description
             "startSize": "30px",
             "endSize": "45px",
             "icon": "BsBuilding",
-            "order": 1,
             "props": {
                 "numericPropExampleA": {
                     "name": "Numeric Prop Example A",
