@@ -3,40 +3,40 @@ The `stats` group takes parameter data that can be combined with geospatial data
 
 Let's look inside the structure of `stats`:
 ```py
-'stats': {
-    'name': 'Statistics',
-    'types': {
-        'customStatKey1': {
-            'name': 'A name to be displayed in the UI',
-            'calculation': 'customStatKey1 / customStatKey2',
-            'numberFormat': {
-                'unit': 'units',
+"stats": {
+    "name": "Statistics",
+    "types": {
+        "customStatKey1": {
+            "name": "A name to be displayed in the UI",
+            "calculation": "customStatKey1 / customStatKey2",
+            "numberFormat": {
+                "unit": "units",
             },
-            'order': 1,
+            "order": 1,
         },
-        'customStatKey2': {...},
+        "customStatKey2": {...},
         # As many stats as needed
     },
-    'data': {
-        'customStatData1': {
-            'category': {
-                'customDataChunck1': [
-                    'customDataKey2',
-                    'customDataKey4'
+    "data": {
+        "customStatData1": {
+            "category": {
+                "customDataChunck1": [
+                    "customDataKey2",
+                    "customDataKey4"
                 ],
-                'customDataChunck2': [
-                    'customDataKey1',
-                    'customDataKey3',
+                "customDataChunck2": [
+                    "customDataKey1",
+                    "customDataKey3",
                 ],
                 # As many data chunks as needed
             },
-            'values': {
-                'customStatKey1': 3,
-                'customStatKey2': 8,
+            "values": {
+                "customStatKey1": 3,
+                "customStatKey2": 8,
                 # As many stat keys as needed
             },
         },
-        'customStatData2': {...},
+        "customStatData2": {...},
         # As many stat data chunks as needed
     },
 }

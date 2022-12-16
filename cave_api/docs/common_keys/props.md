@@ -3,44 +3,44 @@
 We dedicate a section to the `props` group, as it handles all of the user input controls, as well as most of the textual or numeric output in the CAVE App. Let's start with an in-depth look at its internal structure and how it translates to the UI.
 
 ```py
-'props': {
-    'customPropKey1': {
-        'name': 'Section header',
-        'type': 'head',
-        'help': 'A help text for the section header',
+"props": {
+    "customPropKey1": {
+        "name": "Section header",
+        "type": "head",
+        "help": "A help text for the section header",
     },
-    'customPropKey2': {
-        'enabled': True,
-        'name': 'A name to be displayed in the UI',
-        'type': 'num',
-        'value': 1,
-        'numberFormat': {
-            'precision': 0,
-            'unit': 'units',
+    "customPropKey2": {
+        "enabled": True,
+        "name": "A name to be displayed in the UI",
+        "type": "num",
+        "value": 1,
+        "numberFormat": {
+            "precision": 0,
+            "unit": "units",
         },
-        'help': 'A help text for the numeric input',
+        "help": "A help text for the numeric input",
     },
-    'customPropKey3': {
-        'name': 'A name to be displayed in the UI',
-        'type': 'num',
-        'variant': 'slider',
-        'value': 30,
-        'minValue': 0,
-        'maxValue': 100,
-        'label': '%',
-        'help': 'A help text for the slider',
+    "customPropKey3": {
+        "name": "A name to be displayed in the UI",
+        "type": "num",
+        "variant": "slider",
+        "value": 30,
+        "minValue": 0,
+        "maxValue": 100,
+        "label": "%",
+        "help": "A help text for the slider",
     },
-    'customPropKey4': {
-        'enabled': True,
-        'name': 'A name to be displayed in the UI',
-        'type': 'selector',
-        'variant': 'dropdown',
-        'value': [
-            {'name':'custom_option_1', 'value': False},
-            {'name':'custom_option_2', 'value': True},
-            {'name':'custom_option_3', 'value': False},
+    "customPropKey4": {
+        "enabled": True,
+        "name": "A name to be displayed in the UI",
+        "type": "selector",
+        "variant": "dropdown",
+        "value": [
+            {"name":"custom_option_1", "value": False},
+            {"name":"custom_option_2", "value": True},
+            {"name":"custom_option_3", "value": False},
         ],
-        'help': 'A help text for the dropdown selector',
+        "help": "A help text for the dropdown selector",
     },
     # As many props as needed
 }

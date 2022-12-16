@@ -4,8 +4,8 @@
 Below is an example of a `timeObject` with a `timeLength` of 5:
 ```py
 {
-    'timeObject': True,
-    'value': [1, 1, 2, 3, 5],
+    "timeObject": True,
+    "value": [1, 1, 2, 3, 5],
 }
 ```
 - The `timeObject` key being set to `True` is required for all `timeObject`s.

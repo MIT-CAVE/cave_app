@@ -5,79 +5,79 @@ The internal structure of `geos` is very similar to that of the `arcs` and `node
 
 Let's look inside the structure of `geos`:
 ```py
-'geos': {
-    'name': 'A name that will be displayed in the map legend.',
-    'types': {
-        'customGeoType1': {
-            'name': 'A name to be displayed in the UI',
-            'colorByOptions': {
-                'customPropKey1': {
-                    'min': 0,
-                    'max': 60,
-                    'startGradientColor': {
-                        'dark': 'rgb(233, 0, 0)',
-                        'light': 'rgb(52, 52, 236)',
+"geos": {
+    "name": "A name that will be displayed in the map legend.",
+    "types": {
+        "customGeoType1": {
+            "name": "A name to be displayed in the UI",
+            "colorByOptions": {
+                "customPropKey1": {
+                    "min": 0,
+                    "max": 60,
+                    "startGradientColor": {
+                        "dark": "rgb(233, 0, 0)",
+                        "light": "rgb(52, 52, 236)",
                     },
-                    'endGradientColor': {
-                        'dark': 'rgb(96, 2, 2)',
-                        'light': 'rgb(23, 23, 126)',
-                    },
-                },
-                'customPropKey2': {
-                    'min': 0,
-                    'max': 40,
-                    'startGradientColor': {
-                        'dark': 'rgb(233, 0, 0)',
-                        'light': 'rgb(52, 52, 236)',
-                    },
-                    'endGradientColor': {
-                        'dark': 'rgb(96, 2, 2)',
-                        'light': 'rgb(23, 23, 126)',
+                    "endGradientColor": {
+                        "dark": "rgb(96, 2, 2)",
+                        "light": "rgb(23, 23, 126)",
                     },
                 },
-                'customPropKey3': {
-                  'customColorKey1':'rgb(233,0,0)',
-                  'customColorKey2':'rgb(0,233,0)'
+                "customPropKey2": {
+                    "min": 0,
+                    "max": 40,
+                    "startGradientColor": {
+                        "dark": "rgb(233, 0, 0)",
+                        "light": "rgb(52, 52, 236)",
+                    },
+                    "endGradientColor": {
+                        "dark": "rgb(96, 2, 2)",
+                        "light": "rgb(23, 23, 126)",
+                    },
+                },
+                "customPropKey3": {
+                  "customColorKey1":"rgb(233,0,0)",
+                  "customColorKey2":"rgb(0,233,0)"
                 }
             },
-            'colorBy': 'customPropKey1',
-            'geoJson': {
-                'geoJsonLayer': 'https://cave-geojsons.s3.amazonaws.com/geojson_data_1.json',
-                'geoJsonProp': 'geojsonProp1',
+            "colorBy": "customPropKey1",
+            "geoJson": {
+                "geoJsonLayer": "https://cave-geojsons.s3.amazonaws.com/geojson_data_1.json",
+                "geoJsonProp": "geojsonProp1",
             },
-            'props': {
-                'customPropKey1': {
-                    'type': 'num',
-                    'help': 'A help text for this numeric input',
-                    'numberFormat': {
-                        'unit': 'units',
+            "props": {
+                "customPropKey1": {
+                    "type": "num",
+                    "help": "A help text for this numeric input",
+                    "numberFormat": {
+                        "unit": "units",
                     },
-                    'enabled': True,
+                    "enabled": True,
                 },
-                'customPropKey2': {...},
-                'customPropKey3': {...},
+                "customPropKey2": {...},
+                "customPropKey3": {...},
             },
-            'icon': 'FaHexagon',
+            "icon": "FaHexagon",
         },
-        'customGeoType2': {...},
+        "customGeoType2": {...},
     },
-    'data': {
-        'customGeoData1': {
-            'name': 'A name to be displayed in the UI',
-            'geoJsonValue': 'geojson_value_1',
-            'type': 'customGeoType1',
-            'category': {
-                'customDataChunck1': ['customDataKey1']
+    "data": {
+        "customGeoData1": {
+            "name": "A name to be displayed in the UI",
+            "geoJsonValue": "geojson_value_1",
+            "type": "customGeoType1",
+            "category": {
+                "customDataChunck1": ["customDataKey1"]
             },
-            'props': {
-                'customPropKey1': {
-                    'value': 60,
+            "props": {
+                "customPropKey1": {
+                    "value": 60,
                 },
-                'customPropKey2': {...},
-                'customPropKey3': {...},
+                "customPropKey2": {...},
+                "customPropKey3": {...},
             },
         },
-        'customGeoData2': {...},
+        "customGeoData2": {...},
         # As many geo data chunks as needed
     },
 }

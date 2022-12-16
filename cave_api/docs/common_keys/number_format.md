@@ -5,14 +5,14 @@ A `numberFormat` specification can be added to the top level [`settings`](../all
 
 The `numberFormat` structure with all its keys looks as follows:
 ```py
-'numberFormat': {
-    'precision': 2,
-    'unit': '%',
-    'unitSpace': False,
-    'currency': False,
-    'trailingZeros': True,
-    'nilValue': 'N/A',
-    'locale': 'en-US',
+"numberFormat": {
+    "precision": 2,
+    "unit": "%",
+    "unitSpace": False,
+    "currency": False,
+    "trailingZeros": True,
+    "nilValue": "N/A",
+    "locale": "en-US",
 }
 ```
 

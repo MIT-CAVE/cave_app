@@ -3,45 +3,45 @@ Both designers and users often need to work with different levels of data aggreg
 
 Below is an example of the `categories` top level key:
 ```py
-'categories': {
-    'allowModification': False,
-    'sendToApi': False,
-    'sendToClient': True,
-    'data': {
-        'customCategory1': {  # Inside a category group
-            'name': 'A name to be displayed in the UI',
-            'data': {
-                'customDataChunk1': {
-                    'customDataKey1': 'customDataValue1',
-                    'customDataKey2': 'customDataValue2',
-                    'customDataKey3': 'customDataValue3',
+"categories": {
+    "allowModification": False,
+    "sendToApi": False,
+    "sendToClient": True,
+    "data": {
+        "customCategory1": {  # Inside a category group
+            "name": "A name to be displayed in the UI",
+            "data": {
+                "customDataChunk1": {
+                    "customDataKey1": "customDataValue1",
+                    "customDataKey2": "customDataValue2",
+                    "customDataKey3": "customDataValue3",
                 },
-                'customDatachunk2': {
-                    'customDataKey1': 'customDataValue4',
-                    'customDataKey2': 'customDataValue5',
-                    'customDataKey3': 'customDataValue6',
+                "customDatachunk2": {
+                    "customDataKey1": "customDataValue4",
+                    "customDataKey2": "customDataValue5",
+                    "customDataKey3": "customDataValue6",
                 },
                 # As many data chunks as needed
             },
-            'nestedStructure': {
-                'customDataKey1': {
-                    'name': 'A name to be displayed in the UI'
+            "nestedStructure": {
+                "customDataKey1": {
+                    "name": "A name to be displayed in the UI"
                     # Optional ordering (the default is alphabetical)
-                    'ordering': [
-                        'customDataValue1',
-                        'customDataValue4',
+                    "ordering": [
+                        "customDataValue1",
+                        "customDataValue4",
                     ],
-                    'order': 1,
+                    "order": 1,
                 },
-                'customDataKey2': {...},
-                'customDataKey3': {...},
-                'customDataKey4': {...},
+                "customDataKey2": {...},
+                "customDataKey3": {...},
+                "customDataKey4": {...},
                 # As many data keys as defined within the data chunks
             },
-            'layoutDirection': 'horizontal',
-            'order': 2,
+            "layoutDirection": "horizontal",
+            "order": 2,
         },
-        'customCategory2': {...},
+        "customCategory2": {...},
         # As many categories as needed
     },
 }

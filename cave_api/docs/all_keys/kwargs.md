@@ -1,10 +1,10 @@
 # `kwargs`
-The `kwargs` group contains special keys that are not actually stored in the data but instead used to instruct the server to do special tasks. 
+The `kwargs` group contains special keys that are not actually stored in the data but instead used to instruct the server to do special tasks.
 
 Let's look inside the structure of `kwargs`:
 ```py
-'kwargs': {
-  'wipeExisting':False
+"kwargs": {
+  "wipeExisting":False
 }
 ```
 
@@ -19,8 +19,8 @@ Key | Default | Description
   <summary>Click here to show / hide example</summary>
 
 ```py
-'kwargs': {
-  'wipeExisting':False
+"kwargs": {
+  "wipeExisting":False
 }
 ```
 </details>

@@ -4,52 +4,52 @@ The `layout` key allows for use cases where you want to arrange components that 
 
 The `layout` structure is the same for `props` and `kpis` and looks as follows:
 ```py
-'layout': {
-    'type': 'grid',
-    'numColumns': 2,
-    'numRows': 'auto',
-    'data': {
-        'customCol1Row1': {
-            'type': 'item',
-            'column': 1,
-            'row': 1,
-            'itemId': 'customPropOrKpiKey1'
+"layout": {
+    "type": "grid",
+    "numColumns": 2,
+    "numRows": "auto",
+    "data": {
+        "customCol1Row1": {
+            "type": "item",
+            "column": 1,
+            "row": 1,
+            "itemId": "customPropOrKpiKey1"
         },
-        'customCol2Row1': {
-            'type': 'grid',
-            'numColumns': 'auto',
-            'numRows': 1,
-            'column': 2,
-            'row': 1,
-            'data': {
-                'col1': {
-                    'type': 'item',
-                    'column': 1,
-                    'itemId': 'customPropOrKpiKey2',
+        "customCol2Row1": {
+            "type": "grid",
+            "numColumns": "auto",
+            "numRows": 1,
+            "column": 2,
+            "row": 1,
+            "data": {
+                "col1": {
+                    "type": "item",
+                    "column": 1,
+                    "itemId": "customPropOrKpiKey2",
                 },
-                'col2': {
-                    'type': 'item',
-                    'column': 2,
-                    'itemId': 'customPropOrKpiKey3',
+                "col2": {
+                    "type": "item",
+                    "column": 2,
+                    "itemId": "customPropOrKpiKey3",
                 },
-                'col3': {...},
+                "col3": {...},
                 # As many columns as needed
             },
         },
-        'customCol1Row2': {
-            'type': 'item',
-            'column': 1,
-            'row': 2,
-            'itemId': 'customPropOrKpiKey4'
+        "customCol1Row2": {
+            "type": "item",
+            "column": 1,
+            "row": 2,
+            "itemId": "customPropOrKpiKey4"
         },
-        'customCol2Row2': {
-            'type': 'item',
-            'column': 2,
-            'row': 2,
-            'itemId': 'customPropOrKpiKey5'
+        "customCol2Row2": {
+            "type": "item",
+            "column": 2,
+            "row": 2,
+            "itemId": "customPropOrKpiKey5"
         },
-        'customCol1Row3': {...},
-        'customCol2Row3': {...},
+        "customCol1Row3": {...},
+        "customCol2Row3": {...},
     },
 }
 ```
@@ -75,73 +75,73 @@ Key | Default | Description
 To better illustrate various use cases for a `'grid'` layout, we will rely on the same `props` structure, shown below:
 
 ```py
-'props': {
-    'solver_section': {
-        'name': 'Solver Section',
-        'type': 'head',
-        'help': 'Some help for the solver section',
+"props": {
+    "solver_section": {
+        "name": "Solver Section",
+        "type": "head",
+        "help": "Some help for the solver section",
     },
-    'Solver': {
-        'name': 'Solver',
-        'type': 'selector',
-        'variant': 'dropdown',
-        'value': [
-            {'name': 'Gurobi', 'value': True},
-            {'name': 'Cplex', 'value': False},
-            {'name': 'CoinOR', 'value': False},
+    "Solver": {
+        "name": "Solver",
+        "type": "selector",
+        "variant": "dropdown",
+        "value": [
+            {"name": "Gurobi", "value": True},
+            {"name": "Cplex", "value": False},
+            {"name": "CoinOR", "value": False},
         ],
-        'enabled': True,
-        'help': 'Select a solver type to use',
+        "enabled": True,
+        "help": "Select a solver type to use",
     },
-    'optimality_section': {
-        'name': 'Optimality Section',
-        'type': 'head',
-        'help': 'Some help for the optimality section',
+    "optimality_section": {
+        "name": "Optimality Section",
+        "type": "head",
+        "help": "Some help for the optimality section",
     },
-    'Pct_Optimal': {
-        'name': 'Percent Optimal',
-        'type': 'num',
-        'value': 97,
-        'enabled': True,
-        'variant': 'slider',
-        'help': 'What percent of optimal would you like to solve to?',
-        'maxValue': 100,
-        'minValue': 0,
+    "Pct_Optimal": {
+        "name": "Percent Optimal",
+        "type": "num",
+        "value": 97,
+        "enabled": True,
+        "variant": "slider",
+        "help": "What percent of optimal would you like to solve to?",
+        "maxValue": 100,
+        "minValue": 0,
     },
-    'distance_section': {
-        'name': 'Demand Served At Distances',
-        'type': 'head',
-        'help': 'How much demand do you expect to serve at the following distances?',
+    "distance_section": {
+        "name": "Demand Served At Distances",
+        "type": "head",
+        "help": "How much demand do you expect to serve at the following distances?",
     },
-    '50_miles': {
-        'name': '50 Miles',
-        'type': 'num',
-        'value': 45,
-        'enabled': True,
-        'variant': 'slider',
-        'help': 'Expected demand filled at 50 miles',
-        'maxValue': 100,
-        'minValue': 0,
+    "50_miles": {
+        "name": "50 Miles",
+        "type": "num",
+        "value": 45,
+        "enabled": True,
+        "variant": "slider",
+        "help": "Expected demand filled at 50 miles",
+        "maxValue": 100,
+        "minValue": 0,
     },
-    '100_miles': {
-        'name': '100 Miles',
-        'type': 'num',
-        'value': 35,
-        'enabled': True,
-        'variant': 'slider',
-        'help': 'Expected demand filled at 100 miles',
-        'maxValue': 100,
-        'minValue': 0,
+    "100_miles": {
+        "name": "100 Miles",
+        "type": "num",
+        "value": 35,
+        "enabled": True,
+        "variant": "slider",
+        "help": "Expected demand filled at 100 miles",
+        "maxValue": 100,
+        "minValue": 0,
     },
-    '150_miles': {
-        'name': '150 Miles',
-        'type': 'num',
-        'value': 25,
-        'enabled': True,
-        'variant': 'slider',
-        'help': 'Expected demand filled at 150 miles',
-        'maxValue': 100,
-        'minValue': 0,
+    "150_miles": {
+        "name": "150 Miles",
+        "type": "num",
+        "value": 25,
+        "enabled": True,
+        "variant": "slider",
+        "help": "Expected demand filled at 150 miles",
+        "maxValue": 100,
+        "minValue": 0,
     },
 }
 ```
@@ -158,58 +158,58 @@ In this example, all elements are explicitly positioned within the layout. This 
   <summary>Click here to show / hide example</summary>
 
 ```py
-'layout': {
-    'type': 'grid',
-    'numColumns': 3,
-    'numRows': 4,
-    'data': {
-        'col1_row1': {
-            'type': 'item',
-            'itemId': 'solver_section',
-            'column': 1,
-            'row': 1,
+"layout": {
+    "type": "grid",
+    "numColumns": 3,
+    "numRows": 4,
+    "data": {
+        "col1_row1": {
+            "type": "item",
+            "itemId": "solver_section",
+            "column": 1,
+            "row": 1,
         },
-        'col1_row2': {
-            'type': 'item',
-            'itemId': 'Solver',
-            'column': 1,
-            'row': 2,
+        "col1_row2": {
+            "type": "item",
+            "itemId": "Solver",
+            "column": 1,
+            "row": 2,
         },
-        'col2_row1': {
-            'type': 'item',
-            'itemId': 'optimality_section',
-            'column': 2,
-            'row': 1,
+        "col2_row1": {
+            "type": "item",
+            "itemId": "optimality_section",
+            "column": 2,
+            "row": 1,
         },
-        'col2_row2': {
-            'type': 'item',
-            'itemId': 'Pct_Optimal',
-            'column': 2,
-            'row': 2,
+        "col2_row2": {
+            "type": "item",
+            "itemId": "Pct_Optimal",
+            "column": 2,
+            "row": 2,
         },
-        'col3_row1': {
-            'type': 'item',
-            'itemId': 'distance_section',
-            'column': 3,
-            'row': 1,
+        "col3_row1": {
+            "type": "item",
+            "itemId": "distance_section",
+            "column": 3,
+            "row": 1,
         },
-        'col3_row2': {
-            'type': 'item',
-            'itemId': '50_miles',
-            'column': 3,
-            'row': 2,
+        "col3_row2": {
+            "type": "item",
+            "itemId": "50_miles",
+            "column": 3,
+            "row": 2,
         },
-        'col3_row3': {
-            'type': 'item',
-            'itemId': '100_miles',
-            'column': 3,
-            'row': 3,
+        "col3_row3": {
+            "type": "item",
+            "itemId": "100_miles",
+            "column": 3,
+            "row": 3,
         },
-        'col3_row4': {
-            'type': 'item',
-            'itemId': '150_miles',
-            'column': 3,
-            'row': 4,
+        "col3_row4": {
+            "type": "item",
+            "itemId": "150_miles",
+            "column": 3,
+            "row": 4,
         },
     },
 }
@@ -230,50 +230,50 @@ In this example, all items are arranged in a single column. Although the number 
   <summary>Click here to show / hide example</summary>
 
 ```py
-'layout': {
-    'type': 'grid',
-    'numColumns': 1,
-    'numRows': 'auto',
-    'data': {
-        'solver_section': {
-            'row': 1,
-            'type': 'item',
-            'itemId': 'solver_section',
+"layout": {
+    "type": "grid",
+    "numColumns": 1,
+    "numRows": "auto",
+    "data": {
+        "solver_section": {
+            "row": 1,
+            "type": "item",
+            "itemId": "solver_section",
         },
-        'solver': {
-            'row': 2,
-            'type': 'item',
-            'itemId': 'Solver',
+        "solver": {
+            "row": 2,
+            "type": "item",
+            "itemId": "Solver",
         },
-        'optimality_section': {
-            'row': 3,
-            'type': 'item',
-            'itemId': 'optimality_section',
+        "optimality_section": {
+            "row": 3,
+            "type": "item",
+            "itemId": "optimality_section",
         },
-        'pct_optimal': {
-            'row': 4,
-            'type': 'item',
-            'itemId': 'Pct_Optimal',
+        "pct_optimal": {
+            "row": 4,
+            "type": "item",
+            "itemId": "Pct_Optimal",
         },
-        'distance_section': {
-            'row': 5,
-            'type': 'item',
-            'itemId': 'distance_section',
+        "distance_section": {
+            "row": 5,
+            "type": "item",
+            "itemId": "distance_section",
         },
-        '50_miles': {
-            'row': 6,
-            'type': 'item',
-            'itemId': '50_miles',
+        "50_miles": {
+            "row": 6,
+            "type": "item",
+            "itemId": "50_miles",
         },
-        '100_miles': {
-            'row': 7,
-            'type': 'item',
-            'itemId': '100_miles',
+        "100_miles": {
+            "row": 7,
+            "type": "item",
+            "itemId": "100_miles",
         },
-        '150_miles': {
-            'row': 8,
-            'type': 'item',
-            'itemId': '150_miles',
+        "150_miles": {
+            "row": 8,
+            "type": "item",
+            "itemId": "150_miles",
         },
     },
 }
@@ -293,50 +293,50 @@ In this example, all items are arranged in a single row. Like in the previous ex
   <summary>Click here to show / hide example</summary>
 
 ```py
-'layout': {
-    'type': 'grid',
-    'numColumns': 'auto',
-    'numRows': 1,
-    'data': {
-        'column1': {
-            'column': 1,
-            'type': 'item',
-            'itemId': 'solver_section',
+"layout": {
+    "type": "grid",
+    "numColumns": "auto",
+    "numRows": 1,
+    "data": {
+        "column1": {
+            "column": 1,
+            "type": "item",
+            "itemId": "solver_section",
         },
-        'column2': {
-            'column': 2,
-            'type': 'item',
-            'itemId': 'Solver',
+        "column2": {
+            "column": 2,
+            "type": "item",
+            "itemId": "Solver",
         },
-        'column3': {
-            'column': 3,
-            'type': 'item',
-            'itemId': 'optimality_section',
+        "column3": {
+            "column": 3,
+            "type": "item",
+            "itemId": "optimality_section",
         },
-        'column4': {
-            'column': 4,
-            'type': 'item',
-            'itemId': 'Pct_Optimal',
+        "column4": {
+            "column": 4,
+            "type": "item",
+            "itemId": "Pct_Optimal",
         },
-        'column5': {
-            'column': 5,
-            'type': 'item',
-            'itemId': 'distance_section',
+        "column5": {
+            "column": 5,
+            "type": "item",
+            "itemId": "distance_section",
         },
-        'column6': {
-            'column': 6,
-            'type': 'item',
-            'itemId': '50_miles',
+        "column6": {
+            "column": 6,
+            "type": "item",
+            "itemId": "50_miles",
         },
-        'column7': {
-            'column': 7,
-            'type': 'item',
-            'itemId': '100_miles',
+        "column7": {
+            "column": 7,
+            "type": "item",
+            "itemId": "100_miles",
         },
-        'column8': {
-            'column': 8,
-            'type': 'item',
-            'itemId': '150_miles',
+        "column8": {
+            "column": 8,
+            "type": "item",
+            "itemId": "150_miles",
         },
     },
 }
@@ -357,50 +357,50 @@ As in the previous examples, the `'auto'` feature helps you save time and effort
   <summary>Click here to show / hide example</summary>
 
 ```py
-'layout': {
-    'type': 'grid',
-    'numColumns': 2,
-    'numRows': 'auto',
-    'data': {
-        'layout_key_1': {
-            'type': 'item',
-            'itemId': 'solver_section',
-            'column': 1,
+"layout": {
+    "type": "grid",
+    "numColumns": 2,
+    "numRows": "auto",
+    "data": {
+        "layout_key_1": {
+            "type": "item",
+            "itemId": "solver_section",
+            "column": 1,
         },
-        'layout_key_2': {
-            'type': 'item',
-            'itemId': 'Solver',
-            'column': 1,
+        "layout_key_2": {
+            "type": "item",
+            "itemId": "Solver",
+            "column": 1,
         },
-        'layout_key_3': {
-            'type': 'item',
-            'itemId': 'optimality_section',
-            'column': 1,
+        "layout_key_3": {
+            "type": "item",
+            "itemId": "optimality_section",
+            "column": 1,
         },
-        'layout_key_4': {
-            'type': 'item',
-            'itemId': 'Pct_Optimal',
-            'column': 1,
+        "layout_key_4": {
+            "type": "item",
+            "itemId": "Pct_Optimal",
+            "column": 1,
         },
-        'layout_key_5': {
-            'type': 'item',
-            'itemId': 'distance_section',
-            'column': 2,
+        "layout_key_5": {
+            "type": "item",
+            "itemId": "distance_section",
+            "column": 2,
         },
-        'layout_key_6': {
-            'type': 'item',
-            'itemId': '50_miles',
-            'column': 2,
+        "layout_key_6": {
+            "type": "item",
+            "itemId": "50_miles",
+            "column": 2,
         },
-        'layout_key_7': {
-            'type': 'item',
-            'itemId': '100_miles',
-            'column': 2,
+        "layout_key_7": {
+            "type": "item",
+            "itemId": "100_miles",
+            "column": 2,
         },
-        'layout_key_8': {
-            'type': 'item',
-            'itemId': '150_miles',
-            'column': 2,
+        "layout_key_8": {
+            "type": "item",
+            "itemId": "150_miles",
+            "column": 2,
         },
     },
 }
@@ -419,45 +419,45 @@ In this example, a fixed number of rows has been set, letting the CAVE App estim
   <summary>Click here to show / hide example</summary>
 
 ```py
-'layout': {
-    'type': 'grid',
-    'numColumns': 'auto',
-    'numRows': 2,
-    'data': {
-        'layout_key_1': {
-            'type': 'item',
-            'itemId': 'solver_section',
-            'row': 1,
+"layout": {
+    "type": "grid",
+    "numColumns": "auto",
+    "numRows": 2,
+    "data": {
+        "layout_key_1": {
+            "type": "item",
+            "itemId": "solver_section",
+            "row": 1,
         },
-        'layout_key_2': {
-            'type': 'item',
-            'itemId': 'Solver',
+        "layout_key_2": {
+            "type": "item",
+            "itemId": "Solver",
         },
-        'layout_key_3': {
-            'type': 'item',
-            'itemId': 'optimality_section',
-            'row': 1,
+        "layout_key_3": {
+            "type": "item",
+            "itemId": "optimality_section",
+            "row": 1,
         },
-        'layout_key_4': {
-            'type': 'item',
-            'itemId': 'Pct_Optimal',
+        "layout_key_4": {
+            "type": "item",
+            "itemId": "Pct_Optimal",
         },
-        'layout_key_5': {
-            'type': 'item',
-            'itemId': 'distance_section',
-            'row': 1,
+        "layout_key_5": {
+            "type": "item",
+            "itemId": "distance_section",
+            "row": 1,
         },
-        'layout_key_6': {
-            'type': 'item',
-            'itemId': '50_miles',
+        "layout_key_6": {
+            "type": "item",
+            "itemId": "50_miles",
         },
-        'layout_key_7': {
-            'type': 'item',
-            'itemId': '100_miles',
+        "layout_key_7": {
+            "type": "item",
+            "itemId": "100_miles",
         },
-        'layout_key_8': {
-            'type': 'item',
-            'itemId': '150_miles',
+        "layout_key_8": {
+            "type": "item",
+            "itemId": "150_miles",
         },
     },
 }
@@ -480,48 +480,48 @@ The _auto-grid_ rendering is also triggered when the `layout` property is empty 
   <summary>Click here to show / hide example</summary>
 
 ```py
-'layout': {
-    'type': 'grid',
-    'numColumns': 'auto',
-    'numRows': 'auto',
-    'data': {
-        'layout_key_1': {
-            'type': 'item',
-            'itemId': 'solver_section',
-            'row': 1,
-            'column': 1,
+"layout": {
+    "type": "grid",
+    "numColumns": "auto",
+    "numRows": "auto",
+    "data": {
+        "layout_key_1": {
+            "type": "item",
+            "itemId": "solver_section",
+            "row": 1,
+            "column": 1,
         },
-        'layout_key_2': {
-            'type': 'item',
-            'itemId': 'Solver',
+        "layout_key_2": {
+            "type": "item",
+            "itemId": "Solver",
         },
-        'layout_key_3': {
-            'type': 'item',
-            'itemId': 'optimality_section',
-            'row': 1,
-            'column': 2,
+        "layout_key_3": {
+            "type": "item",
+            "itemId": "optimality_section",
+            "row": 1,
+            "column": 2,
         },
-        'layout_key_4': {
-            'type': 'item',
-            'itemId': 'Pct_Optimal',
+        "layout_key_4": {
+            "type": "item",
+            "itemId": "Pct_Optimal",
         },
-        'layout_key_5': {
-            'type': 'item',
-            'itemId': 'distance_section',
-            'row': 1,
-            'column': 3,
+        "layout_key_5": {
+            "type": "item",
+            "itemId": "distance_section",
+            "row": 1,
+            "column": 3,
         },
-        'layout_key_6': {
-            'type': 'item',
-            'itemId': '50_miles',
+        "layout_key_6": {
+            "type": "item",
+            "itemId": "50_miles",
         },
-        'layout_key_7': {
-            'type': 'item',
-            'itemId': '100_miles',
+        "layout_key_7": {
+            "type": "item",
+            "itemId": "100_miles",
         },
-        'layout_key_8': {
-            'type': 'item',
-            'itemId': '150_miles',
+        "layout_key_8": {
+            "type": "item",
+            "itemId": "150_miles",
         },
     },
 }

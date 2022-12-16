@@ -3,21 +3,21 @@ The `kpis` group contains all the KPI data that will be displayed on the "**KPI*
 
 Let's look inside the structure of `kpis`:
 ```py
-'kpis': {
-    'data': {
-        'customKpi1': {
-            'name': 'A name to be displayed in the UI',
-            'numberFormat': {
-                'unit': 'units',
+"kpis": {
+    "data": {
+        "customKpi1": {
+            "name": "A name to be displayed in the UI",
+            "numberFormat": {
+                "unit": "units",
             },
-            'type': 'num',
-            'icon': 'FaBox',
-            'value': 100,
-            'mapKpi': True,
+            "type": "num",
+            "icon": "FaBox",
+            "value": 100,
+            "mapKpi": True,
         },
         # As many custom KPIs as needed
     },
-    'layout': {...},
+    "layout": {...},
 }
 ```
 
