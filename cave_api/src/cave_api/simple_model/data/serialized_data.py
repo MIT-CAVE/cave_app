@@ -15,7 +15,7 @@ serialized_data = {
         "data": {
             "syncToggles": {
                 "Map Layers": {
-                    "ml1": ["map", "data", "enabledTypes"],
+                    "ml1": ["map", "data", "legendGroups"],
                     "ml2": ["nodes", "types"],
                     "ml3": ["arcs", "types"],
                     "ml4": ["geos", "types"],
@@ -23,7 +23,7 @@ serialized_data = {
             },
             "defaultDesync": {
                 "Map Layers": {
-                    "ml1": ["map", "data", "enabledTypes"],
+                    "ml1": ["map", "data", "legendGroups"],
                     "ml2": ["nodes", "types"],
                     "ml3": ["arcs", "types"],
                     "ml4": ["geos", "types"],
@@ -232,11 +232,6 @@ serialized_data = {
     },
     "map": {
         "data": {
-            "enabledTypes": {
-                "arc": {"transport": True, "last_mile": True},
-                "node": {"factory": True, "warehouse": True},
-                "geo": {"demand": True},
-            },
             "defaultViewport": {
                 "longitude": 40,
                 "latitude": 0,
@@ -272,17 +267,33 @@ serialized_data = {
                     "bearing": 0,
                 },
             },
-            "legendGroups": [
-                {
+            "legendGroups": {
+                "Transportation": {
                     "name": "Transportation",
-                    "arcTypes": ["transport", "last_mile"],
+                    "arcs": {
+                        "transport": {"value": True, "order": 1},
+                        "last_mile": {"value": True, "order": 2},
+                    },
+                    "order": 1,
                 },
-                {
+                "Facilities": {
                     "name": "Facilities",
-                    "nodeTypes": ["factory", "warehouse"],
+                    "nodes": {
+                        "factory": {"value": True, "order": 1},
+                        "warehouse": {"value": True, "order": 2}
+                    },
+                    "order": 2,
                 },
-                {"name": "Demand", "geoTypes": ["demand"]},
-            ],
+                "Demand": {
+                    "name": "Demand",
+                    "nodes": {
+                        "factory": {"value": True, "order": 1},
+                        "warehouse": {"value": True, "order": 2}
+                    },
+                    "geos": {"demand": {"value": True}},
+                    "order": 3,
+                },
+            },
         },
     },
     "arcs": {

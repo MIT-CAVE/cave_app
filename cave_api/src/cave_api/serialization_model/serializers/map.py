@@ -14,14 +14,14 @@ def get_enabled_types(layers_data):
 def get_legend_groups(layers_data):
     output = {}
     for item in layers_data:
-        itemType = item.get("type")
-        itemGroup = item.get("legendGroup")
+        itemType = f"{item.get('type')}s"
         itemId = item.get("id")
+        itemValue = item.get("enabled")
+        itemGroup = item.get("legendGroup")
         output[itemGroup] = output.get(itemGroup, {"name": itemGroup})
-        output[itemGroup][itemType + "Types"] = output[itemGroup].get(itemType + "Types", []) + [
-            itemId
-        ]
-    return list(output.values())
+        output[itemGroup][itemType] = output[itemGroup].get(itemType, {})
+        output[itemGroup][itemType][itemId] = {"value": itemValue}
+    return output
 
 
 def get_map_data(data_dir):
@@ -29,7 +29,6 @@ def get_map_data(data_dir):
     viewports = group_list(read_csv(data_dir + "viewports.csv"), "id")
     return {
         "data": {
-            "enabledTypes": get_enabled_types(layers_data),
             "defaultViewport": viewports.pop("default", [{}])[0],
             "optionalViewports": {k: v[0] for k, v in viewports.items()},
             "legendGroups": get_legend_groups(layers_data),

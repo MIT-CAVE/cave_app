@@ -35,7 +35,7 @@ def execute_command(session_data, command="init"):
                         "showToggle": True,
                         "value": False,
                         "data": {
-                            "ml1": ["map", "data", "enabledTypes"],
+                            "ml1": ["map", "data", "legendGroups"],
                             "ml2": ["nodes", "types"],
                             "ml3": ["arcs", "types"],
                             "ml4": ["geos", "types"],
@@ -53,7 +53,7 @@ def execute_command(session_data, command="init"):
                 },
                 "syncToggles": {
                     "Map Layers": {
-                        "ml1": ["map", "data", "enabledTypes"],
+                        "ml1": ["map", "data", "legendGroups"],
                         "ml2": ["nodes", "types"],
                         "ml3": ["arcs", "types"],
                         "ml4": ["geos", "types"],
@@ -61,7 +61,7 @@ def execute_command(session_data, command="init"):
                 },
                 "defaultDesync": {
                     "Map Layers": {
-                        "ml1": ["map", "data", "enabledTypes"],
+                        "ml1": ["map", "data", "legendGroups"],
                         "ml2": ["nodes", "types"],
                         "ml3": ["arcs", "types"],
                         "ml4": ["geos", "types"],
@@ -472,11 +472,6 @@ def execute_command(session_data, command="init"):
         },
         "map": {
             "data": {
-                "enabledTypes": {
-                    "arc": {"T1": True, "T2": True},
-                    "node": {"nodeTypeA": True, "nodeTypeB": True},
-                    "geo": {"state": True},
-                },
                 "defaultViewport": {
                     "longitude": -75.44766721108091,
                     "latitude": 40.34530681636297,
@@ -514,19 +509,24 @@ def execute_command(session_data, command="init"):
                         "longitude": 14,
                     },
                 },
-                "legendGroups": [
-                    {
+                "legendGroups": {
+                    "lga": {
                         "name": "Legend Group A",
-                        "nodeTypes": ["nodeTypeA"],
-                        "arcTypes": ["T1"],
+                        "nodes": {"nodeTypeA": {"value": True}},
+                        "arcs": {"T1": {"value": True}},
+                        "order": 1,
                     },
-                    {
+                    "lgb": {
                         "name": "Legend Group B",
-                        "nodeTypes": ["nodeTypeB"],
-                        "arcTypes": ["T2"],
-                        "geoTypes": ["state", "country"],
+                        "nodes": {"nodeTypeB": {"value": True}},
+                        "arcs": {"T2": {"value": True}},
+                        "geos": {
+                            "state": {"value": True, "order": 1},
+                            "country": {"value": False, "order": 2},
+                        },
+                        "order": 2,
                     },
-                ],
+                },
             },
         },
         "arcs": {

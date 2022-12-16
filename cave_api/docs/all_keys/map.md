@@ -3,43 +3,52 @@ This key group allows designers to specify information about the starting state 
 
 Below is the `map` group with its sub-keys matched by typical or placeholder values:
 ```py
-'map': {
-    'name': 'map',
-    'data':{
-        'enabledArcTypes': {'arc': {'T1': True}},
-        'defaultViewport': {
-            'longitude': -75.44766721108091,
-            'latitude': 40.34530681636297,
-            'zoom': 4.657916626867326,
-            'pitch': 0,
-            'bearing': 0,
-            'height': 1287,
-            'altitude': 1.5,
-            'maxZoom': 12,
-            'minZoom': 2
+"map": {
+    "name": "map",
+    "data": {
+        "defaultViewport": {
+            "longitude": -75.44766721108091,
+            "latitude": 40.34530681636297,
+            "zoom": 4.657916626867326,
+            "pitch": 0,
+            "bearing": 0,
+            "height": 1287,
+            "altitude": 1.5,
+            "maxZoom": 12,
+            "minZoom": 2,
         },
-        'optionalViewports': {
-            'ov0': {
-                'icon': 'FaGlobeAsia',
-                'name': 'Asia',
-                'zoom': 4,
-                'order': 1,
-                'pitch': 0,
-                'bearing': 0,
-                'maxZoom': 12,
-                'minZoom': 2,
-                'latitude': 30,
-                'longitude': 121
+        "optionalViewports": {
+            "ov0": {
+                "icon": "FaGlobeAsia",
+                "name": "Asia",
+                "zoom": 4,
+                "order": 1,
+                "pitch": 0,
+                "bearing": 0,
+                "maxZoom": 12,
+                "minZoom": 2,
+                "latitude": 30,
+                "longitude": 121,
             },
         },
-        'legendGroups': [
-            {
-                'name': 'DC Delivery',
-                'nodeTypes': ['customNodeType1'],
-                'arcTypes': ['customArcType1'],
-                'geoTypes': ['customGeoType1', 'customGeoType2']
-            }
-        ],
+        "legendGroups": {
+            "customLegendGroupKey1": {
+                "name": "DC Delivery",
+                "nodes": {"customNodeType1": {"value": False}},
+                "arcs": {"customArcType1": {"value": True}},
+                "geos": {
+                    "customGeoType1": {"value": False, "order": 1},
+                    "customGeoType2": {"value": False, "order": 2},
+                },
+                "order": 1,
+            },
+            "customLegendGroupKey2": {
+                "name": "Warehouses",
+                "nodes": {"customNodeType2": {"value": True}},
+                "arcs": {"customArcType2": {"value": False}},
+                "order": 2,
+            },
+        },
     },
 }
 ```
@@ -49,6 +58,7 @@ Below is the `map` group with its sub-keys matched by typical or placeholder val
 - [`data`](../common_keys/common_keys.md#data)
 - [`icon`](../common_keys/common_keys.md#icon)
 - [`name`](../common_keys/common_keys.md#name)
+- [`order`](../common_keys/common_keys.md#order)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 
@@ -63,15 +73,16 @@ Key | Default | Description
 `defaultViewport.maxZoom` | `22` | The maximum zoom level of the viewport in the "**Map**" view. It takes an integer value.
 `defaultViewport.minZoom` | `1.5` | The minimum zoom level of the viewport in the "**Map**" view. It takes an integer value.
 `defaultViewport.zoom` | `13` | The initial zoom level of the viewport in the "**Map**" view. It takes an integer value. Learn more about the zoom levels [here](#https://docs.mapbox.com/help/glossary/zoom-level/).
-<a name="enabledTypes">`enabledTypes`</a> | `{}` | A wrapper for the [`arc`](#arc), [`node`](#node), and [`geo`](#geo) keys, each of which matches the respective layer type ([arc type](arcs.md#arc-type), [node type](nodes.md#node-type), or [geo type](geos.md#geo-type)) with a boolean indicating whether the layer type should be visualized in the "**Map**" view or not. The initial states of the boolean values are displayed accordingly in the map legend and can be toggled by the user.
-<a name="arc">`enabledTypes.arc`</a> | | A dictionary object containing [arc types](arcs.md#arc-type) as keys mapped to boolean values to enable or disable the visualization of arc types in the "**Map**" view.
-<a name="node">`enabledTypes.node`</a> | | A dictionary object containing [node types](nodes.md#node-type) as keys mapped to boolean values to enable or disable the visualization of node types in the "**Map**" view.
-<a name="geo">`enabledTypes.geo`</a> | | A dictionary object containing [geo types](geos.md#geo-type) as keys mapped to boolean values to enable or disable the visualization of geo types in the "**Map**" view.
 <a name="optionalViewports">`optionalViewports`</a> | | A dictionary of optional viewports that can be jumped to by users. Each optional viewport should contain the same keys as `defaultViewport` as well as `name` and `icon` keys.
-<a name="legendGroups">`legendGroups`</a> | `[]` | A list of all groupings to be shown in the map legend. Groups are displayed in list order with each group having an internal order of `nodes`, `arcs`, then `geos`. Types not included in any legend group cannot be toggled.
-`legendGroups.*.nodeTypes` | | A list of all node types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
-`legendGroups.*.arcTypes` | | A list of all arc types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
-`legendGroups.*.geoTypes` | | A list of all geo types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+<a name="legendGroups">`legendGroups`</a> | `{}` | A dictionary object of all layer groupings to display in the map legend. The legend groups are displayed according to their `order` and each has an internal order of `nodes`, `arcs`, and `geos`. Types not included in any legend group cannot be toggled.
+`legendGroups.customLegendGroupKey*` | `{}` | A custom key wrapper for a legend group that contains its `name`, its display `order` from top to bottom within the map legend, as well as the initial state of the toggles for [`arc type`](arcs.md#arc-type)s, [`node type`](nodes.md#node-type)s, and [`geo type`](geos.md#geo-type)s.
+`legendGroups.customLegendGroupKey*.arcs` | `{}` | A list of all arc types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+`legendGroups.customLegendGroupKey*.arcs.customArcType*` | `{value: False}` | A [arc type](arcs.md#arc-type) that matches the initial state of the toggle within the legend group. The inner `value` key is paired with a boolean indicating whether the arc type should be displayed in the "Map" view or not, while the `order` key follows the standard [`order`](../common_keys/common_keys.md#order)ing convention, allowing to set the display order of the arc type within the legend group.
+`legendGroups.customLegendGroupKey*.geos` | `{}` | A list of all geo types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+`legendGroups.customLegendGroupKey*.geos.customGeoType*` | `{value: False}` | A [geo type](geos.md#geo-type) that matches the initial state of the toggle within the legend group. The inner `value` key is paired with a boolean indicating whether the geo type should be displayed in the "Map" view or not, while the `order` key follows the standard [`order`](../common_keys/common_keys.md#order)ing convention, allowing to set the display order of the geo type within the legend group.
+`legendGroups.customLegendGroupKey*.nodes` | `{}` | A dictionary of all node types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
+`legendGroups.customLegendGroupKey*.nodes.customNodeType*` | `{value: False}` | A [node type](nodes.md#node-type) that matches the initial state of the toggle within the legend group. The inner `value` key is paired with a boolean indicating whether the node type should be displayed in the "Map" view or not, while the `order` key follows the standard [`order`](../common_keys/common_keys.md#order)ing convention, allowing to set the display order of the node type within the legend group.
+
 
 ## Example
 
@@ -81,11 +92,6 @@ Key | Default | Description
 ```py
 "map": {
     "data": {
-        "enabledTypes": {
-            "arc": {"T1": True, "T2": True},
-            "node": {"nodeTypeA": True, "nodeTypeB": True},
-            "geo": {"state": True},
-        },
         "defaultViewport": {
             "longitude": -75.44766721108091,
             "latitude": 40.34530681636297,
@@ -123,20 +129,25 @@ Key | Default | Description
                 "longitude": 14,
             },
         },
-        "legendGroups": [
-            {
+        "legendGroups": {
+            "lga": {
                 "name": "Legend Group A",
-                "nodeTypes": ["nodeTypeA"],
-                "arcTypes": ["T1"],
+                "nodes": {"nodeTypeA": {"value": True}},
+                "arcs": {"T1": {"value": True}},
+                "order": 1,
             },
-            {
+            "lgb": {
                 "name": "Legend Group B",
-                "nodeTypes": ["nodeTypeB"],
-                "arcTypes": ["T2"],
-                "geoTypes": ["state", "country"],
+                "nodes": {"nodeTypeB": {"value": True}},
+                "arcs": {"T2": {"value": True}},
+                "geos": {
+                    "state": {"value": True, "order": 1},
+                    "country": {"value": False, "order": 2},
+                },
+                "order": 2,
             },
-        ],
+        },
     },
-},
+}
 ```
 </details>

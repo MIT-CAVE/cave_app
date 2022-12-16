@@ -10,7 +10,7 @@ Below is the `settings` group with its sub-keys matched by typical values:
     "data": {
         "syncToggles": {
             "Map Layers": {
-                "ml1": ["map", "data", "enabledTypes"],
+                "ml1": ["map", "data", "legendGroups"],
                 "ml2": ["nodes", "types"],
                 "ml3": ["arcs", "types"],
                 "ml4": ["geos", "types"],
@@ -18,7 +18,7 @@ Below is the `settings` group with its sub-keys matched by typical values:
         },
         "defaultDesync": {
             "Map Layers": {
-                "ml1": ["map", "data", "enabledTypes"],
+                "ml1": ["map", "data", "legendGroups"],
                 "ml2": ["nodes", "types"],
                 "ml3": ["arcs", "types"],
                 "ml4": ["geos", "types"],
@@ -74,7 +74,7 @@ Key | Default | Description
                 "showToggle": True,
                 "value": False,
                 "data":{
-                    "ml1": ["map", "data", "enabledTypes"],
+                    "ml1": ["map", "data", "legendGroups"],
                     "ml2": ["nodes", "types"],
                     "ml3": ["arcs", "types"],
                     "ml4": ["geos", "types"],
@@ -87,12 +87,12 @@ Key | Default | Description
                 "data": {
                     "ab1": ["appBar", "data", "dashboardId"],
                     "ab2": ["appBar", "paneState"],
-                } 
+                }
             },
         },
         "syncToggles": {
             "Map Layers": {
-                "ml1": ["map", "data", "enabledTypes"],
+                "ml1": ["map", "data", "legendGroups"],
                 "ml2": ["nodes", "types"],
                 "ml3": ["arcs", "types"],
                 "ml4": ["geos", "types"],
@@ -100,7 +100,7 @@ Key | Default | Description
         },
         "defaultDesync": {
             "Map Layers": {
-                "ml1": ["map", "data", "enabledTypes"],
+                "ml1": ["map", "data", "legendGroups"],
                 "ml2": ["nodes", "types"],
                 "ml3": ["arcs", "types"],
                 "ml4": ["geos", "types"],
