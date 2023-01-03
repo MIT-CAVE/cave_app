@@ -424,11 +424,17 @@ def execute_command(session_data, command="init"):
                     "bar": "lower",
                     "order": 1,
                 },
+                "map2": {
+                    "type": "map",
+                    "icon": "FaMapMarked",
+                    "bar": "lower",
+                    "order": 2,
+                },
                 "dash1": {
                     "type": "stats",
                     "icon": "MdInsertChart",
                     "name": "Dashboard 1",
-                    "order": 2,
+                    "order": 3,
                     "bar": "lower",
                     "dashboardLayout": [
                         {
@@ -466,65 +472,190 @@ def execute_command(session_data, command="init"):
                     "type": "kpi",
                     "icon": "MdSpeed",
                     "bar": "lower",
-                    "order": 3,
+                    "order": 4,
                 },
             }
         },
         "map": {
             "data": {
-                "defaultViewport": {
-                    "longitude": -75.44766721108091,
-                    "latitude": 40.34530681636297,
-                    "zoom": 4.657916626867326,
-                    "pitch": 0,
-                    "bearing": 0,
-                    "height": 1287,
-                    "altitude": 1.5,
-                    "maxZoom": 12,
-                    "minZoom": 2,
-                },
-                "optionalViewports": {
-                    "ov0": {
-                        "icon": "FaGlobeAsia",
-                        "name": "Asia",
-                        "zoom": 4,
-                        "order": 1,
+                "map1": {
+                    "defaultViewport": {
+                        "longitude": -75.44766721108091,
+                        "latitude": 40.34530681636297,
+                        "zoom": 4.657916626867326,
                         "pitch": 0,
                         "bearing": 0,
+                        "height": 1287,
+                        "altitude": 1.5,
                         "maxZoom": 12,
                         "minZoom": 2,
-                        "latitude": 30,
-                        "longitude": 121,
                     },
-                    "ov1": {
-                        "icon": "FaGlobeEurope",
-                        "name": "EMEA",
-                        "zoom": 4,
-                        "order": 1,
-                        "pitch": 0,
-                        "bearing": 0,
-                        "maxZoom": 12,
-                        "minZoom": 2,
-                        "latitude": 47,
-                        "longitude": 14,
-                    },
-                },
-                "legendGroups": {
-                    "lga": {
-                        "name": "Legend Group A",
-                        "nodes": {"nodeTypeA": {"value": True}},
-                        "arcs": {"T1": {"value": True}},
-                        "order": 1,
-                    },
-                    "lgb": {
-                        "name": "Legend Group B",
-                        "nodes": {"nodeTypeB": {"value": True}},
-                        "arcs": {"T2": {"value": True}},
-                        "geos": {
-                            "state": {"value": True, "order": 1},
-                            "country": {"value": False, "order": 2},
+                    "optionalViewports": {
+                        "ov0": {
+                            "icon": "FaGlobeAsia",
+                            "name": "Asia",
+                            "zoom": 4,
+                            "order": 1,
+                            "pitch": 0,
+                            "bearing": 0,
+                            "maxZoom": 12,
+                            "minZoom": 2,
+                            "latitude": 30,
+                            "longitude": 121,
                         },
-                        "order": 2,
+                        "ov1": {
+                            "icon": "FaGlobeEurope",
+                            "name": "EMEA",
+                            "zoom": 4,
+                            "order": 1,
+                            "pitch": 0,
+                            "bearing": 0,
+                            "maxZoom": 12,
+                            "minZoom": 2,
+                            "latitude": 47,
+                            "longitude": 14,
+                        },
+                    },
+                    "legendGroups": {
+                        "lga": {
+                            "name": "Legend Group A",
+                            "nodes": {
+                                "nodeTypeA": {
+                                    "value": True, 
+                                    "sizeBy": "numericPropExampleA",
+                                    "colorBy": "booleanPropExample",
+                                }
+                            },
+                            "arcs": {
+                                "T1": {
+                                    "colorBy": "numericPropExampleA",
+                                    "sizeBy": "numericPropExampleB",
+                                    "value": True
+                                }
+                            },
+                            "order": 1,
+                        },
+                        "lgb": {
+                            "name": "Legend Group B",
+                            "nodes": {
+                                "nodeTypeB": {
+                                    "value": True, 
+                                    "sizeBy": "numericPropExampleB",
+                                    "colorBy": "booleanPropExample",
+                                }
+                            },
+                            "arcs": {
+                                "T2": {
+                                    "colorBy": "numericPropExampleA",
+                                    "sizeBy": "numericPropExampleB",
+                                    "value": True
+                                }
+                            },
+                            "geos": {
+                                "state": {
+                                    "value": True,
+                                    "order": 1,
+                                    "colorBy": "numericPropExampleC",
+                                },
+                                "country": {
+                                    "value": False, 
+                                    "order": 2,
+                                    "colorBy": "numericPropExampleC",
+
+                                },
+                            },
+                            "order": 2,
+                        },
+                    },
+                },
+                "map2": {
+                    "defaultViewport": {
+                        "longitude": -75.44766721108091,
+                        "latitude": 40.34530681636297,
+                        "zoom": 4.657916626867326,
+                        "pitch": 0,
+                        "bearing": 0,
+                        "height": 1287,
+                        "altitude": 1.5,
+                        "maxZoom": 12,
+                        "minZoom": 2,
+                    },
+                    "optionalViewports": {
+                        "ov0": {
+                            "icon": "FaGlobeAsia",
+                            "name": "Asia",
+                            "zoom": 4,
+                            "order": 1,
+                            "pitch": 0,
+                            "bearing": 0,
+                            "maxZoom": 12,
+                            "minZoom": 2,
+                            "latitude": 30,
+                            "longitude": 121,
+                        },
+                        "ov1": {
+                            "icon": "FaGlobeEurope",
+                            "name": "EMEA",
+                            "zoom": 4,
+                            "order": 1,
+                            "pitch": 0,
+                            "bearing": 0,
+                            "maxZoom": 12,
+                            "minZoom": 2,
+                            "latitude": 47,
+                            "longitude": 14,
+                        },
+                    },
+                    "legendGroups": {
+                        "lga": {
+                            "name": "Legend Group A",
+                            "nodes": {
+                                "nodeTypeA": {
+                                    "value": True, 
+                                    "sizeBy": "numericPropExampleA",
+                                    "colorBy": "booleanPropExample",
+                                }
+                            },
+                            "arcs": {
+                                "T1": {
+                                    "colorBy": "numericPropExampleA",
+                                    "sizeBy": "numericPropExampleB",
+                                    "value": True
+                                }
+                            },
+                            "order": 1,
+                        },
+                        "lgb": {
+                            "name": "Legend Group B",
+                            "nodes": {
+                                "nodeTypeB": {
+                                    "value": True, 
+                                    "sizeBy": "numericPropExampleB",
+                                    "colorBy": "booleanPropExample",
+                                }
+                            },
+                            "arcs": {
+                                "T2": {
+                                    "colorBy": "numericPropExampleA",
+                                    "sizeBy": "numericPropExampleB",
+                                    "value": True
+                                }
+                            },
+                            "geos": {
+                                "state": {
+                                    "value": True,
+                                    "order": 1,
+                                    "colorBy": "numericPropExampleC",
+                                },
+                                "country": {
+                                    "value": False, 
+                                    "order": 2,
+                                    "colorBy": "numericPropExampleC",
+
+                                },
+                            },
+                            "order": 2,
+                        },
                     },
                 },
             },
@@ -567,13 +698,11 @@ def execute_command(session_data, command="init"):
                             },
                         },
                     },
-                    "colorBy": "numericPropExampleA",
                     "lineBy": "solid",
                     "sizeByOptions": {
                         "numericPropExampleA": {"min": 0, "max": 50},
                         "numericPropExampleB": {"min": 0, "max": 40},
                     },
-                    "sizeBy": "numericPropExampleB",
                     "startSize": "15px",
                     "endSize": "30px",
                     "props": {
@@ -665,13 +794,11 @@ def execute_command(session_data, command="init"):
                             },
                         },
                     },
-                    "colorBy": "numericPropExampleA",
                     "lineBy": "dotted",
                     "sizeByOptions": {
                         "numericPropExampleA": {"min": 0, "max": 50},
                         "numericPropExampleB": {"min": 0, "max": 40},
                     },
-                    "sizeBy": "numericPropExampleB",
                     "startSize": "15px",
                     "endSize": "30px",
                     "props": {
@@ -890,13 +1017,11 @@ def execute_command(session_data, command="init"):
                         },
                         "booleanPropExample": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"},
                     },
-                    "colorBy": "booleanPropExample",
                     "minSizeRange": 0,
                     "sizeByOptions": {
                         "numericPropExampleA": {"min": 0, "max": 80},
                         "numericPropExampleB": {"min": 0, "max": 50},
                     },
-                    "sizeBy": "numericPropExampleA",
                     "startSize": "30px",
                     "endSize": "45px",
                     "icon": "MdStore",
@@ -957,12 +1082,10 @@ def execute_command(session_data, command="init"):
                         },
                         "booleanPropExample": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"},
                     },
-                    "colorBy": "numericPropExampleA",
                     "sizeByOptions": {
                         "numericPropExampleA": {"min": 0, "max": 100},
                         "numericPropExampleB": {"min": 0, "max": 250},
                     },
-                    "sizeBy": "numericPropExampleB",
                     "startSize": "30px",
                     "endSize": "45px",
                     "icon": "BsBuilding",
