@@ -405,6 +405,18 @@ example = {
                 "name": "Dashboard 1",
                 "order": 2,
                 "bar": "lower",
+            },
+            "kpi1": {
+                "type": "kpi",
+                "icon": "MdSpeed",
+                "bar": "lower",
+                "order": 3,
+            },
+        }
+    },
+    "dashboard": {
+        "data": {
+            "dash1": {
                 "dashboardLayout": [
                     {
                         "chart": "Bar",
@@ -433,13 +445,7 @@ example = {
                 ],
                 "lockedLayout": False,
             },
-            "kpi1": {
-                "type": "kpi",
-                "icon": "MdSpeed",
-                "bar": "lower",
-                "order": 3,
-            },
-        }
+        },
     },
     "map": {
         "data": {

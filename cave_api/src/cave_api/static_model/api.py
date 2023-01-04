@@ -436,43 +436,49 @@ def execute_command(session_data, command="init"):
                     "name": "Dashboard 1",
                     "order": 3,
                     "bar": "lower",
-                    "dashboardLayout": [
-                        {
-                            "chart": "Bar",
-                            "grouping": "Average",
-                            "statistic": "numericStatExampleA",
-                        },
-                        {
-                            "type": "kpis",
-                            "chart": "Line",
-                            "grouping": "Sum",
-                            "sessions": [],
-                            "kpi": "KPI Example 1",
-                        },
-                        {
-                            "chart": "Bar",
-                            "level": "size",
-                            "category": "sku",
-                            "grouping": "Sum",
-                            "statistic": "numericExampleCalculationStat",
-                        },
-                        {
-                            "chart": 'Stacked Waterfall',
-                            "grouping": 'Sum',
-                            "statistic": 'numericStatExampleA',
-                            "category": 'location',
-                            "level": 'state',
-                            "category2": 'sku',
-                            "level2": 'sku'
-                        },
-                    ],
-                    "lockedLayout": False,
                 },
                 "kpi1": {
                     "type": "kpi",
                     "icon": "MdSpeed",
                     "bar": "lower",
                     "order": 4,
+                },
+            }
+        },
+        "dashboard": {
+            "data": {
+                "dash1": {
+                    "dashboardLayout": [
+                            {
+                                "chart": "Bar",
+                                "grouping": "Average",
+                                "statistic": "numericStatExampleA",
+                            },
+                            {
+                                "type": "kpis",
+                                "chart": "Line",
+                                "grouping": "Sum",
+                                "sessions": [],
+                                "kpi": "KPI Example 1",
+                            },
+                            {
+                                "chart": "Bar",
+                                "level": "size",
+                                "category": "sku",
+                                "grouping": "Sum",
+                                "statistic": "numericExampleCalculationStat",
+                            },
+                            {
+                                "chart": 'Stacked Waterfall',
+                                "grouping": 'Sum',
+                                "statistic": 'numericStatExampleA',
+                                "category": 'location',
+                                "level": 'state',
+                                "category2": 'sku',
+                                "level2": 'sku'
+                            },
+                    ],
+                    "lockedLayout": False,
                 },
             }
         },
