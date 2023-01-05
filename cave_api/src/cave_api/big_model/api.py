@@ -440,7 +440,7 @@ example = {
                         "chart": "Bar",
                         "grouping": "Sum",
                         "sessions": [],
-                        "kpi": "kpi5",
+                        "kpi": "key5",
                     },
                 ],
                 "lockedLayout": False,
@@ -492,7 +492,7 @@ example = {
                             "name": "Legend Group A",
                             "nodes": {
                                 "nodeTypeA": {
-                                    "value": True, 
+                                    "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
                                 }
@@ -510,7 +510,7 @@ example = {
                             "name": "Legend Group B",
                             "nodes": {
                                 "nodeTypeB": {
-                                    "value": True, 
+                                    "value": True,
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
                                 }
@@ -529,7 +529,7 @@ example = {
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
-                                    "value": False, 
+                                    "value": False,
                                     "order": 2,
                                     "colorBy": "numericPropExampleC",
 

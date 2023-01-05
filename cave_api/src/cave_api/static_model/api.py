@@ -459,7 +459,7 @@ def execute_command(session_data, command="init"):
                                 "chart": "Line",
                                 "grouping": "Sum",
                                 "sessions": [],
-                                "kpi": "KPI Example 1",
+                                "kpi": ["key1", "key2"],
                             },
                             {
                                 "chart": "Bar",
@@ -527,7 +527,7 @@ def execute_command(session_data, command="init"):
                             "name": "Legend Group A",
                             "nodes": {
                                 "nodeTypeA": {
-                                    "value": True, 
+                                    "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
                                 }
@@ -545,7 +545,7 @@ def execute_command(session_data, command="init"):
                             "name": "Legend Group B",
                             "nodes": {
                                 "nodeTypeB": {
-                                    "value": True, 
+                                    "value": True,
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
                                 }
@@ -564,7 +564,7 @@ def execute_command(session_data, command="init"):
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
-                                    "value": False, 
+                                    "value": False,
                                     "order": 2,
                                     "colorBy": "numericPropExampleC",
 
@@ -617,7 +617,7 @@ def execute_command(session_data, command="init"):
                             "name": "Legend Group A",
                             "nodes": {
                                 "nodeTypeA": {
-                                    "value": True, 
+                                    "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
                                 }
@@ -635,7 +635,7 @@ def execute_command(session_data, command="init"):
                             "name": "Legend Group B",
                             "nodes": {
                                 "nodeTypeB": {
-                                    "value": True, 
+                                    "value": True,
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
                                 }
@@ -654,7 +654,7 @@ def execute_command(session_data, command="init"):
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
-                                    "value": False, 
+                                    "value": False,
                                     "order": 2,
                                     "colorBy": "numericPropExampleC",
 
