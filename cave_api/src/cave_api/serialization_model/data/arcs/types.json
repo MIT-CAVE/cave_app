@@ -3,12 +3,12 @@
         "name": "Flow Type 1",
         "colorByOptions": {
             "selectorPropForColor": {
-                "A": "rgb(128,255,255)",
-                "B": "rgb(0,153,51)",
-                "C": "rgb(0,0,128)",
-                "D": "rgb(204,0,0)",
-                "E": "rgb(153,77,0)",
-                "F": "rgb(255,25,255)"
+                "a": "rgb(128,255,255)",
+                "b": "rgb(0,153,51)",
+                "c": "rgb(0,0,128)",
+                "d": "rgb(204,0,0)",
+                "e": "rgb(153,77,0)",
+                "f": "rgb(255,25,255)"
             },
             "numericPropExampleA": {
                 "min": 0,
@@ -67,14 +67,15 @@
                 "name": "Example Categorical Prop",
                 "type": "selector",
                 "variant": "dropdown",
-                "value": [
-                    {"name": "A", "value": true},
-                    {"name": "B", "value": false},
-                    {"name": "C", "value": false},
-                    {"name": "D", "value": false},
-                    {"name": "E", "value": false},
-                    {"name": "F", "value": false}
-                ],
+                "value": "a",
+                "options": {
+                    "a": {"name": "A"},
+                    "b": {"name": "B"},
+                    "c": {"name": "C"},
+                    "d": {"name": "D"},
+                    "e": {"name": "E"},
+                    "f": {"name": "F"}
+                },
                 "enabled": true
             }
         },
@@ -101,12 +102,12 @@
         "name": "Flow Type 2",
         "colorByOptions": {
             "selectorPropForColor": {
-                "A": "rgb(128,255,255)",
-                "B": "rgb(0,153,51)",
-                "C": "rgb(0,0,128)",
-                "D": "rgb(204,0,0)",
-                "E": "rgb(153,77,0)",
-                "F": "rgb(255,25,255)"
+                "a": "rgb(128,255,255)",
+                "b": "rgb(0,153,51)",
+                "c": "rgb(0,0,128)",
+                "d": "rgb(204,0,0)",
+                "e": "rgb(153,77,0)",
+                "f": "rgb(255,25,255)"
             },
             "numericPropExampleA": {
                 "min": 0,
@@ -165,14 +166,15 @@
                 "name": "Example Categorical Prop",
                 "type": "selector",
                 "variant": "dropdown",
-                "value": [
-                    {"name": "A", "value": true},
-                    {"name": "B", "value": false},
-                    {"name": "C", "value": false},
-                    {"name": "D", "value": false},
-                    {"name": "E", "value": false},
-                    {"name": "F", "value": false}
-                ],
+                "value": "a",
+                "options": {
+                    "a": {"name": "A"},
+                    "b": {"name": "B"},
+                    "c": {"name": "C"},
+                    "d": {"name": "D"},
+                    "e": {"name": "E"},
+                    "f": {"name": "F"}
+                },
                 "enabled": true
             }
         },

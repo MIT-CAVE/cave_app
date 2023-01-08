@@ -35,11 +35,12 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         "name": "A name to be displayed in the UI",
         "type": "selector",
         "variant": "dropdown",
-        "value": [
-            {"name":"custom_option_1", "value": False},
-            {"name":"custom_option_2", "value": True},
-            {"name":"custom_option_3", "value": False},
-        ],
+        "value": "custom_option_2",
+        "options": {
+            "custom_option_1": {"name": "Custom Option 1"},
+            "custom_option_2": {"name": "Custom Option 2"},
+            "custom_option_3": {"name": "Custom Option 3"},
+        },
         "help": "A help text for the dropdown selector",
     },
     # As many props as needed
@@ -59,9 +60,10 @@ Key | Default | Description
 <a name="label">`customPropKey*.label`</a> | | A label that is displayed in the UI next to the `customPropKey*` element.
 <a name="max-value">`customPropKey*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
 <a name="min-value">`customPropKey*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
+<a name="options">`customPropKey*.options`</a> | Required | Used along a `'selector'` prop, it takes an object containing the [`custom_option_*`](#custom_option_)s to be displayed on the UI element mapped to their display properties.
+<a name="custom_option_">`customPropKey*.options.custom_option_*`</a> | | Used along a `'selector'` prop, it takes an object containing the name of the option to be displayed on the UI element.
 <a name="prop-type">`customPropKey*.type`</a> | Required | As a direct child of `customPropKey*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, `'button'`, or `'selector'`.
-<a name="value">`customPropKey*.value`</a> | Required | The actual value for a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'` \| `'button'`), number (`'num'` \| `'button'`), string (`'text'` \| `'button'`), or an array of objects (`'selector'`).
-<a name="custom_option_">`customPropKey*.value.custom_option_*`</a> | | Used along a `'selector'` prop, it takes a string value to be displayed as an option on the UI element.
+<a name="value">`customPropKey*.value`</a> | Required | The actual value of a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'` \| `'button'`), a number (`'num'` \| `'button'`), a string in the case of `'text'`, `'button'` or the variants `'dropdown'` and `'radio'` of a `'selector'` type, or a [`custom_option_*`](#custom_option_) key array for the `'checkbox'` variant of `'selector'`.
 <a name="variant">`customPropKey*.variant`</a> | | Used to modify the UI for a given prop `type`. For example, it can convert a numeric input to a slider input or a selector to a drop-down menu. The `value`s should remain the same structure, but the presentation to the end user changes.
 
 ## Prop `type`s and their `variant`s:
@@ -89,7 +91,7 @@ Allows end users to select options from a set. This `type` requires an array of 
 >`'checkbox'`: Allows the user to select one or more items from a set of checkboxes.<br>
 `'dropdown'`: Allows a compact way to display multiple options. The options appear upon interaction with an element (such as an icon or button) or when the user performs a specific action.<br>
 `'radio'`: Allows the user to select one option from a set of mutually exclusive options.<br><br>
-Since multiple selection is possible in the `checkbox` variant, one or more options in [`value`](#value) can be set to `True`, while in the `dropdown` and `radio` variants, only one option is allowed to be `True`.
+Since multiple selection is possible in the `'checkbox'` variant, one or more options in [`value`](#value) can be specified as a [`custom_option_*`](#custom_option_) key or [`custom_option_*`](#custom_option_) key array, respectively, while in the `dropdown` and `radio` variants, only one option is allowed to be present.
 
 ## Default `props` values and overriding
 Very often, the `props` elements specified in [`arcs`](../all_keys/arcs.md), [`nodes`](../all_keys/nodes.md), and [`geos`](../all_keys/geos.md) are the same for a large number of items at the _data-point level_ ([customArcData*](../all_keys/arcs.md#arc-data-point), [customNodeData*](../all_keys/nodes.md#node-data-point) or [customGeoData*](../all_keys/geos.md#geo-data-point)). To reduce the overhead caused by duplicate `props` items and achieve a more lightweight data structure, it is possible to define a `props` dictionary at the _type level_ ([customArcType*](../all_keys/arcs.md#arc-type), [customNodeType*](../all_keys/nodes.md#node-type), or [customGeoType*](../all_keys/geos.md#geo-type)) so that a prop can be reused and overridden at the data-point level. In this case, two `props` items match by sharing the same [custom prop key](#customPropKey). The resulting prop from this match is a union of key-value pairs, where if a key exists in both `props` items, the value at the data-point level will be used.

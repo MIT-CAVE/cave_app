@@ -246,11 +246,12 @@ example = {
                         "name": "Dropdown Item Example",
                         "type": "selector",
                         "variant": "dropdown",
-                        "value": [
-                            {"name": "Option A", "value": False},
-                            {"name": "Option B", "value": False},
-                            {"name": "Option C", "value": True},
-                        ],
+                        "value": "option_c",
+                        "options": {
+                            "option_a": {"name": "Option A"},
+                            "option_b": {"name": "Option B"},
+                            "option_c": {"name": "Option C"},
+                        },
                         "enabled": True,
                         "help": "Select an option from the dropdown",
                     },
@@ -258,11 +259,12 @@ example = {
                         "name": "Checkbox Item Example",
                         "type": "selector",
                         "variant": "checkbox",
-                        "value": [
-                            {"name": "Option A", "value": True},
-                            {"name": "Option B", "value": False},
-                            {"name": "Option C", "value": True},
-                        ],
+                        "value": ["option_a", "option_c"],
+                        "options": {
+                            "option_a": {"name": "Option A"},
+                            "option_b": {"name": "Option B"},
+                            "option_c": {"name": "Option C"},
+                        },
                         "enabled": True,
                         "help": "Select all relevant items",
                     },
@@ -270,11 +272,12 @@ example = {
                         "name": "Radio Item Example",
                         "type": "selector",
                         "variant": "radio",
-                        "value": [
-                            {"name": "Option A", "value": True},
-                            {"name": "Option B", "value": False},
-                            {"name": "Option C", "value": False},
-                        ],
+                        "value": "option_a",
+                        "options": {
+                            "option_a": {"name": "Option A"},
+                            "option_b": {"name": "Option B"},
+                            "option_c": {"name": "Option C"},
+                        },
                         "enabled": True,
                         "help": "Select one item from the list",
                     },
@@ -450,95 +453,94 @@ example = {
     "map": {
         "data": {
             "map1": {
-                    "defaultViewport": {
-                        "longitude": -75.44766721108091,
-                        "latitude": 40.34530681636297,
-                        "zoom": 4.657916626867326,
+                "defaultViewport": {
+                    "longitude": -75.44766721108091,
+                    "latitude": 40.34530681636297,
+                    "zoom": 4.657916626867326,
+                    "pitch": 0,
+                    "bearing": 0,
+                    "height": 1287,
+                    "altitude": 1.5,
+                    "maxZoom": 12,
+                    "minZoom": 2,
+                },
+                "optionalViewports": {
+                    "ov0": {
+                        "icon": "FaGlobeAsia",
+                        "name": "Asia",
+                        "zoom": 4,
+                        "order": 1,
                         "pitch": 0,
                         "bearing": 0,
-                        "height": 1287,
-                        "altitude": 1.5,
                         "maxZoom": 12,
                         "minZoom": 2,
+                        "latitude": 30,
+                        "longitude": 121,
                     },
-                    "optionalViewports": {
-                        "ov0": {
-                            "icon": "FaGlobeAsia",
-                            "name": "Asia",
-                            "zoom": 4,
-                            "order": 1,
-                            "pitch": 0,
-                            "bearing": 0,
-                            "maxZoom": 12,
-                            "minZoom": 2,
-                            "latitude": 30,
-                            "longitude": 121,
-                        },
-                        "ov1": {
-                            "icon": "FaGlobeEurope",
-                            "name": "EMEA",
-                            "zoom": 4,
-                            "order": 1,
-                            "pitch": 0,
-                            "bearing": 0,
-                            "maxZoom": 12,
-                            "minZoom": 2,
-                            "latitude": 47,
-                            "longitude": 14,
-                        },
-                    },
-                    "legendGroups": {
-                        "lga": {
-                            "name": "Legend Group A",
-                            "nodes": {
-                                "nodeTypeA": {
-                                    "value": True,
-                                    "sizeBy": "numericPropExampleA",
-                                    "colorBy": "booleanPropExample",
-                                }
-                            },
-                            "arcs": {
-                                "T1": {
-                                    "colorBy": "numericPropExampleA",
-                                    "sizeBy": "numericPropExampleB",
-                                    "value": True
-                                }
-                            },
-                            "order": 1,
-                        },
-                        "lgb": {
-                            "name": "Legend Group B",
-                            "nodes": {
-                                "nodeTypeB": {
-                                    "value": True,
-                                    "sizeBy": "numericPropExampleB",
-                                    "colorBy": "booleanPropExample",
-                                }
-                            },
-                            "arcs": {
-                                "T2": {
-                                    "colorBy": "numericPropExampleA",
-                                    "sizeBy": "numericPropExampleB",
-                                    "value": True
-                                }
-                            },
-                            "geos": {
-                                "state": {
-                                    "value": True,
-                                    "order": 1,
-                                    "colorBy": "numericPropExampleC",
-                                },
-                                "country": {
-                                    "value": False,
-                                    "order": 2,
-                                    "colorBy": "numericPropExampleC",
-
-                                },
-                            },
-                            "order": 2,
-                        },
+                    "ov1": {
+                        "icon": "FaGlobeEurope",
+                        "name": "EMEA",
+                        "zoom": 4,
+                        "order": 1,
+                        "pitch": 0,
+                        "bearing": 0,
+                        "maxZoom": 12,
+                        "minZoom": 2,
+                        "latitude": 47,
+                        "longitude": 14,
                     },
                 },
+                "legendGroups": {
+                    "lga": {
+                        "name": "Legend Group A",
+                        "nodes": {
+                            "nodeTypeA": {
+                                "value": True,
+                                "sizeBy": "numericPropExampleA",
+                                "colorBy": "booleanPropExample",
+                            }
+                        },
+                        "arcs": {
+                            "T1": {
+                                "colorBy": "numericPropExampleA",
+                                "sizeBy": "numericPropExampleB",
+                                "value": True,
+                            }
+                        },
+                        "order": 1,
+                    },
+                    "lgb": {
+                        "name": "Legend Group B",
+                        "nodes": {
+                            "nodeTypeB": {
+                                "value": True,
+                                "sizeBy": "numericPropExampleB",
+                                "colorBy": "booleanPropExample",
+                            }
+                        },
+                        "arcs": {
+                            "T2": {
+                                "colorBy": "numericPropExampleA",
+                                "sizeBy": "numericPropExampleB",
+                                "value": True,
+                            }
+                        },
+                        "geos": {
+                            "state": {
+                                "value": True,
+                                "order": 1,
+                                "colorBy": "numericPropExampleC",
+                            },
+                            "country": {
+                                "value": False,
+                                "order": 2,
+                                "colorBy": "numericPropExampleC",
+                            },
+                        },
+                        "order": 2,
+                    },
+                },
+            },
         },
     },
     "arcs": {
@@ -547,12 +549,12 @@ example = {
                 "name": "Flow Type 1",
                 "colorByOptions": {
                     "selectorPropForColor": {
-                        "A": "rgb(128,255,255)",
-                        "B": "rgb(0,153,51)",
-                        "C": "rgb(0,0,128)",
-                        "D": "rgb(204,0,0)",
-                        "E": "rgb(153,77,0)",
-                        "F": "rgb(255,25,255)",
+                        "a": "rgb(128,255,255)",
+                        "b": "rgb(0,153,51)",
+                        "c": "rgb(0,0,128)",
+                        "d": "rgb(204,0,0)",
+                        "e": "rgb(153,77,0)",
+                        "f": "rgb(255,25,255)",
                     },
                     "numericPropExampleA": {
                         "min": 0,
@@ -609,14 +611,15 @@ example = {
                         "name": "Example Categorical Prop",
                         "type": "selector",
                         "variant": "dropdown",
-                        "value": [
-                            {"name": "A", "value": True},
-                            {"name": "B", "value": False},
-                            {"name": "C", "value": False},
-                            {"name": "D", "value": False},
-                            {"name": "E", "value": False},
-                            {"name": "F", "value": False},
-                        ],
+                        "value": "a",
+                        "options": {
+                            "a": {"name": "A"},
+                            "b": {"name": "B"},
+                            "c": {"name": "C"},
+                            "d": {"name": "D"},
+                            "e": {"name": "E"},
+                            "f": {"name": "F"},
+                        },
                         "enabled": True,
                     },
                 },
@@ -625,7 +628,11 @@ example = {
                     "numColumns": "auto",
                     "numRows": 1,
                     "data": {
-                        "col1": {"type": "item", "itemId": "numericPropExampleA", "col": 1},
+                        "col1": {
+                            "type": "item",
+                            "itemId": "numericPropExampleA",
+                            "col": 1,
+                        },
                         "col2": {
                             "type": "item",
                             "itemId": "numericPropExampleB",
@@ -643,12 +650,12 @@ example = {
                 "name": "Flow Type 2",
                 "colorByOptions": {
                     "selectorPropForColor": {
-                        "A": "rgb(128,255,255)",
-                        "B": "rgb(0,153,51)",
-                        "C": "rgb(0,0,128)",
-                        "D": "rgb(204,0,0)",
-                        "E": "rgb(153,77,0)",
-                        "F": "rgb(255,25,255)",
+                        "a": "rgb(128,255,255)",
+                        "b": "rgb(0,153,51)",
+                        "c": "rgb(0,0,128)",
+                        "d": "rgb(204,0,0)",
+                        "e": "rgb(153,77,0)",
+                        "f": "rgb(255,25,255)",
                     },
                     "numericPropExampleA": {
                         "min": 0,
@@ -705,14 +712,15 @@ example = {
                         "name": "Example Categorical Prop",
                         "type": "selector",
                         "variant": "dropdown",
-                        "value": [
-                            {"name": "A", "value": True},
-                            {"name": "B", "value": False},
-                            {"name": "C", "value": False},
-                            {"name": "D", "value": False},
-                            {"name": "E", "value": False},
-                            {"name": "F", "value": False},
-                        ],
+                        "value": "a",
+                        "options": {
+                            "a": {"name": "A"},
+                            "b": {"name": "B"},
+                            "c": {"name": "C"},
+                            "d": {"name": "D"},
+                            "e": {"name": "E"},
+                            "f": {"name": "F"},
+                        },
                         "enabled": True,
                     },
                 },
@@ -760,16 +768,7 @@ example = {
                     "numericPropExampleB": {
                         "value": 40,
                     },
-                    "selectorPropForColor": {
-                        "value": [
-                            {"name": "A", "value": False},
-                            {"name": "B", "value": True},
-                            {"name": "C", "value": False},
-                            {"name": "D", "value": False},
-                            {"name": "E", "value": False},
-                            {"name": "F", "value": False},
-                        ],
-                    },
+                    "selectorPropForColor": {"value": "b"},
                 },
             },
             "arc2": {
@@ -792,14 +791,7 @@ example = {
                         "value": 20,
                     },
                     "selectorPropForColor": {
-                        "value": [
-                            {"name": "A", "value": False},
-                            {"name": "B", "value": False},
-                            {"name": "C", "value": False},
-                            {"name": "D", "value": False},
-                            {"name": "E", "value": True},
-                            {"name": "F", "value": False},
-                        ],
+                        "value": "e",
                     },
                 },
             },
@@ -823,14 +815,7 @@ example = {
                         "value": 14,
                     },
                     "selectorPropForColor": {
-                        "value": [
-                            {"name": "A", "value": False},
-                            {"name": "B", "value": False},
-                            {"name": "C", "value": False},
-                            {"name": "D", "value": True},
-                            {"name": "E", "value": False},
-                            {"name": "F", "value": False},
-                        ],
+                        "value": "d",
                     },
                 },
             },
@@ -854,14 +839,7 @@ example = {
                         "value": 6,
                     },
                     "selectorPropForColor": {
-                        "value": [
-                            {"name": "A", "value": False},
-                            {"name": "B", "value": False},
-                            {"name": "C", "value": False},
-                            {"name": "D", "value": False},
-                            {"name": "E", "value": False},
-                            {"name": "F", "value": True},
-                        ],
+                        "value": "f",
                     },
                 },
             },
@@ -896,7 +874,10 @@ example = {
                             "light": "rgb(23, 23, 126)",
                         },
                     },
-                    "booleanPropExample": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"},
+                    "booleanPropExample": {
+                        "false": "rgb(255,0,0)",
+                        "true": "rgb(0,255,0)",
+                    },
                 },
                 "minSizeRange": 0,
                 "sizeByOptions": {
@@ -961,7 +942,10 @@ example = {
                             "light": "rgb(23, 23, 126)",
                         },
                     },
-                    "booleanPropExample": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"},
+                    "booleanPropExample": {
+                        "false": "rgb(233, 0, 0)",
+                        "true": "rgb(0, 233, 0)",
+                    },
                 },
                 "sizeByOptions": {
                     "numericPropExampleA": {"min": 0, "max": 100},

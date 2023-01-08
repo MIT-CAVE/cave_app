@@ -85,11 +85,12 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
         "name": "Solver",
         "type": "selector",
         "variant": "dropdown",
-        "value": [
-            {"name": "Gurobi", "value": True},
-            {"name": "Cplex", "value": False},
-            {"name": "CoinOR", "value": False},
-        ],
+        "value": "gurobi",
+        "options": {
+            "gurobi": {"name": "Gurobi"},
+            "cplex": {"name": "Cplex"},
+            "coinor": {"name": "CoinOR"},
+        },
         "enabled": True,
         "help": "Select a solver type to use",
     },
