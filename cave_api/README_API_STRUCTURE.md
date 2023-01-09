@@ -10,6 +10,8 @@ At first glance, the top-level keys in the data structure look like this:
     'settings': {...},
     'categories': {...},
     'appBar': {...},
+    "dashboard": {...},
+    "panes": {...},
     'arcs': {...},
     'nodes': {...},
     'geos': {...},
@@ -70,6 +72,10 @@ Custom keys are always included as a direct child of common keys such as `data`,
 - #### [`categories`](docs/all_keys/categories.md)
 
 - #### [`appBar`](docs/all_keys/app_bar.md)
+
+- #### [`dashboard`](docs/all_keys/dashboard.md)
+
+- #### [`panes`](docs/all_keys/panes.md)
 
 - #### [`arcs`](docs/all_keys/arcs.md)
 

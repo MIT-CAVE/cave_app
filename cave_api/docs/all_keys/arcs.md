@@ -41,13 +41,11 @@ The structure of an `arcs` group looks as follows:
                     },
                 },
             },
-            "colorBy": "customPropKey9",
             "lineBy": "solid",
             "sizeByOptions": {
                 "customPropKey9": {"min": 0, "max": 50},
                 "customPropKey10": {"min": 0, "max": 40},
             },
-            "sizeBy": "customPropKey10",
             "startSize": "15px",
             "endSize": "30px",
             "props": {
@@ -135,7 +133,6 @@ The structure of an `arcs` group looks as follows:
 ## Common keys
 - [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`category`](../common_keys/common_keys.md#category)
-- [`colorBy`](../common_keys/common_keys.md#colorBy)
 - [`colorByOptions`](../common_keys/common_keys.md#colorByOptions)
 - [`column`](../common_keys/common_keys.md#column)
 - [`data`](../common_keys/common_keys.md#data)
@@ -151,7 +148,6 @@ The structure of an `arcs` group looks as follows:
 - [`props`](../common_keys/common_keys.md#props-short)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
-- [`sizeBy`](../common_keys/common_keys.md#sizeBy)
 - [`sizeByOptions`](../common_keys/common_keys.md#sizeByOptions)
 - [`startSize`](../common_keys/common_keys.md#startSize)
 - [`startGradientColor`](../common_keys/common_keys.md#start-gradient)
@@ -225,13 +221,11 @@ Key | Default | Description
                     },
                 },
             },
-            "colorBy": "numericPropExampleA",
             "lineBy": "solid",
             "sizeByOptions": {
                 "numericPropExampleA": {"min": 0, "max": 50},
                 "numericPropExampleB": {"min": 0, "max": 40},
             },
-            "sizeBy": "numericPropExampleB",
             "startSize": "15px",
             "endSize": "30px",
             "props": {

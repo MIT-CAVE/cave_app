@@ -34,13 +34,11 @@ The structure of a `nodes` group looks as follows:
                 },
                 "customPropKey3": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"},
             },
-            "colorBy": "customPropKey3",
             "minSizeRange": 0,
             "sizeByOptions": {
                 "customPropKey1": {"min": 0, "max": 80},
                 "customPropKey2": {"min": 0, "max": 50},
             },
-            "sizeBy": "customPropKey1",
             "startSize": "30px",
             "endSize": "45px",
             "icon": "MdStore",
@@ -101,7 +99,6 @@ The structure of a `nodes` group looks as follows:
 ## Common keys
 - [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`category`](../common_keys/common_keys.md#category)
-- [`colorBy`](../common_keys/common_keys.md#colorBy)
 - [`colorByOptions`](../common_keys/common_keys.md#colorByOptions)
 - [`column`](../common_keys/common_keys.md#column)
 - [`data`](../common_keys/common_keys.md#data)
@@ -116,7 +113,6 @@ The structure of a `nodes` group looks as follows:
 - [`props`](../common_keys/common_keys.md#props-short)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
-- [`sizeBy`](../common_keys/common_keys.md#sizeBy)
 - [`sizeByOptions`](../common_keys/common_keys.md#sizeByOptions)
 - [`startSize`](../common_keys/common_keys.md#startSize)
 - [`startGradientColor`](../common_keys/common_keys.md#startGradientColor)
@@ -175,13 +171,11 @@ Key | Default | Description
                 },
                 "booleanPropExample": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"},
             },
-            "colorBy": "booleanPropExample",
             "minSizeRange": 0,
             "sizeByOptions": {
                 "numericPropExampleA": {"min": 0, "max": 80},
                 "numericPropExampleB": {"min": 0, "max": 50},
             },
-            "sizeBy": "numericPropExampleA",
             "startSize": "30px",
             "endSize": "45px",
             "icon": "MdStore",
@@ -242,12 +236,10 @@ Key | Default | Description
                 },
                 "booleanPropExample": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"},
             },
-            "colorBy": "numericPropExampleA",
             "sizeByOptions": {
                 "numericPropExampleA": {"min": 0, "max": 100},
                 "numericPropExampleB": {"min": 0, "max": 250},
             },
-            "sizeBy": "numericPropExampleB",
             "startSize": "30px",
             "endSize": "45px",
             "icon": "BsBuilding",

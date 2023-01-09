@@ -14,6 +14,8 @@ A CAVE API structure with top-level custom keys looks as follows:
     "settings": {...},
     "categories": {...},
     "appBar": {...},
+    "dashboard": {...},
+    "panes": {...},
     "arcs": {...},
     "nodes": {...},
     "geos": {...},
