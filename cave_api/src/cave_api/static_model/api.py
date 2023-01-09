@@ -35,10 +35,8 @@ def execute_command(session_data, command="init"):
                         "showToggle": True,
                         "value": False,
                         "data": {
-                            "ml1": ["map", "data", "legendGroups"],
-                            "ml2": ["nodes", "types"],
-                            "ml3": ["arcs", "types"],
-                            "ml4": ["geos", "types"],
+                            "ml1": ["map", "data", "map1", "legendGroups"],
+                            "ml2": ["map", "data", "map2", "legendGroups"],
                         },
                     },
                     "appBar": {
@@ -49,26 +47,6 @@ def execute_command(session_data, command="init"):
                             "ab1": ["appBar", "data", "dashboardId"],
                             "ab2": ["appBar", "paneState"],
                         },
-                    },
-                },
-                "syncToggles": {
-                    "Map Layers": {
-                        "ml1": ["map", "data", "legendGroups"],
-                        "ml2": ["nodes", "types"],
-                        "ml3": ["arcs", "types"],
-                        "ml4": ["geos", "types"],
-                    },
-                },
-                "defaultDesync": {
-                    "Map Layers": {
-                        "ml1": ["map", "data", "legendGroups"],
-                        "ml2": ["nodes", "types"],
-                        "ml3": ["arcs", "types"],
-                        "ml4": ["geos", "types"],
-                    },
-                    "App Bar": {
-                        "ab1": ["appBar", "data", "dashboardId"],
-                        "ab2": ["appBar", "paneState"],
                     },
                 },
                 "iconUrl": "https://react-icons.mitcave.com/0.0.1",

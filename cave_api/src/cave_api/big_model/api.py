@@ -26,26 +26,6 @@ example = {
                     },
                 },
             },
-            "syncToggles": {
-                "Map Layers": {
-                    "ml1": ["map", "data", "legendGroups"],
-                    "ml2": ["nodes", "types"],
-                    "ml3": ["arcs", "types"],
-                    "ml4": ["geos", "types"],
-                },
-            },
-            "defaultDesync": {
-                "Map Layers": {
-                    "ml1": ["map", "data", "legendGroups"],
-                    "ml2": ["nodes", "types"],
-                    "ml3": ["arcs", "types"],
-                    "ml4": ["geos", "types"],
-                },
-                "App Bar": {
-                    "ab1": ["appBar", "data", "dashboardId"],
-                    "ab2": ["appBar", "paneState"],
-                },
-            },
             "iconUrl": "https://react-icons.mitcave.com/0.0.1",
             "numberFormat": {
                 "precision": 4,

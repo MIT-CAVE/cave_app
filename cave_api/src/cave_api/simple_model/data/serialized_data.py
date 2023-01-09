@@ -13,26 +13,26 @@ serialized_data = {
         "sendToApi": False,
         "sendToClient": True,
         "data": {
-            "syncToggles": {
-                "Map Layers": {
-                    "ml1": ["map", "data", "legendGroups"],
-                    "ml2": ["nodes", "types"],
-                    "ml3": ["arcs", "types"],
-                    "ml4": ["geos", "types"],
+            "sync": {
+                "mapLayers": {
+                    "name": "Map Layers",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "ml1": ["map", "data", "map1", "legendGroups"],
+                        "ml2": ["map", "data", "map2", "legendGroups"],
+                    },
                 },
-            },
-            "defaultDesync": {
-                "Map Layers": {
-                    "ml1": ["map", "data", "legendGroups"],
-                    "ml2": ["nodes", "types"],
-                    "ml3": ["arcs", "types"],
-                    "ml4": ["geos", "types"],
+                "appBar": {
+                    "name": "App Bar",
+                    "showToggle": False,
+                    "value": False,
+                    "data": {
+                        "ab1": ["appBar", "data", "dashboardId"],
+                        "ab2": ["appBar", "paneState"],
+                    },
                 },
-                "App Bar": {
-                    "ab1": ["appBar", "data", "dashboardId"],
-                    "ab2": ["appBar", "paneState"],
                 },
-            },
             "iconUrl": "https://react-icons.mitcave.com/0.0.1",
             "numberFormat": {
                 "precision": 2,
