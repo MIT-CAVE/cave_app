@@ -144,14 +144,12 @@ example = {
             "session": {
                 "icon": "MdApi",
                 "type": "pane",
-                "variant": "session",
                 "bar": "upper",
                 "order": 0,
             },
             "appSettings": {
                 "icon": "MdOutlineSettings",
                 "type": "pane",
-                "variant": "appSettings",
                 "bar": "upper",
                 "order": 1,
             },
@@ -180,7 +178,56 @@ example = {
                 "order": 2,
             },
             "examplePropsPane": {
+                "icon": "FaCogs",
+                "type": "pane",
+                "bar": "upper",
+                "order": 3,
+            },
+            "context": {
+                "icon": "BsInboxes",
+                "type": "pane",
+                "order": 4,
+                "bar": "upper",
+            },
+            "filter": {
+                "icon": "FaFilter",
+                "type": "pane",
+                "order": 5,
+                "bar": "upper",
+            },
+            "map1": {
+                "type": "map",
+                "icon": "FaMapMarkedAlt",
+                "bar": "lower",
+                "order": 1,
+            },
+            "dash1": {
+                "type": "stats",
+                "icon": "MdInsertChart",
+                "name": "Dashboard 1",
+                "order": 2,
+                "bar": "lower",
+            },
+            "kpi1": {
+                "type": "kpi",
+                "icon": "MdSpeed",
+                "bar": "lower",
+                "order": 3,
+            },
+        }
+    },
+    "panes": {
+        "data": {
+            "session": {
+                "variant": "session",
+                "name": "Session",
+            },
+            "appSettings": {
+                "variant": "appSettings",
+            },
+            "examplePropsPane": {
                 "name": "Example Props Pane",
+                "variant": "options",
                 "props": {
                     "numericHeader": {
                         "name": "Numeric Props",
@@ -355,14 +402,14 @@ example = {
                         },
                     },
                 },
-                "icon": "FaCogs",
-                "type": "pane",
-                "variant": "options",
-                "bar": "upper",
-                "order": 3,
+            },
+            "filter": {
+                "name": "Filter",
+                "variant": "filter",
             },
             "context": {
                 "name": "Context Pane",
+                "variant": "context",
                 "props": {
                     "numericContextProp": {
                         "type": "num",
@@ -383,39 +430,8 @@ example = {
                         "applyCategories": {"location": ["locUsMi"]},
                     }
                 },
-                "icon": "BsInboxes",
-                "type": "pane",
-                "variant": "context",
-                "order": 4,
-                "bar": "upper",
             },
-            "filter": {
-                "icon": "FaFilter",
-                "type": "pane",
-                "variant": "filter",
-                "order": 5,
-                "bar": "upper",
-            },
-            "map1": {
-                "type": "map",
-                "icon": "FaMapMarkedAlt",
-                "bar": "lower",
-                "order": 1,
-            },
-            "dash1": {
-                "type": "stats",
-                "icon": "MdInsertChart",
-                "name": "Dashboard 1",
-                "order": 2,
-                "bar": "lower",
-            },
-            "kpi1": {
-                "type": "kpi",
-                "icon": "MdSpeed",
-                "bar": "lower",
-                "order": 3,
-            },
-        }
+        },
     },
     "dashboard": {
         "data": {

@@ -158,14 +158,12 @@ serialized_data = {
             "session": {
                 "icon": "MdApi",
                 "type": "pane",
-                "variant": "session",
                 "bar": "upper",
                 "order": 0,
             },
             "appSettings": {
                 "icon": "MdOutlineSettings",
                 "type": "pane",
-                "variant": "appSettings",
                 "bar": "upper",
                 "order": 0,
             },
@@ -189,6 +187,29 @@ serialized_data = {
                 "type": "stats",
                 "bar": "lower",
                 "order": 1,
+            },
+            "kpi_1": {
+                "name": "KPI Dashboard",
+                "type": "kpi",
+                "bar": "lower",
+                "icon": "MdSpeed",
+                "order": 4,
+            },
+        }
+    },
+    "panes": {
+        "data": {   
+            "session": {
+                "variant": "session",
+            },
+            "appSettings": {
+                "variant": "appSettings",
+            },
+        }
+    },
+    "dashboard": {
+        "data": {
+            "dash_1": {
                 "dashboardLayout": [
                     {
                         "chart": "Bar",
@@ -221,77 +242,93 @@ serialized_data = {
                 ],
                 "lockedLayout": False,
             },
-            "kpi_1": {
-                "name": "KPI Dashboard",
-                "type": "kpi",
-                "bar": "lower",
-                "icon": "MdSpeed",
-                "order": 4,
-            },
-        }
+        },
     },
     "map": {
         "data": {
-            "defaultViewport": {
-                "longitude": 40,
-                "latitude": 0,
-                "zoom": 2,
-                "pitch": 0,
-                "bearing": 0,
-                "maxZoom": 12,
-                "minZoom": 2,
-            },
-            "optionalViewports": {
-                "ov1": {
-                    "name": "EMEA",
-                    "icon": "FaGlobeEurope",
-                    "order": 1,
-                    "longitude": 14,
-                    "latitude": 47,
-                    "zoom": 4,
-                    "minZoom": 2,
-                    "maxZoom": 12,
+            "map_1": {
+                "defaultViewport": {
+                    "longitude": 40,
+                    "latitude": 0,
+                    "zoom": 2,
                     "pitch": 0,
                     "bearing": 0,
-                },
-                "ov2": {
-                    "name": "Americas",
-                    "icon": "FaGlobeAmericas",
-                    "order": 1,
-                    "longitude": -94,
-                    "latitude": 39,
-                    "zoom": 4,
-                    "minZoom": 2,
                     "maxZoom": 12,
-                    "pitch": 0,
-                    "bearing": 0,
+                    "minZoom": 2,
                 },
-            },
-            "legendGroups": {
-                "Transportation": {
-                    "name": "Transportation",
-                    "arcs": {
-                        "transport": {"value": True, "order": 1},
-                        "last_mile": {"value": True, "order": 2},
+                "optionalViewports": {
+                    "ov1": {
+                        "name": "EMEA",
+                        "icon": "FaGlobeEurope",
+                        "order": 1,
+                        "longitude": 14,
+                        "latitude": 47,
+                        "zoom": 4,
+                        "minZoom": 2,
+                        "maxZoom": 12,
+                        "pitch": 0,
+                        "bearing": 0,
                     },
-                    "order": 1,
+                    "ov2": {
+                        "name": "Americas",
+                        "icon": "FaGlobeAmericas",
+                        "order": 1,
+                        "longitude": -94,
+                        "latitude": 39,
+                        "zoom": 4,
+                        "minZoom": 2,
+                        "maxZoom": 12,
+                        "pitch": 0,
+                        "bearing": 0,
+                    },
                 },
-                "Facilities": {
-                    "name": "Facilities",
-                    "nodes": {
-                        "factory": {"value": True, "order": 1},
-                        "warehouse": {"value": True, "order": 2}
+                "legendGroups": {
+                    "Transportation": {
+                        "name": "Transportation",
+                        "arcs": {
+                            "transport": {
+                                "sizeBy": "processing_capacity",
+                                "colorBy": "processing_capacity",
+                                "value": True, 
+                                "order": 1
+                            },
+                            "last_mile": {
+                                "sizeBy": "cashflow_per_unit",
+                                "colorBy": "processing_capacity",
+                                "value": True,
+                                "order": 2
+                            },
+                        },
+                        "order": 1,
                     },
-                    "order": 2,
-                },
-                "Demand": {
-                    "name": "Demand",
-                    "nodes": {
-                        "factory": {"value": True, "order": 1},
-                        "warehouse": {"value": True, "order": 2}
+                    "Facilities": {
+                        "name": "Facilities",
+                        "nodes": {
+                            "factory": {
+                                "sizeBy": "processing_capacity",
+                                "colorBy": "open",
+                                "value": True, 
+                                "order": 1
+                            },
+                            "warehouse": {
+                                "sizeBy": "processing_capacity",
+                                "colorBy": "open",
+                                "value": True, 
+                                "order": 2
+                            },
+                        },
+                        "order": 2,
                     },
-                    "geos": {"demand": {"value": True}},
-                    "order": 3,
+                    "Demand": {
+                        "name": "Demand",
+                        "geos": {
+                            "demand": {
+                                "colorBy": "processing_capacity",
+                                "value": True
+                                }
+                            },
+                        "order": 3,
+                    },
                 },
             },
         },
@@ -303,10 +340,8 @@ serialized_data = {
                 "colorByOptions": serializer.get_dropdown_options(
                     serializer.arcs, include_categorical=True
                 ),
-                "colorBy": "processing_capacity",
                 "lineBy": "solid",
                 "sizeByOptions": serializer.get_dropdown_options(serializer.arcs),
-                "sizeBy": "cashflow_per_unit",
                 "startSize": "8px",
                 "endSize": "15px",
                 "props": serializer.get_general_prop_defaults(),
@@ -317,11 +352,9 @@ serialized_data = {
                 "colorByOptions": serializer.get_dropdown_options(
                     serializer.arcs, include_categorical=True
                 ),
-                "colorBy": "processing_capacity",
                 "lineBy": "solid",
                 "height": 0.3,
                 "sizeByOptions": serializer.get_dropdown_options(serializer.arcs),
-                "sizeBy": "processing_capacity",
                 "startSize": "8px",
                 "endSize": "15px",
                 "props": serializer.get_general_prop_defaults(),
@@ -337,9 +370,7 @@ serialized_data = {
                 "colorByOptions": serializer.get_dropdown_options(
                     serializer.factories, include_categorical=True
                 ),
-                "colorBy": "open",
                 "sizeByOptions": serializer.get_dropdown_options(serializer.factories),
-                "sizeBy": "processing_capacity",
                 "startSize": "15px",
                 "endSize": "30px",
                 "icon": "GiFactory",
@@ -351,9 +382,7 @@ serialized_data = {
                 "colorByOptions": serializer.get_dropdown_options(
                     serializer.warehouses, include_categorical=True
                 ),
-                "colorBy": "open",
                 "sizeByOptions": serializer.get_dropdown_options(serializer.warehouses),
-                "sizeBy": "processing_capacity",
                 "startSize": "15px",
                 "endSize": "30px",
                 "icon": "FaWarehouse",
@@ -372,7 +401,6 @@ serialized_data = {
                 "colorByOptions": serializer.get_dropdown_options(
                     serializer.demand_zones, include_categorical=True
                 ),
-                "colorBy": "processing_capacity",
                 "geoJson": {
                     "geoJsonLayer": "https://cave-geojsons.s3.amazonaws.com/custom/example_app_continent_region.json",
                     "geoJsonProp": "region_id",

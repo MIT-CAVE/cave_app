@@ -169,14 +169,12 @@ def execute_command(session_data, command="init"):
                 "session": {
                     "icon": "MdApi",
                     "type": "pane",
-                    "variant": "session",
                     "bar": "upper",
                     "order": 0,
                 },
                 "appSettings": {
                     "icon": "MdOutlineSettings",
                     "type": "pane",
-                    "variant": "appSettings",
                     "bar": "upper",
                     "order": 1,
                 },
@@ -205,7 +203,62 @@ def execute_command(session_data, command="init"):
                     "order": 2,
                 },
                 "examplePropsPane": {
+                    "icon": "FaCogs",
+                    "type": "pane",
+                    "bar": "upper",
+                    "order": 3,
+                },
+                "context": {
+                    "icon": "BsInboxes",
+                    "type": "pane",
+                    "order": 4,
+                    "bar": "upper",
+                },
+                "filter": {
+                    "icon": "FaFilter",
+                    "type": "pane",
+                    "order": 5,
+                    "bar": "upper",
+                },
+                "map1": {
+                    "type": "map",
+                    "icon": "FaMapMarkedAlt",
+                    "bar": "lower",
+                    "order": 1,
+                },
+                "map2": {
+                    "type": "map",
+                    "icon": "FaMapMarked",
+                    "bar": "lower",
+                    "order": 2,
+                },
+                "dash1": {
+                    "type": "stats",
+                    "icon": "MdInsertChart",
+                    "name": "Dashboard 1",
+                    "order": 3,
+                    "bar": "lower",
+                },
+                "kpi1": {
+                    "type": "kpi",
+                    "icon": "MdSpeed",
+                    "bar": "lower",
+                    "order": 4,
+                },
+            }
+        },
+        "panes": {
+            "data": {
+                "session": {
+                    "variant": "session",
+                    "name": "Session",
+                },
+                "appSettings": {
+                    "variant": "appSettings",
+                },
+                "examplePropsPane": {
                     "name": "Example Props Pane",
+                    "variant": "options",
                     "props": {
                         "numericHeader": {
                             "name": "Numeric Props",
@@ -380,14 +433,14 @@ def execute_command(session_data, command="init"):
                             },
                         },
                     },
-                    "icon": "FaCogs",
-                    "type": "pane",
-                    "variant": "options",
-                    "bar": "upper",
-                    "order": 3,
+                },
+                "filter": {
+                    "name": "Filter",
+                    "variant": "filter",
                 },
                 "context": {
                     "name": "Context Pane",
+                    "variant": "context",
                     "props": {
                         "numericContextProp": {
                             "type": "num",
@@ -408,45 +461,8 @@ def execute_command(session_data, command="init"):
                             "applyCategories": {"location": ["locUsMi"]},
                         }
                     },
-                    "icon": "BsInboxes",
-                    "type": "pane",
-                    "variant": "context",
-                    "order": 4,
-                    "bar": "upper",
                 },
-                "filter": {
-                    "icon": "FaFilter",
-                    "type": "pane",
-                    "variant": "filter",
-                    "order": 5,
-                    "bar": "upper",
-                },
-                "map1": {
-                    "type": "map",
-                    "icon": "FaMapMarkedAlt",
-                    "bar": "lower",
-                    "order": 1,
-                },
-                "map2": {
-                    "type": "map",
-                    "icon": "FaMapMarked",
-                    "bar": "lower",
-                    "order": 2,
-                },
-                "dash1": {
-                    "type": "stats",
-                    "icon": "MdInsertChart",
-                    "name": "Dashboard 1",
-                    "order": 3,
-                    "bar": "lower",
-                },
-                "kpi1": {
-                    "type": "kpi",
-                    "icon": "MdSpeed",
-                    "bar": "lower",
-                    "order": 4,
-                },
-            }
+            },
         },
         "dashboard": {
             "data": {
