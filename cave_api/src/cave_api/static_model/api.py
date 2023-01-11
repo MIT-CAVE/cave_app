@@ -157,7 +157,6 @@ def execute_command(session_data, command="init"):
                     "order": 1,
                 },
                 "resetButton": {
-                    "name": "Reset Button",
                     "icon": "MdSync",
                     "color": {
                         "dark": "rgb(255, 101, 101)",
@@ -169,7 +168,6 @@ def execute_command(session_data, command="init"):
                     "order": 2,
                 },
                 "buttonSolve": {
-                    "name": "Solve Button",
                     "icon": "BsLightningFill",
                     "color": {
                         "dark": "rgb(178, 179, 55)",
@@ -213,7 +211,6 @@ def execute_command(session_data, command="init"):
                 "dash1": {
                     "type": "stats",
                     "icon": "MdInsertChart",
-                    "name": "Dashboard 1",
                     "order": 3,
                     "bar": "lower",
                 },
@@ -229,7 +226,7 @@ def execute_command(session_data, command="init"):
             "data": {
                 "session": {
                     "variant": "session",
-                    "name": "Session",
+                    "name": "Sessions Pane",
                 },
                 "appSettings": {
                     "variant": "appSettings",
