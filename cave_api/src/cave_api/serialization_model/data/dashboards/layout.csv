@@ -1,4 +1,4 @@
-dashboardId,chart,grouping,statistic,category,level,category2,level2,sessions,kpi,type
+id,chart,grouping,statistic,category,level,category2,level2,sessions,kpi,type
 dash1,Bar,Average,numericStatExampleA,,,,,,,
 dash1,Line,Sum,,,,,,[],KPI Example 1,kpis
 dash1,Bar,Sum,numericExampleCalculationStat,sku,size,,,,,

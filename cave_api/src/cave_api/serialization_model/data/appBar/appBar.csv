@@ -1,11 +1,11 @@
-id,variant,icon,name,type,bar,apiCommand,order,color,lockedLayout
-session,session,MdApi,Sessions,pane,upper,,0,,
-appSettings,appSettings,MdOutlineSettings,,pane,upper,,1,,
-buttonSolve,,BsLightningFill,Solve Button,button,upper,solve,2,"{""dark"": ""rgb(178, 179, 55)"", ""light"": ""rgb(79, 79, 24)""}",
-resetButton,,MdSync,Reset Button,button,upper,reset,2,"{""dark"": ""rgb(255, 101, 101)"", ""light"": ""rgb(212, 0, 0)""}",
-examplePropsPane,options,FaCogs,Example Props Pane,pane,upper,,3,,
-context,context,BsInboxes,Context Pane,pane,upper,,4,,
-filter,filter,FaFilter,,pane,upper,,5,,
-map1,,FaMapMarkedAlt,,map,lower,,1,,
-dash1,,MdInsertChart,Dashboard 1,stats,lower,,2,,FALSE
-kpi1,,MdSpeed,,kpi,lower,,3,,
+id,icon,type,bar,apiCommand,order,color
+session,MdApi,pane,upper,,0,
+appSettings,MdOutlineSettings,pane,upper,,1,
+buttonSolve,BsLightningFill,button,upper,solve,2,"{""dark"": ""rgb(178, 179, 55)"", ""light"": ""rgb(79, 79, 24)""}"
+resetButton,MdSync,button,upper,reset,2,"{""dark"": ""rgb(255, 101, 101)"", ""light"": ""rgb(212, 0, 0)""}"
+examplePropsPane,FaCogs,pane,upper,,3,
+context,BsInboxes,pane,upper,,4,
+filter,FaFilter,pane,upper,,5,
+map1,FaMapMarkedAlt,map,lower,,1,
+dash1,MdInsertChart,stats,lower,,2,
+kpi1,MdSpeed,kpi,lower,,3,

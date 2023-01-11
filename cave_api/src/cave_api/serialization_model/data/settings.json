@@ -9,10 +9,7 @@
                 "showToggle": true,
                 "value": false,
                 "data":{
-                    "ml1": ["map", "data", "legendGroups"],
-                    "ml2": ["nodes", "types"],
-                    "ml3": ["arcs", "types"],
-                    "ml4": ["geos", "types"]
+                    "ml1": ["map", "data", "map1", "legendGroups"]
                 }
             },
             "appBar": {
@@ -27,7 +24,7 @@
         },
         "iconUrl": "https://react-icons.mitcave.com/0.0.1",
         "numberFormat": {
-            "precision": 4,
+            "precision": 2,
             "trailingZeros": false,
             "unitSpace": true
         },

@@ -1,4 +1,4 @@
-appBarID,column,row,itemId
+paneId,column,row,itemId
 examplePropsPane,1,1,numericHeader
 examplePropsPane,1,2,numericInputExample
 examplePropsPane,1,3,numericSliderExample

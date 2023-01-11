@@ -1,0 +1,6 @@
+id,name,variant
+session,Sessions Pane,session
+appSettings,Settings Pane,appSettings
+examplePropsPane,Example Props Pane,options
+context,Context Pane,context
+filter,Filter Pane,filter
