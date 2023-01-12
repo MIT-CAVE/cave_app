@@ -73,7 +73,7 @@ Custom keys are always included as a direct child of common keys such as `data`,
 
 - #### [`appBar`](docs/all_keys/app_bar.md)
 
-- #### [`dashboard`](docs/all_keys/dashboard.md)
+- #### [`dashboards`](docs/all_keys/dashboards.md)
 
 - #### [`panes`](docs/all_keys/panes.md)
 
@@ -83,7 +83,7 @@ Custom keys are always included as a direct child of common keys such as `data`,
 
 - #### [`geos`](docs/all_keys/geos.md)
 
-- #### [`map`](docs/all_keys/map.md)
+- #### [`maps`](docs/all_keys/maps.md)
 
 - #### [`stats`](docs/all_keys/stats.md)
 

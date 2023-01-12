@@ -1,9 +1,9 @@
-# `dashboard`
-The `dashboard` key allows API designers to create custom dashboards for displaying charts and tables of statistics and kpi data. This key allows for default information and layout to be specified, as well as whether the dashboard can be edited by the user.
+# `dashboards`
+The `dashboards` key allows API designers to create custom dashboards for displaying charts and tables of statistics and kpi data. This key allows for default information and layout to be specified, as well as whether the dashboards can be edited by the user.
 
-The structure of the `dashboard` group looks as follows:
+The structure of the `dashboards` group looks as follows:
 ```py
-'dashboard': {
+'dashboards': {
   'data': {
     "customDash1": {
       "dashboardLayout": [
@@ -59,7 +59,7 @@ Key | Default | Description
   <summary>Click here to show / hide example</summary>
   
 ```py
-"dashboard": {
+"dashboards": {
     "data": {
         "dash1": {
             "dashboardLayout": [

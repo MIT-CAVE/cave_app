@@ -19,8 +19,8 @@ serialized_data = {
                     "showToggle": True,
                     "value": False,
                     "data": {
-                        "ml1": ["map", "data", "map1", "legendGroups"],
-                        "ml2": ["map", "data", "map2", "legendGroups"],
+                        "ml1": ["maps", "data", "map1", "legendGroups"],
+                        "ml2": ["maps", "data", "map2", "legendGroups"],
                     },
                 },
                 "appBar": {
@@ -207,7 +207,7 @@ serialized_data = {
             },
         }
     },
-    "dashboard": {
+    "dashboards": {
         "data": {
             "dash_1": {
                 "dashboardLayout": [
@@ -244,7 +244,7 @@ serialized_data = {
             },
         },
     },
-    "map": {
+    "maps": {
         "data": {
             "map_1": {
                 "defaultViewport": {

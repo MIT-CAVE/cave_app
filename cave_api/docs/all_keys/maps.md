@@ -1,9 +1,9 @@
-### `map`
+### `maps`
 This key group allows designers to specify information about the starting state of the map, what information is contained and how it is grouped in the legend, and what viewports can be easily jumped to by the user.
 
-Below is the `map` group with its sub-keys matched by typical or placeholder values:
+Below is the `maps` group with its sub-keys matched by typical or placeholder values:
 ```py
-"map": {
+"maps": {
     "name": "map",
     "data": {
         "customMap": {
@@ -118,7 +118,7 @@ Key | Default | Description
   <summary>Click here to show / hide example</summary>
 
 ```py
-"map": {
+"maps": {
     "data": {
         "map1": {
             "defaultViewport": {

@@ -35,8 +35,8 @@ def execute_command(session_data, command="init"):
                         "showToggle": True,
                         "value": False,
                         "data": {
-                            "ml1": ["map", "data", "map1", "legendGroups"],
-                            "ml2": ["map", "data", "map2", "legendGroups"],
+                            "ml1": ["maps", "data", "map1", "legendGroups"],
+                            "ml2": ["maps", "data", "map2", "legendGroups"],
                         },
                     },
                     "appBar": {
@@ -439,7 +439,7 @@ def execute_command(session_data, command="init"):
                 },
             },
         },
-        "dashboard": {
+        "dashboards": {
             "data": {
                 "dash1": {
                     "dashboardLayout": [
@@ -476,7 +476,7 @@ def execute_command(session_data, command="init"):
                 },
             }
         },
-        "map": {
+        "maps": {
             "data": {
                 "map1": {
                     "defaultViewport": {
@@ -1558,6 +1558,7 @@ def execute_command(session_data, command="init"):
         return example
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")
+        raise Exception("Test Exception!")
     elif command == "test":
         print("The `test` button has been pressed by the user!")
         raise Exception("Test Exception!")

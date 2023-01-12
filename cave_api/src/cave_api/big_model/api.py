@@ -10,7 +10,7 @@ example = {
                     "showToggle": True,
                     "value": False,
                     "data": {
-                        "ml1": ["map", "data", "legendGroups"],
+                        "ml1": ["maps", "data", "legendGroups"],
                         "ml2": ["nodes", "types"],
                         "ml3": ["arcs", "types"],
                         "ml4": ["geos", "types"],
@@ -413,7 +413,7 @@ example = {
             },
         },
     },
-    "dashboard": {
+    "dashboards": {
         "data": {
             "dash1": {
                 "dashboardLayout": [
@@ -446,7 +446,7 @@ example = {
             },
         },
     },
-    "map": {
+    "maps": {
         "data": {
             "map1": {
                 "defaultViewport": {
