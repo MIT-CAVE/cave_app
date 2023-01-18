@@ -85,7 +85,7 @@ To better illustrate various use cases for a `'grid'` layout, we will rely on th
         "name": "Solver",
         "type": "selector",
         "variant": "dropdown",
-        "value": "gurobi",
+        "value": ["gurobi"],
         "options": {
             "gurobi": {"name": "Gurobi"},
             "cplex": {"name": "Cplex"},

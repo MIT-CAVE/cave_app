@@ -35,7 +35,7 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         "name": "A name to be displayed in the UI",
         "type": "selector",
         "variant": "dropdown",
-        "value": "custom_option_2",
+        "value": ["custom_option_2"],
         "options": {
             "custom_option_1": {"name": "Custom Option 1"},
             "custom_option_2": {"name": "Custom Option 2"},
@@ -63,7 +63,7 @@ Key | Default | Description
 <a name="options">`customPropKey*.options`</a> | Required | Used along a `'selector'` prop, it takes an object containing the [`custom_option_*`](#custom_option_)s to be displayed on the UI element mapped to their display properties.
 <a name="custom_option_">`customPropKey*.options.custom_option_*`</a> | | Used along a `'selector'` prop, it takes an object containing the name of the option to be displayed on the UI element.
 <a name="prop-type">`customPropKey*.type`</a> | Required | As a direct child of `customPropKey*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, `'button'`, or `'selector'`.
-<a name="value">`customPropKey*.value`</a> | Required | The actual value of a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'` \| `'button'`), a number (`'num'` \| `'button'`), a string in the case of `'text'`, `'button'` or the variants `'dropdown'` and `'radio'` of a `'selector'` type, or a [`custom_option_*`](#custom_option_) key array for the `'checkbox'` variant of `'selector'`.
+<a name="value">`customPropKey*.value`</a> | Required | The actual value of a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'` \| `'button'`), a number (`'num'` \| `'button'`), a string in the case of `'text'` or `'button'`, or an array of [`custom_option_*`](#custom_option_) keys for all the variants of a `'selector'` type.<br><br>Note that for single selector variants such as `'radio'` and `'dropdown'`, the value must still be an array containing a single [`custom_option_*`](#custom_option_) key.
 <a name="variant">`customPropKey*.variant`</a> | | Used to modify the UI for a given prop `type`. For example, it can convert a numeric input to a slider input or a selector to a drop-down menu. The `value`s should remain the same structure, but the presentation to the end user changes.
 
 ## Prop `type`s and their `variant`s:

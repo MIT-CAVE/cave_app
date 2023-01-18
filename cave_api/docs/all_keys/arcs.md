@@ -69,7 +69,7 @@ The structure of an `arcs` group looks as follows:
                     "name": "Example Categorical Prop",
                     "type": "selector",
                     "variant": "dropdown",
-                    "value": "a",
+                    "value": ["a"],
                     "options": {
                         "a": {"name": "A"},
                         "b": {"name": "B"},
@@ -251,7 +251,7 @@ Key | Default | Description
                     "name": "Example Categorical Prop",
                     "type": "selector",
                     "variant": "dropdown",
-                    "value": "a",
+                    "value": ["a"],
                     "options": {
                         "a": {"name": "A"},
                         "b": {"name": "B"},
@@ -350,7 +350,7 @@ Key | Default | Description
                     "name": "Example Categorical Prop",
                     "type": "selector",
                     "variant": "dropdown",
-                    "value": "a",
+                    "value": ["a"],
                     "options": {
                         "a": {"name": "A"},
                         "b": {"name": "B"},
