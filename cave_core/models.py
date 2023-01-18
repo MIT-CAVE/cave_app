@@ -88,22 +88,16 @@ class CustomUser(AbstractUser):
     #############################################
     def switch_session_no_validation(self, session_obj):
         session = session_obj
-        print("\n\n\n\n\n")
         prev_session = self.session
         if self.session == session:
             return
         # Query CustomUsers -> Update session
         self.session = session
-        print('\nPt 0\n')
         self.save(update_fields=["session"])
-        print('\nPt 1\n')
         # Update user id lists for the previous and current sessions
         session.update_user_ids()
-        print('\nPt 2\n')
         if prev_session is not None:
-            print('\nPt 3\n')
             prev_session.update_user_ids()
-        print('\nPt 4\n')
         # Query all session data:
         # Note: get_changed_data needs to be executed prior to calling session.versions since it can mutate them
         data = session.get_changed_data(previous_versions={})

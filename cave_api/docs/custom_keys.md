@@ -11,18 +11,9 @@ All top-level keys mentioned below are reserved for the use described in their r
 A CAVE API structure with top-level custom keys looks as follows:
 ```py
 {
-    "settings": {...},
-    "categories": {...},
     "appBar": {...},
-    "dashboard": {...},
-    "panes": {...},
-    "arcs": {...},
-    "nodes": {...},
-    "geos": {...},
-    "map": {...},
+    ...
     "stats": {...},
-    "kpis": {...},
-    "kwargs":{...},
     "customTopLevelKey1": {
         "sendToClient": False,
         "customPersistedDataKey1": 10,

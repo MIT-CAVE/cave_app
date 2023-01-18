@@ -7,18 +7,18 @@ The CAVE API Structure is the core data structure required for user interface de
 At first glance, the top-level keys in the data structure look like this:
 ```py
 {
-    'settings': {...},
-    'categories': {...},
     'appBar': {...},
-    "dashboard": {...},
-    "panes": {...},
     'arcs': {...},
-    'nodes': {...},
+    'categories': {...},
+    'dashboards': {...},
     'geos': {...},
-    'map': {...},
-    'stats': {...},
     'kpis': {...},
-    'kwargs':{...}
+    'kwargs':{...},
+    'map': {...},
+    'nodes': {...},
+    'panes': {...},
+    'settings': {...},
+    'stats': {...}
 }
 ```
 Throughout this documentation, we refer to the keys in the data structure above as _top-level keys_ (or _top-level groups_ to point out that these keys contain other key-value pairs).
@@ -56,40 +56,40 @@ Custom keys are always included as a direct child of common keys such as `data`,
 
 ### [Common keys](docs/common_keys/common_keys.md)
 
-- #### [`props`](docs/common_keys/props.md)
-
 - #### [`layout`](docs/common_keys/layout.md)
 
 - #### [`numberFormat`](docs/common_keys/number_format.md)
+
+- #### [`props`](docs/common_keys/props.md)
 
 - #### [`timeObject`](docs/common_keys/time_object.md)
 
 
 ### [Top-Level keys](docs/all_keys/top_level_keys.md)
 
-- #### [`settings`](docs/all_keys/settings.md)
-
-- #### [`categories`](docs/all_keys/categories.md)
-
 - #### [`appBar`](docs/all_keys/app_bar.md)
-
-- #### [`dashboards`](docs/all_keys/dashboards.md)
-
-- #### [`panes`](docs/all_keys/panes.md)
 
 - #### [`arcs`](docs/all_keys/arcs.md)
 
-- #### [`nodes`](docs/all_keys/nodes.md)
+- #### [`categories`](docs/all_keys/categories.md)
+
+- #### [`dashboards`](docs/all_keys/dashboards.md)
 
 - #### [`geos`](docs/all_keys/geos.md)
-
-- #### [`maps`](docs/all_keys/maps.md)
-
-- #### [`stats`](docs/all_keys/stats.md)
 
 - #### [`kpis`](docs/all_keys/kpis.md)
 
 - #### [`kwargs`](docs/all_keys/kwargs.md)
+
+- #### [`maps`](docs/all_keys/maps.md)
+
+- #### [`nodes`](docs/all_keys/nodes.md)
+
+- #### [`panes`](docs/all_keys/panes.md)
+
+- #### [`settings`](docs/all_keys/settings.md)
+
+- #### [`stats`](docs/all_keys/stats.md)
 
 
 ### [Top-level custom keys](docs/custom_keys.md)

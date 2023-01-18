@@ -1,4 +1,3 @@
-
 check_envs() {
   if ! [[ -f "./.env" ]]; then
     printf "Error: No .env file found. Create the '.env' file by following the setup instructions in the readme.md.\n"
