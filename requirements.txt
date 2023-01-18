@@ -6,10 +6,11 @@ django-cors-headers==3.13.0
 django-import-export==2.9.0
 django-solo==2.0.0
 djangorestframework==3.13.1
-pamda==0.0.14
+pamda>=2.0.0
 Pillow==9.2.0
 psycopg2-binary==2.9.3
 python-decouple==3.6
+type_enforced>=0.0.14
 whitenoise==6.2.0
 -e ./cave_api
 -r ./utils/extra_requirements.txt

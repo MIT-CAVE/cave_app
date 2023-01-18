@@ -50,6 +50,10 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
             "Personal Info",
             {"fields": ("first_name", "last_name", "photo", "bio")},
         ),
+        # (
+        #     "Session Info",
+        #     {"fields": ("session", "team_ids")},
+        # ),
     )
     add_fieldsets = (
         (

@@ -14,7 +14,7 @@ setup(
     url="https://github.com/mit-cave/cave_server/cave_api",
     download_url="https://github.com/mit-cave/cave_server/cave_api/dist/cave_api-0.0.1.tar.gz",
     keywords=["data", "api", "cave", "app"],
-    install_requires=["scoptimize==0.0.3", "type_enforced>=0.0.4"],
+    install_requires=["scoptimize>=0.0.6"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",

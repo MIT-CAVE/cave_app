@@ -22,8 +22,8 @@ def get_legend_groups(layers_data):
         output[itemGroup][itemType] = output[itemGroup].get(itemType, {})
         output[itemGroup][itemType][itemId] = {
             "value": item.get("value", False),
-            "colorBy": item.get("colorBy"),
-            "sizeBy": item.get("sizeBy"),
+            "colorBy": item.get("colorBy",''),
+            "sizeBy": item.get("sizeBy",''),
         }
     return output
 

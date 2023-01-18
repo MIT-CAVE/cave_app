@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from cave_core import models
-from pamda.curry_fn import curry_fn
+from pamda import pamda
 
 
-@curry_fn
+@pamda.curry
 def user_form_decorator(form_class, globals):
     additional_fields = []
     if globals.allow_user_edit_photo:

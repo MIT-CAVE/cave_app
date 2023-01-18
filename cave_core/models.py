@@ -8,6 +8,7 @@ from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authtoken.models import Token
 from solo.models import SingletonModel
+from pamda import pamda
 
 # Internal Imports
 from cave_core import utils
@@ -1186,7 +1187,7 @@ class SessionData(models.Model):
             - Default: None
         """
         self.save_data(
-            utils.functional.assoc_path(path=data_path, value=data_value, data=self.get_data())
+            pamda.assocPath(path=data_path, value=data_value, data=self.get_data())
         )
 
     def save_data(
