@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework.authtoken.models import Token
 from solo.models import SingletonModel
 from pamda import pamda
+import type_enforced
 
 # Internal Imports
 from cave_core import utils
@@ -87,16 +88,22 @@ class CustomUser(AbstractUser):
     #############################################
     def switch_session_no_validation(self, session_obj):
         session = session_obj
+        print("\n\n\n\n\n")
         prev_session = self.session
         if self.session == session:
             return
         # Query CustomUsers -> Update session
         self.session = session
-        self.save()
+        print('\nPt 0\n')
+        self.save(update_fields=["session"])
+        print('\nPt 1\n')
         # Update user id lists for the previous and current sessions
         session.update_user_ids()
+        print('\nPt 2\n')
         if prev_session is not None:
+            print('\nPt 3\n')
             prev_session.update_user_ids()
+        print('\nPt 4\n')
         # Query all session data:
         # Note: get_changed_data needs to be executed prior to calling session.versions since it can mutate them
         data = session.get_changed_data(previous_versions={})
@@ -108,7 +115,8 @@ class CustomUser(AbstractUser):
         )
         session.broadcast_session_info()
 
-    def create_session(self, session_name, team_id, session_description=""):
+    @type_enforced.Enforcer
+    def create_session(self, session_name:str, team_id:[int,str], session_description:str=""):
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
         team = self.get_team(team_id)
@@ -124,21 +132,25 @@ class CustomUser(AbstractUser):
         self.switch_session_no_validation(session)
         return session
 
-    def join_session(self, session_id):
+    @type_enforced.Enforcer
+    def join_session(self, session_id:[int, str]):
+        session_id = int(session_id)
         self.error_on_no_access()
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
-        # Query TeamUsers (only if a team session)
+        # Query TeamUsers
         self.error_on_no_team_access(session.team)
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
 
-    def copy_session(self, session_id, session_name, session_description=""):
+    @type_enforced.Enforcer
+    def copy_session(self, session_id: [int, str], session_name:str, session_description:str=""):
+        session_id = int(session_id)
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
-        # Query TeamUsers (only if a team session)
+        # Query TeamUsers
         self.error_on_no_team_access(session.team)
         # Validate session limit
         session.team.error_on_session_limit()
@@ -149,7 +161,9 @@ class CustomUser(AbstractUser):
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
 
-    def delete_session(self, session_id):
+    @type_enforced.Enforcer
+    def delete_session(self, session_id: [int, str]):
+        session_id = int(session_id)
         self.error_on_no_access()
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
@@ -164,7 +178,9 @@ class CustomUser(AbstractUser):
         # Query -> Update Sessions List
         team.update_sessions_list()
 
-    def edit_session(self, session_id, session_name, session_description=""):
+    @type_enforced.Enforcer
+    def edit_session(self, session_id:[int, str], session_name:str, session_description:str=""):
+        session_id = int(session_id)
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
         # Query Sessions
@@ -173,9 +189,8 @@ class CustomUser(AbstractUser):
         self.error_on_no_team_access(session.team)
         session.name = session_name
         session.description = session_description
-        session.save()
+        session.save(update_fields=["name", "description"])
         session.team.update_sessions_list()
-        self.switch_session_no_validation(session)
 
     def refresh_session_lists(self):
         self.error_on_no_access()
@@ -279,7 +294,7 @@ class CustomUser(AbstractUser):
         if self.email_validated:
             return "validated"
         self.email_validation_code = get_random_string(length=16)
-        self.save()
+        self.save(update_fields=["email_validation_code"])
         return self.email_validation_code
 
     def get_token(self):
@@ -766,7 +781,7 @@ class Teams(models.Model):
 
     def set_session_count(self, amt):
         self.count_sessions = amt
-        self.save()
+        self.save(update_fields=["count_sessions"])
 
     def get_user_ids(self):
         return list(TeamUsers.objects.filter(team=self).values_list("user__id", flat=True))
@@ -875,7 +890,7 @@ class Sessions(models.Model):
             obj.data_name: obj.data_version
             for obj in SessionData.objects.filter(session=self, sendToClient=True)
         }
-        self.save()
+        self.save(update_fields=["versions"])
 
     def get_client_data(self, keys, session_data=None):
         """
@@ -1064,7 +1079,7 @@ class Sessions(models.Model):
         Gets all user ids for users currently in this session and stores it as a json object in self.user_ids to reduce query loads
         """
         self.user_ids = list(CustomUser.objects.filter(session=self).values_list("id", flat=True))
-        self.save()
+        self.save(update_fields=["user_ids"])
 
     def copy(self, name, description):
         """
@@ -1099,7 +1114,7 @@ class Sessions(models.Model):
             )
         if loading != self.loading:
             self.loading = loading
-            self.save()
+            self.save(update_fields=["loading"])
             self.broadcast_session_info()
 
     def broadcast_session_info(self):
@@ -1263,7 +1278,7 @@ def update_team_ids(sender, instance, **kwargs):
     instance.user.team_ids = list(
         TeamUsers.objects.filter(user=instance.user).values_list("team", flat=True)
     )
-    instance.user.save()
+    instance.user.save(update_fields=["team_ids"])
 
 
 @receiver(post_save, sender=CustomUser, dispatch_uid="create_personal_team_on_creation")
