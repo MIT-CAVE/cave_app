@@ -192,6 +192,7 @@ class Model_Object:
         self.fixed_cashflow = self.props.get_prop("fixed_cashflow", 0) if self.open else 0
         self.processing_capacity = self.props.get_prop("processing_capacity", 0) if self.open else 0
         self.cashflow_per_unit = self.props.get_prop("cashflow_per_unit", 0)
+
     def format_stats_data(self, values):
         return {
             "category": {

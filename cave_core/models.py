@@ -110,7 +110,7 @@ class CustomUser(AbstractUser):
         session.broadcast_session_info()
 
     @type_enforced.Enforcer
-    def create_session(self, session_name:str, team_id:[int,str], session_description:str=""):
+    def create_session(self, session_name: str, team_id: [int, str], session_description: str = ""):
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
         team = self.get_team(team_id)
@@ -127,7 +127,7 @@ class CustomUser(AbstractUser):
         return session
 
     @type_enforced.Enforcer
-    def join_session(self, session_id:[int, str]):
+    def join_session(self, session_id: [int, str]):
         session_id = int(session_id)
         self.error_on_no_access()
         # Query Sessions
@@ -138,7 +138,9 @@ class CustomUser(AbstractUser):
         self.switch_session_no_validation(session)
 
     @type_enforced.Enforcer
-    def clone_session(self, session_id: [int, str], session_name:str, session_description:str=""):
+    def clone_session(
+        self, session_id: [int, str], session_name: str, session_description: str = ""
+    ):
         session_id = int(session_id)
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
@@ -173,7 +175,9 @@ class CustomUser(AbstractUser):
         team.update_sessions_list()
 
     @type_enforced.Enforcer
-    def edit_session(self, session_id:[int, str], session_name:str, session_description:str=""):
+    def edit_session(
+        self, session_id: [int, str], session_name: str, session_description: str = ""
+    ):
         session_id = int(session_id)
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
@@ -864,9 +868,7 @@ class Sessions(models.Model):
     description = models.TextField(
         _("description"), max_length=512, help_text=_("Description for the session"), default=""
     )
-    versions = models.JSONField(
-        _("versions"), help_text=_("The session versions"), default=dict
-    )
+    versions = models.JSONField(_("versions"), help_text=_("The session versions"), default=dict)
     loading = models.BooleanField(
         _("Loading"),
         help_text=_("Is this session currently loading?"),
@@ -958,7 +960,7 @@ class Sessions(models.Model):
                 allowModification=value.get("allowModification", obj.allowModification),
                 sendToClient=value.get("sendToClient", obj.sendToClient),
                 sendToApi=value.get("sendToApi", obj.sendToApi),
-                data_version=self.versions.get(key, 0)+1
+                data_version=self.versions.get(key, 0) + 1,
             )
         # Update versions post replacement
         self.update_versions()
@@ -1092,7 +1094,7 @@ class Sessions(models.Model):
         new_session.pk = None
         new_session.save()
         for data in session_data:
-            data.clone(session = new_session)
+            data.clone(session=new_session)
         return new_session
 
     def error_on_session_not_empty(self):
@@ -1193,9 +1195,7 @@ class SessionData(models.Model):
             - What: The data value to assign to the end of the provided path
             - Default: None
         """
-        self.save_data(
-            pamda.assocPath(path=data_path, value=data_value, data=self.get_data())
-        )
+        self.save_data(pamda.assocPath(path=data_path, value=data_value, data=self.get_data()))
 
     def clone(self, session):
         """

@@ -32,7 +32,7 @@ serialized_data = {
                         "ab2": ["appBar", "paneState"],
                     },
                 },
-                },
+            },
             "iconUrl": "https://react-icons.mitcave.com/0.0.1",
             "numberFormat": {
                 "precision": 2,
@@ -198,7 +198,7 @@ serialized_data = {
         }
     },
     "panes": {
-        "data": {   
+        "data": {
             "session": {
                 "variant": "session",
             },
@@ -289,14 +289,14 @@ serialized_data = {
                             "transport": {
                                 "sizeBy": "processing_capacity",
                                 "colorBy": "processing_capacity",
-                                "value": True, 
-                                "order": 1
+                                "value": True,
+                                "order": 1,
                             },
                             "last_mile": {
                                 "sizeBy": "cashflow_per_unit",
                                 "colorBy": "processing_capacity",
                                 "value": True,
-                                "order": 2
+                                "order": 2,
                             },
                         },
                         "order": 1,
@@ -307,26 +307,21 @@ serialized_data = {
                             "factory": {
                                 "sizeBy": "processing_capacity",
                                 "colorBy": "open",
-                                "value": True, 
-                                "order": 1
+                                "value": True,
+                                "order": 1,
                             },
                             "warehouse": {
                                 "sizeBy": "processing_capacity",
                                 "colorBy": "open",
-                                "value": True, 
-                                "order": 2
+                                "value": True,
+                                "order": 2,
                             },
                         },
                         "order": 2,
                     },
                     "Demand": {
                         "name": "Demand",
-                        "geos": {
-                            "demand": {
-                                "colorBy": "processing_capacity",
-                                "value": True
-                                }
-                            },
+                        "geos": {"demand": {"colorBy": "processing_capacity", "value": True}},
                         "order": 3,
                     },
                 },

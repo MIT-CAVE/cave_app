@@ -26,7 +26,7 @@ def get_api_object():
         "categories": get_categories_data(data_location + "categories/"),
         "appBar": get_app_bar_data(data_location + "appBar/"),
         "panes": get_panes_data(data_location + "panes/"),
-        "dashboards":get_dashboards_data(data_location + "dashboards/"),
+        "dashboards": get_dashboards_data(data_location + "dashboards/"),
         "maps": get_maps_data(data_location + "maps/"),
         "arcs": get_data(data_location + "arcs/"),
         "nodes": get_data(data_location + "nodes/"),

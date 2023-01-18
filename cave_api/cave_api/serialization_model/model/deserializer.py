@@ -2,6 +2,7 @@ from cave_api.serialization_model.serialize import get_api_object
 from pprint import pprint as print
 from functools import reduce
 
+
 def getPathValue(path, data, default=None):
     """
     Takes in a nested dictionary (data) and returns the value at the end of a specified path (a list of keys of the nested structure).
@@ -20,9 +21,10 @@ def getPathValue(path, data, default=None):
     """
     return reduce(lambda x, y: x.get(y, {}), path[:-1], data).get(path[-1], default)
 
+
 def setPathValue(path, value, data):
     """
-    Takes in a nested dictionary (data), sets the value of the last key in the path, and returns the data. If the last key in the path doesn't already exist, creates a new key-value pair and adds it to the dictionary. 
+    Takes in a nested dictionary (data), sets the value of the last key in the path, and returns the data. If the last key in the path doesn't already exist, creates a new key-value pair and adds it to the dictionary.
 
     Requires:
         - `path`:
@@ -35,9 +37,12 @@ def setPathValue(path, value, data):
             - Type: any
             - What: The value to be assigned to the end of the path
     """
-    if len(path) == 1: data[path[0]] = value
-    else: data[path[0]] = setPathValue(path[1:], value, data[path[0]])
+    if len(path) == 1:
+        data[path[0]] = value
+    else:
+        data[path[0]] = setPathValue(path[1:], value, data[path[0]])
     return data
+
 
 def flatten(data):
     """
@@ -56,6 +61,7 @@ def flatten(data):
     ```
     """
     return reduce(lambda x, y: x + y, data, [])
+
 
 def dictMerge(data):
     """
@@ -78,6 +84,7 @@ def dictMerge(data):
         out[i[0]] = out.get(i[0], []) + [i[1]]
     return out
 
+
 class Model_Object:
     def __init__(self, id, item):
         # General Model Object Data
@@ -85,12 +92,15 @@ class Model_Object:
         self.item = item
         self.type = item.get("type")
         self.category = item.get("category", {})
-        self.stat_values = {} # custom stats data values given object types
+        self.stat_values = {}  # custom stats data values given object types
 
         self.props = item.get("props", {})
-        self.numeric_props = [key for key, value in self.props.items() 
+        self.numeric_props = [
+            key
+            for key, value in self.props.items()
             if isinstance(value.get("value"), (int, float))
-            and not isinstance(value.get("value"), bool)]
+            and not isinstance(value.get("value"), bool)
+        ]
         self.clear_outputs()
 
     def clear_outputs(self):
@@ -114,7 +124,7 @@ class Model_Object:
                 - What: The default value to be used if no value is found for the given key
         """
         return getPathValue([key, "value"], self.props)
-    
+
     def set_prop(self, key, value):
         """
         Associates a prop value to a prop given a key. If key doesn't already exist, create a new key-value pair and adds it to self.props. Updates self.numeric_props.
@@ -127,13 +137,15 @@ class Model_Object:
                 - Type: any
                 - What: The value to be assigned to the prop
                 - Note: The type should match the type necessary as specified in the prop itself
-        """        
-        if self.get_prop(key) is not None: 
+        """
+        if self.get_prop(key) is not None:
             setPathValue([key, "value"], value, self.props)
-            if not isinstance(value, (int, float)) or isinstance(value, bool): 
-                if key in self.numeric_props: self.numeric_props.remove(key)
-        else: setPathValue([key], {"value": value}, self.props)
-        if isinstance(value, (int, float)) and not isinstance(value, bool): 
+            if not isinstance(value, (int, float)) or isinstance(value, bool):
+                if key in self.numeric_props:
+                    self.numeric_props.remove(key)
+        else:
+            setPathValue([key], {"value": value}, self.props)
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
             self.numeric_props.append(key)
 
     def get_numeric_prop_values(self):
@@ -147,12 +159,17 @@ class Aggregate_Serializer:
     def get_agg_stat_sum(self, model_object_list, key, round_to=2):
         return round(sum([i.stat_values.get(key, 0) for i in model_object_list]), round_to)
 
-    def get_agg_stat_div(self, model_object_list, numerator_key, denominator_key, percentage=False, round_to=2):
+    def get_agg_stat_div(
+        self, model_object_list, numerator_key, denominator_key, percentage=False, round_to=2
+    ):
         return round(
-            (sum([i.stat_values.get(numerator_key, 0) for i in model_object_list])
-            / max(sum([i.stat_values.get(denominator_key, 0) for i in model_object_list]), 1))
+            (
+                sum([i.stat_values.get(numerator_key, 0) for i in model_object_list])
+                / max(sum([i.stat_values.get(denominator_key, 0) for i in model_object_list]), 1)
+            )
             * (100 if percentage else 1),
-            round_to,)
+            round_to,
+        )
 
     def get_max_and_min_dict(self, prop_list, force_int=True, flippable=True):
         max_val = max(prop_list + [0])
@@ -168,6 +185,7 @@ class Aggregate_Serializer:
     def get_agg_prop_ranges(self, model_object_list, round_to=2):
         prop_lists = dictMerge([i.get_numeric_prop_values() for i in model_object_list])
         return {key: self.get_max_and_min_dict(value) for key, value in prop_lists.items()}
+
 
 # Example: getting aggregate prop ranges for node 1 and node 2
 example = get_api_object()

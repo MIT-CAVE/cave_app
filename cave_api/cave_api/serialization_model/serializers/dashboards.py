@@ -1,5 +1,6 @@
 import json
-from cave_api.serialization_model.utils import read_csv, group_list
+from cave_api.serialization_model.utils import read_csv
+
 
 def serialize_item(item):
     out = {}
@@ -15,10 +16,8 @@ def get_dashboards_data(data_dir):
     data = {}
     layout_data = read_csv(data_dir + "/layout.csv")
     for item in layout_data:
-        id = item.pop('id')
+        id = item.pop("id")
         if id not in data:
-            data[id]={
-                "dashboardLayout": []
-            }
+            data[id] = {"dashboardLayout": []}
         data[id]["dashboardLayout"].append(serialize_item(item))
     return {"data": data}
