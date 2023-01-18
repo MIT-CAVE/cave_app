@@ -286,10 +286,10 @@ def session_management(request):
     }
     -----------------------------------
 
-    - copy
+    - clone
         - Requires:
             - session_id: int
-                - The id of the session to copy
+                - The id of the session to clone
             - session_name: str
                 - The name of the new copied session
         - Optional:
@@ -299,7 +299,7 @@ def session_management(request):
 
     -----------------------------------
     {
-        "session_command":"copy",
+        "session_command":"clone",
         "session_command_data":{
             "session_name":"copied_name_here",
             "session_description":"copied_description_here",
@@ -362,8 +362,8 @@ def session_management(request):
         user.create_session(**command_data)
     elif command == "join":
         user.join_session(**command_data)
-    elif command == "copy":
-        user.copy_session(**command_data)
+    elif command == "clone" or command == "copy":
+        user.clone_session(**command_data)
     elif command == "delete":
         user.delete_session(**command_data)
     elif command == "edit":

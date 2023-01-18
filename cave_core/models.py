@@ -138,7 +138,7 @@ class CustomUser(AbstractUser):
         self.switch_session_no_validation(session)
 
     @type_enforced.Enforcer
-    def copy_session(self, session_id: [int, str], session_name:str, session_description:str=""):
+    def clone_session(self, session_id: [int, str], session_name:str, session_description:str=""):
         session_id = int(session_id)
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
@@ -149,11 +149,11 @@ class CustomUser(AbstractUser):
         # Validate session limit
         session.team.error_on_session_limit()
         # Queries -> Duplicates this session and session data
-        session_obj = session.copy(session_name, session_description)
+        new_session = session.clone(session_name, session_description)
         # Query -> Update Sessions List
         session.team.update_sessions_list()
         # Queries -> Switch to the session
-        self.switch_session_no_validation(session)
+        self.switch_session_no_validation(new_session)
 
     @type_enforced.Enforcer
     def delete_session(self, session_id: [int, str]):
@@ -1075,7 +1075,7 @@ class Sessions(models.Model):
         self.user_ids = list(CustomUser.objects.filter(session=self).values_list("id", flat=True))
         self.save(update_fields=["user_ids"])
 
-    def copy(self, name, description):
+    def clone(self, name, description):
         """
         Copies the current session to a new session
 
@@ -1083,7 +1083,7 @@ class Sessions(models.Model):
 
         - `name`:
             - Type: str
-            - What: The name of the new session based off of this copy
+            - What: The name of the new session based off of this clone
         """
         session_data = SessionData.objects.filter(session=self)
         new_session = self
@@ -1092,9 +1092,7 @@ class Sessions(models.Model):
         new_session.pk = None
         new_session.save()
         for data in session_data:
-            data.session = new_session
-            data.pk = None
-            data.save()
+            data.clone(session = new_session)
         return new_session
 
     def error_on_session_not_empty(self):
@@ -1198,6 +1196,23 @@ class SessionData(models.Model):
         self.save_data(
             pamda.assocPath(path=data_path, value=data_value, data=self.get_data())
         )
+
+    def clone(self, session):
+        """
+        Clone this session data object for use in a new session
+
+        Requires:
+
+        - `session`:
+            - Type: Session
+            - What: The new session to which this copied data will be associated
+        """
+        data = self.get_data()
+        self.pk = None
+        self.session = session
+        self.version = 0
+        self.save()
+        cache.set(self.get_cache_data_id(), data, None)
 
     def save_data(
         self,
