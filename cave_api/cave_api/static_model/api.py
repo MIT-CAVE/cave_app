@@ -299,7 +299,7 @@ def execute_command(session_data, command="init"):
                             "name": "Dropdown Item Example",
                             "type": "selector",
                             "variant": "dropdown",
-                            "value": "option_c",
+                            "value": ["option_c"],
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -325,7 +325,7 @@ def execute_command(session_data, command="init"):
                             "name": "Radio Item Example",
                             "type": "selector",
                             "variant": "radio",
-                            "value": "option_a",
+                            "value": ["option_a"],
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -726,7 +726,7 @@ def execute_command(session_data, command="init"):
                             "name": "Example Categorical Prop",
                             "type": "selector",
                             "variant": "dropdown",
-                            "value": "a",
+                            "value": ["a"],
                             "options": {
                                 "a": {"name": "A"},
                                 "b": {"name": "B"},
@@ -827,7 +827,7 @@ def execute_command(session_data, command="init"):
                             "name": "Example Categorical Prop",
                             "type": "selector",
                             "variant": "dropdown",
-                            "value": "a",
+                            "value": ["a"],
                             "options": {
                                 "a": {"name": "A"},
                                 "b": {"name": "B"},

@@ -84,7 +84,7 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
             "name": "Dropdown Item Example",
             "type": "selector",
             "variant": "dropdown",
-            "value": "option_c",
+            "value": ["option_c"],
             "options": {
                 "option_a": {"name": "Option A"},
                 "option_b": {"name": "Option B"},
@@ -110,7 +110,7 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
             "name": "Radio Item Example",
             "type": "selector",
             "variant": "radio",
-            "value": "option_a",
+            "value": ["option_a"],
             "options": {
                 "option_a": {"name": "Option A"},
                 "option_b": {"name": "Option B"},
@@ -362,7 +362,7 @@ Key | Default | Description
                     "name": "Dropdown Item Example",
                     "type": "selector",
                     "variant": "dropdown",
-                    "value": "option_c",
+                    "value": ["option_c"],
                     "options": {
                         "option_a": {"name": "Option A"},
                         "option_b": {"name": "Option B"},
@@ -388,7 +388,7 @@ Key | Default | Description
                     "name": "Radio Item Example",
                     "type": "selector",
                     "variant": "radio",
-                    "value": "option_a",
+                    "value": ["option_a"],
                     "options": {
                         "option_a": {"name": "Option A"},
                         "option_b": {"name": "Option B"},
