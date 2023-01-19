@@ -362,7 +362,7 @@ def session_management(request):
         user.create_session(**command_data)
     elif command == "join":
         user.join_session(**command_data)
-    elif command == "clone" or command == "copy":
+    elif command == "clone":
         user.clone_session(**command_data)
     elif command == "delete":
         user.delete_session(**command_data)
