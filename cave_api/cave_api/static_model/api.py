@@ -283,12 +283,25 @@ def execute_command(session_data, command="init"):
                             "enabled": True,
                             "help": "Press this button to create an error",
                         },
+                        "textHeader": {
+                            "name": "Text Props",
+                            "type": "head",
+                            "help": "Some help for Text Props",
+                        },
                         "textInputExample": {
                             "name": "Text Input Example",
                             "type": "text",
                             "value": "Example Text Here",
                             "enabled": True,
                             "help": "Help for the text input example",
+                        },
+                        "textAreaInputExample": {
+                            "name": "TextArea Input Example",
+                            "type": "text",
+                            "variant": "textarea",
+                            "value": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
+                            "enabled": True,
+                            "help": "Help for the text area input example",
                         },
                         "selectorHeader": {
                             "name": "Selection Props",
@@ -337,7 +350,7 @@ def execute_command(session_data, command="init"):
                     },
                     "layout": {
                         "type": "grid",
-                        "numColumns": 3,
+                        "numColumns": 4,
                         "numRows": "auto",
                         "data": {
                             "col1Row1": {
@@ -362,47 +375,59 @@ def execute_command(session_data, command="init"):
                                 "type": "item",
                                 "column": 2,
                                 "row": 1,
-                                "itemId": "miscHeader",
+                                "itemId": "textHeader",
                             },
                             "col2Row2": {
                                 "type": "item",
                                 "column": 2,
                                 "row": 2,
-                                "itemId": "toggleInputExample",
+                                "itemId": "textInputExample",
                             },
                             "col2Row3": {
                                 "type": "item",
                                 "column": 2,
                                 "row": 3,
-                                "itemId": "buttonInputExample",
-                            },
-                            "col2Row4": {
-                                "type": "item",
-                                "column": 2,
-                                "row": 4,
-                                "itemId": "textInputExample",
+                                "itemId": "textAreaInputExample",
                             },
                             "col3Row1": {
                                 "type": "item",
                                 "column": 3,
                                 "row": 1,
-                                "itemId": "selectorHeader",
+                                "itemId": "miscHeader",
                             },
                             "col3Row2": {
                                 "type": "item",
                                 "column": 3,
                                 "row": 2,
-                                "itemId": "dropdownItemExample",
+                                "itemId": "toggleInputExample",
                             },
                             "col3Row3": {
                                 "type": "item",
                                 "column": 3,
                                 "row": 3,
+                                "itemId": "buttonInputExample",
+                            },
+                            "col4Row1": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 1,
+                                "itemId": "selectorHeader",
+                            },
+                            "col4Row2": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 2,
+                                "itemId": "dropdownItemExample",
+                            },
+                            "col4Row3": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 3,
                                 "itemId": "checkboxItemExample",
                             },
-                            "col3Row4": {
+                            "col4Row4": {
                                 "type": "item",
-                                "column": 3,
+                                "column": 4,
                                 "row": 4,
                                 "itemId": "radioItemExample",
                             },

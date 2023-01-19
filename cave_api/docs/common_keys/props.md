@@ -73,6 +73,8 @@ Allows users to place a header for an individual section, containing a title (vi
 
 ### `'text'`
 Allows users to enter text in a UI field. Here, `value` takes a string.
+#### Variants:
+>`'textarea'`: Allows users to enter text in a multi-line input field. This variant allows the special keys `minRows` and `maxRows` to set the minimum and maximum number of rows to display in the input control, as appropriate. If omitted, `minRows` will default to `2`, while `maxRows` will default to `6`.<br>
 
 ### `'num'`
 Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is formatted according to [`numberFormat`](number_format.md).
