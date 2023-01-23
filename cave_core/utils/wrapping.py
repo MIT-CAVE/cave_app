@@ -89,9 +89,9 @@ def async_api_app_ws(fn):
                 event="message",
                 data={
                     "snackbarShow": True,
-                    "snackbarType": "error",
+                    "snackbarType": "warning",
                     "message": str(e),
-                    "duration": 5,
+                    "duration": 30,
                     "traceback": traceback_str,
                 },
             )
