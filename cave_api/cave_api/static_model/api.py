@@ -909,7 +909,7 @@ def execute_command(session_data, command="init"):
                             "value": 40,
                         },
                         "selectorPropForColor": {
-                            "value": "b",
+                            "value": ["b"],
                         },
                     },
                 },
@@ -933,7 +933,7 @@ def execute_command(session_data, command="init"):
                             "value": 20,
                         },
                         "selectorPropForColor": {
-                            "value": "e",
+                            "value": ["e"],
                         },
                     },
                 },
@@ -957,7 +957,7 @@ def execute_command(session_data, command="init"):
                             "value": 14,
                         },
                         "selectorPropForColor": {
-                            "value": "d",
+                            "value": ["d"],
                         },
                     },
                 },
@@ -981,7 +981,7 @@ def execute_command(session_data, command="init"):
                             "value": 6,
                         },
                         "selectorPropForColor": {
-                            "value": "f",
+                            "value": ["f"],
                         },
                     },
                 },
