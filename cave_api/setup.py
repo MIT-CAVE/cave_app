@@ -3,6 +3,7 @@ from distutils.core import setup
 setup(
     name="cave_api",
     packages=["cave_api"],
+    package_data={"": ["*.json", "*.csv"]},
     version="0.0.1",
     license="MIT",
     description="Python wrapper for api use in the cave_app",
