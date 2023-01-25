@@ -5,24 +5,37 @@ example = {
         "sendToClient": True,
         "data": {
             "sync": {
-                "mapLayers": {
-                    "name": "Map Layers",
-                    "showToggle": True,
-                    "value": False,
-                    "data": {
-                        "ml1": ["maps", "data", "legendGroups"],
-                        "ml2": ["nodes", "types"],
-                        "ml3": ["arcs", "types"],
-                        "ml4": ["geos", "types"],
-                    },
-                },
                 "appBar": {
                     "name": "App Bar",
                     "showToggle": True,
                     "value": False,
                     "data": {
                         "ab1": ["appBar", "data", "dashboardId"],
-                        "ab2": ["appBar", "paneState"],
+                        "ab2": ["appBar", "paneState"]
+                    }
+                },
+                "pageSelection": {
+                    "name": "Page Selection",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "ps1": ["appBar", "data", "appBarId"]
+                    },
+                },
+                "mapLayers":{
+                    "name": "Map Layers",
+                    "showToggle": True,
+                    "value": False,
+                    "data":{
+                        "ml1": ["map", "data", "map1", "legendGroups"]
+                    }
+                },
+                "dashboards": {
+                    "name": "Dashboards",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "db1": ["dashboards", "data"]
                     },
                 },
             },

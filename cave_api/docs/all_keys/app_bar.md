@@ -5,6 +5,7 @@ The structure of the `appBar` group looks as follows:
 ```py
 'appBar': {
     'data': {
+        "appBarId":"customDash1",
         "customSessionPane": {
             "icon": "MdApi",
             "type": "pane",
@@ -62,13 +63,13 @@ The structure of the `appBar` group looks as follows:
 ## Page Views
 Page views are the `cave_app`'s primary way to view and interact with the api information outside of panes. There are three types of page views that are all launced from the `appBar`.
 
-In general, the `cave_app` has zero or one `map` view, zero to many `stats` views and zero or one `kpi` view.
+In general, the `cave_app` has zero to many `map` views, zero to many `stats` views and zero or one `kpi` view.
 
 <details>
   <summary>Map page</summary>
 
 ```py
-"customMap": {
+"customMap1": {
     "type": "map",
     "icon": "FaMapMarkedAlt",
     "bar": "lower",
@@ -140,6 +141,7 @@ Panes are constructs primarily used to place UI controls (toggles, text and numb
 ## Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
+`appBarId` | Your first map view | The id (as a string) of the selected view. This would be the key of a `dashboard`, `map` or `kpi` view.
 `customObjKey*` | Required | A custom key wrapper for the custom pane.
 `customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stat`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
 `customObjKey*.bar` | Required | The section of the `appBar` to display the object in. Accepts either `upper` or `lower`. The use of both bar sections is not required, and any object can be shown in either bar.
@@ -154,6 +156,7 @@ Key | Default | Description
 ```py
 "appBar": {
     "data": {
+        "appBarId":"dash1",
         "session": {
             "icon": "MdApi",
             "type": "pane",

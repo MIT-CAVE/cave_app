@@ -29,33 +29,48 @@ def execute_command(session_data, command="init"):
             "sendToApi": False,
             "sendToClient": True,
             "data": {
-                "sync": {
-                    "mapLayers": {
-                        "name": "Map Layers",
-                        "showToggle": True,
-                        "value": False,
-                        "data": {
-                            "ml1": ["maps", "data", "map1", "legendGroups"],
-                            "ml2": ["maps", "data", "map2", "legendGroups"],
-                        },
-                    },
-                    "appBar": {
-                        "name": "App Bar",
-                        "showToggle": True,
-                        "value": False,
-                        "data": {
-                            "ab1": ["appBar", "data", "dashboardId"],
-                            "ab2": ["appBar", "paneState"],
-                        },
+            "sync": {
+                "appBar": {
+                    "name": "App Bar",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "ab1": ["appBar", "data", "dashboardId"],
+                        "ab2": ["appBar", "paneState"]
+                    }
+                },
+                "pageSelection": {
+                    "name": "Page Selection",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "ps1": ["appBar", "data", "appBarId"]
                     },
                 },
-                "iconUrl": "https://react-icons.mitcave.com/0.0.1",
-                "numberFormat": {
-                    "precision": 4,
-                    "trailingZeros": False,
-                    "unitSpace": True,
+                "mapLayers":{
+                    "name": "Map Layers",
+                    "showToggle": True,
+                    "value": False,
+                    "data":{
+                        "ml1": ["map", "data", "map1", "legendGroups"]
+                    }
                 },
-                "debug": True,
+                "dashboards": {
+                    "name": "Dashboards",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "db1": ["dashboards", "data"]
+                    },
+                },
+            },
+            "iconUrl": "https://react-icons.mitcave.com/0.0.1",
+            "numberFormat": {
+                "precision": 4,
+                "trailingZeros": False,
+                "unitSpace": True,
+            },
+            "debug": True,
             },
         },
         "categories": {
@@ -144,6 +159,7 @@ def execute_command(session_data, command="init"):
         },
         "appBar": {
             "data": {
+                "appBarId": "dash1",
                 "session": {
                     "icon": "MdApi",
                     "type": "pane",
