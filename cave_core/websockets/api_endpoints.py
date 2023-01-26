@@ -26,6 +26,8 @@ def get_session_data(request):
     data_versions = request.data.get("data_versions", {})
     # Session validation
     session = request.user.session
+    if session == None:
+        session = request.user.get_or_create_personal_session()
     # get_changed_data needs to be executed prior to session.versions since it can mutate them
     data = session.get_changed_data(previous_versions=data_versions)
     utils.broadcasting.ws_broadcast_object(

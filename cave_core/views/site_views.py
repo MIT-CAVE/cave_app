@@ -105,8 +105,6 @@ def app(request):
         return redirect("/")
     if not globals.show_app_page:
         return redirect("/")
-    if request.user.session == None:
-        request.user.session = request.user.get_or_create_personal_session()
     if request.method == "GET":
         return render(
             request,
