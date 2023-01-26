@@ -1,6 +1,5 @@
-from .data.serialized_data import serialized_data
+from .data.serialized_data import get_serialized_data
 from .model.solver import Solver
-
 
 def execute_command(session_data, command="init"):
     """
@@ -27,8 +26,8 @@ def execute_command(session_data, command="init"):
         - What: A dict of dictionaries to mutate the current session given the current `session_data`
         - See: https://github.com/MIT-CAVE/cave_app/blob/0.2.0/cave_api/README_API_STRUCTURE.md
     """
-    if command == "init":
-        solver = Solver(serialized_data)
+    if command in ["init", "reset"]:
+        solver = Solver(get_serialized_data())
         return solver.solve()
     elif command == "solve":
         solver = Solver(session_data)
