@@ -1,5 +1,5 @@
 # `settings`
-This key group allows designers to specify settings they want the site to use (overriding setting defaults. For example, designers can specify the URL where icons are fetched from. If this is not supplied, it defaults to the one specified in [`cave_static` constants](https://github.com/MIT-CAVE/cave_static/blob/0.3.0-dev/src/utils/constants.js) for each version.
+This key group allows designers to specify settings they want the site to use (overriding setting defaults. For example, designers can specify the URL where icons are fetched from. If this is not supplied, it defaults to the one specified in [`cave_static` constants](https://github.com/MIT-CAVE/cave_static/blob/1.0.1/src/utils/constants.js) for each version.
 
 Below is the `settings` group with its sub-keys matched by typical values:
 ```py

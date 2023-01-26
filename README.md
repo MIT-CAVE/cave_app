@@ -100,7 +100,7 @@ To fully understand how the cave app works, it is best to dive into our default 
     <summary>Example image</summary>
     <img src="https://utils.mitcave.com/docs/cave_app-0.3.0/session.png" width=50%>
     </details>
-  - Creating a new session will initialize whichever model is specified in the `/cave_api/src/cave_api/__init__.py` file
+  - Creating a new session will initialize whichever model is specified in the `/cave_api/cave_api/__init__.py` file
     - We supply multiple example models for users to reference and/or build upon.
       - The `serialization_model` shows how you can easily convert csv and json objects for CAVE API use
       - The `simple_model` demonstrates good practices for researchers using the CAVE API
@@ -123,7 +123,7 @@ To fully understand how the cave app works, it is best to dive into our default 
     - In the `simple_model` KPI view, you can see the list of all the KPI and their values.
     ![kpi view](https://utils.mitcave.com/docs/cave_app-0.3.0/kpi.jpg)
 
-    - These functions are all programmed in `/cave_api/src/cave_api/simple_model`. The CAVE [API Structure](cave_api/README_API_STRUCTURE.md) gives developers many capabilities to edit and create their own models. For instance, you can [change levels of data aggregation](/cave_api/docs/all_keys/categories.md) in Dashboard view or [edit the map legend](/cave_api/docs/all_keys/arcs.md) displayed in Map view.
+    - These functions are all programmed in `/cave_api/cave_api/simple_model`. The CAVE [API Structure](cave_api/README_API_STRUCTURE.md) gives developers many capabilities to edit and create their own models. For instance, you can [change levels of data aggregation](/cave_api/docs/all_keys/categories.md) in Dashboard view or [edit the map legend](/cave_api/docs/all_keys/arcs.md) displayed in Map view.
 
   </details>
 
