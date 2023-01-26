@@ -120,8 +120,6 @@ class CustomUser(AbstractUser):
         )
         if not created:
             raise Exception("Oops! Unable to create that session.")
-        # Query -> Update Session List
-        team.update_sessions_list()
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
         return session
@@ -152,8 +150,6 @@ class CustomUser(AbstractUser):
         session.team.error_on_session_limit()
         # Queries -> Duplicates this session and session data
         new_session = session.clone(session_name, session_description)
-        # Query -> Update Sessions List
-        session.team.update_sessions_list()
         # Queries -> Switch to the session
         self.switch_session_no_validation(new_session)
 
@@ -171,8 +167,6 @@ class CustomUser(AbstractUser):
         session.error_on_session_not_empty()
         # Query -> Delete Session
         session.delete()
-        # Query -> Update Sessions List
-        team.update_sessions_list()
 
     @type_enforced.Enforcer
     def edit_session(
@@ -188,7 +182,6 @@ class CustomUser(AbstractUser):
         session.name = session_name
         session.description = session_description
         session.save(update_fields=["name", "description"])
-        session.team.update_sessions_list()
 
     def refresh_session_lists(self):
         self.error_on_no_access()
@@ -1273,6 +1266,14 @@ class SessionData(models.Model):
 
 
 # Signals
+@receiver(post_save, sender=Sessions, dispatch_uid="update_team_session_list_on_save")
+@receiver(post_delete, sender=Sessions, dispatch_uid="update_team_session_list_on_delete")
+def update_sessions_list_for_team(sender, instance, **kwargs):
+    """
+    When a session object is changed, update the sessions list for the associated session team
+    """
+    instance.team.update_sessions_list()
+
 @receiver(post_delete, sender=SessionData, dispatch_uid="remove_session_data_from_cache_on_delete")
 def remove_session_data_from_cache(sender, instance, **kwargs):
     """
