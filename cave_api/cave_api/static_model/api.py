@@ -1044,7 +1044,7 @@ def execute_command(session_data, command="init"):
                     },
                     "startSize": "30px",
                     "endSize": "45px",
-                    "icon": "MdStore",
+                    "icon": "FaIgloo",
                     "props": {
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
@@ -1423,6 +1423,7 @@ def execute_command(session_data, command="init"):
                 "numericExampleCalculationStat": {
                     "name": "Stat A as a percentage of Stat B",
                     "calculation": 'numericStatExampleA / groupSum("numericStatExampleB")',
+                    "groupByOptions": ["location"],
                     "numberFormat": {
                         "precision": 2,
                         "trailingZeros": True,
