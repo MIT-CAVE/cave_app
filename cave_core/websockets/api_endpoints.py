@@ -28,6 +28,15 @@ def get_session_data(request):
     session = request.user.session
     if session == None:
         session = request.user.get_or_create_personal_session()
+    # Let the user know which session they are in
+    utils.broadcasting.ws_broadcast_object(
+        object=request.user,
+        event="localMutation",
+        data={
+            "data_path": ["sessions","session_id"],
+            "data": session.id
+        },
+    )
     # get_changed_data needs to be executed prior to session.versions since it can mutate them
     data = session.get_changed_data(previous_versions=data_versions)
     utils.broadcasting.ws_broadcast_object(

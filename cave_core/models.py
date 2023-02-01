@@ -787,7 +787,7 @@ class Teams(models.Model):
             object=self,
             event="localMutation",
             data={
-                "data_path": ["sessions", "data", self.id],
+                "data_path": ["sessions", "data", str(self.id)],
                 "data": {
                     "teamId": str(self.id),
                     "teamName": str(self.name),
