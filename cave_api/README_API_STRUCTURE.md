@@ -14,7 +14,7 @@ At first glance, the top-level keys in the data structure look like this:
     'geos': {...},
     'kpis': {...},
     'kwargs':{...},
-    'map': {...},
+    'maps': {...},
     'nodes': {...},
     'panes': {...},
     'settings': {...},
