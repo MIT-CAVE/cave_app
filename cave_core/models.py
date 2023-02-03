@@ -133,7 +133,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers
-        self.error_on_no_team_access(session.team)
+        self.error_on_no_team_access(session.team.id)
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
 
@@ -147,7 +147,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers
-        self.error_on_no_team_access(session.team)
+        self.error_on_no_team_access(session.team.id)
         # Validate session limit
         session.team.error_on_session_limit()
         # Queries -> Duplicates this session and session data
@@ -180,7 +180,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers (only if a team session)
-        self.error_on_no_team_access(session.team)
+        self.error_on_no_team_access(session.team.id)
         session.name = session_name
         session.description = session_description
         session.save(update_fields=["name", "description"])
@@ -280,7 +280,7 @@ class CustomUser(AbstractUser):
     # Access Utils
     #############################################
     def error_on_no_team_access(self, team_id):
-        if (team_id.id not in self.get_team_ids()) and (not self.is_staff):
+        if (team_id not in self.get_team_ids()) and (not self.is_staff):
             raise Exception("Oops! You do not have access to data from the specified team.")
 
     def error_on_no_access(self):
