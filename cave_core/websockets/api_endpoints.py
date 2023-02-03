@@ -2,7 +2,7 @@
 from cave_core import models, utils
 
 # Websocket API Command Endpoints
-@utils.wrapping.async_api_app_ws
+@utils.wrapping.ws_api_app
 @utils.wrapping.cache_data_version
 def get_session_data(request):
     """
@@ -26,17 +26,15 @@ def get_session_data(request):
     data_versions = request.data.get("data_versions", {})
     # Session validation
     session = request.user.session
+
     if session == None:
+        # Create a session and broadcast it to the user
         session = request.user.get_or_create_personal_session()
-    # Let the user know which session they are in
-    utils.broadcasting.ws_broadcast_object(
-        object=request.user,
-        event="localMutation",
-        data={
-            "data_path": ["sessions","session_id"],
-            "data": session.id
-        },
-    )
+    else:
+        # Let the user know which session they are in
+        request.user.broadcast_current_session_id()
+        # Let the user know if their session is loading
+        request.user.broadcast_current_session_loading()
     # get_changed_data needs to be executed prior to session.versions since it can mutate them
     data = session.get_changed_data(previous_versions=data_versions)
     utils.broadcasting.ws_broadcast_object(
@@ -47,7 +45,7 @@ def get_session_data(request):
     )
 
 
-@utils.wrapping.async_api_app_ws
+@utils.wrapping.ws_api_app
 def mutate_session(request):
     """
     API endpoint to mutate session data
@@ -179,10 +177,11 @@ def mutate_session(request):
                 event="mutation",
                 versions=session_i.versions,
                 data=mutate_dict,
+                loading=False,
             )
 
 
-@utils.wrapping.async_api_app_ws
+@utils.wrapping.ws_api_app
 def get_associated_session_data(request):
     """
     API endpoint to generate associated data and push it out to the current session
@@ -213,16 +212,13 @@ def get_associated_session_data(request):
         session__in=associated_sessions, data_name__in=data_names
     )
     # Associated Data
-    if request.user.is_staff:
-        associated = {
-            obj.id: {
-                "name": obj.team.group.name
-                if obj.team.group is not None
-                else "Personal" + " -> " + obj.team.name + " -> " + obj.name,
-                "data": {},
-            }
-            for obj in associated_sessions
+    associated = {
+        obj.id: {
+            "name": obj.team.name + " -> " + obj.name,
+            "data": {},
         }
+        for obj in associated_sessions
+    }
     for obj in session_data:
         associated[obj.session.id]["data"][obj.data_name] = obj.get_data()
 
@@ -245,7 +241,7 @@ def get_associated_session_data(request):
     )
 
 
-@utils.wrapping.async_api_app_ws
+@utils.wrapping.ws_api_app
 def session_management(request):
     """
     API endpoint handle session management

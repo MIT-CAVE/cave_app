@@ -100,6 +100,7 @@ class CustomUser(AbstractUser):
             prev_session.update_user_ids()
         # Query all session data:
         # Note: get_changed_data needs to be executed prior to calling session.versions since it can mutate them
+        # Note: Previous versions should always be empty when switching sessions since versions are incremental and have collisions
         data = session.get_changed_data(previous_versions={})
         utils.broadcasting.ws_broadcast_object(
             object=self,
@@ -107,7 +108,8 @@ class CustomUser(AbstractUser):
             versions=session.versions,
             data=data,
         )
-        session.broadcast_session_info()
+        self.broadcast_current_session_id()
+        self.broadcast_current_session_loading()
 
     @type_enforced.Enforcer
     def create_session(self, session_name: str, team_id: [int, str], session_description: str = ""):
@@ -131,7 +133,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers
-        self.error_on_no_team_access(session.team)
+        self.error_on_no_team_access(session.team.id)
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
 
@@ -145,7 +147,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers
-        self.error_on_no_team_access(session.team)
+        self.error_on_no_team_access(session.team.id)
         # Validate session limit
         session.team.error_on_session_limit()
         # Queries -> Duplicates this session and session data
@@ -178,7 +180,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers (only if a team session)
-        self.error_on_no_team_access(session.team)
+        self.error_on_no_team_access(session.team.id)
         session.name = session_name
         session.description = session_description
         session.save(update_fields=["name", "description"])
@@ -250,11 +252,35 @@ class CustomUser(AbstractUser):
             return team_sessions[0]
         return self.create_session(session_name=f"Initial Session", team_id=team.id)
 
+    def broadcast_current_session_id(self):
+        """
+        Let the user know which session they are currently in
+        """
+        utils.broadcasting.ws_broadcast_object(
+            object=self,
+            event="updateSessions",
+            data={"data_path": ["session_id"], "data": self.session.id},
+            loading=False,
+        )
+
+    def broadcast_current_session_loading(self):
+        """
+        Let the user know if the session is loading
+        """
+        utils.broadcasting.ws_broadcast_object(
+            object=self,
+            event="updateLoading",
+            data={
+                "data_path": ["session_loading"],
+                "data": self.session.loading,
+            },
+            loading=False,
+        )
     #############################################
     # Access Utils
     #############################################
     def error_on_no_team_access(self, team_id):
-        if (team_id not in self.get_team_ids()) and (not self.is_staff):
+        if (int(team_id) not in self.get_team_ids()) and (not self.is_staff):
             raise Exception("Oops! You do not have access to data from the specified team.")
 
     def error_on_no_access(self):
@@ -780,14 +806,14 @@ class Teams(models.Model):
     def get_sessions(self):
         return Sessions.objects.filter(team=self)
 
-    def update_sessions_list(self):
+    def update_sessions_list(self, broadcast=False):
         sessions = self.get_sessions()
         self.set_session_count(len(sessions))
         utils.broadcasting.ws_broadcast_object(
             object=self,
-            event="localMutation",
+            event="updateSessions",
             data={
-                "data_path": ["sessions", "data", str(self.id)],
+                "data_path": ["data", str(self.id)],
                 "data": {
                     "teamId": str(self.id),
                     "teamName": str(self.name),
@@ -803,6 +829,7 @@ class Teams(models.Model):
                     },
                 },
             },
+            loading=False,
         )
 
     # Metadata
@@ -1095,28 +1122,40 @@ class Sessions(models.Model):
             raise Exception("Oops! That session still has users in it.")
 
     def set_loading(self, loading):
+        # Let the user know the updated loading state
+        utils.broadcasting.ws_broadcast_object(
+            object=self,
+            event="updateLoading",
+            data={
+                "data_path": ["session_loading"],
+                "data": loading,
+            },
+            loading=False,
+        )
+        # If the session is currently loading and the user is requesting something that would require loading, block any changes
         if self.loading and loading:
+            self.__dict__['__process_blocked_for_loading__']=True
             raise Exception(
-                "Oops! This session is locked while long running request is being processed."
+                "Oops! This session is currently loading. Please wait until it is finished loading before making changes."
             )
+        # Update the loading state only if it is changing
         if loading != self.loading:
             self.loading = loading
             self.save(update_fields=["loading"])
-            self.broadcast_session_info()
 
-    def broadcast_session_info(self):
-        utils.broadcasting.ws_broadcast_object(
-            object=self,
-            event="localMutation",
-            data={
-                "data_path": ["sessions"],
-                "data": {
-                    "session_id": self.id,
-                    "session_loading": self.loading,
-                },
-            },
-        )
-
+    def save(self, *args, **kwargs):
+        """
+        Special post save event to update the team's session list
+        - Note: Only applies when an update field is not specified
+        """
+        super(Sessions, self).save(*args, **kwargs)
+        try:
+            if kwargs.get('update_fields') is None:
+                self.team.update_sessions_list()
+        except:
+            pass
+            
+    
     @staticmethod
     def error_on_invalid_name(name):
         if name == None or len(str(name)) < 1:
@@ -1266,11 +1305,10 @@ class SessionData(models.Model):
 
 
 # Signals
-@receiver(post_save, sender=Sessions, dispatch_uid="update_team_session_list_on_save")
 @receiver(post_delete, sender=Sessions, dispatch_uid="update_team_session_list_on_delete")
 def update_sessions_list_for_team(sender, instance, **kwargs):
     """
-    When a session object is changed, update the sessions list for the associated session team
+    When a session object is deleted, update the sessions list for the associated session team
     """
     instance.team.update_sessions_list()
 

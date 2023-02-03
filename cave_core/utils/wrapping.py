@@ -1,5 +1,4 @@
 # Framework Imports
-from channels.db import database_sync_to_async
 from django.conf import settings
 from django.core.cache import cache
 from rest_framework.response import Response
@@ -69,9 +68,9 @@ def cache_data_version(fn):
     return wrap
 
 
-def async_api_app_ws(fn):
+def ws_api_app(fn):
     """
-    API view wrapper to process websocket api app calls asynchronously and handle exceptions that are raised sending them back to the end user.
+    API view wrapper to process websocket api app calls and handle exceptions that are raised sending them back to the end user.
     """
 
     @wraps(fn)
@@ -84,6 +83,7 @@ def async_api_app_ws(fn):
             traceback_str = format_exception(e)
             if settings.DEBUG:
                 print(traceback_str)
+            # Notify the user of the exception
             utils.broadcasting.ws_broadcast_object(
                 object=session,
                 event="message",
@@ -94,8 +94,10 @@ def async_api_app_ws(fn):
                     "duration": 30,
                     "traceback": traceback_str,
                 },
+                loading=False,
             )
-            # Stop any loading that might exist for the session
-            session.set_loading(False)
-
-    return database_sync_to_async(wrap)
+            # Stop any loading that might exist for the session unless a loading error was raised
+            if session is not None:
+                if not session.__dict__.get("__process_blocked_for_loading__", False):
+                    session.set_loading(False)
+    return wrap
