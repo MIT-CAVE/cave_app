@@ -280,7 +280,7 @@ class CustomUser(AbstractUser):
     # Access Utils
     #############################################
     def error_on_no_team_access(self, team_id):
-        if (team_id not in self.get_team_ids()) and (not self.is_staff):
+        if (int(team_id) not in self.get_team_ids()) and (not self.is_staff):
             raise Exception("Oops! You do not have access to data from the specified team.")
 
     def error_on_no_access(self):
