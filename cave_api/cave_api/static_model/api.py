@@ -1,3 +1,5 @@
+import time
+
 def execute_command(session_data, command="init"):
     """
     Usage:
@@ -1601,7 +1603,6 @@ def execute_command(session_data, command="init"):
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")
         print ("Starting some long running process...")
-        import time
         time.sleep(10)
         print("Solve completed!")
     elif command == "test":

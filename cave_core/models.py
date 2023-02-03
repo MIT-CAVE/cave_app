@@ -100,6 +100,7 @@ class CustomUser(AbstractUser):
             prev_session.update_user_ids()
         # Query all session data:
         # Note: get_changed_data needs to be executed prior to calling session.versions since it can mutate them
+        # Note: Previous versions should always be empty when switching sessions since versions are incremental and have collisions
         data = session.get_changed_data(previous_versions={})
         utils.broadcasting.ws_broadcast_object(
             object=self,
@@ -108,6 +109,7 @@ class CustomUser(AbstractUser):
             data=data,
         )
         self.broadcast_current_session_id()
+        self.broadcast_current_session_loading()
 
     @type_enforced.Enforcer
     def create_session(self, session_name: str, team_id: [int, str], session_description: str = ""):
@@ -260,11 +262,25 @@ class CustomUser(AbstractUser):
             data={"data_path": ["session_id"], "data": self.session.id},
             loading=False,
         )
+
+    def broadcast_current_session_loading(self):
+        """
+        Let the user know if the session is loading
+        """
+        utils.broadcasting.ws_broadcast_object(
+            object=self,
+            event="updateLoading",
+            data={
+                "data_path": ["session_loading"],
+                "data": self.session.loading,
+            },
+            loading=False,
+        )
     #############################################
     # Access Utils
     #############################################
     def error_on_no_team_access(self, team_id):
-        if (team_id not in self.get_team_ids()) and (not self.is_staff):
+        if (team_id.id not in self.get_team_ids()) and (not self.is_staff):
             raise Exception("Oops! You do not have access to data from the specified team.")
 
     def error_on_no_access(self):
@@ -1106,24 +1122,26 @@ class Sessions(models.Model):
             raise Exception("Oops! That session still has users in it.")
 
     def set_loading(self, loading):
-        # if self.loading and loading:
-        #     raise Exception(
-        #         "Oops! This session is locked while long running request is being processed."
-        #     )
-        # TODO: Block sessions from having changes while loading
-        # TODO: Ensure that loading is set if joining a session that is loading
+        # Let the user know the updated loading state
+        utils.broadcasting.ws_broadcast_object(
+            object=self,
+            event="updateLoading",
+            data={
+                "data_path": ["session_loading"],
+                "data": loading,
+            },
+            loading=False,
+        )
+        # If the session is currently loading and the user is requesting something that would require loading, block any changes
+        if self.loading and loading:
+            self.__dict__['__process_blocked_for_loading__']=True
+            raise Exception(
+                "Oops! This session is currently loading. Please wait until it is finished loading before making changes."
+            )
+        # Update the loading state only if it is changing
         if loading != self.loading:
             self.loading = loading
             self.save(update_fields=["loading"])
-            utils.broadcasting.ws_broadcast_object(
-                object=self,
-                event="updateLoading",
-                data={
-                    "data_path": ["session_loading"],
-                    "data": self.loading,
-                },
-                loading=False,
-            )
 
     def save(self, *args, **kwargs):
         """

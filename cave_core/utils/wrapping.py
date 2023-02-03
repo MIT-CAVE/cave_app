@@ -83,6 +83,7 @@ def ws_api_app(fn):
             traceback_str = format_exception(e)
             if settings.DEBUG:
                 print(traceback_str)
+            # Notify the user of the exception
             utils.broadcasting.ws_broadcast_object(
                 object=session,
                 event="message",
@@ -95,7 +96,8 @@ def ws_api_app(fn):
                 },
                 loading=False,
             )
-            # Stop any loading that might exist for the session
+            # Stop any loading that might exist for the session unless a loading error was raised
             if session is not None:
-                session.set_loading(False)
+                if not session.__dict__.get("__process_blocked_for_loading__", False):
+                    session.set_loading(False)
     return wrap

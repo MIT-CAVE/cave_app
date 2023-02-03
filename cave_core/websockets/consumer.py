@@ -41,7 +41,7 @@ class WebsocketConsumer(WSConsumer):
         """
         async_to_sync(self.channel_layer.group_discard)(self.user_id, self.channel_name)
 
-    # Broadcast app messages to clients
+    # Broadcast loading wrapped app messages to clients
     def loadingbroadcast(self, event):
         """
         Broadcast app messages to clients and add syncronous data loading messages

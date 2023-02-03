@@ -33,6 +33,8 @@ def get_session_data(request):
     else:
         # Let the user know which session they are in
         request.user.broadcast_current_session_id()
+        # Let the user know if their session is loading
+        request.user.broadcast_current_session_loading()
     # get_changed_data needs to be executed prior to session.versions since it can mutate them
     data = session.get_changed_data(previous_versions=data_versions)
     utils.broadcasting.ws_broadcast_object(
