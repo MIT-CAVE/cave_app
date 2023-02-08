@@ -36,8 +36,8 @@ Let's look inside the structure of `geos`:
                     },
                 },
                 "customPropKey3": {
-                  "customColorKey1":"rgb(233,0,0)",
-                  "customColorKey2":"rgb(0,233,0)"
+                  "customColorKey1": "rgb(233,0,0)",
+                  "customColorKey2": "rgb(0,233,0)"
                 }
             },
             "colorBy": "customPropKey1",
