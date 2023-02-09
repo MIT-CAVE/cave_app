@@ -48,8 +48,8 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         "name": "A name to be displayed in the UI",
         "type": "date",
         "variant": "datetime",
-        "value": "2019-06-11T09:10:00",
-        "views": {['year', 'month', 'day', 'hours', 'minutes']},
+        "value": "2019-06-11T09:10:04",
+        "views": {["year", "month", "day", "hours", "minutes", "seconds"]},
         "help": "A help text for the date and time",
     },
     # As many props as needed
@@ -69,7 +69,7 @@ Key | Default | Description
 <a name="label">`customPropKey*.label`</a> | | A label that is displayed in the UI next to the `customPropKey*` element.
 <a name="max-value">`customPropKey*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
 <a name="min-value">`customPropKey*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
-<a name="views">`customPropKey*.views`</a> | `["year", "month", "day", "hours", "minutes", "seconds"]` | Used with a `'date'` prop, defines the available time units of the date and/or time. The views will be presented in the order specified in the `views` array.
+<a name="views">`customPropKey*.views`</a> | `["year", "day", "hours", "minutes"]` | Used with a `'date'` prop, defines the available time units of the date and/or time. The views will be presented in the order specified in the `views` array.
 <a name="options">`customPropKey*.options`</a> | Required | Used along a `'selector'` prop, it takes an object containing the [`custom_option_*`](#custom_option_)s to be displayed on the UI element mapped to their display properties.
 <a name="custom_option_">`customPropKey*.options.custom_option_*`</a> | | Used along a `'selector'` prop, it takes an object containing the name of the option to be displayed on the UI element.
 <a name="prop-type">`customPropKey*.type`</a> | Required | As a direct child of `customPropKey*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, `'button'`, or `'selector'`.
