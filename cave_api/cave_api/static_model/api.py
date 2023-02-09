@@ -1,5 +1,6 @@
 import time
 
+
 def execute_command(session_data, command="init"):
     """
     Usage:
@@ -31,48 +32,42 @@ def execute_command(session_data, command="init"):
             "sendToApi": False,
             "sendToClient": True,
             "data": {
-            "sync": {
-                "appBar": {
-                    "name": "App Bar",
-                    "showToggle": True,
-                    "value": False,
-                    "data": {
-                        "ab1": ["appBar", "data", "dashboardId"],
-                        "ab2": ["appBar", "paneState"]
-                    }
-                },
-                "pageSelection": {
-                    "name": "Page Selection",
-                    "showToggle": True,
-                    "value": False,
-                    "data": {
-                        "ps1": ["appBar", "data", "appBarId"]
+                "sync": {
+                    "appBar": {
+                        "name": "App Bar",
+                        "showToggle": True,
+                        "value": False,
+                        "data": {
+                            "ab1": ["appBar", "data", "dashboardId"],
+                            "ab2": ["appBar", "paneState"],
+                        },
+                    },
+                    "pageSelection": {
+                        "name": "Page Selection",
+                        "showToggle": True,
+                        "value": False,
+                        "data": {"ps1": ["appBar", "data", "appBarId"]},
+                    },
+                    "mapLayers": {
+                        "name": "Map Layers",
+                        "showToggle": True,
+                        "value": False,
+                        "data": {"ml1": ["map", "data", "map1", "legendGroups"]},
+                    },
+                    "dashboards": {
+                        "name": "Dashboards",
+                        "showToggle": True,
+                        "value": False,
+                        "data": {"db1": ["dashboards", "data"]},
                     },
                 },
-                "mapLayers":{
-                    "name": "Map Layers",
-                    "showToggle": True,
-                    "value": False,
-                    "data":{
-                        "ml1": ["map", "data", "map1", "legendGroups"]
-                    }
+                "iconUrl": "https://react-icons.mitcave.com/0.0.1",
+                "numberFormat": {
+                    "precision": 4,
+                    "trailingZeros": False,
+                    "unitSpace": True,
                 },
-                "dashboards": {
-                    "name": "Dashboards",
-                    "showToggle": True,
-                    "value": False,
-                    "data": {
-                        "db1": ["dashboards", "data"]
-                    },
-                },
-            },
-            "iconUrl": "https://react-icons.mitcave.com/0.0.1",
-            "numberFormat": {
-                "precision": 4,
-                "trailingZeros": False,
-                "unitSpace": True,
-            },
-            "debug": True,
+                "debug": True,
             },
         },
         "categories": {
@@ -365,10 +360,39 @@ def execute_command(session_data, command="init"):
                             "enabled": True,
                             "help": "Select one item from the list",
                         },
+                        "dateTimeHeader": {
+                            "name": "Date and Time Props",
+                            "type": "head",
+                            "help": "Some help for Date and Time Props",
+                        },
+                        "dateItemExample": {
+                            "name": "Date Example",
+                            "type": "date",
+                            "variant": "date",
+                            "value": "07/20/1969",
+                            "enabled": True,
+                            "help": "The Eagle has landed!",
+                        },
+                        "timeItemExample": {
+                            "name": "Time Example",
+                            "type": "date",
+                            "variant": "time",
+                            "value": "1969-07-20T20:17:40",
+                            "enabled": True,
+                            "help": "The Eagle has landed!",
+                        },
+                        "dateTimeItemExample": {
+                            "name": "Date and Time Example",
+                            "type": "date",
+                            "variant": "datetime",
+                            "value": "1969-07-20T20:17:40",
+                            "enabled": True,
+                            "help": "The Eagle has landed!",
+                        },
                     },
                     "layout": {
                         "type": "grid",
-                        "numColumns": 4,
+                        "numColumns": 5,
                         "numRows": "auto",
                         "data": {
                             "col1Row1": {
@@ -448,6 +472,30 @@ def execute_command(session_data, command="init"):
                                 "column": 4,
                                 "row": 4,
                                 "itemId": "radioItemExample",
+                            },
+                            "col5Row1": {
+                                "type": "item",
+                                "column": 5,
+                                "row": 1,
+                                "itemId": "dateTimeHeader",
+                            },
+                            "col5Row2": {
+                                "type": "item",
+                                "column": 5,
+                                "row": 2,
+                                "itemId": "dateItemExample",
+                            },
+                            "col5Row3": {
+                                "type": "item",
+                                "column": 5,
+                                "row": 3,
+                                "itemId": "timeItemExample",
+                            },
+                            "col5Row4": {
+                                "type": "item",
+                                "column": 5,
+                                "row": 4,
+                                "itemId": "dateTimeItemExample",
                             },
                         },
                     },
@@ -1602,7 +1650,7 @@ def execute_command(session_data, command="init"):
         return example
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")
-        print ("Starting some long running process...")
+        print("Starting some long running process...")
         time.sleep(10)
         print("Solve completed!")
     elif command == "test":
