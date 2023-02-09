@@ -8,7 +8,7 @@ from functools import wraps
 import traceback
 
 # Internal Imports
-from cave_core import utils
+from cave_core.utils.broadcasting import Messenger
 
 
 def format_exception(e):
@@ -84,17 +84,13 @@ def ws_api_app(fn):
             if settings.DEBUG:
                 print(traceback_str)
             # Notify the user of the exception
-            utils.broadcasting.ws_broadcast_object(
-                object=session,
-                event="message",
-                data={
-                    "snackbarShow": True,
-                    "snackbarType": "warning",
-                    "message": str(e),
-                    "duration": 30,
-                    "traceback": traceback_str,
-                },
-                loading=False,
+            Messenger(session).send(
+                message=str(e),
+                title="Error:",
+                show=True,
+                color="error",
+                duration=10,
+                traceback=traceback_str,
             )
             # Stop any loading that might exist for the session unless a loading error was raised
             if session is not None:

@@ -141,14 +141,11 @@ def mutate_session(request):
                 # In the case of a synch_error broadcast a version fix to the user
                 # and break from any more session work
                 if response.get("synch_error"):
-                    utils.broadcasting.ws_broadcast_object(
-                        object=request.user,
-                        event="message",
-                        data={
-                            "message": "Oops! You are out of sync. Fix in progress...",
-                            "duration": 5,
-                            "traceback": "",
-                        },
+                    utils.broadcasting.Messenger(request.user).send(
+                        message="Oops! You are out of sync. Fix in progress...",
+                        title="Warning:",
+                        color="warning",
+                        duration=5
                     )
                     # get_changed_data needs to be executed prior to session.versions since it can mutate them
                     data = session_i.get_changed_data(data_versions)

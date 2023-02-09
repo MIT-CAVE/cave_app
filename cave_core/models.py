@@ -1012,7 +1012,8 @@ class Sessions(models.Model):
         else:
             data_queryset = data_queryset.filter(sendToApi=True)
         session_data = {i.data_name: i.get_data() for i in data_queryset}
-        command_output = execute_command(session_data=session_data, command=command)
+        messenger = utils.broadcasting.Messenger(model_object=self)
+        command_output = execute_command(session_data=session_data, command=command, messenger=messenger)
         kwargs = command_output.pop("kwargs", {})
         self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
         self.set_loading(False)
