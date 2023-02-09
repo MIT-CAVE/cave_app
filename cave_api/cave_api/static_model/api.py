@@ -1,7 +1,6 @@
 import time
 
-
-def execute_command(session_data, command="init"):
+def execute_command(session_data, messenger, command="init", **kwargs):
     """
     Usage:
     - Execute a command to mutate the current session_data
@@ -1650,9 +1649,22 @@ def execute_command(session_data, command="init"):
         return example
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")
-        print("Starting some long running process...")
-        time.sleep(10)
-        print("Solve completed!")
+        time.sleep(3)
+        messenger.send("Priming Thrusters...", title="Initialization", color="info", duration=3)
+        time.sleep(3)
+        messenger.send("Ignition...", title="Initialization", color="info")
+        time.sleep(3)
+        messenger.send("Leak detected in primary power core!", title="Warning:", color="warning")
+        time.sleep(3)
+        messenger.send("Engine Failure!", title="Error:", color="error")
+        time.sleep(3)
+        messenger.send("Recalibrating Gravitons!", title="Attempting Fix:", color="warning")
+        time.sleep(3)
+        messenger.send("Fix Succeded!", title="Attempting Fix:", color="success")
+        time.sleep(3)
+        messenger.send("All Systems Normal!", title="Status:", color="info")
+        time.sleep(3)
+        messenger.send("Liftoff Achieved!", title="Status:", color="success")
     elif command == "test":
         print("The `test` button has been pressed by the user!")
         raise Exception("Test Exception!")
