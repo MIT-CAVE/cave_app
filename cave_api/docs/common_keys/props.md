@@ -43,6 +43,15 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         },
         "help": "A help text for the dropdown selector",
     },
+    "customPropKey5": {
+        "enabled": True,
+        "name": "A name to be displayed in the UI",
+        "type": "date",
+        "variant": "datetime",
+        "value": "2019-06-11T09:10:04",
+        "views": {["year", "month", "day", "hours", "minutes", "seconds"]},
+        "help": "A help text for the date and time",
+    },
     # As many props as needed
 }
 ```
@@ -60,6 +69,7 @@ Key | Default | Description
 <a name="label">`customPropKey*.label`</a> | | A label that is displayed in the UI next to the `customPropKey*` element.
 <a name="max-value">`customPropKey*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
 <a name="min-value">`customPropKey*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
+<a name="views">`customPropKey*.views`</a> | `["year", "day", "hours", "minutes"]` | Used with a `'date'` prop, defines the available time units of the date and/or time. The views will be presented in the order specified in the `views` array.
 <a name="options">`customPropKey*.options`</a> | Required | Used along a `'selector'` prop, it takes an object containing the [`custom_option_*`](#custom_option_)s to be displayed on the UI element mapped to their display properties.
 <a name="custom_option_">`customPropKey*.options.custom_option_*`</a> | | Used along a `'selector'` prop, it takes an object containing the name of the option to be displayed on the UI element.
 <a name="prop-type">`customPropKey*.type`</a> | Required | As a direct child of `customPropKey*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, `'button'`, or `'selector'`.
@@ -94,6 +104,13 @@ Allows end users to select options from a set. This `type` requires an array of 
 `'dropdown'`: Allows a compact way to display multiple options. The options appear upon interaction with an element (such as an icon or button) or when the user performs a specific action.<br>
 `'radio'`: Allows the user to select one option from a set of mutually exclusive options.<br><br>
 Since multiple selection is possible in the `'checkbox'` variant, one or more options in [`value`](#value) can be specified as a [`custom_option_*`](#custom_option_) key or [`custom_option_*`](#custom_option_) key array, respectively, while in the `dropdown` and `radio` variants, only one option is allowed to be present.
+
+### `'date'`
+Allows users to select a date and/or time. This `type` requires an [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) formatted string for its [`value`](#value) key. In addition, a `variant` must be specified.
+#### Variants:
+>`'date'`: Allows to select a date by clicking on a text field displaying it, which opens a calendar pop-up.<br>
+`'time'`: Allows to select a time by clicking on a text field displaying it, which opens a clock pop-up.<br>
+`'datetime'`: Select date and time by clicking on the text field displaying them, which opens a pop-up with calendar and clock tabs.<br>
 
 ## Default `props` values and overriding
 Very often, the `props` elements specified in [`arcs`](../all_keys/arcs.md), [`nodes`](../all_keys/nodes.md), and [`geos`](../all_keys/geos.md) are the same for a large number of items at the _data-point level_ ([customArcData*](../all_keys/arcs.md#arc-data-point), [customNodeData*](../all_keys/nodes.md#node-data-point) or [customGeoData*](../all_keys/geos.md#geo-data-point)). To reduce the overhead caused by duplicate `props` items and achieve a more lightweight data structure, it is possible to define a `props` dictionary at the _type level_ ([customArcType*](../all_keys/arcs.md#arc-type), [customNodeType*](../all_keys/nodes.md#node-type), or [customGeoType*](../all_keys/geos.md#geo-type)) so that a prop can be reused and overridden at the data-point level. In this case, two `props` items match by sharing the same [custom prop key](#customPropKey). The resulting prop from this match is a union of key-value pairs, where if a key exists in both `props` items, the value at the data-point level will be used.

@@ -32,7 +32,10 @@ The structure of a `nodes` group looks as follows:
                         "light": "rgb(23, 23, 126)",
                     },
                 },
-                "customPropKey3": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"},
+                "customPropKey3": {
+                    "false": "rgb(255,0,0)",
+                    "true": "rgb(0,255,0)"
+                },
             },
             "minSizeRange": 0,
             "sizeByOptions": {
@@ -169,7 +172,10 @@ Key | Default | Description
                         "light": "rgb(23, 23, 126)",
                     },
                 },
-                "booleanPropExample": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"},
+                "booleanPropExample": {
+                    "false": "rgb(255,0,0)",
+                    "true": "rgb(0,255,0)"
+                },
             },
             "minSizeRange": 0,
             "sizeByOptions": {
@@ -234,7 +240,10 @@ Key | Default | Description
                         "light": "rgb(23, 23, 126)",
                     },
                 },
-                "booleanPropExample": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"},
+                "booleanPropExample": {
+                    "false": "rgb(233, 0, 0)",
+                    "true": "rgb(0, 233, 0)"
+                },
             },
             "sizeByOptions": {
                 "numericPropExampleA": {"min": 0, "max": 100},
