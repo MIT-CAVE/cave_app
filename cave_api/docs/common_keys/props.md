@@ -46,6 +46,20 @@ We dedicate a section to the `props` group, as it handles all of the user input 
     "customPropKey5": {
         "enabled": True,
         "name": "A name to be displayed in the UI",
+        "type": "selector",
+        "variant": "combobox",
+        "placeholder": "Custom Option",
+        "value": ["custom_option_2"],
+        "options": {
+            "custom_option_1": {"name": "Custom Option 1"},
+            "custom_option_2": {"name": "Custom Option 2"},
+            "custom_option_3": {"name": "Custom Option 3"},
+        },
+        "help": "Select an option from the combobox",
+    },
+    "customPropKey6": {
+        "enabled": True,
+        "name": "A name to be displayed in the UI",
         "type": "date",
         "variant": "datetime",
         "value": "2019-06-11T09:10:04",
@@ -69,6 +83,7 @@ Key | Default | Description
 <a name="label">`customPropKey*.label`</a> | | A label that is displayed in the UI next to the `customPropKey*` element.
 <a name="max-value">`customPropKey*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
 <a name="min-value">`customPropKey*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
+<a name="`placeholder">`customPropKey*.placeholder`</a> | | When used with a `'combobox'` variant, this displays a label that acts as help text when the field is empty or above the field when it contains a value.
 <a name="views">`customPropKey*.views`</a> | `["year", "day", "hours", "minutes"]` | Used with a `'date'` prop, defines the available time units of the date and/or time. The views will be presented in the order specified in the `views` array.
 <a name="options">`customPropKey*.options`</a> | Required | Used along a `'selector'` prop, it takes an object containing the [`custom_option_*`](#custom_option_)s to be displayed on the UI element mapped to their display properties.
 <a name="custom_option_">`customPropKey*.options.custom_option_*`</a> | | Used along a `'selector'` prop, it takes an object containing the name of the option to be displayed on the UI element.
@@ -101,6 +116,7 @@ Does not actually allow users to directly change a value. Instead,this allows us
 Allows end users to select options from a set. This `type` requires an array of dictionary objects for its [`value`](#value) key and a `variant` must be specified.
 #### Variants:
 >`'checkbox'`: Allows the user to select one or more items from a set of checkboxes.<br>
+`'combobox'`: A dropdown with a search bar that allows users to filter options when typing. The options become visible as the user interacts with the element.<br>
 `'dropdown'`: Allows a compact way to display multiple options. The options appear upon interaction with an element (such as an icon or button) or when the user performs a specific action.<br>
 `'radio'`: Allows the user to select one option from a set of mutually exclusive options.<br><br>
 Since multiple selection is possible in the `'checkbox'` variant, one or more options in [`value`](#value) can be specified as a [`custom_option_*`](#custom_option_) key or [`custom_option_*`](#custom_option_) key array, respectively, while in the `dropdown` and `radio` variants, only one option is allowed to be present.

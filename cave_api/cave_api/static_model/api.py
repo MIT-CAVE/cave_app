@@ -359,6 +359,20 @@ def execute_command(session_data, messenger, command="init", **kwargs):
                             "enabled": True,
                             "help": "Select one item from the list",
                         },
+                        "comboBoxItemExample": {
+                            "name": "ComboBox Item Example",
+                            "type": "selector",
+                            "variant": "combobox",
+                            "value": ["option_b"],
+                            "placeholder": "Option",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "enabled": True,
+                            "help": "Select an option from the combobox",
+                        },
                         "dateTimeHeader": {
                             "name": "Date and Time Props",
                             "type": "head",
@@ -471,6 +485,12 @@ def execute_command(session_data, messenger, command="init", **kwargs):
                                 "column": 4,
                                 "row": 4,
                                 "itemId": "radioItemExample",
+                            },
+                            "col4Row5": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 5,
+                                "itemId": "comboBoxItemExample",
                             },
                             "col5Row1": {
                                 "type": "item",
