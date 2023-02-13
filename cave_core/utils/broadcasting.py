@@ -37,7 +37,7 @@ class Messenger:
         self.event = event
         self.loading = loading
 
-    # @type_enforced.Enforcer
+    @type_enforced.Enforcer
     def send(self, message:str, title:str="", show:bool=True, color:str="info", duration:int=10, **kwargs):
         color_list = ["primary", "secondary", "error", "warning", "info", "success"]
         if color not in color_list:
