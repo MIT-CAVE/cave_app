@@ -1367,7 +1367,7 @@ example = {
 }
 
 
-def execute_command(session_data, messenger, command="init", **kwargs):
+def execute_command(session_data, socket, command="init", **kwargs):
     """
     Usage:
     - Execute a command to mutate the current session_data

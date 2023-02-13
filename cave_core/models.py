@@ -12,7 +12,7 @@ from pamda import pamda
 import type_enforced
 
 # Internal Imports
-from cave_core import utils
+from cave_core.utils.broadcasting import Socket
 from cave_api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
@@ -102,8 +102,7 @@ class CustomUser(AbstractUser):
         # Note: get_changed_data needs to be executed prior to calling session.versions since it can mutate them
         # Note: Previous versions should always be empty when switching sessions since versions are incremental and have collisions
         data = session.get_changed_data(previous_versions={})
-        utils.broadcasting.ws_broadcast_object(
-            object=self,
+        Socket(self).broadcast(
             event="overwrite",
             versions=session.versions,
             data=data,
@@ -227,7 +226,7 @@ class CustomUser(AbstractUser):
         """
         Used to get the current user id in a list by itself.
 
-        Required by ws_broadcast_object for generic functionaility.
+        Required by Socket for generic functionaility.
         """
         return [self.id]
 
@@ -256,8 +255,7 @@ class CustomUser(AbstractUser):
         """
         Let the user know which session they are currently in
         """
-        utils.broadcasting.ws_broadcast_object(
-            object=self,
+        Socket(self).broadcast(
             event="updateSessions",
             data={"data_path": ["session_id"], "data": self.session.id},
             loading=False,
@@ -267,8 +265,7 @@ class CustomUser(AbstractUser):
         """
         Let the user know if the session is loading
         """
-        utils.broadcasting.ws_broadcast_object(
-            object=self,
+        Socket(self).broadcast(
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],
@@ -809,8 +806,7 @@ class Teams(models.Model):
     def update_sessions_list(self, broadcast=False):
         sessions = self.get_sessions()
         self.set_session_count(len(sessions))
-        utils.broadcasting.ws_broadcast_object(
-            object=self,
+        Socket(self).broadcast(
             event="updateSessions",
             data={
                 "data_path": ["data", str(self.id)],
@@ -1012,8 +1008,8 @@ class Sessions(models.Model):
         else:
             data_queryset = data_queryset.filter(sendToApi=True)
         session_data = {i.data_name: i.get_data() for i in data_queryset}
-        messenger = utils.broadcasting.Messenger(model_object=self)
-        command_output = execute_command(session_data=session_data, command=command, messenger=messenger)
+        socket = Socket(self)
+        command_output = execute_command(session_data=session_data, command=command, socket=socket)
         kwargs = command_output.pop("kwargs", {})
         self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
         self.set_loading(False)
@@ -1124,8 +1120,7 @@ class Sessions(models.Model):
 
     def set_loading(self, loading):
         # Let the user know the updated loading state
-        utils.broadcasting.ws_broadcast_object(
-            object=self,
+        Socket(self).broadcast(
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],

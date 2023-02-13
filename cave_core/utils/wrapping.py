@@ -8,7 +8,7 @@ from functools import wraps
 import traceback
 
 # Internal Imports
-from cave_core.utils.broadcasting import Messenger
+from cave_core.utils.broadcasting import Socket
 
 
 def format_exception(e):
@@ -84,11 +84,11 @@ def ws_api_app(fn):
             if settings.DEBUG:
                 print(traceback_str)
             # Notify the user of the exception
-            Messenger(session).send(
+            Socket(session).notify(
                 message=str(e),
                 title="Error:",
                 show=True,
-                color="error",
+                theme="error",
                 duration=10,
                 traceback=traceback_str,
             )

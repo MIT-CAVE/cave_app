@@ -49,7 +49,7 @@ class WebsocketConsumer(WSConsumer):
         Note: Broadcast `event`s should always include a `payload` object that is JSON serialized
         """
         # Not async_to_sync since this is already running in an async context
-        # when called by ws_broadcast_object
+        # when called by Socket
         self.send(loading_true)
         self.send(event.get("payload", "{}"))
         self.send(loading_false)
@@ -62,7 +62,7 @@ class WebsocketConsumer(WSConsumer):
         Note: Broadcast `event`s should always include a `payload` object that is JSON serialized
         """
         # Not async_to_sync since this is already running in an async context
-        # when called by ws_broadcast_object
+        # when called by Socket
         self.send(event.get("payload", "{}"))
 
     # Receive app messages from clients

@@ -10,7 +10,8 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import AllowAny
 
 # Internal Imports
-from cave_core import models, utils
+from cave_core import models
+from cave_core.utils.wrapping import api_util_response
 
 # Views
 @api_view()
@@ -26,7 +27,7 @@ def health(request):
 
 @api_view(["GET"])
 @authentication_classes((SessionAuthentication,))
-@utils.wrapping.api_util_response
+@api_util_response
 def custom_pages(request):
     """
     API endpoint to populate custom page dropdown
@@ -51,7 +52,7 @@ def custom_pages(request):
 
 @api_view(["POST"])
 @authentication_classes((SessionAuthentication,))
-@utils.wrapping.api_util_response
+@api_util_response
 def send_email_validation_code(request):
     """
     API endpoint to send a new email validation code to the requesting user's email address

@@ -1,6 +1,6 @@
 import time
 
-def execute_command(session_data, messenger, command="init", **kwargs):
+def execute_command(session_data, socket, command="init", **kwargs):
     """
     Usage:
     - Execute a command to mutate the current session_data
@@ -1670,21 +1670,21 @@ def execute_command(session_data, messenger, command="init", **kwargs):
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")
         time.sleep(3)
-        messenger.send("Priming Thrusters...", title="Initialization", color="info", duration=3)
+        socket.notify("Priming Thrusters...", title="Initialization", theme="info", duration=3)
         time.sleep(3)
-        messenger.send("Ignition...", title="Initialization", color="info")
+        socket.notify("Ignition...", title="Initialization", theme="info")
         time.sleep(3)
-        messenger.send("Leak detected in primary power core!", title="Warning:", color="warning")
+        socket.notify("Leak detected in primary power core!", title="Warning:", theme="warning")
         time.sleep(3)
-        messenger.send("Engine Failure!", title="Error:", color="error")
+        socket.notify("Engine Failure!", title="Error:", theme="error")
         time.sleep(3)
-        messenger.send("Recalibrating Gravitons!", title="Attempting Fix:", color="warning")
+        socket.notify("Recalibrating Gravitons!", title="Attempting Fix:", theme="warning")
         time.sleep(3)
-        messenger.send("Fix Succeded!", title="Attempting Fix:", color="success")
+        socket.notify("Fix Succeded!", title="Attempting Fix:", theme="success")
         time.sleep(3)
-        messenger.send("All Systems Normal!", title="Status:", color="info")
+        socket.notify("All Systems Normal!", title="Status:", theme="info")
         time.sleep(3)
-        messenger.send("Liftoff Achieved!", title="Status:", color="success")
+        socket.notify("Liftoff Achieved!", title="Status:", theme="success")
     elif command == "test":
         print("The `test` button has been pressed by the user!")
         raise Exception("Test Exception!")

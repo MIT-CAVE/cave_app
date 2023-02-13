@@ -8,50 +8,127 @@ import json, type_enforced
 channel_layer = get_channel_layer()
 sync_send = async_to_sync(channel_layer.group_send)
 
+acceptable_events = set([
+    "mutation",
+    "overwrite",
+    "message",
+    "updateSessions",
+    "updateLoading",
+])
 
+theme_list = set(["primary", "secondary", "error", "warning", "info", "success"])
 
-def format_broadcast_payload(event, data, **kwargs):
-    assert event in [
-        "mutation",
-        "overwrite",
-        "message",
-        "updateSessions",
-        "updateLoading",
-    ]
-    assert isinstance(data, dict)
-    return json.dumps({"event": event, "data": data, **kwargs})
-
-
-def ws_broadcast_object(object, event, data, loading=True, **kwargs):
-    """
-    Broadcasts a message to all users related to an object by object.get_user_ids()
-    """
-    payload = format_broadcast_payload(event=event, data=data, **kwargs)
-    broadcast_type = "loadingbroadcast" if loading else "broadcast"
-    for user_id in object.get_user_ids():
-        sync_send(str(user_id), {"type": broadcast_type, "payload": payload})
-
-class Messenger:
-    def __init__(self, model_object, event="message", loading=False):
+class Socket:
+    def __init__(self, model_object):
         self.model_object = model_object
-        self.event = event
-        self.loading = loading
+
+    def format_broadcast_payload(self, event:str, data:dict, **kwargs):
+        """
+        Formats a broadcast payload
+
+        Requires:
+
+        - `event`:
+            - Type: str
+            - What: The event to broadcast
+            - Allowed Values: "mutation", "overwrite", "message", "updateSessions", "updateLoading"
+        - `data`:
+            - Type: dict (json serializable)
+            - What: The data to broadcast
+        - `**kwargs`:
+            - Type: dict (json serializable)
+            - What: Any additional data to serialize into the payload not under its own key in the payload 
+            - Note: This will not be in `data` in the payload
+
+        """
+        if event not in acceptable_events:
+            raise ValueError(f"Invalid Event ('{event}'). Allowed events include: {acceptable_events}")
+        if not isinstance(data, dict):
+            raise TypeError(f"Invalid `data` type ('{type(data)}'). `data` must be a dict.")
+        return json.dumps({"event": event, "data": data, **kwargs})
+
+    def broadcast(self, event:str, data:dict, loading:bool=True, **kwargs):
+        """
+        Broadcasts a message to all users related to an object by object.get_user_ids()
+
+        Requires:
+
+        - `event`:
+            - Type: str
+            - What: The event to broadcast
+            - Allowed Values: "mutation", "overwrite", "message", "updateSessions", "updateLoading"
+        - `data`:
+            - Type: dict
+            - What: The data to broadcast
+        - `loading`:
+            - Type: bool
+            - What: Whether or not to broadcast a loading event before broadcasting this message
+            - Default: True
+            - Note: This is used to allow users to see a loading screen while data is transmitted
+        """
+        payload = self.format_broadcast_payload(event=event, data=data, **kwargs)
+        broadcast_type = "loadingbroadcast" if loading else "broadcast"
+        for user_id in self.model_object.get_user_ids():
+            sync_send(str(user_id), {"type": broadcast_type, "payload": payload})
 
     @type_enforced.Enforcer
-    def send(self, message:str, title:str="", show:bool=True, color:str="info", duration:int=10, **kwargs):
-        color_list = ["primary", "secondary", "error", "warning", "info", "success"]
-        if color not in color_list:
-            raise ValueError(f"Invalid Color. Allowed colors include: {color_list}")
-        ws_broadcast_object(
-            object=self.model_object,
-            event=self.event,
+    def notify(self, message:str, title:str="", show:bool=True, theme:str="info", duration:int=10, **kwargs):
+        """
+        Notify end users with a message
+
+        Requires:
+
+        - `message`:
+            - Type: str
+            - What: The message to display to the user
+
+        Optional:
+
+        - `title`:
+            - Type: str
+            - What: The title of the message
+        - `show`:
+            - Type: bool
+            - What: Whether or not to show the message
+            - Default: True
+        - `theme`:
+            - Type: str
+            - What: The theme of the message
+            - Default: "info"
+            - Allowed Values: "primary", "secondary", "error", "warning", "info", "success"
+        - `duration`:
+            - Type: int
+            - What: The duration in seconds to show the message
+            - Default: 10
+        - `**kwargs`:
+            - Type: dict (json serializable)
+            - What: Any additional data to serialize and pass to the user
+
+        Example:
+
+        ```
+        from cave_core.utils.broadcasting import Socket
+        Socket(request.user.session).notify(
+            message="Hello World!",
+            title="Hello:",
+            show=True,
+            theme="info",
+            duration=10,
+        )
+        ```
+        """
+        if theme not in theme_list:
+            raise ValueError(f"Invalid `theme` ('{theme}'). Allowed `theme`s include: {theme_list}")
+        self.broadcast(
+            event="message",
             data={
+                # TODO: Overhaul this in next breaking change to better reflect the notification system
                 "snackbarShow": show,
-                "snackbarType": color,
+                "snackbarType": theme,
                 "title": title,
                 "message": message,
                 "duration": duration,
                 **kwargs,
             },
-            loading=self.loading,
+            loading=False,
         )
