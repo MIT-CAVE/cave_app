@@ -635,6 +635,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
+                                    "allowGrouping": True,
+                                    # If grouping is on, can only color / size by numeric or boolean values
+                                    "group": True,
+                                    "groupCalcByColor": "sum",
+                                    "groupCalcBySize": "mode",
+                                    # "groupScaleWithZoom": True,
+                                    # Equivalent to zoom level unless groupScale is set
+                                    # "groupScale": 10,
+                                    # Allow group matching only when a category value matches
+                                    # "groupMatchCategory": "location",
+                                    # "groupMatchCategoryLevel": "state",
                                 }
                             },
                             "arcs": {
