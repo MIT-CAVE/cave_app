@@ -1118,7 +1118,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "true": "rgb(0,255,0)",
                         },
                     },
-                    "minSizeRange": 0,
                     "sizeByOptions": {
                         "numericPropExampleA": {"min": 0, "max": 80},
                         "numericPropExampleB": {"min": 0, "max": 50},

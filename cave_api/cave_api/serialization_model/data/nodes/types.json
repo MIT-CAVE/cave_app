@@ -29,7 +29,6 @@
             "booleanPropExample": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"}
         },
         "colorBy": "booleanPropExample",
-        "minSizeRange": 0,
         "sizeByOptions": {
             "numericPropExampleA": {"min": 0, "max": 80},
             "numericPropExampleB": {"min": 0, "max": 50}

@@ -37,7 +37,6 @@ The structure of a `nodes` group looks as follows:
                     "true": "rgb(0,255,0)"
                 },
             },
-            "minSizeRange": 0,
             "sizeByOptions": {
                 "customPropKey1": {"min": 0, "max": 80},
                 "customPropKey2": {"min": 0, "max": 50},
@@ -177,7 +176,6 @@ Key | Default | Description
                     "true": "rgb(0,255,0)"
                 },
             },
-            "minSizeRange": 0,
             "sizeByOptions": {
                 "numericPropExampleA": {"min": 0, "max": 80},
                 "numericPropExampleB": {"min": 0, "max": 50},
