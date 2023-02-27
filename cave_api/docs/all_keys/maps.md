@@ -109,7 +109,16 @@ Key | Default | Description
 `customMapKey.legendGroups.customLegendGroupKey*.geos` | `{}` | A list of all geo types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
 `customMapKey.legendGroups.customLegendGroupKey*.geos.customGeoType*` | `{value: False}` | A [geo type](geos.md#geo-type) that matches the initial state of the toggle within the legend group. The inner `value` key is paired with a boolean indicating whether the geo type should be displayed in the "Map" view or not, while the `order` key follows the standard [`order`](../common_keys/common_keys.md#order)ing convention, allowing to set the display order of the geo type within the legend group. The `colorBy` key set the default coloring prop of the geo type.
 `customMapKey.legendGroups.customLegendGroupKey*.nodes` | `{}` | A dictionary of all node types to include in the legend group. Note that settings (`colorBy`, `sizeBy`) are syncronized across the same type in multiple groups.
-`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*` | `{value: False}` | A [node type](nodes.md#node-type) that matches the initial state of the toggle within the legend group. The inner `value` key is paired with a boolean indicating whether the node type should be displayed in the "Map" view or not, while the `order` key follows the standard [`order`](../common_keys/common_keys.md#order)ing convention, allowing to set the display order of the node type within the legend group. The `colorBy` and `sizeBy` keys set the default coloring and sizing props of the node type.
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*` | `{}` | An object to hold the options related to each custom node type
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.value` | `false` | A boolean value to indicate if this layer should be shown
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.order` | | The [`order`](../common_keys/common_keys.md#order) value that this toggle should appear in the legend group
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.colorBy` | `false` | The prop to used to color this node layer
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.sizeBy` | `false` | The prop to used to size this node layer
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.allowGrouping` | `false` | (BETA Feature) A node specific key to determine if this node layer is able to be auto grouped.
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.allowGrouping` | `false` | (BETA Feature) A node specific key to determine if this node layer is able to be auto grouped.
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.group` | `false` | (BETA Feature) Group the nodes in this layer (to use this you must set `allowGrouping=true`)
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.groupCalcByColor` | `count` | (BETA Feature) The aggregation method to use on the prop specified in `colorBy`. Options include [`count`,`max`,'min`,`mean`,`median`,`mode`,`sum`]
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.groupCalcBySize` | `count` | (BETA Feature) The aggregation method to use on the prop specified in `sizeBy`. Options include [`count`,`max`,'min`,`mean`,`median`,`mode`,`sum`]
 
 
 ## Example
