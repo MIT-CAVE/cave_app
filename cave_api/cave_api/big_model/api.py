@@ -27,7 +27,7 @@ example = {
                     "showToggle": True,
                     "value": False,
                     "data":{
-                        "ml1": ["map", "data", "map1", "legendGroups"]
+                        "ml1": ["maps", "data", "map1", "legendGroups"]
                     }
                 },
                 "dashboards": {
