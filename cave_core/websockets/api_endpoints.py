@@ -152,7 +152,6 @@ def mutate_session(request):
                     # get_changed_data needs to be executed prior to session.versions since it can mutate them
                     data = session_i.get_changed_data(data_versions)
                     Socket(request.user).broadcast(
-                        model_object=request.user,
                         event="overwrite",
                         versions=session_i.versions,
                         data=data,
