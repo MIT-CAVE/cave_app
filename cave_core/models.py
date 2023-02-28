@@ -161,7 +161,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers (only if a team session)
-        self.error_on_no_team_access(session.team)
+        self.error_on_no_team_access(session.team.id)
         # Get the session team for session count incrementation
         team = session.team
         # Query CustomUsers to make sure that no one is in the session

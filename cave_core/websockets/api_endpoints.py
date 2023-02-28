@@ -145,7 +145,8 @@ def mutate_session(request):
                     Socket(request.user).notify(
                         message="Oops! You are out of sync. Fix in progress...",
                         title="Warning:",
-                        color="warning",
+                        show=True,
+                        theme="warning",
                         duration=5
                     )
                     # get_changed_data needs to be executed prior to session.versions since it can mutate them
