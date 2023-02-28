@@ -51,7 +51,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "name": "Map Layers",
                         "showToggle": True,
                         "value": False,
-                        "data": {"ml1": ["map", "data", "map1", "legendGroups"]},
+                        "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
                     },
                     "dashboards": {
                         "name": "Dashboards",
