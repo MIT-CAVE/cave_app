@@ -43,6 +43,8 @@ def get_data(data_dir):
 
         for key, item in element.items():
             if key in required_keys or key in optional_keys:
+                if key == 'path':
+                    item = json.loads(item)
                 element_dict[key] = item
             elif key in categories.keys():
                 if "category" not in element_dict.keys():
