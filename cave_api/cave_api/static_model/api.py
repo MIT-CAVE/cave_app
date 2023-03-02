@@ -552,7 +552,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "dashboards": {
             "data": {
                 "dash1": {
-                    "statOptions": ["numericExampleCalculationStat"],
                     "dashboardLayout": [
                         {
                             "chart": "Bar",
