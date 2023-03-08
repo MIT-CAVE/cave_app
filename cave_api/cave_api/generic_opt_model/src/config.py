@@ -3,7 +3,7 @@ import pkg_resources
 
 # For Pip based package resources see:
 # https://stackoverflow.com/questions/779495/access-data-in-package-subdirectory
-data_location = pkg_resources.resource_filename("cave_api", "simple_model/data/")
+data_location = pkg_resources.resource_filename("cave_api", "generic_opt_model/data/")
 
 config = pamda.read_json(data_location + "config.json")
 
