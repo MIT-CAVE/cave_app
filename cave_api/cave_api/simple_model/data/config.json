@@ -1,0 +1,71 @@
+{
+    "product_unit":"unit",
+    "money_unit":"$",
+    "currency_format":{
+        "precision": 2,
+        "unit": "$",
+        "currency": true
+    },
+    "percent_format":{
+        "unit": "%",
+        "unitSpace": false
+    },
+    "product_format":{
+        "precision": 0,
+        "unit": "units"
+    },
+    "node_types":{
+        "mfg": {
+            "name": "Manufacturers",
+            "name_singular": "Manufacturer",
+            "icon": "MdPrecisionManufacturing",
+            "isOrigin": true
+        },
+        "port": {
+            "name": "Ports",
+            "name_singular": "Port",
+            "icon": "MdAnchor"
+        },
+        "airport": {
+            "name": "Airports",
+            "name_singular": "Airport",
+            "icon": "MdLocalAirport"
+        },
+        "dc": {
+            "name": "Distribution Centers",
+            "name_singular": "Distribution Center",
+            "icon": "FaWarehouse"
+        }
+    },
+    "geo_types":{
+        "dz": {
+            "name": "Demand Zones",
+            "name_singular": "Demand Zone",
+            "icon": "BsHexagon",
+            "geoJsonLayer": "https://geojsons.mitcave.com/us/us-states-lg.json",
+            "geoJsonProp": "STUSPS",
+            "isDestination": true,
+            "mustMeetCapacity": false
+        }
+    },
+    "arc_types":{
+        "air": {
+            "name": "Air Freight",
+            "name_singular": "Air Freight",
+            "kpi_count_units": "Lanes",
+            "icon": "MdAirplanemodeActive"
+        },
+        "ocean": {
+            "name": "Ocean Freight",
+            "name_singular": "Ocean Freight",
+            "kpi_count_units": "Lanes",
+            "icon": "MdDirectionsBoat"
+        },
+        "truck": {
+            "name": "Truck Freight",
+            "name_singular": "Truck Freight",
+            "kpi_count_units": "Lanes",
+            "icon": "MdLocalShipping"
+        }
+    }
+}

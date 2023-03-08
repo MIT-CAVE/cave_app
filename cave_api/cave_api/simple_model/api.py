@@ -1,5 +1,6 @@
-from .data.serialized_data import get_serialized_data
-from .model.solver import Solver
+from .src.serialized_data import get_serialized_data
+from .src.solver import Solver
+
 
 def execute_command(session_data, socket, command="init", **kwargs):
     """

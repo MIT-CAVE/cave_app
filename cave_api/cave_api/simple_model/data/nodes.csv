@@ -1,9 +1,131 @@
-id,name,type,fixed_cashflow,processing_cashflow_per_unit,processing_capacity,latitude,longitude,altitude,location,geoId
-DEM_EUWS,EU West,demand,0,52,13861,47.25,2.496,0,EUWS,EUWS
-DEM_EUSW,EU Southwest,demand,0,52,5766,39.974,-4.42,0,EUSW,EUSW
-DEM_EUSO,EU South,demand,0,52,7015,40.648,15.746,0,EUSO,EUSO
-DEM_EUCT,EU Central,demand,0,52,15793,50.798,14.488,0,EUCT,EUCT
-FACT_SGZH,Shengzhou Factory,factory,-5200000,-37,40000,29.5,121,0,CHNA,
-FACT_POL,Poland Factory,factory,-8600000,-41,35000,51.1592133026972,16.7174453856181,0,EUCT,
-WHR_PAR,Paris Warehouse,warehouse,-1200000,-0.82,110000,48.9055782461715,2.74412150074233,0,EUWS,
-WHR_ROM,Rome Warehouse,warehouse,-950000,-0.71,75000,41.8878676257862,12.6057362191448,0,EUSO,
+id,name,type,fixed_cashflow,processing_cashflow_per_unit,processing_capacity,latitude,longitude,altitude,location,open,geoId
+dz_al,Alabama Demand Zone (US),dz,0,200,10000,32.318231,-86.902298,0,loc_al,True,AL
+dz_ar,Arkansas Demand Zone (US),dz,0,200,10000,35.20105,-91.831833,0,loc_ar,True,AR
+dz_az,Arizona Demand Zone (US),dz,0,200,10000,34.048928,-111.093731,0,loc_az,True,AZ
+dz_ca,California Demand Zone (US),dz,0,200,10000,36.778261,-119.417932,0,loc_ca,True,CA
+dz_co,Colorado Demand Zone (US),dz,0,200,10000,39.550051,-105.782067,0,loc_co,True,CO
+dz_ct,Connecticut Demand Zone (US),dz,0,200,10000,41.603221,-73.087749,0,loc_ct,True,CT
+dz_dc,District of Columbia Demand Zone (US),dz,0,200,10000,38.905985,-77.033418,0,loc_dc,True,DC
+dz_de,Delaware Demand Zone (US),dz,0,200,10000,38.910832,-75.52767,0,loc_de,True,DE
+dz_fl,Florida Demand Zone (US),dz,0,200,10000,27.664827,-81.515754,0,loc_fl,True,FL
+dz_ga,Georgia Demand Zone (US),dz,0,200,10000,32.157435,-82.907123,0,loc_ga,True,GA
+dz_ia,Iowa Demand Zone (US),dz,0,200,10000,41.878003,-93.097702,0,loc_ia,True,IA
+dz_id,Idaho Demand Zone (US),dz,0,200,10000,44.068202,-114.742041,0,loc_id,True,ID
+dz_il,Illinois Demand Zone (US),dz,0,200,10000,40.633125,-89.398528,0,loc_il,True,IL
+dz_in,Indiana Demand Zone (US),dz,0,200,10000,40.551217,-85.602364,0,loc_in,True,IN
+dz_ks,Kansas Demand Zone (US),dz,0,200,10000,39.011902,-98.484246,0,loc_ks,True,KS
+dz_ky,Kentucky Demand Zone (US),dz,0,200,10000,37.839333,-84.270018,0,loc_ky,True,KY
+dz_la,Louisiana Demand Zone (US),dz,0,200,10000,31.244823,-92.145024,0,loc_la,True,LA
+dz_ma,Massachusetts Demand Zone (US),dz,0,200,10000,42.407211,-71.382437,0,loc_ma,True,MA
+dz_md,Maryland Demand Zone (US),dz,0,200,10000,39.045755,-76.641271,0,loc_md,True,MD
+dz_me,Maine Demand Zone (US),dz,0,200,10000,45.253783,-69.445469,0,loc_me,True,ME
+dz_mi,Michigan Demand Zone (US),dz,0,200,10000,44.314844,-85.602364,0,loc_mi,True,MI
+dz_mn,Minnesota Demand Zone (US),dz,0,200,10000,46.729553,-94.6859,0,loc_mn,True,MN
+dz_mo,Missouri Demand Zone (US),dz,0,200,10000,37.964253,-91.831833,0,loc_mo,True,MO
+dz_ms,Mississippi Demand Zone (US),dz,0,200,10000,32.354668,-89.398528,0,loc_ms,True,MS
+dz_mt,Montana Demand Zone (US),dz,0,200,10000,46.879682,-110.362566,0,loc_mt,True,MT
+dz_nc,North Carolina Demand Zone (US),dz,0,200,10000,35.759573,-79.0193,0,loc_nc,True,NC
+dz_nd,North Dakota Demand Zone (US),dz,0,200,10000,47.551493,-101.002012,0,loc_nd,True,ND
+dz_ne,Nebraska Demand Zone (US),dz,0,200,10000,41.492537,-99.901813,0,loc_ne,True,NE
+dz_nh,New Hampshire Demand Zone (US),dz,0,200,10000,43.193852,-71.572395,0,loc_nh,True,NH
+dz_nj,New Jersey Demand Zone (US),dz,0,200,10000,40.058324,-74.405661,0,loc_nj,True,NJ
+dz_nm,New Mexico Demand Zone (US),dz,0,200,10000,34.97273,-105.032363,0,loc_nm,True,NM
+dz_nv,Nevada Demand Zone (US),dz,0,200,10000,38.80261,-116.419389,0,loc_nv,True,NV
+dz_ny,New York Demand Zone (US),dz,0,200,10000,43.299428,-74.217933,0,loc_ny,True,NY
+dz_oh,Ohio Demand Zone (US),dz,0,200,10000,40.417287,-82.907123,0,loc_oh,True,OH
+dz_ok,Oklahoma Demand Zone (US),dz,0,200,10000,35.007752,-97.092877,0,loc_ok,True,OK
+dz_or,Oregon Demand Zone (US),dz,0,200,10000,43.804133,-120.554201,0,loc_or,True,OR
+dz_pa,Pennsylvania Demand Zone (US),dz,0,200,10000,41.203322,-77.194525,0,loc_pa,True,PA
+dz_ri,Rhode Island Demand Zone (US),dz,0,200,10000,41.580095,-71.477429,0,loc_ri,True,RI
+dz_sc,South Carolina Demand Zone (US),dz,0,200,10000,33.836081,-81.163725,0,loc_sc,True,SC
+dz_sd,South Dakota Demand Zone (US),dz,0,200,10000,43.969515,-99.901813,0,loc_sd,True,SD
+dz_tn,Tennessee Demand Zone (US),dz,0,200,10000,35.517491,-86.580447,0,loc_tn,True,TN
+dz_tx,Texas Demand Zone (US),dz,0,200,10000,31.968599,-99.901813,0,loc_tx,True,TX
+dz_ut,Utah Demand Zone (US),dz,0,200,10000,39.32098,-111.093731,0,loc_ut,True,UT
+dz_va,Virginia Demand Zone (US),dz,0,200,10000,37.431573,-78.656894,0,loc_va,True,VA
+dz_vt,Vermont Demand Zone (US),dz,0,200,10000,44.558803,-72.577841,0,loc_vt,True,VT
+dz_wa,Washington Demand Zone (US),dz,0,200,10000,47.751074,-120.740139,0,loc_wa,True,WA
+dz_wi,Wisconsin Demand Zone (US),dz,0,200,10000,43.78444,-88.787868,0,loc_wi,True,WI
+dz_wv,West Virginia Demand Zone (US),dz,0,200,10000,38.597626,-80.454903,0,loc_wv,True,WV
+dz_wy,Wyoming Demand Zone (US),dz,0,200,10000,43.075968,-107.290284,0,loc_wy,True,WY
+dc_dallas,Dallas DC (US),dc,0,-2.24,180000,32.294,-96.499,0,loc_tx,True,
+dc_san_bernandino,San Bernandino DC (US),dc,0,-1.7,178000,34.097,-117.227,0,loc_ca,True,
+dc_columbus,Columbus DC (US),dc,0,-2.6,179000,39.956,-83.006,0,loc_oh,True,
+dc_atlanta,Atlanta DC (US),dc,0,-1.66,198000,33.746,-84.4,0,loc_ga,True,
+dc_portland,Portland  DC (US),dc,0,-1.32,88000,45.522,-122.668,0,loc_or,True,
+dc_savannah,Savannah DC (US),dc,0,-1.42,152000,32.206,-81.69,0,loc_ga,True,
+dc_indianapolis,Indianapolis DC (US),dc,0,-1.57,54000,39.773,-86.158,0,loc_in,True,
+dc_chicago,Chicago DC (US),dc,0,-1.67,58000,41.511,-88.061,0,loc_il,True,
+dc_nashville,Nashville DC (US),dc,0,-1.35,163000,36.16,-86.784,0,loc_tn,True,
+dc_minneapolis,Minneapolis DC (US),dc,0,-1.7,167000,44.98,-93.26,0,loc_mn,True,
+dc_boise,Boise DC (US),dc,0,-1.08,144000,43.61,-116.2,0,loc_id,True,
+dc_albuquerque,Albuquerque DC (US),dc,0,-2.55,142000,35.088,-106.649,0,loc_nm,True,
+dc_mobile,Mobile DC (US),dc,0,-1.62,180000,30.695,-88.046,0,loc_al,True,
+dc_seattle,Seattle DC (US),dc,0,-2.69,150000,47.602,-122.333,0,loc_wa,True,
+dc_phoenix,Phoenix DC (US),dc,0,-1.76,141000,33.445,-112.08,0,loc_az,True,
+dc_jacksonville,Jacksonville DC (US),dc,0,-2.27,192000,30.327,-81.659,0,loc_fl,True,
+dc_orlando,Orlando DC (US),dc,0,-1.22,131000,28.551,-81.379,0,loc_fl,True,
+dc_albany,Albany DC (US),dc,0,-2.14,120000,42.667,-73.8,0,loc_ny,True,
+dc_pittsburgh,Pittsburgh DC (US),dc,0,-1.79,53000,40.445,-79.99,0,loc_pa,True,
+dc_charleston,Charleston DC (US),dc,0,-2.12,171000,32.796,-79.937,0,loc_sc,True,
+dc_houston,Houston DC (US),dc,0,-1.95,99000,29.756,-94.961,0,loc_tx,True,
+dc_denver,Denver DC (US),dc,0,-2.91,187000,39.736,-104.991,0,loc_co,True,
+dc_louisville,Louisville DC (US),dc,0,-2.44,160000,38.306,-85.826,0,loc_ky,True,
+dc_riverside,Riverside DC (US),dc,0,-2.45,59000,33.938,-117.419,0,loc_ca,True,
+dc_lansing,Lansing DC (US),dc,0,-2.21,91000,42.732,-84.563,0,loc_mi,True,
+dc_las_vegas,Las Vegas DC (US),dc,0,-2.71,153000,36.174,-115.156,0,loc_nv,True,
+airport_los_angeles,Los Angeles Airport (US),airport,0,-4.48,999999999,33.941,-118.403,0,loc_los_angeles,True,
+airport_atlanta,Atlanta Airport (US),airport,0,-3.15,999999999,33.634,-84.419,0,loc_atlanta,True,
+airport_chicago,Chicago Airport (US),airport,0,-4.3,999999999,41.984,-87.913,0,loc_chicago,True,
+airport_new_york,New York Airport (US),airport,0,-4.53,999999999,40.631,-73.789,0,loc_new_york,True,
+airport_miami,Miami Airport (US),airport,0,-4.23,999999999,25.805,-80.298,0,loc_miami,True,
+port_long_beach,Port of Long Beach (US),port,0,-0.15,999999999,33.76,-118.224,0,loc_long_beach,True,
+port_los_angeles,Port of Los Angeles (US),port,0,-0.14,999999999,33.712,-118.306,0,loc_los_angeles,True,
+port_tacoma,Port of Tacoma (US),port,0,-0.39,999999999,47.272,-122.394,0,loc_tacoma,True,
+port_vancouver,Port of Vancouver (CA),port,0,-0.19,999999999,49.347,-122.97,0,loc_vancouver,True,
+port_houston,Port of Houston (US),port,0,-0.1,999999999,29.633,-95.005,0,loc_houston,True,
+port_savannah,Port of Savannah (US),port,0,-0.45,999999999,32.126,-81.132,0,loc_savannah,True,
+port_norfolk,Port of Norfolk (US),port,0,-0.14,999999999,36.968,-76.343,0,loc_norfolk,True,
+port_charleston,Port of Charleston (US),port,0,-0.45,999999999,32.841,-79.879,0,loc_charleston,True,
+port_new_york,Port of New York (US),port,0,-0.26,999999999,40.756,-73.997,0,loc_new_york,True,
+port_new_jersey,Port of New Jersey (US),port,0,-0.39,999999999,40.675,-74,0,loc_new_jersey,True,
+airport_guangzhou,Guangzhou Airport (CN),airport,0,-3.13,999999999,23.159,112.928,0,loc_guangzhou,True,
+airport_shanghai,Shanghai Airport (CN),airport,0,-3.28,999999999,31.144,121.796,0,loc_shanghai,True,
+airport_ningbo,Ningbo Airport (CN),airport,0,-3.4,999999999,29.836,121.457,0,loc_ningbo,True,
+airport_ho_chi_minh_city,Ho Chi Minh City Airport (VT),airport,0,-4.99,999999999,10.82,106.666,0,loc_ho_chi_minh_city,True,
+airport_hanoi,Hanoi Airport (VT),airport,0,-5,999999999,21.229,105.798,0,loc_hanoi,True,
+airport_jakarta,Jakarta Airport (ID),airport,0,-3.25,999999999,-6.268,106.905,0,loc_jakarta,True,
+airport_bangkok,Bangkok Airport (TH),airport,0,-4.27,999999999,13.908,100.613,0,loc_bangkok,True,
+airport_penang,Penang Airport (MY),airport,0,-4.37,999999999,5.305,100.269,0,loc_penang,True,
+airport_kuala_lumpur,Kuala Lumpur Airport (MY),airport,0,-4.89,999999999,2.74,101.703,0,loc_kuala_lumpur,True,
+port_yantian,Port of Yantian (CN),port,0,-0.15,999999999,22.575,114.279,0,loc_yantian,True,
+port_shanghai,Port of Shanghai (CN),port,0,-0.27,999999999,31.587,121.314,0,loc_shanghai,True,
+port_ningbo,Port of Ningbo (CN),port,0,-0.16,999999999,29.945,121.92,0,loc_ningbo,True,
+port_vung_tau,Port of Vung Tau (VT),port,0,-0.18,999999999,10.398,107.08,0,loc_ho_chi_minh_city,True,
+port_haiphong,Port of Haiphong (VT),port,0,-0.4,999999999,20.859,106.718,0,loc_haiphong,True,
+port_surabaya,Port of Surabaya (ID),port,0,-0.21,999999999,-7.218,112.737,0,loc_surabaya,True,
+port_jakarta,Port of Jakarta (ID),port,0,-0.2,999999999,-6.1,106.873,0,loc_jakarta,True,
+port_semarang,Port of Semarang (ID),port,0,-0.42,999999999,-6.954,110.432,0,loc_semarang,True,
+port_laem_chabang,Port of Laem Chabang (TH),port,0,-0.44,999999999,13.093,100.9,0,loc_laem_chabang,True,
+port_penang,Port of Penang (MY),port,0,-0.15,999999999,5.412,100.354,0,loc_penang,True,
+port_port_klang,Port of Port Klang (MY),port,0,-0.34,999999999,3.01,101.381,0,loc_port_klang,True,
+port_tanjung_pelepas,Port of Tanjung Pelepas (MY),port,0,-0.22,999999999,1.351,103.547,0,loc_tanjung_pelepas,True,
+mfg_shenzhen,Shenzhen MFG (CN),mfg,-100000,-40,35600,23.112,113.781,0,loc_shenzhen,True,
+mfg_shanghai,Shanghai MFG (CN)),mfg,-80000,-43,18200,31.318,120.546,0,loc_shanghai,True,
+mfg_ningbo,Ningbo MFG (CN),mfg,-65000,-50,11300,29.642,121.388,0,loc_ningbo,True,
+mfg_foshan,Foshan MFG (CN),mfg,-90000,-58,45500,23.11,112.99,0,loc_foshan,True,
+mfg_ho_chi_minh_city,Ho Chi Minh City MFG (VT),mfg,-87000,-49,41000,10.929,106.904,0,loc_ho_chi_minh_city,True,
+mfg_haiphong,Haiphong MFG (VT),mfg,-90000,-53,25700,20.844,106.585,0,loc_haiphong,True,
+mfg_nam_dinh,Nam Dinh MFG (VT),mfg,-95000,-58,45800,20.261,106.154,0,loc_nam_dinh,True,
+mfg_cai_lan,Cai Lan MFG (VT),mfg,-85000,-44,48600,20.975,107.013,0,loc_cai_lan,True,
+mfg_surabaya,Surabaya MFG (ID),mfg,-89000,-57,47400,-7.238,112.736,0,loc_surabaya,True,
+mfg_jakarta,Jakarta MFG (ID),mfg,-93000,-40,44800,-6.175,106.829,0,loc_jakarta,True,
+mfg_semarang,Semarang MFG (ID),mfg,-70000,-44,13400,-6.997,110.42,0,loc_semarang,True,
+mfg_sukabumi,Sukabumi MFG (ID),mfg,-80000,-59,19300,-6.918,106.931,0,loc_jakarta,True,
+mfg_laem_chabang,Laem Chabang MFG (TH),mfg,-110000,-51,49100,13.386,101.029,0,loc_laem_chabang,True,
+mfg_ayutthaya,Ayutthaya MFG (TH),mfg,-90000,-47,33800,14.316,100.511,0,loc_ayutthaya,True,
+mfg_chonburi,Chonburi MFG (TH),mfg,-80000,-52,24500,13.184,101.12,0,loc_chonburi,True,
+mfg_bangkok,Bangkok MFG (TH),mfg,-90000,-51,39100,13.76,100.486,0,loc_bangkok,True,
+mfg_penang,Penang MFG (MY),mfg,-60000,-54,27200,5.409,100.251,0,loc_penang,True,
+mfg_port_klang,Port Klang MFG (MY),mfg,-70000,-54,19100,2.998,101.4,0,loc_port_klang,True,
+mfg_tanjung_pelepas,Tanjung Pelepas MFG (MY),mfg,-100000,-45,18000,1.345,103.562,0,loc_tanjung_pelepas,True,

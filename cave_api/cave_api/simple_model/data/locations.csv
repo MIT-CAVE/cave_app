@@ -1,6 +1,85 @@
-id,continent,region
-CHNA,Asia,China
-EUCT,Europe,EU Central
-EUSO,Europe,EU South
-EUSW,Europe,EU Southwest
-EUWS,Europe,EU West
+id,continent,country,region
+loc_vancouver,North America,Canada,Vancouver
+loc_foshan,Asia,China,Foshan
+loc_guangzhou,Asia,China,Guangzhou
+loc_ningbo,Asia,China,Ningbo
+loc_shanghai,Asia,China,Shanghai
+loc_shenzhen,Asia,China,Shenzhen
+loc_yantian,Asia,China,Yantian
+loc_jakarta,Asia,Indonesia,Jakarta
+loc_semarang,Asia,Indonesia,Semarang
+loc_surabaya,Asia,Indonesia,Surabaya
+loc_kuala_lumpur,Asia,Malaysia,Kuala Lumpur
+loc_penang,Asia,Malaysia,Penang
+loc_port_klang,Asia,Malaysia,Port Klang
+loc_tanjung_pelepas,Asia,Malaysia,Tanjung Pelepas
+loc_ayutthaya,Asia,Thailand,Ayutthaya
+loc_bangkok,Asia,Thailand,Bangkok
+loc_chonburi,Asia,Thailand,Chonburi
+loc_laem_chabang,Asia,Thailand,Laem Chabang
+loc_atlanta,North America,United States,Atlanta
+loc_charleston,North America,United States,Charleston
+loc_chicago,North America,United States,Chicago
+loc_houston,North America,United States,Houston
+loc_long_beach,North America,United States,Long Beach
+loc_los_angeles,North America,United States,Los Angeles
+loc_miami,North America,United States,Miami
+loc_new_jersey,North America,United States,New Jersey
+loc_new_york,North America,United States,New York
+loc_norfolk,North America,United States,Norfolk
+loc_savannah,North America,United States,Savannah
+loc_tacoma,North America,United States,Tacoma
+loc_cai_lan,Asia,Vietnam,Cai Lan
+loc_haiphong,Asia,Vietnam,Haiphong
+loc_hanoi,Asia,Vietnam,Hanoi
+loc_ho_chi_minh_city,Asia,Vietnam,Ho Chi Minh City
+loc_nam_dinh,Asia,Vietnam,Nam Dinh
+loc_al,North America,United States,Alabama
+loc_ar,North America,United States,Arkansas
+loc_az,North America,United States,Arizona
+loc_ca,North America,United States,California
+loc_co,North America,United States,Colorado
+loc_ct,North America,United States,Connecticut
+loc_dc,North America,United States,District of Columbia
+loc_de,North America,United States,Delaware
+loc_fl,North America,United States,Florida
+loc_ga,North America,United States,Georgia
+loc_ia,North America,United States,Iowa
+loc_id,North America,United States,Idaho
+loc_il,North America,United States,Illinois
+loc_in,North America,United States,Indiana
+loc_ks,North America,United States,Kansas
+loc_ky,North America,United States,Kentucky
+loc_la,North America,United States,Louisiana
+loc_ma,North America,United States,Massachusetts
+loc_md,North America,United States,Maryland
+loc_me,North America,United States,Maine
+loc_mi,North America,United States,Michigan
+loc_mn,North America,United States,Minnesota
+loc_mo,North America,United States,Missouri
+loc_ms,North America,United States,Mississippi
+loc_mt,North America,United States,Montana
+loc_nc,North America,United States,North Carolina
+loc_nd,North America,United States,North Dakota
+loc_ne,North America,United States,Nebraska
+loc_nh,North America,United States,New Hampshire
+loc_nj,North America,United States,New Jersey
+loc_nm,North America,United States,New Mexico
+loc_nv,North America,United States,Nevada
+loc_ny,North America,United States,New York
+loc_oh,North America,United States,Ohio
+loc_ok,North America,United States,Oklahoma
+loc_or,North America,United States,Oregon
+loc_pa,North America,United States,Pennsylvania
+loc_ri,North America,United States,Rhode Island
+loc_sc,North America,United States,South Carolina
+loc_sd,North America,United States,South Dakota
+loc_tn,North America,United States,Tennessee
+loc_tx,North America,United States,Texas
+loc_ut,North America,United States,Utah
+loc_va,North America,United States,Virginia
+loc_vt,North America,United States,Vermont
+loc_wa,North America,United States,Washington
+loc_wi,North America,United States,Wisconsin
+loc_wv,North America,United States,West Virginia
+loc_wy,North America,United States,Wyoming

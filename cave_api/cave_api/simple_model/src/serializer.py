@@ -1,47 +1,28 @@
 import type_enforced
-import csv
-import pkg_resources
-
-# For Pip based package resources see:
-# https://stackoverflow.com/questions/779495/access-data-in-package-subdirectory
-data_location = pkg_resources.resource_filename("cave_api", "simple_model/data/")
-product_unit = "unit"
-money_unit = "$"
-currency_format = {
-    "precision": 2,
-    "unit": f"{money_unit}",
-    "currency": True,
-}
-percent_format = {
-    "unit": "%",
-    "unitSpace": False,
-}
-product_format = {
-    "precision": 0,
-    "unit": f"{product_unit}s",
-}
-
-
-def cast_number(string):
-    try:
-        float_string = float(string)
-        return int(float_string) if float_string == int(float_string) else float_string
-    except:
-        return string
-
-
-def read_csv(filename):
-    with open(filename) as f:
-        file_data = csv.reader(f)
-        headers = next(file_data)
-        return [dict(zip(headers, map(cast_number, i))) for i in file_data]
+from pamda import pamda
+from .config import (
+    data_location,
+    product_unit,
+    money_unit,
+    currency_format,
+    percent_format,
+    product_format,
+    node_types,
+    node_geo_types,
+    arc_types,
+    geo_types,
+    all_types,
+    total_type_keys,
+    destination_type_keys,
+)
 
 
 class Location:
     @type_enforced.Enforcer
-    def __init__(self, id: str, continent: str, region: str):
+    def __init__(self, id: str, continent: str, country: str, region: str):
         self.id = id
         self.continent = continent
+        self.country = country
         self.region = region
 
 
@@ -59,7 +40,8 @@ class Node:
         longitude: [int, float],
         altitude: [int, float],
         location: str,
-        geoId: str,
+        open: bool,
+        geoId: [None, str, int],
         locations,
     ):
         self.id = id
@@ -72,12 +54,9 @@ class Node:
         self.longitude = longitude
         self.altitude = altitude
         self.location = locations[location]
+        self.types = node_geo_types
+        self.open = open
         self.geoId = geoId
-        self.types = {
-            "factory": "Factories",
-            "demand": "Demand Zones",
-            "warehouse": "Warehouses",
-        }
         self.validate()
         self.serialized_data = self.serialize()
 
@@ -108,40 +87,16 @@ class Node:
         return dict(sorted(options.items()))
 
     def get_pretty_type(self):
-        return self.types[self.type]
+        return self.types[self.type]["name"]
 
     def validate(self):
         assert self.type in self.types.keys(), f"Unsupported Node type: {self.type}"
         assert (
             self.processing_capacity >= 0
         ), "processing capacity should always be greater than or equal to 0"
-        if self.type == "demand":
-            assert (
-                self.processing_cashflow_per_unit >= 0
-            ), f"processing_cashflow_per_unit should be greater than or equal to 0 for {self.type} nodes."
-            assert self.geoId != None, f"geoId must be specified for {self.type} nodes."
-        else:
-            assert (
-                self.processing_cashflow_per_unit <= 0
-            ), f"processing_cashflow_per_unit should be less than or equal to 0 for {self.type} nodes."
-            assert self.geoId == "", f"geoId must not be specified for {self.type} nodes."
-            assert (
-                self.fixed_cashflow <= 0
-            ), f"fixed_cashflow should be less than or equal to 0 for {self.type} type nodes"
 
     def serialize(self):
-        if self.type == "demand":
-            extra_props = {}
-            extra_keys = {
-                "geoJsonValue": self.geoId,
-            }
-        else:
-            extra_props = {
-                "fixed_cashflow": {"value": self.fixed_cashflow},
-                "open": {"value": False},
-                "output_total_fixed_cashflow": {"value": 0},
-            }
-            extra_keys = {}
+        extra_args = {"geoJsonValue": self.geoId} if self.geoId else {}
         return {
             "name": self.name,
             "latitude": self.latitude,
@@ -151,16 +106,19 @@ class Node:
             "category": {
                 "location": [self.location.id],
             },
+            **extra_args,
             "location_id": self.location.id,
-            **extra_keys,
             "props": {
                 "variables": {},
                 "processing_capacity": {"value": self.processing_capacity},
                 "cashflow_per_unit": {"value": self.processing_cashflow_per_unit},
                 "outputs": {},
                 "output_total_units": {"value": 0},
+                "output_processing_capacity_utilization": {"value": 0},
                 "output_total_variable_cashflow": {"value": 0},
-                **extra_props,
+                "fixed_cashflow": {"value": self.fixed_cashflow},
+                "open": {"value": self.open},
+                "output_total_fixed_cashflow": {"value": 0},
             },
         }
 
@@ -175,20 +133,17 @@ class Arc:
         destination: str,
         processing_cashflow_per_unit: [int, float],
         processing_capacity: [int, float],
-        nodes,
+        nodes_and_geos,
     ):
         self.id = id
         self.type = type
-        self.origin = nodes[origin]
-        self.destination = nodes[destination]
+        self.origin = nodes_and_geos[origin]
+        self.destination = nodes_and_geos[destination]
         self.processing_cashflow_per_unit = processing_cashflow_per_unit
         self.processing_capacity = processing_capacity
         self.name = f"{self.origin.name} -> {self.destination.name}"
         self.location = self.origin.location
-        self.types = {
-            "transport": "Transport",
-            "last_mile": "Last Mile",
-        }
+        self.types = arc_types
         self.validate()
 
         self.serialized_data = self.serialize()
@@ -220,7 +175,7 @@ class Arc:
         return dict(sorted(options.items()))
 
     def get_pretty_type(self):
-        return self.types[self.type]
+        return self.types[self.type]["name"]
 
     def validate(self):
         assert self.type in self.types.keys(), f"Unsupported Arc type: {self.type}"
@@ -256,6 +211,7 @@ class Arc:
                 "cashflow_per_unit": {"value": self.processing_cashflow_per_unit},
                 "outputs": {},
                 "output_total_units": {"value": 0},
+                "output_processing_capacity_utilization": {"value": 0},
                 "output_total_variable_cashflow": {"value": 0},
             },
         }
@@ -263,38 +219,45 @@ class Arc:
 
 class Serializer:
     def __init__(self):
-        self.locations = {i["id"]: Location(**i) for i in read_csv(data_location + "locations.csv")}
+        self.locations = {
+            i["id"]: Location(**i)
+            for i in pamda.read_csv(data_location + "locations.csv", cast_items=True)
+        }
         self.nodes = {
             i["id"]: Node(**i, locations=self.locations)
-            for i in read_csv(data_location + "nodes.csv")
+            for i in pamda.read_csv(data_location + "nodes.csv", cast_items=True)
+            if i["type"] in node_types.keys()
         }
+        self.geos = {
+            i["id"]: Node(**i, locations=self.locations)
+            for i in pamda.read_csv(data_location + "nodes.csv", cast_items=True)
+            if i["type"] in geo_types.keys()
+        }
+        nodes_and_geos = {**self.nodes, **self.geos}
         self.arcs = {
-            i["id"]: Arc(**i, nodes=self.nodes) for i in read_csv(data_location + "arcs.csv")
+            i["id"]: Arc(**i, nodes_and_geos=nodes_and_geos)
+            for i in pamda.read_csv(data_location + "arcs.csv", cast_items=True)
         }
-        self.warehouses = {
-            key: value for key, value in self.nodes.items() if value.type in ["warehouse"]
-        }
-        self.factories = {
-            key: value for key, value in self.nodes.items() if value.type in ["factory"]
-        }
-        self.demand_zones = {
-            key: value for key, value in self.nodes.items() if value.type in ["demand"]
-        }
+        self.node_data = {key: self.get_items_of_type(self.nodes, key) for key in node_types.keys()}
+        self.geo_data = {key: self.get_items_of_type(self.geos, key) for key in geo_types.keys()}
+        self.arc_data = {key: self.get_items_of_type(self.arcs, key) for key in arc_types.keys()}
 
-    def get_categories_item_data(self, items_dict, **kwargs):
-        return {
-            key: {
-                "type": value.get_pretty_type(),
-                "continent": value.location.continent,
+    def get_items_of_type(self, obj_dict, obj_type):
+        return {key: value for key, value in obj_dict.items() if value.type == obj_type}
+
+    def get_categories_item_data(self, items_dict, additional_key_fn_dict={}):
+        out = {}
+        for key, value in items_dict.items():
+            out[key] = {
                 "item": value.name,
-                **kwargs,
+                **{fn_key: fn(value) for fn_key, fn in additional_key_fn_dict.items()},
             }
-            for key, value in items_dict.items()
-        }
+        return out
 
     def get_categories_location_data(self):
         return {
-            i.id: {"continent": i.continent, "region": i.region} for i in self.locations.values()
+            i.id: {"continent": i.continent, "country": i.country, "region": i.region}
+            for i in self.locations.values()
         }
 
     def get_serialized_item_data(self, items_dict):
@@ -349,6 +312,14 @@ class Serializer:
                 "enabled": False,
                 "help": "The total number of units processed for this arc or node after running this model",
                 "numberFormat": product_format,
+            },
+            "output_processing_capacity_utilization": {
+                "name": "Processing Capacity Utilization",
+                "type": "num",
+                "value": 0,
+                "enabled": False,
+                "help": "The percentage of processing capacity used by this network object after running this model",
+                "numberFormat": percent_format,
             },
             "output_total_variable_cashflow": {
                 "name": "Total Processing Cost",
@@ -420,76 +391,22 @@ class Serializer:
                     "type": "item",
                     "column": 2,
                     "row": 3,
-                    "itemId": "output_total_variable_cashflow",
+                    "itemId": "output_processing_capacity_utilization",
                 },
                 "col2_row4": {
                     "type": "item",
                     "column": 2,
                     "row": 4,
+                    "itemId": "output_total_variable_cashflow",
+                },
+                "col2_row5": {
+                    "type": "item",
+                    "column": 2,
+                    "row": 5,
                     "itemId": "output_total_fixed_cashflow",
                 },
             },
         }
-
-    def get_geo_prop_defaults(self):
-        return {
-            "variables": {
-                "name": "Input Variables",
-                "type": "head",
-                "help": "Input variables used for the model",
-                "order": 0,
-                "column": 1,
-            },
-            "processing_capacity": {
-                "name": "Demand",
-                "type": "num",
-                "enabled": True,
-                "help": f"The baseline demand for this demand zone",
-                "order": 1,
-                "column": 1,
-                "numberFormat": product_format,
-            },
-            "cashflow_per_unit": {
-                "name": f"Revenue Per {product_unit}",
-                "type": "num",
-                "enabled": True,
-                "help": f"The revenue generated per {product_unit} when satisfying demand in this demand zone",
-                "order": 2,
-                "column": 1,
-                "numberFormat": {
-                    "unit": f"{money_unit}/{product_unit}",
-                },
-            },
-            "outputs": {
-                "name": "Output Totals",
-                "type": "head",
-                "help": "Output totals from the model",
-                "order": 0,
-                "column": 2,
-            },
-            "output_total_units": {
-                "name": "Total Demand Filled",
-                "type": "num",
-                "value": 0,
-                "enabled": False,
-                "help": "The total amount of demand filled for this demand zone after running this model",
-                "order": 1,
-                "column": 2,
-                "numberFormat": product_format,
-            },
-            "output_total_variable_cashflow": {
-                "name": "Total Revenue",
-                "type": "num",
-                "value": 0,
-                "enabled": False,
-                "help": "The total revenue generated by this demand zone after running this model",
-                "order": 2,
-                "column": 2,
-                "numberFormat": currency_format,
-            },
-        }
-
-    def get_geo_prop_layout(self):
         return {
             "type": "grid",
             "numColumns": 2,
@@ -529,6 +446,12 @@ class Serializer:
                     "type": "item",
                     "column": 2,
                     "row": 3,
+                    "itemId": "output_processing_capacity_utilization",
+                },
+                "col2_row4": {
+                    "type": "item",
+                    "column": 2,
+                    "row": 4,
                     "itemId": "output_total_variable_cashflow",
                 },
             },
@@ -540,72 +463,135 @@ class Serializer:
         except:
             return []
 
+    def get_kpi_data_template(self):
+        out = {}
+        for key, value in all_types.items():
+            out.update(
+                {
+                    f"{key}_header": {
+                        "name": f"{value['name_singular']} KPIs",
+                        "icon": value["icon"],
+                        "type": "head",
+                        "value": 0,
+                    },
+                    f"{key}_count_used": {
+                        "name": f"{value['name_singular']+' '+value.get('kpi_count_units') if value.get('kpi_count_units') else value['name']} Used",
+                        "value": 0,
+                        "numberFormat": {
+                            "precision": 0,
+                        },
+                        "icon": "AiOutlineNumber",
+                    },
+                    f"{key}_units_processed": {
+                        "name": f"{value['name_singular']} {'Demand Met' if key in total_type_keys+destination_type_keys else 'Units Processed'}",
+                        "value": 0,
+                        "numberFormat": product_format,
+                        "icon": "FaBox",
+                    },
+                    f"{key}_processing_cashflows": {
+                        "name": f"{value['name_singular']} Processing Cashflows",
+                        "value": 0,
+                        "numberFormat": currency_format,
+                        "icon": "FaMoneyBill",
+                    },
+                    f"{key}_fixed_cashflows": {
+                        "name": f"{value['name_singular']} Fixed Cashflows",
+                        "value": 0,
+                        "numberFormat": currency_format,
+                        "icon": "FaMoneyBill",
+                    },
+                    f"{key}_total_cashflows": {
+                        "name": f"{value['name_singular']} Cashflows (Total)",
+                        "value": 0,
+                        "numberFormat": currency_format,
+                        "icon": "FaMoneyBill",
+                    },
+                    f"{key}_processing_utilization": {
+                        "name": f"{value['name_singular']} {'Percent Demand Met' if key in total_type_keys+destination_type_keys else 'Processing Utilization'}",
+                        "value": 0,
+                        "percentage": True,
+                        "numberFormat": {
+                            "unit": f"%",
+                            "unitSpace": False,
+                            "precision": 0,
+                        },
+                        "icon": "MdDataUsage",
+                    },
+                }
+            )
+        return out
+
+    def get_kpi_layout_template(self):
+        out = {}
+        row = 0
+        for key, value in all_types.items():
+            row += 2 if key in total_type_keys else 1
+            for col, item in enumerate(
+                [
+                    f"{key}_header",
+                    f"{key}_count_used",
+                    f"{key}_units_processed",
+                    f"{key}_processing_cashflows",
+                    f"{key}_fixed_cashflows",
+                    f"{key}_total_cashflows",
+                    f"{key}_processing_utilization",
+                ]
+            ):
+                out.update(
+                    {
+                        f"row{row}_col{col+1}": {
+                            "type": "item",
+                            "itemId": item,
+                            "column": col + 1,
+                            "row": row,
+                        },
+                    }
+                )
+
+        values = list(out.values())
+        return {
+            "type": "grid",
+            "numColumns": max(pamda.pluck(["column"], list(out.values()))),
+            "numRows": max(pamda.pluck(["row"], list(out.values()))),
+            "data": out,
+        }
+
     def get_stats_types(self):
         return {
-            "cashflow": {
-                "name": "Cashflow",
-                "calculation": "total_cashflow",
-                "numberFormat": {"unit": f"{money_unit}", "currency": True},
+            "processing_capacity": {
+                "name": "Processing Capacity",
+                "calculation": "processing_capacity",
+                "numberFormat": currency_format,
                 "order": 0,
-            },
-            "demand": {
-                "name": "Demand",
-                "calculation": "demand",
-                "numberFormat": product_format,
-                "order": 1,
-            },
-            "demand_met": {
-                "name": "Demand Met",
-                "calculation": "demand_met",
-                "numberFormat": product_format,
-                "order": 2,
-            },
-            "pct_demand_met": {
-                "name": "Percent Demand Met",
-                "calculation": "demand_met / groupSum('demand') * 100",
-                "numberFormat": percent_format,
-                "order": 2,
-            },
-            "revenue": {
-                "name": "Revenue",
-                "calculation": "revenue",
-                "numberFormat": {"unit": f"{money_unit}", "currency": True},
-                "order": 3,
             },
             "units_processed": {
                 "name": "Units Processed",
                 "calculation": "units_processed",
                 "numberFormat": product_format,
-                "order": 4,
-            },
-            "processing_cashflow": {
-                "name": "Processing Cost",
-                "calculation": "processing_cashflow",
-                "numberFormat": currency_format,
-                "order": 5,
-            },
-            "processing_capacity": {
-                "name": "Processing Capacity",
-                "calculation": "processing_capacity",
-                "numberFormat": currency_format,
-                "order": 5,
+                "order": 1,
             },
             "processing_capacity_utilization": {
                 "name": "Processing Capacity Utilization",
                 "calculation": "units_processed / groupSum('processing_capacity') * 100",
                 "numberFormat": percent_format,
-                "order": 6,
+                "order": 2,
+            },
+            "processing_cashflow": {
+                "name": "Processing Cashflow",
+                "calculation": "processing_cashflow",
+                "numberFormat": currency_format,
+                "order": 3,
             },
             "fixed_cashflow": {
-                "name": "Fixed Cost",
+                "name": "Fixed Cashflow",
                 "calculation": "fixed_cashflow",
                 "numberFormat": currency_format,
-                "order": 10,
+                "order": 4,
             },
-            "total_costs": {
-                "name": "Total Cost",
-                "calculation": "total_costs",
-                "numberFormat": currency_format,
-                "order": 11,
+            "cashflow": {
+                "name": "Total Cashflow",
+                "calculation": "total_cashflow",
+                "numberFormat": {"unit": f"{money_unit}", "currency": True},
+                "order": 5,
             },
         }
