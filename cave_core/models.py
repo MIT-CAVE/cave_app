@@ -482,6 +482,8 @@ class Globals(SingletonModel):
         help_text=_(
             "The static app url path to get from the static url given in the environment files"
         ),
+        blank=True,
+        null=True,
         default="",
     )
 
