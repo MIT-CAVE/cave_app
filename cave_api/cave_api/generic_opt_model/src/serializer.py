@@ -469,6 +469,7 @@ class Serializer:
                         "icon": value["icon"],
                         "type": "head",
                         "value": 0,
+                        "variant": "row",
                     },
                     f"{key}_count_used": {
                         "name": f"{value['name_singular']+' '+value.get('kpi_count_units') if value.get('kpi_count_units') else value['name']} Used",
