@@ -392,6 +392,13 @@ class Globals(SingletonModel):
         help_text=_("Title of the app - Used at the top of every page and in each browser tab"),
         default="Cave App",
     )
+    site_logo = models.ImageField(
+        _("Site Logo"),
+        help_text=_("Logo of the app - Used at the top of every page and in each browser tab"),
+        upload_to="logo_photos",
+        blank=True,
+        null=True,
+    )
     show_custom_pages = models.BooleanField(
         _("Show Custom Pages"),
         help_text=_("Should the custom pages be showed? - Used for every defined custom page"),
@@ -451,7 +458,7 @@ class Globals(SingletonModel):
         _("Primary Color"),
         help_text=_("The primary color for the website - Used for the general style on all pages"),
         max_length=7,
-        default="#2370d5",
+        default="#49525b",
     )
     secondary_color = models.CharField(
         _("Secondary Color"),

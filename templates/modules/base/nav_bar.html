@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-primary slight-shadow">
   <div class="d-flex d-lg-none justify-content-between full-width">
     <button
@@ -11,7 +12,11 @@
     >
       <span class="material-icons">menu</span>
     </button>
-    <a class="navbar-brand" href="/">{{ globals.site_name }}</a>
+    {% if globals.site_logo %}
+    <img src="{{ globals.site_logo.url }}" alt="{{ globals.site_name }}" style="height: 40px;">
+    {% else %}
+      <a class="navbar-brand" href="/">{{ globals.site_name }}</a>
+    {% endif %}
     <div></div>
   </div>
   <div class="collapse navbar-collapse d-flex-lg justify-content-between flex-row mx-2" id="navbarSupportedContent">
@@ -23,7 +28,11 @@
       {% endif %}
     </div>
     <div class="d-none d-lg-flex">
-      <a class="navbar-brand" href="/">{{ globals.site_name }}</a>
+      {% if globals.site_logo %}
+        <img src="{{ globals.site_logo.url }}" alt="{{ globals.site_name }}" style="height: 40px;">
+      {% else %}
+        <a class="navbar-brand" href="/">{{ globals.site_name }}</a>
+      {% endif %}
     </div>
     <div>
       <ul class="navbar-nav dropdown">
@@ -32,9 +41,12 @@
             <span class="material-icons">copyright</span>
             <p class="d-inline d-lg-none mx-3">Copyright</p>
           </a>
-          <div class="dropdown-menu dropdown-menu-end" style="width: 500px; max-width: 90vw;" aria-labelledby="CopyrightDropdown">
+          <div class="dropdown-menu dropdown-menu-end" style="width: 500px; max-width: 95vw;" aria-labelledby="CopyrightDropdown">
             <div class="text-center m-2">
               © Copyright {% now "Y" %} <a href="https://cave.mit.edu/" class="text-dark">MIT Center for Transportation & Logistics</a>
+            </div>
+            <div class="text-center m-2">
+              <img src="{% static 'photos/cave_logo_light.png' %}" alt="MIT CAVE Logo" style="width: 100%;">
             </div>
           </div>
         </li>

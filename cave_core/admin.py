@@ -117,7 +117,7 @@ class CustomGlobalsAdmin(SingletonModelAdmin):
     fieldsets = (
         (
             "General",
-            {"fields": ("site_name", "primary_color", "secondary_color")},
+            {"fields": ("site_name", "site_logo", "primary_color", "secondary_color")},
         ),
         (
             "User Settings",
