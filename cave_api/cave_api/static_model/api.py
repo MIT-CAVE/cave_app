@@ -274,6 +274,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for the numeric slider example",
                             "maxValue": 100,
                             "minValue": 0,
+                            "numberFormat": {
+                                "unit": "%",
+                            },
                         },
                         "miscHeader": {
                             "name": "Misc Props",
