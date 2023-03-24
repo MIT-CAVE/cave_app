@@ -396,6 +396,7 @@ class Globals(SingletonModel):
         _("Site Logo"),
         help_text=_("Logo of the app - Used at the top of every page and in each browser tab"),
         upload_to="logo_photos",
+        default="logo_photos/cave_logo_mit_dark.png",
         blank=True,
         null=True,
     )
