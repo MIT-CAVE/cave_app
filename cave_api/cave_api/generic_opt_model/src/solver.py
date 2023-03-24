@@ -350,7 +350,7 @@ class Solver(Aggregate_Serializer):
         # KPIs
         self.update_kpis()
         # Update prop ranges
-        self.update_prop_ranges()
+        # self.update_prop_ranges()
 
         # Return modified session_data
         return self.session_data

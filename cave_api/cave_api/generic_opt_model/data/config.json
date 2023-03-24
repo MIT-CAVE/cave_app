@@ -53,13 +53,15 @@
             "name": "Air Freight",
             "name_singular": "Air Freight",
             "kpi_count_units": "Lanes",
-            "icon": "MdAirplanemodeActive"
+            "icon": "MdAirplanemodeActive",
+            "lineBy": "3d"
         },
         "ocean": {
             "name": "Ocean Freight",
             "name_singular": "Ocean Freight",
             "kpi_count_units": "Lanes",
-            "icon": "MdDirectionsBoat"
+            "icon": "MdDirectionsBoat",
+            "lineBy": "dotted"
         },
         "truck": {
             "name": "Truck Freight",

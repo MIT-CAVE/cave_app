@@ -312,7 +312,7 @@ def get_serialized_data():
                     "colorByOptions": serializer.get_dropdown_options(
                         serializer.arc_data[arc_key], include_categorical=True
                     ),
-                    "lineBy": "solid",
+                    "lineBy": arc_value.get("lineBy", "Solid"),
                     "sizeByOptions": serializer.get_dropdown_options(serializer.arc_data[arc_key]),
                     "startSize": "8px",
                     "endSize": "15px",

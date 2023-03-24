@@ -65,8 +65,6 @@ class Node:
             return {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"}
         else:
             return {
-                "min": 0,
-                "max": 0,
                 "startGradientColor": {
                     "dark": "rgb(255, 136, 136)",
                     "light": "rgb(187, 0, 0)",
@@ -153,8 +151,6 @@ class Arc:
             return {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"}
         else:
             return {
-                "min": 0,
-                "max": 0,
                 "startGradientColor": {
                     "dark": "rgb(255, 136, 136)",
                     "light": "rgb(187, 0, 0)",
