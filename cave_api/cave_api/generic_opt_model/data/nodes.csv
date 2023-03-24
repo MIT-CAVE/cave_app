@@ -81,7 +81,6 @@ airport_miami,Miami Airport (US),airport,0,-4.23,999999999,25.813,-80.293,0,loc_
 port_long_beach,Port of Long Beach (US),port,0,-0.15,999999999,33.766,-118.225,0,loc_long_beach,True,
 port_los_angeles,Port of Los Angeles (US),port,0,-0.14,999999999,33.72,-118.305,0,loc_los_angeles,True,
 port_tacoma,Port of Tacoma (US),port,0,-0.39,999999999,47.279,-122.393,0,loc_tacoma,True,
-port_vancouver,Port of Vancouver (CA),port,0,-0.19,999999999,49.343,-122.961,0,loc_vancouver,True,
 port_houston,Port of Houston (US),port,0,-0.1,999999999,29.627,-95.013,0,loc_houston,True,
 port_savannah,Port of Savannah (US),port,0,-0.45,999999999,32.136,-81.129,0,loc_savannah,True,
 port_norfolk,Port of Norfolk (US),port,0,-0.14,999999999,36.959,-76.346,0,loc_norfolk,True,

@@ -51,15 +51,6 @@ mfg_penang_airport_kuala_lumpur,truck,mfg_penang,airport_kuala_lumpur,-1.4,99999
 mfg_port_klang_airport_penang,truck,mfg_port_klang,airport_penang,-1.34,999999999
 mfg_port_klang_airport_kuala_lumpur,truck,mfg_port_klang,airport_kuala_lumpur,-1.05,999999999
 mfg_tanjung_pelepas_airport_kuala_lumpur,truck,mfg_tanjung_pelepas,airport_kuala_lumpur,-1.31,999999999
-port_vancouver_port_long_beach,ocean,port_vancouver,port_long_beach,-0.63,999999999
-port_vancouver_port_los_angeles,ocean,port_vancouver,port_los_angeles,-0.63,999999999
-port_vancouver_port_tacoma,ocean,port_vancouver,port_tacoma,-0.17,999999999
-port_vancouver_port_houston,ocean,port_vancouver,port_houston,-1.06,999999999
-port_vancouver_port_savannah,ocean,port_vancouver,port_savannah,-1.28,999999999
-port_vancouver_port_norfolk,ocean,port_vancouver,port_norfolk,-1.29,999999999
-port_vancouver_port_charleston,ocean,port_vancouver,port_charleston,-1.29,999999999
-port_vancouver_port_new_york,ocean,port_vancouver,port_new_york,-1.27,999999999
-port_vancouver_port_new_jersey,ocean,port_vancouver,port_new_jersey,-1.27,999999999
 port_yantian_port_long_beach,ocean,port_yantian,port_long_beach,-3.59,999999999
 port_yantian_port_los_angeles,ocean,port_yantian,port_los_angeles,-3.59,999999999
 port_yantian_port_tacoma,ocean,port_yantian,port_tacoma,-3.22,999999999
