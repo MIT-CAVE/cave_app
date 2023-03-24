@@ -27,7 +27,7 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         "value": 30,
         "minValue": 0,
         "maxValue": 100,
-        "label": "%",
+        "unit": "%",
         "help": "A help text for the slider",
     },
     "customPropKey4": {
@@ -80,10 +80,9 @@ Key | Default | Description
 <a name="apiCommandKeys">`customPropKey*.apiCommandKeys`</a> | | If specified, only passes specific session keys over to `execute_command` for each session to be synced.
 <a name="enabled">`customPropKey*.enabled`</a> | `False` | Enable a `props` element in the UI. If `False`, users cannot interact with the element in the UI.
 <a name="help">`customPropKey*.help`</a> | | A help message that is displayed in the UI, as a result of a mouseover or touch event on a `customPropKey*` element.
-<a name="label">`customPropKey*.label`</a> | | A label that is displayed in the UI next to the `customPropKey*` element.
 <a name="max-value">`customPropKey*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
 <a name="min-value">`customPropKey*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
-<a name="`placeholder">`customPropKey*.placeholder`</a> | | When used with a `'combobox'` variant, this displays a label that acts as help text when the field is empty or above the field when it contains a value.
+<a name="placeholder">`customPropKey*.placeholder`</a> | | When used with a `'combobox'` variant, this displays a label that acts as help text when the field is empty or above the field when it contains a value.
 <a name="views">`customPropKey*.views`</a> | `["year", "day", "hours", "minutes"]` | Used with a `'date'` prop, defines the available time units of the date and/or time. The views will be presented in the order specified in the `views` array.
 <a name="options">`customPropKey*.options`</a> | Required | Used along a `'selector'` prop, it takes an object containing the [`custom_option_*`](#custom_option_)s to be displayed on the UI element mapped to their display properties.
 <a name="custom_option_">`customPropKey*.options.custom_option_*`</a> | | Used along a `'selector'` prop, it takes an object containing the name of the option to be displayed on the UI element.
