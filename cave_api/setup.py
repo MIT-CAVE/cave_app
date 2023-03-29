@@ -1,8 +1,9 @@
 from distutils.core import setup
+from setuptools import find_packages
 
 setup(
     name="cave_api",
-    packages=["cave_api"],
+    packages=find_packages(),
     package_data={"": ["*.json", "*.csv"]},
     version="0.0.1",
     license="MIT",

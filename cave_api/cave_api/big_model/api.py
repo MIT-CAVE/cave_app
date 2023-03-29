@@ -39,7 +39,7 @@ example = {
                     },
                 },
             },
-            "iconUrl": "https://react-icons.mitcave.com/0.0.1",
+            "iconUrl": "https://react-icons.mitcave.com/4.8.0",
             "numberFormat": {
                 "precision": 4,
                 "trailingZeros": False,

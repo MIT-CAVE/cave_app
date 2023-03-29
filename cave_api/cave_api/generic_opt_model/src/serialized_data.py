@@ -72,7 +72,7 @@ def get_serialized_data():
                         "data": {"db1": ["dashboards", "data"]},
                     },
                 },
-                "iconUrl": "https://react-icons.mitcave.com/0.0.1",
+                "iconUrl": "https://react-icons.mitcave.com/4.8.0",
                 "numberFormat": {
                     "precision": 2,
                     "trailingZeros": False,
