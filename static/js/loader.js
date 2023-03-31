@@ -1,11 +1,27 @@
+function remove_with_fade( element, speed = 500 ) {
+  var seconds = speed/1000
+  element.style.transition = "opacity "+seconds+"s ease"
+  element.style.opacity = 0
+  setTimeout(function() {
+      element.parentNode.removeChild(element);
+  }, speed)
+}
+
+function add_with_fade(element, speed = 500) {
+  var seconds = speed/1000
+  element.style.transition = "opacity "+seconds+"s ease"
+  element.style.opacity = 1
+  element.style.display = 'block'
+}
+
 function close_loader() {
-  document.getElementById('loader-show-until-loaded').remove()
-  document.getElementById('loader-block-until-loaded').style.display = 'block'
+  remove_with_fade(document.getElementById('loader-show-until-loaded'))
+  add_with_fade(document.getElementById('loader-block-until-loaded'))
 }
 
 function start_loader() {
   const loader =  document.getElementById('loader-show-until-loaded')
-  loader.style.backgroundColor = 'rgba(0,0,0,0.8)'
+  loader.style.backgroundColor = 'rgba(0,0,0,0.5)'
   loader.style.display = 'block'
   loader.innerHTML = `
   <div class="row h-100 justify-content-center align-items-center">
