@@ -11,32 +11,26 @@ example = {
                     "value": False,
                     "data": {
                         "ab1": ["appBar", "data", "dashboardId"],
-                        "ab2": ["appBar", "paneState"]
-                    }
+                        "ab2": ["appBar", "paneState"],
+                    },
                 },
                 "pageSelection": {
                     "name": "Page Selection",
                     "showToggle": True,
                     "value": False,
-                    "data": {
-                        "ps1": ["appBar", "data", "appBarId"]
-                    },
+                    "data": {"ps1": ["appBar", "data", "appBarId"]},
                 },
-                "mapLayers":{
+                "mapLayers": {
                     "name": "Map Layers",
                     "showToggle": True,
                     "value": False,
-                    "data":{
-                        "ml1": ["maps", "data", "map1", "legendGroups"]
-                    }
+                    "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
                 },
                 "dashboards": {
                     "name": "Dashboards",
                     "showToggle": True,
                     "value": False,
-                    "data": {
-                        "db1": ["dashboards", "data"]
-                    },
+                    "data": {"db1": ["dashboards", "data"]},
                 },
             },
             "iconUrl": "https://react-icons.mitcave.com/4.8.0",

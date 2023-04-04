@@ -40,6 +40,4 @@ total_type_keys = list(total_types.keys())
 all_type_keys = list(all_types.keys())
 
 origin_type_keys = [key for key, value in node_geo_types.items() if value.get("isOrigin")]
-destination_type_keys = [
-    key for key, value in node_geo_types.items() if value.get("isDestination")
-]
+destination_type_keys = [key for key, value in node_geo_types.items() if value.get("isDestination")]

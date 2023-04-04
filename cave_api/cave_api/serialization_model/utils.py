@@ -1,4 +1,4 @@
-import csv, os
+import os
 
 
 def enumerate_dir(directory):

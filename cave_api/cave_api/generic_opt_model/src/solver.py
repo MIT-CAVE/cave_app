@@ -5,7 +5,6 @@ from scoptimize.network import (
 )
 from .config import (
     all_types,
-    all_type_keys,
     node_type_keys,
     node_geo_type_keys,
     node_arc_geo_type_keys,
@@ -172,7 +171,10 @@ class Model_Object:
 
         # Set outputs
         self.props.set_prop(key="output_total_units", value=units_processed)
-        self.props.set_prop(key="output_processing_capacity_utilization", value=pamda.safeDivide(self.processing_capacity, units_processed)*100)
+        self.props.set_prop(
+            key="output_processing_capacity_utilization",
+            value=pamda.safeDivide(self.processing_capacity, units_processed) * 100,
+        )
         self.props.set_prop(key="output_total_variable_cashflow", value=variable_cashflow)
         self.props.set_prop(key="output_total_fixed_cashflow", value=self.fixed_cashflow)
 
@@ -266,9 +268,7 @@ class Solver(Aggregate_Serializer):
         }
 
     def get_kpis(self):
-        used_objects = [
-            i for i in self.model_objects.values() if i.open
-        ]
+        used_objects = [i for i in self.model_objects.values() if i.open]
         destination_objects = [i for i in used_objects if i.type in destination_type_keys]
         self.kpis = {}
         for key, value in all_types.items():

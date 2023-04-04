@@ -7,7 +7,9 @@ def get_panes_data(data_dir):
     data = {i.pop("id"): i for i in pamda.read_csv(data_dir + "panes.csv", cast_items=True)}
 
     try:
-        layout_data = group_list(pamda.read_csv(data_dir + "/layout.csv", cast_items=True), "paneId")
+        layout_data = group_list(
+            pamda.read_csv(data_dir + "/layout.csv", cast_items=True), "paneId"
+        )
     except:
         layout_data = {}
     try:
@@ -15,7 +17,9 @@ def get_panes_data(data_dir):
     except:
         prop_data = {}
     try:
-        context_data = group_list(pamda.read_csv(data_dir + "/contexts.csv", cast_items=True), "paneId")
+        context_data = group_list(
+            pamda.read_csv(data_dir + "/contexts.csv", cast_items=True), "paneId"
+        )
     except:
         context_data = {}
 

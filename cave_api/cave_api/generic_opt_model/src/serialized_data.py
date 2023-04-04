@@ -19,12 +19,12 @@ def get_node_arc_geo_categories(serializer):
                 "data": serializer.get_categories_item_data(
                     items_dict=obj_data.get(obj_key),
                     additional_key_fn_dict={
-                            "all": lambda x: "All",
-                        },
+                        "all": lambda x: "All",
+                    },
                 ),
                 "name": obj_value["name"],
                 "nestedStructure": {
-                    'all': {'name': 'All', 'order': 0},
+                    "all": {"name": "All", "order": 0},
                     "item": {
                         "name": obj_value["name"],
                         "order": 1,
