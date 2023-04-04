@@ -126,6 +126,22 @@ cave test <your-test>
 cave test test_init.py
 ```
 
+## Debugging
+
+Testing: 
+- The best way to debug is normally through the `cave test` command in your terminal. 
+    - Use `cave help` for more information on that function.
+- You can add print statements to your code as you work through that process and `cave test` would yield those in your terminal
+
+Console:
+Another common way to debug app crashes (when the app goes grey and only the app bar is left) is to use the chrome console.
+- Launch your app using `cave run`
+- Log in to the app and go to the `app` page.
+- Inspect chrome
+    - On Mac: Cmd + Option + i
+    - On Linux: Ctrl + Shift + i
+- Navigate to the console tab and note any log items
+
 
 # Appendix
 
