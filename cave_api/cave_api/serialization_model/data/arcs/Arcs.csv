@@ -1,5 +1,5 @@
 id,startLatitude,startLongitude,endLatitude,endLongitude,startClick,endClick,type,location,sku,numericPropExampleA,numericPropExampleB,selectorPropForColor
-arc1,43.78,-79.63,39.82,-86.18,800,1600,T1,locCaOn locUsIn,SKU2 SKU1,50,40,"[{""name"": ""A"", ""value"": false},{""name"": ""B"", ""value"": true},{""name"": ""C"", ""value"": false},{""name"": ""D"", ""value"": false},{""name"": ""E"", ""value"": false},{""name"": ""F"", ""value"": false}]"
-arc2,39.82,-86.18,42.89,-85.68,1600,2000,T2,locUsMi locUsIn,SKU2 SKU1,30,20,"[{""name"": ""A"", ""value"": false},{""name"": ""B"", ""value"": false},{""name"": ""C"", ""value"": false},{""name"": ""D"", ""value"": false},{""name"": ""E"", ""value"": true},{""name"": ""F"", ""value"": false}]"
-arc3,39.82,-86.18,28.49,-81.56,1600,2000,T2,locUsFl locUsIn,SKU2 SKU1,30,14,"[{""name"": ""A"", ""value"": false},{""name"": ""B"", ""value"": false},{""name"": ""C"", ""value"": false},{""name"": ""D"", ""value"": true},{""name"": ""E"", ""value"": false},{""name"": ""F"", ""value"": false}]"
-arc4,39.82,-86.18,42.361176,-71.084707,1600,2000,T2,locUsMa locUsIn,SKU2 SKU1,30,6,"[{""name"": ""A"", ""value"": false},{""name"": ""B"", ""value"": false},{""name"": ""C"", ""value"": false},{""name"": ""D"", ""value"": false},{""name"": ""E"", ""value"": false},{""name"": ""F"", ""value"": true}]"
+arc1,43.78,-79.63,39.82,-86.18,800,1600,T1,locCaOn locUsIn,SKU2 SKU1,50,40,b
+arc2,39.82,-86.18,42.89,-85.68,1600,2000,T2,locUsMi locUsIn,SKU2 SKU1,30,20,e
+arc3,39.82,-86.18,28.49,-81.56,1600,2000,T2,locUsFl locUsIn,SKU2 SKU1,30,14,d
+arc4,39.82,-86.18,42.361176,-71.084707,1600,2000,T2,locUsMa locUsIn,SKU2 SKU1,30,6,f

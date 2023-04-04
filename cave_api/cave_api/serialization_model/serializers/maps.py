@@ -1,4 +1,5 @@
-from cave_api.serialization_model.utils import read_csv, group_list
+from cave_api.serialization_model.utils import group_list
+from pamda import pamda
 
 
 def get_enabled_types(layers_data):
@@ -38,8 +39,8 @@ def serialize_map(layers, viewports):
 
 
 def get_maps_data(data_dir):
-    layers_data = group_list(read_csv(data_dir + "layers.csv"), "id")
-    viewports = group_list(read_csv(data_dir + "viewports.csv"), "id")
+    layers_data = group_list(pamda.read_csv(data_dir + "layers.csv", cast_items=True), "id")
+    viewports = group_list(pamda.read_csv(data_dir + "viewports.csv", cast_items=True), "id")
     return {
         "data": {key: serialize_map(layers_data[key], viewports[key]) for key in layers_data.keys()}
     }

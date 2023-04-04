@@ -1,7 +1,8 @@
 import json
 from cave_api.serialization_model.serializers.keys import specified_keys, data_location
-from cave_api.serialization_model.utils import enumerate_dir, read_csv
+from cave_api.serialization_model.utils import enumerate_dir
 from cave_api.serialization_model.serializers.categories import get_categories_data
+from pamda import pamda
 
 
 def get_file_data(data_dir):
@@ -13,8 +14,8 @@ def get_file_data(data_dir):
     with open(data_dir + json_filename) as f:
         types = json.load(f)
 
-    return {"name": csv_filename.replace(".csv", ""), "types": types}, read_csv(
-        data_dir + csv_filename
+    return {"name": csv_filename.replace(".csv", ""), "types": types}, pamda.read_csv(
+        data_dir + csv_filename, cast_items=True
     )
 
 

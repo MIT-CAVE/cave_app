@@ -1,5 +1,5 @@
 import json
-from cave_api.serialization_model.utils import read_csv
+from pamda import pamda
 
 
 def serialize_item(item):
@@ -14,7 +14,7 @@ def serialize_item(item):
 
 def get_dashboards_data(data_dir):
     data = {}
-    layout_data = read_csv(data_dir + "/layout.csv")
+    layout_data = pamda.read_csv(data_dir + "/layout.csv", cast_items=True)
     for item in layout_data:
         id = item.pop("id")
         if id not in data:

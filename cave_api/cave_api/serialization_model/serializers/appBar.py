@@ -1,5 +1,5 @@
 import json
-from cave_api.serialization_model.utils import read_csv
+from pamda import pamda
 
 
 def serialize_item(item):
@@ -9,4 +9,4 @@ def serialize_item(item):
 
 
 def get_app_bar_data(data_dir):
-    return {"data": {i.pop("id"): serialize_item(i) for i in read_csv(data_dir + "appBar.csv")}}
+    return {"data": {i.pop("id"): serialize_item(i) for i in pamda.read_csv(data_dir + "appBar.csv", cast_items=True)}}

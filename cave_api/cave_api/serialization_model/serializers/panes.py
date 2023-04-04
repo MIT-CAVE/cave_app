@@ -1,20 +1,21 @@
 import json
-from cave_api.serialization_model.utils import read_csv, group_list
+from cave_api.serialization_model.utils import group_list
+from pamda import pamda
 
 
 def get_panes_data(data_dir):
-    data = {i.pop("id"): i for i in read_csv(data_dir + "panes.csv")}
+    data = {i.pop("id"): i for i in pamda.read_csv(data_dir + "panes.csv", cast_items=True)}
 
     try:
-        layout_data = group_list(read_csv(data_dir + "/layout.csv"), "paneId")
+        layout_data = group_list(pamda.read_csv(data_dir + "/layout.csv", cast_items=True), "paneId")
     except:
         layout_data = {}
     try:
-        prop_data = group_list(read_csv(data_dir + "/props.csv"), "paneId")
+        prop_data = group_list(pamda.read_csv(data_dir + "/props.csv", cast_items=True), "paneId")
     except:
         prop_data = {}
     try:
-        context_data = group_list(read_csv(data_dir + "/contexts.csv"), "paneId")
+        context_data = group_list(pamda.read_csv(data_dir + "/contexts.csv", cast_items=True), "paneId")
     except:
         context_data = {}
 
