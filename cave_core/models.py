@@ -892,7 +892,7 @@ class Sessions(models.Model):
         help_text=_("The associated team"),
     )
     description = models.TextField(
-        _("description"), max_length=512, help_text=_("Description for the session"), default=""
+        _("description"), max_length=512, help_text=_("Description for the session"), default="", blank=True
     )
     versions = models.JSONField(_("versions"), help_text=_("The session versions"), default=dict)
     loading = models.BooleanField(
@@ -901,7 +901,7 @@ class Sessions(models.Model):
         default=False,
     )
     user_ids = models.JSONField(
-        _("user_ids"), help_text=_("A list of user_ids for this session"), default=list
+        _("user_ids"), help_text=_("A list of user_ids for this session"), default=list, blank=True
     )
 
     def update_versions(self):
@@ -1152,11 +1152,12 @@ class Sessions(models.Model):
     def save(self, *args, **kwargs):
         """
         Special post save event to update the team's session list
-        - Note: Only applies when an update field is not specified
+        - Note: Only applies when an update field is not specified or includes the session name
         """
         super(Sessions, self).save(*args, **kwargs)
         try:
-            if kwargs.get('update_fields') is None:
+            update_fields = kwargs.get('update_fields',[])
+            if update_fields==[] or 'name' in update_fields:
                 self.team.update_sessions_list()
         except:
             pass
