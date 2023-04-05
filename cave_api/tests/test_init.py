@@ -11,6 +11,7 @@ class Socket:
     def notify(self, *args, **kwargs):
         print("notify: ", {"args": args, "kwargs": kwargs})
 
+
 init_session_data = execute_command(session_data={}, socket=Socket(), command="init")
 
 init_keys = init_session_data.keys()
