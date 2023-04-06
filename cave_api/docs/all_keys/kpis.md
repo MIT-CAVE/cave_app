@@ -37,8 +37,23 @@ Key | Default | Description
 --- | ------- | -----------
 `customKpi*` | Required | A custom key wrapper for the KPI data.
 `customKpi*.mapKpi` | `False` | The `mapKpi` flag allows designers to specify up to six parameters that are displayed on a permanent grid in the "**Map**" view. The grid layout (rows *x* columns) changes with the number of parameters present in the data, scaling up to 2 rows and 3 columns.
-`customKpi*.type` | `'num'` | As a direct child of `customKpi*`, the `type` key defines the UI construct used to render the KPI and restricts the set of key-value pairs that can be used with this type. The `type` key takes one of the following values:<br><br>`'head'`: the `mapKpi`, [`numberFormat`](../common_keys/common_keys.md#number-format), and `value` keys are ignored when used along this type.<br>`'num'`: all keys are valid to use with this type.<br>`'text'`: the [`numberFormat`](../common_keys/common_keys.md#number-format) key is ignored when used along this type.<br>
+`customKpi*.type` | `'num'` | As a direct child of `customKpi*`, the `type` key defines the UI construct used to render the KPI and restricts the set of key-value pairs that can be used with this type.
 `customKpi*.value` | | The actual value of the KPI.
+<a name="variant">`customKpi*.variant`</a> | | Used to modify the UI for a given KPI `type`. The presentation to the end user changes, but the `value`s should remain with the same structure. For example, you can modify the appearance of a `'head'` KPI in terms of the orientation of its related items (`'column'` or `'row'`).
+
+## KPI `type`s and their `variant`s:
+
+### `'head'`
+Allows users to place a header for an individual section, containing a title (via [`name`](common_keys.md#name)) and a [`help`](#help) message. the `mapKpi`, [`numberFormat`](../common_keys/common_keys.md#number-format), and `value` keys are ignored when used along this type.
+#### Variants:
+>`'column'` (**default**): Acts as a header for a column of related KPI items.<br>
+`'row'`: Acts as a header for a row of related KPI items.<br>
+
+### `'num'`
+Displays a numeric value. All keys are valid to use with this type.
+
+### `'text'`
+Displays a text string. The [`numberFormat`](../common_keys/common_keys.md#number-format) key is ignored when used along this type.
 
 ## Example
 
