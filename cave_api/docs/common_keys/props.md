@@ -96,6 +96,9 @@ Key | Default | Description
 
 ### `'head'`
 Allows users to place a header for an individual section, containing a title (via [`name`](common_keys.md#name)) and a [`help`](#help) message. The [`value`](#value) key is not used with this type.
+#### Variants:
+>`'column'` (**default**): Acts as a header for a column of related prop items.<br>
+`'row'`: Acts as a header for a row of related prop items.<br>
 
 ### `'text'`
 Allows users to enter text in a UI field. Here, `value` takes a string.
