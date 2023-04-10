@@ -97,8 +97,8 @@ Key | Default | Description
 ### `'head'`
 Allows users to place a header for an individual section, containing a title (via [`name`](common_keys.md#name)) and a [`help`](#help) message. The [`value`](#value) key is not used with this type.
 #### Variants:
-`'column'`: Arrange items within the prop to display as a column header.<br>
->`'row'`: Arrange items within the prop to display as a row header.<br>
+>`'column'` (**default**): Acts as a header for a column of related prop items.<br>
+`'row'`: Acts as a header for a row of related prop items.<br>
 
 ### `'text'`
 Allows users to enter text in a UI field. Here, `value` takes a string.
@@ -114,7 +114,7 @@ Allows users to enter a numeric value in a UI field. The `value` receives a nume
 Allows to enable or disable the status of a single setting. Here, `value` receives a boolean value.
 
 ### `'button'`
-Does not actually allow users to directly change a value. Instead,this allows users to trigger the `customPropKey*.apiCommand` on the server.
+Does not actually allow users to directly change a value. Instead, this allows users to trigger the `customPropKey*.apiCommand` on the server.
 
 ### `'selector'`
 Allows end users to select options from a set. This `type` requires an array of dictionary objects for its [`value`](#value) key and a `variant` must be specified.
