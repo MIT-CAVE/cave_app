@@ -118,6 +118,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     "layoutDirection": "horizontal",
+                    "grouping": "Solo",
                     "order": 1,
                 },
                 "sku": {
