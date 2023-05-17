@@ -50,6 +50,27 @@ class LogHelper():
     def show(self):
         self.log.show()
 
+class PropsObject():
+    def __init__(self, key, data, log:LogObject, require_values:bool=True):
+        self.key = key
+        self.data = data
+        self.log = log
+        self.validate_fields()
+
+    def validate_variants(self, variants):
+
+    def validate_prop(self, prop_key, prop_dict):
+        prop_type = pamda.path(['type'], prop_dict)
+        if prop_type is None:
+            self.log.add(path=[key,prop_key], error=f"Missing required field `type`.", level="error")
+        elif prop_type not in ['head', 'text', 'num', 'toggle', 'button', 'selector', 'date']:
+            self.log.add(path=[key,prop_key], error=f"Unknown prop type `{prop_type}`. Acceptable prop types include: `head`, `text`, `num`, `toggle`, `button`, `selector`, `date`.", level="error")
+        if prop_type == head
+
+    def validate_fields(self):
+        for prop_key, prop_dict in self.data.items():
+            self.validate_prop(prop_key, prop_dict)
+
 class MapTypeObject():
     def __init__(self, type_key:str, type_dict:dict, top_level_key:str, log:LogObject):
         # Basic Data + Validation
@@ -149,8 +170,7 @@ class MapTypeObject():
                 if field_data not in ['dotted', 'dashed', 'solid']:
                     self.log.add(path=[field], error=f"LineBy can only be `dotted`, `dashed` or `solid` but got `{field_data}` instead.", level="error")
         elif field in ["props"]:
-            # TODO
-            pass
+            props = PropsObject(key=field, data=field_data, log=self.log, require_values=False)
 
         elif field in ["layout"]:
             # TODO
