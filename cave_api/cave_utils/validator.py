@@ -51,21 +51,36 @@ class LogHelper():
         self.log.show()
 
 class PropsObject():
-    def __init__(self, key, data, log:LogObject, require_values:bool=True):
+    def __init__(self, key:str, data, log:LogObject, require_values:bool=True):
         self.key = key
         self.data = data
         self.log = log
         self.validate_fields()
 
-    def validate_variants(self, variants):
+    # def validate_variants(self, variants):
 
     def validate_prop(self, prop_key, prop_dict):
         prop_type = pamda.path(['type'], prop_dict)
         if prop_type is None:
-            self.log.add(path=[key,prop_key], error=f"Missing required field `type`.", level="error")
+            self.log.add(path=[self.key,prop_key], error=f"Missing required field `type`.", level="error")
         elif prop_type not in ['head', 'text', 'num', 'toggle', 'button', 'selector', 'date']:
-            self.log.add(path=[key,prop_key], error=f"Unknown prop type `{prop_type}`. Acceptable prop types include: `head`, `text`, `num`, `toggle`, `button`, `selector`, `date`.", level="error")
-        if prop_type == head
+            self.log.add(path=[self.key,prop_key], error=f"Unknown prop type `{prop_type}`. Acceptable prop types include: `head`, `text`, `num`, `toggle`, `button`, `selector`, `date`.", level="error")
+        if prop_type == 'head':
+            self.validate_keys(prop_key=prop_key, prop_data=prop_dict, required_keys=['name'], optonal_keys=['help'])
+
+    def validate_keys(self, prop_key, prop_data, required_keys, optional_keys):
+        for key in required_keys:
+            if key not in prop_data:
+                self.log.add(path=[self.key, prop_key, key], error=f'Missing required key: {key}', level='error')
+        for key in optional_keys:
+            if key not in prop_data:
+                self.log.add(path=[self.key, prop_key, key], error=f'Missing optional key: {key}', level='warning')
+
+        for key in required_keys + optional_keys:
+            if key in ['name', 'help']:
+                if not isinstance(prop_data.get(key), str):
+                    self.log.add(path=[self.key, prop_key, key], error=f'Value Error: Not a string', level='error')
+                
 
     def validate_fields(self):
         for prop_key, prop_dict in self.data.items():
@@ -196,6 +211,7 @@ class MapDataObject():
 class Validator():
     def __init__(self, session_data, version):
         self.session_data = session_data
+        # TODO: Figure out how to validate arbitrary versions
         self.version = version
         self.log = LogObject()
 
