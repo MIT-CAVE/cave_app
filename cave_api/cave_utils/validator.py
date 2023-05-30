@@ -273,6 +273,7 @@ class MapDataObject():
 class Validator():
     def __init__(self, session_data, version):
         self.session_data = session_data
+        # TODO: Figure out how to validate arbitrary versions
         self.version = version
         self.log = LogObject()
 
