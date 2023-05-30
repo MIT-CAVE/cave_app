@@ -50,41 +50,103 @@ class LogHelper():
     def show(self):
         self.log.show()
 
-class PropsObject():
-    def __init__(self, key:str, data, log:LogObject, require_values:bool=True):
-        self.key = key
+class PropValidator:
+    def __init__(self, key, data, log:LogObject, require_all_fields:bool=True):
         self.data = data
-        self.log = log
-        self.validate_fields()
+        self.log = LogHelper(log=log, prepend_path=[key])
+        self.require_all_fields = require_all_fields
+        self.type = self.data.get("type")
+        self.populate_data()
+        self.validate()
 
-    # def validate_variants(self, variants):
+    def populate_data(self):
+        self.value_types = {
+            'num': (int, float),
+            'toggle': bool,
+            'button': str,
+            'text': str,
+            'selector': list,
+            'date': str,
+        }
 
-    def validate_prop(self, prop_key, prop_dict):
-        prop_type = pamda.path(['type'], prop_dict)
-        if prop_type is None:
-            self.log.add(path=[self.key,prop_key], error=f"Missing required field `type`.", level="error")
-        elif prop_type not in ['head', 'text', 'num', 'toggle', 'button', 'selector', 'date']:
-            self.log.add(path=[self.key,prop_key], error=f"Unknown prop type `{prop_type}`. Acceptable prop types include: `head`, `text`, `num`, `toggle`, `button`, `selector`, `date`.", level="error")
-        if prop_type == 'head':
-            self.validate_keys(prop_key=prop_key, prop_data=prop_dict, required_keys=['name'], optonal_keys=['help'])
+        self.field_types = {
+            'name': str,
+            'help': str,
+            'type': str,
+            'placeholder': str,
+            'apiCommand': str,
+            'views': str,
+            'apiCommandKeys': list,
+            'value': self.value_types.get(self.type, None),
+            'variant': str,
+            'enabled': bool,
+            'options': dict,
+            'maxValue': (int, float),
+            'minValue': (int, float),
+            'numberFormat': dict,
+        }
 
-    def validate_keys(self, prop_key, prop_data, required_keys, optional_keys):
-        for key in required_keys:
-            if key not in prop_data:
-                self.log.add(path=[self.key, prop_key, key], error=f'Missing required key: {key}', level='error')
-        for key in optional_keys:
-            if key not in prop_data:
-                self.log.add(path=[self.key, prop_key, key], error=f'Missing optional key: {key}', level='warning')
+        self.allowed_variants = {
+            'head': ['column', 'row'],
+            'text': ['textarea'],
+            'num': ['slider'],
+            'selector': ['dropdown', 'checkbox', 'radio', 'combobox'],
+            'date': ['date', 'time', 'datetime'],
+        }
 
-        for key in required_keys + optional_keys:
-            if key in ['name', 'help']:
-                if not isinstance(prop_data.get(key), str):
-                    self.log.add(path=[self.key, prop_key, key], error=f'Value Error: Not a string', level='error')
-                
+        self.accepted_values = {
+            'type': ["head", "num", "toggle", "button", "text", "selector", "date"],
+            'views': ['year','day','hours','minutes'],
+            'variant': self.allowed_variants.get(self.type, None),
+            # Variant is omitted because it is validated separately
+        }
 
-    def validate_fields(self):
-        for prop_key, prop_dict in self.data.items():
-            self.validate_prop(prop_key, prop_dict)
+        self.required_fields = {
+            'head': ['name', 'type'],
+            'text': ['name', 'type', 'value'],
+            'num': ['name', 'type', 'value'],
+            'toggle': ['name', 'type', 'value'],
+            'button': ['name', 'type', 'value'],
+            'selector': ['name', 'type', 'value', 'options'],
+            'date': ['name', 'type', 'value'],
+        }
+
+        self.optional_fields = {
+            'head': ['help', 'variant'],
+            'text': ['help', 'enabled', 'variant', 'apiCommand', 'apiCommandKeys', 'minRows', 'maxRows'],
+            'num': ['help', 'enabled', 'variant', 'apiCommand', 'apiCommandKeys', 'maxValue', 'minValue', 'numberFormat'],
+            'toggle': ['help', 'enabled', 'apiCommand', 'apiCommandKeys'],
+            'button': ['help', 'enabled', 'apiCommand', 'apiCommandKeys'],
+            'selector': ['help', 'enabled', 'variant', 'apiCommand', 'apiCommandKeys', 'placeholder'],
+            'date': ['help', 'enabled', 'variant', 'apiCommand', 'apiCommandKeys', 'views']
+        }
+
+    def validate(self):
+        required_fields = self.required_fields.get(self.type, [])
+        optional_fields = self.optional_fields.get(self.type, [])
+        if self.require_all_fields:
+            for field in required_fields:
+                if field not in self.data:
+                    self.log.add(path=[field], error=f"Missing required field")
+        for field, value in self.data.items():
+            if field not in required_fields + optional_fields:
+                self.log.add(path=[field], error="Unknown field")
+                # Do not continue validating this field if it is unknown
+                return 
+            acceptable_types = self.field_types.get(field, type(None))
+            if not isinstance(value, acceptable_types):
+                self.log.add(path=[field], error=f"Invalid type ({type(value)}): Acceptable types are: {acceptable_types}")
+            accepted_values = self.accepted_values.get(field, None)
+            if accepted_values is not None and value not in accepted_values:
+                self.log.add(path=[field], error=f"Invalid value ({value}): Acceptable values are: {accepted_values}")
+        
+class PropsObject():
+    def __init__(self, key, data, log:LogObject, default_data={}, require_all_fields:bool=True):
+        self.key = key
+        self.data = pamda.mergeDeep(data, default_data)
+        self.log = LogHelper(log=log, prepend_path=[key])
+        for prop_key, prop_data in self.data.items():
+            PropValidator(key=prop_key, data=prop_data, log=log, require_all_fields=require_all_fields)
 
 class MapTypeObject():
     def __init__(self, type_key:str, type_dict:dict, top_level_key:str, log:LogObject):
@@ -185,7 +247,7 @@ class MapTypeObject():
                 if field_data not in ['dotted', 'dashed', 'solid']:
                     self.log.add(path=[field], error=f"LineBy can only be `dotted`, `dashed` or `solid` but got `{field_data}` instead.", level="error")
         elif field in ["props"]:
-            props = PropsObject(key=field, data=field_data, log=self.log, require_values=False)
+            props = PropsObject(key=field, data=field_data, log=self.log, require_all_fields=False)
 
         elif field in ["layout"]:
             # TODO
