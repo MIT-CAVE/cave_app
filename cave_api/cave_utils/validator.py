@@ -1,19 +1,6 @@
 from pamda import pamda
+import re
 from pprint import pp
-
-def validate_rgb_string(rgb_string:str):
-    if 'rgb(' != rgb_string[:4]:
-        return False
-    if ')' != rgb_string[-1]:
-        return False
-    rgb_list = rgb_string[4:-1].replace(' ','').split(',')
-    for rgb in rgb_list:
-        if not rgb.isdigit():
-            return False
-        if int(rgb) < 0 or int(rgb) > 255:
-            return False
-    return True
-
 
 class LogObject():
     def __init__(self, errors:dict=dict(), warnings:dict=dict()):
@@ -23,6 +10,7 @@ class LogObject():
     def add(self, path, error, level='error'):
         assert level in ['error', 'warning'], "level must be one of `error` or `warning`"
         data = self.warnings if level == 'warning' else self.errors
+        path = path + [level]
         pamda.assocPath(path=path, value=pamda.pathOr([], path, data) + [error], data=data)
 
     def show_errors(self):
@@ -50,16 +38,144 @@ class LogHelper():
     def show(self):
         self.log.show()
 
-class PropValidator:
-    def __init__(self, key, data, log:LogObject, require_all_fields:bool=True):
+class CoreValidator:
+    def __init__(self, data, log:LogObject, prepend_path:list=[], require_all_fields:bool=True, log_unknown_fields:bool=True, **kwargs):
         self.data = data
-        self.log = LogHelper(log=log, prepend_path=[key])
+        self.log = LogHelper(log=log, prepend_path=prepend_path)
         self.require_all_fields = require_all_fields
-        self.type = self.data.get("type")
-        self.populate_data()
+        self.log_unknown_fields = log_unknown_fields
+        self.populate_data(**kwargs)
         self.validate()
+        try:
+            self.additional_validations(**kwargs)
+        except Exception as e:
+            self.log.add(path=[], error=f"Additional validations failed (likely due to another error)")
 
+    def validate(self):
+        if self.require_all_fields:
+            for field in self.required_fields:
+                if field not in self.data:
+                    self.log.add(path=[field], error=f"Missing required field")
+        for field, value in self.data.items():
+            accepted_values = self.accepted_values.get(field, None)
+            if accepted_values is not None and value not in accepted_values:
+                self.log.add(path=[field], error=f"Invalid value ({value}): Acceptable values are: {accepted_values}")
+                continue
+            if self.log_unknown_fields:
+                if field not in self.required_fields + self.optional_fields:
+                    self.log.add(path=[field], error="Unknown field")
+                    continue
+            acceptable_types = self.field_types.get(field, type(None))
+            if not isinstance(value, acceptable_types):
+                self.log.add(path=[field], error=f"Invalid type ({type(value)}): Acceptable types are: {acceptable_types}")
+
+    def additional_validations(self, **kwargs):
+        pass
+
+    def is_rgb_string_valid(self, rgb_string:str):
+        try:
+            if 'rgb(' != rgb_string[:4]:
+                return False
+            if ')' != rgb_string[-1]:
+                return False
+            rgb_list = rgb_string[4:-1].replace(' ','').split(',')
+            for rgb in rgb_list:
+                if not rgb.isdigit():
+                    return False
+                if int(rgb) < 0 or int(rgb) > 255:
+                    return False
+        except:
+            return False
+        return True
+
+    def validate_rgb_string(self, rgb_string:str, prepend_path:list=[]):
+        if not self.is_rgb_string_valid(rgb_string):
+            self.log.add(path=prepend_path, error=f"Invalid rgb string: {rgb_string}")
+
+    def is_url_valid(self, url:str):
+        # Use Django regex for URL validation
+        # See https://stackoverflow.com/a/7160778/12014156
+        regex = re.compile(
+            r'^(?:http|ftp)s?://' # http:// or https://
+            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
+            r'localhost|' #localhost...
+            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})' # ...or ip
+            r'(?::\d+)?' # optional port
+            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+        is_valid = re.match(regex, url) is not None
+        return re.match(regex, url) is not None
+
+    def validate_url(self, url:str, prepend_path:list=[]):
+        if not self.is_url_valid(url):
+            self.log.add(path=prepend_path, error=f"Invalid URL: {url}")
+
+class ColorValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.expected_color_fields = list(self.data.keys()) if kwargs.get('is_color_option', False) else ['dark', 'light']
+        self.field_types = {i:str for i in self.expected_color_fields}
+        self.required_fields = self.expected_color_fields
+        self.optional_fields = []
+        self.accepted_values = {}
+
+    def additional_validations(self, **kwargs):
+        for field in self.expected_color_fields:
+            self.validate_rgb_string(self.data.get(field,''), prepend_path=[field])
+
+class ColorByOptionValidator(CoreValidator):
+    def is_categorical(self):
+        expected_keys = ['min', 'max', 'startGradientColor', 'endGradientColor']
+        return len(pamda.intersection(expected_keys, list(self.data.keys())))==0
+
+    def populate_data(self, **kwargs):
+        if self.is_categorical():
+            self.field_types = {i: str for i in self.data.keys()}
+            self.required_fields = list(self.data.keys())
+            self.optional_fields = []
+        else:
+            self.field_types = {
+                'min': (float, int),
+                'max': (float, int),
+                'startGradientColor': dict,
+                'endGradientColor': dict,
+            }
+            self.required_fields = ['startGradientColor', 'endGradientColor']
+            self.optional_fields = ['min', 'max']
+        self.accepted_values = {}
+
+    def additional_validations(self, **kwargs):
+        if self.is_categorical():
+            ColorValidator(data=self.data, log=self.log, prepend_path=[], require_all_fields=True, is_color_option=True)
+        else:
+            for field in ['startGradientColor', 'endGradientColor']:
+                ColorValidator(data=self.data.get(field), log=self.log, prepend_path=[field], require_all_fields=True)
+
+class SizeValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'min': (float, int),
+            'max': (float, int),
+        }
+        self.required_fields = []
+        self.optional_fields = ['min', 'max']
+        self.accepted_values = {}
+
+class CustomKeyValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {i:dict for i in self.data.keys()}
+        self.required_fields = list(self.data.keys())
+        self.optional_fields = []
+        self.accepted_values = {}
+
+
+    def additional_validations(self, **kwargs):
+        validator = kwargs.get('validator')
+        assert validator is not None, "Must pass validator to CustomKeyValidator"
+        for field, value in self.data.items():
+            validator(data=value, log=self.log, prepend_path=[field], require_all_fields=True, **kwargs)
+
+class PropValidator(CoreValidator):
     def populate_data(self):
+        validation_type = self.data.get('type')
         self.value_types = {
             'num': (int, float),
             'toggle': bool,
@@ -77,7 +193,7 @@ class PropValidator:
             'apiCommand': str,
             'views': str,
             'apiCommandKeys': list,
-            'value': self.value_types.get(self.type, None),
+            'value': self.value_types.get(validation_type, None),
             'variant': str,
             'enabled': bool,
             'options': dict,
@@ -97,8 +213,7 @@ class PropValidator:
         self.accepted_values = {
             'type': ["head", "num", "toggle", "button", "text", "selector", "date"],
             'views': ['year','day','hours','minutes'],
-            'variant': self.allowed_variants.get(self.type, None),
-            # Variant is omitted because it is validated separately
+            'variant': self.allowed_variants.get(validation_type, None),
         }
 
         self.required_fields = {
@@ -109,7 +224,7 @@ class PropValidator:
             'button': ['name', 'type', 'value'],
             'selector': ['name', 'type', 'value', 'options'],
             'date': ['name', 'type', 'value'],
-        }
+        }.get(validation_type, [])
 
         self.optional_fields = {
             'head': ['help', 'variant'],
@@ -119,34 +234,146 @@ class PropValidator:
             'button': ['help', 'enabled', 'apiCommand', 'apiCommandKeys'],
             'selector': ['help', 'enabled', 'variant', 'apiCommand', 'apiCommandKeys', 'placeholder'],
             'date': ['help', 'enabled', 'variant', 'apiCommand', 'apiCommandKeys', 'views']
+        }.get(validation_type, [])
+
+class PropsValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {i: dict for i in self.data.keys()}
+        self.required_fields = list(self.data.keys())
+        self.optional_fields = []
+        self.accepted_values = {}
+
+    def additional_validations(self, **kwargs):
+        for field, value in self.data.items():
+            x=PropValidator(data=value, log=self.log, prepend_path=[field], require_all_fields=self.require_all_fields, **kwargs)
+
+class LayoutValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        layout_type = self.data.get("type", None)
+
+        self.field_types = {
+            'type': str,
+            'numColumns': (str, int),
+            'numRows': (str, int),
+            'data': dict,
+            'itemId': str,
+            'column': int,
+            'row': int,
         }
 
-    def validate(self):
-        required_fields = self.required_fields.get(self.type, [])
-        optional_fields = self.optional_fields.get(self.type, [])
-        if self.require_all_fields:
-            for field in required_fields:
-                if field not in self.data:
-                    self.log.add(path=[field], error=f"Missing required field")
-        for field, value in self.data.items():
-            if field not in required_fields + optional_fields:
-                self.log.add(path=[field], error="Unknown field")
-                # Do not continue validating this field if it is unknown
-                return 
-            acceptable_types = self.field_types.get(field, type(None))
-            if not isinstance(value, acceptable_types):
-                self.log.add(path=[field], error=f"Invalid type ({type(value)}): Acceptable types are: {acceptable_types}")
-            accepted_values = self.accepted_values.get(field, None)
-            if accepted_values is not None and value not in accepted_values:
-                self.log.add(path=[field], error=f"Invalid value ({value}): Acceptable values are: {accepted_values}")
+        if layout_type == 'grid':
+            self.required_fields = ['type', 'numColumns', 'numRows', 'data']
+            self.optional_fields = []
+
+        elif layout_type == 'item':
+            self.required_fields = ['type', 'itemId']
+            self.optional_fields = ['column', 'row']
+
+        else:
+            self.required_fields = []
+            self.optional_fields = ['type', 'numColumns', 'numRows', 'data', 'itemId', 'column', 'row']
+
+        self.accepted_values = {
+            'type': ['grid', 'item'],
+        }
+
+        if isinstance(self.data.get("numColumns", None), str):
+            self.accepted_values['numColumns'] = ['auto', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        if isinstance(self.data.get("numRows", None), str):
+            self.accepted_values['numRows'] = ['auto', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    def additional_validations(self, **kwargs):
+        layout_type = self.data.get("type", None)
+        if layout_type == 'grid':
+            for field, value in self.data.get('data',{}).items():
+                LayoutValidator(data=value, log=self.log, prepend_path=['data',field], require_all_fields=True, **kwargs)
+
+class GeoJsonValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'geoJsonLayer': str,
+            'geoJsonProp': str,
+        }
+        self.required_fields = ['geoJsonLayer', 'geoJsonProp']
+        self.optional_fields = []
+        self.accepted_values = {}
+
+    def additional_validations(self, **kwargs):
+        self.validate_url(self.data.get('geoJsonLayer', None), prepend_path=['geoJsonLayer'])
+
+class ArcsNodesGeosRootValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        top_level_key = kwargs.get("top_level_key", None)
+        assert top_level_key in ["nodes", "arcs", "geos"], "top_level_key must be one of `nodes`, `arcs`, or `geos`"
         
-class PropsObject():
-    def __init__(self, key, data, log:LogObject, default_data={}, require_all_fields:bool=True):
-        self.key = key
-        self.data = pamda.mergeDeep(data, default_data)
-        self.log = LogHelper(log=log, prepend_path=[key])
-        for prop_key, prop_data in self.data.items():
-            PropValidator(key=prop_key, data=prop_data, log=log, require_all_fields=require_all_fields)
+        self.field_types = {
+            'types': dict,
+            'data': dict,
+            'allowModification': bool,
+            'sendToApi': bool,
+            'sendToClient': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['data']
+
+        self.optional_fields = ['types', 'allowModification', 'sendToApi', 'sendToClient']
+        
+    def additional_validations(self, **kwargs):
+        CustomKeyValidator(data=self.data.get('types',{}), log=self.log, prepend_path=['types'], require_all_fields=True, validator=ArcsNodesGeosTypesValidator, **kwargs)
+        # ArcsNodesGeosDataValidator(data=self.data.get('data',{}), log=self.log, prepend_path=['data'], require_all_fields=True, **kwargs)
+
+class ArcsNodesGeosTypesValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.top_level_key = kwargs.get("top_level_key", None)
+
+        self.field_types = {
+            'name': str,
+            'colorByOptions': dict,
+            'sizeByOptions': dict,
+            'lineBy': str,
+            'startSize': str,
+            'endSize': str,
+            'props': dict,
+            'layout': dict,
+            'icon': str,
+            'height': (float, int),
+            'geoJson': dict,
+        }
+
+        self.required_fields = {
+            'nodes': ['name', 'colorByOptions', 'sizeByOptions', 'startSize', 'endSize', 'icon'],
+            'arcs': ['name', 'colorByOptions', 'sizeByOptions', 'startSize', 'endSize', 'lineBy'],
+            'geos': ['name', 'colorByOptions', 'geoJson', 'icon'],
+        }.get(self.top_level_key, [])
+
+        self.optional_fields = {
+            'nodes': ['props', 'layout'],
+            'arcs': ['props', 'layout', 'height'],
+            'geos': ['props', 'layout'],
+        }.get(self.top_level_key, [])
+
+        self.accepted_values = {
+            'lineBy': ['dotted', 'dashed', 'solid', '3d'],
+        }
+    
+    def additional_validations(self, **kwargs):
+        # Validate Color By Options
+        CustomKeyValidator(data=self.data.get('colorByOptions',{}), log=self.log, prepend_path=['colorByOptions'], require_all_fields=True, validator=ColorByOptionValidator)
+        # Validate Size By Options
+        if self.top_level_key in ['nodes', 'arcs']:
+            CustomKeyValidator(data=self.data.get('sizeByOptions',{}), log=self.log, prepend_path=['sizeByOptions'], require_all_fields=True, validator=SizeValidator)
+        # Validate GeoJson Options
+        if self.top_level_key == 'geos':
+            GeoJsonValidator(data=self.data.get('geoJson',{}), log=self.log, prepend_path=['geoJson'], require_all_fields=True)
+        props = self.data.get('props')
+        layout = self.data.get('layout')
+        if props is not None:
+            PropsValidator(data=props, log=self.log, prepend_path=['props'], require_all_fields=False)
+        if layout is not None:
+            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'], require_all_fields=True)
+
 
 class MapTypeObject():
     def __init__(self, type_key:str, type_dict:dict, top_level_key:str, log:LogObject):
@@ -247,7 +474,7 @@ class MapTypeObject():
                 if field_data not in ['dotted', 'dashed', 'solid']:
                     self.log.add(path=[field], error=f"LineBy can only be `dotted`, `dashed` or `solid` but got `{field_data}` instead.", level="error")
         elif field in ["props"]:
-            props = PropsObject(key=field, data=field_data, log=self.log, require_all_fields=False)
+            props = PropsValidator(key=field, data=field_data, log=self.log, require_all_fields=False)
 
         elif field in ["layout"]:
             # TODO
@@ -304,8 +531,9 @@ class Validator():
 
     def check_map_types(self):
         for top_level_key in ["nodes", "arcs", "geos"]:
-            for type_key, type_dict in pamda.pathOr({}, [top_level_key, 'types'], self.session_data).items():
-                MapTypeObject(type_key=type_key, type_dict=type_dict, top_level_key=top_level_key, log=self.log)
+            ArcsNodesGeosRootValidator(data=pamda.pathOr({}, [top_level_key], self.session_data), log=self.log, prepend_path=[top_level_key], top_level_key=top_level_key)
+            # for type_key, type_dict in pamda.pathOr({}, [top_level_key, 'types'], self.session_data).items():
+            #     MapTypeObject(type_key=type_key, type_dict=type_dict, top_level_key=top_level_key, log=self.log)
 
     def check_settings(self):
         pass

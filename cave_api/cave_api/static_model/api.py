@@ -871,17 +871,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "col1": {
                                 "type": "item",
                                 "itemId": "numericPropExampleA",
-                                "col": 1,
+                                "column": 1,
                             },
                             "col2": {
                                 "type": "item",
                                 "itemId": "numericPropExampleB",
-                                "col": 2,
+                                "column": 2,
                             },
                             "col3": {
                                 "type": "item",
                                 "itemId": "selectorPropForColor",
-                                "col": 3,
+                                "column": 3,
                             },
                         },
                     },
@@ -1345,7 +1345,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         }
                     },
-                    "colorBy": "numericPropExampleC",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
                         "geoJsonProp": "code_hasc",
@@ -1379,7 +1378,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         }
                     },
-                    "colorBy": "numericPropExampleC",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
                         "geoJsonProp": "FIPS_10",
