@@ -123,7 +123,10 @@ Allows end users to select options from a set. This `type` requires an array of 
 `'combobox'`: A dropdown with a search bar that allows users to filter options when typing. The options become visible as the user interacts with the element.<br>
 `'dropdown'`: Allows a compact way to display multiple options. The options appear upon interaction with an element (such as an icon or button) or when the user performs a specific action.<br>
 `'radio'`: Allows the user to select one option from a set of mutually exclusive options.<br><br>
-Since multiple selection is possible in the `'checkbox'` variant, one or more options in [`value`](#value) can be specified as a [`custom_option_*`](#custom_option_) key or [`custom_option_*`](#custom_option_) key array, respectively, while in the `dropdown` and `radio` variants, only one option is allowed to be present.
+`'hradio'`: Same as `'radio'` but horizontal placement.<br><br>
+`'vstepper'`: Allows the user to select one option from a set of mutually exclusive options along a vertical slider.<br><br>
+`'hstepper'`: Same as `'vstepper'` but horizontal placement.<br><br>
+Since multiple selection is possible in the `'checkbox'` variant, one or more options in [`value`](#value) can be specified as a [`custom_option_*`](#custom_option_) key or [`custom_option_*`](#custom_option_) key array, respectively, while in the `dropdown`, `radio`, `hradio`, `vstepper`, and `hstepper`  variants, only one option is allowed to be present.
 
 ### `'date'`
 Allows users to select a date and/or time. This `type` requires an [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) formatted string for its [`value`](#value) key. In addition, a `variant` must be specified.
