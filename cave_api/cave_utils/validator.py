@@ -109,6 +109,18 @@ class CoreValidator:
     def error(self, error:str, prepend_path:list=[]):
         self.log.add(path=prepend_path, error=error)
 
+    def validate_subset(self, subset:list, valid_values:list, prepend_path:list=[]):
+        invalid_values = pamda.difference(subset, valid_values)
+        if len(invalid_values) > 0:
+            self.log.add(path=prepend_path, error=f'Invalid subset values: {invalid_values}')
+
+class NumericDictValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {i:(int,float) for i in self.data.keys()}
+        self.required_fields = list(self.data.keys())
+        self.optional_fields = []
+        self.accepted_values = {}
+
 class ColorValidator(CoreValidator):
     def populate_data(self, **kwargs):
         self.expected_color_fields = list(self.data.keys()) if kwargs.get('is_color_option', False) else ['dark', 'light']
@@ -256,6 +268,17 @@ class PropValidator(CoreValidator):
         # Custom code to handle slider variant required fields
         if validation_type=='num' and variant == 'slider':
             self.required_fields += ['maxValue', 'minValue']
+
+    def additional_validations(self, **kwargs):
+        pass
+        # validation_type = self.data.get('type')
+        # TODO
+        # if self.data.get('type') == 'num':
+        #     if self.data.get('numberFormat'):
+        #         CustomKeyValidator(data=self.data.get('numberFormat'), log=self.log, prepend_path=['numberFormat'])
+        # if validation_type == 'selector':
+        #     Ensure that the values are in the options
+        #     Ensure that the correct number of options are selected
 
 class LayoutValidator(CoreValidator):
     def populate_data(self, **kwargs):
@@ -511,21 +534,94 @@ class NestedStructureValidator(CoreValidator):
 
 class CategoryValidator(CoreValidator):
     def populate_data(self, **kwargs):
-        self.categories_data = kwargs.get('categories_data', {})
-        self.categories_data_keys = list(self.categories_data.keys())
+        self.categories_key_values = kwargs.get('categories_key_values', {})
+        self.categories_keys = list(self.categories_key_values.keys())
 
-        self.field_types = {i:list for i in self.categories_data_keys}
+        self.field_types = {i:list for i in self.categories_keys}
         self.required_fields = []
-        self.optional_fields = self.categories_data_keys
+        self.optional_fields = self.categories_keys
         self.accepted_values = {}
 
     
     def additional_validations(self, **kwargs):
         for category_id, subcategory_list in self.data.items():
-            options = list(pamda.pathOr({}, [category_id,'data'], self.categories_data).keys())
-            missing_options = pamda.difference(subcategory_list, options)
-            if len(missing_options) > 0:
-                self.log.add(path=[category_id], error=f'Invalid keys: {missing_options}')
+            self.validate_subset(
+                subset=subcategory_list, 
+                valid_values=self.categories_key_values.get(category_id, []),
+                prepend_path=[category_id]
+            )
+
+class StatsValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'types': dict,
+            'data': dict,
+            'allowModification': bool,
+            'sendToApi': bool,
+            'sendToClient': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['types', 'data']
+
+        self.optional_fields = ['allowModification', 'sendToApi', 'sendToClient']
+        
+    def additional_validations(self, **kwargs):
+        CustomKeyValidator(data=self.data.get('data',{}), log=self.log, prepend_path=['data'], validator=StatsDataValidator, **kwargs)
+        CustomKeyValidator(data=self.data.get('types',{}), log=self.log, prepend_path=['types'], validator=StatsTypesValidator, **kwargs)
+
+class StatsTypesValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'name': str,
+            'calculation': str,
+            'numberFormat': dict,
+            'groupByOptions': list,
+            'order': int
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['name', 'calculation']
+
+        self.optional_fields = ['numberFormat', 'groupByOptions', 'order']
+
+    def additional_validations(self, **kwargs):
+        self.validate_subset(
+            subset=self.data.get('groupByOptions',[]),
+            valid_values=list(kwargs.get('categories_key_values', {}).keys()),
+            prepend_path=['groupByOptions']
+        )
+
+class StatsDataValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'category': dict,
+            'values': dict,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['category', 'values']
+
+        self.optional_fields = []
+
+    def additional_validations(self, **kwargs):
+        CategoryValidator(data=self.data.get('category',{}), log=self.log, prepend_path=['category'], **kwargs)
+        NumericDictValidator(data=self.data.get('values',{}), log=self.log, prepend_path=['values'], **kwargs)
+
+class KwargsValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'wipeExisting': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = []
+
+        self.optional_fields = ['wipeExisting']
 
 class RootValidator(CoreValidator):
     def populate_data(self, **kwargs):
@@ -561,24 +657,30 @@ class RootValidator(CoreValidator):
         self.accepted_values = {}
 
     def additional_validations(self, **kwargs):
-        # Validate Arcs nodes and Geos
-        ## This is used to validate the categories for each data item in the arcs, nodes, and geos
+
+        # Validate Categories
+        ## Note this happens first to give useful feedback as categories are used in other validations
+        CategoriesValidator(data=self.data.get('categories',{}), log=self.log, prepend_path=['categories'])
+        ## Get useful categories data for future validations
         categories_data = pamda.pathOr({},['categories', 'data'], self.data)
-        ## Validate the arcs, nodes, and geos
-        ArcsNodesGeosValidator(data=self.data.get('arcs',{}), log=self.log, prepend_path=['arcs'], top_level_key='arcs', categories_data=categories_data)
-        ArcsNodesGeosValidator(data=self.data.get('nodes',{}), log=self.log, prepend_path=['nodes'], top_level_key='nodes', categories_data=categories_data)
-        ArcsNodesGeosValidator(data=self.data.get('geos',{}), log=self.log, prepend_path=['geos'], top_level_key='geos', categories_data=categories_data)
+        categories_key_values = {i:list(pamda.pathOr({}, ['data'], j).keys()) for i,j in categories_data.items()}
+
+
+        # Validate Arcs nodes and Geos
+        ArcsNodesGeosValidator(data=self.data.get('arcs',{}), log=self.log, prepend_path=['arcs'], top_level_key='arcs', categories_key_values=categories_key_values)
+        ArcsNodesGeosValidator(data=self.data.get('nodes',{}), log=self.log, prepend_path=['nodes'], top_level_key='nodes', categories_key_values=categories_key_values)
+        ArcsNodesGeosValidator(data=self.data.get('geos',{}), log=self.log, prepend_path=['geos'], top_level_key='geos', categories_key_values=categories_key_values)
 
         # Validate AppBar
-        # Validate Categories
-        CategoriesValidator(data=self.data.get('categories',{}), log=self.log, prepend_path=['categories'])
         # Validate Dashboards
         # Validate KPIs
         # Validate Kwargs
+        KwargsValidator(data=self.data.get('kwargs',{}), log=self.log, prepend_path=['kwargs'])
         # Validate Maps
         # Validate Panes
         # Validate Settings
         # Validate Stats
+        StatsValidator(data=self.data.get('stats',{}), log=self.log, prepend_path=['stats'], categories_key_values=categories_key_values)
         
 class Validator():
     def __init__(self, session_data, version):
