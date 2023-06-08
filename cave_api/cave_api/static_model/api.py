@@ -300,6 +300,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Press this button to create an error",
                         },
+                        "pictureExample": {
+                            "name": "Picture Example",
+                            "type": "media",
+                            "variant": "picture",
+                            "value": "https://avatars.githubusercontent.com/u/39094372?s=200&v=4",
+                            "help": "Press the expand button to view an expanded version",
+                        },
                         "textHeader": {
                             "name": "Text Props",
                             "type": "head",
@@ -505,6 +512,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 3,
                                 "row": 3,
                                 "itemId": "buttonInputExample",
+                            },
+                            "col3Row4": {
+                                "type": "item",
+                                "column": 3,
+                                "row": 4,
+                                "itemId": "pictureExample",
                             },
                             "col4Row1": {
                                 "type": "item",
