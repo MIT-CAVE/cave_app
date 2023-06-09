@@ -40,8 +40,6 @@ def get_serialized_data():
     return {
         "settings": {
             "allowModification": False,
-            "sendToApi": False,
-            "sendToClient": True,
             "data": {
                 "sync": {
                     "appBar": {

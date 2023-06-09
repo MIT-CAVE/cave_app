@@ -29,8 +29,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
     example = {
         "settings": {
             "allowModification": False,
-            "sendToApi": False,
-            "sendToClient": True,
             "data": {
                 "sync": {
                     "appBar": {
