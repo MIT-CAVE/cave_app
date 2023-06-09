@@ -317,9 +317,14 @@ class LayoutValidator(CoreValidator):
 
     def additional_validations(self, **kwargs):
         layout_type = self.data.get("type", None)
+        prop_keys = kwargs.get('prop_keys', None)
         if layout_type == 'grid':
             for field, value in self.data.get('data',{}).items():
                 LayoutValidator(data=value, log=self.log, prepend_path=['data',field], **kwargs)
+        else:
+            itemId = self.data.get('itemId', None)
+            if itemId not in prop_keys:
+                self.error(f"`{itemId}` not found in props", prepend_path=['itemId'])
 
 class GeoJsonValidator(CoreValidator):
     def populate_data(self, **kwargs):
@@ -406,7 +411,8 @@ class ArcsNodesGeosTypesValidator(CoreValidator):
         if props is not None:
             CustomKeyValidator(data=props, log=self.log, prepend_path=['props'], validator=PropValidator, is_types_prop=True)
         if layout is not None:
-            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'])
+            prop_keys = list(props.keys()) if props is not None else []
+            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'], prop_keys=prop_keys)
 
 class ArcsNodesGeosDataValidator(CoreValidator):
     def populate_data(self, **kwargs):
@@ -463,7 +469,8 @@ class ArcsNodesGeosDataValidator(CoreValidator):
         if props is not None:
             CustomKeyValidator(data=props, log=self.log, prepend_path=['props'], validator=PropValidator, **kwargs)
         if layout is not None:
-            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'], **kwargs)
+            prop_keys = list(props.keys()) if props is not None else []
+            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'], prop_keys=prop_keys, **kwargs)
         if category is not None:
             CategoryValidator(data=category, log=self.log, prepend_path=['category'], **kwargs)
 
