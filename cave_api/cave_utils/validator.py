@@ -294,6 +294,10 @@ class LayoutValidator(CoreValidator):
             'row': int,
         }
 
+        self.accepted_values = {
+            'type': ['grid', 'item'],
+        }
+
         if layout_type == 'grid':
             self.required_fields = ['type', 'numColumns', 'numRows', 'data']
             self.optional_fields = []
@@ -301,14 +305,12 @@ class LayoutValidator(CoreValidator):
         elif layout_type == 'item':
             self.required_fields = ['type', 'itemId']
             self.optional_fields = ['column', 'row']
+            self.accepted_values['itemId'] = kwargs.get('prop_keys', [])
 
         else:
             self.required_fields = []
             self.optional_fields = ['type', 'numColumns', 'numRows', 'data', 'itemId', 'column', 'row']
 
-        self.accepted_values = {
-            'type': ['grid', 'item'],
-        }
 
         if isinstance(self.data.get("numColumns", None), str):
             self.accepted_values['numColumns'] = ['auto', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -317,14 +319,9 @@ class LayoutValidator(CoreValidator):
 
     def additional_validations(self, **kwargs):
         layout_type = self.data.get("type", None)
-        prop_keys = kwargs.get('prop_keys', None)
         if layout_type == 'grid':
             for field, value in self.data.get('data',{}).items():
                 LayoutValidator(data=value, log=self.log, prepend_path=['data',field], **kwargs)
-        else:
-            itemId = self.data.get('itemId', None)
-            if itemId not in prop_keys:
-                self.error(f"`{itemId}` not found in props", prepend_path=['itemId'])
 
 class GeoJsonValidator(CoreValidator):
     def populate_data(self, **kwargs):
