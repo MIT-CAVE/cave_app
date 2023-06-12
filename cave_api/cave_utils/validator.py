@@ -56,9 +56,18 @@ class CoreValidator:
                 self.log.add(path=[field], error=f"Missing required field")
         for field, value in self.data.items():
             accepted_values = self.accepted_values.get(field, None)
-            if accepted_values is not None and value not in accepted_values:
-                self.log.add(path=[field], error=f"Invalid value ({value}): Acceptable values are: {accepted_values}")
-                continue
+            if isinstance(value, (list,dict,)) and accepted_values is not None:
+                check_value = value
+                if isinstance(value, dict):
+                    check_value = list(value.keys())
+                value_diff = pamda.difference(check_value, accepted_values)
+                if len(value_diff) > 0:
+                    self.log.add(path=[field], error=f"Invalid values ({value_diff}): Acceptable values are: {accepted_values}")
+                    continue
+            else:
+                if accepted_values is not None and value not in accepted_values:
+                    self.log.add(path=[field], error=f"Invalid value ({value}): Acceptable values are: {accepted_values}")
+                    continue
             if field not in self.required_fields + self.optional_fields:
                 self.log.add(path=[field], error=f"Unknown field")
                 continue
@@ -132,6 +141,21 @@ class ColorValidator(CoreValidator):
     def additional_validations(self, **kwargs):
         for field in self.expected_color_fields:
             self.validate_rgb_string(self.data.get(field,''), prepend_path=[field])
+
+class NumberFormatValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'precision': int,
+            'unit': str,
+            'unitSpace': bool,
+            'currency': bool,
+            'trailingZeros': bool,
+            'nilValue': str,
+            'locale': str,
+        }
+        self.required_fields = []
+        self.optional_fields = list(self.field_types.keys())
+        self.accepted_values = {}
 
 class ColorByOptionValidator(CoreValidator):
     def is_categorical(self):
@@ -229,8 +253,8 @@ class PropValidator(CoreValidator):
 
         self.accepted_values = {
             'type': ["head", "num", "toggle", "button", "text", "selector", "date"],
-            'views': ['year','day','hours','minutes'],
             'variant': self.allowed_variants.get(validation_type, None),
+            'views': ['year', 'day', 'hours', 'minutes'],
         }
 
         # Note this may be modified in the semi_required_fields section below
@@ -269,16 +293,21 @@ class PropValidator(CoreValidator):
         if validation_type=='num' and variant == 'slider':
             self.required_fields += ['maxValue', 'minValue']
 
+        if validation_type=='selector':
+            self.accepted_values['value']=list(self.data.get('options', {}).keys())
+
     def additional_validations(self, **kwargs):
-        pass
-        # validation_type = self.data.get('type')
-        # TODO
-        # if self.data.get('type') == 'num':
-        #     if self.data.get('numberFormat'):
-        #         CustomKeyValidator(data=self.data.get('numberFormat'), log=self.log, prepend_path=['numberFormat'])
-        # if validation_type == 'selector':
-        #     Ensure that the values are in the options
-        #     Ensure that the correct number of options are selected
+        is_types_prop = kwargs.get('is_types_prop', False)
+        validation_type = self.data.get('type')
+
+        if validation_type == 'num':
+            number_format = self.data.get('numberFormat')
+            if number_format:
+                NumberFormatValidator(data=number_format, log=self.log, prepend_path=['numberFormat'])
+        
+        elif validation_type == 'selector':
+            if self.data.get('variant') != 'checkbox' and len(self.data.get('value',[])) > 1:
+                self.error("Only one value can be selected for this variant.", prepend_path=['value'])
 
 class LayoutValidator(CoreValidator):
     def populate_data(self, **kwargs):
@@ -305,7 +334,7 @@ class LayoutValidator(CoreValidator):
         elif layout_type == 'item':
             self.required_fields = ['type', 'itemId']
             self.optional_fields = ['column', 'row']
-            self.accepted_values['itemId'] = kwargs.get('prop_keys', [])
+            self.accepted_values['itemId'] = kwargs.get('acceptable_keys', [])
 
         else:
             self.required_fields = []
@@ -408,8 +437,8 @@ class ArcsNodesGeosTypesValidator(CoreValidator):
         if props is not None:
             CustomKeyValidator(data=props, log=self.log, prepend_path=['props'], validator=PropValidator, is_types_prop=True)
         if layout is not None:
-            prop_keys = list(props.keys()) if props is not None else []
-            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'], prop_keys=prop_keys)
+            acceptable_keys = list(props.keys()) if props is not None else []
+            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'], acceptable_keys=acceptable_keys)
 
 class ArcsNodesGeosDataValidator(CoreValidator):
     def populate_data(self, **kwargs):
@@ -466,8 +495,8 @@ class ArcsNodesGeosDataValidator(CoreValidator):
         if props is not None:
             CustomKeyValidator(data=props, log=self.log, prepend_path=['props'], validator=PropValidator, **kwargs)
         if layout is not None:
-            prop_keys = list(props.keys()) if props is not None else []
-            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'], prop_keys=prop_keys, **kwargs)
+            acceptable_keys = list(props.keys()) if props is not None else []
+            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'], acceptable_keys=acceptable_keys, **kwargs)
         if category is not None:
             CategoryValidator(data=category, log=self.log, prepend_path=['category'], **kwargs)
 
@@ -627,6 +656,398 @@ class KwargsValidator(CoreValidator):
 
         self.optional_fields = ['wipeExisting']
 
+class AppBarValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'data': dict,
+            'allowModification': bool,
+            'sendToApi': bool,
+            'sendToClient': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['data']
+
+        self.optional_fields = ['allowModification', 'sendToApi', 'sendToClient']
+        
+    def additional_validations(self, **kwargs):
+        data = self.data.get('data',{})
+        if 'appBarId' in data:
+            # Note: Can pop since this is a deep copy of the data when passed in to the CoreValidator __init__ function
+            appBarId = data.pop('appBarId')
+            if not isinstance(appBarId, str):
+                self.log.error('appBarId must be a string', prepend_path=['data','appBarId'])
+            if appBarId not in data:
+                self.log.error('appBarId must be a key in the data dictionary', prepend_path=['data','appBarId'])
+        CustomKeyValidator(data=data, log=self.log, prepend_path=['data'], validator=AppBarDataValidator, **kwargs)
+
+class AppBarDataValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'icon': str,
+            'type': str,
+            'bar': str,
+            'order': int,
+            'color': dict,
+            'apiCommand': str,
+            'apiCommandKeys': list,
+        }
+        self.accepted_values ={
+            'type': ['map', 'stats', 'kpi', 'pane', 'button'],
+            'bar': ['upper', 'lower'],
+        }
+        self.required_fields = ['icon', 'type', 'bar']
+        self.optional_fields = ['order', 'color', 'apiCommand', 'apiCommandKeys']
+
+    def additional_validations(self, **kwargs):
+        color = self.data.get('color')
+        if color:
+            ColorValidator(data=color, log=self.log, prepend_path=['color'])
+
+class KpisValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'data': dict,
+            'layout': dict,
+            'allowModification': bool,
+            'sendToApi': bool,
+            'sendToClient': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['data']
+
+        self.optional_fields = ['allowModification', 'sendToApi', 'sendToClient', 'layout']
+        
+    def additional_validations(self, **kwargs):
+        data = self.data.get('data',{})
+        layout = self.data.get('layout')
+
+        CustomKeyValidator(data=data, log=self.log, prepend_path=['data'], validator=KpisDataValidator, **kwargs)
+
+        if layout is not None:
+            acceptable_keys = list(data.keys()) if data is not None else []
+            LayoutValidator(data=layout, log=self.log, prepend_path=['layout'], acceptable_keys=acceptable_keys)
+
+class KpisDataValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        validation_type = self.data.get('type', 'num')
+
+        self.allowed_variants = {
+            'head': ['column', 'row'],
+        }
+
+        self.value_types = {
+            'num': (int, float),
+            'text': str,
+            'head': type(None)
+        }
+
+        self.field_types = {
+            'type': str,
+            'name': str,
+            'icon': str,
+            'mapKpi': bool,
+            'numberFormat': dict,
+            'variant': str,
+            'value': self.value_types.get(validation_type, type(None)),
+        }
+
+        self.accepted_values = {
+            'type': ['head', 'num', 'text'],
+            'variant': self.allowed_variants.get(validation_type, [])
+        }
+
+        self.required_fields = ['name', 'icon']
+
+        self.optional_fields = ['type', 'mapKpi', 'variant', 'value']
+
+        if validation_type != 'head':
+            self.required_fields.append('value')
+
+        if validation_type == 'num':
+            self.optional_fields.append('numberFormat')
+
+    def additional_validations(self, **kwargs):
+        numberFormat = self.data.get('numberFormat')
+        if numberFormat:
+            NumberFormatValidator(data=numberFormat, log=self.log, prepend_path=['numberFormat'])
+
+class DashboardsValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'data': dict,
+            'allowModification': bool,
+            'sendToApi': bool,
+            'sendToClient': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['data']
+
+        self.optional_fields = ['allowModification', 'sendToApi', 'sendToClient']
+
+    def additional_validations(self, **kwargs):
+        data = self.data.get('data',{})
+        CustomKeyValidator(data=data, log=self.log, prepend_path=['data'], validator=DashboardDataValidator, **kwargs)
+
+class DashboardDataValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'dashboardLayout': list,
+            'statOptions': list,
+            'lockedLayout': bool,
+        }
+
+        self.accepted_values = {
+            'statOptions': kwargs.get('acceptable_stats', [])
+        }
+
+        self.required_fields = ['dashboardLayout']
+
+        self.optional_fields = ['statOptions', 'lockedLayout']
+
+    def additional_validations(self, **kwargs):
+        for idx, layout in enumerate(self.data.get('dashboardLayout',[])):
+            DashboardLayoutValidator(data=layout, log=self.log, prepend_path=['dashboardLayout', idx], **kwargs)
+
+class DashboardLayoutValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        categories = kwargs.get('categories_key_levels', {})
+
+        self.field_types = {
+            'type': str,
+            'chart': str,
+            'grouping': str,
+            'kpi': (str, list,),
+            'statistic': (str, list,),
+            'level': str,
+            'category': str,
+            'level2': str,
+            'category2': str,
+            'sessions': list,
+
+        }
+
+        self.accepted_values = {
+            'type': ['stats', 'kpis'],
+            'statistic': kwargs.get('acceptable_stats', []),
+            'kpi': kwargs.get('acceptable_kpis', []),
+            'category': list(categories.keys()),
+            'category2': list(categories.keys()),
+            'level': categories.get(self.data.get('category'), []),
+            'level2': categories.get(self.data.get('category2'), []),
+        }
+
+        self.required_fields = ['chart', 'grouping']
+
+        self.optional_fields = ['type', 'level', 'category', 'level2', 'category2', 'sessions']
+
+        if self.data.get('type') == 'kpis':
+            self.optional_fields.append('kpi')
+        else:
+            self.optional_fields.append('statistic')
+
+class MapsValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'data': dict,
+            'allowModification': bool,
+            'sendToApi': bool,
+            'sendToClient': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['data']
+
+        self.optional_fields = ['allowModification', 'sendToApi', 'sendToClient']
+
+    def additional_validations(self, **kwargs):
+        data = self.data.get('data',{})
+        CustomKeyValidator(data=data, log=self.log, prepend_path=['data'], validator=MapDataValidator, **kwargs)
+
+class MapDataValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'defaultViewport': dict,
+            'optionalViewports': dict,
+            'legendGroups': dict,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['defaultViewport', 'legendGroups']
+
+        self.optional_fields = ['optionalViewports']
+
+    def additional_validations(self, **kwargs):
+        ViewportValidator(data=self.data.get('defaultViewport',{}), log=self.log, prepend_path=['defaultViewport'], **kwargs)
+        
+        for viewportId, viewport in self.data.get('optionalViewports',{}).items():
+            ViewportValidator(data=viewport, log=self.log, prepend_path=['optionalViewports', viewportId], is_optional_viewport=True, **kwargs)
+
+        CustomKeyValidator(data=self.data.get('legendGroups',{}), log=self.log, prepend_path=['legendGroups'], validator=LegendGroupsValidator, **kwargs)
+
+class LegendGroupsValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'name': str,
+            'nodes': dict,
+            'arcs': dict,
+            'geos': dict,
+            'order': int,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['name']
+
+        self.optional_fields = ['nodes', 'arcs', 'geos', 'order']
+
+    def additional_validations(self, **kwargs):
+        options_dicts = {
+            'nodes': kwargs.get('node_prop_options', []),
+            'arcs': kwargs.get('arc_prop_options', []),
+            'geos': kwargs.get('geo_prop_options', []),
+        }
+
+        for option_key, options in options_dicts.items():
+            for key, value in self.data.get(option_key,{}).items():
+                if key not in options:
+                    self.error('Invalid key {}'.format(key))
+                    continue
+                LegendGroupLayersValidator(data=value, log=self.log, prepend_path=[option_key, key], layer_type=option_key, prop_options=options.get(key, []), **kwargs)
+
+class LegendGroupLayersValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        layer_type = kwargs.get('layer_type')
+        prop_options = kwargs.get('prop_options', [])
+        categories = kwargs.get('categories_key_levels', {})
+
+        self.field_types = {
+            'value': bool,
+            'sizeBy': str,
+            'colorBy': str,
+            'allowGrouping': bool,
+            'group': bool,
+            'groupCalcByColor': str,
+            'groupCalcBySize': str,
+            'groupScaleWithZoom': bool,
+            'groupScale': (int, float,),
+            'groupMatchCategory': str,
+            'groupMatchCategoryLevel': str,
+        }
+
+        self.accepted_values = {
+            'sizeBy': prop_options,
+            'colorBy': prop_options,
+            'groupCalcByColor': ["count", "sum", "mean", "median", "mode", "min", "max"],
+            'groupCalcBySize': ["count", "sum", "mean", "median", "mode", "min", "max"],
+            'groupMatchCategory': list(categories.keys()),
+            'groupMatchCategoryLevel': categories.get(self.data.get('groupMatchCategory'), []),
+        }
+
+        self.required_fields = ['value', 'colorBy']
+
+        self.optional_fields = []
+
+        if layer_type == 'nodes':
+            self.optional_fields.extend(['allowGrouping', 'group', 'groupCalcByColor', 'groupCalcBySize', 'groupScaleWithZoom', 'groupScale', 'groupMatchCategory', 'groupMatchCategoryLevel'])
+
+        if layer_type  != 'geos':
+            self.required_fields.append('sizeBy')
+
+class ViewportValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        is_optional_viewport = kwargs.get('is_optional_viewport', False)
+        self.field_types = {
+            'latitude': (float, int,),
+            'longitude': (float, int,),
+            'zoom': (float, int,),
+            'bearing': (float, int,),
+            'pitch': (float, int,),
+            'height': (float, int,),
+            'altitude': (float, int,),
+            'maxZoom': (float, int,),
+            'minZoom': (float, int,),
+            'icon': str,
+            'name': str,
+            'order': int,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['latitude', 'longitude', 'zoom']
+
+        self.optional_fields = ['maxZoom', 'minZoom', 'height', 'altitude', 'bearing', 'pitch', 'order']
+
+        if is_optional_viewport:
+            self.required_fields += ['icon', 'name']
+
+class PanesValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'data': dict,
+            'allowModification': bool,
+            'sendToApi': bool,
+            'sendToClient': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['data']
+
+        self.optional_fields = ['allowModification', 'sendToApi', 'sendToClient']
+
+    def additional_validations(self, **kwargs):
+        CustomKeyValidator(data=self.data.get('data',{}), log=self.log, prepend_path=['data'], validator=PanesDataValidator, **kwargs)
+
+class PanesDataValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        variant = self.data.get('variant')
+
+        self.field_types = {
+            'variant': str,
+            'name': str,
+            'props': dict,
+            'layout': dict,
+            'data': dict,
+            'teamSyncCommand': str,
+            'teamSyncCommandKeys': list,
+        }
+
+        self.accepted_values = {
+            'variant': ['session', 'appSettings', 'options', 'context', 'filter'],
+        }
+
+        self.required_fields = ['name']
+
+        self.optional_fields = ['variant']
+
+        if variant == 'options':
+            self.required_fields += ['props']
+            self.optional_fields += ['layout', 'teamSyncCommand', 'teamSyncCommandKeys']
+        if variant == 'context':
+            self.required_fields += ['props']
+            self.optional_fields += ['data', 'teamSyncCommand', 'teamSyncCommandKeys']
+
+    def additional_validations(self, **kwargs):
+        variant = self.data.get('variant')
+        props_data = self.data.get('props',{})
+        if variant == 'options':
+            CustomKeyValidator(data=props_data, log=self.log, prepend_path=['props'], validator=PropValidator, **kwargs)
+            LayoutValidator(data=self.data.get('layout',{}), log=self.log, prepend_path=['layout'], acceptable_keys=list(props_data.keys()), **kwargs)
+        #TODO Finish validating context panes
+        # if variant == 'context':
+        #     CustomKeyValidator(data=self.data.get('props',{}), log=self.log, prepend_path=['props'], validator=PanesPropsValidator, **kwargs)
+        #     CustomKeyValidator(data=self.data.get('data',{}), log=self.log, prepend_path=['data'], validator=PanesDataDataValidator, **kwargs)
+
+        
+
 class RootValidator(CoreValidator):
     def populate_data(self, **kwargs):
         self.field_types = {
@@ -668,24 +1089,44 @@ class RootValidator(CoreValidator):
         ## Get useful categories data for future validations
         categories_data = pamda.pathOr({},['categories', 'data'], self.data)
         categories_key_values = {i:list(pamda.pathOr({}, ['data'], j).keys()) for i,j in categories_data.items()}
+        categories_key_levels = {i:list(pamda.pathOr({}, ['nestedStructure'], j).keys()) for i,j in categories_data.items()}
 
+        # Validate Stats
+        StatsValidator(data=self.data.get('stats',{}), log=self.log, prepend_path=['stats'], categories_key_values=categories_key_values)
+        ## Get useful stats data for future validations
+        acceptable_stats = list(pamda.pathOr({}, ['stats', 'types'], self.data).keys())
+
+        # Validate KPIs
+        KpisValidator(data=self.data.get('kpis',{}), log=self.log, prepend_path=['kpis'])
+        ## Get useful kpis data for future validations
+        acceptable_kpis = list(pamda.pathOr({}, ['kpis', 'data'], self.data).keys())
 
         # Validate Arcs nodes and Geos
         ArcsNodesGeosValidator(data=self.data.get('arcs',{}), log=self.log, prepend_path=['arcs'], top_level_key='arcs', categories_key_values=categories_key_values)
         ArcsNodesGeosValidator(data=self.data.get('nodes',{}), log=self.log, prepend_path=['nodes'], top_level_key='nodes', categories_key_values=categories_key_values)
         ArcsNodesGeosValidator(data=self.data.get('geos',{}), log=self.log, prepend_path=['geos'], top_level_key='geos', categories_key_values=categories_key_values)
+        ## Get useful arcs, nodes, and geos data for future validations
+        node_prop_options = {k:list(v.get('props',{}).keys()) for k,v in pamda.pathOr({}, ['nodes', 'types'], self.data).items()}
+        arc_prop_options = {k:list(v.get('props',{}).keys()) for k,v in pamda.pathOr({}, ['arcs', 'types'], self.data).items()}
+        geo_prop_options = {k:list(v.get('props',{}).keys()) for k,v in pamda.pathOr({}, ['geos', 'types'], self.data).items()}
 
         # Validate AppBar
+        AppBarValidator(data=self.data.get('appBar',{}), log=self.log, prepend_path=['appBar'])
+
         # Validate Dashboards
-        # Validate KPIs
+        DashboardsValidator(data=self.data.get('dashboards',{}), log=self.log, prepend_path=['dashboards'], categories_key_levels=categories_key_levels, acceptable_stats=acceptable_stats, acceptable_kpis=acceptable_kpis)
+        
         # Validate Kwargs
         KwargsValidator(data=self.data.get('kwargs',{}), log=self.log, prepend_path=['kwargs'])
-        # Validate Maps
-        # Validate Panes
-        # Validate Settings
-        # Validate Stats
-        StatsValidator(data=self.data.get('stats',{}), log=self.log, prepend_path=['stats'], categories_key_values=categories_key_values)
         
+        # Validate Maps
+        MapsValidator(data=self.data.get('maps',{}), log=self.log, prepend_path=['maps'], categories_key_levels=categories_key_levels, node_prop_options=node_prop_options, arc_prop_options=arc_prop_options, geo_prop_options=geo_prop_options)
+
+        # Validate Panes
+        PanesValidator(data=self.data.get('panes',{}), log=self.log, prepend_path=['panes'], categories_key_values=categories_key_values)
+
+        # Validate Settings
+
 class Validator():
     def __init__(self, session_data, version):
         self.session_data = session_data

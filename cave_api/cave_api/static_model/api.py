@@ -241,6 +241,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Sessions Pane",
                 },
                 "appSettings": {
+                    "name": "App Settings Pane",
                     "variant": "appSettings",
                 },
                 "examplePropsPane": {
@@ -642,9 +643,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupCalcByColor": "sum",
                                     # "groupCalcBySize": "mode",
                                     # "groupScaleWithZoom": True,
-                                    # Equivalent to zoom level unless groupScale is set
+                                    # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
-                                    # Allow group matching only when a category value matches
+                                    # # Allow group matching only when a category value matches
                                     # "groupMatchCategory": "location",
                                     # "groupMatchCategoryLevel": "state",
                                 }
@@ -677,12 +678,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "geos": {
                                 "state": {
                                     "value": True,
-                                    "order": 1,
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
                                     "value": False,
-                                    "order": 2,
                                     "colorBy": "numericPropExampleC",
                                 },
                             },
@@ -766,12 +765,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "geos": {
                                 "state": {
                                     "value": True,
-                                    "order": 1,
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
                                     "value": False,
-                                    "order": 2,
                                     "colorBy": "numericPropExampleC",
                                 },
                             },
@@ -833,7 +830,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Help for numeric prop example A",
                             "numberFormat": {
-                                "unit": "A units",
+                                "unit": "A units"
                             },
                         },
                         "numericPropExampleB": {
