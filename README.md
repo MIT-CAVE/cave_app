@@ -29,7 +29,7 @@ Quickly create interactive web applications for python based models.
         cave run <your-ip>:<your-port>
         ```
 
-        - Example on ip `192.168.1.00` with port `8000`:
+        - Example on ip `192.168.1.100` with port `8000`:
           ```
           cave run 192.168.1.100:8000
           ```
@@ -42,7 +42,6 @@ Quickly create interactive web applications for python based models.
             - This uses a self signed and insecure certificate for SSL/TLS reasons
             - The certificates are self signed and shared openly in the cave open source project
             - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
-        - Note: When LAN hosting, a production `daphne` server is started. This requires proper static file serving. To achieve this, `cave_cli` will automatically `collectstatic` when a specific ip and port are provided
     </details>
 
 5. In Chrome, you can now open the web app:

@@ -7,24 +7,24 @@
     cd cave_app
     ```
 
-3. Setup a virtual environment and install all requirements:
+3. Install Docker
 
-    - Install (or upgrade) virtualenv:
-        ```
-        python3 -m pip install --upgrade virtualenv
-        ```
-    - Create your virtualenv named `venv`:
-        ```
-        python3 -m virtualenv venv
-        ```
-    - Activate your virtual environment on Unix (Mac or Linux):
-        ```
-        source venv/bin/activate
-        ```
-    - Install all requirements for development:
-        ```
-        pip install --require-virtualenv -r requirements.txt
-        ```
+    ```sh
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh ./get-docker.sh
+    ```
+
+    Add the current user to the docker group
+
+    ```sh
+    dockerd-rootless-setuptool.sh install
+    ```
+
+    Make sure it works outside of sudo
+
+    ```sh
+    docker run hello-world
+    ```
 
 ### Update the Server Environment Variables
 
@@ -63,42 +63,50 @@
 
 ### Local Deployment
 
-1. Remove any legacy database (if it exists) and set up the stock database:
+1. Navigate to the app and build the container
     ```
     cd path/to/cave_app
-    sudo chmod 700 .
-    ./utils/reset_db.sh
+    docker build . --tag cave-app
     ```
-2. Run the app on `localhost:8000` with development settings:
+2. Create a Docker network for the containers to run in
     ```
-    python manage.py runserver
+    docker network create cave-net
     ```
-3. Run the app on a LAN (local area network):
+3. Start postgres
+    ```
+    source .env && docker run --volume "${app_name}_pg_volume:/var/lib/postgresql/data" --network cave-net --name "${app_name}_postgres" -e POSTGRES_PASSWORD="$DATABASE_PASSWORD" -e POSTGRES_USER="$DATABASE_USER" -e POSTGRES_DB="$DATABASE_NAME" -d postgres:15.3-alpine3.18 postgres -c listen_addresses='*'
+    ```
+    > Note: Replace `${app_name}` with the name of your app
+3. Run the app on `localhost:8000` with development settings:
+    ```
+    docker run -it -p 8000:8000 --network cave-net --volume "./:/app" --name "${app_name}_django" cave-app /app/utils/run_dev_server.sh
+    ```
+    > Note: Replace `${app_name}` with the name of your app
+4. Run the app on a LAN (local area network) on `0.0.0.0:8123`:
     - Note: To run on LAN, you must use an SSL connection.
     - Note: This uses a self signed and insecure certificate for SSL/TLS reasons
         - The certificates are self signed and shared openly in the cave open source project
         - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
-    - Note: This uses the `daphne` production server.
-        - You will need to `collectstatic` in order for your staticfiles to load properly.
-        ```
-        python manage.py collectstatic
-        ```
     - To run the server:
-    ```
-    daphne -e ssl:8000:privateKey=utils/lan_hosting/LAN.key:certKey=utils/lan_hosting/LAN.crt cave_app.asgi:application -p 8001 -b 0.0.0.0
-    ```
-        - Note: You will need to access the app from the ssl port (in the above case `8000`) and not the port specified by `-p`.
-        - Note: You can specify the LAN IP with
-            - Wildcard: `-b 0.0.0.0`
-                - This allows you to access the sever from any IP that points to your machine
-            - Specific: `-b 192.168.1.100`
-                - Note: Replace `192.168.1.100` with your local IP address
-                - This allows you to access the sever from a specific IP that points to your machine
+        ```
+        docker run -d --restart unless-stopped -p "0.0.0.0:8123:8000" --network cave-net --volume "./utils/lan_hosting:/certs" --name "${app_name}_nginx" -e CAVE_HOST="${app_name}_django" --volume "./utils/nginx_ssl.conf.template:/etc/nginx/templates/default.conf.template:ro" nginx
+        ```
+
+        ```
+        docker run -it -p 8000 --network cave-net --volume "./:/app" --name "${app_name}_django" -e CSRF_TRUSTED_ORIGIN="0.0.0.0:8123" cave-app /app/utils/run_dev_server.sh
+        ```
+    > Note: Replace `${app_name}` with the name of your app
+    - Note: You can specify the LAN IP with
+        - Wildcard: `-p 0.0.0.0:8123`
+            - This allows you to access the sever from any IP that points to your machine
+        - Specific: `-p 192.168.1.100:8123`
+            - Note: Replace `192.168.1.100` with your local IP address
+            - This allows you to access the sever from a specific IP that points to your machine
     - To access the server go to:
     ```
-    https://192.168.1.100:8000
+    https://0.0.0.0:8123
     ```
-      - Note: Replace `192.168.1.100` with your local IP address
+    Or the your local address at the specified port
 
 
 ### Prettify Code
@@ -106,10 +114,10 @@ NOTE: All prettify commands write over existing code.
 
 To apply our default lint fixes to all python code in `./cave_core` and `./cave_app`:
 ```
-./utils/prettify.sh
+docker run --volume "./:/app" cave-app /app/utils/prettify.sh
 ```
 
 To apply our default lint fixes to all python code in `./cave_api`:
 ```
-./utils/api_prettify.sh
+docker run --volume "./:/app" cave-app /app/utils/api_prettify.sh
 ```
