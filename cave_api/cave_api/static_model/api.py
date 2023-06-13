@@ -300,6 +300,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Press this button to create an error",
                         },
+                        "pictureExample": {
+                            "name": "Picture Example",
+                            "type": "media",
+                            "variant": "picture",
+                            "value": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
+                            "help": "Click the expand button to view an enlarged version",
+                        },
+                        "videoExample": {
+                            "name": "Video Example",
+                            "type": "media",
+                            "variant": "video",
+                            "value": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                            "help": "Click the play button to start the video",
+                        },
                         "textHeader": {
                             "name": "Text Props",
                             "type": "head",
@@ -505,6 +519,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 3,
                                 "row": 3,
                                 "itemId": "buttonInputExample",
+                            },
+                            "col3Row4": {
+                                "type": "item",
+                                "column": 3,
+                                "row": 4,
+                                "itemId": "pictureExample",
+                            },
+                            "col3Row5": {
+                                "type": "item",
+                                "column": 3,
+                                "row": 5,
+                                "itemId": "videoExample",
                             },
                             "col4Row1": {
                                 "type": "item",

@@ -135,6 +135,12 @@ Allows users to select a date and/or time. This `type` requires an [ISO-8601](ht
 `'time'`: Allows to select a time by clicking on a text field displaying it, which opens a clock pop-up.<br>
 `'datetime'`: Select date and time by clicking on the text field displaying them, which opens a pop-up with calendar and clock tabs.<br>
 
+### `'media'`
+Allows users to view various media formats. This `type` requires an embed URL string for its [`value`](#value) key. A `variant` must be specified.
+#### Variants:
+`'picture'`: Displays a PNG or JPG image. Allows users to view an enlarged version upon clicking an expand button. <br>
+`'video'`: Displays a YouTube, Vimeo, or Dailymotion video clip. Allows users to play, pause, adjust volume, and enter fullscreen mode. <br>
+
 ## Default `props` values and overriding
 Very often, the `props` elements specified in [`arcs`](../all_keys/arcs.md), [`nodes`](../all_keys/nodes.md), and [`geos`](../all_keys/geos.md) are the same for a large number of items at the _data-point level_ ([customArcData*](../all_keys/arcs.md#arc-data-point), [customNodeData*](../all_keys/nodes.md#node-data-point) or [customGeoData*](../all_keys/geos.md#geo-data-point)). To reduce the overhead caused by duplicate `props` items and achieve a more lightweight data structure, it is possible to define a `props` dictionary at the _type level_ ([customArcType*](../all_keys/arcs.md#arc-type), [customNodeType*](../all_keys/nodes.md#node-type), or [customGeoType*](../all_keys/geos.md#geo-type)) so that a prop can be reused and overridden at the data-point level. In this case, two `props` items match by sharing the same [custom prop key](#customPropKey). The resulting prop from this match is a union of key-value pairs, where if a key exists in both `props` items, the value at the data-point level will be used.
 
