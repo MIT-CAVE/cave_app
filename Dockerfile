@@ -8,6 +8,3 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 COPY . /app
-CMD ["utils/run_django_docker.sh"]
-# CMD ["python", "manage.py", "runserver"]
-# CMD ["tail", "-f", "/dev/null"]
