@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Change to the script directory
 cd $(dirname "$0")
 # Lint and Autoformat the code in place
