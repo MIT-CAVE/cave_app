@@ -69,7 +69,7 @@ class CoreValidator:
                     self.log.add(path=[field], error=f"Invalid value ({value}): Acceptable values are: {accepted_values}")
                     continue
             if field not in self.required_fields + self.optional_fields:
-                self.log.add(path=[field], error=f"Unknown field")
+                self.log.add(path=[field], error=f"Unknown field: Acceptable fields are: {self.required_fields + self.optional_fields}")
                 continue
             acceptable_types = self.field_types.get(field, type(None))
             if not isinstance(value, acceptable_types):
@@ -117,6 +117,9 @@ class CoreValidator:
 
     def error(self, error:str, prepend_path:list=[]):
         self.log.add(path=prepend_path, error=error)
+
+    def warn(self, error:str, prepend_path:list=[]):
+        self.log.add(path=prepend_path, error=error, level='warning')
 
     def validate_subset(self, subset:list, valid_values:list, prepend_path:list=[]):
         invalid_values = pamda.difference(subset, valid_values)
@@ -295,6 +298,16 @@ class PropValidator(CoreValidator):
 
         if validation_type=='selector':
             self.accepted_values['value']=list(self.data.get('options', {}).keys())
+
+        if kwargs.get('is_context', False):
+            self.optional_fields += ['selectableCategories', 'label']
+            self.accepted_values.update({
+                'selectableCategories': list(kwargs.get('categories_key_values', {}).keys()),
+            })
+            self.field_types.update({
+                'selectableCategories': list,
+                'label': str
+            })
 
     def additional_validations(self, **kwargs):
         is_types_prop = kwargs.get('is_types_prop', False)
@@ -1042,11 +1055,99 @@ class PanesDataValidator(CoreValidator):
             CustomKeyValidator(data=props_data, log=self.log, prepend_path=['props'], validator=PropValidator, **kwargs)
             LayoutValidator(data=self.data.get('layout',{}), log=self.log, prepend_path=['layout'], acceptable_keys=list(props_data.keys()), **kwargs)
         #TODO Finish validating context panes
-        # if variant == 'context':
-        #     CustomKeyValidator(data=self.data.get('props',{}), log=self.log, prepend_path=['props'], validator=PanesPropsValidator, **kwargs)
-        #     CustomKeyValidator(data=self.data.get('data',{}), log=self.log, prepend_path=['data'], validator=PanesDataDataValidator, **kwargs)
+        if variant == 'context': 
+            CustomKeyValidator(data=props_data, log=self.log, prepend_path=['props'], validator=PropValidator, is_context=True,  **kwargs)
+            CustomKeyValidator(data=self.data.get('data',{}), log=self.log, prepend_path=['data'], validator=PanesContextDataValidator, prop_options=list(props_data.keys()), **kwargs)
 
-        
+class PanesContextDataValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'prop': str,
+            'value': (str, int, float, bool,),
+            'applyCategories': dict,
+        }
+
+        self.accepted_values = {
+            'prop': kwargs.get('prop_options', []),
+        }
+
+        self.required_fields = ['prop', 'value', 'applyCategories']
+
+        self.optional_fields = []
+
+    def additional_validations(self, **kwargs):
+        PanesContextApplyCategoriesValidator(data=self.data.get('applyCategories',{}), log=self.log, prepend_path=['applyCategories'], **kwargs)
+
+class PanesContextApplyCategoriesValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        categories_key_values = kwargs.get('categories_key_values', [])
+        self.field_types = {i:list for i in categories_key_values.keys()}
+
+        self.accepted_values = categories_key_values
+
+        self.required_fields = []
+
+        self.optional_fields = list(categories_key_values.keys())
+
+class SettingsValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'data': dict,
+            'allowModification': bool,
+            'sendToApi': bool,
+            'sendToClient': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['data']
+
+        self.optional_fields = ['allowModification', 'sendToApi', 'sendToClient']
+
+    def additional_validations(self, **kwargs):
+        SettingsDataValidator(data=self.data.get('data',{}), log=self.log, prepend_path=['data'], **kwargs)
+
+class SettingsDataValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'sync': dict,
+            'iconUrl': str,
+            'numberFormat': dict,
+            'timeLength': int,
+            'timeUnits': str,
+            'debug': bool,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['iconUrl']
+
+        self.optional_fields = ['sync', 'numberFormat', 'timeLength', 'timeUnits', 'debug']
+
+    def additional_validations(self, **kwargs):
+        NumberFormatValidator(data=self.data.get('numberFormat',{}), log=self.log, prepend_path=['numberFormat'], **kwargs)
+        CustomKeyValidator(data=self.data.get('sync',{}), log=self.log, prepend_path=['sync'], validator=SettingsDataSyncValidator, **kwargs)
+
+class SettingsDataSyncValidator(CoreValidator):
+    def populate_data(self, **kwargs):
+        self.field_types = {
+            'name': str,
+            'showToggle': bool,
+            'value': bool,
+            'data': dict,
+        }
+
+        self.accepted_values = {}
+
+        self.required_fields = ['name', 'showToggle', 'value', 'data']
+
+        self.optional_fields = []
+
+    def additional_validations(self, **kwargs):
+        root_data = kwargs.get('root_data',{})
+        for key, path in self.data.get('data',{}).items():
+            if not pamda.hasPath(path, root_data):
+                self.warn(f"Path {path} does not exist.", prepend_path=['data', key])
 
 class RootValidator(CoreValidator):
     def populate_data(self, **kwargs):
@@ -1126,6 +1227,7 @@ class RootValidator(CoreValidator):
         PanesValidator(data=self.data.get('panes',{}), log=self.log, prepend_path=['panes'], categories_key_values=categories_key_values)
 
         # Validate Settings
+        SettingsValidator(data=self.data.get('settings',{}), log=self.log, prepend_path=['settings'], root_data=self.data)
 
 class Validator():
     def __init__(self, session_data, version):

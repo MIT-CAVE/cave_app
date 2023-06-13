@@ -36,8 +36,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "showToggle": True,
                         "value": False,
                         "data": {
-                            "ab1": ["appBar", "data", "dashboardId"],
-                            "ab2": ["appBar", "paneState"],
+                            "ab1": ["appBar", "paneState"],
                         },
                     },
                     "pageSelection": {
@@ -532,6 +531,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "variant": "context",
                     "props": {
                         "numericContextProp": {
+                            "name": "Numeric Context Prop",
                             "type": "num",
                             "value": 100,
                             "enabled": True,
