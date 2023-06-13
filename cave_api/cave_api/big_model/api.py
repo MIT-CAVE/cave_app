@@ -1,8 +1,6 @@
 example = {
     "settings": {
         "allowModification": False,
-        "sendToApi": False,
-        "sendToClient": True,
         "data": {
             "sync": {
                 "appBar": {

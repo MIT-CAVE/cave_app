@@ -1,7 +1,5 @@
 {
     "allowModification": false,
-    "sendToApi": false,
-    "sendToClient": true,
     "data": {
         "sync":{
             "mapLayers":{

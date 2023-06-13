@@ -29,8 +29,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
     example = {
         "settings": {
             "allowModification": False,
-            "sendToApi": False,
-            "sendToClient": True,
             "data": {
                 "sync": {
                     "appBar": {
@@ -38,8 +36,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "showToggle": True,
                         "value": False,
                         "data": {
-                            "ab1": ["appBar", "data", "dashboardId"],
-                            "ab2": ["appBar", "paneState"],
+                            "ab1": ["appBar", "paneState"],
                         },
                     },
                     "pageSelection": {
@@ -243,6 +240,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Sessions Pane",
                 },
                 "appSettings": {
+                    "name": "App Settings Pane",
                     "variant": "appSettings",
                 },
                 "examplePropsPane": {
@@ -616,6 +614,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "variant": "context",
                     "props": {
                         "numericContextProp": {
+                            "name": "Numeric Context Prop",
                             "type": "num",
                             "value": 100,
                             "enabled": True,
@@ -727,9 +726,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupCalcByColor": "sum",
                                     # "groupCalcBySize": "mode",
                                     # "groupScaleWithZoom": True,
-                                    # Equivalent to zoom level unless groupScale is set
+                                    # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
-                                    # Allow group matching only when a category value matches
+                                    # # Allow group matching only when a category value matches
                                     # "groupMatchCategory": "location",
                                     # "groupMatchCategoryLevel": "state",
                                 }
@@ -762,12 +761,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "geos": {
                                 "state": {
                                     "value": True,
-                                    "order": 1,
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
                                     "value": False,
-                                    "order": 2,
                                     "colorBy": "numericPropExampleC",
                                 },
                             },
@@ -851,12 +848,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "geos": {
                                 "state": {
                                     "value": True,
-                                    "order": 1,
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
                                     "value": False,
-                                    "order": 2,
                                     "colorBy": "numericPropExampleC",
                                 },
                             },
@@ -918,7 +913,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Help for numeric prop example A",
                             "numberFormat": {
-                                "unit": "A units",
+                                "unit": "A units"
                             },
                         },
                         "numericPropExampleB": {
@@ -954,17 +949,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "col1": {
                                 "type": "item",
                                 "itemId": "numericPropExampleA",
-                                "col": 1,
+                                "column": 1,
                             },
                             "col2": {
                                 "type": "item",
                                 "itemId": "numericPropExampleB",
-                                "col": 2,
+                                "column": 2,
                             },
                             "col3": {
                                 "type": "item",
                                 "itemId": "selectorPropForColor",
-                                "col": 3,
+                                "column": 3,
                             },
                         },
                     },
@@ -1428,7 +1423,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         }
                     },
-                    "colorBy": "numericPropExampleC",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
                         "geoJsonProp": "code_hasc",
@@ -1462,7 +1456,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         }
                     },
-                    "colorBy": "numericPropExampleC",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
                         "geoJsonProp": "FIPS_10",

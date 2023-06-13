@@ -274,10 +274,10 @@ Key | Default | Description
 `customPaneKey*.teamSync` | `False` | If `True`, creates a sync button on the top of the pane. When that sync button is clicked, everything in that pane is synced across all sessions for that team (or user if individual session) such that all other sessions for that team have the exact same pane as it exists in the current session.
 `customPaneKey*.teamSyncCommand` | | If specified, passes an API command argument along with a mutation request. This command will be passed to `execute_command` for each session to be synced.
 `customPaneKey*.teamSyncCommandKeys` | | If specified, only passes specific session keys over to `execute_command` for each session to be synced.
-<a name="pane-variant">`customPaneKey*.variant`</a> | `'options'` | As a direct child of `customPaneKey*`, the `variant` key configures a pane to be an `'options'` or `'context'` pane. Each variant comes along with additional keys that add specific functionality to the pane.
+<a name="pane-variant">`customPaneKey*.variant`</a> | `'options'` | As a direct child of `customPaneKey*`, the `variant` key is used to determine the pane variant. Each variant comes along with additional keys that add specific functionality to the pane. Acceptable values inclue `session`, `appSettings`, `options`, `context`, `filter`
 `customPaneKey*.width` | `'auto'` | Sets the width of the pane. This property is an exact equivalent of the [CSS `width` property](https://developer.mozilla.org/en-US/docs/Web/CSS/width). If set to `'auto'`, the pane will stretch to fit its content with a width no less than `'450px'`. If the specified width exceeds the width of the viewport, the pane will match the width of the viewport.
-`paneState.open` | | Takes a `customPaneKey*` value to cause the referenced pane to open when the app loads.
-`filtered` | `{}` | Takes key value pairs where the keys are category keys, and the values are lists of lowest level items in that category to be included (not filtered out). If a category is not included in this dictionary then all items in that category are displayed.
+<!-- `paneState.open` | | Takes a `customPaneKey*` value to cause the referenced pane to open when the app loads. -->
+<!-- `filtered` | `{}` | Takes key value pairs where the keys are category keys, and the values are lists of lowest level items in that category to be included (not filtered out). If a category is not included in this dictionary then all items in that category are displayed. -->
 
 ## Example
 

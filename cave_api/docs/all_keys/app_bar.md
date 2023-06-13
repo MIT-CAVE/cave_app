@@ -143,9 +143,8 @@ Key | Default | Description
 --- | ------- | -----------
 `appBarId` | Your first map view | The id (as a string) of the selected view. This would be the key of a `dashboard`, `map` or `kpi` view.
 `customObjKey*` | Required | A custom key wrapper for the custom pane.
-`customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stat`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
+`customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stats`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
 `customObjKey*.bar` | Required | The section of the `appBar` to display the object in. Accepts either `upper` or `lower`. The use of both bar sections is not required, and any object can be shown in either bar.
-`customMapKey*.static` | `False` | If `True`, the viewport of this map cannot be changed manually, but can only be switched between the default and optional viewports given in the `map` top-level key.
 `customButtonKey.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 
 ## Example
