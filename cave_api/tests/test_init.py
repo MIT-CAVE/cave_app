@@ -1,9 +1,15 @@
 from cave_api import execute_command
 from cave_utils import Socket, Validator
 
+from pprint import pp
+
 
 init_session_data = execute_command(session_data={}, socket=Socket(), command="init")
 
-Validator(init_session_data, version="0.0.0")
+x = Validator(init_session_data)
 
-print("test_init.py passed!")
+x.print_errors()
+x.print_warnings()
+
+x.write_warnings('./warnings.txt')
+x.write_errors('./errors.txt')

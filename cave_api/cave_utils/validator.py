@@ -1,6 +1,5 @@
 from pamda import pamda
-import re, copy
-from pprint import pp
+import re, copy, json
 
 class LogObject():
     def __init__(self, errors:dict=dict(), warnings:dict=dict()):
@@ -12,20 +11,6 @@ class LogObject():
         data = self.warnings if level == 'warning' else self.errors
         path = path + [level]
         pamda.assocPath(path=path, value=pamda.pathOr([], path, data) + [error], data=data)
-
-    def show_errors(self):
-        if self.errors != {}:
-            pp("Errors:")
-            pp(self.errors)
-
-    def show_warnings(self):
-        if self.warnings != {}:
-            pp("Warnings:")
-            pp(self.warnings)
-
-    def show(self):
-        self.show_errors()
-        self.show_warnings()
 
 class LogHelper():
     def __init__(self, log:LogObject, prepend_path:list):
@@ -44,11 +29,11 @@ class CoreValidator:
         self.log = LogHelper(log=log, prepend_path=prepend_path)
         self.populate_data(**kwargs)
         self.validate()
-        # try:
-        #     self.additional_validations(**kwargs)
-        # except Exception as e:
-        #     self.log.add(path=[], error=f"Additional validations failed (likely due to another error)")
-        self.additional_validations(**kwargs)
+        try:
+            self.additional_validations(**kwargs)
+        except Exception as e:
+            self.log.add(path=[], error=f"Additional validations failed (likely due to another error with your api data)")
+        # self.additional_validations(**kwargs)
 
     def validate(self):
         for field in self.required_fields:
@@ -1230,12 +1215,25 @@ class RootValidator(CoreValidator):
         SettingsValidator(data=self.data.get('settings',{}), log=self.log, prepend_path=['settings'], root_data=self.data)
 
 class Validator():
-    def __init__(self, session_data, version):
+    def __init__(self, session_data, **kwargs):
         self.session_data = session_data
-        # TODO: Figure out how to validate arbitrary versions
-        self.version = version
         self.log = LogObject()
 
         RootValidator(data=self.session_data, log=self.log, prepend_path=[])
 
-        self.log.show()
+        self.errors = self.log.errors
+        self.warnings = self.log.warnings
+
+    def print_errors(self):
+        print("Errors:")
+        print(json.dumps(self.errors, indent=2))
+
+    def print_warnings(self):
+        print("Warnings:")
+        print(json.dumps(self.warnings, indent=2))
+
+    def write_errors(self, path):
+        pamda.write_json(path, self.errors, pretty=True)
+    
+    def write_warnings(self, path):
+        pamda.write_json(path, self.warnings, pretty=True)
