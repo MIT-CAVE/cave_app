@@ -53,7 +53,9 @@ def generate():
 
     # Globals (Only create if one does not exist)
     globals = Globals.objects.first()
-    if not globals:
+    if globals:
+        return
+    else:
         globals = Globals.objects.get_or_create(
             site_name="CAVE App",
             mapbox_token=config("MAPBOX_TOKEN"),
