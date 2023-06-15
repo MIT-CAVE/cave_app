@@ -1,2 +1,2 @@
 scoptimize>=0.0.6
-cave_utils>=1.5.0b2
+cave_utils>=1.5.0b3
