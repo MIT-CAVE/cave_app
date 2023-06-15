@@ -1,6 +1,6 @@
 import json
 from cave_api.serialization_model.serializers.keys import specified_keys, data_location
-from cave_api.serialization_model.utils import enumerate_dir
+from cave_api.serialization_model.utils import enumerate_dir, drop_none
 from cave_api.serialization_model.serializers.categories import get_categories_data
 from pamda import pamda
 
@@ -14,9 +14,9 @@ def get_file_data(data_dir):
     with open(data_dir + json_filename) as f:
         types = json.load(f)
 
-    return {"name": csv_filename.replace(".csv", ""), "types": types}, pamda.read_csv(
+    return {"types": types}, drop_none(pamda.read_csv(
         data_dir + csv_filename, cast_items=True
-    )
+    ))
 
 
 def validate_required_keys(required_keys, data):

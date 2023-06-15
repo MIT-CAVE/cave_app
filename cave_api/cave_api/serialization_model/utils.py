@@ -1,4 +1,5 @@
 import os
+from pamda import pamda
 
 
 def enumerate_dir(directory):
@@ -11,3 +12,6 @@ def group_list(lst, key):
         key_value = i.pop(key)
         output[key_value] = output.get(key_value, []) + [i]
     return output
+
+def drop_none(data):
+    return [{k:v for k,v in i.items() if v is not None} for i in data]

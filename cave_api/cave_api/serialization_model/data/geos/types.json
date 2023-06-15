@@ -15,7 +15,6 @@
                 }
             }
         },
-        "colorBy": "numericPropExampleC",
         "geoJson": {
             "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
             "geoJsonProp": "code_hasc"
@@ -49,7 +48,6 @@
                 }
             }
         },
-        "colorBy": "numericPropExampleC",
         "geoJson": {
             "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
             "geoJsonProp": "FIPS_10"
