@@ -139,7 +139,6 @@ example = {
                 "order": 1,
             },
             "resetButton": {
-                "name": "Reset Button",
                 "icon": "MdSync",
                 "color": {
                     "dark": "rgb(255, 101, 101)",
@@ -151,7 +150,6 @@ example = {
                 "order": 2,
             },
             "buttonSolve": {
-                "name": "Solve Button",
                 "icon": "BsLightningFill",
                 "color": {
                     "dark": "rgb(178, 179, 55)",
@@ -189,7 +187,6 @@ example = {
             "dash1": {
                 "type": "stats",
                 "icon": "MdInsertChart",
-                "name": "Dashboard 1",
                 "order": 2,
                 "bar": "lower",
             },
@@ -209,6 +206,7 @@ example = {
             },
             "appSettings": {
                 "variant": "appSettings",
+                "name": "App Settings",
             },
             "examplePropsPane": {
                 "name": "Example Props Pane",
@@ -397,6 +395,7 @@ example = {
                 "variant": "context",
                 "props": {
                     "numericContextProp": {
+                        "name": "Numeric Context Prop",
                         "type": "num",
                         "value": 100,
                         "enabled": True,
@@ -529,7 +528,7 @@ example = {
                         "geos": {
                             "state": {
                                 "value": True,
-                                "order": 1,
+                                "order": 3,
                                 "colorBy": "numericPropExampleC",
                             },
                             "country": {
@@ -632,17 +631,17 @@ example = {
                         "col1": {
                             "type": "item",
                             "itemId": "numericPropExampleA",
-                            "col": 1,
+                            "column": 1,
                         },
                         "col2": {
                             "type": "item",
                             "itemId": "numericPropExampleB",
-                            "col": 2,
+                            "column": 2,
                         },
                         "col3": {
                             "type": "item",
                             "itemId": "selectorPropForColor",
-                            "col": 3,
+                            "column": 3,
                         },
                     },
                 },
