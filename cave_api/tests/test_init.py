@@ -5,7 +5,6 @@ from cave_utils.validator import Validator
 
 init_session_data = execute_command(session_data={}, socket=Socket(), command="init")
 
-x = Validator(init_session_data)
+x = Validator(init_session_data, ignore_keys=['meta'])
 
 x.log.print_logs()
-# x.write_logs('./log.txt')

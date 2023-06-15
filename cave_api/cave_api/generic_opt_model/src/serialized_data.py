@@ -147,7 +147,6 @@ def get_serialized_data():
                     "order": 0,
                 },
                 "solveButton": {
-                    "name": "Solve Button",
                     "icon": "BsLightningFill",
                     "apiCommand": "solve",
                     "type": "button",
@@ -169,13 +168,11 @@ def get_serialized_data():
                 },
                 "dash_1": {
                     "icon": "GoPackage",
-                    "name": "Dashboard 1",
                     "type": "stats",
                     "bar": "lower",
                     "order": 1,
                 },
                 "kpi_1": {
-                    "name": "KPI Dashboard",
                     "type": "kpi",
                     "bar": "lower",
                     "icon": "MdSpeed",
@@ -187,9 +184,11 @@ def get_serialized_data():
             "data": {
                 "session": {
                     "variant": "session",
+                    "name": "Sessions",
                 },
                 "appSettings": {
                     "variant": "appSettings",
+                    "name": "App Settings",
                 },
             }
         },
@@ -308,9 +307,11 @@ def get_serialized_data():
                 arc_key: {
                     "name": arc_value["name"],
                     "colorByOptions": serializer.get_dropdown_options(
-                        serializer.arc_data[arc_key], include_categorical=True
+                        serializer.arc_data[arc_key], 
+                        include_categorical=True,
+                        include_colors=True,
                     ),
-                    "lineBy": arc_value.get("lineBy", "Solid"),
+                    "lineBy": arc_value.get("lineBy", "solid"),
                     "sizeByOptions": serializer.get_dropdown_options(serializer.arc_data[arc_key]),
                     "startSize": "8px",
                     "endSize": "15px",
@@ -326,7 +327,9 @@ def get_serialized_data():
                 node_key: {
                     "name": node_value["name"],
                     "colorByOptions": serializer.get_dropdown_options(
-                        serializer.node_data[node_key], include_categorical=True
+                        serializer.node_data[node_key], 
+                        include_categorical=True,
+                        include_colors=True,
                     ),
                     "sizeByOptions": serializer.get_dropdown_options(
                         serializer.node_data[node_key]
@@ -346,7 +349,9 @@ def get_serialized_data():
                 geo_key: {
                     "name": geo_value["name"],
                     "colorByOptions": serializer.get_dropdown_options(
-                        serializer.geo_data[geo_key], include_categorical=True
+                        serializer.geo_data[geo_key], 
+                        include_categorical=True,
+                        include_colors=True,
                     ),
                     "geoJson": {
                         "geoJsonLayer": geo_value["geoJsonLayer"],
@@ -368,6 +373,6 @@ def get_serialized_data():
             "layout": serializer.get_kpi_layout_template(),
         },
         "kwargs": {
-            "wipe_existing": True,
+            "wipeExisting": True,
         },
     }
