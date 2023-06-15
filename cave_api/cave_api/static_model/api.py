@@ -328,6 +328,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "TextArea Input Example",
                             "type": "text",
                             "variant": "textarea",
+                            "rows": 6,
                             "value": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                             "enabled": True,
                             "help": "Help for the text area input example",
