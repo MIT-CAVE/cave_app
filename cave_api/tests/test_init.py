@@ -8,6 +8,4 @@ init_session_data = execute_command(session_data={}, socket=Socket(), command="i
 x = Validator(init_session_data)
 
 x.log.print_logs()
-# x.print_warnings()
-# x.write_warnings('./warnings.txt')
-# x.write_errors('./errors.txt')
+# x.write_logs('./log.txt')
