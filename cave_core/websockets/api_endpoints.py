@@ -2,7 +2,7 @@
 from django.conf import settings
 
 # External Imports
-from cave_utils.utils import Validator
+from cave_utils import Validator
 
 # Internal Imports
 from cave_core import models
