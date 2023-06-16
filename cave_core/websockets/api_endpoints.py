@@ -165,7 +165,7 @@ def mutate_session(request):
                     break
         # Apply an api command if provided and push updated output
         if api_command is not None:
-            session_i.execute_api_command(command=api_command, command_keys=api_command_keys)
+            session_i.execute_api_command(command=api_command, command_keys=api_command_keys, mutate_dict=mutate_dict)
             # get_changed_data needs to be executed prior to session.versions since it can mutate them
             data = session_i.get_changed_data(previous_versions=session_i_pre_versions)
             Socket(session_i).broadcast(

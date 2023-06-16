@@ -991,7 +991,7 @@ class Sessions(models.Model):
         # Update versions post replacement
         self.update_versions()
 
-    def execute_api_command(self, command, command_keys=None, data_queryset=None):
+    def execute_api_command(self, command, command_keys=None, data_queryset=None, mutate_dict=dict()):
         """
         Execute an API Command given the current data and replaces the entire current session state
 
@@ -1019,7 +1019,7 @@ class Sessions(models.Model):
             data_queryset = data_queryset.filter(sendToApi=True)
         session_data = {i.data_name: i.get_data() for i in data_queryset}
         socket = Socket(self)
-        command_output = execute_command(session_data=session_data, command=command, socket=socket)
+        command_output = execute_command(session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict)
         kwargs = command_output.pop("kwargs", {})
         self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
         self.set_loading(False)
