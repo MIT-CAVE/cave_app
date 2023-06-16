@@ -131,12 +131,12 @@ class Model_Object:
         self.id = id
         self.type = item.get("type")
         self.props = Props(item.get("props", {}))
-        self.location_id = item.get("location_id")
+        self.location_id = pamda.path(["meta", "location_id"], item)
 
         # Custom init variables for arc types
         if self.type in arc_type_keys:
-            self.origin_id = item.get("origin_id")
-            self.destination_id = item.get("destination_id")
+            self.origin_id = pamda.path(["meta", "origin_id"], item)
+            self.destination_id = pamda.path(["meta", "destination_id"], item)
 
         # Model Inputs
         self.open = self.props.get_prop("open", True)

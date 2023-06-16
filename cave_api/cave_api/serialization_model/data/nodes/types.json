@@ -28,12 +28,10 @@
             },
             "booleanPropExample": {"false": "rgb(255,0,0)", "true": "rgb(0,255,0)"}
         },
-        "colorBy": "booleanPropExample",
         "sizeByOptions": {
             "numericPropExampleA": {"min": 0, "max": 80},
             "numericPropExampleB": {"min": 0, "max": 50}
         },
-        "sizeBy": "numericPropExampleA",
         "startSize": "30px",
         "endSize": "45px",
         "icon": "MdStore",
@@ -94,12 +92,10 @@
             },
             "booleanPropExample": {"false": "rgb(233, 0, 0)", "true": "rgb(0, 233, 0)"}
         },
-        "colorBy": "numericPropExampleA",
         "sizeByOptions": {
             "numericPropExampleA": {"min": 0, "max": 100},
             "numericPropExampleB": {"min": 0, "max": 250}
         },
-        "sizeBy": "numericPropExampleB",
         "startSize": "30px",
         "endSize": "45px",
         "icon": "BsBuilding",

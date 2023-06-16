@@ -1,23 +1,32 @@
 {
     "allowModification": false,
     "data": {
-        "sync":{
-            "mapLayers":{
-                "name": "Map Layers",
-                "showToggle": true,
-                "value": false,
-                "data":{
-                    "ml1": ["maps", "data", "map1", "legendGroups"]
-                }
-            },
+        "sync": {
             "appBar": {
                 "name": "App Bar",
                 "showToggle": true,
                 "value": false,
                 "data": {
-                    "ab1": ["appBar", "data", "dashboardId"],
-                    "ab2": ["appBar", "paneState"]
+                    "ab1": ["appBar", "paneState"]
                 }
+            },
+            "pageSelection": {
+                "name": "Page Selection",
+                "showToggle": true,
+                "value": false,
+                "data": {"ps1": ["appBar", "data", "appBarId"]}
+            },
+            "mapLayers": {
+                "name": "Map Layers",
+                "showToggle": true,
+                "value": false,
+                "data": {"ml1": ["maps", "data", "map1", "legendGroups"]}
+            },
+            "dashboards": {
+                "name": "Dashboards",
+                "showToggle": true,
+                "value": false,
+                "data": {"db1": ["dashboards", "data"]}
             }
         },
         "iconUrl": "https://react-icons.mitcave.com/4.8.0",
