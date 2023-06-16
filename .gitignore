@@ -16,3 +16,6 @@ venv
 %SystemDrive%
 
 .env
+
+# Logs
+logs

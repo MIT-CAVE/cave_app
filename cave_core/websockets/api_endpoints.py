@@ -1,3 +1,9 @@
+# Framework Imports
+from django.conf import settings
+
+# External Imports
+from cave_utils.utils import Validator
+
 # Internal Imports
 from cave_core import models
 from cave_core.utils.broadcasting import Socket
@@ -167,6 +173,10 @@ def mutate_session(request):
                 versions=session_i.versions,
                 data=data,
             )
+            if settings.LIVE_API_VALIDATION and settings.DEBUG:
+                validator = Validator(session_i.get_changed_data(previous_versions={}), ignore_keys=['meta'])
+                validator.log.write_logs(f"./logs/validation/{session_i.name}.log")
+
         # If no api command is provided, apply the mutation
         else:
             Socket(session_i).broadcast(
