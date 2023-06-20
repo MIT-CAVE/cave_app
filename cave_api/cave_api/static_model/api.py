@@ -434,7 +434,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Nested Item Example",
                             "type": "selector",
                             "variant": "nested",
-                            "value": ["t1_b1_tw1", "t1_b1_tw2", "t2_b1_tw1"],
+                            "value": ["t1_b1_tw1", "t1_b1_tw2", "t1_b2_tw2", "t2_b1_tw1", "t2_b1_tw2"],
                             "options": {
                                 "t1_b1_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch1']},
                                 "t1_b1_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch1']},
