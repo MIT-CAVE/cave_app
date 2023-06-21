@@ -1,5 +1,5 @@
 from cave_api import execute_command
-from cave_utils.utils import Socket, Validator
+from cave_utils import Socket, Validator
 
 
 init_session_data = execute_command(session_data={}, socket=Socket(), command="init")
