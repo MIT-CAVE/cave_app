@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /cave_cli/utils.sh
+
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 APP_DIR=$(dirname "$SCRIPT_DIR")
 
@@ -22,8 +24,8 @@ for i in {1..6}; do
   sleep 3
 done
 
-python "$APP_DIR/manage.py" makemigrations cave_core --deployment_type development
-python "$APP_DIR/manage.py" migrate --deployment_type development
-python "$APP_DIR/manage.py" createcachetable
-python "$APP_DIR/data_gen.py" --deployment_type development
-python "$APP_DIR/manage.py" runserver 0.0.0.0:8000
+python "$APP_DIR/manage.py" makemigrations cave_core --deployment_type development 2>&1 | pipe_log "DEBUG"
+python "$APP_DIR/manage.py" migrate --deployment_type development 2>&1 | pipe_log "DEBUG"
+python "$APP_DIR/manage.py" createcachetable 2>&1 | pipe_log "DEBUG"
+python "$APP_DIR/data_gen.py" --deployment_type development 2>&1 | pipe_log "DEBUG"
+python "$APP_DIR/manage.py" runserver 0.0.0.0:8000 2>&1 | pipe_log "INFO"
