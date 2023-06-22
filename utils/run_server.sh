@@ -1,7 +1,5 @@
 #!/bin/bash
 
-echo "Starting DEV server..."
-
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 APP_DIR=$(dirname "$SCRIPT_DIR")
 
