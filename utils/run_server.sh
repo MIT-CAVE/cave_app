@@ -28,4 +28,4 @@ python "$APP_DIR/manage.py" makemigrations cave_core --deployment_type developme
 python "$APP_DIR/manage.py" migrate --deployment_type development 2>&1 | pipe_log "DEBUG"
 python "$APP_DIR/manage.py" createcachetable 2>&1 | pipe_log "DEBUG"
 python "$APP_DIR/data_gen.py" --deployment_type development 2>&1 | pipe_log "DEBUG"
-python "$APP_DIR/manage.py" runserver 0.0.0.0:8000 2>&1 | pipe_log "INFO"
+python -u "$APP_DIR/manage.py" runserver 0.0.0.0:8000 2>&1 | pipe_log "INFO"

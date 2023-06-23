@@ -14,5 +14,4 @@ python-decouple==3.6
 type_enforced>=0.0.15
 whitenoise==6.2.0
 -r ./utils/extra_requirements.txt
--e ./cave_api
 -r ./cave_api/requirements.txt
