@@ -941,6 +941,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numberFormat": {
                                 "unit": "A units"
                             },
+                            "legendOverride": {
+                                "useScientificFormat": False,
+                                "minLabel": "small",
+                            },
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
@@ -1023,6 +1027,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "endGradientColor": {
                                 "dark": "rgb(96, 2, 2)",
                                 "light": "rgb(23, 23, 126)",
+                            },
+                            "legendOverride": {
+                                "useScientificFormat": False,
+                                "maxLabel": "big",
                             },
                         },
                     },
@@ -1241,6 +1249,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numberFormat": {
                                 "unit": "A units",
                             },
+                            "legendOverride": {
+                                "scientificPrecision": 5,
+                                "useScientificFormat": True,
+                            },
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
@@ -1249,6 +1261,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for numeric prop example B",
                             "numberFormat": {
                                 "unit": "B units",
+                            },
+                            "legendOverride": {
+                                "useScientificFormat": True,
                             },
                         },
                         "booleanPropExample": {
@@ -1308,6 +1323,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numberFormat": {
                                 "unit": "A units",
                             },
+                            "legendOverride": {
+                                "scientificPrecision": 5,
+                            },
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
@@ -1316,6 +1334,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for numeric prop example B",
                             "numberFormat": {
                                 "unit": "B units",
+                            },
+                            "legendOverride": {
+                                "minLabel": "Lo",
+                                "maxLabel": "Hi",
                             },
                         },
                         "booleanPropExample": {
