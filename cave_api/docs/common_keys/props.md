@@ -126,6 +126,7 @@ Allows end users to select options from a set. This `type` requires an array of 
 `'hradio'`: Same as `'radio'` but horizontal placement.<br><br>
 `'vstepper'`: Allows the user to select one option from a set of mutually exclusive options along a vertical slider.<br><br>
 `'hstepper'`: Same as `'vstepper'` but horizontal placement.<br><br>
+`'nested'`: Allows the user to choose one or more options from a set of nested checkboxes. Only the checked options at the lowest level are selected. At any time, a box is checked if and only if all of its descendants are checked. Else if at least one but not all of a box's descendants are checked, that box is displayed as being partially checked. Clicking on a box automatically updates the display of all its ancestors and descendants: clicking on a checked box unchecks all of its descendants, whereas clicking on an unchecked or partially checked box checks all of its descendants. <br><br>
 Since multiple selection is possible in the `'checkbox'` variant, one or more options in [`value`](#value) can be specified as a [`custom_option_*`](#custom_option_) key or [`custom_option_*`](#custom_option_) key array, respectively, while in the `dropdown`, `radio`, `hradio`, `vstepper`, and `hstepper`  variants, only one option is allowed to be present.
 
 ### `'date'`
