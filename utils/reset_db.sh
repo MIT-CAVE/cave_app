@@ -24,4 +24,22 @@ for i in {1..6}; do
   sleep 3
 done
 
-python -u "$APP_DIR/manage.py" runserver 0.0.0.0:8000 2>&1 | pipe_log "INFO"
+# Log the current DB migrations
+mkdir "./tmp"
+printf "$(ls ./cave_core/migrations/*.py)" > "./tmp/init.txt"
+
+# Make and apply any new migrations
+python "$APP_DIR/manage.py" makemigrations cave_core --deployment_type development 2>&1 | pipe_log "DEBUG"
+python "$APP_DIR/manage.py" migrate --deployment_type development 2>&1 | pipe_log "DEBUG"
+python "$APP_DIR/manage.py" createcachetable 2>&1 | pipe_log "DEBUG"
+
+# Determine new DB migration files and delete them
+printf "$(ls ./cave_core/migrations/*.py)" > "./tmp/after.txt"
+grep -Fxvf ./tmp/init.txt ./tmp/after.txt > ./tmp/new.txt
+cat ./tmp/new.txt | while read migration_name; do
+  rm $migration_name
+done
+rm -r "./tmp"
+
+# Generate data
+python "$APP_DIR/data_gen.py" --deployment_type development 2>&1 | pipe_log "DEBUG"
