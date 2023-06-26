@@ -24,4 +24,4 @@ for i in {1..6}; do
   sleep 3
 done
 
-python -u "$APP_DIR/manage.py" runserver 0.0.0.0:8000 2>&1 | pipe_log "INFO"
+python "$APP_DIR/manage.py" runserver 0.0.0.0:8000 2>&1 | pipe_log "INFO"
