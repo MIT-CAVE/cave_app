@@ -430,6 +430,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Select an option from the combobox",
                         },
+                        "nestedItemExample": {
+                            "name": "Nested Item Example",
+                            "type": "selector",
+                            "variant": "nested",
+                            "value": ["t1_b1_tw1", "t1_b1_tw2", "t1_b2_tw2", "t2_b1_tw1", "t2_b1_tw2"],
+                            "options": {
+                                "t1_b1_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch1']},
+                                "t1_b1_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch1']},
+                                "t1_b1_tw3": {"name": "Twig3", "path": ['Tree1', 'Branch1']},
+                                "t1_b2_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch2']},
+                                "t1_b2_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch2']},
+                                "t2_b1_tw1": {"name": "Twig1", "path": ['Tree2', 'Branch1']},
+                                "t2_b1_tw2": {"name": "Twig2", "path": ['Tree2', 'Branch1']},
+                                "t2_b2_tw1": {"name": "Twig1", "path": ['Tree2', 'Branch2']},
+                                "t2_b2_tw2": {"name": "Twig2", "path": ['Tree2', 'Branch2']},
+                            },
+                            "enabled": True,
+                            "help": "Select all relevant items",
+                        },
                         "dateTimeHeader": {
                             "name": "Date and Time Props",
                             "type": "head",
@@ -578,6 +597,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 4,
                                 "row": 8,
                                 "itemId": "hradioItemExample",
+                            },
+                            "col4Row9": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 9,
+                                "itemId": "nestedItemExample",
                             },
                             "col5Row1": {
                                 "type": "item",
@@ -916,6 +941,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numberFormat": {
                                 "unit": "A units"
                             },
+                            "legendOverride": {
+                                "useScientificFormat": False,
+                                "minLabel": "small",
+                            },
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
@@ -998,6 +1027,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "endGradientColor": {
                                 "dark": "rgb(96, 2, 2)",
                                 "light": "rgb(23, 23, 126)",
+                            },
+                            "legendOverride": {
+                                "useScientificFormat": False,
+                                "maxLabel": "big",
                             },
                         },
                     },
@@ -1216,6 +1249,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numberFormat": {
                                 "unit": "A units",
                             },
+                            "legendOverride": {
+                                "scientificPrecision": 5,
+                                "useScientificFormat": True,
+                            },
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
@@ -1224,6 +1261,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for numeric prop example B",
                             "numberFormat": {
                                 "unit": "B units",
+                            },
+                            "legendOverride": {
+                                "useScientificFormat": True,
                             },
                         },
                         "booleanPropExample": {
@@ -1283,6 +1323,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numberFormat": {
                                 "unit": "A units",
                             },
+                            "legendOverride": {
+                                "scientificPrecision": 5,
+                            },
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
@@ -1291,6 +1334,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for numeric prop example B",
                             "numberFormat": {
                                 "unit": "B units",
+                            },
+                            "legendOverride": {
+                                "minLabel": "Lo",
+                                "maxLabel": "Hi",
                             },
                         },
                         "booleanPropExample": {
