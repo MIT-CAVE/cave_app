@@ -1028,10 +1028,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "dark": "rgb(96, 2, 2)",
                                 "light": "rgb(23, 23, 126)",
                             },
-                            "legendOverride": {
-                                "useScientificFormat": False,
-                                "maxLabel": "big",
-                            },
                         },
                     },
                     "lineBy": "dotted",
