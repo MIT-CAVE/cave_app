@@ -36,6 +36,9 @@ ALLOWED_HOSTS = ["*"]
 allowed_host = os.environ.get("CSRF_TRUSTED_ORIGIN")
 if allowed_host:
     CSRF_TRUSTED_ORIGINS = [f"https://{allowed_host}"]
+    CSRF_COOKIE_NAME = f"csrftoken-{allowed_host}"
+    SESSION_COOKIE_NAME = f"sessionid-{allowed_host}"
+
 ## Middleware
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
