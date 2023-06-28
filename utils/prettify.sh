@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source /cave_cli/utils.sh
+source ./utils/helpers/utils_backup.sh
 
 # Change to the script directory
 cd $(dirname "$0")
