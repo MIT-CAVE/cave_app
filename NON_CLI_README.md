@@ -38,11 +38,7 @@
             - If you used the CLI to create this `.env` file, a random secret key was generated during that process.
         - `DJANGO_ADMIN_EMAIL`: The email for the site administrator
         - `DJANGO_ADMIN_PASSWORD`: A secure password for the site administrator
-        - `DATABASE_NAME`: The name of your locally hosted development database in postgresql
-            - NOTE: Certain features wipe the database so you should have a unique `DATABASE_NAME` per project
-        - `DATABASE_USER`: A user to access your database
-            - NOTE: You should have a unique `DATABASE_USER` per project to avoid password change conflicts
-          - `DATABASE_PASSWORD`: A secure password for database access
+        - `DATABASE_PASSWORD`: A secure password for database access
       - You might also consider editing:
           - `STATIC_APP_URL` and `STATIC_APP_URL_PATH`
               - If you plan doing development on `cave_static` and deploying it locally:
@@ -66,22 +62,42 @@
 1. Navigate to the app and build the container
     ```
     cd path/to/cave_app
-    docker build . --tag cave-app
+    source .env
+    app_name='cave_test'
+    docker build . --tag cave-app:${app_name}
     ```
 2. Create a Docker network for the containers to run in
     ```
-    docker network create cave-net
+    app_name='cave_test'
+    docker network create cave-net:${app_name}
     ```
 3. Start postgres
     ```
-    source .env && docker run --volume "${app_name}_pg_volume:/var/lib/postgresql/data" --network cave-net --name "${app_name}_postgres" -e POSTGRES_PASSWORD="$DATABASE_PASSWORD" -e POSTGRES_USER="$DATABASE_USER" -e POSTGRES_DB="$DATABASE_NAME" -d postgres:15.3-alpine3.18 postgres -c listen_addresses='*'
+    source .env
+    app_name='cave_test'
+    docker run -d \
+        --volume "${app_name}_pg_volume:/var/lib/postgresql/data" \
+        --network cave-net:${app_name} \
+        --name "${app_name}_db_host" \
+        -e POSTGRES_PASSWORD="$DATABASE_PASSWORD" \
+        -e POSTGRES_USER="${app_name}_user" \
+        -e POSTGRES_DB="${app_name}_name"\
+        "$DATABASE_IMAGE" $DATABASE_COMMAND
     ```
-    > Note: Replace `${app_name}` with the name of your app
+    > Note: Replace `cave_test` with the name of your app
 3. Run the app on `localhost:8000` with development settings:
     ```
-    docker run -it -p 8000:8000 --network cave-net --volume "./:/app" --name "${app_name}_django" cave-app /app/utils/run_dev_server.sh
+    source .env
+    app_name='cave_test'
+    docker run -it -p 8000:8000 --network cave-net:${app_name} --volume "./:/app" --volume "$CAVE_PATH:/cave_cli" --name "${app_name}_django" \
+      -e DATABASE_HOST="${app_name}_db_host" \
+      -e DATABASE_USER="${app_name}_user" \
+      -e DATABASE_PASSWORD="$DATABASE_PASSWORD" \
+      -e DATABASE_NAME="${app_name}_name"\
+      -e DATABASE_PORT=5432 \
+      "cave-app:${app_name}" /app/utils/run_server.sh && docker rm --force "${app_name}_django" "${app_name}_db_host"
     ```
-    > Note: Replace `${app_name}` with the name of your app
+    > Note: Replace `cave_test` with the name of your app
 4. Run the app on a LAN (local area network) on `0.0.0.0:8123`:
     - Note: To run on LAN, you must use an SSL connection.
     - Note: This uses a self signed and insecure certificate for SSL/TLS reasons
@@ -112,12 +128,19 @@
 ### Prettify Code
 NOTE: All prettify commands write over existing code.
 
-To apply our default lint fixes to all python code in `./cave_core` and `./cave_app`:
-```
-docker run --volume "./:/app" cave-app /app/utils/prettify.sh
-```
-
 To apply our default lint fixes to all python code in `./cave_api`:
 ```
-docker run --volume "./:/app" cave-app /app/utils/api_prettify.sh
+app_name='cave_test'
+docker run --volume "./:/app" "cave-app:${app_name}" /app/utils/prettify.sh
+```
+
+To apply our default lint fixes to all python code:
+```
+docker run --volume "./:/app" "cave-app:${app_name}" /app/utils/prettify.sh -all
+```
+
+### Interactive Mode
+To run the app in interactive mode:
+```
+docker run -it --volume "./:/app" "cave-app:${app_name}" bash
 ```
