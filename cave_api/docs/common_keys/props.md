@@ -78,8 +78,11 @@ Aside from [`name`](common_keys.md#name) and [`order`](common_keys.md#order) all
 Key | Default | Description
 --- | ------- | -----------
 <a name="customPropKey">`customPropKey*`</a> | | A custom key wrapper for a `props` item.
-<a name="apiCommand">`customPropKey*.apiCommand`</a> | | If specified, passes an api command argument along with a mutation request. This command will be passed to `execute_command` for each session to be synced.
+<a name="apiCommand">`customPropKey*.apiCommand`</a> | | If specified, passes an API command argument along with a mutation request. This command will be passed to `execute_command` for each session to be synced.
 <a name="apiCommandKeys">`customPropKey*.apiCommandKeys`</a> | | If specified, only passes specific session keys over to `execute_command` for each session to be synced.
+<a name="data-name">`customPropKey*.dataName`</a> | | If specified, it represents the top-level key in the session that will be modified through the `execute_command`.
+<a name="data-path">`customPropKey*.dataPath`</a> | | If specified, it indicates the path to the object that will be modified in the session using `execute_command`. Requires [`dataName`](#data-name) to be specified.
+<a name="data-value">`customPropKey*.dataValue`</a> | | If specified, it provides the object that will override the value pointed to by [`dataPath`](#data-path). Requires [`dataName`](#data-name) to be specified.
 <a name="enabled">`customPropKey*.enabled`</a> | `False` | Enable a `props` element in the UI. If `False`, users cannot interact with the element in the UI.
 <a name="help">`customPropKey*.help`</a> | | A help message that is displayed in the UI, as a result of a mouseover or touch event on a `customPropKey*` element.
 <a name="max-value">`customPropKey*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
