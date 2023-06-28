@@ -1,5 +1,5 @@
 # `legendOverride`
-The `legendOverride` key is used to define how a `num` prop is displayed in the legend, such as in scientific notation, based on [`numberFormat`](number_format.md) or with fixed values.
+The `legendOverride` key is used to define how a `num` prop is displayed in the legend, such as in scientific notation, based on [`numberFormat`](number_format.md), or with fixed values.
 
 The `legendOverride` structure with all its keys looks as follows:
 ```py
