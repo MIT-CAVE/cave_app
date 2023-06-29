@@ -105,11 +105,23 @@
         - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
     - To run the server:
         ```
-        docker run -d --restart unless-stopped -p "0.0.0.0:8123:8000" --network cave-net --volume "./utils/lan_hosting:/certs" --name "${app_name}_nginx" -e CAVE_HOST="${app_name}_django" --volume "./utils/nginx_ssl.conf.template:/etc/nginx/templates/default.conf.template:ro" nginx
+        docker run -d --restart unless-stopped -p "0.0.0.0:8123:8000" \
+            --network cave-net:${app_name} --volume "./utils/lan_hosting:/certs" \
+            --name "${app_name}_nginx" -e CAVE_HOST="${app_name}_django" \
+            --volume "./utils/nginx_ssl.conf.template:/etc/nginx/templates/default.conf.template:ro" nginx
         ```
 
         ```
-        docker run -it -p 8000 --network cave-net --volume "./:/app" --name "${app_name}_django" -e CSRF_TRUSTED_ORIGIN="0.0.0.0:8123" "cave-app:${app_name}" /app/utils/run_dev_server.sh
+        docker run -it -p 8000 --network cave-net:${app_name} \
+            --volume "./:/app" --volume "$CAVE_PATH:/cave_cli" \
+            --name "${app_name}_django" \
+            -e CSRF_TRUSTED_ORIGIN="0.0.0.0:8123" \
+            -e DATABASE_HOST="${app_name}_db_host" \
+            -e DATABASE_USER="${app_name}_user" \
+            -e DATABASE_PASSWORD="$DATABASE_PASSWORD" \
+            -e DATABASE_NAME="${app_name}_name" \
+            -e DATABASE_PORT=5432 \
+            "cave-app:${app_name}" /app/utils/run_server.sh
         ```
     > Note: Replace `${app_name}` with the name of your app
     - Note: You can specify the LAN IP with an IP pointing to your machine, ex
