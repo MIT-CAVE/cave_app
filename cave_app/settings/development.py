@@ -32,6 +32,13 @@ SECRET_KEY = config("SECRET_KEY")
 ## Allow All Hosts For Development
 ### NOTE: This Should be explicit in a production setting
 ALLOWED_HOSTS = ["*"]
+##
+allowed_host = os.environ.get("CSRF_TRUSTED_ORIGIN")
+if allowed_host:
+    CSRF_TRUSTED_ORIGINS = [f"https://{allowed_host}"]
+    CSRF_COOKIE_NAME = f"csrftoken-{allowed_host}"
+    SESSION_COOKIE_NAME = f"sessionid-{allowed_host}"
+
 ## Middleware
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -111,11 +118,11 @@ CORS_ALLOWED_ORIGINS = [STATIC_APP_URL]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": config("DATABASE_NAME"),
-        "USER": config("DATABASE_USER"),
-        "PASSWORD": config("DATABASE_PASSWORD"),
-        "HOST": config("DATABASE_HOST"),
-        "PORT": config("DATABASE_PORT"),
+        "NAME": os.environ.get("DATABASE_NAME"),
+        "USER": os.environ.get("DATABASE_USER"),
+        "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
+        "HOST": os.environ.get("DATABASE_HOST"),
+        "PORT": os.environ.get("DATABASE_PORT"),
     }
 }
 # Static files (CSS, JavaScript, Images)

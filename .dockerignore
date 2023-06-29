@@ -1,0 +1,17 @@
+# Pycache Files
+*__pycache__
+
+# Local Static and Media
+staticfiles
+
+# Virtual Environment
+venv
+
+# Apple Files
+.DS_Store
+.idea
+
+# MS Files
+%SystemDrive%
+
+.env
