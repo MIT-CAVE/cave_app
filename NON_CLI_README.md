@@ -109,11 +109,11 @@
         ```
 
         ```
-        docker run -it -p 8000 --network cave-net --volume "./:/app" --name "${app_name}_django" -e CSRF_TRUSTED_ORIGIN="0.0.0.0:8123" cave-app /app/utils/run_dev_server.sh
+        docker run -it -p 8000 --network cave-net --volume "./:/app" --name "${app_name}_django" -e CSRF_TRUSTED_ORIGIN="0.0.0.0:8123" "cave-app:${app_name}" /app/utils/run_dev_server.sh
         ```
     > Note: Replace `${app_name}` with the name of your app
-    - Note: You can specify the LAN IP with
-        - Specific: `-p 192.168.1.100:8123`
+    - Note: You can specify the LAN IP with an IP pointing to your machine, ex
+      `-p 192.168.1.100:8123` or `-p 0.0.0.0`
             - Note: Replace `192.168.1.100` with your local IP address
             - This allows you to access the sever from a specific IP that points to your machine
     - To access the server go to:
