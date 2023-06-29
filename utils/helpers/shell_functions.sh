@@ -1,4 +1,8 @@
-if ! command -v pipe_log &> /dev/null; then
+# if /cave_cli/utils.sh exists (mounted by the cave cli) source it for use
+# Otherwise determine minimal local utils to use in their stead
+if [ -f "/cave_cli/utils.sh" ]; then
+    source /cave_cli/utils.sh
+else
   get_flag() {
       local default=$1
       shift
