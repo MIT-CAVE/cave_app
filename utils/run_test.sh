@@ -3,10 +3,8 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 APP_DIR=$(dirname "$SCRIPT_DIR")
 
-source /cave_cli/utils.sh
-source ./utils/helpers/utils_backup.sh
+source ./utils/helpers/shell_functions.sh
   
-
 ALL_FLAG=$(has_flag -all "$@")
 
 if [[ ! -f "./cave_api/tests/$1" && "${ALL_FLAG}" != "true" ]]; then
