@@ -113,16 +113,14 @@
         ```
     > Note: Replace `${app_name}` with the name of your app
     - Note: You can specify the LAN IP with
-        - Wildcard: `-p 0.0.0.0:8123`
-            - This allows you to access the sever from any IP that points to your machine
         - Specific: `-p 192.168.1.100:8123`
             - Note: Replace `192.168.1.100` with your local IP address
             - This allows you to access the sever from a specific IP that points to your machine
     - To access the server go to:
     ```
-    https://0.0.0.0:8123
+    https://192.168.1.100:8123
     ```
-    Or the your local address at the specified port
+    Or whichever local address you specified at the specified port
 
 
 ### Prettify Code
