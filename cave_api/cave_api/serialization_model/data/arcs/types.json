@@ -35,13 +35,11 @@
                 }
             }
         },
-        "colorBy": "numericPropExampleA",
         "lineBy": "solid",
         "sizeByOptions": {
             "numericPropExampleA": {"min": 0, "max": 50},
             "numericPropExampleB": {"min": 0, "max": 40}
         },
-        "sizeBy": "numericPropExampleB",
         "startSize": "15px",
         "endSize": "30px",
         "props": {
@@ -84,16 +82,16 @@
             "numColumns": "auto",
             "numRows": 1,
             "data": {
-                "col1": {"type": "item", "itemId": "numericPropExampleA", "col": 1},
+                "col1": {"type": "item", "itemId": "numericPropExampleA", "column": 1},
                 "col2": {
                     "type": "item",
                     "itemId": "numericPropExampleB",
-                    "col": 2
+                    "column": 2
                 },
                 "col3": {
                     "type": "item",
                     "itemId": "selectorPropForColor",
-                    "col": 3
+                    "column": 3
                 }
             }
         }
@@ -134,13 +132,11 @@
                 }
             }
         },
-        "colorBy": "numericPropExampleA",
         "lineBy": "dotted",
         "sizeByOptions": {
             "numericPropExampleA": {"min": 0, "max": 50},
             "numericPropExampleB": {"min": 0, "max": 40}
         },
-        "sizeBy": "numericPropExampleB",
         "startSize": "15px",
         "endSize": "30px",
         "props": {

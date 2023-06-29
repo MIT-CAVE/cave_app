@@ -75,9 +75,9 @@ class Node:
                 },
             }
 
-    def get_dropdown_options(self, include_categorical=False):
+    def get_dropdown_options(self, include_categorical=False, include_colors=False):
         options = {
-            prop: self.get_dropdown_option_data(prop_dict)
+            prop: self.get_dropdown_option_data(prop_dict) if include_colors else {}
             for prop, prop_dict in self.serialized_data["props"].items()
             if "value" in prop_dict
             and (include_categorical or not isinstance(prop_dict.get("value"), bool))
@@ -94,18 +94,24 @@ class Node:
         ), "processing capacity should always be greater than or equal to 0"
 
     def serialize(self):
-        extra_args = {"geoJsonValue": self.geoId} if self.geoId else {}
-        return {
-            "name": self.name,
+        extra_args = {"geoJsonValue": self.geoId} if self.geoId else {
             "latitude": self.latitude,
             "longitude": self.longitude,
-            "altitude": self.altitude,
+            "altitude": self.altitude
+        }
+        return {
+            "name": self.name,
+            "meta": {
+                "latitude": self.latitude,
+                "longitude": self.longitude,
+                "altitude": self.altitude,
+                "location_id": self.location.id,
+            },
             "type": self.type,
             "category": {
                 "location": [self.location.id],
             },
             **extra_args,
-            "location_id": self.location.id,
             "props": {
                 "variables": {},
                 "processing_capacity": {"value": self.processing_capacity},
@@ -161,9 +167,9 @@ class Arc:
                 },
             }
 
-    def get_dropdown_options(self, include_categorical=False):
+    def get_dropdown_options(self, include_categorical=False, include_colors=False):
         options = {
-            prop: self.get_dropdown_option_data(prop_dict)
+            prop: self.get_dropdown_option_data(prop_dict) if include_colors else {}
             for prop, prop_dict in self.serialized_data["props"].items()
             if "value" in prop_dict
             and (include_categorical or not isinstance(prop_dict.get("value"), bool))
@@ -198,9 +204,11 @@ class Arc:
                     self.destination.location.id,
                 ],
             },
-            "origin_id": self.origin.id,
-            "destination_id": self.destination.id,
-            "location_id": self.location.id,
+            "meta": {
+                "origin_id": self.origin.id,
+                "destination_id": self.destination.id,
+                "location_id": self.location.id,
+            },
             "props": {
                 "variables": {},
                 "processing_capacity": {"value": self.processing_capacity},
@@ -288,6 +296,7 @@ class Serializer:
                 "enabled": True,
                 "help": "The fixed cost to open this node",
                 "numberFormat": currency_format,
+                "value": 0,
             },
             "open": {
                 "name": "Open",
@@ -453,9 +462,9 @@ class Serializer:
             },
         }
 
-    def get_dropdown_options(self, items_dict, include_categorical=False):
+    def get_dropdown_options(self, items_dict, include_categorical=False, include_colors=False):
         try:
-            return list(items_dict.values())[0].get_dropdown_options(include_categorical)
+            return list(items_dict.values())[0].get_dropdown_options(include_categorical, include_colors)
         except:
             return []
 
@@ -468,7 +477,6 @@ class Serializer:
                         "name": f"{value['name_singular']} KPIs",
                         "icon": value["icon"],
                         "type": "head",
-                        "value": 0,
                         "variant": "row",
                     },
                     f"{key}_count_used": {
@@ -506,7 +514,6 @@ class Serializer:
                     f"{key}_processing_utilization": {
                         "name": f"{value['name_singular']} {'Percent Demand Met' if key in total_type_keys+destination_type_keys else 'Processing Utilization'}",
                         "value": 0,
-                        "percentage": True,
                         "numberFormat": {
                             "unit": f"%",
                             "unitSpace": False,

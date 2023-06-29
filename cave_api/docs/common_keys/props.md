@@ -78,8 +78,11 @@ Aside from [`name`](common_keys.md#name) and [`order`](common_keys.md#order) all
 Key | Default | Description
 --- | ------- | -----------
 <a name="customPropKey">`customPropKey*`</a> | | A custom key wrapper for a `props` item.
-<a name="apiCommand">`customPropKey*.apiCommand`</a> | | If specified, passes an api command argument along with a mutation request. This command will be passed to `execute_command` for each session to be synced.
+<a name="apiCommand">`customPropKey*.apiCommand`</a> | | If specified, passes an API command argument along with a mutation request. This command will be passed to `execute_command` for each session to be synced.
 <a name="apiCommandKeys">`customPropKey*.apiCommandKeys`</a> | | If specified, only passes specific session keys over to `execute_command` for each session to be synced.
+<a name="data-name">`customPropKey*.dataName`</a> | | If specified, it represents the top-level key in the session that will be modified through the `execute_command`.
+<a name="data-path">`customPropKey*.dataPath`</a> | | If specified, it indicates the path to the object that will be modified in the session using `execute_command`. Requires [`dataName`](#data-name) to be specified.
+<a name="data-value">`customPropKey*.dataValue`</a> | | If specified, it provides the object that will override the value pointed to by [`dataPath`](#data-path). Requires [`dataName`](#data-name) to be specified.
 <a name="enabled">`customPropKey*.enabled`</a> | `False` | Enable a `props` element in the UI. If `False`, users cannot interact with the element in the UI.
 <a name="help">`customPropKey*.help`</a> | | A help message that is displayed in the UI, as a result of a mouseover or touch event on a `customPropKey*` element.
 <a name="max-value">`customPropKey*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
@@ -103,10 +106,10 @@ Allows users to place a header for an individual section, containing a title (vi
 ### `'text'`
 Allows users to enter text in a UI field. Here, `value` takes a string.
 #### Variants:
->`'textarea'`: Allows users to enter text in a multi-line input field. This variant allows the special keys `minRows` and `maxRows` to set the minimum and maximum number of rows to display in the input control, as appropriate. If omitted, `minRows` will default to `2`, while `maxRows` will default to `10`.<br>
+>`'textarea'`: Allows users to enter text in a multi-line input field. For customizing the number of visible rows, the preferred approach is to use the `rows` special key. If not specified, `rows` defaults to `4`. Alternatively, the deprecated `minRows` and `maxRows` special keys can be used to set the minimum and maximum number of rows, respectively. However, please note that `minRows` and `maxRows` will be dropped in a future version.<br>
 
 ### `'num'`
-Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is formatted according to [`numberFormat`](number_format.md).
+Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is formatted according to [`numberFormat`](number_format.md) and legend formatted with [`legendOverride`](legendOverride.md)
 #### Variants:
 >`'slider'`: Places a range of values along a bar, from which users may select a single value.<br>
 
@@ -123,7 +126,11 @@ Allows end users to select options from a set. This `type` requires an array of 
 `'combobox'`: A dropdown with a search bar that allows users to filter options when typing. The options become visible as the user interacts with the element.<br>
 `'dropdown'`: Allows a compact way to display multiple options. The options appear upon interaction with an element (such as an icon or button) or when the user performs a specific action.<br>
 `'radio'`: Allows the user to select one option from a set of mutually exclusive options.<br><br>
-Since multiple selection is possible in the `'checkbox'` variant, one or more options in [`value`](#value) can be specified as a [`custom_option_*`](#custom_option_) key or [`custom_option_*`](#custom_option_) key array, respectively, while in the `dropdown` and `radio` variants, only one option is allowed to be present.
+`'hradio'`: Same as `'radio'` but horizontal placement.<br><br>
+`'vstepper'`: Allows the user to select one option from a set of mutually exclusive options along a vertical slider.<br><br>
+`'hstepper'`: Same as `'vstepper'` but horizontal placement.<br><br>
+`'nested'`: Allows the user to choose one or more options from a set of nested checkboxes. Only the checked options at the lowest level are selected. At any time, a box is checked if and only if all of its descendants are checked. Else if at least one but not all of a box's descendants are checked, that box is displayed as being partially checked. Clicking on a box automatically updates the display of all its ancestors and descendants: clicking on a checked box unchecks all of its descendants, whereas clicking on an unchecked or partially checked box checks all of its descendants. <br><br>
+Since multiple selection is possible in the `'checkbox'` variant, one or more options in [`value`](#value) can be specified as a [`custom_option_*`](#custom_option_) key or [`custom_option_*`](#custom_option_) key array, respectively, while in the `dropdown`, `radio`, `hradio`, `vstepper`, and `hstepper`  variants, only one option is allowed to be present.
 
 ### `'date'`
 Allows users to select a date and/or time. This `type` requires an [ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) formatted string for its [`value`](#value) key. In addition, a `variant` must be specified.
@@ -131,6 +138,12 @@ Allows users to select a date and/or time. This `type` requires an [ISO-8601](ht
 >`'date'`: Allows to select a date by clicking on a text field displaying it, which opens a calendar pop-up.<br>
 `'time'`: Allows to select a time by clicking on a text field displaying it, which opens a clock pop-up.<br>
 `'datetime'`: Select date and time by clicking on the text field displaying them, which opens a pop-up with calendar and clock tabs.<br>
+
+### `'media'`
+Allows users to view various media formats. This `type` requires an embed URL string for its [`value`](#value) key. A `variant` must be specified.
+#### Variants:
+`'picture'`: Displays a PNG or JPG image. Allows users to view an enlarged version upon clicking an expand button. <br>
+`'video'`: Displays a YouTube, Vimeo, or Dailymotion video clip. Allows users to play, pause, adjust volume, and enter fullscreen mode. <br>
 
 ## Default `props` values and overriding
 Very often, the `props` elements specified in [`arcs`](../all_keys/arcs.md), [`nodes`](../all_keys/nodes.md), and [`geos`](../all_keys/geos.md) are the same for a large number of items at the _data-point level_ ([customArcData*](../all_keys/arcs.md#arc-data-point), [customNodeData*](../all_keys/nodes.md#node-data-point) or [customGeoData*](../all_keys/geos.md#geo-data-point)). To reduce the overhead caused by duplicate `props` items and achieve a more lightweight data structure, it is possible to define a `props` dictionary at the _type level_ ([customArcType*](../all_keys/arcs.md#arc-type), [customNodeType*](../all_keys/nodes.md#node-type), or [customGeoType*](../all_keys/geos.md#geo-type)) so that a prop can be reused and overridden at the data-point level. In this case, two `props` items match by sharing the same [custom prop key](#customPropKey). The resulting prop from this match is a union of key-value pairs, where if a key exists in both `props` items, the value at the data-point level will be used.

@@ -7,24 +7,24 @@
     cd cave_app
     ```
 
-3. Setup a virtual environment and install all requirements:
+3. Install Docker
 
-    - Install (or upgrade) virtualenv:
-        ```
-        python3 -m pip install --upgrade virtualenv
-        ```
-    - Create your virtualenv named `venv`:
-        ```
-        python3 -m virtualenv venv
-        ```
-    - Activate your virtual environment on Unix (Mac or Linux):
-        ```
-        source venv/bin/activate
-        ```
-    - Install all requirements for development:
-        ```
-        pip install --require-virtualenv -r requirements.txt
-        ```
+    ```sh
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh ./get-docker.sh
+    ```
+
+    Add the current user to the docker group
+
+    ```sh
+    dockerd-rootless-setuptool.sh install
+    ```
+
+    Make sure it works outside of sudo
+
+    ```sh
+    docker run hello-world
+    ```
 
 ### Update the Server Environment Variables
 
@@ -38,11 +38,7 @@
             - If you used the CLI to create this `.env` file, a random secret key was generated during that process.
         - `DJANGO_ADMIN_EMAIL`: The email for the site administrator
         - `DJANGO_ADMIN_PASSWORD`: A secure password for the site administrator
-        - `DATABASE_NAME`: The name of your locally hosted development database in postgresql
-            - NOTE: Certain features wipe the database so you should have a unique `DATABASE_NAME` per project
-        - `DATABASE_USER`: A user to access your database
-            - NOTE: You should have a unique `DATABASE_USER` per project to avoid password change conflicts
-          - `DATABASE_PASSWORD`: A secure password for database access
+        - `DATABASE_PASSWORD`: A secure password for database access
       - You might also consider editing:
           - `STATIC_APP_URL` and `STATIC_APP_URL_PATH`
               - If you plan doing development on `cave_static` and deploying it locally:
@@ -63,53 +59,98 @@
 
 ### Local Deployment
 
-1. Remove any legacy database (if it exists) and set up the stock database:
+1. Navigate to the app and build the container
     ```
     cd path/to/cave_app
-    sudo chmod 700 .
-    ./utils/reset_db.sh
+    source .env
+    app_name='cave_test'
+    docker build . --tag cave-app:${app_name}
     ```
-2. Run the app on `localhost:8000` with development settings:
+2. Create a Docker network for the containers to run in
     ```
-    python manage.py runserver
+    app_name='cave_test'
+    docker network create cave-net:${app_name}
     ```
-3. Run the app on a LAN (local area network):
+3. Start postgres
+    ```
+    source .env
+    app_name='cave_test'
+    docker run -d \
+        --volume "${app_name}_pg_volume:/var/lib/postgresql/data" \
+        --network cave-net:${app_name} \
+        --name "${app_name}_db_host" \
+        -e POSTGRES_PASSWORD="$DATABASE_PASSWORD" \
+        -e POSTGRES_USER="${app_name}_user" \
+        -e POSTGRES_DB="${app_name}_name"\
+        "$DATABASE_IMAGE" $DATABASE_COMMAND
+    ```
+    > Note: Replace `cave_test` with the name of your app
+3. Run the app on `localhost:8000` with development settings:
+    ```
+    source .env
+    app_name='cave_test'
+    docker run -it -p 8000:8000 --network cave-net:${app_name} --volume "./:/app" --volume "$CAVE_PATH:/cave_cli" --name "${app_name}_django" \
+      -e DATABASE_HOST="${app_name}_db_host" \
+      -e DATABASE_USER="${app_name}_user" \
+      -e DATABASE_PASSWORD="$DATABASE_PASSWORD" \
+      -e DATABASE_NAME="${app_name}_name"\
+      -e DATABASE_PORT=5432 \
+      "cave-app:${app_name}" /app/utils/run_server.sh && docker rm --force "${app_name}_django" "${app_name}_db_host"
+    ```
+    > Note: Replace `cave_test` with the name of your app
+4. Run the app on a LAN (local area network) on `0.0.0.0:8123`:
     - Note: To run on LAN, you must use an SSL connection.
     - Note: This uses a self signed and insecure certificate for SSL/TLS reasons
         - The certificates are self signed and shared openly in the cave open source project
         - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
-    - Note: This uses the `daphne` production server.
-        - You will need to `collectstatic` in order for your staticfiles to load properly.
-        ```
-        python manage.py collectstatic
-        ```
     - To run the server:
-    ```
-    daphne -e ssl:8000:privateKey=utils/lan_hosting/LAN.key:certKey=utils/lan_hosting/LAN.crt cave_app.asgi:application -p 8001 -b 0.0.0.0
-    ```
-        - Note: You will need to access the app from the ssl port (in the above case `8000`) and not the port specified by `-p`.
-        - Note: You can specify the LAN IP with
-            - Wildcard: `-b 0.0.0.0`
-                - This allows you to access the sever from any IP that points to your machine
-            - Specific: `-b 192.168.1.100`
-                - Note: Replace `192.168.1.100` with your local IP address
-                - This allows you to access the sever from a specific IP that points to your machine
+        ```
+        docker run -d --restart unless-stopped -p "0.0.0.0:8123:8000" \
+            --network cave-net:${app_name} --volume "./utils/lan_hosting:/certs" \
+            --name "${app_name}_nginx" -e CAVE_HOST="${app_name}_django" \
+            --volume "./utils/nginx_ssl.conf.template:/etc/nginx/templates/default.conf.template:ro" nginx
+        ```
+
+        ```
+        docker run -it -p 8000 --network cave-net:${app_name} \
+            --volume "./:/app" --volume "$CAVE_PATH:/cave_cli" \
+            --name "${app_name}_django" \
+            -e CSRF_TRUSTED_ORIGIN="0.0.0.0:8123" \
+            -e DATABASE_HOST="${app_name}_db_host" \
+            -e DATABASE_USER="${app_name}_user" \
+            -e DATABASE_PASSWORD="$DATABASE_PASSWORD" \
+            -e DATABASE_NAME="${app_name}_name" \
+            -e DATABASE_PORT=5432 \
+            "cave-app:${app_name}" /app/utils/run_server.sh
+        ```
+    > Note: Replace `${app_name}` with the name of your app
+    - Note: You can specify the LAN IP with an IP pointing to your machine, ex
+      `-p 192.168.1.100:8123` or `-p 0.0.0.0`
+            - Note: Replace `192.168.1.100` with your local IP address
+            - This allows you to access the sever from a specific IP that points to your machine
     - To access the server go to:
     ```
-    https://192.168.1.100:8000
+    https://192.168.1.100:8123
     ```
-      - Note: Replace `192.168.1.100` with your local IP address
+    Or whichever local address you specified at the specified port
 
 
 ### Prettify Code
 NOTE: All prettify commands write over existing code.
 
-To apply our default lint fixes to all python code in `./cave_core` and `./cave_app`:
-```
-./utils/prettify.sh
-```
-
 To apply our default lint fixes to all python code in `./cave_api`:
 ```
-./utils/api_prettify.sh
+app_name='cave_test'
+docker run --volume "./:/app" "cave-app:${app_name}" /app/utils/prettify.sh
+```
+
+To apply our default lint fixes to all python code:
+```
+docker run --volume "./:/app" "cave-app:${app_name}" /app/utils/prettify.sh -all
+```
+
+### Interactive Mode
+To run the app in interactive mode:
+```
+docker run -it --volume "./:/app" "cave-app:${app_name}" bash
 ```

@@ -1,3 +1,9 @@
+# Framework Imports
+from django.conf import settings
+
+# External Imports
+from cave_utils import Validator
+
 # Internal Imports
 from cave_core import models
 from cave_core.utils.broadcasting import Socket
@@ -159,7 +165,7 @@ def mutate_session(request):
                     break
         # Apply an api command if provided and push updated output
         if api_command is not None:
-            session_i.execute_api_command(command=api_command, command_keys=api_command_keys)
+            session_i.execute_api_command(command=api_command, command_keys=api_command_keys, mutate_dict=mutate_dict)
             # get_changed_data needs to be executed prior to session.versions since it can mutate them
             data = session_i.get_changed_data(previous_versions=session_i_pre_versions)
             Socket(session_i).broadcast(
@@ -167,6 +173,10 @@ def mutate_session(request):
                 versions=session_i.versions,
                 data=data,
             )
+            if settings.LIVE_API_VALIDATION and settings.DEBUG:
+                validator = Validator(session_i.get_changed_data(previous_versions={}), ignore_keys=['meta'])
+                validator.log.write_logs(f"./logs/validation/{session_i.name}.log")
+
         # If no api command is provided, apply the mutation
         else:
             Socket(session_i).broadcast(

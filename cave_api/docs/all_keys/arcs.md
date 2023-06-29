@@ -172,6 +172,7 @@ Key | Default | Description
 `data.customArcData*.startClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
 `data.customArcData*.startLatitude` | Required | The latitude for the source location in the "**Map**" view. It takes a float value.
 `data.customArcData*.startLongitude` | Required | The longitude for the source location in the "**Map**" view. It takes a float value.
+`data.customArcData*.tilt` | `0` | Expressed in degrees (-90&deg; to 90&deg;), this feature enables you to tilt the arc sideways when dealing with multiple arcs that share the same source and target locations in the "**Map**" view.
 `data.customArcData*.type` | Required | The `type` key sets the arc type of `customArcData*` to a `customArcType*` key, to match specific visualization preferences for an arc flow.
 `types` | Required | The `types` key allows you to define different arc types in terms of styling and data viz settings.
 <a name="arc-type">`types.customArcType*`</a> | | A wrapper for key-value pairs that match a specific set of data viz preferences for an arc flow.

@@ -115,10 +115,9 @@ Key | Default | Description
 `customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.colorBy` | `false` | The prop to used to color this node layer
 `customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.sizeBy` | `false` | The prop to used to size this node layer
 `customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.allowGrouping` | `false` | (BETA Feature) A node specific key to determine if this node layer is able to be auto grouped.
-`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.allowGrouping` | `false` | (BETA Feature) A node specific key to determine if this node layer is able to be auto grouped.
 `customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.group` | `false` | (BETA Feature) Group the nodes in this layer (to use this you must set `allowGrouping=true`)
-`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.groupCalcByColor` | `count` | (BETA Feature) The aggregation method to use on the prop specified in `colorBy`. Options include [`count`,`max`,'min`,`mean`,`median`,`mode`,`sum`]
-`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.groupCalcBySize` | `count` | (BETA Feature) The aggregation method to use on the prop specified in `sizeBy`. Options include [`count`,`max`,'min`,`mean`,`median`,`mode`,`sum`]
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.groupCalcByColor` | `count` | (BETA Feature) The aggregation method to use on the prop specified in `colorBy`. Options include [`count`,`max`,`min`,`mean`,`median`,`mode`,`sum`]
+`customMapKey.legendGroups.customLegendGroupKey*.nodes.customNodeType*.groupCalcBySize` | `count` | (BETA Feature) The aggregation method to use on the prop specified in `sizeBy`. Options include [`count`,`max`,`min`,`mean`,`median`,`mode`,`sum`]
 
 
 ## Example

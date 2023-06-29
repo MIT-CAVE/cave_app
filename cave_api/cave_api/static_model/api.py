@@ -29,8 +29,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
     example = {
         "settings": {
             "allowModification": False,
-            "sendToApi": False,
-            "sendToClient": True,
             "data": {
                 "sync": {
                     "appBar": {
@@ -38,8 +36,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "showToggle": True,
                         "value": False,
                         "data": {
-                            "ab1": ["appBar", "data", "dashboardId"],
-                            "ab2": ["appBar", "paneState"],
+                            "ab1": ["appBar", "paneState"],
                         },
                     },
                     "pageSelection": {
@@ -243,6 +240,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Sessions Pane",
                 },
                 "appSettings": {
+                    "name": "App Settings Pane",
                     "variant": "appSettings",
                 },
                 "examplePropsPane": {
@@ -300,6 +298,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Press this button to create an error",
                         },
+                        "pictureExample": {
+                            "name": "Picture Example",
+                            "type": "media",
+                            "variant": "picture",
+                            "value": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
+                            "help": "Click the expand button to view an enlarged version",
+                        },
+                        "videoExample": {
+                            "name": "Video Example",
+                            "type": "media",
+                            "variant": "video",
+                            "value": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                            "help": "Click the play button to start the video",
+                        },
                         "textHeader": {
                             "name": "Text Props",
                             "type": "head",
@@ -316,6 +328,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "TextArea Input Example",
                             "type": "text",
                             "variant": "textarea",
+                            "rows": 6,
                             "value": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                             "enabled": True,
                             "help": "Help for the text area input example",
@@ -364,6 +377,45 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Select one item from the list",
                         },
+                        "hstepperItemExample": {
+                                "name": "Horizontal Stepper Item Example",
+                                "type": "selector",
+                                "variant": "hstepper",
+                                "value": ["option_c"],
+                                "options": {
+                                    "option_a": {"name": "Option A"},
+                                    "option_b": {"name": "Option B"},
+                                    "option_c": {"name": "Option C"},
+                                    },
+                                "enabled": True,
+                                "help": "Select an option from the stepper",
+                        },
+                        "vstepperItemExample": {
+                                "name": "Vertical Stepper Item Example",
+                                "type": "selector",
+                                "variant": "vstepper",
+                                "value": ["option_c"],
+                                "options": {
+                                    "option_a": {"name": "Option A"},
+                                    "option_b": {"name": "Option B"},
+                                    "option_c": {"name": "Option C"},
+                                    },
+                                "enabled": True,
+                                "help": "Select an option from the stepper",
+                        },
+                        "hradioItemExample": {
+                                "name": "Horizontal Radio Item Example",
+                                "type": "selector",
+                                "variant": "hradio",
+                                "value": ["option_c"],
+                                "options": {
+                                    "option_a": {"name": "Option A"},
+                                    "option_b": {"name": "Option B"},
+                                    "option_c": {"name": "Option C"},
+                                    },
+                                "enabled": True,
+                                "help": "Select an option from the radio",
+                        },
                         "comboBoxItemExample": {
                             "name": "ComboBox Item Example",
                             "type": "selector",
@@ -377,6 +429,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "enabled": True,
                             "help": "Select an option from the combobox",
+                        },
+                        "nestedItemExample": {
+                            "name": "Nested Item Example",
+                            "type": "selector",
+                            "variant": "nested",
+                            "value": ["t1_b1_tw1", "t1_b1_tw2", "t1_b2_tw2", "t2_b1_tw1", "t2_b1_tw2"],
+                            "options": {
+                                "t1_b1_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch1']},
+                                "t1_b1_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch1']},
+                                "t1_b1_tw3": {"name": "Twig3", "path": ['Tree1', 'Branch1']},
+                                "t1_b2_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch2']},
+                                "t1_b2_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch2']},
+                                "t2_b1_tw1": {"name": "Twig1", "path": ['Tree2', 'Branch1']},
+                                "t2_b1_tw2": {"name": "Twig2", "path": ['Tree2', 'Branch1']},
+                                "t2_b2_tw1": {"name": "Twig1", "path": ['Tree2', 'Branch2']},
+                                "t2_b2_tw2": {"name": "Twig2", "path": ['Tree2', 'Branch2']},
+                            },
+                            "enabled": True,
+                            "help": "Select all relevant items",
                         },
                         "dateTimeHeader": {
                             "name": "Date and Time Props",
@@ -467,6 +538,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "row": 3,
                                 "itemId": "buttonInputExample",
                             },
+                            "col3Row4": {
+                                "type": "item",
+                                "column": 3,
+                                "row": 4,
+                                "itemId": "pictureExample",
+                            },
+                            "col3Row5": {
+                                "type": "item",
+                                "column": 3,
+                                "row": 5,
+                                "itemId": "videoExample",
+                            },
                             "col4Row1": {
                                 "type": "item",
                                 "column": 4,
@@ -496,6 +579,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 4,
                                 "row": 5,
                                 "itemId": "comboBoxItemExample",
+                            },
+                            "col4Row6": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 6,
+                                "itemId": "hstepperItemExample",
+                            },
+                            "col4Row7": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 7,
+                                "itemId": "vstepperItemExample",
+                            },
+                            "col4Row8": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 8,
+                                "itemId": "hradioItemExample",
+                            },
+                            "col4Row9": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 9,
+                                "itemId": "nestedItemExample",
                             },
                             "col5Row1": {
                                 "type": "item",
@@ -533,6 +640,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "variant": "context",
                     "props": {
                         "numericContextProp": {
+                            "name": "Numeric Context Prop",
                             "type": "num",
                             "value": 100,
                             "enabled": True,
@@ -644,9 +752,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupCalcByColor": "sum",
                                     # "groupCalcBySize": "mode",
                                     # "groupScaleWithZoom": True,
-                                    # Equivalent to zoom level unless groupScale is set
+                                    # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
-                                    # Allow group matching only when a category value matches
+                                    # # Allow group matching only when a category value matches
                                     # "groupMatchCategory": "location",
                                     # "groupMatchCategoryLevel": "state",
                                 }
@@ -679,12 +787,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "geos": {
                                 "state": {
                                     "value": True,
-                                    "order": 1,
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
                                     "value": False,
-                                    "order": 2,
                                     "colorBy": "numericPropExampleC",
                                 },
                             },
@@ -768,12 +874,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "geos": {
                                 "state": {
                                     "value": True,
-                                    "order": 1,
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
                                     "value": False,
-                                    "order": 2,
                                     "colorBy": "numericPropExampleC",
                                 },
                             },
@@ -835,7 +939,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Help for numeric prop example A",
                             "numberFormat": {
-                                "unit": "A units",
+                                "unit": "A units"
+                            },
+                            "legendOverride": {
+                                "useScientificFormat": False,
+                                "minLabel": "small",
                             },
                         },
                         "numericPropExampleB": {
@@ -871,17 +979,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "col1": {
                                 "type": "item",
                                 "itemId": "numericPropExampleA",
-                                "col": 1,
+                                "column": 1,
                             },
                             "col2": {
                                 "type": "item",
                                 "itemId": "numericPropExampleB",
-                                "col": 2,
+                                "column": 2,
                             },
                             "col3": {
                                 "type": "item",
                                 "itemId": "selectorPropForColor",
-                                "col": 3,
+                                "column": 3,
                             },
                         },
                     },
@@ -1137,6 +1245,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numberFormat": {
                                 "unit": "A units",
                             },
+                            "legendOverride": {
+                                "scientificPrecision": 5,
+                                "useScientificFormat": True,
+                            },
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
@@ -1145,6 +1257,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for numeric prop example B",
                             "numberFormat": {
                                 "unit": "B units",
+                            },
+                            "legendOverride": {
+                                "useScientificFormat": True,
                             },
                         },
                         "booleanPropExample": {
@@ -1204,6 +1319,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numberFormat": {
                                 "unit": "A units",
                             },
+                            "legendOverride": {
+                                "scientificPrecision": 5,
+                            },
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
@@ -1212,6 +1330,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for numeric prop example B",
                             "numberFormat": {
                                 "unit": "B units",
+                            },
+                            "legendOverride": {
+                                "minLabel": "Lo",
+                                "maxLabel": "Hi",
                             },
                         },
                         "booleanPropExample": {
@@ -1345,7 +1467,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         }
                     },
-                    "colorBy": "numericPropExampleC",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
                         "geoJsonProp": "code_hasc",
@@ -1379,7 +1500,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         }
                     },
-                    "colorBy": "numericPropExampleC",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
                         "geoJsonProp": "FIPS_10",

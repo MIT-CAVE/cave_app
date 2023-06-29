@@ -27,7 +27,7 @@ urlpatterns = [
     # User Authentication
     path(
         "login/",
-        LoginView.as_view(extra_context=url_helpers.get_extra_content()),
+        LoginView.as_view(extra_context=url_helpers.get_extra_content(), redirect_authenticated_user=True),
     ),
     path(
         "logout/",

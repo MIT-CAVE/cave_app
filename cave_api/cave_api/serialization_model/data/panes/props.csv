@@ -1,7 +1,7 @@
 paneId,propId,name,type,variant,options,value,enabled,help,maxValue,minValue,numberFormat,apiCommand,label,selectableCategories
 examplePropsPane,numericHeader,Numeric Props,head,,,,,Some help for numeric props,,,,,,
 examplePropsPane,numericInputExample,Numeric Input Example,num,,,50,TRUE,Help for the numeric input example,100,0,"{""precision"": 0,""unit"": ""units""}",,,
-examplePropsPane,numericSliderExample,Numeric Slider Example,num,slider,,50,TRUE,Help for the numeric slider example,100,0,,,,
+examplePropsPane,numericSliderExample,Numeric Slider Example,num,slider,,50,TRUE,Help for the numeric slider example,100,0,"{""precision"": 0,""unit"": ""units""}",,,
 examplePropsPane,miscHeader,Misc Props,head,,,,,Some help for miscelanous props,,,,,,
 examplePropsPane,toggleInputExample,Toggle Input Example,toggle,,,TRUE,TRUE,Help for the toggle input example,,,,,,
 examplePropsPane,buttonInputExample,Button Input Example (Creates an Error),button,,,Press Me!,TRUE,Press this button to create an error,,,,test,,

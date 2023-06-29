@@ -3,7 +3,6 @@
 
 # Local Static and Media
 staticfiles
-media
 
 # Virtual Environment
 venv
@@ -16,6 +15,3 @@ venv
 %SystemDrive%
 
 .env
-
-# Logs
-logs

@@ -1,4 +1,4 @@
-from cave_api.serialization_model.utils import group_list
+from cave_api.serialization_model.utils import group_list, drop_none
 from pamda import pamda
 
 
@@ -21,11 +21,11 @@ def get_legend_groups(layers_data):
         itemGroup = item.get("legendGroup")
         output[itemGroup] = output.get(itemGroup, {"name": itemGroup})
         output[itemGroup][itemType] = output[itemGroup].get(itemType, {})
-        output[itemGroup][itemType][itemId] = {
+        output[itemGroup][itemType][itemId] = {k:v for k,v in {
             "value": item.get("value", False),
-            "colorBy": item.get("colorBy", ""),
-            "sizeBy": item.get("sizeBy", ""),
-        }
+            "colorBy": item.get("colorBy"),
+            "sizeBy": item.get("sizeBy"),
+        }.items() if v is not None}
     return output
 
 
@@ -39,8 +39,8 @@ def serialize_map(layers, viewports):
 
 
 def get_maps_data(data_dir):
-    layers_data = group_list(pamda.read_csv(data_dir + "layers.csv", cast_items=True), "id")
-    viewports = group_list(pamda.read_csv(data_dir + "viewports.csv", cast_items=True), "id")
+    layers_data = group_list(drop_none(pamda.read_csv(data_dir + "layers.csv", cast_items=True)), "id")
+    viewports = group_list(drop_none(pamda.read_csv(data_dir + "viewports.csv", cast_items=True)), "id")
     return {
         "data": {key: serialize_map(layers_data[key], viewports[key]) for key in layers_data.keys()}
     }

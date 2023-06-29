@@ -1,24 +1,24 @@
 import json
-from cave_api.serialization_model.utils import group_list
+from cave_api.serialization_model.utils import group_list, drop_none
 from pamda import pamda
 
 
 def get_panes_data(data_dir):
-    data = {i.pop("id"): i for i in pamda.read_csv(data_dir + "panes.csv", cast_items=True)}
+    data = {i.pop("id"): i for i in drop_none(pamda.read_csv(data_dir + "panes.csv", cast_items=True))}
 
     try:
         layout_data = group_list(
-            pamda.read_csv(data_dir + "/layout.csv", cast_items=True), "paneId"
+            drop_none(pamda.read_csv(data_dir + "/layout.csv", cast_items=True)), "paneId"
         )
     except:
         layout_data = {}
     try:
-        prop_data = group_list(pamda.read_csv(data_dir + "/props.csv", cast_items=True), "paneId")
+        prop_data = group_list(drop_none(pamda.read_csv(data_dir + "/props.csv", cast_items=True)), "paneId")
     except:
         prop_data = {}
     try:
         context_data = group_list(
-            pamda.read_csv(data_dir + "/contexts.csv", cast_items=True), "paneId"
+            drop_none(pamda.read_csv(data_dir + "/contexts.csv", cast_items=True)), "paneId"
         )
     except:
         context_data = {}
