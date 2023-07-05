@@ -101,8 +101,10 @@ Once added, you can update your python environment by running your app again (in
 cave run -v
 ```
 
-### Unable to import a package?
-
+<br/>
+<details>
+  <summary>Unable to import a package? Click Here</summary>
+<br/>
 If you notice issues or cannot install/import packages specified in `your_app/cave_api/requirements.txt`, consider running the app in interactive mode:
 ```
 cave run -it
@@ -146,7 +148,8 @@ Example:
     ```
 - Now, when you run your app, the DOCKER image will be built again and `rasterio` should install correctly 
     - The app should work assuming you have no other issues.
-
+</details>
+<br/>
 
 ## Adding Static Data to the API
 
