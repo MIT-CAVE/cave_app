@@ -50,10 +50,10 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
             "Personal Info",
             {"fields": ("first_name", "last_name", "photo", "bio")},
         ),
-        # (
-        #     "Session Info",
-        #     {"fields": ("session", "team_ids")},
-        # ),
+        (
+            "Session Info",
+            {"fields": ("session", "team_ids")},
+        ),
     )
     add_fieldsets = (
         (
@@ -179,9 +179,9 @@ class CustomTeamUserAdmin(admin.ModelAdmin):
         "team__name",
     ]
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.exclude(team__name__icontains="Personal (")
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     return qs.exclude(team__name__icontains="Personal")
 
 
 class CustomPageSectionInline(admin.StackedInline):
@@ -218,9 +218,9 @@ class CustomTeamAdmin(admin.ModelAdmin):
         CustomTeamUserInline,
     ]
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.exclude(name__icontains="Personal (")
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     return qs.exclude(name__icontains="Personal")
 
 
 class CustomGroupUserAdmin(admin.ModelAdmin):
