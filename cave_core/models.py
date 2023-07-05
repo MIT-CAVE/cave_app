@@ -231,14 +231,14 @@ class CustomUser(AbstractUser):
         return [self.id]
 
     def create_personal_team(self):
-        team, team_created = Teams.objects.get_or_create(name=f"Personal ({self.username})")
+        team, team_created = Teams.objects.get_or_create(name=f"{self.username} - Personal")
         if team_created:
             team.add_user(self)
         return team
 
     def get_or_create_personal_team(self):
         team = Teams.objects.filter(
-            id__in=self.team_ids, name=f"Personal ({self.username})"
+            id__in=self.team_ids, name__icontains="Personal"
         ).first()
         if team is None:
             team = self.create_personal_team()
