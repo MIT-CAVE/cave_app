@@ -164,6 +164,7 @@ Key | Default | Description
 `data.customArcData*.endClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
 `data.customArcData*.endLatitude` | Required | The latitude for the target location in the "**Map**" view. It takes a float value.
 `data.customArcData*.endLongitude` | Required | The longitude for the target location in the "**Map**" view. It takes a float value.
+`data.customArcData*.geoJsonValue` | | To be used only in conjunction with `types.customArcType*.geoJson`. The identifier for this arc as identified in the specified geoJson object. This identifier is matched to the `types.customArcType*.geoJson.geoJsonProp` as it relates to each geoJson object in the file specified at `types.customArcType*.geoJson.geoJsonLayer`.
 `data.customArcData*.height` | `1` | The height multiplier relative to the distance between two points for the apex of a `3d` (lineBy) arc. For example, a value of `0` would turn a `3d` (lineBy) arc into the equivalent to a `solid` (lineBy) arc.
 `data.customArcData*.name` | | A name for the arc flow that will be displayed as a title in the map modal.
 <a name="path">`data.customArcData*.path`</a> | | A list of coordinate points (`[<longitude>, <latitude>]`), such that every two consecutive coordinates represent an arc segment of a path to be rendered in the "**Map**" view. Additionally, a third position can be added to each coordinate (`[<longitude>, <latitude>, <altitude>]`), to visually represent altitude on the map.<br><br>Please note that `path` is not supported for `3d` arcs. If you need to create a "`3d` path", you can do so by joining multiple arcs which start and end coordinates match the segments of the intended path.<br><br>The use of `path` overrides any behavior resulting from the use of the following `data.customArcData*.` keys: `startLongitude`, `startLatitude`, `startAltitude`, `endLongitude`, `endLatitude`, and `endAltitude`.
@@ -177,6 +178,9 @@ Key | Default | Description
 `types` | Required | The `types` key allows you to define different arc types in terms of styling and data viz settings.
 <a name="arc-type">`types.customArcType*`</a> | | A wrapper for key-value pairs that match a specific set of data viz preferences for an arc flow.
 `types.customArcType*.lineBy` | `'solid'` | The pattern of dashes and gaps used to form the shape of an arc's stroke. It takes one of the following values: `'dashed'`, `'dotted'`, `'solid'`, or `'3d'`. This can be set in individual arcs to overwrite the default for the type.
+<a name="geoJson">`types.customArcType*.geoJson`</a> | | A wrapper for the [`geoJsonLayer`](#geojson_layer) and [`geoJsonProp`](#geojson_prop) keys in an arc type. If this key is present, all custumArcData.* object of this type should include a `geoJsonValue` key, rather than a `path` or `startLongitude` and `startLatitude`/`endLongitude` and `endLatitude` pair.
+<a name="geoJsonLayer">`types.customArcType*.geoJson`&swarhk;<br>`.geoJsonLayer`</a> | | Sets the GeoJSON data source of `customArcType*` to a URL of a GeoJSON data source. Note that this URL is fetched on app startup or, if passed later, when the layer is enabled by the app user.
+<a name="geoJsonProp">`types.customArcType*.geoJson`&swarhk;<br>`.geoJsonProp`</a> | | Contains the name of a [GeoJSON property](#https://datatracker.ietf.org/doc/html/rfc7946#section-1.5) in the data source specified in `geoJsonLayer`.
 
 ## Example
 
