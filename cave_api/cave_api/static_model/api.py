@@ -155,83 +155,151 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "appBar": {
             "data": {
                 "appBarId": "dash1",
-                "session": {
-                    "icon": "MdApi",
-                    "type": "pane",
-                    "bar": "upper",
-                    "order": 0,
-                },
-                "appSettings": {
-                    "icon": "MdOutlineSettings",
-                    "type": "pane",
-                    "bar": "upper",
-                    "order": 1,
-                },
-                "resetButton": {
-                    "icon": "MdSync",
-                    "color": {
-                        "dark": "rgb(255, 101, 101)",
-                        "light": "rgb(212, 0, 0)",
+                "left": {
+                    "session": {
+                        "icon": "MdApi",
+                        "type": "pane",
+                        "bar": "upper",
+                        "order": 0,
                     },
-                    "apiCommand": "reset",
-                    "type": "button",
-                    "bar": "upper",
-                    "order": 2,
-                },
-                "buttonSolve": {
-                    "icon": "BsLightningFill",
-                    "color": {
-                        "dark": "rgb(178, 179, 55)",
-                        "light": "rgb(79, 79, 24)",
+                    "appSettings": {
+                        "icon": "MdOutlineSettings",
+                        "type": "pane",
+                        "bar": "upper",
+                        "order": 1,
                     },
-                    "apiCommand": "solve",
-                    "type": "button",
-                    "bar": "upper",
-                    "order": 2,
+                    "resetButton": {
+                        "icon": "MdSync",
+                        "color": {
+                            "dark": "rgb(255, 101, 101)",
+                            "light": "rgb(212, 0, 0)",
+                        },
+                        "apiCommand": "reset",
+                        "type": "button",
+                        "bar": "upper",
+                        "order": 2,
+                    },
+                    "buttonSolve": {
+                        "icon": "BsLightningFill",
+                        "color": {
+                            "dark": "rgb(178, 179, 55)",
+                            "light": "rgb(79, 79, 24)",
+                        },
+                        "apiCommand": "solve",
+                        "type": "button",
+                        "bar": "upper",
+                        "order": 2,
+                    },
+                    "examplePropsPane": {
+                        "icon": "FaCogs",
+                        "type": "pane",
+                        "bar": "upper",
+                        "order": 3,
+                    },
+                    "context1": {
+                        "icon": "BsInboxes",
+                        "type": "pane",
+                        "order": 4,
+                        "bar": "upper",
+                    },
+                    "filter": {
+                        "icon": "FaFilter",
+                        "type": "pane",
+                        "order": 5,
+                        "bar": "upper",
+                    },
+                    "map1": {
+                        "type": "map",
+                        "icon": "FaMapMarkedAlt",
+                        "bar": "lower",
+                        "order": 0,
+                    },
+                    "dash1": {
+                        "type": "stats",
+                        "icon": "MdInsertChart",
+                        "order": 1,
+                        "bar": "lower",
+                    },
+                    "kpi1": {
+                        "type": "kpi",
+                        "icon": "MdSpeed",
+                        "bar": "lower",
+                        "order": 2,
+                    },
                 },
-                "examplePropsPane": {
-                    "icon": "FaCogs",
-                    "type": "pane",
-                    "bar": "upper",
-                    "order": 3,
+                "right": {
+                    "session": {
+                        "icon": "MdApi",
+                        "type": "pane",
+                        "bar": "upper",
+                        "order": 0,
+                    },
+                    "appSettings": {
+                        "icon": "MdOutlineSettings",
+                        "type": "pane",
+                        "bar": "upper",
+                        "order": 1,
+                    },
+                    "resetButton": {
+                        "icon": "MdSync",
+                        "color": {
+                            "dark": "rgb(255, 101, 101)",
+                            "light": "rgb(212, 0, 0)",
+                        },
+                        "apiCommand": "reset",
+                        "type": "button",
+                        "bar": "upper",
+                        "order": 2,
+                    },
+                    "buttonSolve": {
+                        "icon": "BsLightningFill",
+                        "color": {
+                            "dark": "rgb(178, 179, 55)",
+                            "light": "rgb(79, 79, 24)",
+                        },
+                        "apiCommand": "solve",
+                        "type": "button",
+                        "bar": "upper",
+                        "order": 2,
+                    },
+                    "examplePropsPane": {
+                        "icon": "FaCogs",
+                        "type": "pane",
+                        "bar": "upper",
+                        "order": 3,
+                    },
+                    "context2": {
+                        "icon": "BsInboxes",
+                        "type": "pane",
+                        "order": 4,
+                        "bar": "upper",
+                    },
+                    "filter": {
+                        "icon": "FaFilter",
+                        "type": "pane",
+                        "order": 5,
+                        "bar": "upper",
+                    },
+                    "map2": {
+                        "type": "map",
+                        "icon": "FaMapMarked",
+                        "bar": "lower",
+                        "order": 0,
+                    },
+                    "dash2": {
+                        "type": "stats",
+                        "icon": "MdInsertChartOutlined",
+                        "order": 1,
+                        "bar": "lower",
+                    },
+                    "kpi1": {
+                        "type": "kpi",
+                        "icon": "MdSpeed",
+                        "bar": "lower",
+                        "order": 2,
+                    },
                 },
-                "context": {
-                    "icon": "BsInboxes",
-                    "type": "pane",
-                    "order": 4,
-                    "bar": "upper",
-                },
-                "filter": {
-                    "icon": "FaFilter",
-                    "type": "pane",
-                    "order": 5,
-                    "bar": "upper",
-                },
-                "map1": {
-                    "type": "map",
-                    "icon": "FaMapMarkedAlt",
-                    "bar": "lower",
-                    "order": 1,
-                },
-                "map2": {
-                    "type": "map",
-                    "icon": "FaMapMarked",
-                    "bar": "lower",
-                    "order": 2,
-                },
-                "dash1": {
-                    "type": "stats",
-                    "icon": "MdInsertChart",
-                    "order": 3,
-                    "bar": "lower",
-                },
-                "kpi1": {
-                    "type": "kpi",
-                    "icon": "MdSpeed",
-                    "bar": "lower",
-                    "order": 4,
-                },
-            }
+            },
         },
         "panes": {
             "data": {
@@ -635,7 +703,32 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Filter",
                     "variant": "filter",
                 },
-                "context": {
+                "context1": {
+                    "name": "Context Pane",
+                    "variant": "context",
+                    "props": {
+                        "numericContextProp": {
+                            "name": "Numeric Context Prop",
+                            "type": "num",
+                            "value": 100,
+                            "enabled": True,
+                            "help": "Numeric Context Prop Help",
+                            "label": "%",
+                            "variant": "slider",
+                            "maxValue": 500,
+                            "minValue": 0,
+                            "selectableCategories": ["location", "sku"],
+                        },
+                    },
+                    "data": {
+                        "context1": {
+                            "prop": "numericContextProp",
+                            "value": 110,
+                            "applyCategories": {"location": ["locUsMi"]},
+                        }
+                    },
+                },
+                "context2": {
                     "name": "Context Pane",
                     "variant": "context",
                     "props": {
@@ -689,6 +782,39 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "chart": "Stacked Waterfall",
                             "grouping": "Sum",
                             "statistic": "numericStatExampleA",
+                            "category": "location",
+                            "level": "state",
+                            "category2": "sku",
+                            "level2": "sku",
+                        },
+                    ],
+                    "lockedLayout": False,
+                },
+                "dash2": {
+                    "dashboardLayout": [
+                        {
+                            "chart": "Bar",
+                            "grouping": "Average",
+                            "statistic": "numericStatExampleB",
+                        },
+                        {
+                            "type": "kpis",
+                            "chart": "Bar",
+                            "grouping": "Sum",
+                            "sessions": [],
+                            "kpi": ["key1", "key2"],
+                        },
+                        {
+                            "chart": "Table",
+                            "level": "size",
+                            "category": "sku",
+                            "grouping": "Average",
+                            "statistic": "numericExampleCalculationStat",
+                        },
+                        {
+                            "chart": "Stacked Waterfall",
+                            "grouping": "Sum",
+                            "statistic": "numericStatExampleB",
                             "category": "location",
                             "level": "state",
                             "category2": "sku",
