@@ -27,9 +27,9 @@ This structure guarantees some nice features for API developers who want forward
 
 1. You start a project using `cave_app 1.0.0` using `cave_static 1.0.0`
 2. A new chart type becomes available in `cave_static 1.2.0`
-3. You update your environment in `cave_app 1.0.0` to now point to `cave_static 1.2.0`
+3. You choose to update your environment in `cave_app 1.0.0` to now point to `cave_static 1.2.0`
     - You edit `globals.static_app_url_path` value in the admin page
-        - Alternatively, you can run `cave reset` after updating your `.env`
+        - Alternatively, you can run `cave reset-db` after updating your `.env`
     - Your app will continue to work as it worked on `cave_static 1.0.0` with the new chart available
         - Remember: breaking API changes only occur between major version changes
         - Since you stayed on `1.x.y` you get a free forward compatible upgrade
@@ -96,10 +96,7 @@ As an example of how to do this, lets add a flag button to the static model that
 Python requirements can be added to the API by adding line items to `your_app/cave_api/requirements.txt`.
 - **NOTE**: These requirements should not be added in the `your_app/requirements.txt` or `utils/extra_requirements.txt` files as these are designed for server use.
 
-Once added, you can update your python environment by running (in the root of your app):
-```
-cave reinstall-pkgs
-```
+Once added in this requirements file, your docker environment will be updated the next time you start it (cave run, cave test ...). You may have to kill your current process to get this change. To do this, use `Ctrl + C` in your terminal.
 
 ## Adding Static Data to the API
 
@@ -128,13 +125,22 @@ cave test test_init.py
 
 ## Debugging
 
+API Data Validation:
+
+- You can use live automated validation by updating `LIVE_API_VALIDATION=True` in your `your_app/.env` file
+    - This will validate your data every time an api command is called (for each session)
+    - The outputs will be stored in `{your_app}/logs/validation/{session_name}.log`s
+- You can also manually validate your api code with the `cave_utils` package
+    - See the [cave_utils documentation](https://github.com/mit-cave/cave_utils) for more information
+
 Testing: 
-- The best way to debug is normally through the `cave test` command in your terminal. 
+- A great way to debug is through the `cave test` command in your terminal. 
     - Use `cave help` for more information on that function.
 - You can add print statements to your code as you work through that process and `cave test` would yield those in your terminal
+- Pairing this with the `cave_utils` package can be a great way to test/debug your code
 
 Console:
-Another common way to debug app crashes (when the app goes grey and only the app bar is left) is to use the chrome console.
+Assuming your API Data Validation passes without any issues, but something is still crashing (when the app goes grey and only the app bar is left), the console is a great next step to debug the situation
 - Launch your app using `cave run`
 - Log in to the app and go to the `app` page.
 - Inspect chrome
