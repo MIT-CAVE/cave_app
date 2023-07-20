@@ -925,7 +925,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         },
                     },
-                    "lineBy": "solid",
+                    "geoJson": {
+                        "geoJsonLayer": "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json",
+                        "geoJsonProp": "name",
+                    },
+                    "lineBy": "geoJson",
                     "sizeByOptions": {
                         "numericPropExampleA": {"min": 0, "max": 50},
                         "numericPropExampleB": {"min": 0, "max": 40},
@@ -1098,10 +1102,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
             "data": {
                 "arc1": {
-                    "startLatitude": 43.78,
-                    "startLongitude": -79.63,
-                    "endLatitude": 39.82,
-                    "endLongitude": -86.18,
+                    "geoJsonValue": "DUBL-DALY (ROUTE 11/12)",
                     "startClick": 800,
                     "endClick": 1600,
                     "type": "T1",
