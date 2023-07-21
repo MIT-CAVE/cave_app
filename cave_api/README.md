@@ -27,9 +27,9 @@ This structure guarantees some nice features for API developers who want forward
 
 1. You start a project using `cave_app 1.0.0` using `cave_static 1.0.0`
 2. A new chart type becomes available in `cave_static 1.2.0`
-3. You update your environment in `cave_app 1.0.0` to now point to `cave_static 1.2.0`
+3. You choose to update your environment in `cave_app 1.0.0` to now point to `cave_static 1.2.0`
     - You edit `globals.static_app_url_path` value in the admin page
-        - Alternatively, you can run `cave reset` after updating your `.env`
+        - Alternatively, you can run `cave reset-db` after updating your `.env`
     - Your app will continue to work as it worked on `cave_static 1.0.0` with the new chart available
         - Remember: breaking API changes only occur between major version changes
         - Since you stayed on `1.x.y` you get a free forward compatible upgrade
@@ -96,60 +96,7 @@ As an example of how to do this, lets add a flag button to the static model that
 Python requirements can be added to the API by adding line items to `your_app/cave_api/requirements.txt`.
 - **NOTE**: These requirements should not be added in the `your_app/requirements.txt` or `utils/extra_requirements.txt` files as these are designed for server use.
 
-Once added, you can update your python environment by running your app again (in verbose mode for debugging):
-```
-cave run -v
-```
-
-<br/>
-<details>
-  <summary>Unable to import a package? Click Here</summary>
-<br/>
-If you notice issues or cannot install/import packages specified in `your_app/cave_api/requirements.txt`, consider running the app in interactive mode:
-```
-cave run -it
-```
-
-Then in your container terminal, run:
-```
-pip install -r cave_api/requirements.txt
-```
-
-You should see some errors as to why the package is not installing. 
-    - This is usually due to a missing dependency. 
-    - You may need to install a system level package.
-
-To Fix this, update your dockerfile to `RUN` the needed steps to resolve the dependency issue.
-
-Example:
-
-- As an example, you add `rasterio==1.3.7` to `your_app/cave_api/requirements.txt`
-    - When you start your app again, you notice that it fails to start or you can not complete a function because `rasterio` is missing.
-- Run `cave run -it` and try to install the requirements manually:
-    ```
-    pip install -r cave_api/requirements.txt
-    ```
-- You may see an error like:
-    ```
-    Error: A GDAL API version must be specified. Provide a path to gdal-config using a GDAL_CONFIG environment variable or use a GDAL_VERSION environment variable.
-    ```
-- A quick google search will show that you need to install `gdal-bin` and `libgdal-dev` system packages to resolve this issue.
-- To install this in your container image (EG: python:3.11.3-bullseye - which runs on debian), you might find that you need to run:
-    ```
-    apt-get update && apt-get install -y gdal-bin libgdal-dev
-    ```
-- If you can then successfully run `pip install -r cave_api/requirements` in the interactive terminal, you have solved your problem.
-- You can exit your interactive terminal by typing `exit` and hit enter.
-- This process now needs to be added to you Dockerfile.
-    - To do this, edit `your_app/Dockerfile` and add the following lines before the `RUN pip install -r cave_api/requirements.txt` line:
-    ```
-    RUN apt-get update
-    RUN apt-get install -y gdal-bin libgdal-dev
-    ```
-- Now, when you run your app, the DOCKER image will be built again and `rasterio` should install correctly 
-    - The app should work assuming you have no other issues.
-</details>
-<br/>
+Once added in this requirements file, your docker environment will be updated the next time you start it (cave run, cave test ...). You may have to kill your current process to get this change. To do this, use `Ctrl + C` in your terminal.
 
 ## Adding Static Data to the API
 
@@ -178,13 +125,22 @@ cave test test_init.py
 
 ## Debugging
 
+API Data Validation:
+
+- You can use live automated validation by updating `LIVE_API_VALIDATION=True` in your `your_app/.env` file
+    - This will validate your data every time an api command is called (for each session)
+    - The outputs will be stored in `{your_app}/logs/validation/{session_name}.log`s
+- You can also manually validate your api code with the `cave_utils` package
+    - See the [cave_utils documentation](https://github.com/mit-cave/cave_utils) for more information
+
 Testing: 
-- The best way to debug is normally through the `cave test` command in your terminal. 
+- A great way to debug is through the `cave test` command in your terminal. 
     - Use `cave help` for more information on that function.
 - You can add print statements to your code as you work through that process and `cave test` would yield those in your terminal
+- Pairing this with the `cave_utils` package can be a great way to test/debug your code
 
 Console:
-Another common way to debug app crashes (when the app goes grey and only the app bar is left) is to use the chrome console.
+Assuming your API Data Validation passes without any issues, but something is still crashing (when the app goes grey and only the app bar is left), the console is a great next step to debug the situation
 - Launch your app using `cave run`
 - Log in to the app and go to the `app` page.
 - Inspect chrome
