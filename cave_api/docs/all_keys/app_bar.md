@@ -1,85 +1,80 @@
 # `appBar`
-The `appBar` key allows API designers to create a custom bar located on the left or right of the CAVE app. It is possible to incoporate both a left bar and a right bar. A bar allows for navigation between the different views of the app (e.g. Map, Dashboards), as well as interaction with panes. A bar is split into two sections: `upper` and `lower`. Using both sections is not required, but it is generally recommended that `lower` be used for navigation through the CAVE app views and `upper` for interactive panes and buttons.s
+The `appBar` key allows API designers to create a custom bar located on the left or right of the CAVE app. It is possible to include both a left bar and a right bar. A bar allows for navigation between the different views of the app (e.g. Map, Dashboards), as well as interaction with panes. Each bar is split into two sections: upper and lower. Using both sections is not required, but it is generally recommended that the lower section be used for navigation through the CAVE app views and the upper section be used for interactive panes and buttons.
 
 The structure of the `appBar` group looks as follows:
 ```py
 'appBar': {
     'data': {
         "appBarId":"customDash1",
-        "left": {
-            "customSessionPane": {
-                "icon": "MdApi",
-                "type": "pane",
-                "bar": "upper",
-                "order": 0,
+        "customSessionPane": {
+            "icon": "MdApi",
+            "type": "pane",
+            "bar": "upperLeft",
+            "order": 0,
+        },
+        "customAppSettingsPane": {
+            "icon": "MdOutlineSettings",
+            "type": "pane",
+            "bar": "upperLeft",
+            "order": 1,
+        },
+        "customSolveButton": {
+            "name": "Solve Button",
+            "icon": "BsLightningFill",
+            "color": {
+                "dark": "rgb(178, 179, 55)",
+                "light": "rgb(79, 79, 24)",
             },
-            "customAppSettingsPane": {
-                "icon": "MdOutlineSettings",
-                "type": "pane",
-                "bar": "upper",
-                "order": 1,
-            },
-            "customSolveButton": {
-                "name": "Solve Button",
-                "icon": "BsLightningFill",
-                "color": {
-                    "dark": "rgb(178, 179, 55)",
-                    "light": "rgb(79, 79, 24)",
-                },
-                "apiCommand": "solve",
-                "type": "button",
-                "bar": "upper",
-                "order": 2,
-            },
-            "customPropsPane1": {
-                "icon": "FaCogs",
-                "type": "pane",
-                "bar": "upper",
-                "order": 3,
-            },
-            "customMap1": {
-                "type": "map",
-                "icon": "FaMapMarkedAlt",
-                "bar": "lower",
-                "order": 1,
-            },
-            "customDash1": {
-                "type": "stats",
-                "icon": "MdInsertChart",
-                "name": "Dashboard 1",
-                "order": 2,
-                "bar": "lower",
-            },
-            "customKpi": {
-                "type": "kpi",
-                "icon": "MdSpeed",
-                "bar": "lower",
-                "order": 3,
-            },
-            # As many custom pane objects as needed
-        }, 
-        "right": {
-            "customPropsPane2": {
-                "icon": "ImCogs",
-                "type": "pane",
-                "bar": "upper",
-                "order": 0,
-            },
-            "customMap2": {
-                "type": "map",
-                "icon": "FaMapMarkedAlt",
-                "bar": "lower",
-                "order": 1,
-            },
-            "customDash2": {
-                "type": "stats",
-                "icon": "MdInsertChart",
-                "name": "Dashboard 1",
-                "order": 2,
-                "bar": "lower",
-            },
-            # As many custom pane objects as needed
-        }
+            "apiCommand": "solve",
+            "type": "button",
+            "bar": "upperLeft",
+            "order": 2,
+        },
+        "customPropsPane1": {
+            "icon": "FaCogs",
+            "type": "pane",
+            "bar": "upperLeft",
+            "order": 3,
+        },
+        "customMap1": {
+            "type": "map",
+            "icon": "FaMapMarkedAlt",
+            "bar": "lowerLeft",
+            "order": 0,
+        },
+        "customDash1": {
+            "type": "stats",
+            "icon": "MdInsertChart",
+            "name": "Dashboard 1",
+            "bar": "lowerLeft",
+            "order": 1,
+        },
+        "customKpi": {
+            "type": "kpi",
+            "icon": "MdSpeed",
+            "bar": "lowerLeft",
+            "order": 2,
+        },
+        "customPropsPane2": {
+            "type": "pane",
+            "icon": "ImCogs",
+            "bar": "upperRight",
+            "order": 0,
+        },
+        "customMap2": {
+            "type": "map",
+            "icon": "FaMapMarkedAlt",
+            "bar": "lowerRight",
+            "order": 0,
+        },
+        "customDash2": {
+            "type": "stats",
+            "icon": "MdInsertChart",
+            "name": "Dashboard 2",
+            "bar": "lowerRight",
+            "order": 1,
+        },
+        # As many custom pane objects as needed
     },
 }
 ```
@@ -96,7 +91,7 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 "customMap1": {
     "type": "map",
     "icon": "FaMapMarkedAlt",
-    "bar": "lower",
+    "bar": "lowerLeft",
     "order": 1,
 },
 ```
@@ -111,7 +106,7 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
     "icon": "MdInsertChart",
     "name": "Dashboard 1",
     "order": 2,
-    "bar": "lower",
+    "bar": "lowerLeft",
 },
 ```
 </details>
@@ -123,7 +118,7 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 "customKpi": {
     "type": "kpi",
     "icon": "MdSpeed",
-    "bar": "lower",
+    "bar": "lowerLeft",
     "order": 3,
 },
 ```
@@ -139,7 +134,7 @@ Panes are constructs primarily used to place UI controls (toggles, text and numb
 "customSessionPane": {
     "icon": "MdApi",
     "type": "pane",
-    "bar": "upper",
+    "bar": "upperLeft",
     "order": 0,
 },
 ```
@@ -166,12 +161,10 @@ Panes are constructs primarily used to place UI controls (toggles, text and numb
 Key | Default | Description
 --- | ------- | -----------
 `appBarId` | Your first map view | The id (as a string) of the selected view. This would be the key of a `dashboard`, `map` or `kpi` view.
-`left` | `{}` | A dictionary that describes the objects to be displayed on the left-hand side app bar 
-`right` | `{}` | A dictionary that describes the objects to be displayed on the right-hand side app bar 
-`*.customObjKey*` | Required | A custom key wrapper for the custom pane.
-`*.customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stats`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
-`*.customObjKey*.bar` | Required | The section of the `appBar` to display the object in. Accepts either `upper` or `lower`. The use of both bar sections is not required, and any object can be shown in either section.
-`*.customButtonKey.apiCommand`<br> | | A string to pass to the API when the button is pressed.
+`customObjKey*` | Required | A custom key wrapper for the custom pane.
+`customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stats`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
+`customObjKey*.bar` | Required | The section of the `appBar` to display the object in. Accepts either `upperLeft`, `lowerLeft`, `upperRight`, or `lowerRight`. If no object is specified as `upperRight` or `lowerRight`, a right bar will not be created. Similarly, if no object is specified as `upperLeft` or `lowerLeft`, a left bar will not be created. The use of both an upper and a lower bar section is not required, and any object can be shown in any section.
+`customButtonKey.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 
 ## Example
 
@@ -182,81 +175,110 @@ Key | Default | Description
 "appBar": {
     "data": {
         "appBarId":"dash1",
-        "left": {
-            "session": {
-                "icon": "MdApi",
-                "type": "pane",
-                "bar": "upper",
-                "order": 0,
+        "session": {
+            "icon": "MdApi",
+            "type": "pane",
+            "bar": "upperLeft",
+            "order": 0,
+        },
+        "appSettings": {
+            "icon": "MdOutlineSettings",
+            "type": "pane",
+            "bar": "upperLeft",
+            "order": 1,
+        },
+        "resetButton": {
+            "name": "Reset Button",
+            "icon": "MdSync",
+            "color": {
+                "dark": "rgb(255, 101, 101)",
+                "light": "rgb(212, 0, 0)",
             },
-            "appSettings": {
-                "icon": "MdOutlineSettings",
-                "type": "pane",
-                "bar": "upper",
-                "order": 1,
+            "apiCommand": "reset",
+            "type": "button",
+            "bar": "upperLeft",
+            "order": 2,
+        },
+        "buttonSolve": {
+            "name": "Solve Button",
+            "icon": "BsLightningFill",
+            "color": {
+                "dark": "rgb(178, 179, 55)",
+                "light": "rgb(79, 79, 24)",
             },
-            "resetButton": {
-                "name": "Reset Button",
-                "icon": "MdSync",
-                "color": {
-                    "dark": "rgb(255, 101, 101)",
-                    "light": "rgb(212, 0, 0)",
-                },
-                "apiCommand": "reset",
-                "type": "button",
-                "bar": "upper",
-                "order": 2,
-            },
-            "buttonSolve": {
-                "name": "Solve Button",
-                "icon": "BsLightningFill",
-                "color": {
-                    "dark": "rgb(178, 179, 55)",
-                    "light": "rgb(79, 79, 24)",
-                },
-                "apiCommand": "solve",
-                "type": "button",
-                "bar": "upper",
-                "order": 2,
-            },
-            "examplePropsPane": {
-                "icon": "FaCogs",
-                "type": "pane",
-                "bar": "upper",
-                "order": 3,
-            },
-            "context": {            
-                "icon": "BsInboxes",
-                "type": "pane",
-                "order": 4,
-                "bar": "upper",
-            },
-            "filter": {
-                "icon": "FaFilter",
-                "type": "pane",
-                "order": 5,
-                "bar": "upper",
-            },
-            "map1": {
-                "type": "map",
-                "icon": "FaMapMarkedAlt",
-                "bar": "lower",
-                "order": 1,
-            },
-            "dash1": {
-                "type": "stats",
-                "icon": "MdInsertChart",
-                "name": "Dashboard 1",
-                "order": 2,
-                "bar": "lower",
-            },
-            "kpi1": {
-                "type": "kpi",
-                "icon": "MdSpeed",
-                "bar": "lower",
-                "order": 3,
-            },
-        }
+            "apiCommand": "solve",
+            "type": "button",
+            "bar": "upperLeft",
+            "order": 3,
+        },
+        "examplePropsPane": {
+            "icon": "FaCogs",
+            "type": "pane",
+            "bar": "upperLeft",
+            "order": 4,
+        },
+        "context": {            
+            "icon": "BsInboxes",
+            "type": "pane",
+            "order": 5,
+            "bar": "upperLeft",
+        },
+        "filter": {
+            "icon": "FaFilter",
+            "type": "pane",
+            "order": 6,
+            "bar": "upperLeft",
+        },
+        "map1": {
+            "type": "map",
+            "icon": "FaMapMarkedAlt",
+            "bar": "lowerLeft",
+            "order": 0,
+        },
+        "dash1": {
+            "type": "stats",
+            "icon": "MdInsertChart",
+            "name": "Dashboard 1",
+            "order": 1,
+            "bar": "lowerLeft",
+        },
+        "kpi1": {
+            "type": "kpi",
+            "icon": "MdSpeed",
+            "bar": "lowerLeft",
+            "order": 2,
+        },
+        "customPropsPane": {
+            "icon": "ImCogs",
+            "type": "pane",
+            "bar": "upperRight",
+            "order": 0,
+        },
+        "context": {            
+            "icon": "BsInboxes",
+            "type": "pane",
+            "order": 1,
+            "bar": "upperRight",
+        },
+        "filter": {
+            "icon": "FaFilter",
+            "type": "pane",
+            "order": 2,
+            "bar": "upperRight",
+        },
+        "map2": {
+            "type": "map",
+            "icon": "FaMapMarkedAlt",
+            "bar": "lowerRight",
+            "order": 0,
+        },
+        "dash2": {
+            "type": "stats",
+            "icon": "MdInsertChart",
+            "name": "Dashboard 1",
+            "order": 1,
+            "bar": "lowerRight",
+        },
     }
 },
 ```

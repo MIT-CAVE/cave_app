@@ -155,149 +155,104 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "appBar": {
             "data": {
                 "appBarId": "dash1",
-                "left": {
-                    "session": {
-                        "icon": "MdApi",
-                        "type": "pane",
-                        "bar": "upper",
-                        "order": 0,
-                    },
-                    "appSettings": {
-                        "icon": "MdOutlineSettings",
-                        "type": "pane",
-                        "bar": "upper",
-                        "order": 1,
-                    },
-                    "resetButton": {
-                        "icon": "MdSync",
-                        "color": {
-                            "dark": "rgb(255, 101, 101)",
-                            "light": "rgb(212, 0, 0)",
-                        },
-                        "apiCommand": "reset",
-                        "type": "button",
-                        "bar": "upper",
-                        "order": 2,
-                    },
-                    "buttonSolve": {
-                        "icon": "BsLightningFill",
-                        "color": {
-                            "dark": "rgb(178, 179, 55)",
-                            "light": "rgb(79, 79, 24)",
-                        },
-                        "apiCommand": "solve",
-                        "type": "button",
-                        "bar": "upper",
-                        "order": 2,
-                    },
-                    "examplePropsPane": {
-                        "icon": "FaCogs",
-                        "type": "pane",
-                        "bar": "upper",
-                        "order": 3,
-                    },
-                    "context1": {
-                        "icon": "BsInboxes",
-                        "type": "pane",
-                        "order": 4,
-                        "bar": "upper",
-                    },
-                    "filter": {
-                        "icon": "FaFilter",
-                        "type": "pane",
-                        "order": 5,
-                        "bar": "upper",
-                    },
-                    "map1": {
-                        "type": "map",
-                        "icon": "FaMapMarkedAlt",
-                        "bar": "lower",
-                        "order": 0,
-                    },
-                    "dash1": {
-                        "type": "stats",
-                        "icon": "MdInsertChart",
-                        "order": 1,
-                        "bar": "lower",
-                    },
-                    "kpi1": {
-                        "type": "kpi",
-                        "icon": "MdSpeed",
-                        "bar": "lower",
-                        "order": 2,
-                    },
+                "session": {
+                    "icon": "MdApi",
+                    "type": "pane",
+                    "bar": "upperLeft",
+                    "order": 0,
                 },
-                "right": {
-                    "session": {
-                        "icon": "MdApi",
-                        "type": "pane",
-                        "bar": "upper",
-                        "order": 0,
+                "appSettings": {
+                    "icon": "MdOutlineSettings",
+                    "type": "pane",
+                    "bar": "upperLeft",
+                    "order": 1,
+                },
+                "resetButton": {
+                    "icon": "MdSync",
+                    "color": {
+                        "dark": "rgb(255, 101, 101)",
+                        "light": "rgb(212, 0, 0)",
                     },
-                    "appSettings": {
-                        "icon": "MdOutlineSettings",
-                        "type": "pane",
-                        "bar": "upper",
-                        "order": 1,
+                    "apiCommand": "reset",
+                    "type": "button",
+                    "bar": "upperLeft",
+                    "order": 2,
+                },
+                "buttonSolve": {
+                    "icon": "BsLightningFill",
+                    "color": {
+                        "dark": "rgb(178, 179, 55)",
+                        "light": "rgb(79, 79, 24)",
                     },
-                    "resetButton": {
-                        "icon": "MdSync",
-                        "color": {
-                            "dark": "rgb(255, 101, 101)",
-                            "light": "rgb(212, 0, 0)",
-                        },
-                        "apiCommand": "reset",
-                        "type": "button",
-                        "bar": "upper",
-                        "order": 2,
+                    "apiCommand": "solve",
+                    "type": "button",
+                    "bar": "upperLeft",
+                    "order": 3,
+                },
+                "context1": {
+                    "icon": "BsInboxes",
+                    "type": "pane",
+                    "order": 4,
+                    "bar": "upperLeft",
+                },
+                "map1": {
+                    "type": "map",
+                    "icon": "FaMapMarkedAlt",
+                    "bar": "lowerLeft",
+                    "order": 0,
+                },
+                "dash1": {
+                    "type": "stats",
+                    "icon": "MdInsertChart",
+                    "order": 1,
+                    "bar": "lowerLeft",
+                },
+                "kpi1": {
+                    "type": "kpi",
+                    "icon": "MdSpeed",
+                    "bar": "lowerLeft",
+                    "order": 2,
+                },
+                "buttonViewInfo": {
+                    "icon": "MdContactSupport",
+                    "color": {
+                        "dark": "rgb(195, 164, 222)",
+                        "light": "rgb(84, 60, 107)",
                     },
-                    "buttonSolve": {
-                        "icon": "BsLightningFill",
-                        "color": {
-                            "dark": "rgb(178, 179, 55)",
-                            "light": "rgb(79, 79, 24)",
-                        },
-                        "apiCommand": "solve",
-                        "type": "button",
-                        "bar": "upper",
-                        "order": 2,
-                    },
-                    "examplePropsPane": {
-                        "icon": "FaCogs",
-                        "type": "pane",
-                        "bar": "upper",
-                        "order": 3,
-                    },
-                    "context2": {
-                        "icon": "BsInboxes",
-                        "type": "pane",
-                        "order": 4,
-                        "bar": "upper",
-                    },
-                    "filter": {
-                        "icon": "FaFilter",
-                        "type": "pane",
-                        "order": 5,
-                        "bar": "upper",
-                    },
-                    "map2": {
-                        "type": "map",
-                        "icon": "FaMapMarked",
-                        "bar": "lower",
-                        "order": 0,
-                    },
-                    "dash2": {
-                        "type": "stats",
-                        "icon": "MdInsertChartOutlined",
-                        "order": 1,
-                        "bar": "lower",
-                    },
-                    "kpi1": {
-                        "type": "kpi",
-                        "icon": "MdSpeed",
-                        "bar": "lower",
-                        "order": 2,
-                    },
+                    "apiCommand": "viewInfo",
+                    "type": "button",
+                    "bar": "upperRight",
+                    "order": 0,
+                },
+                "examplePropsPane": {
+                    "icon": "FaCogs",
+                    "type": "pane",
+                    "bar": "upperRight",
+                    "order": 1,
+                },
+                "filter": {
+                    "icon": "FaFilter",
+                    "type": "pane",
+                    "order": 2,
+                    "bar": "upperRight",
+                },
+                "context2": {
+                    "icon": "BsInboxes",
+                    "type": "pane",
+                    "order": 3,
+                    "bar": "upperRight",
+                },
+                "map2": {
+                    "type": "map",
+                    "icon": "FaMapMarked",
+                    "bar": "lowerRight",
+                    "order": 0,
+                },
+                "dash2": {
+                    "type": "stats",
+                    "icon": "MdInsertChartOutlined",
+                    "order": 1,
+                    "bar": "lowerRight",
                 },
             },
         },
@@ -805,14 +760,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "kpi": ["key1", "key2"],
                         },
                         {
-                            "chart": "Table",
+                            "chart": "Box Plot",
                             "level": "size",
                             "category": "sku",
                             "grouping": "Average",
                             "statistic": "numericExampleCalculationStat",
                         },
                         {
-                            "chart": "Stacked Waterfall",
+                            "chart": "Cumulative Line",
                             "grouping": "Sum",
                             "statistic": "numericStatExampleB",
                             "category": "location",
@@ -1948,6 +1903,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
     elif command == "test":
         print("The `test` button has been pressed by the user!")
         raise Exception("Test Exception!")
+    if command == "viewInfo":
+        socket.notify("The info button has been pressed!", title="Info", theme="info")
     if session_data:
         for key, value in session_data.items():
             example[key] = value
