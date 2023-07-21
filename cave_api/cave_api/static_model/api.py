@@ -747,10 +747,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
-                                    # "allowGrouping": True,
-                                    # "group": True,
-                                    # "groupCalcByColor": "sum",
-                                    # "groupCalcBySize": "mode",
+                                    "allowGrouping": True,
+                                    "group": True,
+                                    "groupCalcBySize": "sum",
+                                    "groupCalcByColor": "mode",
                                     # "groupScaleWithZoom": True,
                                     # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
@@ -775,6 +775,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "value": True,
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
+                                    "allowGrouping": True,
+                                    "group": True,
+                                    "groupCalcBySize": "count",
+                                    "groupCalcByColor": "and",
+                                    # "groupScaleWithZoom": True,
+                                    # # Equivalent to zoom level unless groupScale is set
+                                    # "groupScale": 10,
+                                    # # Allow group matching only when a category value matches
+                                    # "groupMatchCategory": "location",
+                                    # "groupMatchCategoryLevel": "state",
                                 }
                             },
                             "arcs": {
