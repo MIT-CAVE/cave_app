@@ -132,7 +132,7 @@ Numeric values are associated with a [`'num'` prop](../common_keys/props.md#num)
 `'mode'`: Returns the most frequently occurring value within the node cluster data.<br>
 `'sum'`: Adds up all the numeric values within the node cluster and returns the total sum.
 
-Example: Consider three nodes with values `[10, 15, 5]`. By choosing the `sum` function for aggregation, the resulting value for the cluster would be `30` (`10` + `15` + `5`).
+Example: Consider three nodes with values `[10, 15, 5]`. By choosing the `'sum'` function for aggregation, the resulting value for the cluster would be `30` (`10` + `15` + `5`).
 
 #### Boolean values
 For boolean values (obtained from a [`'toggle'` prop](../common_keys/props.md#toggle)), the following functions are available:
@@ -140,7 +140,7 @@ For boolean values (obtained from a [`'toggle'` prop](../common_keys/props.md#to
 `'or'`: Evaluates boolean values within the node cluster and returns `True` if at least one of the values is `True`. Otherwise, it returns `False`.<br>
 `'and'`: Evaluates boolean values within the node cluster and returns `True` if all of the values are `True`. Otherwise, it returns `False`.
 
-Example: Imagine four nodes with values `[False, True, False, True]`. If we choose the `or` function, the cluster value would be `True`, as it evaluates to `True` if at least one node value is `True`.
+Example: Imagine four nodes with values `[False, True, False, True]`. If we choose the `'or'` function, the cluster value would be `True`, as it evaluates to `True` if at least one node value is `True`.
 
 #### Categorical values
 When dealing with categorical values (taken from a [`'selector'` prop](../common_keys/props.md#selector)), the only available function is `'mode'`.
