@@ -130,7 +130,7 @@ Numeric values are associated with a [`'num'` prop](../common_keys/props.md#num)
 `'mean'`: Calculates the average of all the numeric values within the node cluster.<br>
 `'median'`: Finds the middle numeric value within the node cluster data when the values are sorted in ascending order. If there is an even number of elements, it calculates the average of the two middle values.<br>
 `'mode'`: Returns the most frequently occurring value within the node cluster data.<br>
-`'sum'`: adds up all the numeric values within the node cluster and returns the total sum.
+`'sum'`: Adds up all the numeric values within the node cluster and returns the total sum.
 
 Example: Consider three nodes with values `[10, 15, 5]`. By choosing the `sum` function for aggregation, the resulting value for the cluster would be `30` (`10` + `15` + `5`).
 
