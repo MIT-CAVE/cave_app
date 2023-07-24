@@ -2,54 +2,138 @@
 
 The `layout` key allows for use cases where you want to arrange components that are related or simply group them under a well-structured layout. The supported components for use with a layout structure are [props](props.md) and [KPIs](../all_keys/kpis.md). In addition to properly aligning a group of props or KPIs, a `style` prop is provided to act as a escape hatch for specifying CSS rules. Through these CSS rules, it is possible to modify the appearance of your prop components or KPIs and allows a way to make them more distinctive or visually appealing.
 
-The `layout` structure is the same for `props` and `kpis` and looks as follows:
+## Example
+
+<details>
+  <summary>Click here to show / hide the `props` for the example</summary>
+
+```py
+"props": {
+    "numericHeader": {
+        "name": "Numeric Props",
+        "type": "head",
+        "help": "Some help for numeric props",
+    },
+    "numericInputExample": {
+        "name": "Numeric Input Example",
+        "type": "num",
+        "value": 50,
+        "enabled": True,
+        "help": "Help for the numeric input example",
+        "maxValue": 100,
+        "minValue": 0,
+        "numberFormat": {
+            "precision": 0,
+            "unit": "units",
+        },
+    },
+    "numericSliderExample": {
+        "name": "Numeric Slider Example",
+        "type": "num",
+        "value": 50,
+        "enabled": True,
+        "variant": "slider",
+        "help": "Help for the numeric slider example",
+        "maxValue": 100,
+        "minValue": 0,
+        "numberFormat": {
+            "unit": "%",
+        },
+    },
+    "miscHeader": {
+        "name": "Misc Props",
+        "type": "head",
+        "help": "Some help for miscelanous props",
+    },
+    "toggleInputExample": {
+        "name": "Toggle Input Example",
+        "type": "toggle",
+        "value": True,
+        "enabled": True,
+        "help": "Help for the toggle input example",
+    },
+    "buttonInputExample": {
+        "name": "Button Input Example (Creates an Error)",
+        "value": "Press Me!",
+        "type": "button",
+        "apiCommand": "test",
+        "enabled": True,
+        "help": "Press this button to create an error",
+    },
+    "pictureExample": {
+        "name": "Picture Example",
+        "type": "media",
+        "variant": "picture",
+        "value": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
+        "help": "Click the expand button to view an enlarged version",
+    },
+    "videoExample": {
+        "name": "Video Example",
+        "type": "media",
+        "variant": "video",
+        "value": "https://www.youtube.com/embed/6q5R1TDmKnU",
+        "help": "Click the play button to start the video",
+    },
+}
+```
+</details>
+
+### Layout
+
 ```py
 "layout": {
     "type": "grid",
     "numColumns": 2,
     "numRows": "auto",
     "data": {
-        "customCol1Row1": {
+        "col1Row1": {
             "type": "item",
             "column": 1,
             "row": 1,
-            "itemId": "customPropOrKpiKey1"
+            "itemId": "numericHeader",
         },
-        "customCol2Row1": {
-            "type": "grid",
-            "numColumns": "auto",
-            "numRows": 1,
-            "column": 2,
-            "row": 1,
-            "data": {
-                "col1": {
-                    "type": "item",
-                    "column": 1,
-                    "itemId": "customPropOrKpiKey2",
-                },
-                "col2": {
-                    "type": "item",
-                    "column": 2,
-                    "itemId": "customPropOrKpiKey3",
-                },
-                "col3": {...},
-                # As many columns as needed
-            },
-        },
-        "customCol1Row2": {
+        "col1Row2": {
             "type": "item",
             "column": 1,
             "row": 2,
-            "itemId": "customPropOrKpiKey4"
+            "itemId": "numericInputExample",
         },
-        "customCol2Row2": {
+        "col1Row3": {
+            "type": "item",
+            "column": 1,
+            "row": 3,
+            "itemId": "numericSliderExample",
+        },
+        "col2Row1": {
+            "type": "item",
+            "column": 2,
+            "row": 1,
+            "itemId": "miscHeader",
+        },
+        "col2Row2": {
             "type": "item",
             "column": 2,
             "row": 2,
-            "itemId": "customPropOrKpiKey5"
+            "itemId": "toggleInputExample",
         },
-        "customCol1Row3": {...},
-        "customCol2Row3": {...},
+        "col2Row3": {
+            "type": "item",
+            "column": 2,
+            "row": 3,
+            "itemId": "buttonInputExample",
+        },
+        "col2Row4": {
+            "type": "item",
+            "column": 2,
+            "row": 4,
+            "itemId": "pictureExample",
+        },
+        "col2Row5": {
+            "type": "item",
+            "column": 2,
+            "row": 5,
+            "itemId": "videoExample",
+        },
     },
 }
 ```
