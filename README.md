@@ -146,11 +146,15 @@ Use the CLI to keep your API code `pretty` and match cave coding format standard
 
 - Willem Guter - CAVE Developer
 - Luis Vasquez - CAVE Developer
+- Alice Zhao - CAVE Developer
+- Max Katz-Christy - CAVE Developer
+- Tim Russell - CAVE Researcher
+- Connor Makowski - CAVE Researcher / Development Lead
+- Matthias Winkenbach - CAVE Director
+
+## Previous Contributors
 - Erin Liu - CAVE Developer
 - Jean Billa - CAVE Developer
-- Connor Makowski - CAVE Researcher / Project Manager / Developer
-- Tim Russell - CAVE Researcher
-- Matthias Winkenbach - CAVE Director
 
 ## License Notice
 
