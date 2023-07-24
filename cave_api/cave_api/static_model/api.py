@@ -158,13 +158,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "session": {
                     "icon": "MdApi",
                     "type": "pane",
-                    "bar": "upper",
+                    "bar": "upperLeft",
                     "order": 0,
                 },
                 "appSettings": {
                     "icon": "MdOutlineSettings",
                     "type": "pane",
-                    "bar": "upper",
+                    "bar": "upperLeft",
                     "order": 1,
                 },
                 "resetButton": {
@@ -175,7 +175,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "apiCommand": "reset",
                     "type": "button",
-                    "bar": "upper",
+                    "bar": "upperLeft",
                     "order": 2,
                 },
                 "buttonSolve": {
@@ -186,52 +186,69 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "apiCommand": "solve",
                     "type": "button",
-                    "bar": "upper",
-                    "order": 2,
+                    "bar": "upperLeft",
+                    "order": 3,
                 },
                 "examplePropsPane": {
                     "icon": "FaCogs",
                     "type": "pane",
-                    "bar": "upper",
-                    "order": 3,
+                    "bar": "upperLeft",
+                    "order": 4,
                 },
-                "context": {
+                "context1": {
                     "icon": "BsInboxes",
                     "type": "pane",
-                    "order": 4,
-                    "bar": "upper",
+                    "order": 5,
+                    "bar": "upperLeft",
                 },
                 "filter": {
                     "icon": "FaFilter",
                     "type": "pane",
-                    "order": 5,
-                    "bar": "upper",
+                    "order": 6,
+                    "bar": "upperLeft",
                 },
                 "map1": {
                     "type": "map",
                     "icon": "FaMapMarkedAlt",
-                    "bar": "lower",
-                    "order": 1,
+                    "bar": "lowerLeft",
+                    "order": 0,
                 },
                 "map2": {
                     "type": "map",
                     "icon": "FaMapMarked",
-                    "bar": "lower",
-                    "order": 2,
+                    "bar": "lowerLeft",
+                    "order": 1,
                 },
                 "dash1": {
                     "type": "stats",
                     "icon": "MdInsertChart",
-                    "order": 3,
-                    "bar": "lower",
+                    "order": 1,
+                    "bar": "lowerLeft",
+                },
+                "dash2": {
+                    "type": "stats",
+                    "icon": "MdInsertChartOutlined",
+                    "order": 2,
+                    "bar": "lowerLeft",
                 },
                 "kpi1": {
                     "type": "kpi",
                     "icon": "MdSpeed",
-                    "bar": "lower",
-                    "order": 4,
+                    "bar": "lowerLeft",
+                    "order": 2,
                 },
-            }
+                "buttonViewInfo": {
+                    "icon": "MdInfo",
+                    "color": {
+                        "dark": "rgb(195, 164, 222)",
+                        "light": "rgb(84, 60, 107)",
+                    },
+                    "apiCommand": "viewInfo",
+                    "type": "button",
+                    "bar": "upperRight",
+                    "order": 0,
+                },
+            },
         },
         "panes": {
             "data": {
@@ -635,7 +652,32 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Filter",
                     "variant": "filter",
                 },
-                "context": {
+                "context1": {
+                    "name": "Context Pane",
+                    "variant": "context",
+                    "props": {
+                        "numericContextProp": {
+                            "name": "Numeric Context Prop",
+                            "type": "num",
+                            "value": 100,
+                            "enabled": True,
+                            "help": "Numeric Context Prop Help",
+                            "label": "%",
+                            "variant": "slider",
+                            "maxValue": 500,
+                            "minValue": 0,
+                            "selectableCategories": ["location", "sku"],
+                        },
+                    },
+                    "data": {
+                        "context1": {
+                            "prop": "numericContextProp",
+                            "value": 110,
+                            "applyCategories": {"location": ["locUsMi"]},
+                        }
+                    },
+                },
+                "context2": {
                     "name": "Context Pane",
                     "variant": "context",
                     "props": {
@@ -689,6 +731,39 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "chart": "Stacked Waterfall",
                             "grouping": "Sum",
                             "statistic": "numericStatExampleA",
+                            "category": "location",
+                            "level": "state",
+                            "category2": "sku",
+                            "level2": "sku",
+                        },
+                    ],
+                    "lockedLayout": False,
+                },
+                "dash2": {
+                    "dashboardLayout": [
+                        {
+                            "chart": "Bar",
+                            "grouping": "Average",
+                            "statistic": "numericStatExampleB",
+                        },
+                        {
+                            "type": "kpis",
+                            "chart": "Bar",
+                            "grouping": "Sum",
+                            "sessions": [],
+                            "kpi": ["key1", "key2"],
+                        },
+                        {
+                            "chart": "Box Plot",
+                            "level": "size",
+                            "category": "sku",
+                            "grouping": "Average",
+                            "statistic": "numericExampleCalculationStat",
+                        },
+                        {
+                            "chart": "Cumulative Line",
+                            "grouping": "Sum",
+                            "statistic": "numericStatExampleB",
                             "category": "location",
                             "level": "state",
                             "category2": "sku",
@@ -1832,6 +1907,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
     elif command == "test":
         print("The `test` button has been pressed by the user!")
         raise Exception("Test Exception!")
+    if command == "viewInfo":
+        socket.notify("The info button has been pressed!", title="Info", theme="info")
     if session_data:
         for key, value in session_data.items():
             example[key] = value
