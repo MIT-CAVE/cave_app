@@ -189,10 +189,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "bar": "upperLeft",
                     "order": 3,
                 },
+                "examplePropsPane": {
+                    "icon": "FaCogs",
+                    "type": "pane",
+                    "bar": "upperLeft",
+                    "order": 4,
+                },
                 "context1": {
                     "icon": "BsInboxes",
                     "type": "pane",
-                    "order": 4,
+                    "order": 5,
+                    "bar": "upperLeft",
+                },
+                "filter": {
+                    "icon": "FaFilter",
+                    "type": "pane",
+                    "order": 6,
                     "bar": "upperLeft",
                 },
                 "map1": {
@@ -201,10 +213,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "bar": "lowerLeft",
                     "order": 0,
                 },
+                "map2": {
+                    "type": "map",
+                    "icon": "FaMapMarked",
+                    "bar": "lowerLeft",
+                    "order": 1,
+                },
                 "dash1": {
                     "type": "stats",
                     "icon": "MdInsertChart",
                     "order": 1,
+                    "bar": "lowerLeft",
+                },
+                "dash2": {
+                    "type": "stats",
+                    "icon": "MdInsertChartOutlined",
+                    "order": 2,
                     "bar": "lowerLeft",
                 },
                 "kpi1": {
@@ -214,7 +238,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "order": 2,
                 },
                 "buttonViewInfo": {
-                    "icon": "MdContactSupport",
+                    "icon": "MdInfo",
                     "color": {
                         "dark": "rgb(195, 164, 222)",
                         "light": "rgb(84, 60, 107)",
@@ -223,36 +247,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "button",
                     "bar": "upperRight",
                     "order": 0,
-                },
-                "examplePropsPane": {
-                    "icon": "FaCogs",
-                    "type": "pane",
-                    "bar": "upperRight",
-                    "order": 1,
-                },
-                "filter": {
-                    "icon": "FaFilter",
-                    "type": "pane",
-                    "order": 2,
-                    "bar": "upperRight",
-                },
-                "context2": {
-                    "icon": "BsInboxes",
-                    "type": "pane",
-                    "order": 3,
-                    "bar": "upperRight",
-                },
-                "map2": {
-                    "type": "map",
-                    "icon": "FaMapMarked",
-                    "bar": "lowerRight",
-                    "order": 0,
-                },
-                "dash2": {
-                    "type": "stats",
-                    "icon": "MdInsertChartOutlined",
-                    "order": 1,
-                    "bar": "lowerRight",
                 },
             },
         },
