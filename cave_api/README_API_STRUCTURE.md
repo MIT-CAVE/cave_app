@@ -62,7 +62,7 @@ Custom keys are always included as a direct child of common keys such as `data`,
 
 - #### [`props`](docs/common_keys/props.md)
 
-- #### [`timeObject`](docs/common_keys/time_object.md)
+- #### [`timeValues`](docs/common_keys/time_value.md)
 
 
 ### [Top-Level keys](docs/all_keys/top_level_keys.md)

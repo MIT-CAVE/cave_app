@@ -71,7 +71,11 @@ Let's look inside the structure of `geos`:
             },
             "props": {
                 "customPropKey1": {
-                    "value": 60,
+                    "timeValues": {
+                        0: { "value": 0 },
+                        1: { "value": 100 },
+                        2: { "value": 300 },
+                    }
                 },
                 "customPropKey2": {...},
                 "customPropKey3": {...},
@@ -101,6 +105,7 @@ Let's look inside the structure of `geos`:
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 - [`startGradientColor`](../common_keys/common_keys.md#start-gradient)
+- [`timeValues`](../common_keys/time_value.md)
 - [`value`](../common_keys/props.md#value)
 - [`variant`](../common_keys/props.md#variant)
 

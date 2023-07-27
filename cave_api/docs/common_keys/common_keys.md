@@ -40,4 +40,4 @@ Key | Default | Description
 
 - ## [`numberFormat`](numberFormat.md)
 
-- ## [`timeObject`](timeObject.md)
+- ## [`timeValues`](time_value.md)

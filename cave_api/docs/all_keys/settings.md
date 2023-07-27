@@ -58,8 +58,8 @@ Key | Default | Description
 `sync.customSyncKey*.data` | `{}` | A dictionary with key value pairs, where values are unqiue paths in the API that can be synced or desynced.
 `sync.customSyncKey*.value` | `True` | A boolean value that determines whether the given paths are synced on app startup
 `sync.customSyncKey*.showToggle` | `False` | A boolean value that determines whether a toggle for the given paths is shown in the appSettings pane.
-<a name="timeLength">`timeLength`</a> | | An integer representing the length of all `value` lists found in any supplied [`timeObject`](../common_keys/time_object.md)s. If no `timeObject`s are used, this key can be omitted to hide the time selector in the app.
-<a name="timeUnits">`timeUnits`</a> | `'units'` | A string used to describe each unit of time between steps in [`timeObject`](../common_keys/time_object.md)s (e.g. 'day', 'week', 'month', etc.). This is only used for display purposes.
+<a name="timeLength">`timeLength`</a> | | An integer representing the length of all `value` lists found in any supplied [`timeValues`](../common_keys/time_value.md)s. If no `timeValues` are used, this key can be omitted to hide the time selector in the app.
+<a name="timeUnits">`timeUnits`</a> | `'units'` | A string used to describe each unit of time between steps in [`timeValues`](../common_keys/time_value.md)s (e.g. 'day', 'week', 'month', etc.). This is only used for display purposes.
 
 
 ## Example
