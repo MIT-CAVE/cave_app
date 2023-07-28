@@ -55,8 +55,8 @@ The structure of the `appBar` group looks as follows:
             "bar": "lowerLeft",
             "order": 2,
         },
-        "customPropsPane2": {
-            "type": "pane",
+        "customModal": {
+            "type": "modal",
             "icon": "ImCogs",
             "bar": "upperRight",
             "order": 0,
@@ -140,6 +140,22 @@ Panes are constructs primarily used to place UI controls (toggles, text and numb
 ```
 </details>
 
+## Modals
+Similar to custom panes, modals can be used to place UI controls and buttons to allow interaction with actionable data. A modal appears as a dialogue box in the center of the screen. The `appBar` group only contains the icon, order, and bar information about a modal with all other info being found in the `modals` group.
+
+<details>
+  <summary>Example Modal</summary>
+
+```py
+"customModal": {
+    "icon": "ImCogs",
+    "type": "modal",
+    "bar": "upperLeft",
+    "order": 1,
+},
+```
+</details>
+
 ## Common keys
 - [`color`](../common_keys/common_keys.md#color)
 - [`data`](../common_keys/common_keys.md#data)
@@ -162,7 +178,7 @@ Key | Default | Description
 --- | ------- | -----------
 `appBarId` | Your first map view | The id (as a string) of the selected view. This would be the key of a `dashboard`, `map` or `kpi` view.
 `customObjKey*` | Required | A custom key wrapper for the custom pane.
-`customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stats`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
+`customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stats`, `kpi`, `pane`, `modal`, or `button`. The type given changes what other props can be given to the object.
 `customObjKey*.bar` | Required | The section of the `appBar` to display the object in. Accepts either `upperLeft`, `lowerLeft`, `upperRight`, or `lowerRight`. If no object is specified as `upperRight` or `lowerRight`, a right bar will not be created. Similarly, if no object is specified as `upperLeft` or `lowerLeft`, a left bar will not be created. The use of both an upper and a lower bar section is not required, and any object can be shown in any section.
 `customButtonKey.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 
@@ -248,23 +264,11 @@ Key | Default | Description
             "bar": "lowerLeft",
             "order": 2,
         },
-        "customPropsPane": {
+        "customModal": {
             "icon": "ImCogs",
-            "type": "pane",
+            "type": "modal",
             "bar": "upperRight",
             "order": 0,
-        },
-        "context": {            
-            "icon": "BsInboxes",
-            "type": "pane",
-            "order": 1,
-            "bar": "upperRight",
-        },
-        "filter": {
-            "icon": "FaFilter",
-            "type": "pane",
-            "order": 2,
-            "bar": "upperRight",
         },
         "map2": {
             "type": "map",
