@@ -237,16 +237,45 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "bar": "lowerLeft",
                     "order": 2,
                 },
-                "buttonViewInfo": {
+                "exampleModal": {
                     "icon": "MdInfo",
                     "color": {
                         "dark": "rgb(195, 164, 222)",
                         "light": "rgb(84, 60, 107)",
                     },
-                    "apiCommand": "viewInfo",
-                    "type": "button",
+                    "type": "modal",
                     "bar": "upperRight",
                     "order": 0,
+                },
+            },
+        },
+        "modals": {
+            "data": {
+                "exampleModal": {
+                    "name": "Example Modal",
+                    "props": {
+                        "buttonViewInfo": {
+                            "name": "Info Button",
+                            "value": "Press",
+                            "type": "button",
+                            "apiCommand": "viewInfo",
+                            "enabled": True,
+                            "help": "Press this button to view info",
+                        },
+                    },
+                    "layout": {
+                        "type": "grid",
+                        "numColumns": 1,
+                        "numRows": 1,
+                        "data": {
+                            "col1Row1": {
+                                "type": "item",
+                                "column": 1,
+                                "row": 1,
+                                "itemId": "buttonViewInfo",
+                            },
+                        },
+                    },
                 },
             },
         },
@@ -653,31 +682,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "variant": "filter",
                 },
                 "context1": {
-                    "name": "Context Pane",
-                    "variant": "context",
-                    "props": {
-                        "numericContextProp": {
-                            "name": "Numeric Context Prop",
-                            "type": "num",
-                            "value": 100,
-                            "enabled": True,
-                            "help": "Numeric Context Prop Help",
-                            "label": "%",
-                            "variant": "slider",
-                            "maxValue": 500,
-                            "minValue": 0,
-                            "selectableCategories": ["location", "sku"],
-                        },
-                    },
-                    "data": {
-                        "context1": {
-                            "prop": "numericContextProp",
-                            "value": 110,
-                            "applyCategories": {"location": ["locUsMi"]},
-                        }
-                    },
-                },
-                "context2": {
                     "name": "Context Pane",
                     "variant": "context",
                     "props": {
