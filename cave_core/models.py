@@ -475,7 +475,7 @@ class Globals(SingletonModel):
         help_text=_(
             "Mapbox Token to use in the app - Used in the site views and data visualization"
         ),
-        default="NO TOKEN SET YET",
+        default="",
     )
     app_screen_width = models.IntegerField(
         _("App Screen Width"),

@@ -64,6 +64,91 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "trailingZeros": False,
                     "unitSpace": True,
                 },
+                "additionalMapStyles": {
+                    "watercolor": {
+                        "name": "Watercolor",
+                        "icon": "MdBrush",
+                        "order": 1,
+                        "spec": {
+                            "version": 8,
+                            "sources": {
+                                "raster-tiles": {
+                                    "type": "raster",
+                                    "tiles": [
+                                        "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
+                                    ],
+                                    "tileSize": 256,
+                                    "attribution": "Map tiles by <a target='_top' rel='noopener' href='http://stamen.com'>Stamen Design</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a target='_top' rel='noopener' href='http://openstreetmap.org'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>",
+                                },
+                            },
+                            "layers": [
+                                {
+                                    "id": "simple-tiles",
+                                    "type": "raster",
+                                    "source": "raster-tiles",
+                                    "minzoom": 0,
+                                    "maxzoom": 22,
+                                },
+                            ],
+                        },
+                        "fog": {
+                            "range": [0.5, 10],
+                            "color": "#ffffff",
+                            "high-color": "#245cdf",
+                            "space-color": [
+                                "interpolate",
+                                ["linear"],
+                                ["zoom"],
+                                2,
+                                "orange",
+                                4,
+                                "blue",
+                            ],
+                            "horizon-blend": [
+                                "interpolate",
+                                ["exponential", 1.2],
+                                ["zoom"],
+                                5,
+                                0.02,
+                                7,
+                                0.08,
+                            ],
+                            "star-intensity": [
+                                "interpolate",
+                                ["linear"],
+                                ["zoom"],
+                                5,
+                                0.35,
+                                6,
+                                0,
+                            ],
+                        },
+                    },
+                    "streets": {
+                        "name": "Streets",
+                        "icon": "MdStreetview",
+                        "order": 2,
+                        "spec": "mapbox://styles/mapbox/streets-v12",
+                    },
+                    "outdoors": {
+                        "name": "Outdoors",
+                        "icon": "MdForest",
+                        "order": 3,
+                        "spec": "mapbox://styles/mapbox/outdoors-v12",
+                    },
+                    "satellite": {
+                        "name": "Satellite",
+                        "icon": "MdSatelliteAlt",
+                        "order": 4,
+                        "spec": "mapbox://styles/mapbox/satellite-v9",
+                    },
+                    "satellite_streets": {
+                        "name": "Satellite Streets",
+                        "icon": "MdSatellite",
+                        "order": 5,
+                        "spec": "mapbox://styles/mapbox/satellite-streets-v12",
+                    },
+                },
                 "debug": True,
                 "timeLength": 3,
                 "timeUnits": "Century",
@@ -704,6 +789,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "maps": {
             "data": {
                 "map1": {
+                    "currentStyle": "watercolor",
+                    "currentProjection": "globe",
                     "defaultViewport": {
                         "longitude": -75.44766721108091,
                         "latitude": 40.34530681636297,
@@ -937,7 +1024,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         },
                     },
-                    "lineBy": "solid",
+                    "geoJson": {
+                        "geoJsonLayer": "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json",
+                        "geoJsonProp": "name",
+                    },
                     "sizeByOptions": {
                         "numericPropExampleA": {"min": 0, "max": 50},
                         "numericPropExampleB": {"min": 0, "max": 40},
@@ -1110,10 +1200,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
             "data": {
                 "arc1": {
-                    "startLatitude": 43.78,
-                    "startLongitude": -79.63,
-                    "endLatitude": 39.82,
-                    "endLongitude": -86.18,
+                    "geoJsonValue": "DUBL-DALY (ROUTE 11/12)",
                     "startClick": 800,
                     "endClick": 1600,
                     "type": "T1",
