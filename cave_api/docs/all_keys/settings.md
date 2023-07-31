@@ -13,7 +13,7 @@ Below is the `settings` group with its sub-keys matched by typical values:
                 {
                     "name": 'Custom Style',
                     "icon": 'MdExplore',
-                    "order": -1,
+                    "order": 1,
                     "spec": 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
                     "fog": {
                         "range": [0.8, 8],
