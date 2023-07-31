@@ -150,6 +150,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                 },
                 "debug": True,
+                "timeLength": 3,
+                "timeUnits": "Century",
             },
         },
         "categories": {
@@ -1298,7 +1300,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Node Type A",
                     "colorByOptions": {
                         "numericPropExampleA": {
-                            "min": 0,
+                            "timeValues": {
+                                0: {"min": 50},
+                                1: {"min": 0},
+                                2: {"min": 20},
+                            },
                             "max": 80,
                             "startGradientColor": {
                                 "dark": "rgb(233, 0, 0)",
@@ -1445,7 +1451,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
             "data": {
                 "node1": {
-                    "latitude": 43.78,
+                    "timeValues": {
+                        0: { "latitude": 43.78, },
+                        1: { "latitude": 44.78, },
+                        2: { "latitude": 45.78, },
+                    },
                     "longitude": -79.63,
                     "type": "nodeTypeA",
                     "category": {
@@ -1623,7 +1633,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "category": {"location": ["locCaOn"]},
                     "props": {
                         "numericPropExampleC": {
-                            "value": 50,
+                            "timeValues": {
+                                0: { "value": 0 },
+                                1: { "value": 100 },
+                                2: { "value": 300 },
+                            }
                         }
                     },
                 },

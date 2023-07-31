@@ -85,6 +85,7 @@ Key | Default | Description
 `customMapStyle*.style` | required | Either a URL string pointing to a (Mapbox-GL style spec)[https://docs.mapbox.com/mapbox-gl-js/style-spec/], or a dictionary complying with the spec.
 
 
+
 ## Example
 
 <details>
