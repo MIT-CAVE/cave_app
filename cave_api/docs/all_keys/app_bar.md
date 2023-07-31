@@ -7,20 +7,20 @@ The structure of the `appBar` group looks as follows:
     'data': {
         "appBarId":"customDash1",
         "customSessionPane": {
-            "icon": "MdApi",
+            "icon": "md/MdApi",
             "type": "pane",
             "bar": "upper",
             "order": 0,
         },
         "customAppSettingsPane": {
-            "icon": "MdOutlineSettings",
+            "icon": "md/MdOutlineSettings",
             "type": "pane",
             "bar": "upper",
             "order": 1,
         },
         "customSolveButton": {
             "name": "Solve Button",
-            "icon": "BsLightningFill",
+            "icon": "bs/BsLightningFill",
             "color": {
                 "dark": "rgb(178, 179, 55)",
                 "light": "rgb(79, 79, 24)",
@@ -31,27 +31,27 @@ The structure of the `appBar` group looks as follows:
             "order": 2,
         },
         "customPropsPane": {
-            "icon": "FaCogs",
+            "icon": "fa/FaCogs",
             "type": "pane",
             "bar": "upper",
             "order": 3,
         },
         "customMap": {
             "type": "map",
-            "icon": "FaMapMarkedAlt",
+            "icon": "fa/FaMapMarkedAlt",
             "bar": "lower",
             "order": 1,
         },
         "customDash1": {
             "type": "stats",
-            "icon": "MdInsertChart",
+            "icon": "md/MdInsertChart",
             "name": "Dashboard 1",
             "order": 2,
             "bar": "lower",
         },
         "customKpi": {
             "type": "kpi",
-            "icon": "MdSpeed",
+            "icon": "md/MdSpeed",
             "bar": "lower",
             "order": 3,
         },
@@ -71,7 +71,7 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customMap1": {
     "type": "map",
-    "icon": "FaMapMarkedAlt",
+    "icon": "fa/FaMapMarkedAlt",
     "bar": "lower",
     "order": 1,
 },
@@ -84,7 +84,7 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customStats1": {
     "type": "stats",
-    "icon": "MdInsertChart",
+    "icon": "md/MdInsertChart",
     "name": "Dashboard 1",
     "order": 2,
     "bar": "lower",
@@ -98,7 +98,7 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customKpi": {
     "type": "kpi",
-    "icon": "MdSpeed",
+    "icon": "md/MdSpeed",
     "bar": "lower",
     "order": 3,
 },
@@ -113,7 +113,7 @@ Panes are constructs primarily used to place UI controls (toggles, text and numb
 
 ```py
 "customSessionPane": {
-    "icon": "MdApi",
+    "icon": "md/MdApi",
     "type": "pane",
     "bar": "upper",
     "order": 0,
@@ -157,20 +157,20 @@ Key | Default | Description
     "data": {
         "appBarId":"dash1",
         "session": {
-            "icon": "MdApi",
+            "icon": "md/MdApi",
             "type": "pane",
             "bar": "upper",
             "order": 0,
         },
         "appSettings": {
-            "icon": "MdOutlineSettings",
+            "icon": "md/MdOutlineSettings",
             "type": "pane",
             "bar": "upper",
             "order": 1,
         },
         "resetButton": {
             "name": "Reset Button",
-            "icon": "MdSync",
+            "icon": "md/MdSync",
             "color": {
                 "dark": "rgb(255, 101, 101)",
                 "light": "rgb(212, 0, 0)",
@@ -182,7 +182,7 @@ Key | Default | Description
         },
         "buttonSolve": {
             "name": "Solve Button",
-            "icon": "BsLightningFill",
+            "icon": "bs/BsLightningFill",
             "color": {
                 "dark": "rgb(178, 179, 55)",
                 "light": "rgb(79, 79, 24)",
@@ -193,39 +193,39 @@ Key | Default | Description
             "order": 2,
         },
         "examplePropsPane": {
-            "icon": "FaCogs",
+            "icon": "fa/FaCogs",
             "type": "pane",
             "bar": "upper",
             "order": 3,
         },
         "context": {            
-            "icon": "BsInboxes",
+            "icon": "bs/BsInboxes",
             "type": "pane",
             "order": 4,
             "bar": "upper",
         },
         "filter": {
-            "icon": "FaFilter",
+            "icon": "fa/FaFilter",
             "type": "pane",
             "order": 5,
             "bar": "upper",
         },
         "map1": {
             "type": "map",
-            "icon": "FaMapMarkedAlt",
+            "icon": "fa/FaMapMarkedAlt",
             "bar": "lower",
             "order": 1,
         },
         "dash1": {
             "type": "stats",
-            "icon": "MdInsertChart",
+            "icon": "md/MdInsertChart",
             "name": "Dashboard 1",
             "order": 2,
             "bar": "lower",
         },
         "kpi1": {
             "type": "kpi",
-            "icon": "MdSpeed",
+            "icon": "md/MdSpeed",
             "bar": "lower",
             "order": 3,
         },

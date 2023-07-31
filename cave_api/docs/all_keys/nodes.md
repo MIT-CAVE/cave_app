@@ -43,7 +43,7 @@ The structure of a `nodes` group looks as follows:
             },
             "startSize": "30px",
             "endSize": "45px",
-            "icon": "MdStore",
+            "icon": "md/MdStore",
             "props": {
                 "customPropKey1": {
                     "name": "Numeric Prop Example A",
@@ -187,7 +187,7 @@ Key | Default | Description
             },
             "startSize": "30px",
             "endSize": "45px",
-            "icon": "MdStore",
+            "icon": "md/MdStore",
             "props": {
                 "numericPropExampleA": {
                     "name": "Numeric Prop Example A",
@@ -254,7 +254,7 @@ Key | Default | Description
             },
             "startSize": "30px",
             "endSize": "45px",
-            "icon": "BsBuilding",
+            "icon": "bs/BsBuilding",
             "props": {
                 "numericPropExampleA": {
                     "name": "Numeric Prop Example A",

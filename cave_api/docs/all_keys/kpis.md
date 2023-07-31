@@ -11,7 +11,7 @@ Let's look inside the structure of `kpis`:
                 "unit": "units",
             },
             "type": "num",
-            "icon": "FaBox",
+            "icon": "fa/FaBox",
             "value": 100,
             "mapKpi": True,
         },
@@ -66,17 +66,17 @@ Displays a text string. The [`numberFormat`](../common_keys/common_keys.md#numbe
         "kpiHeader1": {
             "type": "head",
             "name": "Example KPI Header 1",
-            "icon": "BsInboxes",
+            "icon": "bs/BsInboxes",
         },
         "kpiHeader2": {
             "type": "head",
             "name": "Example KPI Header 2",
-            "icon": "BsTruck",
+            "icon": "bs/BsTruck",
         },
         "key1": {
             "name": "KPI Example 1",
             "value": 18,
-            "icon": "BsFillEmojiFrownFill",
+            "icon": "bs/BsFillEmojiFrownFill",
             "mapKpi": True,
             "numberFormat": {
                 "precision": 0,
@@ -86,7 +86,7 @@ Displays a text string. The [`numberFormat`](../common_keys/common_keys.md#numbe
         "key2": {
             "name": "KPI Example 2",
             "value": 32,
-            "icon": "BsFillEmojiSmileFill",
+            "icon": "bs/BsFillEmojiSmileFill",
             "mapKpi": True,
             "numberFormat": {
                 "precision": 0,
@@ -95,7 +95,7 @@ Displays a text string. The [`numberFormat`](../common_keys/common_keys.md#numbe
         },
         "key3": {
             "name": "KPI Example 3",
-            "icon": "BsInboxes",
+            "icon": "bs/BsInboxes",
             "numberFormat": {
                 "precision": 4,
                 "trailingZeros": True,
@@ -105,7 +105,7 @@ Displays a text string. The [`numberFormat`](../common_keys/common_keys.md#numbe
         },
         "key4": {
             "name": "A Big Number",
-            "icon": "BsTruck",
+            "icon": "bs/BsTruck",
             "value": 10000000000000,
             "numberFormat": {
                 "precision": 0,
@@ -114,7 +114,7 @@ Displays a text string. The [`numberFormat`](../common_keys/common_keys.md#numbe
         },
         "key5": {
             "name": "A Really Big Number",
-            "icon": "MdExpand",
+            "icon": "md/MdExpand",
             "value": 9007199254740991,
             "numberFormat": {
                 "precision": 2,
