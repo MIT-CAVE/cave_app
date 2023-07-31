@@ -181,7 +181,7 @@ class CustomTeamUserAdmin(admin.ModelAdmin):
 
     # def get_queryset(self, request):
     #     qs = super().get_queryset(request)
-    #     return qs.exclude(team__name__icontains="Personal")
+    #     return qs.exclude(team__is_personal_team=True)
 
 
 class CustomPageSectionInline(admin.StackedInline):
@@ -208,10 +208,13 @@ class CustomTeamAdmin(admin.ModelAdmin):
         "id",
         "name",
         "group",
+        "limit_sessions",
+        "is_personal_team",
     ]
     list_editable = [
         "name",
         "group",
+        "limit_sessions",
     ]
     search_fields = ["name", "group__name"]
     inlines = [
@@ -220,7 +223,7 @@ class CustomTeamAdmin(admin.ModelAdmin):
 
     # def get_queryset(self, request):
     #     qs = super().get_queryset(request)
-    #     return qs.exclude(name__icontains="Personal")
+    #     return qs.exclude(is_personal_team=True)
 
 
 class CustomGroupUserAdmin(admin.ModelAdmin):

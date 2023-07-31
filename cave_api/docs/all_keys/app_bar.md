@@ -1,5 +1,5 @@
 # `appBar`
-The `appBar` key allows API designers to create a custom bar located on the left of the CAVE app. This bar allows for navigation between the different views of the app (e.g. Map, Dashboards), as well as interaction with panes. The `appBar` is split into two sections: `upper` and `lower`. Using both sections is not required, but it is generally recommended that `lower` be used for navigation through the CAVE app views and `upper` for interactive panes and buttons.
+The `appBar` key allows API designers to create a custom bar located on the left or right of the CAVE app. It is possible to include both a left bar and a right bar. A bar allows for navigation between the different views of the app (e.g. Map, Dashboards), as well as interaction with panes. Each bar is split into two sections: upper and lower. Using both sections is not required, but it is generally recommended that the lower section be used for navigation through the CAVE app views and the upper section be used for interactive panes and buttons.
 
 The structure of the `appBar` group looks as follows:
 ```py
@@ -9,13 +9,13 @@ The structure of the `appBar` group looks as follows:
         "customSessionPane": {
             "icon": "md/MdApi",
             "type": "pane",
-            "bar": "upper",
+            "bar": "upperLeft",
             "order": 0,
         },
         "customAppSettingsPane": {
             "icon": "md/MdOutlineSettings",
             "type": "pane",
-            "bar": "upper",
+            "bar": "upperLeft",
             "order": 1,
         },
         "customSolveButton": {
@@ -27,33 +27,69 @@ The structure of the `appBar` group looks as follows:
             },
             "apiCommand": "solve",
             "type": "button",
-            "bar": "upper",
+            "bar": "upperLeft",
             "order": 2,
         },
+<<<<<<< HEAD
         "customPropsPane": {
             "icon": "fa/FaCogs",
+=======
+        "customPropsPane1": {
+            "icon": "FaCogs",
+>>>>>>> 2.0.0-dev
             "type": "pane",
-            "bar": "upper",
+            "bar": "upperLeft",
             "order": 3,
         },
-        "customMap": {
+        "customMap1": {
             "type": "map",
+<<<<<<< HEAD
             "icon": "fa/FaMapMarkedAlt",
             "bar": "lower",
             "order": 1,
+=======
+            "icon": "FaMapMarkedAlt",
+            "bar": "lowerLeft",
+            "order": 0,
+>>>>>>> 2.0.0-dev
         },
         "customDash1": {
             "type": "stats",
             "icon": "md/MdInsertChart",
             "name": "Dashboard 1",
-            "order": 2,
-            "bar": "lower",
+            "bar": "lowerLeft",
+            "order": 1,
         },
         "customKpi": {
             "type": "kpi",
+<<<<<<< HEAD
             "icon": "md/MdSpeed",
             "bar": "lower",
             "order": 3,
+=======
+            "icon": "MdSpeed",
+            "bar": "lowerLeft",
+            "order": 2,
+        },
+        "customModal": {
+            "type": "modal",
+            "icon": "ImCogs",
+            "bar": "upperRight",
+            "order": 0,
+        },
+        "customMap2": {
+            "type": "map",
+            "icon": "FaMapMarkedAlt",
+            "bar": "lowerRight",
+            "order": 0,
+        },
+        "customDash2": {
+            "type": "stats",
+            "icon": "MdInsertChart",
+            "name": "Dashboard 2",
+            "bar": "lowerRight",
+            "order": 1,
+>>>>>>> 2.0.0-dev
         },
         # As many custom pane objects as needed
     },
@@ -61,7 +97,7 @@ The structure of the `appBar` group looks as follows:
 ```
 
 ## Page Views
-Page views are the `cave_app`'s primary way to view and interact with the api information outside of panes. There are three types of page views that are all launced from the `appBar`.
+Page views are the `cave_app`'s primary way to view and interact with the api information outside of panes. There are three types of page views that are all launched from the `appBar`.
 
 In general, the `cave_app` has zero to many `map` views, zero to many `stats` views and zero or one `kpi` view.
 
@@ -71,8 +107,13 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customMap1": {
     "type": "map",
+<<<<<<< HEAD
     "icon": "fa/FaMapMarkedAlt",
     "bar": "lower",
+=======
+    "icon": "FaMapMarkedAlt",
+    "bar": "lowerLeft",
+>>>>>>> 2.0.0-dev
     "order": 1,
 },
 ```
@@ -87,7 +128,7 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
     "icon": "md/MdInsertChart",
     "name": "Dashboard 1",
     "order": 2,
-    "bar": "lower",
+    "bar": "lowerLeft",
 },
 ```
 </details>
@@ -98,8 +139,13 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customKpi": {
     "type": "kpi",
+<<<<<<< HEAD
     "icon": "md/MdSpeed",
     "bar": "lower",
+=======
+    "icon": "MdSpeed",
+    "bar": "lowerLeft",
+>>>>>>> 2.0.0-dev
     "order": 3,
 },
 ```
@@ -115,8 +161,24 @@ Panes are constructs primarily used to place UI controls (toggles, text and numb
 "customSessionPane": {
     "icon": "md/MdApi",
     "type": "pane",
-    "bar": "upper",
+    "bar": "upperLeft",
     "order": 0,
+},
+```
+</details>
+
+## Modals
+Similar to custom panes, modals can be used to place UI controls and buttons to allow interaction with actionable data. A modal appears as a dialogue box in the center of the screen. The `appBar` group only contains the icon, order, and bar information about a modal with all other info being found in the `modals` group.
+
+<details>
+  <summary>Example Modal</summary>
+
+```py
+"customModal": {
+    "icon": "ImCogs",
+    "type": "modal",
+    "bar": "upperLeft",
+    "order": 1,
 },
 ```
 </details>
@@ -143,8 +205,8 @@ Key | Default | Description
 --- | ------- | -----------
 `appBarId` | Your first map view | The id (as a string) of the selected view. This would be the key of a `dashboard`, `map` or `kpi` view.
 `customObjKey*` | Required | A custom key wrapper for the custom pane.
-`customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stats`, `kpi`, `pane`, or `button`. The type given changes what other props can be given to the object.
-`customObjKey*.bar` | Required | The section of the `appBar` to display the object in. Accepts either `upper` or `lower`. The use of both bar sections is not required, and any object can be shown in either bar.
+`customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stats`, `kpi`, `pane`, `modal`, or `button`. The type given changes what other props can be given to the object.
+`customObjKey*.bar` | Required | The section of the `appBar` to display the object in. Accepts either `upperLeft`, `lowerLeft`, `upperRight`, or `lowerRight`. If no object is specified as `upperRight` or `lowerRight`, a right bar will not be created. Similarly, if no object is specified as `upperLeft` or `lowerLeft`, a left bar will not be created. The use of both an upper and a lower bar section is not required, and any object can be shown in any section.
 `customButtonKey.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 
 ## Example
@@ -159,13 +221,13 @@ Key | Default | Description
         "session": {
             "icon": "md/MdApi",
             "type": "pane",
-            "bar": "upper",
+            "bar": "upperLeft",
             "order": 0,
         },
         "appSettings": {
             "icon": "md/MdOutlineSettings",
             "type": "pane",
-            "bar": "upper",
+            "bar": "upperLeft",
             "order": 1,
         },
         "resetButton": {
@@ -177,7 +239,7 @@ Key | Default | Description
             },
             "apiCommand": "reset",
             "type": "button",
-            "bar": "upper",
+            "bar": "upperLeft",
             "order": 2,
         },
         "buttonSolve": {
@@ -189,45 +251,76 @@ Key | Default | Description
             },
             "apiCommand": "solve",
             "type": "button",
-            "bar": "upper",
-            "order": 2,
+            "bar": "upperLeft",
+            "order": 3,
         },
         "examplePropsPane": {
             "icon": "fa/FaCogs",
             "type": "pane",
-            "bar": "upper",
-            "order": 3,
+            "bar": "upperLeft",
+            "order": 4,
         },
         "context": {            
             "icon": "bs/BsInboxes",
             "type": "pane",
-            "order": 4,
-            "bar": "upper",
+            "order": 5,
+            "bar": "upperLeft",
         },
         "filter": {
             "icon": "fa/FaFilter",
             "type": "pane",
-            "order": 5,
-            "bar": "upper",
+            "order": 6,
+            "bar": "upperLeft",
         },
         "map1": {
             "type": "map",
+<<<<<<< HEAD
             "icon": "fa/FaMapMarkedAlt",
             "bar": "lower",
             "order": 1,
+=======
+            "icon": "FaMapMarkedAlt",
+            "bar": "lowerLeft",
+            "order": 0,
+>>>>>>> 2.0.0-dev
         },
         "dash1": {
             "type": "stats",
             "icon": "md/MdInsertChart",
             "name": "Dashboard 1",
-            "order": 2,
-            "bar": "lower",
+            "order": 1,
+            "bar": "lowerLeft",
         },
         "kpi1": {
             "type": "kpi",
+<<<<<<< HEAD
             "icon": "md/MdSpeed",
             "bar": "lower",
             "order": 3,
+=======
+            "icon": "MdSpeed",
+            "bar": "lowerLeft",
+            "order": 2,
+        },
+        "customModal": {
+            "icon": "ImCogs",
+            "type": "modal",
+            "bar": "upperRight",
+            "order": 0,
+        },
+        "map2": {
+            "type": "map",
+            "icon": "FaMapMarkedAlt",
+            "bar": "lowerRight",
+            "order": 0,
+        },
+        "dash2": {
+            "type": "stats",
+            "icon": "MdInsertChart",
+            "name": "Dashboard 1",
+            "order": 1,
+            "bar": "lowerRight",
+>>>>>>> 2.0.0-dev
         },
     }
 },
