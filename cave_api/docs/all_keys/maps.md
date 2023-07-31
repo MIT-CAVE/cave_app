@@ -7,6 +7,8 @@ Below is the `maps` group with its sub-keys matched by typical or placeholder va
     "name": "map",
     "data": {
         "customMap": {
+            "currentStyle": "customMapStyle1",
+            "currentProjection": "globe"
             "defaultViewport": {
                 "longitude": -75.44766721108091,
                 "latitude": 40.34530681636297,
@@ -93,6 +95,8 @@ Below is the `maps` group with its sub-keys matched by typical or placeholder va
 ## Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
+`customMapKey.currentProjection` | mercator | A string describing the current map projection. Can be either `'globe'` or `'mercator'`.
+`customMapKey.currentStyle` | _default | A string describing the current map style. Can be `'_default'`, `'dark_matter'`, `'positron'`, `'OSM'`, or a custom style specified in the [`settings`](./settings.md) key.
 <a name="defaultViewport">`customMapKey.defaultViewport`</a> | | A dictionary object containing geo properties that set the map's default field of view. Also used by the "home" viewport button in the app.
 `customMapKey.defaultViewport.bearing` | `0` | The initial bearing (rotation) of the map, measured in degrees counter-clockwise from north.
 `customMapKey.defaultViewport.pitch` | `0` | The initial pitch (*tilt*) of the viewport in the "**Map**" view, measured in degrees away from the plane of the screen (0&deg; - 85&deg;). A pitch of 0&deg; results in a two-dimensional map, as if your line of sight forms a perpendicular angle with the earth's surface, while a greater value like 60&deg; looks ahead towards the horizon.
@@ -157,6 +161,8 @@ Example: Suppose we have five nodes with values `["Monday", "Tuesday", "Monday",
 "maps": {
     "data": {
         "map1": {
+            "currentProjection": "mercator",
+            "currentStyle": "dark_matter"
             "defaultViewport": {
                 "longitude": -75.44766721108091,
                 "latitude": 40.34530681636297,

@@ -8,6 +8,24 @@ Below is the `settings` group with its sub-keys matched by typical values:
     "sendToApi": False,
     "sendToClient": True,
     "data": {
+        "additionalMapStyles": {
+            "customMapStyle1": {
+                {
+                    "name": 'Custom Style',
+                    "icon": 'MdExplore',
+                    "order": -1,
+                    "spec": 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json',
+                    "fog": {
+                        "range": [0.8, 8],
+                        "color": "#dc9f9f",
+                        "horizon-blend": 0.5,
+                        "high-color": "#245bde",
+                        "space-color": "#000000",
+                        "star-intensity": 0.15
+                    },
+                }
+            }
+        },
         "sync":{
             "mapLayers":{
                 "name": "Map Layers",
@@ -44,8 +62,10 @@ Below is the `settings` group with its sub-keys matched by typical values:
 ## Common keys
 - [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`data`](../common_keys/common_keys.md#data)
+- [`icon`](../common_keys//common_keys.md#icon)
 - [`name`](../common_keys/common_keys.md#name)
 - [`numberFormat`](../common_keys/common_keys.md#number-format)
+- [`order`](../common_keys//common_keys.md#order)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 
@@ -58,8 +78,11 @@ Key | Default | Description
 `sync.customSyncKey*.data` | `{}` | A dictionary with key value pairs, where values are unqiue paths in the API that can be synced or desynced.
 `sync.customSyncKey*.value` | `True` | A boolean value that determines whether the given paths are synced on app startup
 `sync.customSyncKey*.showToggle` | `False` | A boolean value that determines whether a toggle for the given paths is shown in the appSettings pane.
-<a name="timeLength">`timeLength`</a> | | An integer representing the length of all `value` lists found in any supplied [`timeObject`](../common_keys/time_object.md)s. If no `timeObject`s are used, this key can be omitted to hide the time selector in the app.
-<a name="timeUnits">`timeUnits`</a> | `'units'` | A string used to describe each unit of time between steps in [`timeObject`](../common_keys/time_object.md)s (e.g. 'day', 'week', 'month', etc.). This is only used for display purposes.
+<a name="timeLength">`timeLength`</a> | | An integer representing the length of all `value` lists found in any supplied [`timeValues`](../common_keys/time_value.md)s. If no `timeValues` are used, this key can be omitted to hide the time selector in the app.
+<a name="timeUnits">`timeUnits`</a> | `'units'` | A string used to describe each unit of time between steps in [`timeValues`](../common_keys/time_value.md)s (e.g. 'day', 'week', 'month', etc.). This is only used for display purposes.
+`customMapStyle*` | {} | A dictionary containing custom style options for the map views.
+`customMapStyle*.fog` | {} | A dictionary complying with the (Mapbox-GL fog spec)[https://docs.mapbox.com/mapbox-gl-js/style-spec/fog/]. If left empty default fog is used based on whether the user is in light or dark mode.
+`customMapStyle*.style` | required | Either a URL string pointing to a (Mapbox-GL style spec)[https://docs.mapbox.com/mapbox-gl-js/style-spec/], or a dictionary complying with the spec.
 
 
 ## Example
