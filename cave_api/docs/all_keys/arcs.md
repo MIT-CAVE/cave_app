@@ -115,7 +115,11 @@ The structure of an `arcs` group looks as follows:
             },
             "props": {
                 "customPropKey9": {
-                    "value": 50,
+                    "timeValues": {
+                        0: { "value": 0 },
+                        1: { "value": 100 },
+                        2: { "value": 300 },
+                    }
                 },
                 "customPropKey10": {
                     "value": 40,
@@ -151,6 +155,7 @@ The structure of an `arcs` group looks as follows:
 - [`sizeByOptions`](../common_keys/common_keys.md#sizeByOptions)
 - [`startSize`](../common_keys/common_keys.md#startSize)
 - [`startGradientColor`](../common_keys/common_keys.md#start-gradient)
+- [`timeValues`](../common_keys/time_value.md)
 - [`value`](../common_keys/props.md#value)
 - [`variant`](../common_keys/props.md#variant)
 

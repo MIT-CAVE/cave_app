@@ -84,7 +84,11 @@ The structure of a `nodes` group looks as follows:
             },
             "props": {
                 "customPropKey1": {
-                    "value": 100,
+                    "timeValues": {
+                        0: { "value": 0 },
+                        1: { "value": 100 },
+                        2: { "value": 300 },
+                    }
                 },
                 "customPropKey2": {
                     "value": 50,
@@ -118,6 +122,7 @@ The structure of a `nodes` group looks as follows:
 - [`sizeByOptions`](../common_keys/common_keys.md#sizeByOptions)
 - [`startSize`](../common_keys/common_keys.md#startSize)
 - [`startGradientColor`](../common_keys/common_keys.md#startGradientColor)
+- [`timeValues`](../common_keys/time_value.md)
 - [`value`](../common_keys/props.md#value)
 - [`variant`](../common_keys/props.md#variant)
 
