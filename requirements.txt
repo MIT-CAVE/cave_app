@@ -1,6 +1,6 @@
 autoflake==1.4
 black==22.8.0
-cave_utils==1.5.*
+cave_utils==1.6.*
 channels==3.0.5
 Django==4.1.1
 django-cors-headers==3.13.0
@@ -14,4 +14,3 @@ python-decouple==3.6
 type_enforced>=0.0.15
 whitenoise==6.2.0
 -r ./utils/extra_requirements.txt
--r ./cave_api/requirements.txt

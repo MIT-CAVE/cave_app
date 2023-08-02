@@ -15,6 +15,7 @@ At first glance, the top-level keys in the data structure look like this:
     'kpis': {...},
     'kwargs':{...},
     'maps': {...},
+    'modals': {...},
     'nodes': {...},
     'panes': {...},
     'settings': {...},
@@ -82,6 +83,8 @@ Custom keys are always included as a direct child of common keys such as `data`,
 - #### [`kwargs`](docs/all_keys/kwargs.md)
 
 - #### [`maps`](docs/all_keys/maps.md)
+
+- #### [`modals`](docs/all_keys/modals.md)
 
 - #### [`nodes`](docs/all_keys/nodes.md)
 

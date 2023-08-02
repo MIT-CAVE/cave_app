@@ -231,14 +231,14 @@ class CustomUser(AbstractUser):
         return [self.id]
 
     def create_personal_team(self):
-        team, team_created = Teams.objects.get_or_create(name=f"Personal ({self.username})")
+        team, team_created = Teams.objects.get_or_create(name=f"{self.username} - Personal", is_personal_team=True)
         if team_created:
             team.add_user(self)
         return team
 
     def get_or_create_personal_team(self):
         team = Teams.objects.filter(
-            id__in=self.team_ids, name=f"Personal ({self.username})"
+            id__in=self.team_ids, is_personal_team=True
         ).first()
         if team is None:
             team = self.create_personal_team()
@@ -777,12 +777,19 @@ class Teams(models.Model):
         help_text=_(
             "Integer. The amount of sessions this team can have - Used in views to enable/disable session limit"
         ),
-        default=3,
+        default=10,
     )
     count_sessions = models.IntegerField(
         _("Count of Team Sessions"),
         help_text=_("Integer. The amount sessions this team currently has"),
         default=0,
+    )
+    is_personal_team = models.BooleanField(
+        _("Is Personal Team"),
+        help_text=_(
+            "Is this team a personal team? Used only for admin filtering purposes."
+        ),
+        default=False,
     )
 
     def add_user(self, user):
