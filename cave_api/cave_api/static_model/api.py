@@ -58,7 +58,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "data": {"db1": ["dashboards", "data"]},
                     },
                 },
-                "iconUrl": "https://react-icons.mitcave.com/4.8.0",
+                "iconUrl": "https://react-icons.mitcave.com/4.10.1",
                 "numberFormat": {
                     "precision": 4,
                     "trailingZeros": False,
@@ -67,7 +67,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "additionalMapStyles": {
                     "watercolor": {
                         "name": "Watercolor",
-                        "icon": "MdBrush",
+                        "icon": "md/MdBrush",
                         "order": 1,
                         "spec": {
                             "version": 8,
@@ -126,25 +126,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "streets": {
                         "name": "Streets",
-                        "icon": "MdStreetview",
+                        "icon": "md/MdStreetview",
                         "order": 2,
                         "spec": "mapbox://styles/mapbox/streets-v12",
                     },
                     "outdoors": {
                         "name": "Outdoors",
-                        "icon": "MdForest",
+                        "icon": "md/MdForest",
                         "order": 3,
                         "spec": "mapbox://styles/mapbox/outdoors-v12",
                     },
                     "satellite": {
                         "name": "Satellite",
-                        "icon": "MdSatelliteAlt",
+                        "icon": "md/MdSatelliteAlt",
                         "order": 4,
                         "spec": "mapbox://styles/mapbox/satellite-v9",
                     },
                     "satellite_streets": {
                         "name": "Satellite Streets",
-                        "icon": "MdSatellite",
+                        "icon": "md/MdSatellite",
                         "order": 5,
                         "spec": "mapbox://styles/mapbox/satellite-streets-v12",
                     },
@@ -243,19 +243,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "appBarId": "dash1",
                 "session": {
-                    "icon": "MdApi",
+                    "icon": "md/MdApi",
                     "type": "pane",
                     "bar": "upperLeft",
                     "order": 0,
                 },
                 "appSettings": {
-                    "icon": "MdOutlineSettings",
+                    "icon": "md/MdOutlineSettings",
                     "type": "pane",
                     "bar": "upperLeft",
                     "order": 1,
                 },
                 "resetButton": {
-                    "icon": "MdSync",
+                    "icon": "md/MdSync",
                     "color": {
                         "dark": "rgb(255, 101, 101)",
                         "light": "rgb(212, 0, 0)",
@@ -266,7 +266,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "order": 2,
                 },
                 "buttonSolve": {
-                    "icon": "BsLightningFill",
+                    "icon": "bs/BsLightningFill",
                     "color": {
                         "dark": "rgb(178, 179, 55)",
                         "light": "rgb(79, 79, 24)",
@@ -277,55 +277,55 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "order": 3,
                 },
                 "examplePropsPane": {
-                    "icon": "FaCogs",
+                    "icon": "fa/FaCogs",
                     "type": "pane",
                     "bar": "upperLeft",
                     "order": 4,
                 },
                 "context1": {
-                    "icon": "BsInboxes",
+                    "icon": "bs/BsInboxes",
                     "type": "pane",
                     "order": 5,
                     "bar": "upperLeft",
                 },
                 "filter": {
-                    "icon": "FaFilter",
+                    "icon": "fa/FaFilter",
                     "type": "pane",
                     "order": 6,
                     "bar": "upperLeft",
                 },
                 "map1": {
                     "type": "map",
-                    "icon": "FaMapMarkedAlt",
+                    "icon": "fa/FaMapMarkedAlt",
                     "bar": "lowerLeft",
                     "order": 0,
                 },
                 "map2": {
                     "type": "map",
-                    "icon": "FaMapMarked",
+                    "icon": "fa/FaMapMarked",
                     "bar": "lowerLeft",
                     "order": 1,
                 },
                 "dash1": {
                     "type": "stats",
-                    "icon": "MdInsertChart",
+                    "icon": "md/MdInsertChart",
                     "order": 1,
                     "bar": "lowerLeft",
                 },
                 "dash2": {
                     "type": "stats",
-                    "icon": "MdInsertChartOutlined",
+                    "icon": "md/MdInsertChartOutlined",
                     "order": 2,
                     "bar": "lowerLeft",
                 },
                 "kpi1": {
                     "type": "kpi",
-                    "icon": "MdSpeed",
+                    "icon": "md/MdSpeed",
                     "bar": "lowerLeft",
                     "order": 2,
                 },
                 "exampleModal": {
-                    "icon": "MdInfo",
+                    "icon": "md/MdInfo",
                     "color": {
                         "dark": "rgb(195, 164, 222)",
                         "light": "rgb(84, 60, 107)",
@@ -883,7 +883,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "optionalViewports": {
                         "ov0": {
-                            "icon": "FaGlobeAsia",
+                            "icon": "fa/FaGlobeAsia",
                             "name": "Asia",
                             "zoom": 4,
                             "order": 1,
@@ -895,7 +895,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "longitude": 121,
                         },
                         "ov1": {
-                            "icon": "FaGlobeEurope",
+                            "icon": "fa/FaGlobeEurope",
                             "name": "EMEA",
                             "zoom": 4,
                             "order": 1,
@@ -990,7 +990,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "optionalViewports": {
                         "ov0": {
-                            "icon": "FaGlobeAsia",
+                            "icon": "fa/FaGlobeAsia",
                             "name": "Asia",
                             "zoom": 4,
                             "order": 1,
@@ -1002,7 +1002,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "longitude": 121,
                         },
                         "ov1": {
-                            "icon": "FaGlobeEurope",
+                            "icon": "fa/FaGlobeEurope",
                             "name": "EMEA",
                             "zoom": 4,
                             "order": 1,
@@ -1417,7 +1417,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "startSize": "30px",
                     "endSize": "45px",
-                    "icon": "FaIgloo",
+                    "icon": "fa6/FaIgloo",
                     "props": {
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
@@ -1491,7 +1491,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "startSize": "30px",
                     "endSize": "45px",
-                    "icon": "BsBuilding",
+                    "icon": "bs/BsBuilding",
                     "props": {
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
@@ -1651,13 +1651,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "dark": "rgb(20, 205, 20)",
                                 "light": "rgb(10, 100, 10)",
                             },
-                        }
+                        },
+                        "booleanPropExample": {
+                            "false": "rgb(233, 0, 0)",
+                            "true": "rgb(0, 233, 0)",
+                        },
                     },
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
                         "geoJsonProp": "code_hasc",
                     },
-                    "icon": "BsHexagon",
+                    "icon": "bs/BsHexagon",
                     "props": {
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
@@ -1667,6 +1671,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numberFormat": {
                                 "unit": "C units",
                             },
+                        },
+                        "booleanPropExample": {
+                            "name": "Boolean Prop Example",
+                            "type": "toggle",
+                            "value": True,
+                            "enabled": True,
+                            "help": "Help for boolean prop",
                         },
                     },
                 },
@@ -1690,7 +1701,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
                         "geoJsonProp": "FIPS_10",
                     },
-                    "icon": "BsHexagon",
+                    "icon": "bs/BsHexagon",
                     "props": {
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
@@ -1728,6 +1739,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "props": {
                         "numericPropExampleC": {
                             "value": 300,
+                        },
+                        "booleanPropExample": {
+                            "value": True,
                         }
                     },
                 },
@@ -1739,6 +1753,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "props": {
                         "numericPropExampleC": {
                             "value": 250,
+                        },
+                        "booleanPropExample": {
+                            "value": False,
                         }
                     },
                 },
@@ -1750,6 +1767,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "props": {
                         "numericPropExampleC": {
                             "value": 100,
+                        },
+                        "booleanPropExample": {
+                            "value": False,
                         }
                     },
                 },
@@ -1761,6 +1781,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "props": {
                         "numericPropExampleC": {
                             "value": 200,
+                        },
+                        "booleanPropExample": {
+                            "value": False,
                         }
                     },
                 },
@@ -1876,17 +1899,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "kpiHeader1": {
                     "type": "head",
                     "name": "Example KPI Header 1",
-                    "icon": "BsInboxes",
+                    "icon": "bs/BsInboxes",
                 },
                 "kpiHeader2": {
                     "type": "head",
                     "name": "Example KPI Header 2",
-                    "icon": "BsTruck",
+                    "icon": "bs/BsTruck",
                 },
                 "key1": {
                     "name": "KPI Example 1",
                     "value": 18,
-                    "icon": "BsFillEmojiFrownFill",
+                    "icon": "bs/BsFillEmojiFrownFill",
                     "mapKpi": True,
                     "numberFormat": {
                         "precision": 0,
@@ -1896,7 +1919,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "key2": {
                     "name": "KPI Example 2",
                     "value": 32,
-                    "icon": "BsFillEmojiSmileFill",
+                    "icon": "bs/BsFillEmojiSmileFill",
                     "mapKpi": True,
                     "numberFormat": {
                         "precision": 0,
@@ -1905,7 +1928,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "key3": {
                     "name": "KPI Example 3",
-                    "icon": "BsInboxes",
+                    "icon": "bs/BsInboxes",
                     "numberFormat": {
                         "precision": 4,
                         "trailingZeros": True,
@@ -1915,7 +1938,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "key4": {
                     "name": "A Big Number",
-                    "icon": "BsTruck",
+                    "icon": "bs/BsTruck",
                     "value": 10000000000000,
                     "numberFormat": {
                         "precision": 0,
@@ -1924,7 +1947,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "key5": {
                     "name": "A Really Big Number",
-                    "icon": "MdExpand",
+                    "icon": "md/MdExpand",
                     "value": 9007199254740991,
                     "numberFormat": {
                         "precision": 2,

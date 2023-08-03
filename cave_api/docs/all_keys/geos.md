@@ -57,7 +57,7 @@ Let's look inside the structure of `geos`:
                 "customPropKey2": {...},
                 "customPropKey3": {...},
             },
-            "icon": "FaHexagon",
+            "icon": "fa/FaHexagon",
         },
         "customGeoType2": {...},
     },
@@ -155,7 +155,7 @@ Key | Default | Description
                 "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
                 "geoJsonProp": "code_hasc",
             },
-            "icon": "BsHexagon",
+            "icon": "bs/BsHexagon",
             "props": {
                 "numericPropExampleC": {
                     "name": "Numeric Prop Example C",
@@ -189,7 +189,7 @@ Key | Default | Description
                 "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
                 "geoJsonProp": "FIPS_10",
             },
-            "icon": "BsHexagon",
+            "icon": "bs/BsHexagon",
             "props": {
                 "numericPropExampleC": {
                     "name": "Numeric Prop Example C",

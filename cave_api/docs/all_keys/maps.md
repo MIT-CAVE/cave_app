@@ -22,7 +22,7 @@ Below is the `maps` group with its sub-keys matched by typical or placeholder va
             },
             "optionalViewports": {
                 "ov0": {
-                    "icon": "FaGlobeAsia",
+                    "icon": "fa/FaGlobeAsia",
                     "name": "Asia",
                     "zoom": 4,
                     "order": 1,
@@ -176,7 +176,7 @@ Example: Suppose we have five nodes with values `["Monday", "Tuesday", "Monday",
             },
             "optionalViewports": {
                 "ov0": {
-                    "icon": "FaGlobeAsia",
+                    "icon": "fa/FaGlobeAsia",
                     "name": "Asia",
                     "zoom": 4,
                     "order": 1,
@@ -188,7 +188,7 @@ Example: Suppose we have five nodes with values `["Monday", "Tuesday", "Monday",
                     "longitude": 121,
                 },
                 "ov1": {
-                    "icon": "FaGlobeEurope",
+                    "icon": "fa/FaGlobeEurope",
                     "name": "EMEA",
                     "zoom": 4,
                     "order": 1,
@@ -265,7 +265,7 @@ Example: Suppose we have five nodes with values `["Monday", "Tuesday", "Monday",
             },
             "optionalViewports": {
                 "ov0": {
-                    "icon": "FaGlobeAsia",
+                    "icon": "fa/FaGlobeAsia",
                     "name": "Asia",
                     "zoom": 4,
                     "order": 1,
@@ -277,7 +277,7 @@ Example: Suppose we have five nodes with values `["Monday", "Tuesday", "Monday",
                     "longitude": 121,
                 },
                 "ov1": {
-                    "icon": "FaGlobeEurope",
+                    "icon": "fa/FaGlobeEurope",
                     "name": "EMEA",
                     "zoom": 4,
                     "order": 1,

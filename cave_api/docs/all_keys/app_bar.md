@@ -7,20 +7,20 @@ The structure of the `appBar` group looks as follows:
     'data': {
         "appBarId":"customDash1",
         "customSessionPane": {
-            "icon": "MdApi",
+            "icon": "md/MdApi",
             "type": "pane",
             "bar": "upperLeft",
             "order": 0,
         },
         "customAppSettingsPane": {
-            "icon": "MdOutlineSettings",
+            "icon": "md/MdOutlineSettings",
             "type": "pane",
             "bar": "upperLeft",
             "order": 1,
         },
         "customSolveButton": {
             "name": "Solve Button",
-            "icon": "BsLightningFill",
+            "icon": "bs/BsLightningFill",
             "color": {
                 "dark": "rgb(178, 179, 55)",
                 "light": "rgb(79, 79, 24)",
@@ -30,27 +30,43 @@ The structure of the `appBar` group looks as follows:
             "bar": "upperLeft",
             "order": 2,
         },
+<<<<<<< HEAD
+        "customPropsPane": {
+            "icon": "fa/FaCogs",
+=======
         "customPropsPane1": {
             "icon": "FaCogs",
+>>>>>>> 2.0.0-dev
             "type": "pane",
             "bar": "upperLeft",
             "order": 3,
         },
         "customMap1": {
             "type": "map",
+<<<<<<< HEAD
+            "icon": "fa/FaMapMarkedAlt",
+            "bar": "lower",
+            "order": 1,
+=======
             "icon": "FaMapMarkedAlt",
             "bar": "lowerLeft",
             "order": 0,
+>>>>>>> 2.0.0-dev
         },
         "customDash1": {
             "type": "stats",
-            "icon": "MdInsertChart",
+            "icon": "md/MdInsertChart",
             "name": "Dashboard 1",
             "bar": "lowerLeft",
             "order": 1,
         },
         "customKpi": {
             "type": "kpi",
+<<<<<<< HEAD
+            "icon": "md/MdSpeed",
+            "bar": "lower",
+            "order": 3,
+=======
             "icon": "MdSpeed",
             "bar": "lowerLeft",
             "order": 2,
@@ -73,6 +89,7 @@ The structure of the `appBar` group looks as follows:
             "name": "Dashboard 2",
             "bar": "lowerRight",
             "order": 1,
+>>>>>>> 2.0.0-dev
         },
         # As many custom pane objects as needed
     },
@@ -90,8 +107,13 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customMap1": {
     "type": "map",
+<<<<<<< HEAD
+    "icon": "fa/FaMapMarkedAlt",
+    "bar": "lower",
+=======
     "icon": "FaMapMarkedAlt",
     "bar": "lowerLeft",
+>>>>>>> 2.0.0-dev
     "order": 1,
 },
 ```
@@ -103,7 +125,7 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customStats1": {
     "type": "stats",
-    "icon": "MdInsertChart",
+    "icon": "md/MdInsertChart",
     "name": "Dashboard 1",
     "order": 2,
     "bar": "lowerLeft",
@@ -117,8 +139,13 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customKpi": {
     "type": "kpi",
+<<<<<<< HEAD
+    "icon": "md/MdSpeed",
+    "bar": "lower",
+=======
     "icon": "MdSpeed",
     "bar": "lowerLeft",
+>>>>>>> 2.0.0-dev
     "order": 3,
 },
 ```
@@ -132,7 +159,7 @@ Panes are constructs primarily used to place UI controls (toggles, text and numb
 
 ```py
 "customSessionPane": {
-    "icon": "MdApi",
+    "icon": "md/MdApi",
     "type": "pane",
     "bar": "upperLeft",
     "order": 0,
@@ -192,20 +219,20 @@ Key | Default | Description
     "data": {
         "appBarId":"dash1",
         "session": {
-            "icon": "MdApi",
+            "icon": "md/MdApi",
             "type": "pane",
             "bar": "upperLeft",
             "order": 0,
         },
         "appSettings": {
-            "icon": "MdOutlineSettings",
+            "icon": "md/MdOutlineSettings",
             "type": "pane",
             "bar": "upperLeft",
             "order": 1,
         },
         "resetButton": {
             "name": "Reset Button",
-            "icon": "MdSync",
+            "icon": "md/MdSync",
             "color": {
                 "dark": "rgb(255, 101, 101)",
                 "light": "rgb(212, 0, 0)",
@@ -217,7 +244,7 @@ Key | Default | Description
         },
         "buttonSolve": {
             "name": "Solve Button",
-            "icon": "BsLightningFill",
+            "icon": "bs/BsLightningFill",
             "color": {
                 "dark": "rgb(178, 179, 55)",
                 "light": "rgb(79, 79, 24)",
@@ -228,38 +255,49 @@ Key | Default | Description
             "order": 3,
         },
         "examplePropsPane": {
-            "icon": "FaCogs",
+            "icon": "fa/FaCogs",
             "type": "pane",
             "bar": "upperLeft",
             "order": 4,
         },
         "context": {            
-            "icon": "BsInboxes",
+            "icon": "bs/BsInboxes",
             "type": "pane",
             "order": 5,
             "bar": "upperLeft",
         },
         "filter": {
-            "icon": "FaFilter",
+            "icon": "fa/FaFilter",
             "type": "pane",
             "order": 6,
             "bar": "upperLeft",
         },
         "map1": {
             "type": "map",
+<<<<<<< HEAD
+            "icon": "fa/FaMapMarkedAlt",
+            "bar": "lower",
+            "order": 1,
+=======
             "icon": "FaMapMarkedAlt",
             "bar": "lowerLeft",
             "order": 0,
+>>>>>>> 2.0.0-dev
         },
         "dash1": {
             "type": "stats",
-            "icon": "MdInsertChart",
+            "icon": "md/MdInsertChart",
             "name": "Dashboard 1",
             "order": 1,
             "bar": "lowerLeft",
         },
         "kpi1": {
             "type": "kpi",
+<<<<<<< HEAD
+            "icon": "md/MdSpeed",
+            "bar": "lower",
+            "order": 3,
+=======
             "icon": "MdSpeed",
             "bar": "lowerLeft",
             "order": 2,
@@ -282,6 +320,7 @@ Key | Default | Description
             "name": "Dashboard 1",
             "order": 1,
             "bar": "lowerRight",
+>>>>>>> 2.0.0-dev
         },
     }
 },
