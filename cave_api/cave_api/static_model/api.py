@@ -67,7 +67,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "additionalMapStyles": {
                     "watercolor": {
                         "name": "Watercolor",
-                        "icon": "MdBrush",
+                        "icon": "md/MdBrush",
                         "order": 1,
                         "spec": {
                             "version": 8,
@@ -126,25 +126,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "streets": {
                         "name": "Streets",
-                        "icon": "MdStreetview",
+                        "icon": "md/MdStreetview",
                         "order": 2,
                         "spec": "mapbox://styles/mapbox/streets-v12",
                     },
                     "outdoors": {
                         "name": "Outdoors",
-                        "icon": "MdForest",
+                        "icon": "md/MdForest",
                         "order": 3,
                         "spec": "mapbox://styles/mapbox/outdoors-v12",
                     },
                     "satellite": {
                         "name": "Satellite",
-                        "icon": "MdSatelliteAlt",
+                        "icon": "md/MdSatelliteAlt",
                         "order": 4,
                         "spec": "mapbox://styles/mapbox/satellite-v9",
                     },
                     "satellite_streets": {
                         "name": "Satellite Streets",
-                        "icon": "MdSatellite",
+                        "icon": "md/MdSatellite",
                         "order": 5,
                         "spec": "mapbox://styles/mapbox/satellite-streets-v12",
                     },
