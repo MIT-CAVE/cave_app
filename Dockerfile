@@ -13,4 +13,4 @@ RUN pip install -r cave_api/requirements.txt
 
 # Run after pip install to allow caching most of the pip work 
 COPY . /app
-run pip install -e ./cave_api
+RUN pip install -e ./cave_api
