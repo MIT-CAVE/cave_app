@@ -13,6 +13,46 @@ def execute_command(session_data, socket, command="init", **kwargs):
         - What: A dict of `session_data` objects to use when configuring this session
         - See: https://github.com/MIT-CAVE/cave_app/blob/0.2.0/cave_api/README_API_STRUCTURE.md
 
+    - `socket`:
+        - Type: Initialized Socket Object
+        - What: A socket object to use to communicate with clients (or print to the console if testing)
+        - Methods:
+            - `notify`:
+                - Requires:
+                    - `message`:
+                        - Type: str
+                        - What: The message to display to the user
+                - Optional:
+                    - `title`:
+                        - Type: str
+                        - What: The title of the message
+                    - `show`:
+                        - Type: bool
+                        - What: Whether or not to show the message
+                        - Default: True
+                    - `theme`:
+                        - Type: str
+                        - What: The theme of the message
+                        - Default: "info"
+                        - Allowed Values: "primary", "secondary", "error", "warning", "info", "success"
+                    - `duration`:
+                        - Type: int
+                        - What: The duration in seconds to show the message
+                        - Default: 10
+                    - `**kwargs`:
+                        - Type: dict (json serializable)
+                        - What: Any additional data to serialize and pass to the user
+                - EG: socket.notify(message="Hello World!", title="Hello:", show=True, theme="info", duration=10)
+        - Note: This comes from one of the following places:
+            - If you are running the cave server:
+                - your_app.cave_core.utils.broadcasting.Socket
+            - If you are running non server tests:
+                - cave_utils.socket.Socket
+                    - See: https://github.com/MIT-CAVE/cave_utils/blob/main/cave_utils/socket.py
+                    - EG: https://github.com/MIT-CAVE/cave_app/blob/main/cave_api/tests/test_init.py
+                - Your own custom socket object with a `notify` method accepting the same arguments as the method described above
+
+
     Optional:
 
     - `command`:
