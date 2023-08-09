@@ -71,6 +71,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "settings": {
             "allowModification": False,
             "data": {
+                "demo": {
+                    "map2": {
+                        "show": False,
+                    },
+                    "map1": {
+                        "scrollSpeed": 2,
+                    },
+                    "dash1": {
+                        "displayTime": 1,
+                    },
+                },
                 "sync": {
                     "appBar": {
                         "name": "App Bar",

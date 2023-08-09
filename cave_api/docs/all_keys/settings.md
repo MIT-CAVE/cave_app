@@ -8,6 +8,17 @@ Below is the `settings` group with its sub-keys matched by typical values:
     "sendToApi": False,
     "sendToClient": True,
     "data": {
+        "demo": {
+            "customViewKey*": {
+                "show": False,
+            },
+            "customMapKey*": {
+                "scrollSpeed": 2,
+            },
+            "customViewKey*": {
+                "displayTime": 1,
+            },
+        },
         "additionalMapStyles": {
             "customMapStyle1": {
                 {
@@ -83,8 +94,10 @@ Key | Default | Description
 `customMapStyle*` | {} | A dictionary containing custom style options for the map views.
 `customMapStyle*.fog` | {} | A dictionary complying with the (Mapbox-GL fog spec)[https://docs.mapbox.com/mapbox-gl-js/style-spec/fog/]. If left empty default fog is used based on whether the user is in light or dark mode.
 `customMapStyle*.style` | required | Either a URL string pointing to a (Mapbox-GL style spec)[https://docs.mapbox.com/mapbox-gl-js/style-spec/], or a dictionary complying with the spec.
-
-
+<a name="demo">`demo`</a> | {} | A dictionary with appBar views as keys, and and objects with values that modify the default demo mode.
+`demo.customViewKey*.show` | True | A boolean value that determines whether demo mode will automatically display this view. 
+`demo.customViewKey*.displayTime` | 100 for maps, 10 for dashboards | An integer or a float value representing the number of seconds to display the view during demo mode. 
+`demo.customMapKey*.scrollSpeed` | 0.05 | A float value representing degrees of rotation per frame (degrees per 13 milliseconds). This key only applies to map views
 
 ## Example
 
@@ -97,6 +110,17 @@ Key | Default | Description
     "sendToApi": False,
     "sendToClient": True,
     "data": {
+        "demo": {
+            "map2": {
+                "show": False,
+            },
+            "map1": {
+                "scrollSpeed": 2,
+            },
+            "dash1": {
+                "displayTime": 1,
+            },
+        },
         "sync":{
             "mapLayers":{
                 "name": "Map Layers",
