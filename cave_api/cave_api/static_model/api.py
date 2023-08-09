@@ -61,10 +61,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
         - Default: 'init'
 
     Returns:
+    
     - `output`:
         - Type: dict of dicts
         - What: A dict of dictionaries to mutate the current session given the current `session_data`
-        - See: https://github.com/MIT-CAVE/cave_app/blob/0.2.0/cave_api/README_API_STRUCTURE.md
+        - See: https://github.com/MIT-CAVE/cave_app/blob/main/cave_api/README_API_STRUCTURE.md
     """
     example = {
         "settings": {
