@@ -44,6 +44,8 @@ Let's look inside the structure of `stats`:
 - [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`category`](../common_keys/common_keys.md#category)
 - [`data`](../common_keys/common_keys.md#data)
+- [`fallbackValue`](../common_keys/common_keys.md#fallback-value)
+- [`locale`](../common_keys/common_keys.md#locale)
 - [`name`](../common_keys/common_keys.md#name)
 - [`order`](../common_keys/common_keys.md#order)
 - [`precision`](../common_keys/common_keys.md#precision)
