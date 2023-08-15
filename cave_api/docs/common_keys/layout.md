@@ -22,10 +22,8 @@ The `layout` key allows for use cases where you want to arrange components that 
         "help": "Help for the numeric input example",
         "maxValue": 100,
         "minValue": 0,
-        "numberFormat": {
-            "precision": 0,
-            "unit": "units",
-        },
+        "precision": 0,
+        "unit": "units",
     },
     "numericSliderExample": {
         "name": "Numeric Slider Example",
@@ -36,9 +34,7 @@ The `layout` key allows for use cases where you want to arrange components that 
         "help": "Help for the numeric slider example",
         "maxValue": 100,
         "minValue": 0,
-        "numberFormat": {
-            "unit": "%",
-        },
+        "unit": "%",
     },
     "miscHeader": {
         "name": "Misc Props",

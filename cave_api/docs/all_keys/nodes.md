@@ -50,18 +50,14 @@ The structure of a `nodes` group looks as follows:
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example A",
-                    "numberFormat": {
-                        "unit": "A units",
-                    },
+                    "unit": "A units",
                 },
                 "customPropKey2": {
                     "name": "Numeric Prop Example B",
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example B",
-                    "numberFormat": {
-                        "unit": "B units",
-                    },
+                    "unit": "B units",
                 },
                 "customPropKey3": {
                     "name": "Boolean Prop Example",
@@ -114,7 +110,6 @@ The structure of a `nodes` group looks as follows:
 - [`help`](../common_keys/props.md#help)
 - [`icon`](../common_keys/common_keys.md#icon)
 - [`name`](../common_keys/common_keys.md#name)
-- [`numberFormat`](../common_keys/common_keys.md#number-format)
 - [`prop > type`](../common_keys/props.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
@@ -123,6 +118,7 @@ The structure of a `nodes` group looks as follows:
 - [`startSize`](../common_keys/common_keys.md#startSize)
 - [`startGradientColor`](../common_keys/common_keys.md#startGradientColor)
 - [`timeValues`](../common_keys/time_value.md)
+- [`unit`](../common_keys/common_keys.md#unit)
 - [`value`](../common_keys/props.md#value)
 - [`variant`](../common_keys/props.md#variant)
 
@@ -194,18 +190,14 @@ Key | Default | Description
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example A",
-                    "numberFormat": {
-                        "unit": "A units",
-                    },
+                    "unit": "A units",
                 },
                 "numericPropExampleB": {
                     "name": "Numeric Prop Example B",
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example B",
-                    "numberFormat": {
-                        "unit": "B units",
-                    },
+                    "unit": "B units",
                 },
                 "booleanPropExample": {
                     "name": "Boolean Prop Example",
@@ -261,18 +253,14 @@ Key | Default | Description
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example A",
-                    "numberFormat": {
-                        "unit": "A units",
-                    },
+                    "unit": "A units",
                 },
                 "numericPropExampleB": {
                     "name": "Numeric Prop Example B",
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example B",
-                    "numberFormat": {
-                        "unit": "B units",
-                    },
+                    "unit": "B units",
                 },
                 "booleanPropExample": {
                     "name": "Boolean Prop Example",

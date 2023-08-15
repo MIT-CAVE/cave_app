@@ -17,10 +17,8 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         "help": "Help for the numeric input example",
         "maxValue": 100,
         "minValue": 0,
-        "numberFormat": {
-            "precision": 0,
-            "unit": "units",
-        },
+        "precision": 0,
+        "unit": "units",
     },
     "numericSliderExample": {
         "name": "Numeric Slider Example",
@@ -31,9 +29,7 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         "help": "Help for the numeric slider example",
         "maxValue": 100,
         "minValue": 0,
-        "numberFormat": {
-            "unit": "%",
-        },
+        "unit": "%",
     },
     "miscHeader": {
         "name": "Misc Props",
@@ -251,15 +247,19 @@ Key | Default | Description
 <a name="data-value">`customPropKey*.dataValue`</a> | | If specified, it provides the object that will override the value pointed to by [`dataPath`](#data-path). Requires [`dataName`](#data-name) to be specified.
 <a name="enabled">`customPropKey*.enabled`</a> | `False` | Enable a `props` element in the UI. If `False`, users cannot interact with the element in the UI.
 <a name="help">`customPropKey*.help`</a> | | A help message that is displayed in the UI, as a result of a mouseover or touch event on a `customPropKey*` element.
+<a name="legend-max-label">`customPropKey*.legendMaxLabel`</a> | | Used along a `'num'` prop, it sets a custom and descriptive label for the highest data point on the "**Map Legend**". Takes precedence over other formatting.<br><br>This property can be added to the [`numberFormat`](../all_keys/settings.md#number-format) setting.
+<a name="legend-min-label">`customPropKey*.legendMinLabel`</a> | | Used along a `'num'` prop, it sets a custom and descriptive label for the lowest data point on the "**Map Legend**". Takes precedence over other formatting.<br><br>This property can be added to the [`numberFormat`](../all_keys/settings.md#number-format) setting.
+<a name="legend-sci-format">`customPropKey*.legendSciFormat`</a> | `True` | Used along a `'num'` prop, determines whether the [`value`](#value) is displayed in [scientific notation](https://en.wikipedia.org/wiki/Scientific_notation) in the "**Map Legend**". If `False`, the value will be formatted according to the [`numberFormat`](../all_keys/settings.md#number-format) property and its corresponding overriden attributes.<br><br>This property can be added to the [`numberFormat`](../all_keys/settings.md#number-format) setting.
+<a name="legend-sci-precision">`customPropKey*.legendSciPrecision`</a> | `3` | Used along a `'num'` prop, it sets the number of digits to use for the [`value`](#value) in the "**Map Legend**". Only used if [`legendSciFormat`](#legend-sci-format) is `True`.<br><br>This property can be added to the [`numberFormat`](../all_keys/settings.md#number-format) setting.
 <a name="max-value">`customPropKey*.maxValue`</a> | | Used along a `'num'` prop, it takes the maximum allowed value of the numeric input. Should not be equal to `minValue`.
 <a name="min-value">`customPropKey*.minValue`</a> | | Used along a `'num'` prop, it takes the minimum allowed value of the numeric input. Should not be equal to `maxValue`.
 <a name="placeholder">`customPropKey*.placeholder`</a> | | When used with a `'combobox'` variant, this displays a label that acts as help text when the field is empty or above the field when it contains a value.
-<a name="views">`customPropKey*.views`</a> | `["year", "day", "hours", "minutes"]` | Used with a `'date'` prop, defines the available time units of the date and/or time. The views will be presented in the order specified in the `views` array.
 <a name="options">`customPropKey*.options`</a> | Required | Used along a `'selector'` prop, it takes an object containing the [`custom_option_*`](#custom_option_)s to be displayed on the UI element mapped to their display properties.
 <a name="custom_option_">`customPropKey*.options.custom_option_*`</a> | | Used along a `'selector'` prop, it takes an object containing the name of the option to be displayed on the UI element.
 <a name="prop-type">`customPropKey*.type`</a> | Required | As a direct child of `customPropKey*`, the `type` key sets the UI element type, implicitly constraining the set of key-value pairs that can be used along this type. The `type` key takes one of the following values: `'head'`, `'text'`, `'num'`, `'toggle'`, `'button'`, or `'selector'`.
 <a name="value">`customPropKey*.value`</a> | Required | The actual value of a `props` element. Depending on the prop [`type`](#prop-type), it can be a boolean (`'toggle'` \| `'button'`), a number (`'num'` \| `'button'`), a string in the case of `'text'` or `'button'`, or an array of [`custom_option_*`](#custom_option_) keys for all the variants of a `'selector'` type.<br><br>Note that for single selector variants such as `'radio'` and `'dropdown'`, the value must still be an array containing a single [`custom_option_*`](#custom_option_) key.
 <a name="variant">`customPropKey*.variant`</a> | | Used to modify the UI for a given prop `type`. For example, it can convert a numeric input to a slider input or a selector to a drop-down menu. The `value`s should remain the same structure, but the presentation to the end user changes.
+<a name="views">`customPropKey*.views`</a> | `["year", "day", "hours", "minutes"]` | Used with a `'date'` prop, defines the available time units of the date and/or time. The views will be presented in the order specified in the `views` array.
 
 ## Prop `type`s and their `variant`s:
 

@@ -114,7 +114,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "numberFormat": {
                     "precision": 4,
                     "trailingZeros": False,
-                    "unitSpace": True,
+                    "unitPlacement": "afterWithSpace",
                 },
                 "additionalMapStyles": {
                     "watercolor": {
@@ -445,10 +445,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for the numeric input example",
                             "maxValue": 100,
                             "minValue": 0,
-                            "numberFormat": {
-                                "precision": 0,
-                                "unit": "units",
-                            },
+                            "precision": 0,
+                            "unit": "units",
                         },
                         "numericSliderExample": {
                             "name": "Numeric Slider Example",
@@ -459,9 +457,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for the numeric slider example",
                             "maxValue": 100,
                             "minValue": 0,
-                            "numberFormat": {
-                                "unit": "%",
-                            },
+                            "unit": "%",
                         },
                         "miscHeader": {
                             "name": "Misc Props",
@@ -1171,22 +1167,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "enabled": True,
                             "help": "Help for numeric prop example A",
-                            "numberFormat": {
-                                "unit": "A units"
-                            },
-                            "legendOverride": {
-                                "useScientificFormat": False,
-                                "minLabel": "small",
-                            },
+                            "unit": "A units",
+                            "legendSciFormat": False,
+                            "legendMinLabel": "small",
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
                             "enabled": True,
                             "help": "Help for numeric prop example B",
-                            "numberFormat": {
-                                "unit": "B units",
-                            },
+                            "unit": "B units",
                         },
                         "selectorPropForColor": {
                             "name": "Example Categorical Prop",
@@ -1276,18 +1266,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "enabled": True,
                             "help": "Help for numeric prop example A",
-                            "numberFormat": {
-                                "unit": "A units",
-                            },
+                            "unit": "A units",
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
                             "enabled": True,
                             "help": "Help for numeric prop example B",
-                            "numberFormat": {
-                                "unit": "B units",
-                            },
+                            "unit": "B units",
                         },
                         "selectorPropForColor": {
                             "name": "Example Categorical Prop",
@@ -1476,25 +1462,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "enabled": True,
                             "help": "Help for numeric prop example A",
-                            "numberFormat": {
-                                "unit": "A units",
-                            },
-                            "legendOverride": {
-                                "scientificPrecision": 5,
-                                "useScientificFormat": True,
-                            },
+                            "unit": "A units",
+                            "legendSciFormat": True,
+                            "legendSciPrecision": 5,
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
                             "enabled": True,
                             "help": "Help for numeric prop example B",
-                            "numberFormat": {
-                                "unit": "B units",
-                            },
-                            "legendOverride": {
-                                "useScientificFormat": True,
-                            },
+                            "unit": "B units",
+                            "legendSciFormat": True,
                         },
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
@@ -1550,25 +1528,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "enabled": True,
                             "help": "Help for numeric prop example A",
-                            "numberFormat": {
-                                "unit": "A units",
-                            },
-                            "legendOverride": {
-                                "scientificPrecision": 5,
-                            },
+                            "precision": 2,
+                            "unit": "A units",
+                            "legendSciFormat": True,
+                            "legendSciPrecision": 5,
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
                             "enabled": True,
                             "help": "Help for numeric prop example B",
-                            "numberFormat": {
-                                "unit": "B units",
-                            },
-                            "legendOverride": {
-                                "minLabel": "Lo",
-                                "maxLabel": "Hi",
-                            },
+                            "unit": "B units",
+                            "legendMinLabel": "Lo",
+                            "legendMaxLabel": "Hi",
                         },
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
@@ -1720,9 +1692,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "enabled": True,
                             "help": "Help with the example numeric prop for this State",
-                            "numberFormat": {
-                                "unit": "C units",
-                            },
+                            "unit": "C units",
                         },
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
@@ -1760,9 +1730,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "enabled": True,
                             "help": "Help with the example numeric prop for this Country",
-                            "numberFormat": {
-                                "unit": "units",
-                            },
+                            "unit": "units",
                         },
                     },
                 },
@@ -1875,29 +1843,23 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "numericStatExampleA": {
                     "name": "Stat Example A",
                     "calculation": "numericStatExampleA",
-                    "numberFormat": {
-                        "unit": "units",
-                    },
+                    "unit": "units",
                     "order": 1,
                 },
                 "numericStatExampleB": {
                     "name": "Stat Example B",
                     "calculation": "numericStatExampleB",
-                    "numberFormat": {
-                        "unit": "units",
-                    },
+                    "unit": "units",
                     "order": 2,
                 },
                 "numericExampleCalculationStat": {
                     "name": "Stat A as a percentage of Stat B",
                     "calculation": 'numericStatExampleA / groupSum("numericStatExampleB")',
                     "groupByOptions": ["location"],
-                    "numberFormat": {
-                        "precision": 2,
-                        "trailingZeros": True,
-                        "unitSpace": False,
-                        "unit": "%",
-                    },
+                    "precision": 2,
+                    "trailingZeros": True,
+                    "unit": "%",
+                    "unitPlacement": "after",
                     "order": 3,
                 },
             },
@@ -1960,53 +1922,43 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "key1": {
                     "name": "KPI Example 1",
-                    "value": 18,
                     "icon": "bs/BsFillEmojiFrownFill",
+                    "value": 18,
+                    "precision": 0,
+                    "unit": "frowns",
                     "mapKpi": True,
-                    "numberFormat": {
-                        "precision": 0,
-                        "unit": "frowns",
-                    },
                 },
                 "key2": {
                     "name": "KPI Example 2",
-                    "value": 32,
                     "icon": "bs/BsFillEmojiSmileFill",
+                    "value": 32,
+                    "precision": 0,
+                    "unit": "smiles",
                     "mapKpi": True,
-                    "numberFormat": {
-                        "precision": 0,
-                        "unit": "smiles",
-                    },
                 },
                 "key3": {
                     "name": "KPI Example 3",
                     "icon": "bs/BsInboxes",
-                    "numberFormat": {
-                        "precision": 4,
-                        "trailingZeros": True,
-                        "unit": "units",
-                    },
                     "value": 100,
+                    "precision": 4,
+                    "trailingZeros": True,
+                    "unit": "units",
                 },
                 "key4": {
                     "name": "A Big Number",
                     "icon": "bs/BsTruck",
                     "value": 10000000000000,
-                    "numberFormat": {
-                        "precision": 0,
-                        "unit": "units",
-                    },
+                    "precision": 0,
+                    "unit": "units",
                 },
                 "key5": {
                     "name": "A Really Big Number",
                     "icon": "md/MdExpand",
                     "value": 9007199254740991,
-                    "numberFormat": {
-                        "precision": 2,
-                        "unit": "$",
-                        "currency": True,
-                        "trailingZeros": False,
-                    },
+                    "precision": 2,
+                    "unit": "$",
+                    "unitPlacement": "before",
+                    "trailingZeros": False,
                 },
             },
             "layout": {

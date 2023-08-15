@@ -49,9 +49,7 @@ Let's look inside the structure of `geos`:
                 "customPropKey1": {
                     "type": "num",
                     "help": "A help text for this numeric input",
-                    "numberFormat": {
-                        "unit": "units",
-                    },
+                    "unit": "units",
                     "enabled": True,
                 },
                 "customPropKey2": {...},
@@ -99,13 +97,13 @@ Let's look inside the structure of `geos`:
 - [`help`](../common_keys/props.md#help)
 - [`icon`](../common_keys/common_keys.md#icon)
 - [`name`](../common_keys/common_keys.md#name)
-- [`numberFormat`](../common_keys/common_keys.md#number-format)
 - [`prop > type`](../common_keys/props.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 - [`startGradientColor`](../common_keys/common_keys.md#start-gradient)
 - [`timeValues`](../common_keys/time_value.md)
+- [`unit`](../common_keys/common_keys.md#unit)
 - [`value`](../common_keys/props.md#value)
 - [`variant`](../common_keys/props.md#variant)
 
@@ -162,9 +160,7 @@ Key | Default | Description
                     "type": "num",
                     "enabled": True,
                     "help": "Help with the example numeric prop for this State",
-                    "numberFormat": {
-                        "unit": "C units",
-                    },
+                    "unit": "C units",
                 },
             },
         },
@@ -196,9 +192,7 @@ Key | Default | Description
                     "type": "num",
                     "enabled": True,
                     "help": "Help with the example numeric prop for this Country",
-                    "numberFormat": {
-                        "unit": "units",
-                    },
+                    "unit": "units",
                 },
             },
         },
