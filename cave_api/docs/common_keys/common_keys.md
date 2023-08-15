@@ -17,7 +17,7 @@ Key | Default | Description
 <a name="end-gradient">`colorByOptions.*.endGradientColor`</a> | | The final color in a color gradient that matches the maximum value specified in [`colorByOptions.max`](#color-by-max). This should be an RGB string. EG: `'rgb(0,0,0)'`.
 <a name="color-by-max">`colorByOptions.*.max`</a> | | The maximum value that a parameter can take in.
 <a name="color-by-min">`colorByOptions.*.min`</a> | | The minimum value that a parameter can take in.
-<a name="color-by-null">colorByOptions.*.nullColor</a> | `'rgb(0,0,0)'` | The color to set any objects with a null value for the given prop. This should be an RGB string. EG: `'rgb(0,0,0)'`. This can also by set to the `None` keyword to hide these objects. Not supported for groupable nodes.
+<a name="color-by-null">`colorByOptions.*.nullColor`</a> | `'rgb(0,0,0)'` | The color to set any objects with a null value for the given prop. This should be an RGB string. EG: `'rgb(0,0,0)'`. This can also by set to the `None` keyword to hide these objects. Not supported for groupable nodes.
 <a name="start-gradient">`colorByOptions.*.startGradientColor`</a> | | The starting color in a color gradient that matches the minimum value specified in [`colorByOptions.min`](#color-by-min). This should be an RGB string. EG: `'rgb(0,0,0)'`.
 <a name="column">`column`</a>  | | A column position number (left to right) at which a UI element will be displayed when in a `grid` layout. This includes layouts for([`'options'` panes](../all_keys/app_bar.md#options-pane) or [KPIs](../all_keys/kpis.md)) or a map modal ([`arcs`](../all_keys/arcs.md), [`nodes`](../all_keys/nodes.md), and [`geos`](../all_keys/geos.md)). If omitted in a full-width view layout, the element will not be displayed in the UI.
 <a name="data">`data`</a> | | Dictionary object that contains data related to the use case.
@@ -32,8 +32,9 @@ Key | Default | Description
 <a name="sizeByOptions">`sizeByOptions`</a> | | An object with [parameters](../all_keys/categories.md#custom_data_key_) keys that are provided for the user to choose from a drop-down menu in the "**Map Legend**" and view their variation in terms of stroke width ([`arcs`](../all_keys/arcs.md)) or icon size ([`nodes`](../all_keys/nodes.md)). The associated value should be an object with shape `{"min": 0, "max": 0}` that contains the expected minimum and maximum values for the parameter.
 <a name="size-by-max">`sizeByOptions.*.max`</a> | | The maximum value that a parameter can take in.
 <a name="size-by-min">`sizeByOptions.*.min`</a> | | The minimum value that a parameter can take in.
-<a name="size-by-null">sizeByOptions.*.nullSize</a> | `None` | The size to set any objects with a null value for the given prop. This should be a pixel string. EG: `'45px'`. This can also by set to the `None` keyword to hide these objects. Not supported for groupable nodes.
+<a name="size-by-null">`sizeByOptions.*.nullSize`</a> | `None` | The size to set any objects with a null value for the given prop. This should be a pixel string. EG: `'45px'`. This can also by set to the `None` keyword to hide these objects. Not supported for groupable nodes.
 <a name="startSize">`startSize`</a> | | The starting dimension in pixels for a stroke width of an arc or the size of a node icon, which matches the minimum value of a given parameter in a set of data points. This should be a pixel string. EG: `'45px'`.<br><br>Used in [`arcs`](../all_keys/arcs.md) and [`nodes`](../all_keys/nodes.md).
+
 
 [^1]: This key matches a string that contains a [color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) or a dictionary object with color values per theme keys. The allowed theme keys in the current version are `'dark'` and `'light'`.
 
