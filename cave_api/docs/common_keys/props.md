@@ -275,7 +275,7 @@ Allows users to enter text in a UI field. Here, `value` takes a string.
 >`'textarea'`: Allows users to enter text in a multi-line input field. For customizing the number of visible rows, the preferred approach is to use the `rows` special key. If not specified, `rows` defaults to `4`. Alternatively, the deprecated `minRows` and `maxRows` special keys can be used to set the minimum and maximum number of rows, respectively. However, please note that `minRows` and `maxRows` will be dropped in a future version.<br>
 
 ### `'num'`
-Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is formatted according to [`numberFormat`](number_format.md) and legend formatted with [`legendOverride`](legendOverride.md)
+Allows users to enter a numeric value in a UI field. The `value` receives a numeric input that is formatted according to [`numberFormat`](../all_keys/settings.md#number-format) and its corresponding overriden attributes.
 #### Variants:
 >`'slider'`: Places a range of values along a bar, from which users may select a single value.<br>
 
