@@ -1464,7 +1464,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for numeric prop example A",
                             "unit": "A units",
                             "legendSciFormat": True,
-                            "legendSciPrecision": 5,
+                            "legendPrecision": 5,
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
@@ -1531,7 +1531,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "precision": 2,
                             "unit": "A units",
                             "legendSciFormat": True,
-                            "legendSciPrecision": 5,
+                            "legendPrecision": 5,
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",

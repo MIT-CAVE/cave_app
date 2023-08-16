@@ -29,6 +29,7 @@ Let's look inside the structure of `kpis`:
 - [`locale`](../common_keys/common_keys.md#locale)
 - [`name`](../common_keys/common_keys.md#name)
 - [`precision`](../common_keys/common_keys.md#precision)
+- [`sciFormat`](../common_keys/common_keys.md#sci-format)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 - [`trailingZeros`](../common_keys/common_keys.md#trailing-zeros)

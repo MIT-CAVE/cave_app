@@ -49,6 +49,7 @@ Let's look inside the structure of `stats`:
 - [`name`](../common_keys/common_keys.md#name)
 - [`order`](../common_keys/common_keys.md#order)
 - [`precision`](../common_keys/common_keys.md#precision)
+- [`sciFormat`](../common_keys/common_keys.md#sci-format)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
 - [`trailingZeros`](../common_keys/common_keys.md#trailing-zeros)
