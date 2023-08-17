@@ -233,7 +233,8 @@ Extra Information:
 Context panes can be used to create a list of contexts which can be applied to a model.
 
 A context represents a prop applied to a set of [`category`](../all_keys/categories.md)s.
-    - `applyCategories`: Used to determine which categories this context can be applied to. 
+    - `applyCategories`: Determines which category items this context should be applied to.
+        - Note: Only category items from categories listed in `selectableCategories` (based on the selected prop) can be applied to this context.
     - `prop`: Used to determine which prop the current context is altering.
     - `value`: Used to determine the value of the prop for this context.
 
@@ -265,11 +266,11 @@ Option 2:
     - Create a `context` pane with a prop for percent price modification that can apply to the `sku` and `location` categories.
     - End users could then add a context (selecting price modification), setting the value to 10%, select the all button for the `location` category and finally select the `sku` they want to modify.
     - This would take the user ~10 clicks and would be much less frustrating to complete (and far easier to understand)
-    - On the API side, the designer would need to apply the context (percent price modification) to all the selected `sku`s/`location`s on an API command.
-        - In general, API designers should aim to keep this context in place and apply during API command execution.
-            - Think of this as a "sticky" context that is applied to all `sku`s/`location`s until the user chooses to remove it.
-        - There are also use cases where API designers might choose to apply the context to all `sku`s/`location`s, save their state and clear out the context pane after some command is executed.
-            - Think of this as a "one time" context that is applied to all `sku`s/`location`s and can not be removed.
+- On the API side, the designer would need to apply the context (percent price modification) to all the selected `sku`s/`location`s on an API command.
+    - In general, API designers should aim to keep this context in place and apply during API command execution.
+        - Think of this as a "sticky" context that is applied to the selected `sku`s/`location`s until the user chooses to remove it.
+    - There are also use cases where API designers might choose to apply the context to the selected `sku`s/`location`s, save their state and clear out the context pane after some command is executed.
+        - Think of this as a "one time" context that is applied to the selected `sku`s/`location`s and can not be removed.
 
 
 </details>
