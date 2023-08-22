@@ -61,7 +61,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         - Default: 'init'
 
     Returns:
-    
+
     - `output`:
         - Type: dict of dicts
         - What: A dict of dictionaries to mutate the current session given the current `session_data`
@@ -445,6 +445,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for the numeric input example",
                             "maxValue": 100,
                             "minValue": 0,
+                            "notation": "scientific",
+                            "notationDisplay": "x10^+",
                             "precision": 0,
                             "unit": "units",
                         },
@@ -1168,7 +1170,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Help for numeric prop example A",
                             "unit": "A units",
-                            "legendSciFormat": False,
+                            "legendNotation": "compact",
                             "legendMinLabel": "small",
                         },
                         "numericPropExampleB": {
@@ -1463,7 +1465,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Help for numeric prop example A",
                             "unit": "A units",
-                            "legendSciFormat": True,
+                            "legendNotation": "precision",
                             "legendPrecision": 5,
                         },
                         "numericPropExampleB": {
@@ -1472,7 +1474,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Help for numeric prop example B",
                             "unit": "B units",
-                            "legendSciFormat": True,
+                            "legendNotation": "scientific",
+                            "legendNotationDisplay": "x10^",
                         },
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
@@ -1530,7 +1533,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for numeric prop example A",
                             "precision": 2,
                             "unit": "A units",
-                            "legendSciFormat": True,
+                            "legendNotation": "precision",
                             "legendPrecision": 5,
                         },
                         "numericPropExampleB": {
@@ -1941,6 +1944,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "icon": "bs/BsInboxes",
                     "value": 100,
                     "precision": 4,
+                    "notation": "scientific",
+                    "notationDisplay": "E+",
                     "trailingZeros": True,
                     "unit": "units",
                 },
@@ -1948,6 +1953,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "A Big Number",
                     "icon": "bs/BsTruck",
                     "value": 10000000000000,
+                    "notation": "engineering",
+                    "notationDisplay": "x10^",
                     "precision": 0,
                     "unit": "units",
                 },
@@ -1958,7 +1965,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "precision": 2,
                     "unit": "$",
                     "unitPlacement": "before",
-                    "trailingZeros": False,
+                    "notation": "compact",
+                    "notationDisplay": "long",
+                    "trailingZeros": True,
                 },
             },
             "layout": {
