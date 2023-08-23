@@ -39,8 +39,8 @@ def get_panes_data(data_dir):
         if isinstance(data.get(key), dict):
             data[key]["layout"] = {
                 "type": "grid",
-                "numColumns": "auto",
-                "numRows": "auto",
+                "numColumns": max([i.get("column") for i in value]),
+                "numRows": max([i.get("row") for i in value]),
                 "data": {},
             }
             for i in value:

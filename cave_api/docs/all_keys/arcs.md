@@ -42,6 +42,7 @@ The structure of an `arcs` group looks as follows:
                 },
             },
             "lineBy": "solid",
+            "displayType": 'flat',
             "sizeByOptions": {
                 "customPropKey9": {"min": 0, "max": 50},
                 "customPropKey10": {"min": 0, "max": 40},
@@ -169,6 +170,7 @@ Key | Default | Description
 `data.customArcData*.height` | `1` | The height multiplier relative to the distance between two points for the apex of a `3d` (lineBy) arc. For example, a value of `0` would turn a `3d` (lineBy) arc into the equivalent to a `solid` (lineBy) arc.
 `data.customArcData*.name` | | A name for the arc flow that will be displayed as a title in the map modal.
 <a name="path">`data.customArcData*.path`</a> | | A list of coordinate points (`[<longitude>, <latitude>]`), such that every two consecutive coordinates represent an arc segment of a path to be rendered in the "**Map**" view. Additionally, a third position can be added to each coordinate (`[<longitude>, <latitude>, <altitude>]`), to visually represent altitude on the map.<br><br>Please note that `path` is not supported for `3d` arcs. If you need to create a "`3d` path", you can do so by joining multiple arcs which start and end coordinates match the segments of the intended path.<br><br>The use of `path` overrides any behavior resulting from the use of the following `data.customArcData*.` keys: `startLongitude`, `startLatitude`, `startAltitude`, `endLongitude`, `endLatitude`, and `endAltitude`.
+`data.customArcData*.displayType` | `'flat'` | The display type of the arc, either `'flat'` or `'3d'`. 3d arcs aren't supported when using path coordinates or geojson data. When using the globe projection, 3d arcs are automatically converted to flat arcs.
 `data.customArcData*.props`&swarhk;<br>`.customPropKey*` | | See [`customPropKey*`](../common_keys/props.md#customPropKey).
 `data.customArcData*.startAltitude` | | The altitude (in meters) for the source location in the "**Map**" view. It takes a float value.
 `data.customArcData*.startClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
