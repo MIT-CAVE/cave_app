@@ -7,9 +7,7 @@ Let's look inside the structure of `kpis`:
     "data": {
         "customKpi1": {
             "name": "A name to be displayed in the UI",
-            "numberFormat": {
-                "unit": "units",
-            },
+            "unit": "units",
             "type": "num",
             "icon": "fa/FaBox",
             "value": 100,
@@ -25,12 +23,19 @@ Let's look inside the structure of `kpis`:
 - [`allowModification`](../common_keys/common_keys.md#allowModification)
 - [`column`](../common_keys/common_keys.md#column)
 - [`data`](../common_keys/common_keys.md#data)
+- [`fallbackValue`](../common_keys/common_keys.md#fallback-value)
 - [`icon`](../common_keys/common_keys.md#icon)
 - [`layout`](../common_keys/layout.md)
+- [`locale`](../common_keys/common_keys.md#locale)
 - [`name`](../common_keys/common_keys.md#name)
-- [`numberFormat`](../common_keys/common_keys.md#number-format)
+- [`notation`](../common_keys/common_keys.md#notation)
+- [`notationDisplay`](../common_keys/common_keys.md#notation-display)
+- [`precision`](../common_keys/common_keys.md#precision)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
+- [`trailingZeros`](../common_keys/common_keys.md#trailing-zeros)
+- [`unit`](../common_keys/common_keys.md#unit)
+- [`unitPlacement`](../common_keys/common_keys.md#unit-placement)
 
 ## Special and custom keys
 Key | Default | Description
@@ -44,7 +49,7 @@ Key | Default | Description
 ## KPI `type`s and their `variant`s:
 
 ### `'head'`
-Allows users to place a header for an individual section, containing a title (via [`name`](common_keys.md#name)) and a [`help`](#help) message. the `mapKpi`, [`numberFormat`](../common_keys/common_keys.md#number-format), and `value` keys are ignored when used along this type.
+Allows users to place a header for an individual section, containing a title (via [`name`](common_keys.md#name)) and a [`help`](#help) message. The `mapKpi` and `value` keys are ignored when used along this type.
 #### Variants:
 >`'column'` (**default**): Acts as a header for a column of related KPI items.<br>
 `'row'`: Acts as a header for a row of related KPI items.<br>
@@ -53,7 +58,7 @@ Allows users to place a header for an individual section, containing a title (vi
 Displays a numeric value. All keys are valid to use with this type.
 
 ### `'text'`
-Displays a text string. The [`numberFormat`](../common_keys/common_keys.md#number-format) key is ignored when used along this type.
+Displays a text string.
 
 ## Example
 
@@ -78,50 +83,40 @@ Displays a text string. The [`numberFormat`](../common_keys/common_keys.md#numbe
             "value": 18,
             "icon": "bs/BsFillEmojiFrownFill",
             "mapKpi": True,
-            "numberFormat": {
-                "precision": 0,
-                "unit": "frowns",
-            },
+            "precision": 0,
+            "unit": "frowns",
         },
         "key2": {
             "name": "KPI Example 2",
-            "value": 32,
             "icon": "bs/BsFillEmojiSmileFill",
+            "value": 32,
             "mapKpi": True,
-            "numberFormat": {
-                "precision": 0,
-                "unit": "smiles",
-            },
+            "precision": 0,
+            "unit": "smiles",
         },
         "key3": {
             "name": "KPI Example 3",
             "icon": "bs/BsInboxes",
-            "numberFormat": {
-                "precision": 4,
-                "trailingZeros": True,
-                "unit": "units",
-            },
             "value": 100,
+            "precision": 4,
+            "trailingZeros": True,
+            "unit": "units",
         },
         "key4": {
             "name": "A Big Number",
             "icon": "bs/BsTruck",
             "value": 10000000000000,
-            "numberFormat": {
-                "precision": 0,
-                "unit": "units",
-            },
+            "precision": 0,
+            "unit": "units",
         },
         "key5": {
             "name": "A Really Big Number",
             "icon": "md/MdExpand",
             "value": 9007199254740991,
-            "numberFormat": {
-                "precision": 2,
-                "unit": "$",
-                "currency": True,
-                "trailingZeros": False,
-            },
+            "precision": 2,
+            "trailingZeros": False,
+            "unit": "$",
+            "unitPlacement": "before",
         },
     },
     "layout": {

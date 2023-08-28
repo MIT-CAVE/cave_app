@@ -33,10 +33,8 @@ Panes can be of different [`variant`](#pane-variant)s, so to keep the data struc
             "help": "Help for the numeric input example",
             "maxValue": 100,
             "minValue": 0,
-            "numberFormat": {
-                "precision": 0,
-                "unit": "units",
-            },
+            "precision": 0,
+            "unit": "units",
         },
         "numericSliderExample": {
             "name": "Numeric Slider Example",
@@ -301,10 +299,12 @@ Option 2:
 - [`layout`](../common_keys/common_keys.md#layout)
 - [`name`](../common_keys/common_keys.md#name)
 - [`order`](../common_keys/common_keys.md#order)
+- [`precision`](../common_keys/common_keys.md#precision)
 - [`prop > type`](../common_keys/common_keys.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
 - [`sendToClient`](../common_keys/common_keys.md#sendToClient)
+- [`unit`](../common_keys/common_keys.md#unit)
 - [`variant`](../common_keys/common_keys.md#variant)
 
 ## Special and custom keys
@@ -357,10 +357,8 @@ Key | Default | Description
                     "help": "Help for the numeric input example",
                     "maxValue": 100,
                     "minValue": 0,
-                    "numberFormat": {
-                        "precision": 0,
-                        "unit": "units",
-                    },
+                    "precision": 0,
+                    "unit": "units",
                 },
                 "numericSliderExample": {
                     "name": "Numeric Slider Example",

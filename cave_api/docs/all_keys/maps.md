@@ -119,7 +119,7 @@ Key | Default | Description
 `customMapKey.legendGroups.customLegendGroupKey*.nodes`&swarhk;<br>`.customNodeType*.colorBy` | `False` | The prop to used to color this node layer
 `customMapKey.legendGroups.customLegendGroupKey*.nodes`&swarhk;<br>`.customNodeType*.sizeBy` | `False` | The prop to used to size this node layer
 `customMapKey.legendGroups.customLegendGroupKey*.nodes`&swarhk;<br>`.customNodeType*.allowGrouping` | `False` | A node specific key to determine if this node layer is able to be auto grouped.
-`customMapKey.legendGroups.customLegendGroupKey*.nodes`&swarhk;<br>`.customNodeType*.group` | `False` | Group the nodes in this layer (to use this you must set `allowGrouping=true`)
+<a name="node-group">`customMapKey.legendGroups.customLegendGroupKey*.nodes`&swarhk;<br>`.customNodeType*.group`</a> | `False` | Group the nodes in this layer (to use this you must set `allowGrouping=true`)
 `customMapKey.legendGroups.customLegendGroupKey*.nodes`&swarhk;<br>`.customNodeType*.groupCalcByColor` | `'mode'`<br><br>or<br><br> `'count'`<br>(only for [`'num'` prop](../common_keys/props.md#num)s) | The aggregation function to use on the prop specified in `colorBy`. See [Aggregation functions](#aggregation-functions).
 `customMapKey.legendGroups.customLegendGroupKey*.nodes`&swarhk;<br>`.customNodeType*.groupCalcBySize` | `'count'` | The aggregation function to use on the prop specified in `sizeBy`. Only [`'num'` prop](../common_keys/props.md#num)s are supported for this setting. See [Numeric values](#numeric-values).
 

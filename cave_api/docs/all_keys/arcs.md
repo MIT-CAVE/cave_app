@@ -54,17 +54,13 @@ The structure of an `arcs` group looks as follows:
                     "name": "Numeric Prop Example A",
                     "type": "num",
                     "help": "Help for numeric prop example A",
-                    "numberFormat": {
-                        "unit": "A units",
-                    },
+                    "unit": "A units",
                 },
                 "customPropKey10": {
                     "name": "Numeric Prop Example B",
                     "type": "num",
                     "help": "Help for numeric prop example B",
-                    "numberFormat": {
-                        "unit": "B units",
-                    },
+                    "unit": "B units",
                 },
                 "customPropKey8": {
                     "name": "Example Categorical Prop",
@@ -148,7 +144,6 @@ The structure of an `arcs` group looks as follows:
 - [`max`](../common_keys/common_keys.md#color-by-max)
 - [`min`](../common_keys/common_keys.md#color-by-min)
 - [`name`](../common_keys/common_keys.md#name)
-- [`numberFormat`](../common_keys/common_keys.md#number-format)
 - [`prop > type`](../common_keys/props.md#prop-type)
 - [`props`](../common_keys/common_keys.md#props-short)
 - [`sendToApi`](../common_keys/common_keys.md#sendToApi)
@@ -157,6 +152,7 @@ The structure of an `arcs` group looks as follows:
 - [`startSize`](../common_keys/common_keys.md#startSize)
 - [`startGradientColor`](../common_keys/common_keys.md#start-gradient)
 - [`timeValues`](../common_keys/time_value.md)
+- [`unit`](../common_keys/common_keys.md#unit)
 - [`value`](../common_keys/props.md#value)
 - [`variant`](../common_keys/props.md#variant)
 
@@ -246,18 +242,14 @@ Key | Default | Description
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example A",
-                    "numberFormat": {
-                        "unit": "A units",
-                    },
+                    "unit": "A units",
                 },
                 "numericPropExampleB": {
                     "name": "Numeric Prop Example B",
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example B",
-                    "numberFormat": {
-                        "unit": "B units",
-                    },
+                    "unit": "B units",
                 },
                 "selectorPropForColor": {
                     "name": "Example Categorical Prop",
@@ -345,18 +337,14 @@ Key | Default | Description
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example A",
-                    "numberFormat": {
-                        "unit": "A units",
-                    },
+                    "unit": "A units",
                 },
                 "numericPropExampleB": {
                     "name": "Numeric Prop Example B",
                     "type": "num",
                     "enabled": True,
                     "help": "Help for numeric prop example B",
-                    "numberFormat": {
-                        "unit": "B units",
-                    },
+                    "unit": "B units",
                 },
                 "selectorPropForColor": {
                     "name": "Example Categorical Prop",
