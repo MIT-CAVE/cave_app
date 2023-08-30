@@ -293,7 +293,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             "data": {
-                "appBarId": "dash1",
                 "session": {
                     "icon": "md/MdApi",
                     "type": "pane",

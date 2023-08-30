@@ -1,1 +1,1 @@
-from .static_model.api import execute_command
+from .examples.ex_ae_settings import execute_command
