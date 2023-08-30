@@ -1,1 +1,1 @@
-from .examples.getting_started.api_command_with_notifications import execute_command
+from .examples.getting_started.map_with_custom_tiles_and_custom_fog import execute_command
