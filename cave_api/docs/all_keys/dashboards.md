@@ -56,8 +56,9 @@ Key | Default | Description
 <a name="level2">`customDashKey.dashboardLayout.*.*.level2`</a> | | The second-level aggregation selected from the "**Sub Group**" drop-down menu of a chart in a dashboard view.
 `customDashKey.dashboardLayout.*.*.lockedLayout` | `False` | A boolean to indicate if the layout on this chart can be changed by users.
 `customDashKey.dashboardLayout.*.*.statistic` | | The statistic selected from the "**Statistic**" drop-down menu of a chart in a dashboard view if the chart `type='stats'`
-`customDashKey.dashboardLayout.*.*.type` | `'stats'` | This has two options: `'stats'` or `'kpis'`
+`customDashKey.dashboardLayout.*.*.type` | `'stats'` | One of `'stats'`, `'maps'`, or `'kpis'`
 `customDashKey.lockedLayout` | `False` | If `True`, prevents users from modifying the layout of a dashboard view by adding or removing charts.
+`customDashKey.dashboardLayout.*.*.mapId` | | The map key to display in the chart item if `type='maps'`.
 
 ## Example
 

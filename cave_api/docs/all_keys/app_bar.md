@@ -30,28 +30,17 @@ The structure of the `appBar` group looks as follows:
             "bar": "upperLeft",
             "order": 2,
         },
-<<<<<<< HEAD
         "customPropsPane": {
             "icon": "fa/FaCogs",
-=======
-        "customPropsPane1": {
-            "icon": "FaCogs",
->>>>>>> 2.0.0-dev
             "type": "pane",
             "bar": "upperLeft",
             "order": 3,
         },
         "customMap1": {
             "type": "map",
-<<<<<<< HEAD
             "icon": "fa/FaMapMarkedAlt",
-            "bar": "lower",
-            "order": 1,
-=======
-            "icon": "FaMapMarkedAlt",
             "bar": "lowerLeft",
-            "order": 0,
->>>>>>> 2.0.0-dev
+            "order": 1,
         },
         "customDash1": {
             "type": "stats",
@@ -62,34 +51,9 @@ The structure of the `appBar` group looks as follows:
         },
         "customKpi": {
             "type": "kpi",
-<<<<<<< HEAD
             "icon": "md/MdSpeed",
-            "bar": "lower",
-            "order": 3,
-=======
-            "icon": "MdSpeed",
             "bar": "lowerLeft",
-            "order": 2,
-        },
-        "customModal": {
-            "type": "modal",
-            "icon": "ImCogs",
-            "bar": "upperRight",
-            "order": 0,
-        },
-        "customMap2": {
-            "type": "map",
-            "icon": "FaMapMarkedAlt",
-            "bar": "lowerRight",
-            "order": 0,
-        },
-        "customDash2": {
-            "type": "stats",
-            "icon": "MdInsertChart",
-            "name": "Dashboard 2",
-            "bar": "lowerRight",
-            "order": 1,
->>>>>>> 2.0.0-dev
+            "order": 3,
         },
         # As many custom pane objects as needed
     },
@@ -107,13 +71,8 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customMap1": {
     "type": "map",
-<<<<<<< HEAD
     "icon": "fa/FaMapMarkedAlt",
-    "bar": "lower",
-=======
-    "icon": "FaMapMarkedAlt",
     "bar": "lowerLeft",
->>>>>>> 2.0.0-dev
     "order": 1,
 },
 ```
@@ -139,13 +98,8 @@ In general, the `cave_app` has zero to many `map` views, zero to many `stats` vi
 ```py
 "customKpi": {
     "type": "kpi",
-<<<<<<< HEAD
     "icon": "md/MdSpeed",
-    "bar": "lower",
-=======
-    "icon": "MdSpeed",
     "bar": "lowerLeft",
->>>>>>> 2.0.0-dev
     "order": 3,
 },
 ```
@@ -203,9 +157,9 @@ Similar to custom panes, modals can be used to place UI controls and buttons to 
 ## Special and custom keys
 Key | Default | Description
 --- | ------- | -----------
-`appBarId` | Your first map view | The id (as a string) of the selected view. This would be the key of a `dashboard`, `map` or `kpi` view.
+`appBarId` | Your first map view | The id (as a string) of the selected view. This would be the key of a `dashboard` view.
 `customObjKey*` | Required | A custom key wrapper for the custom pane.
-`customObjKey*.type` | Required | The type of object shown - takes one of these values: `map`, `stats`, `kpi`, `pane`, `modal`, or `button`. The type given changes what other props can be given to the object.
+`customObjKey*.type` | Required | The type of object shown - takes one of these values: `stats`, `pane`, `modal`, or `button`. The type given changes what other props can be given to the object.
 `customObjKey*.bar` | Required | The section of the `appBar` to display the object in. Accepts either `upperLeft`, `lowerLeft`, `upperRight`, or `lowerRight`. If no object is specified as `upperRight` or `lowerRight`, a right bar will not be created. Similarly, if no object is specified as `upperLeft` or `lowerLeft`, a left bar will not be created. The use of both an upper and a lower bar section is not required, and any object can be shown in any section.
 `customButtonKey.apiCommand`<br> | | A string to pass to the API when the button is pressed.
 
@@ -272,18 +226,6 @@ Key | Default | Description
             "order": 6,
             "bar": "upperLeft",
         },
-        "map1": {
-            "type": "map",
-<<<<<<< HEAD
-            "icon": "fa/FaMapMarkedAlt",
-            "bar": "lower",
-            "order": 1,
-=======
-            "icon": "FaMapMarkedAlt",
-            "bar": "lowerLeft",
-            "order": 0,
->>>>>>> 2.0.0-dev
-        },
         "dash1": {
             "type": "stats",
             "icon": "md/MdInsertChart",
@@ -293,34 +235,28 @@ Key | Default | Description
         },
         "kpi1": {
             "type": "kpi",
-<<<<<<< HEAD
             "icon": "md/MdSpeed",
-            "bar": "lower",
-            "order": 3,
-=======
-            "icon": "MdSpeed",
             "bar": "lowerLeft",
             "order": 2,
         },
         "customModal": {
-            "icon": "ImCogs",
+            "icon": "im/ImCogs",
             "type": "modal",
             "bar": "upperRight",
             "order": 0,
         },
         "map2": {
             "type": "map",
-            "icon": "FaMapMarkedAlt",
+            "icon": "fa/FaMapMarkedAlt",
             "bar": "lowerRight",
             "order": 0,
         },
         "dash2": {
             "type": "stats",
-            "icon": "MdInsertChart",
+            "icon": "md/MdInsertChart",
             "name": "Dashboard 1",
             "order": 1,
             "bar": "lowerRight",
->>>>>>> 2.0.0-dev
         },
     }
 },

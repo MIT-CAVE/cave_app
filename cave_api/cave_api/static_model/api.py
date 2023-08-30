@@ -72,14 +72,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "allowModification": False,
             "data": {
                 "demo": {
-                    "map2": {
-                        "show": False,
-                    },
                     "map1": {
-                        "scrollSpeed": 2,
+                        "scrollSpeed": 0.1,
                     },
                     "dash1": {
-                        "displayTime": 1,
+                        "displayTime": 30,
                     },
                 },
                 "sync": {
@@ -346,18 +343,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "order": 6,
                     "bar": "upperLeft",
                 },
-                "map1": {
-                    "type": "map",
-                    "icon": "fa/FaMapMarkedAlt",
-                    "bar": "lowerLeft",
-                    "order": 0,
-                },
-                "map2": {
-                    "type": "map",
-                    "icon": "fa/FaMapMarked",
-                    "bar": "lowerLeft",
-                    "order": 1,
-                },
                 "dash1": {
                     "type": "stats",
                     "icon": "md/MdInsertChart",
@@ -369,12 +354,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "icon": "md/MdInsertChartOutlined",
                     "order": 2,
                     "bar": "lowerLeft",
-                },
-                "kpi1": {
-                    "type": "kpi",
-                    "icon": "md/MdSpeed",
-                    "bar": "lowerLeft",
-                    "order": 2,
                 },
                 "exampleModal": {
                     "icon": "md/MdInfo",
@@ -855,11 +834,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "statistic": "numericStatExampleA",
                         },
                         {
-                            "type": "kpis",
-                            "chart": "Line",
-                            "grouping": "Sum",
-                            "sessions": [],
-                            "kpi": ["key1", "key2"],
+                            "type": "maps",
+                            "mapId": "map1"
                         },
                         {
                             "chart": "Bar",
@@ -918,6 +894,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "maps": {
             "data": {
                 "map1": {
+                    "name": "Example Map 1",
                     "currentStyle": "watercolor",
                     "currentProjection": "globe",
                     "defaultViewport": {
@@ -1969,6 +1946,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "notationDisplay": "long",
                     "trailingZeros": True,
                 },
+                 "key6": {
+                    "name": "A Decent Big Number",
+                    "icon": "md/MdExpand",
+                    "value": 199254740991,
+                    "precision": 2,
+                    "unit": "$",
+                    "unitPlacement": "before",
+                    "notation": "compact",
+                    "notationDisplay": "long",
+                    "trailingZeros": True,
+                },
             },
             "layout": {
                 "type": "grid",
@@ -2016,6 +2004,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "itemId": "key3",
                         "column": 2,
                         "row": 3,
+                    },
+                    "col1Row5": {
+                        "type": "item",
+                        "itemId": "key6",
+                        "column": 1,
+                        "row": 5,
                     },
                 },
             },
