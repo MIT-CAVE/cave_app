@@ -1,1 +1,1 @@
-from .examples.ex_ae_settings import execute_command
+from .examples.ex_aa_api_command import execute_command
