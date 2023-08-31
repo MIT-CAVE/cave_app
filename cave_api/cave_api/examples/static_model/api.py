@@ -1906,7 +1906,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "value": 18,
                     "precision": 0,
                     "unit": "frowns",
-                    "mapKpi": True,
                 },
                 "key2": {
                     "name": "KPI Example 2",
@@ -1914,7 +1913,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "value": 32,
                     "precision": 0,
                     "unit": "smiles",
-                    "mapKpi": True,
                 },
                 "key3": {
                     "name": "KPI Example 3",

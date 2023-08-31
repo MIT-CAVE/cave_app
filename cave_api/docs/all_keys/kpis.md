@@ -11,7 +11,6 @@ Let's look inside the structure of `kpis`:
             "type": "num",
             "icon": "fa/FaBox",
             "value": 100,
-            "mapKpi": True,
         },
         # As many custom KPIs as needed
     },
@@ -41,7 +40,6 @@ Let's look inside the structure of `kpis`:
 Key | Default | Description
 --- | ------- | -----------
 `customKpi*` | Required | A custom key wrapper for the KPI data.
-`customKpi*.mapKpi` | `False` | The `mapKpi` flag allows designers to specify up to six parameters that are displayed on a permanent grid in the "**Map**" view. The grid layout (rows *x* columns) changes with the number of parameters present in the data, scaling up to 2 rows and 3 columns.
 `customKpi*.type` | `'num'` | As a direct child of `customKpi*`, the `type` key defines the UI construct used to render the KPI and restricts the set of key-value pairs that can be used with this type.
 `customKpi*.value` | | The actual value of the KPI.
 <a name="variant">`customKpi*.variant`</a> | | Used to modify the UI for a given KPI `type`. The presentation to the end user changes, but the `value`s should remain with the same structure. For example, you can modify the appearance of a `'head'` KPI in terms of the orientation of its related items (`'column'` or `'row'`).
@@ -82,7 +80,6 @@ Displays a text string.
             "name": "KPI Example 1",
             "value": 18,
             "icon": "bs/BsFillEmojiFrownFill",
-            "mapKpi": True,
             "precision": 0,
             "unit": "frowns",
         },
@@ -90,7 +87,6 @@ Displays a text string.
             "name": "KPI Example 2",
             "icon": "bs/BsFillEmojiSmileFill",
             "value": 32,
-            "mapKpi": True,
             "precision": 0,
             "unit": "smiles",
         },
