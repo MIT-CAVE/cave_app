@@ -1,1 +1,1 @@
-from .static_model.api import execute_command
+from .examples.getting_started.map_with_custom_tiles_and_custom_fog import execute_command

@@ -898,9 +898,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "currentStyle": "watercolor",
                     "currentProjection": "globe",
                     "defaultViewport": {
-                        "longitude": -75.44766721108091,
-                        "latitude": 40.34530681636297,
-                        "zoom": 4.657916626867326,
+                        "longitude": -75.447,
+                        "latitude": 40.345,
+                        "zoom": 4.66,
                         "pitch": 0,
                         "bearing": 0,
                         "height": 1287,
@@ -1005,9 +1005,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "map2": {
                     "defaultViewport": {
-                        "longitude": -75.44766721108091,
-                        "latitude": 40.34530681636297,
-                        "zoom": 4.657916626867326,
+                        "longitude": -75.447,
+                        "latitude": 40.345,
+                        "zoom": 4.66,
                         "pitch": 0,
                         "bearing": 0,
                         "height": 1287,
