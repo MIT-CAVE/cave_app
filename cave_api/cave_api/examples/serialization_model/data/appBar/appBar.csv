@@ -1,11 +1,11 @@
 id,icon,type,bar,apiCommand,order,color
-session,MdApi,pane,upper,,0,
-appSettings,MdOutlineSettings,pane,upper,,1,
-buttonSolve,BsLightningFill,button,upper,solve,2,"{""dark"": ""rgb(178, 179, 55)"", ""light"": ""rgb(79, 79, 24)""}"
-resetButton,MdSync,button,upper,reset,2,"{""dark"": ""rgb(255, 101, 101)"", ""light"": ""rgb(212, 0, 0)""}"
-examplePropsPane,FaCogs,pane,upper,,3,
-context,BsInboxes,pane,upper,,4,
-filter,FaFilter,pane,upper,,5,
-map1,FaMapMarkedAlt,map,lower,,1,
-dash1,MdInsertChart,stats,lower,,2,
-kpi1,MdSpeed,kpi,lower,,3,
+session,MdApi,pane,upperLeft,,0,
+appSettings,MdOutlineSettings,pane,upperLeft,,1,
+buttonSolve,BsLightningFill,button,upperLeft,solve,2,"{""dark"": ""rgb(178, 179, 55)"", ""light"": ""rgb(79, 79, 24)""}"
+resetButton,MdSync,button,upperLeft,reset,2,"{""dark"": ""rgb(255, 101, 101)"", ""light"": ""rgb(212, 0, 0)""}"
+examplePropsPane,FaCogs,pane,upperLeft,,3,
+context,BsInboxes,pane,upperLeft,,4,
+filter,FaFilter,pane,upperLeft,,5,
+map1,FaMapMarkedAlt,map,lowerLeft,,1,
+dash1,MdInsertChart,stats,lowerLeft,,2,
+kpi1,MdSpeed,kpi,lowerLeft,,3,

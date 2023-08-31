@@ -73,7 +73,7 @@ As an example of how to do this, lets add a flag button to the static model that
                 "icon": "md/MdFlag",
                 "apiCommand": "myCommand",
                 "type": "button",
-                "bar": "upper",
+                "bar": "upperRight",
                 "order":7,
             }
             ```
