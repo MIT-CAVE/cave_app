@@ -1297,8 +1297,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "arc1": {
                     "geoJsonValue": "DUBL-DALY (ROUTE 11/12)",
-                    "startClick": 800,
-                    "endClick": 1600,
                     "type": "T1",
                     "category": {
                         "location": ["locCaOn", "locUsIn"],
@@ -1321,8 +1319,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "startLongitude": -86.18,
                     "endLatitude": 42.89,
                     "endLongitude": -85.68,
-                    "startClick": 1600,
-                    "endClick": 2000,
                     "type": "T2",
                     "category": {
                         "location": ["locUsMi", "locUsIn"],
@@ -1345,8 +1341,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "startLongitude": -86.18,
                     "endLatitude": 28.49,
                     "endLongitude": -81.56,
-                    "startClick": 1600,
-                    "endClick": 2000,
                     "type": "T2",
                     "category": {
                         "location": ["locUsFl", "locUsIn"],
@@ -1369,8 +1363,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "startLongitude": -86.18,
                     "endLatitude": 42.361176,
                     "endLongitude": -71.084707,
-                    "startClick": 1600,
-                    "endClick": 2000,
                     "type": "T2",
                     "category": {
                         "location": ["locUsMa", "locUsIn"],

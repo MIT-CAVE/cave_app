@@ -9,8 +9,6 @@ specified_keys = {
         "optional_keys": [
             "startAltitude",
             "endAltitude",
-            "startClick",
-            "endClick",
             "height",
             "lineBy",
             "path",

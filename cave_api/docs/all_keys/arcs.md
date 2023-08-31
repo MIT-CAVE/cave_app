@@ -103,8 +103,6 @@ The structure of an `arcs` group looks as follows:
             "startLongitude": -79.63,
             "endLatitude": 39.82,
             "endLongitude": -86.18,
-            "startClick": 800,
-            "endClick": 1600,
             "type": "T1",
             "category": {
                 "customLocation": ["locCaOn", "locUsIn"],
@@ -163,7 +161,6 @@ Key | Default | Description
 `data.customArcData*.category`&swarhk;<br>`.customDataChunck*` | | See [`customDataChunck*`](../all_keys/categories.md#customDataChunck).
 `data.customArcData*.category`&swarhk;<br>`.customDataChunck*.customDataKey*` | | See [`customDataKey*`](../all_keys/categories.md#customDataKey).
 `data.customArcData*.endAltitude` | | The altitude (in meters) for the target location in the "**Map**" view. It takes a float value.
-`data.customArcData*.endClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
 `data.customArcData*.endLatitude` | Required | The latitude for the target location in the "**Map**" view. It takes a float value.
 `data.customArcData*.endLongitude` | Required | The longitude for the target location in the "**Map**" view. It takes a float value.
 `data.customArcData*.geoJsonValue` | | To be used only in conjunction with `types.customArcType*.geoJson`. The identifier for this arc as identified in the specified geoJson object. This identifier is matched to the `types.customArcType*.geoJson.geoJsonProp` as it relates to each geoJson object in the file specified at `types.customArcType*.geoJson.geoJsonLayer`.
@@ -173,7 +170,6 @@ Key | Default | Description
 `data.customArcData*.displayType` | `'flat'` | The display type of the arc, either `'flat'` or `'3d'`. 3d arcs aren't supported when using path coordinates or geojson data. When using the globe projection, 3d arcs are automatically converted to flat arcs.
 `data.customArcData*.props`&swarhk;<br>`.customPropKey*` | | See [`customPropKey*`](../common_keys/props.md#customPropKey).
 `data.customArcData*.startAltitude` | | The altitude (in meters) for the source location in the "**Map**" view. It takes a float value.
-`data.customArcData*.startClick`<br>(*Under construction*) | | Related to the animation frame rate of an arc layer. It takes an integer value.
 `data.customArcData*.startLatitude` | Required | The latitude for the source location in the "**Map**" view. It takes a float value.
 `data.customArcData*.startLongitude` | Required | The longitude for the source location in the "**Map**" view. It takes a float value.
 `data.customArcData*.tilt` | `0` | Expressed in degrees (-90&deg; to 90&deg;), this feature enables you to tilt the arc sideways when dealing with multiple arcs that share the same source and target locations in the "**Map**" view.
@@ -392,8 +388,6 @@ Key | Default | Description
             "startLongitude": -79.63,
             "endLatitude": 39.82,
             "endLongitude": -86.18,
-            "startClick": 800,
-            "endClick": 1600,
             "type": "T1",
             "category": {
                 "location": ["locCaOn", "locUsIn"],
@@ -416,8 +410,6 @@ Key | Default | Description
             "startLongitude": -86.18,
             "endLatitude": 42.89,
             "endLongitude": -85.68,
-            "startClick": 1600,
-            "endClick": 2000,
             "type": "T2",
             "category": {
                 "location": ["locUsMi", "locUsIn"],
@@ -440,8 +432,6 @@ Key | Default | Description
             "startLongitude": -86.18,
             "endLatitude": 28.49,
             "endLongitude": -81.56,
-            "startClick": 1600,
-            "endClick": 2000,
             "type": "T2",
             "category": {
                 "location": ["locUsFl", "locUsIn"],
@@ -464,8 +454,6 @@ Key | Default | Description
             "startLongitude": -86.18,
             "endLatitude": 42.361176,
             "endLongitude": -71.084707,
-            "startClick": 1600,
-            "endClick": 2000,
             "type": "T2",
             "category": {
                 "location": ["locUsMa", "locUsIn"],
