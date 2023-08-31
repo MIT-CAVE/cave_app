@@ -92,7 +92,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "name": "Page Selection",
                         "showToggle": True,
                         "value": False,
-                        "data": {"ps1": ["appBar", "data", "appBarId"]},
+                        "data": {"ps1": ["appBar", "appBarId"]},
                     },
                     "mapLayers": {
                         "name": "Map Layers",
@@ -289,8 +289,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "appBar": {
+            "appBarId": "dash1",
             "data": {
-                "appBarId": "dash1",
                 "session": {
                     "icon": "md/MdApi",
                     "type": "pane",
@@ -1306,7 +1306,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "props": {
                         "numericPropExampleA": {
-                            "value": 50,
+                            "value": {"timeObject": True, "value":[50, 30, 0]},
                         },
                         "numericPropExampleB": {
                             "value": 40,

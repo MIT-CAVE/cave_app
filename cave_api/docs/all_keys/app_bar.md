@@ -4,8 +4,8 @@ The `appBar` key allows API designers to create a custom bar located on the left
 The structure of the `appBar` group looks as follows:
 ```py
 'appBar': {
+    "appBarId":"customDash1",
     'data': {
-        "appBarId":"customDash1",
         "customSessionPane": {
             "icon": "md/MdApi",
             "type": "pane",
@@ -170,8 +170,8 @@ Key | Default | Description
 
 ```py
 "appBar": {
+    "appBarId":"dash1",
     "data": {
-        "appBarId":"dash1",
         "session": {
             "icon": "md/MdApi",
             "type": "pane",
