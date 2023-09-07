@@ -203,91 +203,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "timeUnits": "Century",
             },
         },
-        "categories": {
-            "allowModification": False,
-            "data": {
-                "location": {
-                    "data": {
-                        "locUsMi": {
-                            "region": "North America",
-                            "country": "USA",
-                            "state": "Michigan",
-                        },
-                        "locUsMa": {
-                            "region": "North America",
-                            "country": "USA",
-                            "state": "Massachusetts",
-                        },
-                        "locUsFl": {
-                            "region": "North America",
-                            "country": "USA",
-                            "state": "Florida",
-                        },
-                        "locUsIn": {
-                            "region": "North America",
-                            "country": "USA",
-                            "state": "Indiana",
-                        },
-                        "locCaOn": {
-                            "region": "North America",
-                            "country": "Canada",
-                            "state": "Ontario",
-                        },
-                    },
-                    "name": "Locations",
-                    "nestedStructure": {
-                        "region": {
-                            "name": "Regions",
-                            "order": 1,
-                        },
-                        "country": {
-                            "name": "Countries",
-                            "ordering": ["USA", "Canada"],
-                            "order": 2,
-                        },
-                        "state": {
-                            "name": "States",
-                            "order": 3,
-                        },
-                    },
-                    "layoutDirection": "horizontal",
-                    "grouping": "Solo",
-                    "order": 1,
-                },
-                "sku": {
-                    "data": {
-                        "SKU1": {
-                            "type": "Type A",
-                            "size": "Size A",
-                            "sku": "SKU1",
-                        },
-                        "SKU2": {
-                            "type": "Type A",
-                            "size": "Size B",
-                            "sku": "SKU2",
-                        },
-                    },
-                    "name": "SKUs",
-                    "nestedStructure": {
-                        "type": {
-                            "name": "Types",
-                            "order": 1,
-                        },
-                        "size": {
-                            "name": "Sizing",
-                            "ordering": ["Size B", "Size A"],
-                            "order": 2,
-                        },
-                        "sku": {
-                            "name": "SKU",
-                            "order": 3,
-                        },
-                    },
-                    "layoutDirection": "horizontal",
-                    "order": 2,
-                },
-            },
-        },
         "appBar": {
             "appBarId": "dash1",
             "data": {
@@ -309,7 +224,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "dark": "rgb(255, 101, 101)",
                         "light": "rgb(212, 0, 0)",
                     },
-                    "apiCommand": "reset",
+                    "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
                     "order": 2,
@@ -793,35 +708,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                 },
-                "filter": {
-                    "name": "Filter",
-                    "variant": "filter",
-                },
-                "context1": {
-                    "name": "Context Pane",
-                    "variant": "context",
-                    "props": {
-                        "numericContextProp": {
-                            "name": "Numeric Context Prop",
-                            "type": "num",
-                            "value": 100,
-                            "enabled": True,
-                            "help": "Numeric Context Prop Help",
-                            "label": "%",
-                            "variant": "slider",
-                            "maxValue": 500,
-                            "minValue": 0,
-                            "selectableCategories": ["location", "sku"],
-                        },
-                    },
-                    "data": {
-                        "context1": {
-                            "prop": "numericContextProp",
-                            "value": 110,
-                            "applyCategories": {"location": ["locUsMi"]},
-                        }
-                    },
-                },
             },
         },
         "dashboards": {
@@ -831,7 +717,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         {
                             "chart": "Bar",
                             "grouping": "Average",
-                            "statistic": "numericStatExampleA",
                         },
                         {
                             "type": "maps",
@@ -839,19 +724,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         {
                             "chart": "Bar",
-                            "level": "size",
-                            "category": "sku",
+                            "level": ["size"],
+                            "category": ["sku"],
                             "grouping": "Sum",
-                            "statistic": "numericExampleCalculationStat",
-                        },
-                        {
-                            "chart": "Stacked Waterfall",
-                            "grouping": "Sum",
-                            "statistic": "numericStatExampleA",
-                            "category": "location",
-                            "level": "state",
-                            "category2": "sku",
-                            "level2": "sku",
+                            "statistic": ["locationGroup", "numericExampleCalculationStat"],
                         },
                     ],
                     "lockedLayout": False,
@@ -861,30 +737,28 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         {
                             "chart": "Bar",
                             "grouping": "Average",
-                            "statistic": "numericStatExampleB",
+                            "statistic": ["locationGroup", "numericStatExampleB"],
                         },
                         {
-                            "type": "kpis",
+                            "type": "globalOutputs",
                             "chart": "Bar",
                             "grouping": "Sum",
                             "sessions": [],
-                            "kpi": ["key1", "key2"],
+                            "globalOutput": ["key1", "key2"],
                         },
                         {
                             "chart": "Box Plot",
-                            "level": "size",
-                            "category": "sku",
+                            "level": ["size"],
+                            "category": ["sku"],
                             "grouping": "Average",
-                            "statistic": "numericExampleCalculationStat",
+                            "statistic": ["locationGroup", "numericExampleCalculationStat"],
                         },
                         {
                             "chart": "Cumulative Line",
                             "grouping": "Sum",
-                            "statistic": "numericStatExampleB",
-                            "category": "location",
-                            "level": "state",
-                            "category2": "sku",
-                            "level2": "sku",
+                            "statistic": ["locationGroup", "numericStatExampleB"],
+                            "category": ["location", "sku"],
+                            "level": ["state", "sku"],
                         },
                     ],
                     "lockedLayout": False,
@@ -949,9 +823,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupScaleWithZoom": True,
                                     # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
-                                    # # Allow group matching only when a category value matches
-                                    # "groupMatchCategory": "location",
-                                    # "groupMatchCategoryLevel": "state",
                                 }
                             },
                             "arcs": {
@@ -977,9 +848,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupScaleWithZoom": True,
                                     # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
-                                    # # Allow group matching only when a category value matches
-                                    # "groupMatchCategory": "location",
-                                    # "groupMatchCategoryLevel": "state",
                                 }
                             },
                             "arcs": {
@@ -1298,10 +1166,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "arc1": {
                     "geoJsonValue": "DUBL-DALY (ROUTE 11/12)",
                     "type": "T1",
-                    "category": {
-                        "location": ["locCaOn", "locUsIn"],
-                        "sku": ["SKU2", "SKU1"],
-                    },
                     "props": {
                         "numericPropExampleA": {
                             "value": {"timeObject": True, "value":[50, 30, 0]},
@@ -1320,10 +1184,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "endLatitude": 42.89,
                     "endLongitude": -85.68,
                     "type": "T2",
-                    "category": {
-                        "location": ["locUsMi", "locUsIn"],
-                        "sku": ["SKU2", "SKU1"],
-                    },
                     "props": {
                         "numericPropExampleA": {
                             "value": 30,
@@ -1342,10 +1202,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "endLatitude": 28.49,
                     "endLongitude": -81.56,
                     "type": "T2",
-                    "category": {
-                        "location": ["locUsFl", "locUsIn"],
-                        "sku": ["SKU2", "SKU1"],
-                    },
                     "props": {
                         "numericPropExampleA": {
                             "value": 30,
@@ -1364,10 +1220,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "endLatitude": 42.361176,
                     "endLongitude": -71.084707,
                     "type": "T2",
-                    "category": {
-                        "location": ["locUsMa", "locUsIn"],
-                        "sku": ["SKU2", "SKU1"],
-                    },
                     "props": {
                         "numericPropExampleA": {
                             "value": 30,
@@ -1533,10 +1385,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "longitude": -79.63,
                     "type": "nodeTypeA",
-                    "category": {
-                        "location": ["locCaOn"],
-                        "sku": ["SKU2", "SKU1"],
-                    },
                     "props": {
                         "numericPropExampleA": {
                             "value": 100,
@@ -1553,10 +1401,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "latitude": 39.82,
                     "longitude": -86.18,
                     "type": "nodeTypeA",
-                    "category": {
-                        "location": ["locUsIn"],
-                        "sku": ["SKU2", "SKU1"],
-                    },
                     "props": {
                         "numericPropExampleA": {
                             "value": 80,
@@ -1573,10 +1417,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "latitude": 42.89,
                     "longitude": -85.68,
                     "type": "nodeTypeB",
-                    "category": {
-                        "location": ["locUsMi"],
-                        "sku": ["SKU2", "SKU1"],
-                    },
                     "props": {
                         "numericPropExampleA": {
                             "value": 500,
@@ -1593,10 +1433,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "latitude": 28.49,
                     "longitude": -81.56,
                     "type": "nodeTypeB",
-                    "category": {
-                        "location": ["locUsFl"],
-                        "sku": ["SKU2", "SKU1"],
-                    },
                     "props": {
                         "numericPropExampleA": {
                             "value": 1000,
@@ -1613,10 +1449,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "latitude": 42.361176,
                     "longitude": -71.084707,
                     "type": "nodeTypeB",
-                    "category": {
-                        "location": ["locUsMa"],
-                        "sku": ["SKU2", "SKU1"],
-                    },
                     "props": {
                         "numericPropExampleA": {
                             "value": 1000,
@@ -1712,7 +1544,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Ontario, Canada",
                     "geoJsonValue": "CA.ON",
                     "type": "state",
-                    "category": {"location": ["locCaOn"]},
                     "props": {
                         "numericPropExampleC": {
                             "timeValues": {
@@ -1727,7 +1558,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Michigan, USA",
                     "geoJsonValue": "US.MI",
                     "type": "state",
-                    "category": {"location": ["locUsMi"]},
                     "props": {
                         "numericPropExampleC": {
                             "value": 300,
@@ -1741,7 +1571,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Massachusetts, USA",
                     "geoJsonValue": "US.MA",
                     "type": "state",
-                    "category": {"location": ["locUsMi"]},
                     "props": {
                         "numericPropExampleC": {
                             "value": 250,
@@ -1755,7 +1584,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Florida, USA",
                     "geoJsonValue": "US.FL",
                     "type": "state",
-                    "category": {"location": ["locUsMi"]},
                     "props": {
                         "numericPropExampleC": {
                             "value": 100,
@@ -1769,7 +1597,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Indiana, USA",
                     "geoJsonValue": "US.FL",
                     "type": "state",
-                    "category": {"location": ["locUsMi"]},
                     "props": {
                         "numericPropExampleC": {
                             "value": 200,
@@ -1783,7 +1610,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Canada",
                     "geoJsonValue": "CA",
                     "type": "country",
-                    "category": {"location": ["locCaOn"]},
                     "props": {
                         "numericPropExampleC": {
                             "value": 50,
@@ -1794,14 +1620,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "USA",
                     "geoJsonValue": "US",
                     "type": "country",
-                    "category": {
-                        "location": [
-                            "locUsFl",
-                            "locUsMa",
-                            "locUsIn",
-                            "locUsMi",
-                        ]
-                    },
                     "props": {
                         "numericPropExampleC": {
                             "value": 800,
@@ -1810,77 +1628,144 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
         },
-        "stats": {
-            "types": {
-                "numericStatExampleA": {
-                    "name": "Stat Example A",
-                    "calculation": "numericStatExampleA",
-                    "unit": "units",
-                    "order": 1,
+        "groupedOutputs": {
+            "groupings": {
+                "location": {
+                        "data": {
+                            "locUsMi": {
+                                "region": "North America",
+                                "country": "USA",
+                                "state": "Michigan",
+                            },
+                            "locUsMa": {
+                                "region": "North America",
+                                "country": "USA",
+                                "state": "Massachusetts",
+                            },
+                            "locUsFl": {
+                                "region": "North America",
+                                "country": "USA",
+                                "state": "Florida",
+                            },
+                            "locUsIn": {
+                                "region": "North America",
+                                "country": "USA",
+                                "state": "Indiana",
+                            },
+                            "locCaOn": {
+                                "region": "North America",
+                                "country": "Canada",
+                                "state": "Ontario",
+                            },
+                        },
+                        "name": "Locations",
+                        "nestedStructure": {
+                            "region": {
+                                "name": "Regions",
+                                "order": 1,
+                            },
+                            "country": {
+                                "name": "Countries",
+                                "ordering": ["USA", "Canada"],
+                                "parent": "region",
+                                "order": 2,
+                            },
+                            "state": {
+                                "name": "States",
+                                "parent": "country",
+                                "order": 3,
+                            },
+                        },
+                        "layoutDirection": "horizontal",
+                        "grouping": "Solo",
+                        "order": 1,
                 },
-                "numericStatExampleB": {
-                    "name": "Stat Example B",
-                    "calculation": "numericStatExampleB",
-                    "unit": "units",
+                "sku": {
+                    "data": {
+                        "SKU1": {
+                            "type": "Type A",
+                            "size": "Size A",
+                            "sku": "SKU1",
+                        },
+                        "SKU2": {
+                            "type": "Type A",
+                            "size": "Size B",
+                            "sku": "SKU2",
+                        },
+                    },
+                    "name": "SKUs",
+                    "nestedStructure": {
+                        "type": {
+                            "name": "Types",
+                            "order": 1,
+                        },
+                        "size": {
+                            "name": "Sizing",
+                            "ordering": ["Size B", "Size A"],
+                            "order": 2,
+                        },
+                        "sku": {
+                            "name": "SKU",
+                            "order": 3,
+                        },
+                    },
+                    "layoutDirection": "horizontal",
                     "order": 2,
                 },
-                "numericExampleCalculationStat": {
-                    "name": "Stat A as a percentage of Stat B",
-                    "calculation": 'numericStatExampleA / groupSum("numericStatExampleB")',
-                    "groupByOptions": ["location"],
-                    "precision": 2,
-                    "trailingZeros": True,
-                    "unit": "%",
-                    "unitPlacement": "after",
-                    "order": 3,
-                },
             },
-            "data": {
-                "d1": {
-                    "category": {
-                        "location": ["locCaOn"],
-                        "sku": ["SKU1"],
+            "data":{
+                'locationGroup':  {
+                    "stats": {
+                        "numericStatExampleA": {
+                            "name": "Stat Example A",
+                            "calculation": "numericStatExampleA",
+                            "unit": "units",
+                            "order": 1,
+                        },
+                        "numericStatExampleB": {
+                            "name": "Stat Example B",
+                            "calculation": "numericStatExampleB",
+                            "unit": "units",
+                            "order": 2,
+                        },
+                        "numericExampleCalculationStat": {
+                            "name": "Stat A as a percentage of Stat B",
+                            "calculation": 'numericStatExampleA / groupSum("numericStatExampleB")',
+                            "precision": 2,
+                            "trailingZeros": True,
+                            "unit": "%",
+                            "unitPlacement": "after",
+                            "order": 3,
+                        },
                     },
-                    "values": {"numericStatExampleA": 5, "numericStatExampleB": 10},
-                },
-                "d2": {
-                    "category": {
-                        "location": ["locCaOn"],
-                        "sku": ["SKU2"],
+                    "valueLists": {
+                        'numericStatExampleA': [5, 4, 6, -3, -3, 1],
+                        'numericStatExampleB': [10, 5, 7, 5, -2, -1],
                     },
-                    "values": {"numericStatExampleA": 4, "numericStatExampleB": 5},
-                },
-                "d3": {
-                    "category": {
-                        "location": ["locUsMi"],
-                        "sku": ["SKU1"],
+                    "groupLists":{
+                        "location": ['locCaOn', 'locCaOn', 'locUsMi', 'locUsMi', 'locUsIn', 'locUsFl'],
+                        "sku": ["SKU1", "SKU2", "SKU1", "SKU2", "SKU2", "SKU2"],
                     },
-                    "values": {"numericStatExampleA": 6, "numericStatExampleB": 7},
                 },
-                "d4": {
-                    "category": {
-                        "location": ["locUsMi"],
-                        "sku": ["SKU2"],
+                'skuGroup':  {
+                    "stats": {
+                        "numericStatExampleD": {
+                            "name": "Stat Example D",
+                            "calculation": "numericStatExampleD",
+                            "unit": "units",
+                            "order": 1,
+                        },
                     },
-                    "values": {"numericStatExampleA": -3, "numericStatExampleB": 5},
-                },
-                "d5": {
-                    "category": {
-                        "location": ["locUsIn"],
-                        "sku": ["SKU2"],
+                    "valueLists": {
+                        'numericStatExampleD': [10, 15]
                     },
-                    "values": {"numericStatExampleA": -3, "numericStatExampleB": -2},
-                },
-                "d6": {
-                    "category": {
-                        "location": ["locUsFl"],
-                        "sku": ["SKU2"],
+                    "groupLists": {
+                        "sku": ["SKU1", "SKU2"],
                     },
-                    "values": {"numericStatExampleA": 1, "numericStatExampleB": -1},
                 },
-            },
+            }
         },
-        "kpis": {
+        "globalOutputs": {
             "data": {
                 "kpiHeader1": {
                     "type": "head",
@@ -2008,7 +1893,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "wipeExisting": True,
         },
     }
-    if command == "reset":
+    if command == "init":
         print("The `reset` button has been pressed by the user!")
         return example
     elif command == "solve":
