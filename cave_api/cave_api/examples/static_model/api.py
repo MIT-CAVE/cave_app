@@ -208,13 +208,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "session": {
                     "icon": "md/MdApi",
-                    "type": "pane",
+                    "type": "session",
                     "bar": "upperLeft",
                     "order": 0,
                 },
                 "appSettings": {
                     "icon": "md/MdOutlineSettings",
-                    "type": "pane",
+                    "type": "settings",
                     "bar": "upperLeft",
                     "order": 1,
                 },
@@ -314,14 +314,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "panes": {
             "data": {
-                "session": {
-                    "variant": "session",
-                    "name": "Sessions Pane",
-                },
-                "appSettings": {
-                    "name": "App Settings Pane",
-                    "variant": "appSettings",
-                },
                 "examplePropsPane": {
                     "name": "Example Props Pane",
                     "variant": "options",
