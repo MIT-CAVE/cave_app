@@ -803,8 +803,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "legendGroups": {
                         "lga": {
                             "name": "Legend Group A",
-                            "nodes": {
+                            "data": {
                                 "nodeTypeA": {
+                                    "type": "nodes",
                                     "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
@@ -815,10 +816,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupScaleWithZoom": True,
                                     # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
-                                }
-                            },
-                            "arcs": {
+                                },
                                 "T1": {
+                                    "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
@@ -828,8 +828,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "lgb": {
                             "name": "Legend Group B",
-                            "nodes": {
+                            "data": {
                                 "nodeTypeB": {
+                                    "type": "nodes",
                                     "value": True,
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
@@ -840,21 +841,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupScaleWithZoom": True,
                                     # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
-                                }
-                            },
-                            "arcs": {
+                                },
                                 "T2": {
+                                    "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
-                                }
-                            },
-                            "geos": {
+                                },
                                 "state": {
+                                    "type": "geos",
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
+                                    "type": "geos",
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
                                 },
@@ -904,15 +904,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "legendGroups": {
                         "lga": {
                             "name": "Legend Group A",
-                            "nodes": {
+                            "data": {
                                 "nodeTypeA": {
+                                    "type": "nodes",
                                     "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
-                                }
-                            },
-                            "arcs": {
+                                },
                                 "T1": {
+                                    "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
@@ -922,26 +922,26 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "lgb": {
                             "name": "Legend Group B",
-                            "nodes": {
+                            "data": {
                                 "nodeTypeB": {
+                                    "type": "nodes",
                                     "value": True,
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
-                                }
-                            },
-                            "arcs": {
+                                },
                                 "T2": {
+                                    "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
-                                }
-                            },
-                            "geos": {
+                                },
                                 "state": {
+                                    "type": "geos",
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
                                 },
                                 "country": {
+                                    "type": "geos",
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
                                 },
@@ -1160,7 +1160,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "T1",
                     "props": {
                         "numericPropExampleA": {
-                            "value": {"timeObject": True, "value":[50, 30, 0]},
+                            "value": 15,
                         },
                         "numericPropExampleB": {
                             "value": 40,
