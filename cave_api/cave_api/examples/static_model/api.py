@@ -693,10 +693,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
         },
-        "dashboards": {
+        "pages": {
             "data": {
                 "dash1": {
-                    "dashboardLayout": [
+                    "pageLayout": [
                         {
                             "chart": "Bar",
                             "grouping": "Average",
@@ -716,7 +716,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "lockedLayout": False,
                 },
                 "dash2": {
-                    "dashboardLayout": [
+                    "pageLayout": [
                         {
                             "chart": "Bar",
                             "grouping": "Average",
