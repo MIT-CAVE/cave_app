@@ -816,13 +816,88 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupScaleWithZoom": True,
                                     # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
+                                    "colorByOptions": {
+                                        "numericPropExampleA": {
+                                            "timeValues": {
+                                                0: {"min": 50},
+                                                1: {"min": 0},
+                                                2: {"min": 20},
+                                            },
+                                            "max": 80,
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "booleanPropExample": {
+                                            "false": "rgb(255,0,0)",
+                                            "true": "rgb(0,255,0)",
+                                        },
+                                    },
+                                    "sizeByOptions": {
+                                        "numericPropExampleA": {"min": 0, "max": 80},
+                                        "numericPropExampleB": {"min": 0, "max": 50},
+                                    },
+                                    "startSize": "30px",
+                                    "endSize": "45px",
+                                    "icon": "fa6/FaIgloo",
                                 },
                                 "T1": {
                                     "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
-                                }
+                                    "sizeByOptions": {
+                                        "numericPropExampleA": {"min": 0, "max": 50},
+                                        "numericPropExampleB": {"min": 0, "max": 40},
+                                    },
+                                    "startSize": "15px",
+                                    "endSize": "30px",
+                                    "colorByOptions": {
+                                        "selectorPropForColor": {
+                                            "a": "rgb(128,255,255)",
+                                            "b": "rgb(0,153,51)",
+                                            "c": "rgb(0,0,128)",
+                                            "d": "rgb(204,0,0)",
+                                            "e": "rgb(153,77,0)",
+                                            "f": "rgb(255,25,255)",
+                                        },
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                    },
+                                },
                             },
                             "order": 1,
                         },
@@ -841,22 +916,129 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupScaleWithZoom": True,
                                     # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
+                                    "colorByOptions": {
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 1000,
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
+                                            
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "booleanPropExample": {
+                                            "false": "rgb(233, 0, 0)",
+                                            "true": "rgb(0, 233, 0)",
+                                        },
+                                    },
+                                    "sizeByOptions": {
+                                        "numericPropExampleA": {"min": 0, "max": 100},
+                                        "numericPropExampleB": {"min": 0, "max": 250},
+                                    },
+                                    "startSize": "30px",
+                                    "endSize": "45px",
+                                    "icon": "bs/BsBuilding",
                                 },
                                 "T2": {
                                     "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
+                                    "colorByOptions": {
+                                        "selectorPropForColor": {
+                                            "a": "rgb(128,255,255)",
+                                            "b": "rgb(0,153,51)",
+                                            "c": "rgb(0,0,128)",
+                                            "d": "rgb(204,0,0)",
+                                            "e": "rgb(153,77,0)",
+                                            "f": "rgb(255,25,255)",
+                                        },
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                    },
+                                    "lineBy": "dotted",
+                                    "sizeByOptions": {
+                                        "numericPropExampleA": {"min": 0, "max": 50},
+                                        "numericPropExampleB": {"min": 0, "max": 40},
+                                    },
+                                    "startSize": "15px",
+                                    "endSize": "30px",
                                 },
                                 "state": {
                                     "type": "geos",
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
+                                    "colorByOptions": {
+                                        "numericPropExampleC": {
+                                            "min": 0,
+                                            "max": 300,
+                                            "startGradientColor": {
+                                                "dark": "rgb(100, 100, 100)",
+                                                "light": "rgb(200, 200, 200)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(20, 205, 20)",
+                                                "light": "rgb(10, 100, 10)",
+                                            },
+                                        },
+                                        "booleanPropExample": {
+                                            "false": "rgb(233, 0, 0)",
+                                            "true": "rgb(0, 233, 0)",
+                                        },
+                                    }, 
+                                    "icon": "bs/BsHexagon",
                                 },
                                 "country": {
                                     "type": "geos",
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
+                                    "colorByOptions": {
+                                        "numericPropExampleC": {
+                                            "min": 0,
+                                            "max": 800,
+                                            "startGradientColor": {
+                                                "dark": "rgb(100, 100, 100)",
+                                                "light": "rgb(200, 200, 200)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(20, 205, 20)",
+                                                "light": "rgb(10, 100, 10)",
+                                            },
+                                        }
+                                    },
+                                "icon": "bs/BsHexagon",
                                 },
                             },
                             "order": 2,
@@ -910,13 +1092,94 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
+                                    "colorByOptions": {
+                                        "numericPropExampleA": {
+                                            "timeValues": {
+                                                0: {"min": 50},
+                                                1: {"min": 0},
+                                                2: {"min": 20},
+                                            },
+                                            "max": 80,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "booleanPropExample": {
+                                            "false": "rgb(255,0,0)",
+                                            "true": "rgb(0,255,0)",
+                                        },
+                                    },
+                                    "sizeByOptions": {
+                                        "numericPropExampleA": {"min": 0, "max": 80},
+                                        "numericPropExampleB": {"min": 0, "max": 50},
+                                    },
+                                    "startSize": "30px",
+                                    "endSize": "45px",
+                                    "icon": "fa6/FaIgloo",
                                 },
                                 "T1": {
                                     "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
-                                }
+                                    "sizeByOptions": {
+                                        "numericPropExampleA": {"min": 0, "max": 50},
+                                        "numericPropExampleB": {"min": 0, "max": 40},
+                                    },
+                                    "startSize": "15px",
+                                    "endSize": "30px",
+                                    "colorByOptions": {
+                                        "selectorPropForColor": {
+                                            "a": "rgb(128,255,255)",
+                                            "b": "rgb(0,153,51)",
+                                            "c": "rgb(0,0,128)",
+                                            "d": "rgb(204,0,0)",
+                                            "e": "rgb(153,77,0)",
+                                            "f": "rgb(255,25,255)",
+                                        },
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                    },
+                                },                                
                             },
                             "order": 1,
                         },
@@ -928,22 +1191,134 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "value": True,
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
+                                    "colorByOptions": {
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 1000,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "booleanPropExample": {
+                                            "false": "rgb(233, 0, 0)",
+                                            "true": "rgb(0, 233, 0)",
+                                        },
+                                    },
+                                    "sizeByOptions": {
+                                        "numericPropExampleA": {"min": 0, "max": 100},
+                                        "numericPropExampleB": {"min": 0, "max": 250},
+                                    },
+                                    "startSize": "30px",
+                                    "endSize": "45px",
+                                    "icon": "bs/BsBuilding",
                                 },
                                 "T2": {
                                     "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
+                                    "colorByOptions": {
+                                        "selectorPropForColor": {
+                                            "a": "rgb(128,255,255)",
+                                            "b": "rgb(0,153,51)",
+                                            "c": "rgb(0,0,128)",
+                                            "d": "rgb(204,0,0)",
+                                            "e": "rgb(153,77,0)",
+                                            "f": "rgb(255,25,255)",
+                                        },
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startGradientColor": {
+                                                "dark": "rgb(233, 0, 0)",
+                                                "light": "rgb(52, 52, 236)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(96, 2, 2)",
+                                                "light": "rgb(23, 23, 126)",
+                                            },
+                                        },
+                                    },
+                                    "lineBy": "dotted",
+                                    "sizeByOptions": {
+                                        "numericPropExampleA": {"min": 0, "max": 50},
+                                        "numericPropExampleB": {"min": 0, "max": 40},
+                                    },
+                                    "startSize": "15px",
+                                    "endSize": "30px",
                                 },
                                 "state": {
                                     "type": "geos",
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
+                                    "colorByOptions": {
+                                        "numericPropExampleC": {
+                                            "min": 0,
+                                            "max": 300,
+                                            "startGradientColor": {
+                                                "dark": "rgb(100, 100, 100)",
+                                                "light": "rgb(200, 200, 200)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(20, 205, 20)",
+                                                "light": "rgb(10, 100, 10)",
+                                            },
+                                        },
+                                        "booleanPropExample": {
+                                            "false": "rgb(233, 0, 0)",
+                                            "true": "rgb(0, 233, 0)",
+                                        },
+                                    }, 
+                                    "icon": "bs/BsHexagon",
                                 },
                                 "country": {
                                     "type": "geos",
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
+                                    "colorByOptions": {
+                                        "numericPropExampleC": {
+                                            "min": 0,
+                                            "max": 800,
+                                            "startGradientColor": {
+                                                "dark": "rgb(100, 100, 100)",
+                                                "light": "rgb(200, 200, 200)",
+                                            },
+                                            "endGradientColor": {
+                                                "dark": "rgb(20, 205, 20)",
+                                                "light": "rgb(10, 100, 10)",
+                                            },
+                                        }
+                                    },
+                                    "icon": "bs/BsHexagon",
                                 },
                             },
                             "order": 2,
@@ -956,50 +1331,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "types": {
                 "T1": {
                     "name": "Flow Type 1",
-                    "colorByOptions": {
-                        "selectorPropForColor": {
-                            "a": "rgb(128,255,255)",
-                            "b": "rgb(0,153,51)",
-                            "c": "rgb(0,0,128)",
-                            "d": "rgb(204,0,0)",
-                            "e": "rgb(153,77,0)",
-                            "f": "rgb(255,25,255)",
-                        },
-                        "numericPropExampleA": {
-                            "min": 0,
-                            "max": 50,
-                            "startGradientColor": {
-                                "dark": "rgb(233, 0, 0)",
-                                "light": "rgb(52, 52, 236)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(96, 2, 2)",
-                                "light": "rgb(23, 23, 126)",
-                            },
-                        },
-                        "numericPropExampleB": {
-                            "min": 0,
-                            "max": 40,
-                            "startGradientColor": {
-                                "dark": "rgb(233, 0, 0)",
-                                "light": "rgb(52, 52, 236)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(96, 2, 2)",
-                                "light": "rgb(23, 23, 126)",
-                            },
-                        },
-                    },
                     "geoJson": {
                         "geoJsonLayer": "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json",
                         "geoJsonProp": "name",
                     },
-                    "sizeByOptions": {
-                        "numericPropExampleA": {"min": 0, "max": 50},
-                        "numericPropExampleB": {"min": 0, "max": 40},
-                    },
-                    "startSize": "15px",
-                    "endSize": "30px",
                     "props": {
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
@@ -1058,47 +1393,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "T2": {
                     "name": "Flow Type 2",
-                    "colorByOptions": {
-                        "selectorPropForColor": {
-                            "a": "rgb(128,255,255)",
-                            "b": "rgb(0,153,51)",
-                            "c": "rgb(0,0,128)",
-                            "d": "rgb(204,0,0)",
-                            "e": "rgb(153,77,0)",
-                            "f": "rgb(255,25,255)",
-                        },
-                        "numericPropExampleA": {
-                            "min": 0,
-                            "max": 50,
-                            "startGradientColor": {
-                                "dark": "rgb(233, 0, 0)",
-                                "light": "rgb(52, 52, 236)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(96, 2, 2)",
-                                "light": "rgb(23, 23, 126)",
-                            },
-                        },
-                        "numericPropExampleB": {
-                            "min": 0,
-                            "max": 40,
-                            "startGradientColor": {
-                                "dark": "rgb(233, 0, 0)",
-                                "light": "rgb(52, 52, 236)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(96, 2, 2)",
-                                "light": "rgb(23, 23, 126)",
-                            },
-                        },
-                    },
-                    "lineBy": "dotted",
-                    "sizeByOptions": {
-                        "numericPropExampleA": {"min": 0, "max": 50},
-                        "numericPropExampleB": {"min": 0, "max": 40},
-                    },
-                    "startSize": "15px",
-                    "endSize": "30px",
                     "props": {
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
@@ -1230,47 +1524,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "types": {
                 "nodeTypeA": {
                     "name": "Node Type A",
-                    "colorByOptions": {
-                        "numericPropExampleA": {
-                            "timeValues": {
-                                0: {"min": 50},
-                                1: {"min": 0},
-                                2: {"min": 20},
-                            },
-                            "max": 80,
-                            "startGradientColor": {
-                                "dark": "rgb(233, 0, 0)",
-                                "light": "rgb(52, 52, 236)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(96, 2, 2)",
-                                "light": "rgb(23, 23, 126)",
-                            },
-                        },
-                        "numericPropExampleB": {
-                            "min": 0,
-                            "max": 50,
-                            "startGradientColor": {
-                                "dark": "rgb(233, 0, 0)",
-                                "light": "rgb(52, 52, 236)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(96, 2, 2)",
-                                "light": "rgb(23, 23, 126)",
-                            },
-                        },
-                        "booleanPropExample": {
-                            "false": "rgb(255,0,0)",
-                            "true": "rgb(0,255,0)",
-                        },
-                    },
-                    "sizeByOptions": {
-                        "numericPropExampleA": {"min": 0, "max": 80},
-                        "numericPropExampleB": {"min": 0, "max": 50},
-                    },
-                    "startSize": "30px",
-                    "endSize": "45px",
-                    "icon": "fa6/FaIgloo",
                     "props": {
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
@@ -1301,43 +1554,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "nodeTypeB": {
                     "name": "Node Type B",
-                    "colorByOptions": {
-                        "numericPropExampleA": {
-                            "min": 0,
-                            "max": 1000,
-                            "startGradientColor": {
-                                "dark": "rgb(233, 0, 0)",
-                                "light": "rgb(52, 52, 236)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(96, 2, 2)",
-                                "light": "rgb(23, 23, 126)",
-                            },
-                        },
-                        "numericPropExampleB": {
-                            "min": 0,
-                            "max": 50,
-                            "startGradientColor": {
-                                "dark": "rgb(233, 0, 0)",
-                                "light": "rgb(52, 52, 236)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(96, 2, 2)",
-                                "light": "rgb(23, 23, 126)",
-                            },
-                        },
-                        "booleanPropExample": {
-                            "false": "rgb(233, 0, 0)",
-                            "true": "rgb(0, 233, 0)",
-                        },
-                    },
-                    "sizeByOptions": {
-                        "numericPropExampleA": {"min": 0, "max": 100},
-                        "numericPropExampleB": {"min": 0, "max": 250},
-                    },
-                    "startSize": "30px",
-                    "endSize": "45px",
-                    "icon": "bs/BsBuilding",
                     "props": {
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
@@ -1459,29 +1675,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "types": {
                 "state": {
                     "name": "State",
-                    "colorByOptions": {
-                        "numericPropExampleC": {
-                            "min": 0,
-                            "max": 300,
-                            "startGradientColor": {
-                                "dark": "rgb(100, 100, 100)",
-                                "light": "rgb(200, 200, 200)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(20, 205, 20)",
-                                "light": "rgb(10, 100, 10)",
-                            },
-                        },
-                        "booleanPropExample": {
-                            "false": "rgb(233, 0, 0)",
-                            "true": "rgb(0, 233, 0)",
-                        },
-                    },
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
                         "geoJsonProp": "code_hasc",
                     },
-                    "icon": "bs/BsHexagon",
                     "props": {
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
@@ -1501,25 +1698,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "country": {
                     "name": "Country",
-                    "colorByOptions": {
-                        "numericPropExampleC": {
-                            "min": 0,
-                            "max": 800,
-                            "startGradientColor": {
-                                "dark": "rgb(100, 100, 100)",
-                                "light": "rgb(200, 200, 200)",
-                            },
-                            "endGradientColor": {
-                                "dark": "rgb(20, 205, 20)",
-                                "light": "rgb(10, 100, 10)",
-                            },
-                        }
-                    },
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
                         "geoJsonProp": "FIPS_10",
                     },
-                    "icon": "bs/BsHexagon",
                     "props": {
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
