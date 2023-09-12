@@ -220,10 +220,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "resetButton": {
                     "icon": "md/MdSync",
-                    "color": {
-                        "dark": "rgb(255, 101, 101)",
-                        "light": "rgb(212, 0, 0)",
-                    },
+                    "color": "rgb(255, 101, 101)",
                     "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
@@ -231,10 +228,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "buttonSolve": {
                     "icon": "bs/BsLightningFill",
-                    "color": {
-                        "dark": "rgb(178, 179, 55)",
-                        "light": "rgb(79, 79, 24)",
-                    },
+                    "color": "rgb(178, 179, 55)",
                     "apiCommand": "solve",
                     "type": "button",
                     "bar": "upperLeft",
@@ -272,10 +266,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "exampleModal": {
                     "icon": "md/MdInfo",
-                    "color": {
-                        "dark": "rgb(195, 164, 222)",
-                        "light": "rgb(84, 60, 107)",
-                    },
+                    "color": "rgb(195, 164, 222)",
                     "type": "modal",
                     "bar": "upperRight",
                     "order": 0,
@@ -830,14 +821,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "booleanPropExample": {
                                             "false": "rgb(255,0,0)",
@@ -875,26 +860,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 40,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                     },
                                 },
@@ -927,14 +900,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "booleanPropExample": {
                                             "false": "rgb(233, 0, 0)",
@@ -966,26 +933,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 40,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                     },
                                     "lineBy": "dotted",
@@ -1004,14 +959,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleC": {
                                             "min": 0,
                                             "max": 300,
-                                            "startGradientColor": {
-                                                "dark": "rgb(100, 100, 100)",
-                                                "light": "rgb(200, 200, 200)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(20, 205, 20)",
-                                                "light": "rgb(10, 100, 10)",
-                                            },
+                                            "startGradientColor": "rgb(100, 100, 100)",
+                                            "endGradientColor": "rgb(20, 205, 20)",
                                         },
                                         "booleanPropExample": {
                                             "false": "rgb(233, 0, 0)",
@@ -1028,14 +977,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleC": {
                                             "min": 0,
                                             "max": 800,
-                                            "startGradientColor": {
-                                                "dark": "rgb(100, 100, 100)",
-                                                "light": "rgb(200, 200, 200)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(20, 205, 20)",
-                                                "light": "rgb(10, 100, 10)",
-                                            },
+                                            "startGradientColor": "rgb(100, 100, 100)",
+                                            "endGradientColor": "rgb(20, 205, 20)",
                                         }
                                     },
                                 "icon": "bs/BsHexagon",
@@ -1100,26 +1043,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                                 2: {"min": 20},
                                             },
                                             "max": 80,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "booleanPropExample": {
                                             "false": "rgb(255,0,0)",
@@ -1157,26 +1088,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 40,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                     },
                                 },                                
@@ -1195,26 +1114,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 1000,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "booleanPropExample": {
                                             "false": "rgb(233, 0, 0)",
@@ -1246,26 +1153,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 40,
-                                            "startGradientColor": {
-                                                "dark": "rgb(233, 0, 0)",
-                                                "light": "rgb(52, 52, 236)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(96, 2, 2)",
-                                                "light": "rgb(23, 23, 126)",
-                                            },
+                                            "startGradientColor": "rgb(233, 0, 0)",
+                                            "endGradientColor": "rgb(96, 2, 2)",
                                         },
                                     },
                                     "lineBy": "dotted",
@@ -1284,14 +1179,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleC": {
                                             "min": 0,
                                             "max": 300,
-                                            "startGradientColor": {
-                                                "dark": "rgb(100, 100, 100)",
-                                                "light": "rgb(200, 200, 200)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(20, 205, 20)",
-                                                "light": "rgb(10, 100, 10)",
-                                            },
+                                            "startGradientColor": "rgb(100, 100, 100)",
+                                            "endGradientColor": "rgb(20, 205, 20)",
                                         },
                                         "booleanPropExample": {
                                             "false": "rgb(233, 0, 0)",
@@ -1308,14 +1197,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleC": {
                                             "min": 0,
                                             "max": 800,
-                                            "startGradientColor": {
-                                                "dark": "rgb(100, 100, 100)",
-                                                "light": "rgb(200, 200, 200)",
-                                            },
-                                            "endGradientColor": {
-                                                "dark": "rgb(20, 205, 20)",
-                                                "light": "rgb(10, 100, 10)",
-                                            },
+                                            "startGradientColor": "rgb(100, 100, 100)",
+                                            "endGradientColor": "rgb(20, 205, 20)",
                                         }
                                     },
                                     "icon": "bs/BsHexagon",
