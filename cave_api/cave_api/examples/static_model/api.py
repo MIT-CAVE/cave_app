@@ -253,13 +253,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "bar": "upperLeft",
                 },
                 "dash1": {
-                    "type": "stats",
+                    "type": "page",
                     "icon": "md/MdInsertChart",
                     "order": 1,
                     "bar": "lowerLeft",
                 },
                 "dash2": {
-                    "type": "stats",
+                    "type": "page",
                     "icon": "md/MdInsertChartOutlined",
                     "order": 2,
                     "bar": "lowerLeft",
