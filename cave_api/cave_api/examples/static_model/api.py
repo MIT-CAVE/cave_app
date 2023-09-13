@@ -113,11 +113,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "trailingZeros": False,
                     "unitPlacement": "afterWithSpace",
                 },
+                "order": {
+                    "additionalMapStyles": ["watercolor", "streets", "outdoors", "satellite", "satellite_streets"],
+                },
                 "additionalMapStyles": {
                     "watercolor": {
                         "name": "Watercolor",
                         "icon": "md/MdBrush",
-                        "order": 1,
                         "spec": {
                             "version": 8,
                             "sources": {
@@ -176,25 +178,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "streets": {
                         "name": "Streets",
                         "icon": "md/MdStreetview",
-                        "order": 2,
                         "spec": "mapbox://styles/mapbox/streets-v12",
                     },
                     "outdoors": {
                         "name": "Outdoors",
                         "icon": "md/MdForest",
-                        "order": 3,
                         "spec": "mapbox://styles/mapbox/outdoors-v12",
                     },
                     "satellite": {
                         "name": "Satellite",
                         "icon": "md/MdSatelliteAlt",
-                        "order": 4,
                         "spec": "mapbox://styles/mapbox/satellite-v9",
                     },
                     "satellite_streets": {
                         "name": "Satellite Streets",
                         "icon": "md/MdSatellite",
-                        "order": 5,
                         "spec": "mapbox://styles/mapbox/satellite-streets-v12",
                     },
                 },
@@ -205,18 +203,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             "appBarId": "dash1",
+            "order": {
+                "data": ["session", "appSettings", "resetButton", "buttonSolve", "examplePropsPane", "dash1", "dash2"],
+            },
             "data": {
                 "session": {
                     "icon": "md/MdApi",
                     "type": "session",
                     "bar": "upperLeft",
-                    "order": 0,
                 },
                 "appSettings": {
                     "icon": "md/MdOutlineSettings",
                     "type": "settings",
                     "bar": "upperLeft",
-                    "order": 1,
                 },
                 "resetButton": {
                     "icon": "md/MdSync",
@@ -224,7 +223,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
-                    "order": 2,
                 },
                 "buttonSolve": {
                     "icon": "bs/BsLightningFill",
@@ -232,24 +230,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "apiCommand": "solve",
                     "type": "button",
                     "bar": "upperLeft",
-                    "order": 3,
                 },
                 "examplePropsPane": {
                     "icon": "fa/FaCogs",
                     "type": "pane",
                     "bar": "upperLeft",
-                    "order": 4,
                 },
                 "dash1": {
                     "type": "page",
                     "icon": "md/MdInsertChart",
-                    "order": 1,
                     "bar": "lowerLeft",
                 },
                 "dash2": {
                     "type": "page",
                     "icon": "md/MdInsertChartOutlined",
-                    "order": 2,
                     "bar": "lowerLeft",
                 },
                 "exampleModal": {
@@ -257,7 +251,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "color": "rgba(195, 164, 222, 255)",
                     "type": "modal",
                     "bar": "upperRight",
-                    "order": 0,
                 },
             },
         },
@@ -743,6 +736,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "maps": {
             "data": {
                 "map1": {
+                    "order": {
+                        "optionalViewports": ["ov0", "ov1"],
+                        "legendGroups": ["lga", "lgb"],
+                    },
                     "name": "Example Map 1",
                     "currentStyle": "watercolor",
                     "currentProjection": "globe",
@@ -762,7 +759,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "icon": "fa/FaGlobeAsia",
                             "name": "Asia",
                             "zoom": 4,
-                            "order": 1,
                             "pitch": 0,
                             "bearing": 0,
                             "maxZoom": 12,
@@ -774,7 +770,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "icon": "fa/FaGlobeEurope",
                             "name": "EMEA",
                             "zoom": 4,
-                            "order": 1,
                             "pitch": 0,
                             "bearing": 0,
                             "maxZoom": 12,
@@ -864,7 +859,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                 },
                             },
-                            "order": 1,
                         },
                         "lgb": {
                             "name": "Legend Group B",
@@ -976,11 +970,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "icon": "bs/BsHexagon",
                                 },
                             },
-                            "order": 2,
                         },
                     },
                 },
                 "map2": {
+                    "order": {
+                        "optionalViewports": ["ov0", "ov1"],
+                        "legendGroups": ["lga", "lgb"],
+                    },
                     "defaultViewport": {
                         "longitude": -75.447,
                         "latitude": 40.345,
@@ -997,7 +994,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "icon": "fa/FaGlobeAsia",
                             "name": "Asia",
                             "zoom": 4,
-                            "order": 1,
                             "pitch": 0,
                             "bearing": 0,
                             "maxZoom": 12,
@@ -1009,7 +1005,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "icon": "fa/FaGlobeEurope",
                             "name": "EMEA",
                             "zoom": 4,
-                            "order": 1,
                             "pitch": 0,
                             "bearing": 0,
                             "maxZoom": 12,
@@ -1092,7 +1087,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                 },                                
                             },
-                            "order": 1,
                         },
                         "lgb": {
                             "name": "Legend Group B",
@@ -1196,7 +1190,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "icon": "bs/BsHexagon",
                                 },
                             },
-                            "order": 2,
                         },
                     },
                 },
@@ -1613,8 +1606,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "groupedOutputs": {
+            "order": {
+                "groupings": ["location", "sku"],
+            },
             "groupings": {
                 "location": {
+                        "order": {
+                            "nestedStructure": ["region", "country", "state"],
+                        },
                         "data": {
                             "locUsMi": {
                                 "region": "North America",
@@ -1646,25 +1645,24 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "nestedStructure": {
                             "region": {
                                 "name": "Regions",
-                                "order": 1,
                             },
                             "country": {
                                 "name": "Countries",
                                 "ordering": ["USA", "Canada"],
                                 "parent": "region",
-                                "order": 2,
                             },
                             "state": {
                                 "name": "States",
                                 "parent": "country",
-                                "order": 3,
                             },
                         },
                         "layoutDirection": "horizontal",
                         "grouping": "Solo",
-                        "order": 1,
                 },
                 "sku": {
+                    "order": {
+                        "nestedStructure": ["type", "size", "sku"],
+                    },
                     "data": {
                         "SKU1": {
                             "type": "Type A",
@@ -1681,36 +1679,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "nestedStructure": {
                         "type": {
                             "name": "Types",
-                            "order": 1,
                         },
                         "size": {
                             "name": "Sizing",
                             "ordering": ["Size B", "Size A"],
-                            "order": 2,
                         },
                         "sku": {
                             "name": "SKU",
-                            "order": 3,
                         },
                     },
                     "layoutDirection": "horizontal",
-                    "order": 2,
                 },
             },
             "data":{
                 'locationGroup':  {
+                    "order": {
+                        "stats": ["numericStatExampleA", "numericStatExampleB", "numericExampleCalculationStat"],
+                    },
                     "stats": {
                         "numericStatExampleA": {
                             "name": "Stat Example A",
                             "calculation": "numericStatExampleA",
                             "unit": "units",
-                            "order": 1,
                         },
                         "numericStatExampleB": {
                             "name": "Stat Example B",
                             "calculation": "numericStatExampleB",
                             "unit": "units",
-                            "order": 2,
                         },
                         "numericExampleCalculationStat": {
                             "name": "Stat A as a percentage of Stat B",
@@ -1719,7 +1714,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "trailingZeros": True,
                             "unit": "%",
                             "unitPlacement": "after",
-                            "order": 3,
                         },
                     },
                     "valueLists": {
@@ -1737,7 +1731,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Stat Example D",
                             "calculation": "numericStatExampleD",
                             "unit": "units",
-                            "order": 1,
                         },
                     },
                     "valueLists": {
