@@ -240,18 +240,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "bar": "upperLeft",
                     "order": 4,
                 },
-                "context1": {
-                    "icon": "bs/BsInboxes",
-                    "type": "pane",
-                    "order": 5,
-                    "bar": "upperLeft",
-                },
-                "filter": {
-                    "icon": "fa/FaFilter",
-                    "type": "pane",
-                    "order": 6,
-                    "bar": "upperLeft",
-                },
                 "dash1": {
                     "type": "page",
                     "icon": "md/MdInsertChart",
@@ -280,12 +268,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "props": {
                         "buttonViewInfo": {
                             "name": "Info Button",
-                            "value": "Press",
                             "type": "button",
                             "apiCommand": "viewInfo",
                             "enabled": True,
                             "help": "Press this button to view info",
                         },
+                    },
+                    "values": {
+                        "buttonViewInfo": "Press",
                     },
                     "layout": {
                         "type": "grid",
@@ -317,7 +307,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericInputExample": {
                             "name": "Numeric Input Example",
                             "type": "num",
-                            "value": 50,
                             "enabled": True,
                             "help": "Help for the numeric input example",
                             "maxValue": 100,
@@ -330,7 +319,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericSliderExample": {
                             "name": "Numeric Slider Example",
                             "type": "num",
-                            "value": 50,
                             "enabled": True,
                             "variant": "slider",
                             "help": "Help for the numeric slider example",
@@ -346,13 +334,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "toggleInputExample": {
                             "name": "Toggle Input Example",
                             "type": "toggle",
-                            "value": True,
                             "enabled": True,
                             "help": "Help for the toggle input example",
                         },
                         "buttonInputExample": {
                             "name": "Button Input Example (Creates an Error)",
-                            "value": "Press Me!",
                             "type": "button",
                             "apiCommand": "test",
                             "enabled": True,
@@ -362,14 +348,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Picture Example",
                             "type": "media",
                             "variant": "picture",
-                            "value": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
                             "help": "Click the expand button to view an enlarged version",
                         },
                         "videoExample": {
                             "name": "Video Example",
                             "type": "media",
                             "variant": "video",
-                            "value": "https://www.youtube.com/embed/6q5R1TDmKnU",
                             "help": "Click the play button to start the video",
                         },
                         "textHeader": {
@@ -380,7 +364,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "textInputExample": {
                             "name": "Text Input Example",
                             "type": "text",
-                            "value": "Example Text Here",
                             "enabled": True,
                             "help": "Help for the text input example",
                         },
@@ -389,7 +372,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "text",
                             "variant": "textarea",
                             "rows": 6,
-                            "value": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                             "enabled": True,
                             "help": "Help for the text area input example",
                         },
@@ -402,7 +384,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Dropdown Item Example",
                             "type": "selector",
                             "variant": "dropdown",
-                            "value": ["option_c"],
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -415,7 +396,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Checkbox Item Example",
                             "type": "selector",
                             "variant": "checkbox",
-                            "value": ["option_a", "option_c"],
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -428,7 +408,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Radio Item Example",
                             "type": "selector",
                             "variant": "radio",
-                            "value": ["option_a"],
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -441,7 +420,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "name": "Horizontal Stepper Item Example",
                                 "type": "selector",
                                 "variant": "hstepper",
-                                "value": ["option_c"],
                                 "options": {
                                     "option_a": {"name": "Option A"},
                                     "option_b": {"name": "Option B"},
@@ -454,7 +432,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "name": "Vertical Stepper Item Example",
                                 "type": "selector",
                                 "variant": "vstepper",
-                                "value": ["option_c"],
                                 "options": {
                                     "option_a": {"name": "Option A"},
                                     "option_b": {"name": "Option B"},
@@ -467,7 +444,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "name": "Horizontal Radio Item Example",
                                 "type": "selector",
                                 "variant": "hradio",
-                                "value": ["option_c"],
                                 "options": {
                                     "option_a": {"name": "Option A"},
                                     "option_b": {"name": "Option B"},
@@ -480,7 +456,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "ComboBox Item Example",
                             "type": "selector",
                             "variant": "combobox",
-                            "value": ["option_b"],
                             "placeholder": "Option",
                             "options": {
                                 "option_a": {"name": "Option A"},
@@ -494,7 +469,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Nested Item Example",
                             "type": "selector",
                             "variant": "nested",
-                            "value": ["t1_b1_tw1", "t1_b1_tw2", "t1_b2_tw2", "t2_b1_tw1", "t2_b1_tw2"],
                             "options": {
                                 "t1_b1_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch1']},
                                 "t1_b1_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch1']},
@@ -518,7 +492,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Date Example",
                             "type": "date",
                             "variant": "date",
-                            "value": "07/20/1969",
                             "enabled": True,
                             "help": "The Eagle has landed!",
                         },
@@ -526,7 +499,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Time Example",
                             "type": "date",
                             "variant": "time",
-                            "value": "1969-07-20T20:17:40",
                             "enabled": True,
                             "help": "The Eagle has landed!",
                         },
@@ -534,10 +506,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Date and Time Example",
                             "type": "date",
                             "variant": "datetime",
-                            "value": "1969-07-20T20:17:40",
                             "enabled": True,
                             "help": "The Eagle has landed!",
                         },
+                    },
+                    "values": {
+                        "numericInputExample": 50,
+                        "numericSliderExample": 50,
+                        "toggleInputExample": True,
+                        "buttonInputExample": "Press Me!",
+                        "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
+                        "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                        "textInputExample": "Example Text Here",
+                        "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
+                        "dropdownItemExample": ["option_c"],
+                        "checkboxItemExample": ["option_a", "option_c"],
+                        "radioItemExample": ["option_a"],
+                        "hstepperItemExample": ["option_c"],
+                        "vstepperItemExample": ["option_c"],
+                        "hradioItemExample": ["option_c"],
+                        "comboBoxItemExample": ["option_b"],
+                        "nestedItemExample": ["t1_b1_tw1", "t1_b1_tw2", "t1_b2_tw2", "t2_b1_tw1", "t2_b1_tw2"],
+                        "dateItemExample": "07/20/1969",
+                        "timeItemExample": "1969-07-20T20:17:40",
+                        "dateTimeItemExample": "1969-07-20T20:17:40",
                     },
                     "layout": {
                         "type": "grid",
@@ -1239,7 +1231,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Example Categorical Prop",
                             "type": "selector",
                             "variant": "dropdown",
-                            "value": ["a"],
                             "options": {
                                 "a": {"name": "A"},
                                 "b": {"name": "B"},
@@ -1250,6 +1241,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "enabled": True,
                         },
+                    },
+                    "values": {
+                        "selectorPropForColor": ["a"],
                     },
                     "layout": {
                         "type": "grid",
@@ -1295,7 +1289,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Example Categorical Prop",
                             "type": "selector",
                             "variant": "dropdown",
-                            "value": ["a"],
                             "options": {
                                 "a": {"name": "A"},
                                 "b": {"name": "B"},
@@ -1306,6 +1299,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "enabled": True,
                         },
+                    },
+                    "values": {
+                        "selectorPropForColor": ["a"],
                     },
                     "layout": {
                         "type": "grid",
@@ -1335,16 +1331,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "arc1": {
                     "geoJsonValue": "DUBL-DALY (ROUTE 11/12)",
                     "type": "T1",
-                    "props": {
-                        "numericPropExampleA": {
-                            "value": 15,
-                        },
-                        "numericPropExampleB": {
-                            "value": 40,
-                        },
-                        "selectorPropForColor": {
-                            "value": ["b"],
-                        },
+                    "values": {
+                        "numericPropExampleA": 15,
+                        "numericPropExampleB": 40,
+                        "selectorPropForColor": ["b"],
                     },
                 },
                 "arc2": {
@@ -1353,16 +1343,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "endLatitude": 42.89,
                     "endLongitude": -85.68,
                     "type": "T2",
-                    "props": {
-                        "numericPropExampleA": {
-                            "value": 30,
-                        },
-                        "numericPropExampleB": {
-                            "value": 20,
-                        },
-                        "selectorPropForColor": {
-                            "value": ["e"],
-                        },
+                    "values": {
+                        "numericPropExampleA": 30,
+                        "numericPropExampleB": 20,
+                        "selectorPropForColor": ["e"],
                     },
                 },
                 "arc3": {
@@ -1371,16 +1355,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "endLatitude": 28.49,
                     "endLongitude": -81.56,
                     "type": "T2",
-                    "props": {
-                        "numericPropExampleA": {
-                            "value": 30,
-                        },
-                        "numericPropExampleB": {
-                            "value": 14,
-                        },
-                        "selectorPropForColor": {
-                            "value": ["d"],
-                        },
+                    "values": {
+                        "numericPropExampleA": 30,
+                        "numericPropExampleB": 14,
+                        "selectorPropForColor": ["d"],
                     },
                 },
                 "arc4": {
@@ -1389,16 +1367,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "endLatitude": 42.361176,
                     "endLongitude": -71.084707,
                     "type": "T2",
-                    "props": {
-                        "numericPropExampleA": {
-                            "value": 30,
-                        },
-                        "numericPropExampleB": {
-                            "value": 6,
-                        },
-                        "selectorPropForColor": {
-                            "value": ["f"],
-                        },
+                    "values": {
+                        "numericPropExampleA": 30,
+                        "numericPropExampleB": 6,
+                        "selectorPropForColor": ["f"],
                     },
                 },
             },
@@ -1429,10 +1401,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            "value": True,
                             "enabled": True,
                             "help": "Help for boolean prop",
                         },
+                    },
+                    "values": {
+                        "booleanPropExample": True,
                     },
                 },
                 "nodeTypeB": {
@@ -1460,10 +1434,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            "value": True,
                             "enabled": True,
                             "help": "Help for boolean prop",
                         },
+                    },
+                    "values": {
+                        "booleanPropExample": True,
                     },
                 },
             },
@@ -1476,80 +1452,50 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "longitude": -79.63,
                     "type": "nodeTypeA",
-                    "props": {
-                        "numericPropExampleA": {
-                            "value": 100,
-                        },
-                        "numericPropExampleB": {
-                            "value": 50,
-                        },
-                        "booleanPropExample": {
-                            "value": True,
-                        },
+                    "values": {
+                        "numericPropExampleA": 100,
+                        "numericPropExampleB": 50,
+                        "booleanPropExample": True,
                     },
                 },
                 "node2": {
                     "latitude": 39.82,
                     "longitude": -86.18,
                     "type": "nodeTypeA",
-                    "props": {
-                        "numericPropExampleA": {
-                            "value": 80,
-                        },
-                        "numericPropExampleB": {
-                            "value": 40,
-                        },
-                        "booleanPropExample": {
-                            "value": True,
-                        },
+                    "values": {
+                        "numericPropExampleA": 80,
+                        "numericPropExampleB": 40,
+                        "booleanPropExample": True,
                     },
                 },
                 "node3": {
                     "latitude": 42.89,
                     "longitude": -85.68,
                     "type": "nodeTypeB",
-                    "props": {
-                        "numericPropExampleA": {
-                            "value": 500,
-                        },
-                        "numericPropExampleB": {
-                            "value": 150,
-                        },
-                        "booleanPropExample": {
-                            "value": True,
-                        },
+                    "values": {
+                        "numericPropExampleA": 500,
+                        "numericPropExampleB": 150,
+                        "booleanPropExample": True,
                     },
                 },
                 "node4": {
                     "latitude": 28.49,
                     "longitude": -81.56,
                     "type": "nodeTypeB",
-                    "props": {
-                        "numericPropExampleA": {
-                            "value": 1000,
-                        },
-                        "numericPropExampleB": {
-                            "value": 250,
-                        },
-                        "booleanPropExample": {
-                            "value": True,
-                        },
+                    "values": {
+                        "numericPropExampleA": 1000,
+                        "numericPropExampleB": 250,
+                        "booleanPropExample": True,
                     },
                 },
                 "node5": {
                     "latitude": 42.361176,
                     "longitude": -71.084707,
                     "type": "nodeTypeB",
-                    "props": {
-                        "numericPropExampleA": {
-                            "value": 1000,
-                        },
-                        "numericPropExampleB": {
-                            "value": 250,
-                        },
-                        "booleanPropExample": {
-                            "value": True,
-                        },
+                    "values": {
+                        "numericPropExampleA": 1000,
+                        "numericPropExampleB": 250,
+                        "booleanPropExample": True,
                     },
                 },
             },
@@ -1574,9 +1520,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Boolean Prop Example",
                             "type": "toggle",
                             "value": True,
-                            "enabled": True,
                             "help": "Help for boolean prop",
                         },
+                    },
+                    "values": {
+                        "booleanPropExample": True,
                     },
                 },
                 "country": {
@@ -1601,86 +1549,65 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Ontario, Canada",
                     "geoJsonValue": "CA.ON",
                     "type": "state",
-                    "props": {
-                        "numericPropExampleC": {
-                            "timeValues": {
-                                0: { "value": 0 },
-                                1: { "value": 100 },
-                                2: { "value": 300 },
-                            }
+                    "values": {
+                        "timeValues": {
+                            0: { "numericPropExampleC": 0 },
+                            1: { "numericPropExampleC": 100 },
+                            2: { "numericPropExampleC": 300 },
                         }
-                    },
+                    }
+
                 },
                 "geo2": {
                     "name": "Michigan, USA",
                     "geoJsonValue": "US.MI",
                     "type": "state",
-                    "props": {
-                        "numericPropExampleC": {
-                            "value": 300,
-                        },
-                        "booleanPropExample": {
-                            "value": True,
-                        }
+                    "values": {
+                        "numericPropExampleC": 300,                        
+                        "booleanPropExample": True,                      
                     },
                 },
                 "geo3": {
                     "name": "Massachusetts, USA",
                     "geoJsonValue": "US.MA",
                     "type": "state",
-                    "props": {
-                        "numericPropExampleC": {
-                            "value": 250,
-                        },
-                        "booleanPropExample": {
-                            "value": False,
-                        }
+                    "values": {
+                        "numericPropExampleC": 250,                    
+                        "booleanPropExample": False,                        
                     },
                 },
                 "geo4": {
                     "name": "Florida, USA",
                     "geoJsonValue": "US.FL",
                     "type": "state",
-                    "props": {
-                        "numericPropExampleC": {
-                            "value": 100,
-                        },
-                        "booleanPropExample": {
-                            "value": False,
-                        }
+                    "values": {
+                        "numericPropExampleC": 100,                        
+                        "booleanPropExample": False,                
                     },
                 },
                 "geo5": {
                     "name": "Indiana, USA",
                     "geoJsonValue": "US.FL",
                     "type": "state",
-                    "props": {
-                        "numericPropExampleC": {
-                            "value": 200,
-                        },
-                        "booleanPropExample": {
-                            "value": False,
-                        }
+                    "values": {
+                        "numericPropExampleC": 200,
+                        "booleanPropExample": False,  
                     },
-                },
+                },    
                 "geoCountry1": {
                     "name": "Canada",
                     "geoJsonValue": "CA",
                     "type": "country",
-                    "props": {
-                        "numericPropExampleC": {
-                            "value": 50,
-                        }
-                    },
+                    "values": {
+                        "numericPropExampleC": 50,
+                        },
                 },
                 "geoCountry2": {
                     "name": "USA",
                     "geoJsonValue": "US",
                     "type": "country",
-                    "props": {
-                        "numericPropExampleC": {
-                            "value": 800,
-                        }
+                    "values": {
+                        "numericPropExampleC": 800,
                     },
                 },
             },
