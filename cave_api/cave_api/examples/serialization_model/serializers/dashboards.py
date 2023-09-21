@@ -13,12 +13,12 @@ def serialize_item(item):
     return out
 
 
-def get_dashboards_data(data_dir):
+def get_pages_data(data_dir):
     data = {}
     layout_data = drop_none(pamda.read_csv(data_dir + "/layout.csv", cast_items=True))
     for item in layout_data:
         id = item.pop("id")
         if id not in data:
-            data[id] = {"dashboardLayout": []}
-        data[id]["dashboardLayout"].append(serialize_item(item))
+            data[id] = {"pageLayout": []}
+        data[id]["pageLayout"].append(serialize_item(item))
     return {"data": data}

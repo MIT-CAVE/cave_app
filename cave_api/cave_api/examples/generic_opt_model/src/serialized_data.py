@@ -63,11 +63,11 @@ def get_serialized_data():
                         "value": False,
                         "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
                     },
-                    "dashboards": {
+                    "pages": {
                         "name": "Dashboards",
                         "showToggle": True,
                         "value": False,
-                        "data": {"db1": ["dashboards", "data"]},
+                        "data": {"db1": ["pages", "data"]},
                     },
                 },
                 "iconUrl": "https://react-icons.mitcave.com/4.8.0",
@@ -192,10 +192,10 @@ def get_serialized_data():
                 },
             }
         },
-        "dashboards": {
+        "pages": {
             "data": {
                 "dash_1": {
-                    "dashboardLayout": [
+                    "pageLayout": [
                         {
                             "chart": "Bar",
                             "grouping": "Sum",

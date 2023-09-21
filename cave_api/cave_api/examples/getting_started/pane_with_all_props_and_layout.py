@@ -12,6 +12,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "appBar": {
+            # Specify the order of items as they will appear in the app bar
+            "order": {
+                "data": ["refreshButton", "examplePropsPane"],
+            },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
                 # This is useful for resetting the app to its initial state
@@ -20,7 +24,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
-                    "order": 0,
                 },
                 # Add a pane to the app bar
                 # This will add a button to the app bar that opens a pane
@@ -30,7 +33,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "icon": "fa/FaCogs",
                     "type": "pane",
                     "bar": "upperLeft",
-                    "order": 1,
                 },
             },
         },
@@ -49,16 +51,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericInputExample": {
                             "name": "Numeric Input Example",
                             "type": "num",
-                            "value": 50,
-                            "enabled": True,
                             "help": "Help for the numeric input example",
                             "unit": "units",
                         },
                         "numericSliderExample": {
                             "name": "Numeric Slider Example",
                             "type": "num",
-                            "value": 50,
-                            "enabled": True,
                             "variant": "slider",
                             "help": "Help for the numeric slider example",
                             "maxValue": 100,
@@ -74,7 +72,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Text Input Example",
                             "type": "text",
                             "value": "Example Text Here",
-                            "enabled": True,
                             "help": "Help for the text input example",
                         },
                         "textAreaInputExample": {
@@ -83,7 +80,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "textarea",
                             "rows": 6,
                             "value": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
-                            "enabled": True,
                             "help": "Help for the text area input example",
                         },
                         "miscHeader": {
@@ -94,8 +90,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "toggleInputExample": {
                             "name": "Toggle Input Example",
                             "type": "toggle",
-                            "value": True,
-                            "enabled": True,
                             "help": "Help for the toggle input example",
                         },
                         "buttonInputExample": {
@@ -103,21 +97,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "value": "Press Me!",
                             "type": "button",
                             "apiCommand": "test",
-                            "enabled": True,
                             "help": "Press this button to create an error",
                         },
                         "pictureExample": {
                             "name": "Picture Example",
                             "type": "media",
                             "variant": "picture",
-                            "value": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
                             "help": "Click the expand button to view an enlarged version",
                         },
                         "videoExample": {
                             "name": "Video Example",
                             "type": "media",
                             "variant": "video",
-                            "value": "https://www.youtube.com/embed/6q5R1TDmKnU",
                             "help": "Click the play button to start the video",
                         },
                         "selectorHeader": {
@@ -129,99 +120,87 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Dropdown Item Example",
                             "type": "selector",
                             "variant": "dropdown",
-                            "value": ["option_c"],
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the dropdown",
                         },
                         "checkboxItemExample": {
                             "name": "Checkbox Item Example",
                             "type": "selector",
                             "variant": "checkbox",
-                            "value": ["option_a", "option_c"],
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select all relevant items",
                         },
                         "radioItemExample": {
                             "name": "Radio Item Example",
                             "type": "selector",
                             "variant": "radio",
-                            "value": ["option_a"],
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select one item from the list",
                         },
                         "hstepperItemExample": {
                                 "name": "Horizontal Stepper Item Example",
                                 "type": "selector",
                                 "variant": "hstepper",
-                                "value": ["option_c"],
                                 "options": {
                                     "option_a": {"name": "Option A"},
                                     "option_b": {"name": "Option B"},
                                     "option_c": {"name": "Option C"},
                                     },
-                                "enabled": True,
+
                                 "help": "Select an option from the stepper",
                         },
                         "vstepperItemExample": {
                                 "name": "Vertical Stepper Item Example",
                                 "type": "selector",
                                 "variant": "vstepper",
-                                "value": ["option_c"],
                                 "options": {
                                     "option_a": {"name": "Option A"},
                                     "option_b": {"name": "Option B"},
                                     "option_c": {"name": "Option C"},
                                     },
-                                "enabled": True,
+
                                 "help": "Select an option from the stepper",
                         },
                         "hradioItemExample": {
                                 "name": "Horizontal Radio Item Example",
                                 "type": "selector",
                                 "variant": "hradio",
-                                "value": ["option_c"],
                                 "options": {
                                     "option_a": {"name": "Option A"},
                                     "option_b": {"name": "Option B"},
                                     "option_c": {"name": "Option C"},
                                     },
-                                "enabled": True,
+
                                 "help": "Select an option from the radio",
                         },
                         "comboBoxItemExample": {
                             "name": "ComboBox Item Example",
                             "type": "selector",
                             "variant": "combobox",
-                            "value": ["option_b"],
                             "placeholder": "Option",
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the combobox",
                         },
                         "nestedItemExample": {
                             "name": "Nested Item Example",
                             "type": "selector",
                             "variant": "nested",
-                            "value": ["t1_b1_tw1", "t1_b1_tw2", "t1_b2_tw2", "t2_b1_tw1", "t2_b1_tw2"],
                             "options": {
                                 "t1_b1_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch1']},
                                 "t1_b1_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch1']},
@@ -233,7 +212,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "t2_b2_tw1": {"name": "Twig1", "path": ['Tree2', 'Branch2']},
                                 "t2_b2_tw2": {"name": "Twig2", "path": ['Tree2', 'Branch2']},
                             },
-                            "enabled": True,
                             "help": "Select all relevant items",
                         },
                         "dateTimeHeader": {
@@ -245,26 +223,40 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Date Example",
                             "type": "date",
                             "variant": "date",
-                            "value": "07/20/1969",
-                            "enabled": True,
                             "help": "The Eagle has landed!",
                         },
                         "timeItemExample": {
                             "name": "Time Example",
                             "type": "date",
                             "variant": "time",
-                            "value": "1969-07-20T20:17:40",
-                            "enabled": True,
                             "help": "The Eagle has landed!",
                         },
                         "dateTimeItemExample": {
                             "name": "Date and Time Example",
                             "type": "date",
                             "variant": "datetime",
-                            "value": "1969-07-20T20:17:40",
-                            "enabled": True,
                             "help": "The Eagle has landed!",
                         },
+                    },
+                    "values": {
+                        "numericInputExample": 50,
+                        "numericSliderExample": 50,
+                        "textInputExample": "Example Text Here",
+                        "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
+                        "toggleInputExample": True,
+                        "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
+                        "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                        "dropdownItemExample": ["option_c"],
+                        "checkboxItemExample": ["option_a", "option_c"],
+                        "radioItemExample": ["option_a"],
+                        "hstepperItemExample": ["option_c"],
+                        "vstepperItemExample": ["option_c"],
+                        "hradioItemExample": ["option_c"],
+                        "comboBoxItemExample": ["option_b"],
+                        "nestedItemExample": ["t1_b1_tw1", "t1_b1_tw2", "t1_b2_tw2", "t2_b1_tw1", "t2_b1_tw2"],
+                        "dateItemExample": "07/20/1969",
+                        "timeItemExample": "1969-07-20T20:17:40",
+                        "dateTimeItemExample": "1969-07-20T20:17:40",
                     },
                     "layout": {
                         "type": "grid",

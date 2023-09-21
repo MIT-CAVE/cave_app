@@ -12,6 +12,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "appBar": {
+            # Specify the order of items as they will appear in the app bar
+            "order": {
+                "data": ["refreshButton", "examplePane"],
+            },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
                 # This is useful for resetting the app to its initial state
@@ -20,7 +24,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
-                    "order": 0,
                 },
                 # Add a pane to the app bar
                 # This will add a button to the app bar that opens a pane
@@ -30,7 +33,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "icon": "fa/FaCogs",
                     "type": "pane",
                     "bar": "upperLeft",
-                    "order": 1,
                 },
             },
         },

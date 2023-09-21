@@ -22,11 +22,11 @@
                 "value": false,
                 "data": {"ml1": ["maps", "data", "map1", "legendGroups"]}
             },
-            "dashboards": {
+            "pages": {
                 "name": "Dashboards",
                 "showToggle": true,
                 "value": false,
-                "data": {"db1": ["dashboards", "data"]}
+                "data": {"db1": ["pages", "data"]}
             }
         },
         "iconUrl": "https://react-icons.mitcave.com/4.8.0",

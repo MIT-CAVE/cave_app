@@ -2,7 +2,7 @@ import json
 import pkg_resources
 from cave_api.serialization_model.serializers import (
     get_categories_data,
-    get_dashboards_data,
+    get_pages_data,
     get_app_bar_data,
     get_panes_data,
     get_maps_data,
@@ -26,7 +26,7 @@ def get_api_object():
         "categories": get_categories_data(data_location + "categories/"),
         "appBar": get_app_bar_data(data_location + "appBar/"),
         "panes": get_panes_data(data_location + "panes/"),
-        "dashboards": get_dashboards_data(data_location + "dashboards/"),
+        "pages": get_pages_data(data_location + "pages/"),
         "maps": get_maps_data(data_location + "maps/"),
         "arcs": get_data(data_location + "arcs/"),
         "nodes": get_data(data_location + "nodes/"),

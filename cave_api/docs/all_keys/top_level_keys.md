@@ -7,7 +7,7 @@ All top level key documentation is linked below. Click on each respective links 
 
 - ## [`categories`](categories.md)
 
-- ## [`dashboards`](dashboards.md)
+- ## [`pages`](pages.md)
 
 - ## [`geos`](geos.md)
 

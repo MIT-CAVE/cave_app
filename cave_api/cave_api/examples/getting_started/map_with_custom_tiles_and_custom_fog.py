@@ -9,6 +9,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 # Once you select a version, you can see the available icons in the version
                 # EG: https://react-icons.mitcave.com/4.10.1/icon_list.txt
                 "iconUrl": "https://react-icons.mitcave.com/4.10.1",
+                # Specify the order of map style items as they will appear in the style selector
+                "order": {
+                    "additionalMapStyles": ["mapboxDark", "cartoVoyager"],
+                },
                 # Add custom map styles
                 "additionalMapStyles": {
                     # For general mapbox GL based styles, a simple api interface can be used with
@@ -16,7 +20,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "mapboxDark": {
                         "name": "Mapbox Dark",
                         "icon": "md/MdBrightness2",
-                        "order": 0,
                         # For mapbox styles:
                         # See: https://docs.mapbox.com/api/maps/styles/
                         "spec": "mapbox://styles/mapbox/dark-v11",
@@ -35,7 +38,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "cartoVoyager": {
                         "name": 'Carto Voyager',
                         "icon": 'md/MdExplore',
-                        "order": 1,
                         # For CartoDB based Mapbox GL styles:
                         # See: https://github.com/CartoDB/basemap-styles/blob/master/docs/basemap_styles.json
                         "spec": 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
@@ -78,6 +80,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "appBar": {
+            "appBarId": "mapDashboard",
+            # Specify the order of items as they will appear in the app bar
+            "order": {
+                "data": ["refreshButton", "mapDashboard"],
+            },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
                 # This is useful for resetting the app to its initial state
@@ -86,14 +93,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
-                    "order": 0,
                 },
                 # Add a pane button to launch a map focused dashboard
                 "mapDashboard": {
                     "icon": "md/MdMap",
-                    "type": "stats",
+                    "type": "page",
                     "bar": "upperLeft",
-                    "order": 1,
                 },
             },
         },
@@ -116,10 +121,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
         },
-        "dashboards": {
+        "pages": {
             "data": {
                 "mapDashboard": {
-                    "dashboardLayout": [
+                    "pageLayout": [
                         {
                             "type": "maps",
                             "mapId": "exampleMap"

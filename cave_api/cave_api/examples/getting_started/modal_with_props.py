@@ -12,6 +12,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "appBar": {
+            # Specify the order of items as they will appear in the app bar
+            "order": {
+                "data": ["refreshButton", "exampleModal"],
+            },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
                 # This is useful for resetting the app to its initial state
@@ -20,7 +24,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
-                    "order": 0,
                 },
                 # Add a modal to the app bar
                 # This will add a button to the app bar that opens a modal
@@ -30,7 +33,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "icon": "fa/FaSlidersH",
                     "type": "modal",
                     "bar": "upperLeft",
-                    "order": 1,
                 },
             },
         },
@@ -49,10 +51,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericInputExample": {
                             "name": "Numeric Input Example",
                             "type": "num",
-                            "value": 100,
                             "help": "Help for the numeric input example",
                             "unit": "widgets",
                         },
+                    },
+                    "values": {
+                        "numericInputExample": 100,
                     },
                 },
             },

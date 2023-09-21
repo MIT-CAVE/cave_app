@@ -97,7 +97,7 @@ Key | Default | Description
 `customMapStyle*.style` | Required | Either a URL string pointing to a [Mapbox-GL style spec](https://docs.mapbox.com/mapbox-gl-js/style-spec/), or a dictionary complying with the spec.
 <a name="demo">`demo`</a> | `{}` | A dictionary with appBar views as keys, and and objects with values that modify the default demo mode.
 `demo.customViewKey*.show` | `True` | A boolean value that determines whether demo mode will automatically display this view.
-`demo.customViewKey*.displayTime` | `100` for maps, `10` for dashboards | An integer or a float value representing the number of seconds to display the view during demo mode.
+`demo.customViewKey*.displayTime` | `100` for maps, `10` for pages | An integer or a float value representing the number of seconds to display the view during demo mode.
 `demo.customMapKey*.scrollSpeed` | `0.05` | A float value representing degrees of rotation per frame (degrees per 13 milliseconds). This key only applies to map views
 
 ## Example

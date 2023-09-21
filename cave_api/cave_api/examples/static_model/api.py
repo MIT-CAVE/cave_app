@@ -100,11 +100,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "value": False,
                         "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
                     },
-                    "dashboards": {
+                    "pages": {
                         "name": "Dashboards",
                         "showToggle": True,
                         "value": False,
-                        "data": {"db1": ["dashboards", "data"]},
+                        "data": {"db1": ["pages", "data"]},
                     },
                 },
                 "iconUrl": "https://react-icons.mitcave.com/4.10.1",

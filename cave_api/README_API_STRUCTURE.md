@@ -10,7 +10,7 @@ At first glance, the top-level keys in the data structure look like this:
     'appBar': {...},
     'arcs': {...},
     'categories': {...},
-    'dashboards': {...},
+    'pages': {...},
     'geos': {...},
     'kpis': {...},
     'kwargs':{...},
@@ -72,7 +72,7 @@ Custom keys are always included as a direct child of common keys such as `data`,
 
 - #### [`categories`](docs/all_keys/categories.md)
 
-- #### [`dashboards`](docs/all_keys/dashboards.md)
+- #### [`pages`](docs/all_keys/pages.md)
 
 - #### [`geos`](docs/all_keys/geos.md)
 

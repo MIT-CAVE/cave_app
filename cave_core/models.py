@@ -13,7 +13,7 @@ import type_enforced
 
 # Internal Imports
 from cave_core.utils.broadcasting import Socket
-from cave_api import execute_command
+from cave_api.api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
 

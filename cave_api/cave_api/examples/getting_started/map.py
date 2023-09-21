@@ -12,6 +12,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "appBar": {
+            "appBarId": "mapDashboard",
+            # Specify the order of items as they will appear in the app bar
+            "order": {
+                "data": ["refreshButton", "mapDashboard"]
+            },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
                 # This is useful for resetting the app to its initial state
@@ -20,14 +25,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
-                    "order": 0,
                 },
                 # Add a pane button to launch a map focused dashboard
                 "mapDashboard": {
                     "icon": "md/MdMap",
-                    "type": "stats",
+                    "type": "page",
                     "bar": "upperLeft",
-                    "order": 1,
                 },
             },
         },
@@ -50,10 +53,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
         },
-        "dashboards": {
+        "pages": {
             "data": {
                 "mapDashboard": {
-                    "dashboardLayout": [
+                    "pageLayout": [
                         {
                             "type": "maps",
                             "mapId": "exampleMap"

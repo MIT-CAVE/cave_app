@@ -8,10 +8,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 # https://react-icons.mitcave.com/versions.txt
                 # Once you select a version, you can see the available icons in the version
                 # EG: https://react-icons.mitcave.com/4.10.1/icon_list.txt
-                "iconUrl": "https://react-icons.mitcave.com/4.10.1"
+                "iconUrl": "https://react-icons.mitcave.com/4.10.1",
             },
         },
         "appBar": {
+            # Specify the order of items as they will appear in the app bar
+            "order": {
+                "data": ["refreshButton", "appSettings"],
+            },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
                 # This is useful for resetting the app to its initial state
@@ -20,26 +24,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
-                    "order": 0,
                 },
                 # Add a pane button to launch the app settings pane
                 "appSettings": {
                     "icon": "md/MdOutlineSettings",
-                    "type": "pane",
+                    "type": "settings",
                     "bar": "upperLeft",
-                    "order": 1,
-                },
-            },
-        },
-        "panes": {
-            "data": {
-                # Create a pane that allows the user to interact with app settings
-                # App settings are used to configure various aspects of the app
-                # Note: This key must match the key used in the app bar above
-                "appSettings": {
-                    "name": "App Settings Pane",
-                    # By using the `appSettings` variant, the pane will be rendered as an app settings pane
-                    "variant": "appSettings",
                 },
             },
         },

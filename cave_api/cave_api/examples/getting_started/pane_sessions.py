@@ -12,6 +12,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "appBar": {
+            "order": {
+                "data": ["refreshButton", "session"],
+            },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
                 # This is useful for resetting the app to its initial state
@@ -20,14 +23,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "apiCommand": "init",
                     "type": "button",
                     "bar": "upperLeft",
-                    "order": 0,
                 },
                 # Add a pane button to launch the sessions pane
                 "session": {
                     "icon": "md/MdApi",
                     "type": "pane",
                     "bar": "upperLeft",
-                    "order": 1,
                 },
             },
         },
