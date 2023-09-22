@@ -80,6 +80,7 @@ def ws_api_app(fn):
         try:
             fn(request)
         except Exception as e:
+            session = request.user.session
             traceback_str = format_exception(e)
             if settings.DEBUG:
                 print(traceback_str)
@@ -92,8 +93,8 @@ def ws_api_app(fn):
                 duration=10,
                 traceback=traceback_str,
             )
-            # Stop any loading that might exist for the session unless a loading error was raised
-            if session is not None:
-                if not session.__dict__.get("__process_blocked_for_loading__", False):
-                    session.set_loading(False)
+            # Turn off loading and set execution as False if the error was not raised related to executing
+            if session.executing and not self.__dict__.get("__blocked_due_to_execution__"):
+                session.set_executing(False)
+                session.broadcast_loading(False)
     return wrap

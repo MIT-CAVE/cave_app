@@ -47,7 +47,7 @@ class Socket:
             raise TypeError(f"Invalid `data` type ('{type(data)}'). `data` must be a dict.")
         return json.dumps({"event": event, "data": data, **kwargs})
 
-    def broadcast(self, event:str, data:dict, loading:bool=True, **kwargs):
+    def broadcast(self, event:str, data:dict, **kwargs):
         """
         Broadcasts a message to all users related to an object by object.get_user_ids()
 
@@ -57,17 +57,14 @@ class Socket:
             - Type: str
             - What: The event to broadcast
             - Allowed Values: "mutation", "overwrite", "message", "updateSessions", "updateLoading"
+            - Note: If `event` is "overwrite", then a loading broadcast will be sent instead
         - `data`:
             - Type: dict
             - What: The data to broadcast
-        - `loading`:
-            - Type: bool
-            - What: Whether or not to broadcast a loading event before broadcasting this message
-            - Default: True
-            - Note: This is used to allow users to see a loading screen while data is transmitted
         """
         payload = self.format_broadcast_payload(event=event, data=data, **kwargs)
-        broadcast_type = "loadingbroadcast" if loading else "broadcast"
+        # Note: broadcast_type refers to the function called in consumer.py
+        broadcast_type = "loadingbroadcast" if event=="overwrite" else "broadcast"
         for user_id in self.model_object.get_user_ids():
             sync_send(str(user_id), {"type": broadcast_type, "payload": payload})
 

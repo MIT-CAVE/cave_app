@@ -99,14 +99,8 @@ class CustomUser(AbstractUser):
         if prev_session is not None:
             prev_session.update_user_ids()
         # Query all session data:
-        # Note: get_changed_data needs to be executed prior to calling session.versions since it can mutate them
-        # Note: Previous versions should always be empty when switching sessions since versions are incremental and have collisions
-        data = session.get_changed_data(previous_versions={})
-        Socket(self).broadcast(
-            event="overwrite",
-            versions=session.versions,
-            data=data,
-        )
+        # Broadcast the new session data
+        session.broadcast_changed_data(previous_versions={})
         self.broadcast_current_session_id()
         self.broadcast_current_session_loading()
 
@@ -258,7 +252,6 @@ class CustomUser(AbstractUser):
         Socket(self).broadcast(
             event="updateSessions",
             data={"data_path": ["session_id"], "data": self.session.id},
-            loading=False,
         )
 
     def broadcast_current_session_loading(self):
@@ -269,9 +262,8 @@ class CustomUser(AbstractUser):
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],
-                "data": self.session.loading,
+                "data": self.session.executing,
             },
-            loading=False,
         )
     #############################################
     # Access Utils
@@ -820,7 +812,7 @@ class Teams(models.Model):
     def get_sessions(self):
         return Sessions.objects.filter(team=self)
 
-    def update_sessions_list(self, broadcast=False):
+    def update_sessions_list(self):
         sessions = self.get_sessions()
         self.set_session_count(len(sessions))
         Socket(self).broadcast(
@@ -842,7 +834,6 @@ class Teams(models.Model):
                     },
                 },
             },
-            loading=False,
         )
 
     # Metadata
@@ -902,9 +893,9 @@ class Sessions(models.Model):
         _("description"), max_length=512, help_text=_("Description for the session"), default="", blank=True
     )
     versions = models.JSONField(_("versions"), help_text=_("The session versions"), default=dict)
-    loading = models.BooleanField(
-        _("Loading"),
-        help_text=_("Is this session currently loading?"),
+    executing = models.BooleanField(
+        _("executing"),
+        help_text=_("Is this session currently executing?"),
         default=False,
     )
     user_ids = models.JSONField(
@@ -932,9 +923,9 @@ class Sessions(models.Model):
             for obj in session_data.filter(data_name__in=keys, sendToClient=True)
         }
 
-    def get_changed_data(self, previous_versions):
+    def broadcast_changed_data(self, previous_versions, broadcast=True):
         """
-        Returns all data that has changed given some set of previous versions
+        Broadcasts and returns all data that has changed given some set of previous versions
 
         Requires:
 
@@ -950,8 +941,16 @@ class Sessions(models.Model):
         updated_keys = [
             key for key, value in self.versions.items() if previous_versions.get(key) != value
         ]
-
-        return self.get_client_data(keys=updated_keys, session_data=session_data)
+        data = self.get_client_data(keys=updated_keys, session_data=session_data)
+        if broadcast:
+            Socket(self).broadcast(
+                event="overwrite",
+                versions=self.versions,
+                data=data,
+            )
+        if not self.executing:
+            self.broadcast_loading(False)
+        return data
 
     def wipe_data(self):
         """
@@ -1017,7 +1016,9 @@ class Sessions(models.Model):
             - What: Queryset of SessionData objects
             - Default: All SessionData objects related to this session object
         """
-        self.set_loading(True)
+        self.error_on_executing()
+        self.broadcast_loading(True)
+        self.set_executing(True)
         if data_queryset == None:
             data_queryset = SessionData.objects.filter(session=self)
         if isinstance(command_keys, list):
@@ -1029,7 +1030,7 @@ class Sessions(models.Model):
         command_output = execute_command(session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict)
         kwargs = command_output.pop("kwargs", {})
         self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
-        self.set_loading(False)
+        self.set_executing(False)
 
     def mutate(self, data_version, data_name, data_path, data_value=None, ignore_version=False):
         """
@@ -1135,7 +1136,22 @@ class Sessions(models.Model):
         if len(self.get_user_ids()) > 0:
             raise Exception("Oops! That session still has users in it.")
 
-    def set_loading(self, loading):
+    def error_on_executing(self):
+        if self.executing:
+            self.__dict__['__blocked_due_to_execution__'] = True
+            self.broadcast_loading(True)
+            raise Exception(
+                "Oops! This session is currently executing a process. Please wait until it is finished before making changes."
+            )
+
+    def set_executing(self, executing):
+        # Update the executing state only if it is changing
+        if executing != self.executing:
+            self.executing = executing
+            self.save(update_fields=["executing"])
+            
+
+    def broadcast_loading(self, loading):
         # Let the user know the updated loading state
         Socket(self).broadcast(
             event="updateLoading",
@@ -1143,18 +1159,7 @@ class Sessions(models.Model):
                 "data_path": ["session_loading"],
                 "data": loading,
             },
-            loading=False,
         )
-        # If the session is currently loading and the user is requesting something that would require loading, block any changes
-        if self.loading and loading:
-            self.__dict__['__process_blocked_for_loading__']=True
-            raise Exception(
-                "Oops! This session is currently loading. Please wait until it is finished loading before making changes."
-            )
-        # Update the loading state only if it is changing
-        if loading != self.loading:
-            self.loading = loading
-            self.save(update_fields=["loading"])
 
     def save(self, *args, **kwargs):
         """
