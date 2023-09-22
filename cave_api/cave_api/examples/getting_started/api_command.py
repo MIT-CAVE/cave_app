@@ -16,7 +16,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "appBar": {
                 # Specify the order of items as they will appear in the app bar
                 "order": {
-                    "data": ["refreshButton", "examplePropsPane"],
+                    "data": ["refreshButton", "myCommandButton"],
                 },
                 "data": {
                     # Add a simple button to the app bar to trigger the `init` command

@@ -1,1 +1,1 @@
-from .examples.getting_started.pane_with_all_props_and_layout import execute_command
+from .examples.getting_started.api_command import execute_command
