@@ -85,14 +85,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "showToggle": True,
                         "value": False,
                         "data": {
-                            "ab1": ["appBar", "paneState"],
+                            "ab1": ["panes", "paneState"],
                         },
                     },
                     "pageSelection": {
                         "name": "Page Selection",
                         "showToggle": True,
                         "value": False,
-                        "data": {"ps1": ["appBar", "appBarId"]},
+                        "data": {"ps1": ["pages", "currentPage"]},
                     },
                     "mapLayers": {
                         "name": "Map Layers",
@@ -204,7 +204,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "appBar": {
-            "appBarId": "dash1",
             "order": {
                 "data": ["session", "appSettings", "resetButton", "buttonSolve", "examplePropsPane", "dash1", "dash2"],
             },
@@ -681,6 +680,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "pages": {
+            "currentPage": "dash2",
             "data": {
                 "dash1": {
                     "pageLayout": [
