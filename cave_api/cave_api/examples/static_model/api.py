@@ -197,8 +197,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                 },
                 "debug": True,
-                "timeLength": 3,
-                "timeUnits": "Century",
+                "time": {
+                    "timeLength": 3,
+                    "timeUnits": "Century",
+                },
             },
         },
         "appBar": {
