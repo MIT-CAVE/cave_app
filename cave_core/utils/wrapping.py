@@ -94,7 +94,7 @@ def ws_api_app(fn):
                 traceback=traceback_str,
             )
             # Turn off loading and set execution as False if the error was not raised related to executing
-            if session.executing and not self.__dict__.get("__blocked_due_to_execution__"):
+            if session.executing and not session.__dict__.get("__blocked_due_to_execution__"):
                 session.set_executing(False)
                 session.broadcast_loading(False)
     return wrap
