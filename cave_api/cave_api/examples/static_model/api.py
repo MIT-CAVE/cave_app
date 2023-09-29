@@ -80,12 +80,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                 },
                 "sync": {
-                    "appBar": {
-                        "name": "App Bar",
+                    "panes": {
+                        "name": "Open Pane",
                         "showToggle": True,
                         "value": False,
                         "data": {
-                            "ab1": ["panes", "paneState"],
+                            "ab1": ["panes", "paneState", "left"],
+                            "ab2": ["panes", "paneState", "right"],
                         },
                     },
                     "pageSelection": {
@@ -99,6 +100,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "showToggle": True,
                         "value": False,
                         "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
+                    },
+                    "modals": {
+                        "name": "Open Modal",
+                        "showToggle": True,
+                        "value": False,
+                        "data": {"pn1": ["panes", "paneState", "center"]},
                     },
                     "pages": {
                         "name": "Dashboards",
@@ -115,6 +122,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "order": {
                     "additionalMapStyles": ["watercolor", "streets", "outdoors", "satellite", "satellite_streets"],
+                    "sync": ['panes', 'modals', 'pageSelection', 'mapLayers', 'pages'],
                 },
                 "additionalMapStyles": {
                     "watercolor": {
@@ -234,7 +242,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "examplePropsPane": {
                     "icon": "fa/FaCogs",
-                    "type": "pane",
+                    "type": "wall",
                     "bar": "upperLeft",
                 },
                 "dash1": {
@@ -255,7 +263,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
         },
-        "modals": {
+        "panes": {
             "data": {
                 "exampleModal": {
                     "name": "Example Modal",
@@ -285,10 +293,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                 },
-            },
-        },
-        "panes": {
-            "data": {
                 "examplePropsPane": {
                     "name": "Example Props Pane",
                     "variant": "options",
