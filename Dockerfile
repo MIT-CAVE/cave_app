@@ -1,5 +1,8 @@
-FROM python:3.11.3-bullseye
+FROM python:3.11-alpine
 ENV PYTHONUNBUFFERED=1
+
+RUN apk update && apk --no-cache add \
+    bash
 
 COPY requirements.txt /app/requirements.txt
 COPY utils/extra_requirements.txt /app/utils/extra_requirements.txt
@@ -11,6 +14,5 @@ RUN pip install -r requirements.txt
 COPY ./cave_api/requirements.txt /app/cave_api/requirements.txt
 RUN pip install -r cave_api/requirements.txt
 
-# Run after pip install to allow caching most of the pip work 
-COPY . /app
-RUN pip install -e ./cave_api
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
