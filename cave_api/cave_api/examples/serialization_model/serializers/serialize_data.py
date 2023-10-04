@@ -14,9 +14,7 @@ def get_file_data(data_dir):
     with open(data_dir + json_filename) as f:
         types = json.load(f)
 
-    return {"types": types}, drop_none(pamda.read_csv(
-        data_dir + csv_filename, cast_items=True
-    ))
+    return {"types": types}, drop_none(pamda.read_csv(data_dir + csv_filename, cast_items=True))
 
 
 def validate_required_keys(required_keys, data):
@@ -50,7 +48,9 @@ def get_data(data_dir):
                     element_dict[key] = item
                 else:
                     if key in required_keys:
-                        raise ValueError(f"Recieved a None value for {key}, but this key is required")
+                        raise ValueError(
+                            f"Recieved a None value for {key}, but this key is required"
+                        )
             elif key in categories.keys():
                 if "category" not in element_dict.keys():
                     element_dict["category"] = {}

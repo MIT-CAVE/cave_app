@@ -225,15 +225,15 @@ class CustomUser(AbstractUser):
         return [self.id]
 
     def create_personal_team(self):
-        team, team_created = Teams.objects.get_or_create(name=f"{self.username} - Personal", is_personal_team=True)
+        team, team_created = Teams.objects.get_or_create(
+            name=f"{self.username} - Personal", is_personal_team=True
+        )
         if team_created:
             team.add_user(self)
         return team
 
     def get_or_create_personal_team(self):
-        team = Teams.objects.filter(
-            id__in=self.team_ids, is_personal_team=True
-        ).first()
+        team = Teams.objects.filter(id__in=self.team_ids, is_personal_team=True).first()
         if team is None:
             team = self.create_personal_team()
         return team
@@ -265,6 +265,7 @@ class CustomUser(AbstractUser):
                 "data": self.session.executing,
             },
         )
+
     #############################################
     # Access Utils
     #############################################
@@ -778,9 +779,7 @@ class Teams(models.Model):
     )
     is_personal_team = models.BooleanField(
         _("Is Personal Team"),
-        help_text=_(
-            "Is this team a personal team? Used only for admin filtering purposes."
-        ),
+        help_text=_("Is this team a personal team? Used only for admin filtering purposes."),
         default=False,
     )
 
@@ -890,7 +889,11 @@ class Sessions(models.Model):
         help_text=_("The associated team"),
     )
     description = models.TextField(
-        _("description"), max_length=512, help_text=_("Description for the session"), default="", blank=True
+        _("description"),
+        max_length=512,
+        help_text=_("Description for the session"),
+        default="",
+        blank=True,
     )
     versions = models.JSONField(_("versions"), help_text=_("The session versions"), default=dict)
     executing = models.BooleanField(
@@ -997,7 +1000,9 @@ class Sessions(models.Model):
         # Update versions post replacement
         self.update_versions()
 
-    def execute_api_command(self, command, command_keys=None, data_queryset=None, mutate_dict=dict()):
+    def execute_api_command(
+        self, command, command_keys=None, data_queryset=None, mutate_dict=dict()
+    ):
         """
         Execute an API Command given the current data and replaces the entire current session state
 
@@ -1027,7 +1032,9 @@ class Sessions(models.Model):
             data_queryset = data_queryset.filter(sendToApi=True)
         session_data = {i.data_name: i.get_data() for i in data_queryset}
         socket = Socket(self)
-        command_output = execute_command(session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict)
+        command_output = execute_command(
+            session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
+        )
         kwargs = command_output.pop("kwargs", {})
         self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
         self.set_executing(False)
@@ -1138,7 +1145,7 @@ class Sessions(models.Model):
 
     def error_on_executing(self):
         if self.executing:
-            self.__dict__['__blocked_due_to_execution__'] = True
+            self.__dict__["__blocked_due_to_execution__"] = True
             self.broadcast_loading(True)
             raise Exception(
                 "Oops! This session is currently executing a process. Please wait until it is finished before making changes."
@@ -1149,7 +1156,6 @@ class Sessions(models.Model):
         if executing != self.executing:
             self.executing = executing
             self.save(update_fields=["executing"])
-            
 
     def broadcast_loading(self, loading):
         # Let the user know the updated loading state
@@ -1168,13 +1174,12 @@ class Sessions(models.Model):
         """
         super(Sessions, self).save(*args, **kwargs)
         try:
-            update_fields = kwargs.get('update_fields',[])
-            if update_fields==[] or 'name' in update_fields:
+            update_fields = kwargs.get("update_fields", [])
+            if update_fields == [] or "name" in update_fields:
                 self.team.update_sessions_list()
         except:
             pass
-            
-    
+
     @staticmethod
     def error_on_invalid_name(name):
         if name == None or len(str(name)) < 1:
@@ -1330,6 +1335,7 @@ def update_sessions_list_for_team(sender, instance, **kwargs):
     When a session object is deleted, update the sessions list for the associated session team
     """
     instance.team.update_sessions_list()
+
 
 @receiver(post_delete, sender=SessionData, dispatch_uid="remove_session_data_from_cache_on_delete")
 def remove_session_data_from_cache(sender, instance, **kwargs):

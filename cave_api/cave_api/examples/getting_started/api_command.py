@@ -6,7 +6,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "settings": {
                 "data": {
                     # Icon Url is used to load icons from a custom icon library
-                    # See the available versions provided by the cave team here: 
+                    # See the available versions provided by the cave team here:
                     # https://react-icons.mitcave.com/versions.txt
                     # Once you select a version, you can see the available icons in the version
                     # EG: https://react-icons.mitcave.com/4.10.1/icon_list.txt
@@ -47,7 +47,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
         # EG - Toggle the icon between lightbulb and lightbulb outline
         current_icon = session_data["appBar"]["data"]["myCommandButton"]["icon"]
         # Update the icon in the session data
-        session_data["appBar"]["data"]["myCommandButton"]["icon"] = "md/MdLightbulb" if current_icon == "md/MdLightbulbOutline" else "md/MdLightbulbOutline"
+        session_data["appBar"]["data"]["myCommandButton"]["icon"] = (
+            "md/MdLightbulb" if current_icon == "md/MdLightbulbOutline" else "md/MdLightbulbOutline"
+        )
         # Send a message to app users
         socket.notify("Notification: `myCommand` has been triggered!")
         # Log a message in the console

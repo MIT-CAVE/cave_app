@@ -186,62 +186,63 @@ CACHES = {
 ################################################################
 if config("USE_LOGGING", default=False, cast=bool):
     from pathlib import Path
+
     Path(f"{BASE_DIR}/logs/general").mkdir(parents=True, exist_ok=True)
     LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'request_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/request.log',
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "request_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/request.log",
             },
-            'server_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/server.log',
+            "server_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/server.log",
             },
-            'sql_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/sql.log',
+            "sql_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/sql.log",
             },
-            'template_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/template.log',
+            "template_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/template.log",
             },
-            'security_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/security.log',
+            "security_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/security.log",
             },
         },
-        'loggers': {
-            'django.request': {
-                'handlers': ['request_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+        "loggers": {
+            "django.request": {
+                "handlers": ["request_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
-            'django.server': {
-                'handlers': ['server_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+            "django.server": {
+                "handlers": ["server_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
-            'django.db.backends': {
-                'handlers': ['sql_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+            "django.db.backends": {
+                "handlers": ["sql_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
-            'django.template': {
-                'handlers': ['template_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+            "django.template": {
+                "handlers": ["template_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
-            'django.security': {
-                'handlers': ['security_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+            "django.security": {
+                "handlers": ["security_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
         },
     }

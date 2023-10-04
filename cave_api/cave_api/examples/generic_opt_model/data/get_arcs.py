@@ -7,10 +7,10 @@ setup_cost = {"truck": 1, "rail": 1.5, "ocean": 0.1, "air": 2}
 
 
 def haversine_distance(origin, destination):
-    lat1 = origin['meta']["latitude"]
-    lon1 = origin['meta']["longitude"]
-    lat2 = destination['meta']["latitude"]
-    lon2 = destination['meta']["longitude"]
+    lat1 = origin["meta"]["latitude"]
+    lon1 = origin["meta"]["longitude"]
+    lat2 = destination["meta"]["latitude"]
+    lon2 = destination["meta"]["longitude"]
     radius = 6371  # km
 
     dlat = math.radians(lat2 - lat1)

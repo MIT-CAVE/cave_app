@@ -4,7 +4,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "settings": {
             "data": {
                 # Icon Url is used to load icons from a custom icon library
-                # See the available versions provided by the cave team here: 
+                # See the available versions provided by the cave team here:
                 # https://react-icons.mitcave.com/versions.txt
                 # Once you select a version, you can see the available icons in the version
                 # EG: https://react-icons.mitcave.com/4.10.1/icon_list.txt
@@ -32,15 +32,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "horizon-blend": 0.5,
                             "high-color": "#245bde",
                             "space-color": "#000000",
-                            "star-intensity": 0.15
+                            "star-intensity": 0.15,
                         },
                     },
                     "cartoVoyager": {
-                        "name": 'Carto Voyager',
-                        "icon": 'md/MdExplore',
+                        "name": "Carto Voyager",
+                        "icon": "md/MdExplore",
                         # For CartoDB based Mapbox GL styles:
                         # See: https://github.com/CartoDB/basemap-styles/blob/master/docs/basemap_styles.json
-                        "spec": 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
+                        "spec": "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
                         # Complex fog specs allow for even more customization
                         # See: https://docs.mapbox.com/mapbox-gl-js/api/map/#map#setfog
                         "fog": {
@@ -125,10 +125,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "mapDashboard": {
                     "pageLayout": [
-                        {
-                            "type": "maps",
-                            "mapId": "exampleMap"
-                        },
+                        {"type": "maps", "mapId": "exampleMap"},
                     ],
                 },
             },

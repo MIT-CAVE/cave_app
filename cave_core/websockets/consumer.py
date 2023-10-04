@@ -5,22 +5,26 @@ from asgiref.sync import async_to_sync
 
 from .commands import get_command
 
+
 def run_in_background(command, *args, **kwargs):
-    local_thread = threading.Thread(
-            target=command,
-            args=args,
-            kwargs=kwargs
-        )
+    local_thread = threading.Thread(target=command, args=args, kwargs=kwargs)
     local_thread.setDaemon(True)
     local_thread.start()
 
-loading_true=json.dumps({'event':"updateLoading", 'data':{"data_path": ["data_loading"],"data": True}})
-loading_false=json.dumps({'event':"updateLoading", 'data':{"data_path": ["data_loading"],"data": False}})
+
+loading_true = json.dumps(
+    {"event": "updateLoading", "data": {"data_path": ["data_loading"], "data": True}}
+)
+loading_false = json.dumps(
+    {"event": "updateLoading", "data": {"data_path": ["data_loading"], "data": False}}
+)
+
 
 class Request:
     """
     A simple request object class to mimic the behavior of the request object passed by DRF
     """
+
     def __init__(self, user, data):
         self.data = data
         self.user = user
@@ -89,4 +93,4 @@ class WebsocketConsumer(WSConsumer):
             print("WS RECEIVE ", parsed_data.get("command"))
         request = Request(self.scope.get("user"), parsed_data.get("data"))
         command = get_command(parsed_data.get("command"))
-        run_in_background(command, request)   
+        run_in_background(command, request)

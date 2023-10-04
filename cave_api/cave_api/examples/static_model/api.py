@@ -121,8 +121,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "unitPlacement": "afterWithSpace",
                 },
                 "order": {
-                    "additionalMapStyles": ["watercolor", "streets", "outdoors", "satellite", "satellite_streets"],
-                    "sync": ['panes', 'modals', 'pageSelection', 'mapLayers', 'pages'],
+                    "additionalMapStyles": [
+                        "watercolor",
+                        "streets",
+                        "outdoors",
+                        "satellite",
+                        "satellite_streets",
+                    ],
+                    "sync": ["panes", "modals", "pageSelection", "mapLayers", "pages"],
                 },
                 "additionalMapStyles": {
                     "watercolor": {
@@ -213,7 +219,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             "order": {
-                "data": ["session", "appSettings", "resetButton", "buttonSolve", "examplePropsPane", "dash1", "dash2"],
+                "data": [
+                    "session",
+                    "appSettings",
+                    "resetButton",
+                    "buttonSolve",
+                    "examplePropsPane",
+                    "dash1",
+                    "dash2",
+                ],
             },
             "data": {
                 "session": {
@@ -415,40 +429,40 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Select one item from the list",
                         },
                         "hstepperItemExample": {
-                                "name": "Horizontal Stepper Item Example",
-                                "type": "selector",
-                                "variant": "hstepper",
-                                "options": {
-                                    "option_a": {"name": "Option A"},
-                                    "option_b": {"name": "Option B"},
-                                    "option_c": {"name": "Option C"},
-                                    },
-                                "enabled": True,
-                                "help": "Select an option from the stepper",
+                            "name": "Horizontal Stepper Item Example",
+                            "type": "selector",
+                            "variant": "hstepper",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "enabled": True,
+                            "help": "Select an option from the stepper",
                         },
                         "vstepperItemExample": {
-                                "name": "Vertical Stepper Item Example",
-                                "type": "selector",
-                                "variant": "vstepper",
-                                "options": {
-                                    "option_a": {"name": "Option A"},
-                                    "option_b": {"name": "Option B"},
-                                    "option_c": {"name": "Option C"},
-                                    },
-                                "enabled": True,
-                                "help": "Select an option from the stepper",
+                            "name": "Vertical Stepper Item Example",
+                            "type": "selector",
+                            "variant": "vstepper",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "enabled": True,
+                            "help": "Select an option from the stepper",
                         },
                         "hradioItemExample": {
-                                "name": "Horizontal Radio Item Example",
-                                "type": "selector",
-                                "variant": "hradio",
-                                "options": {
-                                    "option_a": {"name": "Option A"},
-                                    "option_b": {"name": "Option B"},
-                                    "option_c": {"name": "Option C"},
-                                    },
-                                "enabled": True,
-                                "help": "Select an option from the radio",
+                            "name": "Horizontal Radio Item Example",
+                            "type": "selector",
+                            "variant": "hradio",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "enabled": True,
+                            "help": "Select an option from the radio",
                         },
                         "comboBoxItemExample": {
                             "name": "ComboBox Item Example",
@@ -468,15 +482,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "nested",
                             "options": {
-                                "t1_b1_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch1']},
-                                "t1_b1_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch1']},
-                                "t1_b1_tw3": {"name": "Twig3", "path": ['Tree1', 'Branch1']},
-                                "t1_b2_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch2']},
-                                "t1_b2_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch2']},
-                                "t2_b1_tw1": {"name": "Twig1", "path": ['Tree2', 'Branch1']},
-                                "t2_b1_tw2": {"name": "Twig2", "path": ['Tree2', 'Branch1']},
-                                "t2_b2_tw1": {"name": "Twig1", "path": ['Tree2', 'Branch2']},
-                                "t2_b2_tw2": {"name": "Twig2", "path": ['Tree2', 'Branch2']},
+                                "t1_b1_tw1": {"name": "Twig1", "path": ["Tree1", "Branch1"]},
+                                "t1_b1_tw2": {"name": "Twig2", "path": ["Tree1", "Branch1"]},
+                                "t1_b1_tw3": {"name": "Twig3", "path": ["Tree1", "Branch1"]},
+                                "t1_b2_tw1": {"name": "Twig1", "path": ["Tree1", "Branch2"]},
+                                "t1_b2_tw2": {"name": "Twig2", "path": ["Tree1", "Branch2"]},
+                                "t2_b1_tw1": {"name": "Twig1", "path": ["Tree2", "Branch1"]},
+                                "t2_b1_tw2": {"name": "Twig2", "path": ["Tree2", "Branch1"]},
+                                "t2_b2_tw1": {"name": "Twig1", "path": ["Tree2", "Branch2"]},
+                                "t2_b2_tw2": {"name": "Twig2", "path": ["Tree2", "Branch2"]},
                             },
                             "enabled": True,
                             "help": "Select all relevant items",
@@ -524,7 +538,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "vstepperItemExample": ["option_c"],
                         "hradioItemExample": ["option_c"],
                         "comboBoxItemExample": ["option_b"],
-                        "nestedItemExample": ["t1_b1_tw1", "t1_b1_tw2", "t1_b2_tw2", "t2_b1_tw1", "t2_b1_tw2"],
+                        "nestedItemExample": [
+                            "t1_b1_tw1",
+                            "t1_b1_tw2",
+                            "t1_b2_tw2",
+                            "t2_b1_tw1",
+                            "t2_b1_tw2",
+                        ],
                         "dateItemExample": "07/20/1969",
                         "timeItemExample": "1969-07-20T20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
@@ -692,10 +712,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "chart": "Bar",
                             "grouping": "Average",
                         },
-                        {
-                            "type": "maps",
-                            "mapId": "map1"
-                        },
+                        {"type": "maps", "mapId": "map1"},
                         {
                             "chart": "Bar",
                             "level": ["size"],
@@ -737,7 +754,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     ],
                     "lockedLayout": False,
                 },
-            }
+            },
         },
         "maps": {
             "data": {
@@ -887,7 +904,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "max": 1000,
                                             "startGradientColor": "rgba(233, 0, 0, 255)",
                                             "endGradientColor": "rgba(96, 2, 2, 255)",
-                                            
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
@@ -958,7 +974,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "false": "rgba(233, 0, 0, 255)",
                                             "true": "rgba(0, 233, 0, 255)",
                                         },
-                                    }, 
+                                    },
                                     "icon": "bs/BsHexagon",
                                 },
                                 "country": {
@@ -973,7 +989,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "endGradientColor": "rgba(20, 205, 20, 255)",
                                         }
                                     },
-                                "icon": "bs/BsHexagon",
+                                    "icon": "bs/BsHexagon",
                                 },
                             },
                         },
@@ -1091,7 +1107,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "endGradientColor": "rgba(96, 2, 2, 255)",
                                         },
                                     },
-                                },                                
+                                },
                             },
                         },
                         "lgb": {
@@ -1178,7 +1194,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "false": "rgba(233, 0, 0, 255)",
                                             "true": "rgba(0, 233, 0, 255)",
                                         },
-                                    }, 
+                                    },
                                     "icon": "bs/BsHexagon",
                                 },
                                 "country": {
@@ -1445,9 +1461,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "node1": {
                     "timeValues": {
-                        0: { "latitude": 43.78, },
-                        1: { "latitude": 44.78, },
-                        2: { "latitude": 45.78, },
+                        0: {
+                            "latitude": 43.78,
+                        },
+                        1: {
+                            "latitude": 44.78,
+                        },
+                        2: {
+                            "latitude": 45.78,
+                        },
                     },
                     "longitude": -79.63,
                     "type": "nodeTypeA",
@@ -1550,20 +1572,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "state",
                     "values": {
                         "timeValues": {
-                            0: { "numericPropExampleC": 0 },
-                            1: { "numericPropExampleC": 100 },
-                            2: { "numericPropExampleC": 300 },
+                            0: {"numericPropExampleC": 0},
+                            1: {"numericPropExampleC": 100},
+                            2: {"numericPropExampleC": 300},
                         }
-                    }
-
+                    },
                 },
                 "geo2": {
                     "name": "Michigan, USA",
                     "geoJsonValue": "US.MI",
                     "type": "state",
                     "values": {
-                        "numericPropExampleC": 300,                        
-                        "booleanPropExample": True,                      
+                        "numericPropExampleC": 300,
+                        "booleanPropExample": True,
                     },
                 },
                 "geo3": {
@@ -1571,8 +1592,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "geoJsonValue": "US.MA",
                     "type": "state",
                     "values": {
-                        "numericPropExampleC": 250,                    
-                        "booleanPropExample": False,                        
+                        "numericPropExampleC": 250,
+                        "booleanPropExample": False,
                     },
                 },
                 "geo4": {
@@ -1580,8 +1601,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "geoJsonValue": "US.FL",
                     "type": "state",
                     "values": {
-                        "numericPropExampleC": 100,                        
-                        "booleanPropExample": False,                
+                        "numericPropExampleC": 100,
+                        "booleanPropExample": False,
                     },
                 },
                 "geo5": {
@@ -1590,16 +1611,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "state",
                     "values": {
                         "numericPropExampleC": 200,
-                        "booleanPropExample": False,  
+                        "booleanPropExample": False,
                     },
-                },    
+                },
                 "geoCountry1": {
                     "name": "Canada",
                     "geoJsonValue": "CA",
                     "type": "country",
                     "values": {
                         "numericPropExampleC": 50,
-                        },
+                    },
                 },
                 "geoCountry2": {
                     "name": "USA",
@@ -1617,53 +1638,53 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
             "groupings": {
                 "location": {
-                        "order": {
-                            "nestedStructure": ["region", "country", "state"],
+                    "order": {
+                        "nestedStructure": ["region", "country", "state"],
+                    },
+                    "data": {
+                        "locUsMi": {
+                            "region": "North America",
+                            "country": "USA",
+                            "state": "Michigan",
                         },
-                        "data": {
-                            "locUsMi": {
-                                "region": "North America",
-                                "country": "USA",
-                                "state": "Michigan",
-                            },
-                            "locUsMa": {
-                                "region": "North America",
-                                "country": "USA",
-                                "state": "Massachusetts",
-                            },
-                            "locUsFl": {
-                                "region": "North America",
-                                "country": "USA",
-                                "state": "Florida",
-                            },
-                            "locUsIn": {
-                                "region": "North America",
-                                "country": "USA",
-                                "state": "Indiana",
-                            },
-                            "locCaOn": {
-                                "region": "North America",
-                                "country": "Canada",
-                                "state": "Ontario",
-                            },
+                        "locUsMa": {
+                            "region": "North America",
+                            "country": "USA",
+                            "state": "Massachusetts",
                         },
-                        "name": "Locations",
-                        "nestedStructure": {
-                            "region": {
-                                "name": "Regions",
-                            },
-                            "country": {
-                                "name": "Countries",
-                                "ordering": ["USA", "Canada"],
-                                "parent": "region",
-                            },
-                            "state": {
-                                "name": "States",
-                                "parent": "country",
-                            },
+                        "locUsFl": {
+                            "region": "North America",
+                            "country": "USA",
+                            "state": "Florida",
                         },
-                        "layoutDirection": "horizontal",
-                        "grouping": "Solo",
+                        "locUsIn": {
+                            "region": "North America",
+                            "country": "USA",
+                            "state": "Indiana",
+                        },
+                        "locCaOn": {
+                            "region": "North America",
+                            "country": "Canada",
+                            "state": "Ontario",
+                        },
+                    },
+                    "name": "Locations",
+                    "nestedStructure": {
+                        "region": {
+                            "name": "Regions",
+                        },
+                        "country": {
+                            "name": "Countries",
+                            "ordering": ["USA", "Canada"],
+                            "parent": "region",
+                        },
+                        "state": {
+                            "name": "States",
+                            "parent": "country",
+                        },
+                    },
+                    "layoutDirection": "horizontal",
+                    "grouping": "Solo",
                 },
                 "sku": {
                     "order": {
@@ -1697,10 +1718,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "layoutDirection": "horizontal",
                 },
             },
-            "data":{
-                'locationGroup':  {
+            "data": {
+                "locationGroup": {
                     "order": {
-                        "stats": ["numericStatExampleA", "numericStatExampleB", "numericExampleCalculationStat"],
+                        "stats": [
+                            "numericStatExampleA",
+                            "numericStatExampleB",
+                            "numericExampleCalculationStat",
+                        ],
                     },
                     "stats": {
                         "numericStatExampleA": {
@@ -1723,15 +1748,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     "valueLists": {
-                        'numericStatExampleA': [5, 4, 6, -3, -3, 1],
-                        'numericStatExampleB': [10, 5, 7, 5, -2, -1],
+                        "numericStatExampleA": [5, 4, 6, -3, -3, 1],
+                        "numericStatExampleB": [10, 5, 7, 5, -2, -1],
                     },
-                    "groupLists":{
-                        "location": ['locCaOn', 'locCaOn', 'locUsMi', 'locUsMi', 'locUsIn', 'locUsFl'],
+                    "groupLists": {
+                        "location": [
+                            "locCaOn",
+                            "locCaOn",
+                            "locUsMi",
+                            "locUsMi",
+                            "locUsIn",
+                            "locUsFl",
+                        ],
                         "sku": ["SKU1", "SKU2", "SKU1", "SKU2", "SKU2", "SKU2"],
                     },
                 },
-                'skuGroup':  {
+                "skuGroup": {
                     "stats": {
                         "numericStatExampleD": {
                             "name": "Stat Example D",
@@ -1739,14 +1771,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "units",
                         },
                     },
-                    "valueLists": {
-                        'numericStatExampleD': [10, 15]
-                    },
+                    "valueLists": {"numericStatExampleD": [10, 15]},
                     "groupLists": {
                         "sku": ["SKU1", "SKU2"],
                     },
                 },
-            }
+            },
         },
         "globalOutputs": {
             "data": {
@@ -1804,7 +1834,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "notationDisplay": "long",
                     "trailingZeros": True,
                 },
-                 "key6": {
+                "key6": {
                     "name": "A Decent Big Number",
                     "icon": "md/MdExpand",
                     "value": 199254740991,

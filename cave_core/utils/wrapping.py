@@ -97,4 +97,5 @@ def ws_api_app(fn):
             if session.executing and not session.__dict__.get("__blocked_due_to_execution__"):
                 session.set_executing(False)
                 session.broadcast_loading(False)
+
     return wrap

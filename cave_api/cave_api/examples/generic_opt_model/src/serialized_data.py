@@ -307,7 +307,7 @@ def get_serialized_data():
                 arc_key: {
                     "name": arc_value["name"],
                     "colorByOptions": serializer.get_dropdown_options(
-                        serializer.arc_data[arc_key], 
+                        serializer.arc_data[arc_key],
                         include_categorical=True,
                         include_colors=True,
                     ),
@@ -327,7 +327,7 @@ def get_serialized_data():
                 node_key: {
                     "name": node_value["name"],
                     "colorByOptions": serializer.get_dropdown_options(
-                        serializer.node_data[node_key], 
+                        serializer.node_data[node_key],
                         include_categorical=True,
                         include_colors=True,
                     ),
@@ -349,7 +349,7 @@ def get_serialized_data():
                 geo_key: {
                     "name": geo_value["name"],
                     "colorByOptions": serializer.get_dropdown_options(
-                        serializer.geo_data[geo_key], 
+                        serializer.geo_data[geo_key],
                         include_categorical=True,
                         include_colors=True,
                     ),

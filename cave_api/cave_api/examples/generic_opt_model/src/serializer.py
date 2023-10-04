@@ -94,11 +94,11 @@ class Node:
         ), "processing capacity should always be greater than or equal to 0"
 
     def serialize(self):
-        extra_args = {"geoJsonValue": self.geoId} if self.geoId else {
-            "latitude": self.latitude,
-            "longitude": self.longitude,
-            "altitude": self.altitude
-        }
+        extra_args = (
+            {"geoJsonValue": self.geoId}
+            if self.geoId
+            else {"latitude": self.latitude, "longitude": self.longitude, "altitude": self.altitude}
+        )
         return {
             "name": self.name,
             "meta": {
@@ -464,7 +464,9 @@ class Serializer:
 
     def get_dropdown_options(self, items_dict, include_categorical=False, include_colors=False):
         try:
-            return list(items_dict.values())[0].get_dropdown_options(include_categorical, include_colors)
+            return list(items_dict.values())[0].get_dropdown_options(
+                include_categorical, include_colors
+            )
         except:
             return []
 

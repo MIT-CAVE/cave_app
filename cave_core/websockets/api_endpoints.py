@@ -9,6 +9,7 @@ from cave_core import models
 from cave_core.utils.broadcasting import Socket
 from cave_core.utils.wrapping import cache_data_version, ws_api_app
 
+
 # Websocket API Command Endpoints
 @ws_api_app
 @cache_data_version
@@ -148,18 +149,23 @@ def mutate_session(request):
                         title="Warning:",
                         show=True,
                         theme="warning",
-                        duration=5
+                        duration=5,
                     )
                     # Broadcast any changed session data
                     session_i.broadcast_changed_data(data_versions)
                     break
         # Apply an api command if provided and push updated output
         if api_command is not None:
-            session_i.execute_api_command(command=api_command, command_keys=api_command_keys, mutate_dict=mutate_dict)
+            session_i.execute_api_command(
+                command=api_command, command_keys=api_command_keys, mutate_dict=mutate_dict
+            )
             # Broadcast any changed session data
             session_i.broadcast_changed_data(previous_versions=session_i_pre_versions)
             if settings.LIVE_API_VALIDATION and settings.DEBUG:
-                validator = Validator(session_i.broadcast_changed_data(previous_versions={}, broadcast=False), ignore_keys=['meta'])
+                validator = Validator(
+                    session_i.broadcast_changed_data(previous_versions={}, broadcast=False),
+                    ignore_keys=["meta"],
+                )
                 validator.log.write_logs(f"./logs/validation/{session_i.name}.log")
 
         # If no api command is provided, apply the mutation

@@ -1,5 +1,6 @@
 import time
 
+
 def execute_command(session_data, socket, command="init", **kwargs):
     # `init` is the default command that is run when a session is created
     # It should return an initial state for the app
@@ -8,7 +9,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "settings": {
                 "data": {
                     # Icon Url is used to load icons from a custom icon library
-                    # See the available versions provided by the cave team here: 
+                    # See the available versions provided by the cave team here:
                     # https://react-icons.mitcave.com/versions.txt
                     # Once you select a version, you can see the available icons in the version
                     # EG: https://react-icons.mitcave.com/4.10.1/icon_list.txt
@@ -49,7 +50,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
         # EG - Toggle the icon between lightbulb and lightbulb outline
         current_icon = session_data["appBar"]["data"]["myCommandButton"]["icon"]
         # Update the icon in the session data
-        session_data["appBar"]["data"]["myCommandButton"]["icon"] = "md/MdLightbulb" if current_icon == "md/MdLightbulbOutline" else "md/MdLightbulbOutline"
+        session_data["appBar"]["data"]["myCommandButton"]["icon"] = (
+            "md/MdLightbulb" if current_icon == "md/MdLightbulbOutline" else "md/MdLightbulbOutline"
+        )
         # Send a series of notifications to the end user
         socket.notify("Priming Thrusters...", title="Initialization", theme="info", duration=3)
         time.sleep(1)

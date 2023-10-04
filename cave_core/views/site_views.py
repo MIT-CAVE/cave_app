@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 # Internal Imports
 from cave_core import forms, models
 
+
 # Views
 def index(request):
     """

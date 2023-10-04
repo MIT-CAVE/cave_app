@@ -4,7 +4,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "settings": {
             "data": {
                 # Icon Url is used to load icons from a custom icon library
-                # See the available versions provided by the cave team here: 
+                # See the available versions provided by the cave team here:
                 # https://react-icons.mitcave.com/versions.txt
                 # Once you select a version, you can see the available icons in the version
                 # EG: https://react-icons.mitcave.com/4.10.1/icon_list.txt
@@ -150,40 +150,37 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Select one item from the list",
                         },
                         "hstepperItemExample": {
-                                "name": "Horizontal Stepper Item Example",
-                                "type": "selector",
-                                "variant": "hstepper",
-                                "options": {
-                                    "option_a": {"name": "Option A"},
-                                    "option_b": {"name": "Option B"},
-                                    "option_c": {"name": "Option C"},
-                                    },
-
-                                "help": "Select an option from the stepper",
+                            "name": "Horizontal Stepper Item Example",
+                            "type": "selector",
+                            "variant": "hstepper",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "help": "Select an option from the stepper",
                         },
                         "vstepperItemExample": {
-                                "name": "Vertical Stepper Item Example",
-                                "type": "selector",
-                                "variant": "vstepper",
-                                "options": {
-                                    "option_a": {"name": "Option A"},
-                                    "option_b": {"name": "Option B"},
-                                    "option_c": {"name": "Option C"},
-                                    },
-
-                                "help": "Select an option from the stepper",
+                            "name": "Vertical Stepper Item Example",
+                            "type": "selector",
+                            "variant": "vstepper",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "help": "Select an option from the stepper",
                         },
                         "hradioItemExample": {
-                                "name": "Horizontal Radio Item Example",
-                                "type": "selector",
-                                "variant": "hradio",
-                                "options": {
-                                    "option_a": {"name": "Option A"},
-                                    "option_b": {"name": "Option B"},
-                                    "option_c": {"name": "Option C"},
-                                    },
-
-                                "help": "Select an option from the radio",
+                            "name": "Horizontal Radio Item Example",
+                            "type": "selector",
+                            "variant": "hradio",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "help": "Select an option from the radio",
                         },
                         "comboBoxItemExample": {
                             "name": "ComboBox Item Example",
@@ -202,15 +199,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "nested",
                             "options": {
-                                "t1_b1_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch1']},
-                                "t1_b1_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch1']},
-                                "t1_b1_tw3": {"name": "Twig3", "path": ['Tree1', 'Branch1']},
-                                "t1_b2_tw1": {"name": "Twig1", "path": ['Tree1', 'Branch2']},
-                                "t1_b2_tw2": {"name": "Twig2", "path": ['Tree1', 'Branch2']},
-                                "t2_b1_tw1": {"name": "Twig1", "path": ['Tree2', 'Branch1']},
-                                "t2_b1_tw2": {"name": "Twig2", "path": ['Tree2', 'Branch1']},
-                                "t2_b2_tw1": {"name": "Twig1", "path": ['Tree2', 'Branch2']},
-                                "t2_b2_tw2": {"name": "Twig2", "path": ['Tree2', 'Branch2']},
+                                "t1_b1_tw1": {"name": "Twig1", "path": ["Tree1", "Branch1"]},
+                                "t1_b1_tw2": {"name": "Twig2", "path": ["Tree1", "Branch1"]},
+                                "t1_b1_tw3": {"name": "Twig3", "path": ["Tree1", "Branch1"]},
+                                "t1_b2_tw1": {"name": "Twig1", "path": ["Tree1", "Branch2"]},
+                                "t1_b2_tw2": {"name": "Twig2", "path": ["Tree1", "Branch2"]},
+                                "t2_b1_tw1": {"name": "Twig1", "path": ["Tree2", "Branch1"]},
+                                "t2_b1_tw2": {"name": "Twig2", "path": ["Tree2", "Branch1"]},
+                                "t2_b2_tw1": {"name": "Twig1", "path": ["Tree2", "Branch2"]},
+                                "t2_b2_tw2": {"name": "Twig2", "path": ["Tree2", "Branch2"]},
                             },
                             "help": "Select all relevant items",
                         },
@@ -253,7 +250,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "vstepperItemExample": ["option_c"],
                         "hradioItemExample": ["option_c"],
                         "comboBoxItemExample": ["option_b"],
-                        "nestedItemExample": ["t1_b1_tw1", "t1_b1_tw2", "t1_b2_tw2", "t2_b1_tw1", "t2_b1_tw2"],
+                        "nestedItemExample": [
+                            "t1_b1_tw1",
+                            "t1_b1_tw2",
+                            "t1_b2_tw2",
+                            "t2_b1_tw1",
+                            "t2_b1_tw2",
+                        ],
                         "dateItemExample": "07/20/1969",
                         "timeItemExample": "1969-07-20T20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
