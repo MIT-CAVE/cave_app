@@ -3,7 +3,7 @@
 ################ Settings ################
 # Choose your base image and tag
 # Alpine Based Python Image
-ARG ROOT_CONTAINER=python:3.11-alpine
+ARG ROOT_CONTAINER=python:3.12-alpine
 # Debian Based Python Image
 # ARG ROOT_CONTAINER=python:3.12-bullseye
 ################ Settings ################

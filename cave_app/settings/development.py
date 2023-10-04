@@ -161,7 +161,7 @@ REST_FRAMEWORK = {
 # Django Channels
 ################################################################
 ## Channels Layer Support
-INSTALLED_APPS += ["channels"]
+INSTALLED_APPS = ["daphne"] + INSTALLED_APPS
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
