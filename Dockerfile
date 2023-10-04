@@ -17,7 +17,6 @@ RUN apk update && apk --no-cache add \
     bash
 ARG SOURCE_DIR
 ENV SOURCE_DIR $SOURCE_DIR
-ENV PATH $PATH:/usr/local/bin
 RUN mkdir -p $SOURCE_DIR
 WORKDIR $SOURCE_DIR
 COPY --from=builder /root/.local/ /usr/local/
