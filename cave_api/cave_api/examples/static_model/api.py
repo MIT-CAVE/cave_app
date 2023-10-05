@@ -1217,9 +1217,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
         },
-        "arcs": {
-            "types": {
+        "mapFeatures": {
+            "data": {
                 "T1": {
+                    "type": "arc",
                     "name": "Flow Type 1",
                     "geoJson": {
                         "geoJsonLayer": "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json",
@@ -1282,8 +1283,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         },
                     },
+                    "data": {
+                        "location": {
+                            "geoJsonValue": ["DUBL-DALY (ROUTE 11/12)"],
+                        },
+                        "values": {
+                            "numericPropExampleA": [15],
+                            "numericPropExampleB": [40],
+                            "selectorPropForColor": [["b"]],
+                        }
+                    }
                 },
                 "T2": {
+                    "type": "arc",
                     "name": "Flow Type 2",
                     "props": {
                         "numericPropExampleA": {
@@ -1316,7 +1328,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     "values": {
-                        "selectorPropForColor": ["a"],
+                        "selectorPropForColor": [["a"]],
                     },
                     "layout": {
                         "type": "grid",
@@ -1340,59 +1352,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         },
                     },
+                    "data": {
+                        "location": {
+                            "startLatitude": [39.82, 39.82, 39.82],
+                            "startLongitude": [-86.18, -86.18, -86.18],
+                            "endLatitude": [42.89, 28.49, 42.361176],
+                            "endLongitude": [-85.68, -81.56, -71.084707],
+                        },
+                        "values": {
+                            "numericPropExampleA": [30, 30, 30],
+                            "numericPropExampleB": [20, 14, 6],
+                            "selectorPropForColor": [["e"], ["d"], ["f"]],
+                        },
+                    }
                 },
-            },
-            "data": {
-                "arc1": {
-                    "geoJsonValue": "DUBL-DALY (ROUTE 11/12)",
-                    "type": "T1",
-                    "values": {
-                        "numericPropExampleA": 15,
-                        "numericPropExampleB": 40,
-                        "selectorPropForColor": ["b"],
-                    },
-                },
-                "arc2": {
-                    "startLatitude": 39.82,
-                    "startLongitude": -86.18,
-                    "endLatitude": 42.89,
-                    "endLongitude": -85.68,
-                    "type": "T2",
-                    "values": {
-                        "numericPropExampleA": 30,
-                        "numericPropExampleB": 20,
-                        "selectorPropForColor": ["e"],
-                    },
-                },
-                "arc3": {
-                    "startLatitude": 39.82,
-                    "startLongitude": -86.18,
-                    "endLatitude": 28.49,
-                    "endLongitude": -81.56,
-                    "type": "T2",
-                    "values": {
-                        "numericPropExampleA": 30,
-                        "numericPropExampleB": 14,
-                        "selectorPropForColor": ["d"],
-                    },
-                },
-                "arc4": {
-                    "startLatitude": 39.82,
-                    "startLongitude": -86.18,
-                    "endLatitude": 42.361176,
-                    "endLongitude": -71.084707,
-                    "type": "T2",
-                    "values": {
-                        "numericPropExampleA": 30,
-                        "numericPropExampleB": 6,
-                        "selectorPropForColor": ["f"],
-                    },
-                },
-            },
-        },
-        "nodes": {
-            "types": {
                 "nodeTypeA": {
+                    "type": "node",
                     "name": "Node Type A",
                     "props": {
                         "numericPropExampleA": {
@@ -1423,8 +1398,24 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "values": {
                         "booleanPropExample": True,
                     },
+                    "data": {
+                        "location": {
+                            "timeValues": {
+                                0: { "latitude": [43.78, 39.82], },
+                                1: { "latitude": [44.78, 39.82], },
+                                2: { "latitude": [45.78, 39.82], },
+                            },
+                            "longitude": [-79.63, -86.18],
+                        },
+                        "values": {
+                            "numericPropExampleA": [100, 80],
+                            "numericPropExampleB": [50, 40],
+                            "booleanPropExample": [True, True],
+                        },
+                    }
                 },
                 "nodeTypeB": {
+                    "type": "node",
                     "name": "Node Type B",
                     "props": {
                         "numericPropExampleA": {
@@ -1456,74 +1447,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "values": {
                         "booleanPropExample": True,
                     },
-                },
-            },
-            "data": {
-                "node1": {
-                    "timeValues": {
-                        0: {
-                            "latitude": 43.78,
+                    "data": {
+                        "location": {
+                            "latitude": [42.89, 28.49, 42.361176],
+                            "longitude": [-85.68, -81.56, -71.084707],
                         },
-                        1: {
-                            "latitude": 44.78,
+                        "values": {
+                            "numericPropExampleA": [500, 1000, 1000],
+                            "numericPropExampleB": [150, 250, 250],
+                            "booleanPropExample": [True, True, True],
                         },
-                        2: {
-                            "latitude": 45.78,
-                        },
-                    },
-                    "longitude": -79.63,
-                    "type": "nodeTypeA",
-                    "values": {
-                        "numericPropExampleA": 100,
-                        "numericPropExampleB": 50,
-                        "booleanPropExample": True,
-                    },
+                    }
                 },
-                "node2": {
-                    "latitude": 39.82,
-                    "longitude": -86.18,
-                    "type": "nodeTypeA",
-                    "values": {
-                        "numericPropExampleA": 80,
-                        "numericPropExampleB": 40,
-                        "booleanPropExample": True,
-                    },
-                },
-                "node3": {
-                    "latitude": 42.89,
-                    "longitude": -85.68,
-                    "type": "nodeTypeB",
-                    "values": {
-                        "numericPropExampleA": 500,
-                        "numericPropExampleB": 150,
-                        "booleanPropExample": True,
-                    },
-                },
-                "node4": {
-                    "latitude": 28.49,
-                    "longitude": -81.56,
-                    "type": "nodeTypeB",
-                    "values": {
-                        "numericPropExampleA": 1000,
-                        "numericPropExampleB": 250,
-                        "booleanPropExample": True,
-                    },
-                },
-                "node5": {
-                    "latitude": 42.361176,
-                    "longitude": -71.084707,
-                    "type": "nodeTypeB",
-                    "values": {
-                        "numericPropExampleA": 1000,
-                        "numericPropExampleB": 250,
-                        "booleanPropExample": True,
-                    },
-                },
-            },
-        },
-        "geos": {
-            "types": {
                 "state": {
+                    "type": "geo",
                     "name": "State",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
@@ -1547,8 +1484,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "values": {
                         "booleanPropExample": True,
                     },
+                    "data": {
+                        "location": {
+                            "geoJsonValue": ["CA.ON", "US.MI", "US.MA", "US.FL", "US.IN"],
+                        },
+                        "values": {
+                            "numericPropExampleC": [0, 300, 250, 100, 200],
+                            "booleanPropExample": [True, True, False, False, False],
+                        }
+                    }
                 },
                 "country": {
+                    "type": "geo",
                     "name": "Country",
                     "geoJson": {
                         "geoJsonLayer": "https://geojsons.mitcave.com/world/countries-sm.json",
@@ -1563,74 +1510,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "units",
                         },
                     },
-                },
-            },
-            "data": {
-                "geo1": {
-                    "name": "Ontario, Canada",
-                    "geoJsonValue": "CA.ON",
-                    "type": "state",
-                    "values": {
-                        "timeValues": {
-                            0: {"numericPropExampleC": 0},
-                            1: {"numericPropExampleC": 100},
-                            2: {"numericPropExampleC": 300},
+                    "data": {
+                        "location": {
+                            "geoJsonValue": ["CA", "US"],
+                        },
+                        "values": {
+                            "numericPropExampleC": [50, 800],
                         }
-                    },
+                    }
                 },
-                "geo2": {
-                    "name": "Michigan, USA",
-                    "geoJsonValue": "US.MI",
-                    "type": "state",
-                    "values": {
-                        "numericPropExampleC": 300,
-                        "booleanPropExample": True,
-                    },
-                },
-                "geo3": {
-                    "name": "Massachusetts, USA",
-                    "geoJsonValue": "US.MA",
-                    "type": "state",
-                    "values": {
-                        "numericPropExampleC": 250,
-                        "booleanPropExample": False,
-                    },
-                },
-                "geo4": {
-                    "name": "Florida, USA",
-                    "geoJsonValue": "US.FL",
-                    "type": "state",
-                    "values": {
-                        "numericPropExampleC": 100,
-                        "booleanPropExample": False,
-                    },
-                },
-                "geo5": {
-                    "name": "Indiana, USA",
-                    "geoJsonValue": "US.FL",
-                    "type": "state",
-                    "values": {
-                        "numericPropExampleC": 200,
-                        "booleanPropExample": False,
-                    },
-                },
-                "geoCountry1": {
-                    "name": "Canada",
-                    "geoJsonValue": "CA",
-                    "type": "country",
-                    "values": {
-                        "numericPropExampleC": 50,
-                    },
-                },
-                "geoCountry2": {
-                    "name": "USA",
-                    "geoJsonValue": "US",
-                    "type": "country",
-                    "values": {
-                        "numericPropExampleC": 800,
-                    },
-                },
-            },
+            }
         },
         "groupedOutputs": {
             "order": {
