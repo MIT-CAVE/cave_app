@@ -28,16 +28,12 @@ Quickly create interactive web applications for python based models.
         ```
         cave run <your-ip>:<your-port>
         ```
-
+        - Access with `https://<your-ip>:<your-port>`
         - Example on ip `192.168.1.100` with port `8000`:
           ```
           cave run 192.168.1.100:8000
           ```
-        - Example for a wildcard ip (any network ip that routes to your machine):
-          ```
-          cave run 0.0.0.0:8000
-          ```
-        - Note: This requires one free port above the specified port to run the server
+          - Access with `https://192.168.1.100:8000`
         - Note: When LAN hosting, an SSL connection is required. The `cave_cli` does this automatically, however there are a few caveats:
             - This uses a self signed and insecure certificate for SSL/TLS reasons
             - The certificates are self signed and shared openly in the cave open source project
