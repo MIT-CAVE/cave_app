@@ -215,6 +215,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "timeLength": 3,
                     "timeUnits": "Century",
                 },
+                "defaults": {
+                    "showToolbar": True,
+                },
             },
         },
         "appBar": {
@@ -712,11 +715,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "chart": "Bar",
                             "grouping": "Average",
                         },
-                        {"type": "maps", "mapId": "map1"},
+                        {
+                            "type": "maps",
+                            "mapId": "map1",
+                            "showToolbar": False,
+                            "maximized": True,
+                         },
                         {
                             "chart": "Bar",
                             "level": ["size"],
                             "category": ["sku"],
+                            "lockedLayout": True,
                             "grouping": "Sum",
                             "statistic": ["locationGroup", "numericExampleCalculationStat"],
                         },
@@ -736,10 +745,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "grouping": "Sum",
                             "sessions": [],
                             "globalOutput": ["key1", "key2"],
+                            "showToolbar": False,
                         },
                         {
                             "chart": "Box Plot",
                             "level": ["size"],
+                            "lockedLayout": True,
                             "category": ["sku"],
                             "grouping": "Average",
                             "statistic": ["locationGroup", "numericExampleCalculationStat"],
