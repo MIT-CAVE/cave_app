@@ -258,7 +258,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "t2_b1_tw2",
                         ],
                         "dateItemExample": "07/20/1969",
-                        "timeItemExample": "1969-07-20T20:17:40",
+                        "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
                     },
                     "layout": {

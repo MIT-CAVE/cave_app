@@ -219,7 +219,7 @@ We dedicate a section to the `props` group, as it handles all of the user input 
         "name": "Time Example",
         "type": "date",
         "variant": "time",
-        "value": "1969-07-20T20:17:40",
+        "value": "20:17:40",
         "enabled": True,
         "help": "The Eagle has landed!",
     },
