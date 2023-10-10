@@ -109,7 +109,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "mapDashboard": {
                     "pageLayout": [
-                        {"type": "maps", "mapId": "exampleMap"},
+                        {
+                            "type": "maps",
+                            "mapId": "exampleMap",
+                            "showToolbar": False,
+                            "maximized": True},
                     ],
                 },
             },
