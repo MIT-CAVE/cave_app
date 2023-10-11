@@ -818,7 +818,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Legend Group A",
                             "data": {
                                 "nodeTypeA": {
-                                    "type": "nodes",
                                     "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
@@ -860,7 +859,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "icon": "fa6/FaIgloo",
                                 },
                                 "T1": {
-                                    "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
@@ -899,7 +897,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Legend Group B",
                             "data": {
                                 "nodeTypeB": {
-                                    "type": "nodes",
                                     "value": True,
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
@@ -937,7 +934,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "icon": "bs/BsBuilding",
                                 },
                                 "T2": {
-                                    "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
@@ -972,7 +968,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "endSize": "30px",
                                 },
                                 "state": {
-                                    "type": "geos",
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
                                     "colorByOptions": {
@@ -990,7 +985,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "icon": "bs/BsHexagon",
                                 },
                                 "country": {
-                                    "type": "geos",
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
                                     "colorByOptions": {
@@ -1052,7 +1046,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Legend Group A",
                             "data": {
                                 "nodeTypeA": {
-                                    "type": "nodes",
                                     "value": True,
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
@@ -1087,7 +1080,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "icon": "fa6/FaIgloo",
                                 },
                                 "T1": {
-                                    "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
@@ -1126,7 +1118,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Legend Group B",
                             "data": {
                                 "nodeTypeB": {
-                                    "type": "nodes",
                                     "value": True,
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
@@ -1157,7 +1148,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "icon": "bs/BsBuilding",
                                 },
                                 "T2": {
-                                    "type": "arcs",
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
@@ -1192,7 +1182,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "endSize": "30px",
                                 },
                                 "state": {
-                                    "type": "geos",
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
                                     "colorByOptions": {
@@ -1210,7 +1199,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "icon": "bs/BsHexagon",
                                 },
                                 "country": {
-                                    "type": "geos",
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
                                     "colorByOptions": {
