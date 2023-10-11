@@ -1339,9 +1339,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                         },
                     },
-                    "values": {
-                        "selectorPropForColor": [["a"]],
-                    },
                     "layout": {
                         "type": "grid",
                         "numColumns": 1,
@@ -1407,9 +1404,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for boolean prop",
                         },
                     },
-                    "values": {
-                        "booleanPropExample": True,
-                    },
                     "data": {
                         "location": {
                             "timeValues": {
@@ -1456,9 +1450,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for boolean prop",
                         },
                     },
-                    "values": {
-                        "booleanPropExample": True,
-                    },
                     "data": {
                         "location": {
                             "latitude": [42.89, 28.49, 42.361176],
@@ -1492,9 +1483,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "value": True,
                             "help": "Help for boolean prop",
                         },
-                    },
-                    "values": {
-                        "booleanPropExample": True,
                     },
                     "data": {
                         "location": {
