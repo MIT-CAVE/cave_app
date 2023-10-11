@@ -115,11 +115,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                 },
                 "iconUrl": "https://react-icons.mitcave.com/4.10.1",
-                "numberFormat": {
-                    "precision": 4,
-                    "trailingZeros": False,
-                    "unitPlacement": "afterWithSpace",
-                },
                 "order": {
                     "additionalMapStyles": [
                         "watercolor",
@@ -216,6 +211,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "timeUnits": "Century",
                 },
                 "defaults": {
+                    "precision": 4,
+                    "trailingZeros": True,
+                    "unitPlacement": "afterWithSpace",
                     "showToolbar": True,
                 },
             },
