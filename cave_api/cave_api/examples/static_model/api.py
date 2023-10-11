@@ -257,8 +257,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "examplePropsPane": {
                     "icon": "fa/FaCogs",
-                    "type": "wall",
+                    "type": "pane",
                     "bar": "upperLeft",
+                    "variant": "wall",
                 },
                 "dash1": {
                     "type": "page",
@@ -273,8 +274,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "exampleModal": {
                     "icon": "md/MdInfo",
                     "color": "rgba(195, 164, 222, 255)",
-                    "type": "modal",
+                    "type": "pane",
                     "bar": "upperRight",
+                    "variant": "modal",
                 },
             },
         },
