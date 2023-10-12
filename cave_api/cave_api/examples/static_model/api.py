@@ -713,22 +713,23 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "dash1": {
                     "pageLayout": [
                         {
-                            "chart": "Bar",
-                            "grouping": "Average",
+                            "variant": "Bar",
+                            "statAggregation": "Average",
                         },
                         {
-                            "type": "maps",
+                            "type": "map",
                             "mapId": "map1",
                             "showToolbar": False,
                             "maximized": True,
                          },
                         {
-                            "chart": "Bar",
-                            "level": ["size"],
-                            "category": ["sku"],
+                            "variant": "Bar",
+                            "groupingLevel": ["size"],
+                            "groupingId": ["sku"],
                             "lockedLayout": True,
-                            "grouping": "Sum",
-                            "statistic": ["locationGroup", "numericExampleCalculationStat"],
+                            "statAggregation": "Sum",
+                            "groupedOutputDataId": "locationGroup",
+                            "statId":"numericExampleCalculationStat",
                         },
                     ],
                     "lockedLayout": False,
@@ -736,32 +737,35 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "dash2": {
                     "pageLayout": [
                         {
-                            "chart": "Bar",
-                            "grouping": "Average",
-                            "statistic": ["locationGroup", "numericStatExampleB"],
+                            "variant": "Bar",
+                            "statAggregation": "Average",
+                            "groupedOutputDataId": "locationGroup",
+                            "statId":"numericStatExampleB",
                         },
                         {
                             "type": "globalOutputs",
-                            "chart": "Bar",
-                            "grouping": "Sum",
+                            "variant": "Bar",
+                            "statAggregation": "Sum",
                             "sessions": [],
                             "globalOutput": ["key1", "key2"],
                             "showToolbar": False,
                         },
                         {
-                            "chart": "Box Plot",
-                            "level": ["size"],
+                            "variant": "Box Plot",
+                            "groupingLevel": ["size"],
                             "lockedLayout": True,
-                            "category": ["sku"],
-                            "grouping": "Average",
-                            "statistic": ["locationGroup", "numericExampleCalculationStat"],
+                            "groupingId": ["sku"],
+                            "statAggregation": "Average",
+                            "groupedOutputDataId": "locationGroup",
+                            "statId":"numericExampleCalculationStat",
                         },
                         {
-                            "chart": "Cumulative Line",
-                            "grouping": "Sum",
-                            "statistic": ["locationGroup", "numericStatExampleB"],
-                            "category": ["location", "sku"],
-                            "level": ["state", "sku"],
+                            "variant": "Cumulative Line",
+                            "statAggregation": "Sum",
+                            "groupedOutputDataId": "locationGroup",
+                            "statId":"numericStatExampleB",
+                            "groupingId": ["location", "sku"],
+                            "groupingLevel": ["state", "sku"],
                         },
                     ],
                     "lockedLayout": False,
@@ -1508,7 +1512,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "groupings": {
                 "location": {
                     "order": {
-                        "nestedStructure": ["region", "country", "state"],
+                        "levels": ["region", "country", "state"],
                     },
                     "data": {
                         "locUsMi": {
@@ -1538,7 +1542,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     "name": "Locations",
-                    "nestedStructure": {
+                    "levels": {
                         "region": {
                             "name": "Regions",
                         },
@@ -1557,7 +1561,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "sku": {
                     "order": {
-                        "nestedStructure": ["type", "size", "sku"],
+                        "levels": ["type", "size", "sku"],
                     },
                     "data": {
                         "SKU1": {
@@ -1572,7 +1576,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     "name": "SKUs",
-                    "nestedStructure": {
+                    "levels": {
                         "type": {
                             "name": "Types",
                         },
