@@ -851,11 +851,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 80},
-                                        "numericPropExampleB": {"min": 0, "max": 50},
+                                        "numericPropExampleA": {"min": 0, "max": 80, "startSize": "30px", "endSize": "45px"},
+                                        "numericPropExampleB": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
                                     },
-                                    "startSize": "30px",
-                                    "endSize": "45px",
                                     "icon": "fa6/FaIgloo",
                                 },
                                 "T1": {
@@ -863,11 +861,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50},
-                                        "numericPropExampleB": {"min": 0, "max": 40},
+                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
                                     },
-                                    "startSize": "15px",
-                                    "endSize": "30px",
                                     "colorByOptions": {
                                         "selectorPropForColor": {
                                             "a": "rgba(128,255,255, 255)",
@@ -926,11 +922,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 100},
-                                        "numericPropExampleB": {"min": 0, "max": 250},
+                                        "numericPropExampleA": {"min": 0, "max": 100, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleB": {"min": 0, "max": 250, "startSize": "5px", "endSize": "15px"},
                                     },
-                                    "startSize": "30px",
-                                    "endSize": "45px",
                                     "icon": "bs/BsBuilding",
                                 },
                                 "T2": {
@@ -961,11 +955,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                     "lineBy": "dotted",
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50},
-                                        "numericPropExampleB": {"min": 0, "max": 40},
+                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
                                     },
-                                    "startSize": "15px",
-                                    "endSize": "30px",
                                 },
                                 "state": {
                                     "value": True,
@@ -1072,8 +1064,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 80},
-                                        "numericPropExampleB": {"min": 0, "max": 50},
+                                        "numericPropExampleA": {"min": 0, "max": 80, "startSize": "30px", "endSize": "45px"},
+                                        "numericPropExampleB": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
                                     },
                                     "startSize": "30px",
                                     "endSize": "45px",
@@ -1084,8 +1076,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50},
-                                        "numericPropExampleB": {"min": 0, "max": 40},
+                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
                                     },
                                     "startSize": "15px",
                                     "endSize": "30px",
@@ -1140,8 +1132,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 100},
-                                        "numericPropExampleB": {"min": 0, "max": 250},
+                                        "numericPropExampleA": {"min": 0, "max": 100, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleB": {"min": 0, "max": 250, "startSize": "5px", "endSize": "15px"},
                                     },
                                     "startSize": "30px",
                                     "endSize": "45px",
@@ -1175,8 +1167,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                     "lineBy": "dotted",
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50},
-                                        "numericPropExampleB": {"min": 0, "max": 40},
+                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
                                     },
                                     "startSize": "15px",
                                     "endSize": "30px",
