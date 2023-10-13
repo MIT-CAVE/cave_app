@@ -29,7 +29,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 # This will add a button to the app bar that opens a pane
                 # Panes are used to display additional options / data to the user
                 # See the panes top level key below for more details
-                "examplePropsPane": {
+                "examplePane": {
                     "icon": "fa/FaCogs",
                     "type": "pane",
                     "variant": "wall",
@@ -38,7 +38,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
-            "paneState":{"left":{"open":"examplePane"}},
+            "paneState":{"left":{"type":"pane", "open":"examplePane", "pinned":True}},
             "data": {
                 # Create an options pane with all of the available props
                 "examplePane": {

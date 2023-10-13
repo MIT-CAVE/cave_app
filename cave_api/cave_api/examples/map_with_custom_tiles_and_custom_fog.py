@@ -109,11 +109,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     # Specify the default projection for the map
                     # Note: globe can only be used if you have a mapbox token
                     "currentProjection": "globe",
+                    # Specify the current style for the map
+                    "currentStyle": "cartoVoyager",
                     # Specify the default viewport for the map
                     "defaultViewport": {
                         "longitude": -75.447,
                         "latitude": 40.345,
-                        "zoom": 4.66,
+                        "zoom": 2.66,
                         "pitch": 0,
                         "bearing": 0,
                         "height": 1287,
