@@ -116,13 +116,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "iconUrl": "https://react-icons.mitcave.com/4.10.1",
                 "order": {
-                    "additionalMapStyles": [
-                        "watercolor",
-                        "streets",
-                        "outdoors",
-                        "satellite",
-                        "satellite_streets",
-                    ],
                     "sync": ["panes", "modals", "pageSelection", "mapLayers", "pages"],
                 },
                 "debug": True,
