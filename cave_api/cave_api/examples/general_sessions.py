@@ -12,6 +12,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "appBar": {
+            # Specify the order of items as they will appear in the app bar
             "order": {
                 "data": ["refreshButton", "session"],
             },

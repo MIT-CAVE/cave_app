@@ -43,6 +43,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "examplePropsPane": {
                     "name": "Example Props Pane",
                     "variant": "options",
+                    # Use an example of each prop and variant available in the api
                     "props": {
                         "numericHeader": {
                             "name": "Numeric Props",
@@ -236,6 +237,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "The Eagle has landed!",
                         },
                     },
+                    # Specify the values for each prop listed above
                     "values": {
                         "numericInputExample": 50,
                         "numericSliderExample": 50,
@@ -262,6 +264,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
                     },
+                    # Create a custom grid layout for the pane items
                     "layout": {
                         "type": "grid",
                         "numColumns": 5,
