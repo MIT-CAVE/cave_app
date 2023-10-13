@@ -1,7 +1,0 @@
-id,type,layerId,value,sizeBy,colorBy,legendGroup
-map1,arc,T1,True,numericPropExampleA,numericPropExampleA,Legend Group A
-map1,arc,T2,True,numericPropExampleA,numericPropExampleA,Legend Group B
-map1,node,nodeTypeA,True,numericPropExampleA,booleanPropExample,Legend Group A
-map1,node,nodeTypeB,True,numericPropExampleA,numericPropExampleA,Legend Group B
-map1,geo,state,True,,numericPropExampleC,Legend Group B
-map1,geo,country,False,,numericPropExampleC,Legend Group B

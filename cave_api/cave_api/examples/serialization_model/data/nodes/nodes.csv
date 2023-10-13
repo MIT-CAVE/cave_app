@@ -1,6 +1,0 @@
-id,type,latitude,longitude,numericPropExampleA,numericPropExampleB,booleanPropExample,location,sku
-node1,nodeTypeA,43.78,-79.63,100,50,TRUE,locCaOn,SKU2 SKU1
-node2,nodeTypeA,39.82,-86.18,80,40,TRUE,locUsIn,SKU2 SKU1
-node3,nodeTypeB,42.89,-85.68,500,150,TRUE,locUsMi,SKU2 SKU1
-node4,nodeTypeB,28.49,-81.56,1000,250,TRUE,locUsFl,SKU2 SKU1
-node5,nodeTypeB,42.361176,-71.084707,1000,250,TRUE,locUsMa,SKU2 SKU1
