@@ -6,7 +6,7 @@ def get_examples():
     return sorted([i.replace('.py','') for i in os.listdir(examples_location) if i.endswith('.py') and i != '__init__.py' and i != 'example_selector.py'])
 
 def execute_command(session_data, socket, command="init", **kwargs):
-    selected_pane = pamda.path(['panes','data','exampleSelector','values','example'], session_data)[0]
+    selected_pane = pamda.pathOr([None],['panes','data','exampleSelector','values','example'], session_data)[0]
     examples = get_examples()
     if selected_pane not in examples:
         selected_pane = examples[0]

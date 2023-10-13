@@ -28,6 +28,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "session": {
                     "icon": "md/MdApi",
                     "type": "pane",
+                    "variant": "wall",
                     "bar": "upperLeft",
                 },
             },

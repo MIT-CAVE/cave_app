@@ -31,12 +31,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 # See the modals top level key below for more details
                 "exampleModal": {
                     "icon": "fa/FaSlidersH",
-                    "type": "modal",
+                    "type": "pane",
+                    "variant": "modal",
                     "bar": "upperLeft",
                 },
             },
         },
-        "modals": {
+        "panes": {
             "data": {
                 # Create a modal with an example header and simple numeric input
                 # Note: This key must match the key used in the app bar above
