@@ -25,7 +25,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "button",
                     "bar": "upperLeft",
                 },
-                # Add a pane button to launch a map focused dashboard
+                # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",
                     "type": "page",

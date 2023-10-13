@@ -38,11 +38,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
+            "paneState":{"center":{"open":"exampleModal"}},
             "data": {
                 # Create a modal with an example header and simple numeric input
                 # Note: This key must match the key used in the app bar above
                 "exampleModal": {
                     "name": "Example Modal",
+                    "variant": "options",
                     "props": {
                         "exampleHeader": {
                             "name": "Example Header",

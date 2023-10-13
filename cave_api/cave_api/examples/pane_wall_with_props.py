@@ -38,6 +38,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
+            "paneState":{"left":{"open":"examplePane"}},
             "data": {
                 # Create a pane with an example header and simple numeric input
                 # Note: This key must match the key used in the app bar above

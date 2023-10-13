@@ -38,9 +38,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
+            "paneState":{"left":{"open":"examplePane"}},
             "data": {
                 # Create an options pane with all of the available props
-                "examplePropsPane": {
+                "examplePane": {
                     "name": "Example Props Pane",
                     "variant": "options",
                     # Use an example of each prop and variant available in the api

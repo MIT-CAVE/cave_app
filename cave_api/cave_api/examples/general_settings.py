@@ -25,7 +25,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "button",
                     "bar": "upperLeft",
                 },
-                # Add a pane button to launch the app settings pane
+                # Add an appBar button to launch the app settings pane
                 "appSettings": {
                     "icon": "md/MdOutlineSettings",
                     "type": "settings",
