@@ -50,6 +50,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
     pamda.assocPath(['appBar','order','data'], appBarOrder, session_data)
     pamda.assocPath(['panes','data','exampleSelector'], exampleSelectorPane, session_data)
     pamda.assocPath(['appBar','data','exampleSelector'], exampleSelectorAppBarButton, session_data)
+    # When reinitializing a session, wipe the existing session data
+    if command == 'init':
+        pamda.assocPath(['kwargs','wipeExisting'], True, session_data)
 
     # Return the modified session data from the selected example's execute_command function
     return session_data
