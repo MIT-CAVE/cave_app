@@ -13,6 +13,7 @@ import type_enforced
 
 # Internal Imports
 from cave_core.utils.broadcasting import Socket
+from cave_core.utils.constants import top_level_keys
 from cave_api.api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
@@ -955,12 +956,6 @@ class Sessions(models.Model):
             self.broadcast_loading(False)
         return data
 
-    def wipe_data(self):
-        """
-        Removes all data from the current session
-        """
-        SessionData.objects.filter(session=self).delete()
-
     def replace_data(self, data, wipeExisting):
         """
         Replaces data in this session
@@ -987,7 +982,13 @@ class Sessions(models.Model):
         ```
         """
         if wipeExisting:
-            self.wipe_data()
+            data_keys = list(data.keys())
+            keys_to_delete = pamda.difference(data_keys, top_level_keys)
+            keys_to_empty = pamda.difference(top_level_keys, data_keys)
+            if len(keys_to_delete)>0:
+                SessionData.objects.filter(session=self, data_name__in=keys_to_delete).delete()
+            for k in keys_to_empty:
+                data[k] = {}
         for key, value in data.items():
             obj, created = SessionData.objects.get_or_create(session=self, data_name=key)
             obj.save_data(
