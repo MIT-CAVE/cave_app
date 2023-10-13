@@ -125,86 +125,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     ],
                     "sync": ["panes", "modals", "pageSelection", "mapLayers", "pages"],
                 },
-                "additionalMapStyles": {
-                    "watercolor": {
-                        "name": "Watercolor",
-                        "icon": "md/MdBrush",
-                        "spec": {
-                            "version": 8,
-                            "sources": {
-                                "raster-tiles": {
-                                    "type": "raster",
-                                    "tiles": [
-                                        "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
-                                    ],
-                                    "tileSize": 256,
-                                    "attribution": "Map tiles by <a target='_top' rel='noopener' href='http://stamen.com'>Stamen Design</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a target='_top' rel='noopener' href='http://openstreetmap.org'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>",
-                                },
-                            },
-                            "layers": [
-                                {
-                                    "id": "simple-tiles",
-                                    "type": "raster",
-                                    "source": "raster-tiles",
-                                    "minzoom": 0,
-                                    "maxzoom": 22,
-                                },
-                            ],
-                        },
-                        "fog": {
-                            "range": [0.5, 10],
-                            "color": "#ffffff",
-                            "high-color": "#245cdf",
-                            "space-color": [
-                                "interpolate",
-                                ["linear"],
-                                ["zoom"],
-                                2,
-                                "orange",
-                                4,
-                                "blue",
-                            ],
-                            "horizon-blend": [
-                                "interpolate",
-                                ["exponential", 1.2],
-                                ["zoom"],
-                                5,
-                                0.02,
-                                7,
-                                0.08,
-                            ],
-                            "star-intensity": [
-                                "interpolate",
-                                ["linear"],
-                                ["zoom"],
-                                5,
-                                0.35,
-                                6,
-                                0,
-                            ],
-                        },
-                    },
-                    "streets": {
-                        "name": "Streets",
-                        "icon": "md/MdStreetview",
-                        "spec": "mapbox://styles/mapbox/streets-v12",
-                    },
-                    "outdoors": {
-                        "name": "Outdoors",
-                        "icon": "md/MdForest",
-                        "spec": "mapbox://styles/mapbox/outdoors-v12",
-                    },
-                    "satellite": {
-                        "name": "Satellite",
-                        "icon": "md/MdSatelliteAlt",
-                        "spec": "mapbox://styles/mapbox/satellite-v9",
-                    },
-                    "satellite_streets": {
-                        "name": "Satellite Streets",
-                        "icon": "md/MdSatellite",
-                        "spec": "mapbox://styles/mapbox/satellite-streets-v12",
-                    },
-                },
                 "debug": True,
                 "time": {
                     "timeLength": 3,
@@ -773,6 +693,86 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "maps": {
+            "additionalMapStyles": {
+                "watercolor": {
+                    "name": "Watercolor",
+                    "icon": "md/MdBrush",
+                    "spec": {
+                        "version": 8,
+                        "sources": {
+                            "raster-tiles": {
+                                "type": "raster",
+                                "tiles": [
+                                    "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
+                                ],
+                                "tileSize": 256,
+                                "attribution": "Map tiles by <a target='_top' rel='noopener' href='http://stamen.com'>Stamen Design</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a target='_top' rel='noopener' href='http://openstreetmap.org'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>",
+                            },
+                        },
+                        "layers": [
+                            {
+                                "id": "simple-tiles",
+                                "type": "raster",
+                                "source": "raster-tiles",
+                                "minzoom": 0,
+                                "maxzoom": 22,
+                            },
+                        ],
+                    },
+                    "fog": {
+                        "range": [0.5, 10],
+                        "color": "#ffffff",
+                        "high-color": "#245cdf",
+                        "space-color": [
+                            "interpolate",
+                            ["linear"],
+                            ["zoom"],
+                            2,
+                            "orange",
+                            4,
+                            "blue",
+                        ],
+                        "horizon-blend": [
+                            "interpolate",
+                            ["exponential", 1.2],
+                            ["zoom"],
+                            5,
+                            0.02,
+                            7,
+                            0.08,
+                        ],
+                        "star-intensity": [
+                            "interpolate",
+                            ["linear"],
+                            ["zoom"],
+                            5,
+                            0.35,
+                            6,
+                            0,
+                        ],
+                    },
+                },
+                "streets": {
+                    "name": "Streets",
+                    "icon": "md/MdStreetview",
+                    "spec": "mapbox://styles/mapbox/streets-v12",
+                },
+                "outdoors": {
+                    "name": "Outdoors",
+                    "icon": "md/MdForest",
+                    "spec": "mapbox://styles/mapbox/outdoors-v12",
+                },
+                "satellite": {
+                    "name": "Satellite",
+                    "icon": "md/MdSatelliteAlt",
+                    "spec": "mapbox://styles/mapbox/satellite-v9",
+                },
+                "satellite_streets": {
+                    "name": "Satellite Streets",
+                    "icon": "md/MdSatellite",
+                    "spec": "mapbox://styles/mapbox/satellite-streets-v12",
+                },
+            },
             "data": {
                 "map1": {
                     "order": {
