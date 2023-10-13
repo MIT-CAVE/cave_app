@@ -1,7 +1,11 @@
 from pamda import pamda
 import os, importlib.resources
 
+# This file is not intended to serve as an example, but rather is used as a way to serve up examples
+# You should not consider this as code to emulate, but rather as a way to serve up examples
+
 def get_examples():
+    # Return all the examples in the cave_api/examples folder
     examples_location = importlib.resources.files("cave_api") / "cave_api" / "examples"
     return sorted([i.replace('.py','') for i in os.listdir(examples_location) if i.endswith('.py') and i != '__init__.py' and i != 'example_selector.py'])
 
@@ -29,9 +33,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "options": {k:{'name':k+'.py'} for k in examples},
                 "apiCommand": "init",
             },
+            "note": {
+                'name': 'Note',
+                'type': 'text',
+                'variant': 'textarea',
+                'rows': 13,
+                'help': 'This is a note to help you understand how to use the example selector pane.',
+            }
         },
         "values": {
             "example": [selected_example],
+            "note": ["Select one of the example files above to preview an app using that code.\n\nTo view the code for each example, open the corresponding file in:\n\ncave_api/cave_api/examples\n\nYou can add or modify examples. Your changes will be reflected the next time you select that example from the above list."],
         },
     }
     
