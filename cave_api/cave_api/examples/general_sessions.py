@@ -27,23 +27,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 # Add a pane button to launch the sessions pane
                 "session": {
                     "icon": "md/MdApi",
-                    "type": "pane",
-                    "variant": "wall",
+                    "type": "session",
                     "bar": "upperLeft",
-                },
-            },
-        },
-        "panes": {
-            "data": {
-                # Create a pane that allows the user to interact with sessions
-                # Sessions represent the state of the app
-                # A user (specifically a team) can have multiple sessions
-                # Each session is a unique instance of the app
-                # Note: This key must match the key used in the app bar above
-                "session": {
-                    "name": "Sessions Pane",
-                    # By using the `session` variant, the pane will be rendered as a session pane
-                    "variant": "session",
                 },
             },
         },

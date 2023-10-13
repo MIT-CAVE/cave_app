@@ -32,6 +32,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "examplePropsPane": {
                     "icon": "fa/FaCogs",
                     "type": "pane",
+                    "variant": "wall",
                     "bar": "upperLeft",
                 },
             },

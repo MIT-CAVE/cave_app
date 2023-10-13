@@ -32,6 +32,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "examplePane": {
                     "icon": "fa/FaCogs",
                     "type": "pane",
+                    "variant": "wall",
                     "bar": "upperLeft",
                 },
             },
@@ -47,20 +48,40 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "variant": "options",
                     # Create a set of example props to be rendered in the pane
                     "props": {
-                        "exampleHeader": {
-                            "name": "Example Header",
+                        "topLeft": {
+                            "name": "Top Left",
                             "type": "head",
-                            "help": "Some help for the Example Header",
+                            # Convert the header variant from the default of col to row
+                            # This creates a box rather than an underlined header
+                            "variant": "row",
                         },
-                        "numericInputExample": {
-                            "name": "Numeric Input Example",
-                            "type": "num",
-                            "help": "Help for the numeric input example",
-                            "unit": "widgets",
+                        "bottomRight": {
+                            "name": "Bottom Right",
+                            "type": "head",
+                            # Convert the header variant from the default of col to row
+                            # This creates a box rather than an underlined header
+                            "variant": "row",
                         },
                     },
-                    "values": {
-                        "numericInputExample": 100,
+                    # Layout is used to define the layout of props in a modal or pane
+                    "layout": {
+                        "type": "grid",
+                        "numColumns": 2,
+                        "numRows": 2,
+                        "data": {
+                            "col1Row1": {
+                                "type": "item",
+                                "column": 1,
+                                "row": 1,
+                                "itemId": "topLeft",
+                            },
+                            "col1Row2": {
+                                "type": "item",
+                                "column": 2,
+                                "row": 2,
+                                "itemId": "bottomRight",
+                            },
+                        },
                     },
                 },
             },
