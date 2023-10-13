@@ -92,7 +92,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "product": {
                     "order": {
-                        "levels": ["color", "size", "type"],
+                        "levels": ["color", "size", "product"],
                     },
                     "data": {
                         "apple": {
