@@ -16,8 +16,8 @@ FROM ${ROOT_CONTAINER}
 ENV PYTHONUNBUFFERED=1
 
 # Install any additional requirements
-# EG: Use bash for alpine based images
-RUN apk update && apk --no-cache add bash
+# EG: Use bash for alpine images / install some build tools and cryptography dependencies
+RUN apk update && apk --no-cache add bash build-base libffi-dev
 
 # Set the working directory to /app
 WORKDIR /app/
