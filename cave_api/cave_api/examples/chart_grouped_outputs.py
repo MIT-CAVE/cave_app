@@ -39,10 +39,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "pageLayout": [
                         {
                             "type": "groupedOutput",
-                            "variant": "Bar",
+                            "variant": "bar",
                             "groupingId": ["product", "location"],
                             "groupingLevel": ["color", "state"],
-                            "statAggregation": "Sum",
+                            "statAggregation": "sum",
                             "groupedOutputDataId": "salesData",
                             "statId":"sales",
                         }
