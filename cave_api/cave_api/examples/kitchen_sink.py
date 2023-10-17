@@ -626,8 +626,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "dash1": {
                     "pageLayout": [
                         {
-                            "variant": "Bar",
-                            "statAggregation": "Average",
+                            "variant": "bar",
+                            "statAggregation": "mean",
                         },
                         {
                             "type": "map",
@@ -636,11 +636,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "maximized": True,
                          },
                         {
-                            "variant": "Bar",
+                            "variant": "bar",
                             "groupingLevel": ["size"],
                             "groupingId": ["sku"],
                             "lockedLayout": True,
-                            "statAggregation": "Sum",
+                            "statAggregation": "sum",
                             "groupedOutputDataId": "locationGroup",
                             "statId":"numericExampleCalculationStat",
                         },
@@ -650,31 +650,31 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "dash2": {
                     "pageLayout": [
                         {
-                            "variant": "Bar",
-                            "statAggregation": "Average",
+                            "variant": "bar",
+                            "statAggregation": "mean",
                             "groupedOutputDataId": "locationGroup",
                             "statId":"numericStatExampleB",
                         },
                         {
                             "type": "globalOutputs",
-                            "variant": "Bar",
-                            "statAggregation": "Sum",
+                            "variant": "bar",
+                            "statAggregation": "sum",
                             "sessions": [],
                             "globalOutput": ["key1", "key2"],
                             "showToolbar": False,
                         },
                         {
-                            "variant": "Box Plot",
+                            "variant": "box_plot",
                             "groupingLevel": ["size"],
                             "lockedLayout": True,
                             "groupingId": ["sku"],
-                            "statAggregation": "Average",
+                            "statAggregation": "mean",
                             "groupedOutputDataId": "locationGroup",
                             "statId":"numericExampleCalculationStat",
                         },
                         {
-                            "variant": "Cumulative Line",
-                            "statAggregation": "Sum",
+                            "variant": "cumulative_line",
+                            "statAggregation": "sum",
                             "groupedOutputDataId": "locationGroup",
                             "statId":"numericStatExampleB",
                             "groupingId": ["location", "sku"],
