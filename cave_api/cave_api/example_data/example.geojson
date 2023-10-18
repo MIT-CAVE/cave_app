@@ -1,0 +1,28 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "arc_id": "toronto-indy"
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        -79.63,
+                        43.78
+                    ],
+                    [
+                        -79.63,
+                        39.82
+                    ],
+                    [
+                        -86.18,
+                        39.82
+                    ]
+                ]
+            }
+        }
+    ]
+}
