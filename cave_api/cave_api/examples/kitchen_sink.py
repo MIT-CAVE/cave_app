@@ -1212,8 +1212,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "arc",
                     "name": "Flow Type 1",
                     "geoJson": {
-                        "geoJsonLayer": "https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/bart.geo.json",
-                        "geoJsonProp": "name",
+                        "geoJsonLayer": "https://raw.githubusercontent.com/MIT-CAVE/cave_app/ced363/cave_api/cave_api/example_data/example.geojson",
+                        "geoJsonProp": "arc_id",
                     },
                     "props": {
                         "numericPropExampleA": {
@@ -1271,7 +1271,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "geoJsonValue": ["DUBL-DALY (ROUTE 11/12)"],
+                            "geoJsonValue": ["toronto-pittsburgh-indianapolis"],
                         },
                         "values": {
                             "numericPropExampleA": [15],
