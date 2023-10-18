@@ -1247,9 +1247,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                         },
                     },
-                    "values": {
-                        "selectorPropForColor": ["a"],
-                    },
                     "layout": {
                         "type": "grid",
                         "numColumns": "auto",
@@ -1457,7 +1454,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            "value": True,
                             "help": "Help for boolean prop",
                         },
                     },
