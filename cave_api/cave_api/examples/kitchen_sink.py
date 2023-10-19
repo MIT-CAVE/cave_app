@@ -69,65 +69,63 @@ def execute_command(session_data, socket, command="init", **kwargs):
     """
     example = {
         "settings": {
-            "data": {
-                "demo": {
-                    "map1": {
-                        "scrollSpeed": 0.1,
-                    },
-                    "dash1": {
-                        "displayTime": 30,
+            "demo": {
+                "map1": {
+                    "scrollSpeed": 0.1,
+                },
+                "dash1": {
+                    "displayTime": 30,
+                },
+            },
+            "sync": {
+                "panes": {
+                    "name": "Open Pane",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "ab1": ["panes", "paneState", "left"],
+                        "ab2": ["panes", "paneState", "right"],
                     },
                 },
-                "sync": {
-                    "panes": {
-                        "name": "Open Pane",
-                        "showToggle": True,
-                        "value": False,
-                        "data": {
-                            "ab1": ["panes", "paneState", "left"],
-                            "ab2": ["panes", "paneState", "right"],
-                        },
-                    },
-                    "pageSelection": {
-                        "name": "Page Selection",
-                        "showToggle": True,
-                        "value": False,
-                        "data": {"ps1": ["pages", "currentPage"]},
-                    },
-                    "mapLayers": {
-                        "name": "Map Layers",
-                        "showToggle": True,
-                        "value": False,
-                        "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
-                    },
-                    "modals": {
-                        "name": "Open Modal",
-                        "showToggle": True,
-                        "value": False,
-                        "data": {"pn1": ["panes", "paneState", "center"]},
-                    },
-                    "pages": {
-                        "name": "Dashboards",
-                        "showToggle": True,
-                        "value": False,
-                        "data": {"db1": ["pages", "data"]},
-                    },
+                "pageSelection": {
+                    "name": "Page Selection",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {"ps1": ["pages", "currentPage"]},
                 },
-                "iconUrl": "https://react-icons.mitcave.com/4.10.1",
-                "order": {
-                    "sync": ["panes", "modals", "pageSelection", "mapLayers", "pages"],
+                "mapLayers": {
+                    "name": "Map Layers",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
                 },
-                "debug": True,
-                "time": {
-                    "timeLength": 3,
-                    "timeUnits": "Century",
+                "modals": {
+                    "name": "Open Modal",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {"pn1": ["panes", "paneState", "center"]},
                 },
-                "defaults": {
-                    "precision": 4,
-                    "trailingZeros": True,
-                    "unitPlacement": "afterWithSpace",
-                    "showToolbar": True,
+                "pages": {
+                    "name": "Dashboards",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {"db1": ["pages", "data"]},
                 },
+            },
+            "iconUrl": "https://react-icons.mitcave.com/4.10.1",
+            "order": {
+                "sync": ["panes", "modals", "pageSelection", "mapLayers", "pages"],
+            },
+            "debug": True,
+            "time": {
+                "timeLength": 3,
+                "timeUnits": "Century",
+            },
+            "defaults": {
+                "precision": 4,
+                "trailingZeros": True,
+                "unitPlacement": "afterWithSpace",
+                "showToolbar": True,
             },
         },
         "appBar": {
@@ -1642,143 +1640,141 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "globalOutputs": {
-            "data": {
-                "props": {
-                    "kpiHeader1": {
-                        "type": "head",
-                        "name": "Example KPI Header 1",
-                        "icon": "bs/BsInboxes",
-                        "variant": "icon"
-                    },
-                    "kpiHeader2": {
-                        "type": "head",
-                        "name": "Example KPI Header 2",
-                        "icon": "bs/BsTruck",
-                        "variant": "icon"
-                    },
-                    "key1": {
-                        "name": "KPI Example 1",
-                        "icon": "bs/BsFillEmojiFrownFill",
-                        "precision": 0,
-                        "unit": "frowns",
-                        "type": "num",
-                        "variant": "icon",
-                    },
-                    "key2": {
-                        "name": "KPI Example 2",
-                        "icon": "bs/BsFillEmojiSmileFill",
-                        "precision": 0,
-                        "unit": "smiles",
-                        "type": "num",
-                        "variant": "icon",
-                    },
-                    "key3": {
-                        "name": "KPI Example 3",
-                        "icon": "bs/BsInboxes",
-                        "precision": 4,
-                        "notation": "scientific",
-                        "notationDisplay": "E+",
-                        "trailingZeros": True,
-                        "unit": "units",
-                        "type": "num",
-                        "variant": "icon",
-                    },
-                    "key4": {
-                        "name": "A Big Number",
-                        "icon": "bs/BsTruck",
-                        "notation": "engineering",
-                        "notationDisplay": "x10^",
-                        "precision": 0,
-                        "unit": "units",
-                        "type": "num",
-                        "variant": "icon",
-                    },
-                    "key5": {
-                        "name": "A Really Big Number",
-                        "icon": "md/MdExpand",
-                        "precision": 2,
-                        "unit": "$",
-                        "unitPlacement": "before",
-                        "notation": "compact",
-                        "notationDisplay": "long",
-                        "trailingZeros": True,
-                        "type": "num",
-                        "variant": "icon",
-                    },
-                    "key6": {
-                        "name": "A Decent Big Number",
-                        "icon": "md/MdExpand",
-                        "precision": 2,
-                        "unit": "$",
-                        "unitPlacement": "before",
-                        "notation": "compact",
-                        "notationDisplay": "long",
-                        "trailingZeros": True,
-                        "type": "num",
-                        "variant": "icon",
-                    },
+            "props": {
+                "kpiHeader1": {
+                    "type": "head",
+                    "name": "Example KPI Header 1",
+                    "icon": "bs/BsInboxes",
+                    "variant": "icon"
                 },
-                "values": {
-                    "key1": 18,
-                    "key2": 32,
-                    "key3": 100,
-                    "key4": 10000000000000,
-                    "key5": 9007199254740991,
-                    "key6": 199254740991,
+                "kpiHeader2": {
+                    "type": "head",
+                    "name": "Example KPI Header 2",
+                    "icon": "bs/BsTruck",
+                    "variant": "icon"
                 },
-                "layout": {
-                    "type": "grid",
-                    "numColumns": "auto",
-                    "numRows": "auto",
-                    "data": {
-                        "col1Row1": {
-                            "type": "item",
-                            "itemId": "kpiHeader1",
-                            "column": 1,
-                            "row": 1,
-                        },
-                        "col1Row2": {
-                            "type": "item",
-                            "itemId": "key1",
-                            "column": 1,
-                            "row": 2,
-                        },
-                        "col1Row3": {
-                            "type": "item",
-                            "itemId": "key4",
-                            "column": 1,
-                            "row": 3,
-                        },
-                        "col1Row4": {
-                            "type": "item",
-                            "itemId": "key5",
-                            "column": 1,
-                            "row": 4,
-                        },
-                        "col2Row1": {
-                            "type": "item",
-                            "itemId": "kpiHeader2",
-                            "column": 2,
-                            "row": 1,
-                        },
-                        "col2Row2": {
-                            "type": "item",
-                            "itemId": "key2",
-                            "column": 2,
-                            "row": 2,
-                        },
-                        "col2Row3": {
-                            "type": "item",
-                            "itemId": "key3",
-                            "column": 2,
-                            "row": 3,
-                        },
-                        "col1Row5": {
-                            "type": "item",
-                            "itemId": "key6",
-                            "column": 1,
-                            "row": 5,
-                        },
+                "key1": {
+                    "name": "KPI Example 1",
+                    "icon": "bs/BsFillEmojiFrownFill",
+                    "precision": 0,
+                    "unit": "frowns",
+                    "type": "num",
+                    "variant": "icon",
+                },
+                "key2": {
+                    "name": "KPI Example 2",
+                    "icon": "bs/BsFillEmojiSmileFill",
+                    "precision": 0,
+                    "unit": "smiles",
+                    "type": "num",
+                    "variant": "icon",
+                },
+                "key3": {
+                    "name": "KPI Example 3",
+                    "icon": "bs/BsInboxes",
+                    "precision": 4,
+                    "notation": "scientific",
+                    "notationDisplay": "E+",
+                    "trailingZeros": True,
+                    "unit": "units",
+                    "type": "num",
+                    "variant": "icon",
+                },
+                "key4": {
+                    "name": "A Big Number",
+                    "icon": "bs/BsTruck",
+                    "notation": "engineering",
+                    "notationDisplay": "x10^",
+                    "precision": 0,
+                    "unit": "units",
+                    "type": "num",
+                    "variant": "icon",
+                },
+                "key5": {
+                    "name": "A Really Big Number",
+                    "icon": "md/MdExpand",
+                    "precision": 2,
+                    "unit": "$",
+                    "unitPlacement": "before",
+                    "notation": "compact",
+                    "notationDisplay": "long",
+                    "trailingZeros": True,
+                    "type": "num",
+                    "variant": "icon",
+                },
+                "key6": {
+                    "name": "A Decent Big Number",
+                    "icon": "md/MdExpand",
+                    "precision": 2,
+                    "unit": "$",
+                    "unitPlacement": "before",
+                    "notation": "compact",
+                    "notationDisplay": "long",
+                    "trailingZeros": True,
+                    "type": "num",
+                    "variant": "icon",
+                },
+            },
+            "values": {
+                "key1": 18,
+                "key2": 32,
+                "key3": 100,
+                "key4": 10000000000000,
+                "key5": 9007199254740991,
+                "key6": 199254740991,
+            },
+            "layout": {
+                "type": "grid",
+                "numColumns": "auto",
+                "numRows": "auto",
+                "data": {
+                    "col1Row1": {
+                        "type": "item",
+                        "itemId": "kpiHeader1",
+                        "column": 1,
+                        "row": 1,
+                    },
+                    "col1Row2": {
+                        "type": "item",
+                        "itemId": "key1",
+                        "column": 1,
+                        "row": 2,
+                    },
+                    "col1Row3": {
+                        "type": "item",
+                        "itemId": "key4",
+                        "column": 1,
+                        "row": 3,
+                    },
+                    "col1Row4": {
+                        "type": "item",
+                        "itemId": "key5",
+                        "column": 1,
+                        "row": 4,
+                    },
+                    "col2Row1": {
+                        "type": "item",
+                        "itemId": "kpiHeader2",
+                        "column": 2,
+                        "row": 1,
+                    },
+                    "col2Row2": {
+                        "type": "item",
+                        "itemId": "key2",
+                        "column": 2,
+                        "row": 2,
+                    },
+                    "col2Row3": {
+                        "type": "item",
+                        "itemId": "key3",
+                        "column": 2,
+                        "row": 3,
+                    },
+                    "col1Row5": {
+                        "type": "item",
+                        "itemId": "key6",
+                        "column": 1,
+                        "row": 5,
                     },
                 },
             },
