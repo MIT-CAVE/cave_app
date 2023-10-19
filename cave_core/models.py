@@ -13,7 +13,7 @@ import type_enforced
 
 # Internal Imports
 from cave_core.utils.broadcasting import Socket
-from cave_core.utils.constants import top_level_keys
+from cave_core.utils.constants import api_keys, background_api_keys
 from cave_api.api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
@@ -912,19 +912,22 @@ class Sessions(models.Model):
         """
         self.versions = {
             obj.data_name: obj.data_version
-            for obj in SessionData.objects.filter(session=self, sendToClient=True)
+            for obj in SessionData.objects.filter(session=self).filter(data_name__in=api_keys)
         }
         self.save(update_fields=["versions"])
 
     def get_client_data(self, keys, session_data=None):
         """
-        Returns all data that is marked as sendToClient in this session
+        Returns all data for this session that should be sent to the client
         """
+        keys = pamda.intersection(keys, api_keys)
+        if len(keys) == 0:
+            return {}
         if session_data == None:
             session_data = SessionData.objects.filter(session=self)
         return {
             obj.data_name: obj.get_data()
-            for obj in session_data.filter(data_name__in=keys, sendToClient=True)
+            for obj in session_data.filter(data_name__in=keys)
         }
 
     def broadcast_changed_data(self, previous_versions, broadcast=True):
@@ -972,10 +975,7 @@ class Sessions(models.Model):
                 'data':{"desired":"data object here"}
             },
             'data2_name_here':{
-                'data':{"desired":"data 2 object here"},
-                'allowModification':False,
-                'sendToApi':False,
-                'sendToClient':True
+                'data':{"desired":"data 2 object here"}
             }
             ...
         }
@@ -983,8 +983,8 @@ class Sessions(models.Model):
         """
         if wipeExisting:
             data_keys = list(data.keys())
-            keys_to_delete = pamda.difference(data_keys, top_level_keys)
-            keys_to_empty = pamda.difference(top_level_keys, data_keys)
+            keys_to_delete = pamda.difference(data_keys, api_keys)
+            keys_to_empty = pamda.difference(api_keys, data_keys)
             if len(keys_to_delete)>0:
                 SessionData.objects.filter(session=self, data_name__in=keys_to_delete).delete()
             for k in keys_to_empty:
@@ -993,9 +993,6 @@ class Sessions(models.Model):
             obj, created = SessionData.objects.get_or_create(session=self, data_name=key)
             obj.save_data(
                 data=value,
-                allowModification=value.get("allowModification", obj.allowModification),
-                sendToClient=value.get("sendToClient", obj.sendToClient),
-                sendToApi=value.get("sendToApi", obj.sendToApi),
                 data_version=self.versions.get(key, 0) + 1,
             )
         # Update versions post replacement
@@ -1017,7 +1014,7 @@ class Sessions(models.Model):
         - `command_keys`:
             - What: List of strings to determine which top level keys should be passed with the command
             - Default: None
-            - Note: If None, only top level keys marked as `sendToApi` are sent to the api
+            - Note: If None, all keys are sent to the api
         - `data_queryset`:
             - What: Queryset of SessionData objects
             - Default: All SessionData objects related to this session object
@@ -1026,18 +1023,23 @@ class Sessions(models.Model):
         self.broadcast_loading(True)
         self.set_executing(True)
         if data_queryset == None:
-            data_queryset = SessionData.objects.filter(session=self)
+            data_queryset = SessionData.objects.filter(session=self).exclude(data_name__in=background_api_keys)
         if isinstance(command_keys, list):
             data_queryset = data_queryset.filter(data_name__in=command_keys)
-        else:
-            data_queryset = data_queryset.filter(sendToApi=True)
         session_data = {i.data_name: i.get_data() for i in data_queryset}
         socket = Socket(self)
         command_output = execute_command(
             session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
         )
+        # Ensure that no reserved api keys are returned
+        background_api_keys_used = pamda.intersection(list(command_output.keys()), background_api_keys)
+        if len(background_api_keys_used)>0:
+            raise Exception(f"Oops! The following reserved api keys were returned: {str(background_api_keys_used)}")
+        # Pop out kwargs for use but not for storage
         kwargs = command_output.pop("kwargs", {})
+        # Update the session data with the command output
         self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
+        # Update the execution state
         self.set_executing(False)
 
     def mutate(self, data_version, data_name, data_path, data_value=None, ignore_version=False):
@@ -1071,10 +1073,6 @@ class Sessions(models.Model):
         if not session_data:
             raise Exception(
                 "Session Error: No session data found. This could be caused by an incorrect `data_name` or not being in a session."
-            )
-        if not session_data.allowModification:
-            raise Exception(
-                "Session Error: Attempting to mutate a data that does not `allowModification`"
             )
         if not ignore_version and session_data.data_version != data_version:
             return {"synch_error": True}
@@ -1208,21 +1206,6 @@ class SessionData(models.Model):
         help_text=_("The associated session"),
     )
     data_name = models.CharField(_("data_name"), max_length=32, help_text=_("Name of the data"))
-    allowModification = models.BooleanField(
-        _("allowModification"),
-        help_text=_("Allow this data to be modified?"),
-        default=True,
-    )
-    sendToClient = models.BooleanField(
-        _("sendToClient"),
-        help_text=_("Should this data be sent to the client?"),
-        default=True,
-    )
-    sendToApi = models.BooleanField(
-        _("sendToApi"),
-        help_text=_("Should this data be sent to the api? (for solve and configure)"),
-        default=True,
-    )
     data_version = models.IntegerField(
         _("data_version"),
         help_text=_("Version of the data"),
@@ -1274,9 +1257,6 @@ class SessionData(models.Model):
     def save_data(
         self,
         data,
-        allowModification=None,
-        sendToClient=None,
-        sendToApi=None,
         data_version=None,
     ):
         """
@@ -1288,27 +1268,7 @@ class SessionData(models.Model):
             - Type: dict | list
             - What: The data to save
 
-        Optional:
-
-        - `allowModification`:
-            - Type: Boolean
-            - What: Allow this data to be modified by mutation requests
-            - Default: The current database setting
-        - `sendToClient`:
-            - Type: Boolean
-            - What: Send this object to the client when a client connects
-            - Default: The current database setting
-        - `sendToApi`:
-            - Type: Boolean
-            - What: Send this data to the api when executing an api command
-            - Default: The current database setting
         """
-        if allowModification is not None:
-            self.allowModification = allowModification
-        if sendToClient is not None:
-            self.sendToClient = sendToClient
-        if sendToApi is not None:
-            self.sendToApi = sendToApi
         if data_version is not None:
             self.data_version = data_version
         else:

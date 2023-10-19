@@ -1,4 +1,4 @@
-top_level_keys = [
+api_keys = [
     'settings',
     'appBar',
     'panes',
@@ -6,5 +6,8 @@ top_level_keys = [
     'maps',
     'mapFeatures',
     'groupedOutputs',
-    'globalOutputs'
+    'globalOutputs',
+    'associated'
 ]
+
+background_api_keys = ['associated']

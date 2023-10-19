@@ -36,7 +36,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "maps": {
             # Specify the order of map style items as they will appear in the style selector
             "order": {
-                "additionalMapStyles": ["mapboxDark", "cartoVoyager", "stamenWatercolor"],
+                "additionalMapStyles": ["mapboxDark", "cartoVoyager", "osmRasterTiles"],
             },
             # Add custom map styles
             "additionalMapStyles": {
@@ -56,10 +56,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     # See: https://github.com/CartoDB/basemap-styles/blob/master/docs/basemap_styles.json
                     "spec": "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
                 },
-                # For custom tiling styles from other sources like stamen,
+                # For custom tiling styles from other raster sources (eg: stamen or open street map),
                 # you can use the more complex spec dictionary based interface
-                "stamenWatercolor": {
-                    "name": "Stamen Watercolor",
+                "osmRasterTiles": {
+                    "name": "OSM Raster Tiles",
                     "icon": "md/MdBrush",
                     # See the `style` key in the following mapbox gl reference spec:
                     # https://docs.mapbox.com/mapbox-gl-js/example/map-tiles/
@@ -68,11 +68,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "sources": {
                             "raster-tiles": {
                                 "type": "raster",
+                                # EG: See a list of raster sources based on OSM here:
+                                # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
                                 "tiles": [
-                                    "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
+                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 ],
                                 "tileSize": 256,
-                                "attribution": "Map tiles by <a target='_top' rel='noopener' href='http://stamen.com'>Stamen Design</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a target='_top' rel='noopener' href='http://openstreetmap.org'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>",
+                                "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
                             },
                         },
                         "layers": [
@@ -95,7 +97,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     # Note: globe can only be used if you have a mapbox token
                     "currentProjection": "globe",
                     # Specify the current style for the map
-                    "currentStyle": "stamenWatercolor",
+                    "currentStyle": "osmRasterTiles",
                     # Specify the default viewport for the map
                     "defaultViewport": {
                         "longitude": -75.447,

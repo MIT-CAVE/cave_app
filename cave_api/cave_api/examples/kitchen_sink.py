@@ -69,7 +69,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
     """
     example = {
         "settings": {
-            "allowModification": False,
             "data": {
                 "demo": {
                     "map1": {
@@ -687,19 +686,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "maps": {
             "additionalMapStyles": {
-                "watercolor": {
-                    "name": "Watercolor",
+                "osmRasterTiles": {
+                    "name": "OSM Raster Tiles",
                     "icon": "md/MdBrush",
                     "spec": {
                         "version": 8,
                         "sources": {
                             "raster-tiles": {
                                 "type": "raster",
+                                # EG: See a list of raster sources based on OSM here:
+                                # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
                                 "tiles": [
-                                    "https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"
+                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
                                 ],
                                 "tileSize": 256,
-                                "attribution": "Map tiles by <a target='_top' rel='noopener' href='http://stamen.com'>Stamen Design</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a target='_top' rel='noopener' href='http://openstreetmap.org'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>",
+                                "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
                             },
                         },
                         "layers": [
@@ -773,7 +774,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "legendGroups": ["lga", "lgb"],
                     },
                     "name": "Example Map 1",
-                    "currentStyle": "watercolor",
+                    "currentStyle": "osmRasterTiles",
                     "currentProjection": "globe",
                     "defaultViewport": {
                         "longitude": -75.447,

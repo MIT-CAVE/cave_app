@@ -100,7 +100,6 @@ def mutate_session(request):
     {
     "data_name":"localSync",
     "data_path":["test"],
-    "data_version":"44136fa355b3",
     "data_value":"Example",
     "api_command":None,
     "team_sync":true
@@ -122,20 +121,20 @@ def mutate_session(request):
 
     # Session validation
     session = request.user.session
-
+    sessions = [session]
     if team_sync:
         sessions = session.get_associated_sessions()
         # Used to make sure current session is the first item in the list
         if sessions is not None:
-            sessions = [session] + list(sessions.exclude(id=session.id))
-    else:
-        sessions = [session]
+            sessions += list(sessions.exclude(id=session.id))
 
     for session_i in sessions:
-        # Apply the mutation only if a `data_name` is provided
+        # Get the session data versions
         session_i_pre_versions = session_i.versions
+        # Apply the mutation only if a `data_name` is provided
         if data_name is not None:
             response = session_i.mutate(
+                # Ignore version validation if this is not the current session
                 ignore_version=session_i.id != session.id,
                 data_version=data_versions.get(data_name),
                 **mutate_dict,
@@ -152,7 +151,7 @@ def mutate_session(request):
                         duration=5,
                     )
                     # Broadcast any changed session data
-                    session_i.broadcast_changed_data(data_versions)
+                    session_i.broadcast_changed_data(previous_versions=data_versions)
                     break
         # Apply an api command if provided and push updated output
         if api_command is not None:
@@ -161,6 +160,7 @@ def mutate_session(request):
             )
             # Broadcast any changed session data
             session_i.broadcast_changed_data(previous_versions=session_i_pre_versions)
+            # Validate the api command if in live api validation mode
             if settings.LIVE_API_VALIDATION and settings.DEBUG:
                 validator = Validator(
                     session_i.broadcast_changed_data(previous_versions={}, broadcast=False),
@@ -194,7 +194,7 @@ def get_associated_session_data(request):
     Example input (WS Send):
 
     -----------------------------------
-    {"data_names":["kpis"]}
+    {"data_names":["globalOutputs"]}
     -----------------------------------
     """
     data_names = request.data.get("data_names")
@@ -220,9 +220,7 @@ def get_associated_session_data(request):
 
     associated_data_object = {
         "associated": {
-            "data": associated,
-            "sendToApi": False,
-            "allowModification": False,
+            "data": associated
         }
     }
 
