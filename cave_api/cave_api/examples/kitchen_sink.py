@@ -1272,7 +1272,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             "geoJsonValue": ["toronto-pittsburgh-indianapolis"],
                         },
-                        "values": {
+                        "valueLists": {
                             "numericPropExampleA": [15],
                             "numericPropExampleB": [40],
                             "selectorPropForColor": [["b"]],
@@ -1341,7 +1341,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "endLatitude": [42.89, 28.49, 42.361176],
                             "endLongitude": [-85.68, -81.56, -71.084707],
                         },
-                        "values": {
+                        "valueLists": {
                             "numericPropExampleA": [30, 30, 30],
                             "numericPropExampleB": [20, 14, 6],
                             "selectorPropForColor": [["e"], ["d"], ["f"]],
@@ -1386,7 +1386,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "longitude": [-79.63, -86.18],
                         },
-                        "values": {
+                        "valueLists": {
                             "numericPropExampleA": [100, 80],
                             "numericPropExampleB": [50, 40],
                             "booleanPropExample": [True, True],
@@ -1428,7 +1428,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "latitude": [42.89, 28.49, 42.361176],
                             "longitude": [-85.68, -81.56, -71.084707],
                         },
-                        "values": {
+                        "valueLists": {
                             "numericPropExampleA": [500, 1000, 1000],
                             "numericPropExampleB": [150, 250, 250],
                             "booleanPropExample": [True, True, True],
@@ -1460,7 +1460,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             "geoJsonValue": ["CA.ON", "US.MI", "US.MA", "US.FL", "US.IN"],
                         },
-                        "values": {
+                        "valueLists": {
                             "numericPropExampleC": [0, 300, 250, 100, 200],
                             "booleanPropExample": [True, True, False, False, False],
                         }
@@ -1486,7 +1486,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             "geoJsonValue": ["CA", "US"],
                         },
-                        "values": {
+                        "valueLists": {
                             "numericPropExampleC": [50, 800],
                         }
                     }

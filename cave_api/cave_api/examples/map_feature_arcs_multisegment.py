@@ -110,7 +110,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 [[-83.9207, 35.9606], [-84.2533, 30.4383], [-81.3792, 28.5383]],
                             ]
                         },
-                        "values": {
+                        "valueLists": {
                             "capacity": [75, 105],
                             "preferredRoute": [True, False],
                         },

@@ -103,7 +103,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             "geoJsonValue": ["CA.ON", "US.MI", "US.PA"],
                         },
-                        "values": {
+                        "valueLists": {
                             "demand": [50, 80, 75],
                             "targetGrowthArea": [False, False, True],
                         }

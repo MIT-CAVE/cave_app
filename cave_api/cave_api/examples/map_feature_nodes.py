@@ -107,7 +107,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "latitude": [43.78, 39.82],
                             "longitude": [-79.63, -86.18],
                         },
-                        "values": {
+                        "valueLists": {
                             "capacity": [100, 80],
                             "includesAutomation": [True, False],
                         },

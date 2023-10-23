@@ -117,7 +117,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             # The order of the ids must match the order of the values in the data.values fields
                             "geoJsonValue": ["toronto-pittsburgh-indianapolis", "souix-falls-little-rock-memphis"],
                         },
-                        "values": {
+                        "valueLists": {
                             "capacity": [65, 85],
                             "preferredRoute": [True, False],
                         },

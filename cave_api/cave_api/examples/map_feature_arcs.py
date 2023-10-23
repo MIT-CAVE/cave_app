@@ -108,7 +108,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "endLatitude": [39.82, 39.95],
                             "endLongitude": [-86.18, -75.16],
                         },
-                        "values": {
+                        "valueLists": {
                             "capacity": [75, 105],
                             "preferredRoute": [True, False],
                         },
