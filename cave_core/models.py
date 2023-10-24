@@ -1036,9 +1036,9 @@ class Sessions(models.Model):
         if len(background_api_keys_used)>0:
             raise Exception(f"Oops! The following reserved api keys were returned: {str(background_api_keys_used)}")
         # Pop out kwargs for use but not for storage
-        kwargs = command_output.pop("kwargs", {})
+        extraKwargs = command_output.pop("extraKwargs", {})
         # Update the session data with the command output
-        self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
+        self.replace_data(data=command_output, wipeExisting=extraKwargs.get("wipeExisting", True))
         # Update the execution state
         self.set_executing(False)
 

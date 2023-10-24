@@ -222,7 +222,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "examplePropsPane": {
                     "name": "Example Props Pane",
-                    "variant": "options",
                     "props": {
                         "numericHeader": {
                             "name": "Numeric Props",
@@ -780,8 +779,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "zoom": 4.66,
                         "pitch": 0,
                         "bearing": 0,
-                        "height": 1287,
-                        "altitude": 1.5,
                         "maxZoom": 12,
                         "minZoom": 2,
                     },
@@ -994,14 +991,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "optionalViewports": ["ov0", "ov1"],
                         "legendGroups": ["lga", "lgb"],
                     },
+                    "name": "Example Map 2",
                     "defaultViewport": {
                         "longitude": -75.447,
                         "latitude": 40.345,
                         "zoom": 4.66,
                         "pitch": 0,
                         "bearing": 0,
-                        "height": 1287,
-                        "altitude": 1.5,
                         "maxZoom": 12,
                         "minZoom": 2,
                     },
@@ -1063,8 +1059,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {"min": 0, "max": 80, "startSize": "30px", "endSize": "45px"},
                                         "numericPropExampleB": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
                                     },
-                                    "startSize": "30px",
-                                    "endSize": "45px",
                                     "icon": "fa6/FaIgloo",
                                 },
                                 "T1": {
@@ -1075,8 +1069,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
                                         "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
                                     },
-                                    "startSize": "15px",
-                                    "endSize": "30px",
                                     "colorByOptions": {
                                         "selectorPropForColor": {
                                             "a": "rgba(128,255,255, 255)",
@@ -1131,8 +1123,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {"min": 0, "max": 100, "startSize": "15px", "endSize": "30px"},
                                         "numericPropExampleB": {"min": 0, "max": 250, "startSize": "5px", "endSize": "15px"},
                                     },
-                                    "startSize": "30px",
-                                    "endSize": "45px",
                                     "icon": "bs/BsBuilding",
                                 },
                                 "T2": {
@@ -1166,8 +1156,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
                                         "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
                                     },
-                                    "startSize": "15px",
-                                    "endSize": "30px",
                                 },
                                 "state": {
                                     "value": True,
@@ -1779,7 +1767,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
         },
-        "kwargs": {
+        "extraKwargs": {
             "wipeExisting": True,
         },
     }
