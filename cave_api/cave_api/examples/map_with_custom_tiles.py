@@ -103,8 +103,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "zoom": 4.66,
                         "pitch": 0,
                         "bearing": 0,
-                        "height": 1287,
-                        "altitude": 1.5,
                         "maxZoom": 12,
                         "minZoom": 2,
                     },

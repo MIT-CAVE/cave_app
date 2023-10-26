@@ -154,7 +154,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "resetButton": {
                     "icon": "md/MdSync",
                     "color": "rgba(255, 101, 101, 255)",
-                    "apiCommand": "init",
+                    "apiCommand": "reset",
                     "type": "button",
                     "bar": "upperLeft",
                 },
@@ -652,7 +652,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "statId":"numericStatExampleB",
                         },
                         {
-                            "type": "globalOutputs",
+                            "type": "globalOutput",
                             "variant": "bar",
                             "statAggregation": "sum",
                             "sessions": [],
@@ -1771,8 +1771,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "wipeExisting": True,
         },
     }
-    if command == "init":
-        print("The `reset` button has been pressed by the user!")
+    if command == "init" or command == "reset":
+        if command == "reset":
+            print ("The `reset` button has been pressed by the user!")
         return example
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")

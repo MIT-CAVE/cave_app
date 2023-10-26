@@ -42,9 +42,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 # Note: This key must match the key used in the app bar above
                 "examplePane": {
                     "name": "Example Options Pane",
-                    # By using the `options` variant, the pane will be rendered as an options pane
-                    # This allows for props to be rendered in the pane
-                    "variant": "options",
                     # Create a set of example props to be rendered in the pane
                     "props": {
                         "topLeft": {

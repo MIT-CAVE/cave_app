@@ -42,7 +42,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 # Note: This key must match the key used in the app bar above
                 "exampleModal": {
                     "name": "Example Modal",
-                    "variant": "options",
                     "props": {
                         "exampleHeader": {
                             "name": "Example Header",

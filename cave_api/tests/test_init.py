@@ -1,4 +1,4 @@
-from cave_api import execute_command
+from cave_api.examples.general_props_all import execute_command
 from cave_utils import Socket, Validator
 
 

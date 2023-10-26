@@ -41,7 +41,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 # Create an options pane with all of the available props
                 "examplePane": {
                     "name": "Example Props Pane",
-                    "variant": "options",
                     # Use an example of each prop and variant available in the api
                     "props": {
                         "numericHeader": {
@@ -72,7 +71,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "textInputExample": {
                             "name": "Text Input Example",
                             "type": "text",
-                            "value": "Example Text Here",
                             "help": "Help for the text input example",
                         },
                         "textAreaInputExample": {
@@ -80,7 +78,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "text",
                             "variant": "textarea",
                             "rows": 6,
-                            "value": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                             "help": "Help for the text area input example",
                         },
                         "miscHeader": {
@@ -95,7 +92,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "buttonInputExample": {
                             "name": "Button Input Example (Creates an Error)",
-                            "value": "Press Me!",
                             "type": "button",
                             "apiCommand": "test",
                             "help": "Press this button to create an error",
