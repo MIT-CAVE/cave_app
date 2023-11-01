@@ -1,6 +1,6 @@
 autoflake==2.2.1
 black==23.9.1
-cave_utils @ git+https://github.com/MIT-CAVE/cave_utils@fdec47ff45952db975e5ac42a6e10ce7b1b38119
+cave_utils==2.0.0b2
 channels[daphne]==4.0.0
 Django==4.2.6
 django-cors-headers==4.2.0
