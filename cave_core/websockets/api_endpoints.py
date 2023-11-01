@@ -167,7 +167,6 @@ def mutate_session(request):
                     ignore_keys=["meta"],
                 )
                 validator.log.write_logs(f"./logs/validation/{session_i.name}.log")
-
         # If no api command is provided, apply the mutation
         else:
             Socket(session_i).broadcast(

@@ -819,7 +819,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "groupCalcBySize": "sum",
                                     "groupCalcByColor": "mode",
                                     # "groupScaleWithZoom": True,
-                                    # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
                                     "colorByOptions": {
                                         "numericPropExampleA": {
@@ -841,6 +840,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "booleanPropExample": {
                                             "false": "rgba(255,0,0, 255)",
                                             "true": "rgba(0,255,0, 255)",
+                                            "nullColor": "rgba(0,255,0, 255)",
                                         },
                                     },
                                     "sizeByOptions": {
@@ -1372,6 +1372,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 1: { "latitude": [44.78, 39.82], },
                                 2: { "latitude": [45.78, 39.82], },
                             },
+                            "latitude": [43.78, 39.82],
                             "longitude": [-79.63, -86.18],
                         },
                         "valueLists": {

@@ -23,7 +23,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
     # A data structure to hold the persistent pane for selecting an example to preview
     exampleSelectorPane = {
         "name": "Example Code Selector",
-        "variant": "options",
         "props": {
             "example": {
                 "name": "Example Code To Preview",
@@ -43,7 +42,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "values": {
             "example": [selected_example],
-            "note": ["Select one of the example files above to preview an app using that code.\n\nTo view the code for each example, open the corresponding file in:\n\ncave_api/cave_api/examples\n\nYou can add or modify examples. Your changes will be reflected the next time you select that example from the above list."],
+            "note": "Select one of the example files above to preview an app using that code.\n\nTo view the code for each example, open the corresponding file in:\n\ncave_api/cave_api/examples\n\nYou can add or modify examples. Your changes will be reflected the next time you select that example from the above list.",
         },
     }
     
