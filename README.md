@@ -124,7 +124,7 @@ Use the CLI to keep your API code `pretty` and match CAVE coding format standard
 - Yang Dai - CAVE Developer
 - Margaret Sands - CAVE Developer
 - Kristen Manning - CAVE Developer
-- Alan CY - CAVE Developer
+- Alan Yan - CAVE Developer
 - Chris Larry - CAVE Developer
 - Chloe Wang - CAVE Developer
 - Shepherd Jiang - CAVE Developer
