@@ -1,54 +1,61 @@
 # Introduction
 
-This documentation is intended for teams that are creating an API for use with the `CAVE App`.
+This documentation is intended for teams that are creating their own custom `CAVE App`.
 
-This covers topics related to the python wrapper `cave_api` as part of `cave_app`.
+Specifically, this covers topics related to the `cave_api` as part of `cave_app`.
 
-**The detailed API documentation can be found [here](README_API_STRUCTURE.md)**
+**The detailed API documentation can be found [here](https://mit-cave.github.io/cave_utils/cave_utils/api.html)**
 
-The `CAVE App` includes:
+## Designed for Customization and Deployment
 
-- [cave_app](https://github.com/MIT-CAVE/cave_app) - API Data Provider
-- [cave_static](https://github.com/MIT-CAVE/cave_static) - API Data Consumer
+The `CAVE App` is designed such that custom CAVE App creators (app creators) should be able to quickly integrate advanced methods and models from Python into a productive user experience via a simple API. The created experience should be easy to deploy to a website. It should also have a wide variety of other web application features that app creators can take advantage of with little or no additional code.
 
-## Designed for API Creators
+The `CAVE App` is also designed such that app creators should not have to write any back end or front end code (Django & React). With that said, each project expects back end (Django) code to be housed in the same project as the API code. This allows for local development and production web deployments including horizontally and vertically scalable systems. In the event of distributed server production environments, this allows for distributed deployments with shared state handled by a load balancer.
 
-The `CAVE App` is designed such that API Creators should be able to quickly tie advanced methods and models via API code into a productive user experience. The created experience should be easy to deploy to a website and have a wide variety of other web application features that API users can take advantage of without having to code.
+## Related Projects
 
-API creators should not need to look at code from `cave_static`. As the CAVE team makes new `cave_static` releases, they provide these releases as a static build via a CDN at `https://builds.mitcave.com/major.minor.patch/index.html`. At the same time, the new `cave_app` version is released which includes updates to the example APIs and this documentation.
+There are related supporting projects for each custom `CAVE App` (we will call this `your_app`). These include `cave_utils` and `cave_static`. 
 
-The `CAVE App` is also designed such that API creators should not have to write any server or hosting code (Django & React), however each project expects server code to be housed in the same project as the API code. In the event of distributed server production environments, this allows for distributed deployments with shared state handled by a load balancer.
+The `cave_utils` project is python package. It comes with some helpful python utility functions that are used throughout `your_app`. These include helpful logging features, api validation features, and more. The `cave_utils` project is also used to generate the detailed [API spec documentation](https://mit-cave.github.io/cave_utils/cave_utils/api.html). Static builds of `cave_utils` are available from [pypi](https://pypi.org/project/cave-utils). This package is automatically installed when running `your_app` using the `cave_cli`. It is listed in `your_app/requirements.txt`.
+
+The `cave_static` project represents a static build of the front end code (React). Each browser that accesses `your_app` will load one of these static builds and use it to render the app page of your `cave_app`. It essentially consumes the API to create the actual user experience. The `cave_static` project is hosted on a CDN. The exact build `your_app` uses is determined by the location set in your `your_app/.env`
 
 ## Versioning
 
-Both `cave_app` and `cave_static` are versioned and kept in sync with releases. Each release is composed of a major version, a minor version and patch version (example `1.0.0`). Major versions are incremented when there is a breaking change in the API. Minor versions are incremented as we release new features that are not breaking changes within the API. Patch versions are updated as we push bug fixes.
+The core `cave_app` projet and supporting projects are versioned and offered in sychronized releases. Each release is composed of a major version, a minor version and patch version (example `1.0.0`). Major versions are incremented when there is a breaking change in the API. Minor versions are incremented as we release new features that are not breaking changes within the API. Patch versions are updated as we push bug fixes.
 
-This structure guarantees some nice features for API developers who want forward compatible upgrades from provider to consumer. As an example:
+This structure guarantees some nice features for API developers who want forward compatible upgrades. As an example:
 
-1. You start a project using `cave_app 1.0.0` using `cave_static 1.0.0`
-2. A new chart type becomes available in `cave_static 1.2.0`
-3. You choose to update your environment in `cave_app 1.0.0` to now point to `cave_static 1.2.0`
-    - You edit `globals.static_app_url_path` value in the admin page
-        - Alternatively, you can run `cave reset-db` after updating your `.env`
-    - Your app will continue to work as it worked on `cave_static 1.0.0` with the new chart available
+1. You start a project using `cave_app 2.0.0` using `cave_static 2.0.0`
+2. A new chart type becomes available in `cave_static 2.2.0`
+3. You choose to update `your_app` running `cave_app 2.0.0` to now point to `cave_static 2.2.0`
+    - You go to your admin page and edit `globals.static_app_url_path` value in the admin page
+        - Alternatively, you can run `cave reset-db` after updating your `your_app/.env`
+    - Your app will continue to work as it worked on `cave_static 2.0.0` with the new chart available
         - Remember: breaking API changes only occur between major version changes
-        - Since you stayed on `1.x.y` you get a free forward compatible upgrade
+        - Since you stayed on `2.x.y` you get a free forward compatible upgrade with no updates needed for your api or server code.
 
-- Note: If you start developing on `cave_app 1.x.y`, it will only work with `cave_static 1.a.b` where the `a>x` or `a=x & b>y`
+- Note: If you start developing on `cave_app 2.x.y`, it is only guaranteed to work with `cave_static 2.a.b` where the `a>x` or `a=x & b>y`
+
+App creators will have access to new `cave_static` versions as they they become stable releases. You can see the list of `cave_static` versions by checking our [cave_static branches on github](https://github.com/MIT-CAVE/cave_static/branches/all). Stable branches are branches that do not include `-dev` in their name. When it is time for a version to become stable, we remove the `-dev` tag from the branch and upload the accompaning build. These releases are accessable via our CDN at `https://builds.mitcave.com/major.minor.patch/index.html`. At the same time, the new `cave_app` version is released which includes updates to any example APIs and this documentation. 
+
+New versions of `cave_utils` will be released as needed. These will be available on [pypi](https://pypi.org/project/cave-utils). In your `your_app/requirements.txt` file, this package is listed as `cave-utils>=x.y.z` where `x.y.z` is the version you are using. Because Docker may cache your individual package versions, you may need to update your `your_app/requirements.txt` file to get the latest version of `cave_utils`. To do this, simply update the version number to the latest version available on [pypi](https://pypi.org/project/cave-utils). As an example, if you are using `cave_utils 2.0.0` and `cave_utils 2.0.1` is released, you may need to update your `your_app/requirements.txt` file to `cave-utils>=2.0.1`. This will ensure you are using the latest major version of `cave_utils` available on [pypi](https://pypi.org/project/cave-utils).
+
+
+Special Note: Patch version releases may not align between projects, but major and minor versions will always align. As an example, `cave_app 2.0.0` will always be released with `cave_static 2.0.0` and `cave_utils 2.0.0`. However, `cave_app 2.0.1` may be released with `cave_static 2.0.1` and `cave_utils 2.0.2`. This is because `cave_utils` may have a bug fix that is not needed in `cave_static` or `cave_app`.
 
 # Making changes
 
-To make changes to the `cave_api`, navigate to `<your_app>/cave_api/cave_api` and begin to make adjustments.
+To make changes to the `cave_api`, navigate to `your_app/cave_api/cave_api` and begin to make adjustments.
 
-By default the `cave_api` uses the `static_model` listed in `<your_app>/cave_api/cave_api`. To change this over to the `serialization_model`:
-- Edit `<your_app>/cave_api/cave_api/__init__.py`
-- Replace `static_model` with `serialization_model`
-- Save the file
+By default the `cave_api` uses `your_app/cave_api/cave_api/examples/example_selector.py`. This is a meta model that allows you to choose from any of the api models listed in `your_app/cave_api/cave_api/examples`. You can modify any of the examples while using the `example_selector.py` to see your changes live. 
 
-Using the `static_model` is a great way to explore the functions available in the `cave_api`. It does not do anything, but it is helpful to explore how the API can control the UI.
+To change over to any specific example or your own code, you can edit `your_app/cave_api/cave_api/api.py` accordingly. Replace the import location for `execute_command` and save the file. You may need to reset your database to see these changes take effect. To do this, run `cave reset-db` from your project root.
 
-As an example of how to do this, lets add a flag button to the static model that calls the api and has it print `Hello World!`.
-- NOTE: Make sure you switched the app back over to `static_model` using the instructions above before starting this step.
+## Changing an Example
+
+As an example of how to edit the api, lets add a flag button to the `api_command.py` example that calls the api and has it print `Hello World!`.
+- NOTE: Make sure `your_app/cave_api/cave_api/api.py` is importing from `cave_api.examples.example_selector`. 
 
 1. Start the app:
     ```
@@ -60,43 +67,37 @@ As an example of how to do this, lets add a flag button to the static model that
     - For now, you can log in with:
         - Username: `admin`
         - Password: The password you set when creating the app (stored in `your_app/.env`)
-4. Click on the sessions icon (top left of the page - furthest icon to the right)
-    - Create a new session named `s1`
-    - You should now be looking at the app for `static_model`
-5. Now edit the `static_model`:
-    - Edit `<your_app>/cave_api/cave_api/static_model/api.py`
-        - In this file, there is one large `example` variable (a python dictionary) that creates all the needed API values in one place.
-        - In the `example` dictionary edit `appBar.data` to add the following key:
-            ```
-            "myButton":{
-                "name": "My Button",
-                "icon": "md/MdFlag",
-                "apiCommand": "myCommand",
-                "type": "button",
-                "bar": "upperRight",
-                "order":7,
-            }
-            ```
-        - Near the end of the file after:
-            ```
-            if command == 'reset':
-                  return example
-            ```
-            Add the following code:
-            ```
-            if command == 'myCommand':
-                print ("Hello World!")
-            ```
-6. Going back to Chrome, click the refresh button just above the lightning bolt on the app bar (left hand side of the page) to update your data.
-    - You should now see your new button (the flag).
-    - Click on your button to see the output `Hello World!` printed in your terminal.
+4. Click on the app page:
+    - You should now be looking at the app for your currently selected example.
+5. Now edit `your_app/cave_api/cave_api/examples/api_command.py`:
+    - In the block `if command == "init"` add the following key to `appBar.data`:
+        ```
+        "sayHelloButton": {
+            "icon": "md/MdFlag",
+            "apiCommand": "sayHello",
+            "type": "button",
+            "bar": "lowerLeft",
+        },
+        ```
+    - Near the end of the file after the `elif command == "myCommand"` block and before raising an exception, add the following code:
+        ```
+        elif command == "sayHello":
+            # Send a message to the user
+            socket.notify("Hello World!")
+            # Print a message to the terminal
+            print("Hello World!")
+            return session_data
+        ```
+6. Going back to Chrome, in the top left corner click on the 3 sliders icon and choose the `api_command.py` example. If you are on the current exmaple, you might need to click on the refresh button just below the 3 sliders. 
+    - You should now see your new button (the flag) in the bottom left corner.
+    - Click on your button to see the output `Hello World!` sent to the chrome page as a notification and printed in your terminal.
 
 ## Adding Requirements to the API
 
 Python requirements can be added to the API by adding line items to `your_app/cave_api/requirements.txt`.
-- **NOTE**: These requirements should not be added in the `your_app/requirements.txt` or `utils/extra_requirements.txt` files as these are designed for server use.
+- **NOTE**: These requirements should **not** be added in the `your_app/requirements.txt` or `your_app/utils/extra_requirements.txt` files as these are designated for server use.
 
-Once added in this requirements file, your docker environment will be updated the next time you start it (cave run, cave test ...). 
+Once added in this requirements file, your docker environment will be updated the next time you start it (cave run, cave test ...). It is possible that you may experience issues after adding these requirements. To debug this, try running your app in verbose mode `cave run -v` to see if there are any errors.
 
 You may have to kill your current running app to get this change. To do this, use `Ctrl + C` in the terminal running your app.
 
@@ -156,6 +157,7 @@ Example:
 <br/>
 
 ## Adding Static Data to the API
+<!-- TODO: Make sure this is correct -->
 
 To add static data to the api:
 - Make sure it is located in: `your_app/cave_api/cave_api`
@@ -184,9 +186,9 @@ cave test test_init.py
 
 API Data Validation:
 
-- You can use live automated validation by updating `LIVE_API_VALIDATION=True` in your `your_app/.env` file
-    - This will validate your data every time an api command is called (for each session)
-    - The outputs will be stored in `{your_app}/logs/validation/{session_name}.log`s
+- You can use live automated API validation by updating `LIVE_API_VALIDATION_PRINT` or `LIVE_API_VALIDATION_LOG` in your `your_app/.env` file.
+- An alternative to this is to use the `cave test` command to run your tests.
+    - Include any validation tests in your test scripts
 - You can also manually validate your api code with the `cave_utils` package
     - See the [cave_utils documentation](https://github.com/mit-cave/cave_utils) for more information
 
@@ -203,10 +205,4 @@ Assuming your API Data Validation passes without any issues, but something is st
 - Inspect chrome
     - On Mac: Cmd + Option + i
     - On Linux: Ctrl + Shift + i
-- Navigate to the console tab and note any log items
-
-
-# Appendix
-
-## Changing the API Code
-To fundamentally change the API structure, API developers can always fork a specific version of `cave_static`, make any adjustments, and host a build at their desired location. Then they can update their version of `cave_app` to match these changes.
+- Navigate to the console tab and note any log items that may help you to debug your issue.

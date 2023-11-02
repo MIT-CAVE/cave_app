@@ -251,7 +251,8 @@ if config("USE_LOGGING", default=False, cast=bool):
 
 # Configure validation if LIVE_API_VALIDATION is True
 ################################################################
-LIVE_API_VALIDATION = config("LIVE_API_VALIDATION", default=False, cast=bool)
+LIVE_API_VALIDATION_LOG = config("LIVE_API_VALIDATION_LOG", default=False, cast=bool)
+LIVE_API_VALIDATION_LOG_MAX = config("LIVE_API_VALIDATION_LOG_MAX", default=1000, cast=int)
 LIVE_API_VALIDATION_PRINT = config("LIVE_API_VALIDATION_PRINT", default=False, cast=bool)
 LIVE_API_VALIDATION_PRINT_MAX = config("LIVE_API_VALIDATION_PRINT_MAX", default=10, cast=int)
 ################################################################

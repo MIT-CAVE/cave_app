@@ -162,15 +162,15 @@ def mutate_session(request):
             session_i.broadcast_changed_data(previous_versions=session_i_pre_versions)
             # Validate the api command if in live api validation mode
             if settings.DEBUG:
-                if settings.LIVE_API_VALIDATION or settings.LIVE_API_VALIDATION_PRINT:
+                if settings.LIVE_API_VALIDATION_LOG or settings.LIVE_API_VALIDATION_PRINT:
                     validator = Validator(
                         session_i.broadcast_changed_data(previous_versions={}, broadcast=False),
                         ignore_keys=["meta"],
                     )
                     if settings.LIVE_API_VALIDATION_PRINT:
                         validator.log.print_logs(max_count=settings.LIVE_API_VALIDATION_PRINT_MAX)
-                    if settings.LIVE_API_VALIDATION:
-                        validator.log.write_logs(f"./logs/validation/{session_i.name}.log")
+                    if settings.LIVE_API_VALIDATION_LOG:
+                        validator.log.write_logs(f"./logs/validation/{session_i.name}.log", max_count=settings.LIVE_API_VALIDATION_LOG_MAX)
             
         # If no api command is provided, apply the mutation
         else:
