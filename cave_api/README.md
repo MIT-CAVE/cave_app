@@ -5,6 +5,7 @@ This documentation is intended for teams that are creating their own custom `CAV
 Specifically, this covers topics related to the `cave_api` as part of `cave_app`.
 
 **The detailed API documentation can be found [here](https://mit-cave.github.io/cave_utils/cave_utils/api.html)**
+**Examples can be found [here](https://github.com/MIT-CAVE/cave_app/tree/main/cave_api/cave_api/examples)**
 
 ## Designed for Customization and Deployment
 
@@ -14,11 +15,13 @@ The `CAVE App` is also designed such that app creators should not have to write 
 
 ## Related Projects
 
-There are related supporting projects for each custom `CAVE App` (we will call this `your_app`). These include `cave_utils` and `cave_static`. 
+There are related supporting projects for each custom `CAVE App` (we will call this `your_app`). These include `cave_utils`, `cave_static` and `cave_cli`.
 
 The `cave_utils` project is python package. It comes with some helpful python utility functions that are used throughout `your_app`. These include helpful logging features, api validation features, and more. The `cave_utils` project is also used to generate the detailed [API spec documentation](https://mit-cave.github.io/cave_utils/cave_utils/api.html). Static builds of `cave_utils` are available from [pypi](https://pypi.org/project/cave-utils). This package is automatically installed when running `your_app` using the `cave_cli`. It is listed in `your_app/requirements.txt`.
 
 The `cave_static` project represents a static build of the front end code (React). Each browser that accesses `your_app` will load one of these static builds and use it to render the app page of your `cave_app`. It essentially consumes the API to create the actual user experience. The `cave_static` project is hosted on a CDN. The exact build `your_app` uses is determined by the location set in your `your_app/.env`
+
+The `cave_cli` project offers an easy to use command line interface to interact with `your_app`. This includes creating an app, starting the app, running tests, and more. You can see the full list of commands by running `cave help`. You can find the `cave_cli` project [here](https://github.com/MIT-CAVE/cave_cli).
 
 ## Versioning
 

@@ -17,7 +17,7 @@ Quickly create interactive web applications for python based models.
     cd my_app
     ```
 
-4. Run the app at `localhost:8000` (while in `my_app`):
+4. Run the app at `localhost:8000` (while in the directory `my_app`):
     ```
     cave run
     ```
@@ -46,12 +46,44 @@ Quickly create interactive web applications for python based models.
     http://localhost:8000
     ```
 
+## Using The Example App
+To fully understand how the cave app works, it is best to dive into some of our examples. The cave app comes with pre-built examples to help you understand all the components you can take advantage of and how to use them. To use the example app, follow the steps below:
+
+- Ensure the app is running (while in the directory `your_app`):
+  ```
+  cave run
+  ```
+- Open the app in Chrome:
+  - EG: If you use the standard settings
+  ```
+  http://localhost:8000
+  ```
+- Login (or create an account)
+  - For example purposes, we recommend you login as the default admin
+    - Use the info from when you created the cave app.
+    - This can also be found in `your_app/.env`
+  - The login button appears in the main app bar
+- Click on the app page icon (A square with spaces along its edges)
+- We supply multiple example code structures for you to use for reference and to build on top of. You can find them in `your_app/cave_api/cave_api/examples`
+  - By default, you will get an app with a button (three sliders) in the top left corner that allows you to switch between all of our examples. 
+  - Click on the three sliders to open the example menu and choose an example to view.
+  - To see the code for each example, navigate to `your_app/cave_api/cave_api/examples` and open the example you want to view.
+
+
+## Making API Changes
+See the API documentation:
+
+- [General API Topics](cave_api/README.md)
+- [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html)
+
+
 ## Cave App Components
 The cave app includes a variety of core components to allow for rapid prototyping, development and testing. The main components include:
 
 - Customizable web pages that allow for creating and modifying simple information based web content on the fly
   - Managed by a simple admin interface after deployment
   - Content scales seamlessly between mobile and desktop
+  - When logged in as an admin, you can browse and edit pages by clicking on the admin icon in the top right corner of the app next to the logout button.
 
 
 - Interactive Application
@@ -74,30 +106,6 @@ The cave app includes a variety of core components to allow for rapid prototypin
     ![example page](https://utils.mitcave.com/docs/cave_app-0.3.0/example_page.png)
   </details>
 
-## Using The Example App
-To fully understand how the cave app works, it is best to dive into some of our examples. The cave app comes with pre-built examples to help you understand all the components you can take advantage of and how to use them. To use the example app, follow the steps below:
-
-- Ensure the app is running:
-  ```
-  cave run
-  ```
-- Login (or create an account)
-  - For example purposes, we recommend you login as the default admin
-    - Use the info from when you created the cave app.
-    - This can also be found in `your_app/.env`
-  - The login button appears in the main app bar
-- Click on the app page icon (A square with spaces along its edges)
-- We supply multiple example code structures for you to use for reference and to build on top of. You can find them in `/cave_api/cave_api/examples`
-  - By default, you will get an app with a button (three sliders) in the top left corner that allows you to switch between all of our examples. 
-  - Click on the three sliders to open the example menu and choose an example to view.
-  - To see the code for each example, navigate to `your_app/cave_api/cave_api/examples` and open the example you want to view.
-
-
-## Making API Changes
-See the API documentation:
-
-- [General API Topics](cave_api/README.md)
-- [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html)
 
 ### Prettify Code
 Use the CLI to keep your API code `pretty` and match CAVE coding format standards.
@@ -105,8 +113,7 @@ Use the CLI to keep your API code `pretty` and match CAVE coding format standard
   ```sh
   cave prettify
   ```
-
-**NOTE**: All prettify commands write over existing code (in place).
+  **NOTE**: All prettify commands write over existing code (in place).
 
 ## Project Contributors
 

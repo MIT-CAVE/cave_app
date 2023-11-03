@@ -132,7 +132,6 @@ class Socket:
         self.broadcast(
             event="message",
             data={
-                # TODO: Overhaul this in next breaking change to better reflect the notification system
                 "snackbarShow": show,
                 "snackbarType": theme,
                 "title": title,
