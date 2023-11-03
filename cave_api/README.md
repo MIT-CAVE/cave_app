@@ -5,7 +5,10 @@ This documentation is intended for teams that are creating their own custom `CAV
 Specifically, this covers topics related to the `cave_api` as part of `cave_app`.
 
 **The detailed API documentation can be found [here](https://mit-cave.github.io/cave_utils/cave_utils/api.html)**
-**Examples can be found [here](https://github.com/MIT-CAVE/cave_app/tree/main/cave_api/cave_api/examples)**
+
+**Detailed API examples can be found [here](https://github.com/MIT-CAVE/cave_app/tree/main/cave_api/cave_api/examples)**
+
+# What is a `CAVE App`?
 
 ## Designed for Customization and Deployment
 
