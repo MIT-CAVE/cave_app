@@ -1492,32 +1492,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "levels": ["region", "country", "state"],
                     },
                     "data": {
-                        "locUsMi": {
-                            "region": "North America",
-                            "country": "USA",
-                            "state": "Michigan",
+                        "id": ["locUsMi", "locUsMa", "locUsFl", "locUsIn", "locCaOn"],
+                        "region": ["North America", "North America", "North America", "North America", "North America"],
+                        "country": ["USA", "USA", "USA", "USA", "Canada"],  
+                        "state": ["Michigan", "Massachusetts", "Florida", "Indiana", "Ontario"],
                         },
-                        "locUsMa": {
-                            "region": "North America",
-                            "country": "USA",
-                            "state": "Massachusetts",
-                        },
-                        "locUsFl": {
-                            "region": "North America",
-                            "country": "USA",
-                            "state": "Florida",
-                        },
-                        "locUsIn": {
-                            "region": "North America",
-                            "country": "USA",
-                            "state": "Indiana",
-                        },
-                        "locCaOn": {
-                            "region": "North America",
-                            "country": "Canada",
-                            "state": "Ontario",
-                        },
-                    },
                     "name": "Locations",
                     "levels": {
                         "region": {
@@ -1541,16 +1520,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "levels": ["type", "size", "sku"],
                     },
                     "data": {
-                        "SKU1": {
-                            "type": "Type A",
-                            "size": "Size A",
-                            "sku": "SKU1",
-                        },
-                        "SKU2": {
-                            "type": "Type A",
-                            "size": "Size B",
-                            "sku": "SKU2",
-                        },
+                        "id": ["SKU1", "SKU2"],
+                        "type": ["Type A", "Type A"],
+                        "size": ["Size A", "Size B"],
+                        "sku": ["SKU1", "SKU2"],
                     },
                     "name": "SKUs",
                     "levels": {

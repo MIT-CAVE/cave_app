@@ -58,22 +58,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "levels": ["country", "state"],
                     },
                     "data": {
-                        "UsMi": {
-                            "country": "USA",
-                            "state": "Michigan",
-                        },
-                        "UsMa": {
-                            "country": "USA",
-                            "state": "Massachusetts",
-                        },
-                        "CaOn": {
-                            "country": "Canada",
-                            "state": "Ontario",
-                        },
-                        "CaQc": {
-                            "country": "Canada",
-                            "state": "Quebec",
-                        }
+                        "id": ["UsMi", "UsMa", "CaOn", "CaQc"],
+                        "country": ["USA", "USA", "Canada", "Canada"],
+                        "state": ["Michigan", "Massachusetts", "Ontario", "Quebec"],
                     },
                     "name": "Locations",
                     "levels": {
@@ -93,22 +80,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "levels": ["color", "size", "product"],
                     },
                     "data": {
-                        "apple": {
-                            "color": "Red",
-                            "size": "Medium",
-                            "product": "Apple",
-                        },
-                        "grape": {
-                            "color": "Purple",
-                            "size": "Small",
-                            "product": "Grape",
-                        },
-                        "strawberry": {
-                            "color": "Red",
-                            "size": "Small",
-                            "product": "Strawberry",
-                        },
-
+                        "id": ["apple", "grape", "strawberry"],
+                        "color": ["Red", "Purple", "Red"],
+                        "size": ["Medium", "Small", "Small"],
+                        "product": ["Apple", "Grape", "Strawberry"],
                     },
                     "name": "Products",
                     "levels": {
