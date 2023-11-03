@@ -17,8 +17,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Install any additional requirements
 # EG: Use bash for alpine images / install some build tools and cryptography dependencies
-# TODO: Remove git and update requirements.txt once we have a proper cave_utils release
-RUN apk update && apk --no-cache add bash build-base libffi-dev git
+RUN apk update && apk --no-cache add bash build-base libffi-dev
 
 # Set the working directory to /app
 WORKDIR /app/
