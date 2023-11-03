@@ -176,8 +176,8 @@ CHANNEL_LAYERS = {
 ## NOTE: For production, switch to a network based memcache or redis envronment
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
-        "LOCATION": "development_cache_table",
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
     }
 }
 ################################################################
