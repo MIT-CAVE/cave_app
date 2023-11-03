@@ -1199,7 +1199,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "arc",
                     "name": "Flow Type 1",
                     "geoJson": {
-                        "geoJsonLayer": "https://raw.githubusercontent.com/MIT-CAVE/cave_app/ced363/cave_api/cave_api/example_data/example.geojson",
+                        "geoJsonLayer": "https://raw.githubusercontent.com/MIT-CAVE/cave_app_extras/main/example_data/example.geojson",
                         "geoJsonProp": "arc_id",
                     },
                     "props": {

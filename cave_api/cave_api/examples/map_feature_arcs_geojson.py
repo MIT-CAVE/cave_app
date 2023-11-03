@@ -87,8 +87,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         # Local file support is not supported
                         # To upload your own geojson file, use a service like GitHub and upload your file there
                         # Then copy the raw URL and paste it in the geoJsonLayer field to use it
-                        # See data in cave_api/cave_api/example_data/example.geojson
-                        "geoJsonLayer": "https://raw.githubusercontent.com/MIT-CAVE/cave_app/ced363/cave_api/cave_api/example_data/example.geojson",
+                        # See data in https://github.com/MIT-CAVE/cave_app_extras/tree/main/example_data
+                        "geoJsonLayer": "https://raw.githubusercontent.com/MIT-CAVE/cave_app_extras/main/example_data/example.geojson",
                         # geoJsonProp is the property in the geoJson file that contains the id you specify in the data.location.geoJsonValue field
                         "geoJsonProp": "arc_id",
                     },
