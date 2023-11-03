@@ -51,9 +51,11 @@ Special Note: Patch version releases may not align between projects, but major a
 
 To make changes to the `cave_api`, navigate to `your_app/cave_api/cave_api` and begin to make adjustments.
 
-By default the `cave_api` uses `your_app/cave_api/cave_api/examples/example_selector.py`. This is a meta model that allows you to choose from any of the api models listed in `your_app/cave_api/cave_api/examples`. You can modify any of the examples while using the `example_selector.py` to see your changes live. 
+The main entrypoint to the `cave_api` is in `your_app/cave_api/cave_api/api.py`. This file must have a function `execute_command` that serves as the primary entrypoint for all incoming requests. This function is responsible for parsing the incoming request and handling it accordingly. This function is also responsible for returning the appropriate response to the request.
 
-To change over to any specific example or your own code, you can edit `your_app/cave_api/cave_api/api.py` accordingly. Replace the import location for `execute_command` and save the file. You may need to reset your database to see these changes take effect. To do this, run `cave reset-db` from your project root.
+By default the `your_app/cave_api/cave_api/api.py` imports `execute_command` from `your_app/cave_api/cave_api/examples/example_selector.py`. This is a meta model that allows you to choose from any of the api models listed in `your_app/cave_api/cave_api/examples`. You can modify any of the examples while using the default example selector and see your changes live by choosing the example in the app menu.
+
+To change over to any specific example or your own code, you can edit `your_app/cave_api/cave_api/api.py` accordingly. Replace the import location for `execute_command` or simply define `execute_command` in this file and save. You may need to reset your database to see these changes take effect. To do this, run `cave reset` from your project root.
 
 ## Changing an Example
 
@@ -160,7 +162,6 @@ Example:
 <br/>
 
 ## Adding Static Data to the API
-<!-- TODO: Make sure this is correct -->
 
 To add static data to the api:
 - Make sure it is located in: `your_app/cave_api/cave_api`
@@ -187,7 +188,7 @@ cave test test_init.py
 
 ## Debugging
 
-API Data Validation:
+### API Data Validation:
 
 - You can use live automated API validation by updating `LIVE_API_VALIDATION_PRINT` or `LIVE_API_VALIDATION_LOG` in your `your_app/.env` file.
 - An alternative to this is to use the `cave test` command to run your tests.
@@ -195,14 +196,16 @@ API Data Validation:
 - You can also manually validate your api code with the `cave_utils` package
     - See the [cave_utils documentation](https://github.com/mit-cave/cave_utils) for more information
 
-Testing: 
+### Testing: 
+
 - A great way to debug is through the `cave test` command in your terminal. 
     - Use `cave help` for more information on that function.
 - You can add print statements to your code as you work through that process and `cave test` would yield those in your terminal
 - Pairing this with the `cave_utils` package can be a great way to test/debug your code
 
-Console:
-Assuming your API Data Validation passes without any issues, but something is still crashing (when the app goes grey and only the app bar is left), the console is a great next step to debug the situation
+### Console:
+
+- Assuming your API Data Validation passes without any issues, but something is still crashing (when the app goes grey and only the app bar is left), the console is a great next step to debug the situation
 - Launch your app using `cave run`
 - Log in to the app and go to the `app` page.
 - Inspect chrome
