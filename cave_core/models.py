@@ -13,7 +13,8 @@ import type_enforced
 
 # Internal Imports
 from cave_core.utils.broadcasting import Socket
-from cave_api import execute_command
+from cave_core.utils.constants import api_keys, background_api_keys
+from cave_api.api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
 
@@ -99,14 +100,8 @@ class CustomUser(AbstractUser):
         if prev_session is not None:
             prev_session.update_user_ids()
         # Query all session data:
-        # Note: get_changed_data needs to be executed prior to calling session.versions since it can mutate them
-        # Note: Previous versions should always be empty when switching sessions since versions are incremental and have collisions
-        data = session.get_changed_data(previous_versions={})
-        Socket(self).broadcast(
-            event="overwrite",
-            versions=session.versions,
-            data=data,
-        )
+        # Broadcast the new session data
+        session.broadcast_changed_data(previous_versions={})
         self.broadcast_current_session_id()
         self.broadcast_current_session_loading()
 
@@ -231,15 +226,15 @@ class CustomUser(AbstractUser):
         return [self.id]
 
     def create_personal_team(self):
-        team, team_created = Teams.objects.get_or_create(name=f"{self.username} - Personal", is_personal_team=True)
+        team, team_created = Teams.objects.get_or_create(
+            name=f"{self.username} - Personal", is_personal_team=True
+        )
         if team_created:
             team.add_user(self)
         return team
 
     def get_or_create_personal_team(self):
-        team = Teams.objects.filter(
-            id__in=self.team_ids, is_personal_team=True
-        ).first()
+        team = Teams.objects.filter(id__in=self.team_ids, is_personal_team=True).first()
         if team is None:
             team = self.create_personal_team()
         return team
@@ -258,7 +253,6 @@ class CustomUser(AbstractUser):
         Socket(self).broadcast(
             event="updateSessions",
             data={"data_path": ["session_id"], "data": self.session.id},
-            loading=False,
         )
 
     def broadcast_current_session_loading(self):
@@ -269,10 +263,10 @@ class CustomUser(AbstractUser):
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],
-                "data": self.session.loading,
+                "data": self.session.executing,
             },
-            loading=False,
         )
+
     #############################################
     # Access Utils
     #############################################
@@ -475,7 +469,7 @@ class Globals(SingletonModel):
         help_text=_(
             "Mapbox Token to use in the app - Used in the site views and data visualization"
         ),
-        default="NO TOKEN SET YET",
+        default="",
     )
     app_screen_width = models.IntegerField(
         _("App Screen Width"),
@@ -786,9 +780,7 @@ class Teams(models.Model):
     )
     is_personal_team = models.BooleanField(
         _("Is Personal Team"),
-        help_text=_(
-            "Is this team a personal team? Used only for admin filtering purposes."
-        ),
+        help_text=_("Is this team a personal team? Used only for admin filtering purposes."),
         default=False,
     )
 
@@ -820,7 +812,7 @@ class Teams(models.Model):
     def get_sessions(self):
         return Sessions.objects.filter(team=self)
 
-    def update_sessions_list(self, broadcast=False):
+    def update_sessions_list(self):
         sessions = self.get_sessions()
         self.set_session_count(len(sessions))
         Socket(self).broadcast(
@@ -842,7 +834,6 @@ class Teams(models.Model):
                     },
                 },
             },
-            loading=False,
         )
 
     # Metadata
@@ -899,12 +890,16 @@ class Sessions(models.Model):
         help_text=_("The associated team"),
     )
     description = models.TextField(
-        _("description"), max_length=512, help_text=_("Description for the session"), default="", blank=True
+        _("description"),
+        max_length=512,
+        help_text=_("Description for the session"),
+        default="",
+        blank=True,
     )
     versions = models.JSONField(_("versions"), help_text=_("The session versions"), default=dict)
-    loading = models.BooleanField(
-        _("Loading"),
-        help_text=_("Is this session currently loading?"),
+    executing = models.BooleanField(
+        _("executing"),
+        help_text=_("Is this session currently executing?"),
         default=False,
     )
     user_ids = models.JSONField(
@@ -917,24 +912,27 @@ class Sessions(models.Model):
         """
         self.versions = {
             obj.data_name: obj.data_version
-            for obj in SessionData.objects.filter(session=self, sendToClient=True)
+            for obj in SessionData.objects.filter(session=self).filter(data_name__in=api_keys)
         }
         self.save(update_fields=["versions"])
 
     def get_client_data(self, keys, session_data=None):
         """
-        Returns all data that is marked as sendToClient in this session
+        Returns all data for this session that should be sent to the client
         """
+        keys = pamda.intersection(keys, api_keys)
+        if len(keys) == 0:
+            return {}
         if session_data == None:
             session_data = SessionData.objects.filter(session=self)
         return {
             obj.data_name: obj.get_data()
-            for obj in session_data.filter(data_name__in=keys, sendToClient=True)
+            for obj in session_data.filter(data_name__in=keys)
         }
 
-    def get_changed_data(self, previous_versions):
+    def broadcast_changed_data(self, previous_versions, broadcast=True):
         """
-        Returns all data that has changed given some set of previous versions
+        Broadcasts and returns all data that has changed given some set of previous versions
 
         Requires:
 
@@ -950,14 +948,16 @@ class Sessions(models.Model):
         updated_keys = [
             key for key, value in self.versions.items() if previous_versions.get(key) != value
         ]
-
-        return self.get_client_data(keys=updated_keys, session_data=session_data)
-
-    def wipe_data(self):
-        """
-        Removes all data from the current session
-        """
-        SessionData.objects.filter(session=self).delete()
+        data = self.get_client_data(keys=updated_keys, session_data=session_data)
+        if broadcast:
+            Socket(self).broadcast(
+                event="overwrite",
+                versions=self.versions,
+                data=data,
+            )
+        if not self.executing:
+            self.broadcast_loading(False)
+        return data
 
     def replace_data(self, data, wipeExisting):
         """
@@ -975,30 +975,32 @@ class Sessions(models.Model):
                 'data':{"desired":"data object here"}
             },
             'data2_name_here':{
-                'data':{"desired":"data 2 object here"},
-                'allowModification':False,
-                'sendToApi':False,
-                'sendToClient':True
+                'data':{"desired":"data 2 object here"}
             }
             ...
         }
         ```
         """
         if wipeExisting:
-            self.wipe_data()
+            data_keys = list(data.keys())
+            keys_to_delete = pamda.difference(data_keys, api_keys)
+            keys_to_empty = pamda.difference(api_keys, data_keys)
+            if len(keys_to_delete)>0:
+                SessionData.objects.filter(session=self, data_name__in=keys_to_delete).delete()
+            for k in keys_to_empty:
+                data[k] = {}
         for key, value in data.items():
             obj, created = SessionData.objects.get_or_create(session=self, data_name=key)
             obj.save_data(
                 data=value,
-                allowModification=value.get("allowModification", obj.allowModification),
-                sendToClient=value.get("sendToClient", obj.sendToClient),
-                sendToApi=value.get("sendToApi", obj.sendToApi),
                 data_version=self.versions.get(key, 0) + 1,
             )
         # Update versions post replacement
         self.update_versions()
 
-    def execute_api_command(self, command, command_keys=None, data_queryset=None, mutate_dict=dict()):
+    def execute_api_command(
+        self, command, command_keys=None, data_queryset=None, mutate_dict=dict()
+    ):
         """
         Execute an API Command given the current data and replaces the entire current session state
 
@@ -1012,24 +1014,33 @@ class Sessions(models.Model):
         - `command_keys`:
             - What: List of strings to determine which top level keys should be passed with the command
             - Default: None
-            - Note: If None, only top level keys marked as `sendToApi` are sent to the api
+            - Note: If None, all keys are sent to the api
         - `data_queryset`:
             - What: Queryset of SessionData objects
             - Default: All SessionData objects related to this session object
         """
-        self.set_loading(True)
+        self.error_on_executing()
+        self.broadcast_loading(True)
+        self.set_executing(True)
         if data_queryset == None:
-            data_queryset = SessionData.objects.filter(session=self)
+            data_queryset = SessionData.objects.filter(session=self).exclude(data_name__in=background_api_keys)
         if isinstance(command_keys, list):
             data_queryset = data_queryset.filter(data_name__in=command_keys)
-        else:
-            data_queryset = data_queryset.filter(sendToApi=True)
         session_data = {i.data_name: i.get_data() for i in data_queryset}
         socket = Socket(self)
-        command_output = execute_command(session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict)
-        kwargs = command_output.pop("kwargs", {})
-        self.replace_data(data=command_output, wipeExisting=kwargs.get("wipeExisting", True))
-        self.set_loading(False)
+        command_output = execute_command(
+            session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
+        )
+        # Ensure that no reserved api keys are returned
+        background_api_keys_used = pamda.intersection(list(command_output.keys()), background_api_keys)
+        if len(background_api_keys_used)>0:
+            raise Exception(f"Oops! The following reserved api keys were returned: {str(background_api_keys_used)}")
+        # Pop out kwargs for use but not for storage
+        extraKwargs = command_output.pop("extraKwargs", {})
+        # Update the session data with the command output
+        self.replace_data(data=command_output, wipeExisting=extraKwargs.get("wipeExisting", True))
+        # Update the execution state
+        self.set_executing(False)
 
     def mutate(self, data_version, data_name, data_path, data_value=None, ignore_version=False):
         """
@@ -1062,10 +1073,6 @@ class Sessions(models.Model):
         if not session_data:
             raise Exception(
                 "Session Error: No session data found. This could be caused by an incorrect `data_name` or not being in a session."
-            )
-        if not session_data.allowModification:
-            raise Exception(
-                "Session Error: Attempting to mutate a data that does not `allowModification`"
             )
         if not ignore_version and session_data.data_version != data_version:
             return {"synch_error": True}
@@ -1135,7 +1142,21 @@ class Sessions(models.Model):
         if len(self.get_user_ids()) > 0:
             raise Exception("Oops! That session still has users in it.")
 
-    def set_loading(self, loading):
+    def error_on_executing(self):
+        if self.executing:
+            self.__dict__["__blocked_due_to_execution__"] = True
+            self.broadcast_loading(True)
+            raise Exception(
+                "Oops! This session is currently executing a process. Please wait until it is finished before making changes."
+            )
+
+    def set_executing(self, executing):
+        # Update the executing state only if it is changing
+        if executing != self.executing:
+            self.executing = executing
+            self.save(update_fields=["executing"])
+
+    def broadcast_loading(self, loading):
         # Let the user know the updated loading state
         Socket(self).broadcast(
             event="updateLoading",
@@ -1143,18 +1164,7 @@ class Sessions(models.Model):
                 "data_path": ["session_loading"],
                 "data": loading,
             },
-            loading=False,
         )
-        # If the session is currently loading and the user is requesting something that would require loading, block any changes
-        if self.loading and loading:
-            self.__dict__['__process_blocked_for_loading__']=True
-            raise Exception(
-                "Oops! This session is currently loading. Please wait until it is finished loading before making changes."
-            )
-        # Update the loading state only if it is changing
-        if loading != self.loading:
-            self.loading = loading
-            self.save(update_fields=["loading"])
 
     def save(self, *args, **kwargs):
         """
@@ -1163,13 +1173,12 @@ class Sessions(models.Model):
         """
         super(Sessions, self).save(*args, **kwargs)
         try:
-            update_fields = kwargs.get('update_fields',[])
-            if update_fields==[] or 'name' in update_fields:
+            update_fields = kwargs.get("update_fields", [])
+            if update_fields == [] or "name" in update_fields:
                 self.team.update_sessions_list()
         except:
             pass
-            
-    
+
     @staticmethod
     def error_on_invalid_name(name):
         if name == None or len(str(name)) < 1:
@@ -1197,21 +1206,6 @@ class SessionData(models.Model):
         help_text=_("The associated session"),
     )
     data_name = models.CharField(_("data_name"), max_length=32, help_text=_("Name of the data"))
-    allowModification = models.BooleanField(
-        _("allowModification"),
-        help_text=_("Allow this data to be modified?"),
-        default=True,
-    )
-    sendToClient = models.BooleanField(
-        _("sendToClient"),
-        help_text=_("Should this data be sent to the client?"),
-        default=True,
-    )
-    sendToApi = models.BooleanField(
-        _("sendToApi"),
-        help_text=_("Should this data be sent to the api? (for solve and configure)"),
-        default=True,
-    )
     data_version = models.IntegerField(
         _("data_version"),
         help_text=_("Version of the data"),
@@ -1263,9 +1257,6 @@ class SessionData(models.Model):
     def save_data(
         self,
         data,
-        allowModification=None,
-        sendToClient=None,
-        sendToApi=None,
         data_version=None,
     ):
         """
@@ -1277,27 +1268,7 @@ class SessionData(models.Model):
             - Type: dict | list
             - What: The data to save
 
-        Optional:
-
-        - `allowModification`:
-            - Type: Boolean
-            - What: Allow this data to be modified by mutation requests
-            - Default: The current database setting
-        - `sendToClient`:
-            - Type: Boolean
-            - What: Send this object to the client when a client connects
-            - Default: The current database setting
-        - `sendToApi`:
-            - Type: Boolean
-            - What: Send this data to the api when executing an api command
-            - Default: The current database setting
         """
-        if allowModification is not None:
-            self.allowModification = allowModification
-        if sendToClient is not None:
-            self.sendToClient = sendToClient
-        if sendToApi is not None:
-            self.sendToApi = sendToApi
         if data_version is not None:
             self.data_version = data_version
         else:
@@ -1325,6 +1296,7 @@ def update_sessions_list_for_team(sender, instance, **kwargs):
     When a session object is deleted, update the sessions list for the associated session team
     """
     instance.team.update_sessions_list()
+
 
 @receiver(post_delete, sender=SessionData, dispatch_uid="remove_session_data_from_cache_on_delete")
 def remove_session_data_from_cache(sender, instance, **kwargs):

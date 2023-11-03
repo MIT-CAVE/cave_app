@@ -8,21 +8,24 @@ import json, type_enforced
 channel_layer = get_channel_layer()
 sync_send = async_to_sync(channel_layer.group_send)
 
-acceptable_events = set([
-    "mutation",
-    "overwrite",
-    "message",
-    "updateSessions",
-    "updateLoading",
-])
+acceptable_events = set(
+    [
+        "mutation",
+        "overwrite",
+        "message",
+        "updateSessions",
+        "updateLoading",
+    ]
+)
 
 theme_list = set(["primary", "secondary", "error", "warning", "info", "success"])
+
 
 class Socket:
     def __init__(self, model_object):
         self.model_object = model_object
 
-    def format_broadcast_payload(self, event:str, data:dict, **kwargs):
+    def format_broadcast_payload(self, event: str, data: dict, **kwargs):
         """
         Formats a broadcast payload
 
@@ -37,17 +40,19 @@ class Socket:
             - What: The data to broadcast
         - `**kwargs`:
             - Type: dict (json serializable)
-            - What: Any additional data to serialize into the payload not under its own key in the payload 
+            - What: Any additional data to serialize into the payload not under its own key in the payload
             - Note: This will not be in `data` in the payload
 
         """
         if event not in acceptable_events:
-            raise ValueError(f"Invalid Event ('{event}'). Allowed events include: {acceptable_events}")
+            raise ValueError(
+                f"Invalid Event ('{event}'). Allowed events include: {acceptable_events}"
+            )
         if not isinstance(data, dict):
             raise TypeError(f"Invalid `data` type ('{type(data)}'). `data` must be a dict.")
         return json.dumps({"event": event, "data": data, **kwargs})
 
-    def broadcast(self, event:str, data:dict, loading:bool=True, **kwargs):
+    def broadcast(self, event: str, data: dict, **kwargs):
         """
         Broadcasts a message to all users related to an object by object.get_user_ids()
 
@@ -57,22 +62,27 @@ class Socket:
             - Type: str
             - What: The event to broadcast
             - Allowed Values: "mutation", "overwrite", "message", "updateSessions", "updateLoading"
+            - Note: If `event` is "overwrite", then a loading broadcast will be sent instead
         - `data`:
             - Type: dict
             - What: The data to broadcast
-        - `loading`:
-            - Type: bool
-            - What: Whether or not to broadcast a loading event before broadcasting this message
-            - Default: True
-            - Note: This is used to allow users to see a loading screen while data is transmitted
         """
         payload = self.format_broadcast_payload(event=event, data=data, **kwargs)
-        broadcast_type = "loadingbroadcast" if loading else "broadcast"
+        # Note: broadcast_type refers to the function called in consumer.py
+        broadcast_type = "loadingbroadcast" if event == "overwrite" else "broadcast"
         for user_id in self.model_object.get_user_ids():
             sync_send(str(user_id), {"type": broadcast_type, "payload": payload})
 
     @type_enforced.Enforcer
-    def notify(self, message:str, title:str="", show:bool=True, theme:str="info", duration:int=10, **kwargs):
+    def notify(
+        self,
+        message: str,
+        title: str = "",
+        show: bool = True,
+        theme: str = "info",
+        duration: int = 10,
+        **kwargs,
+    ):
         """
         Notify end users with a message
 
@@ -122,7 +132,6 @@ class Socket:
         self.broadcast(
             event="message",
             data={
-                # TODO: Overhaul this in next breaking change to better reflect the notification system
                 "snackbarShow": show,
                 "snackbarType": theme,
                 "title": title,

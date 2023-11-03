@@ -1,8 +1,0 @@
-id,name,geoJsonValue,type,location,numericPropExampleC
-geo1,"Ontario, Canada",CA.ON,state,locCaOn,50
-geo2,"Michigan, USA",US.MI,state,locUsMi,300
-geo3,"Massachusetts, USA",US.MA,state,locUsMi,250
-geo4,"Florida, USA",US.FL,state,locUsMi,100
-geo5,"Indiana, USA",US.FL,state,locUsMi,200
-geoCountry1,Canada,CA,country,locCaOn,50
-geoCountry2,USA,US,country,locUsFl locUsMa locUsIn locUsMi,800

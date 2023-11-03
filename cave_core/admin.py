@@ -269,6 +269,7 @@ admin.site.register(models.TeamUsers, CustomTeamUserAdmin)
 admin.site.register(models.Sessions, CustomSessionAdmin)
 admin.site.register(models.SessionData, CustomSessionDataAdmin)
 
+
 # Create a special Staff Admin Site
 class StaffSite(admin.AdminSite):
     site_header = "CAVE App Staff Site"

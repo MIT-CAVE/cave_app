@@ -1,8 +1,0 @@
-id,viewportId,name,icon,longitude,latitude,zoom,pitch,bearing,height,altitude,maxZoom,minZoom,order
-map1,default,,,0,40,2,0,0,1287,1.5,12,2,
-map1,ovNA,North America,FaGlobeAmericas,-75,40,4,0,0,1287,1.5,12,2,1
-map1,ovSA,South America,FaGlobeAmericas,-55,-20,4,0,0,1287,1.5,12,2,2
-map1,ovEU,Europe And Middle East,FaGlobeEurope,25,47,4,0,0,1287,1.5,12,2,3
-map1,ovAF,Africa,FaGlobeAfrica,14,0,4,0,0,1287,1.5,12,2,4
-map1,ovAS,Asia,FaGlobeAsia,121,30,4,0,0,1287,1.5,12,2,5
-map1,ovAU,Australia,FaGlobeAsia,121,-20,4,0,0,1287,1.5,12,2,5

@@ -17,7 +17,7 @@ Quickly create interactive web applications for python based models.
     cd my_app
     ```
 
-4. Run the app at `localhost:8000` (while in `my_app`):
+4. Run the app at `localhost:8000` (while in the directory `my_app`):
     ```
     cave run
     ```
@@ -28,16 +28,12 @@ Quickly create interactive web applications for python based models.
         ```
         cave run <your-ip>:<your-port>
         ```
-
+        - Access with `https://<your-ip>:<your-port>`
         - Example on ip `192.168.1.100` with port `8000`:
           ```
           cave run 192.168.1.100:8000
           ```
-        - Example for a wildcard ip (any network ip that routes to your machine):
-          ```
-          cave run 0.0.0.0:8000
-          ```
-        - Note: This requires one free port above the specified port to run the server
+          - Access with `https://192.168.1.100:8000`
         - Note: When LAN hosting, an SSL connection is required. The `cave_cli` does this automatically, however there are a few caveats:
             - This uses a self signed and insecure certificate for SSL/TLS reasons
             - The certificates are self signed and shared openly in the cave open source project
@@ -50,18 +46,48 @@ Quickly create interactive web applications for python based models.
     http://localhost:8000
     ```
 
+## Using The Example App
+To fully understand how the cave app works, it is best to dive into some of our examples. The cave app comes with pre-built examples to help you understand all the components you can take advantage of and how to use them. To use the example app, follow the steps below:
+
+- Ensure the app is running (while in the directory `your_app`):
+  ```
+  cave run
+  ```
+- Open the app in Chrome:
+  - EG: If you use the standard settings
+  ```
+  http://localhost:8000
+  ```
+- Login (or create an account)
+  - For example purposes, we recommend you login as the default admin
+    - Use the info from when you created the cave app.
+    - This can also be found in `your_app/.env`
+  - The login button appears in the main app bar
+- Click on the app page icon (A square with spaces along its edges)
+- We supply multiple example code structures for you to use for reference and to build on top of. You can find them in `your_app/cave_api/cave_api/examples`
+  - By default, you will get an app with a button (three sliders) in the top left corner that allows you to switch between all of our examples. 
+  - Click on the three sliders to open the example menu and choose an example to view.
+  - To see the code for each example, navigate to `your_app/cave_api/cave_api/examples` and open the example you want to view.
+
+
+## Making API Changes
+See the API documentation:
+
+- [General API Topics](cave_api/README.md)
+- [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html)
+
+
 ## Cave App Components
 The cave app includes a variety of core components to allow for rapid prototyping, development and testing. The main components include:
 
 - Customizable web pages that allow for creating and modifying simple information based web content on the fly
   - Managed by a simple admin interface after deployment
   - Content scales seamlessly between mobile and desktop
+  - When logged in as an admin, you can browse and edit pages by clicking on the admin icon in the top right corner of the app next to the logout button.
 
 
 - Interactive Application
-  - You can create unique user experiences quickly using the CAVE API
-    - EG: [Adding buttons to the `appBar`](/cave_api/docs/all_keys/app_bar.md)
-  - This contains built in session management for synchronous multi window or multi user access
+  - This contains built in session management for synchronous multi window and multi user experiences
   - See the [Cave API folder](/cave_api) for step-by-step details on how to get started on API development with the CAVE App.
 
 
@@ -80,67 +106,14 @@ The cave app includes a variety of core components to allow for rapid prototypin
     ![example page](https://utils.mitcave.com/docs/cave_app-0.3.0/example_page.png)
   </details>
 
-## Using The Example App
-To fully understand how the cave app works, it is best to dive into our default example application.
-
-- Ensure the app is running:
-  ```
-  cave run
-  ```
-- Login (or create an account)
-  - For example purposes, we recommend you login as the default admin
-    - Use the info from when you created the cave app.
-    - This can also be found in `your_app/.env`
-  - The login button appears in the main app bar (or menu if on mobile)
-- Create a session:
-  - Click on the app page icon (A square with spaces along its edges)
-  - This will show your current sessions and allow you to create new sessions
-    <details>
-    <summary>Example image</summary>
-    <img src="https://utils.mitcave.com/docs/cave_app-0.3.0/session.png" width=50%>
-    </details>
-  - Creating a new session will initialize whichever model is specified in the `/cave_api/cave_api/__init__.py` file
-    - We supply multiple example models for users to reference and/or build upon.
-      - The `serialization_model` shows how you can easily convert csv and json objects for CAVE API use
-      - The `simple_model` demonstrates good practices for researchers using the CAVE API
-      - The `static_model` contains examples of the whole API structure, and is useful for developers to debug and experiment with new features
-      - You can build on top of whichever model is more applicable to your research, or create your own model
-
-  <details>
-  <summary>Simple Model Walk Through</summary>
-
-    - You can customize the interactive data you want to render in your model, and display them in three types of views
-      - Map View
-      - Dashboard View
-      - KPI View.
-    - In the `simple_model`, we render the following Map view. You can click on each of the warehouses and factories to toggle open and calculate the statistics and KPI of the model.
-    ![map view](https://utils.mitcave.com/docs/cave_app-0.3.0/map.jpg)
-
-    - In the `simple_model` Dashboard view, you can generate charts based on the statistics and KPI of the model. You can adjust various elements of the charts, such as type of chart, statistic, groupings, etc.
-    ![dashboard view](https://utils.mitcave.com/docs/cave_app-0.3.0/dashboard.jpg)
-
-    - In the `simple_model` KPI view, you can see the list of all the KPI and their values.
-    ![kpi view](https://utils.mitcave.com/docs/cave_app-0.3.0/kpi.jpg)
-
-    - These functions are all programmed in `/cave_api/cave_api/simple_model`. The CAVE [API Structure](cave_api/README_API_STRUCTURE.md) gives developers many capabilities to edit and create their own models. For instance, you can [change levels of data aggregation](/cave_api/docs/all_keys/categories.md) in Dashboard view or [edit the map legend](/cave_api/docs/all_keys/arcs.md) displayed in Map view.
-
-  </details>
-
-
-## Making API Changes
-See the API documentation:
-
-- [General API Topics](cave_api/README.md)
-- [API Structure](cave_api/README_API_STRUCTURE.md)
 
 ### Prettify Code
-Use the CLI to keep your API code `pretty` and match cave coding format standards.
+Use the CLI to keep your API code `pretty` and match CAVE coding format standards.
 
   ```sh
   cave prettify
   ```
-
-**NOTE**: All prettify commands write over existing code (in place).
+  **NOTE**: All prettify commands write over existing code (in place).
 
 ## Project Contributors
 
@@ -148,17 +121,32 @@ Use the CLI to keep your API code `pretty` and match cave coding format standard
 - Luis Vasquez - CAVE Developer
 - Alice Zhao - CAVE Developer
 - Max Katz-Christy - CAVE Developer
+- Elaine Wang - CAVE Developer
 - Tim Russell - CAVE Researcher
 - Connor Makowski - CAVE Researcher / Development Lead
 - Matthias Winkenbach - CAVE Director
 
 ## Previous Contributors
+- Robert Tran - CAVE Developer
+- Yang Dai - CAVE Developer
+- Margaret Sands - CAVE Developer
+- Kristen Manning - CAVE Developer
+- Alan Yan - CAVE Developer
+- Chris Larry - CAVE Developer
+- Chloe Wang - CAVE Developer
+- Shepherd Jiang - CAVE Developer
+- Samip Jain - CAVE Developer
 - Erin Liu - CAVE Developer
+- Sanjay Seshan - CAVE Developer
 - Jean Billa - CAVE Developer
+- Austin Lee - Conarrative Developer
+- Alex Dixon - Conarrative Developer
+- Steven Achstein - Conarrative Developer
+- Mike Gai - Conarrative Developer
 
 ## License Notice
 
-Copyright 2022 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
+Copyright 2023 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

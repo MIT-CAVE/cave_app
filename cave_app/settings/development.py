@@ -161,7 +161,7 @@ REST_FRAMEWORK = {
 # Django Channels
 ################################################################
 ## Channels Layer Support
-INSTALLED_APPS += ["channels"]
+INSTALLED_APPS = ["daphne"] + INSTALLED_APPS
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels.layers.InMemoryChannelLayer",
@@ -186,62 +186,63 @@ CACHES = {
 ################################################################
 if config("USE_LOGGING", default=False, cast=bool):
     from pathlib import Path
+
     Path(f"{BASE_DIR}/logs/general").mkdir(parents=True, exist_ok=True)
     LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'request_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/request.log',
+        "version": 1,
+        "disable_existing_loggers": False,
+        "handlers": {
+            "request_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/request.log",
             },
-            'server_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/server.log',
+            "server_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/server.log",
             },
-            'sql_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/sql.log',
+            "sql_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/sql.log",
             },
-            'template_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/template.log',
+            "template_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/template.log",
             },
-            'security_file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': f'{BASE_DIR}/logs/general/security.log',
+            "security_file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": f"{BASE_DIR}/logs/general/security.log",
             },
         },
-        'loggers': {
-            'django.request': {
-                'handlers': ['request_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+        "loggers": {
+            "django.request": {
+                "handlers": ["request_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
-            'django.server': {
-                'handlers': ['server_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+            "django.server": {
+                "handlers": ["server_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
-            'django.db.backends': {
-                'handlers': ['sql_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+            "django.db.backends": {
+                "handlers": ["sql_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
-            'django.template': {
-                'handlers': ['template_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+            "django.template": {
+                "handlers": ["template_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
-            'django.security': {
-                'handlers': ['security_file'],
-                'level': 'DEBUG',
-                'propagate': True,
+            "django.security": {
+                "handlers": ["security_file"],
+                "level": "DEBUG",
+                "propagate": True,
             },
         },
     }
@@ -250,5 +251,8 @@ if config("USE_LOGGING", default=False, cast=bool):
 
 # Configure validation if LIVE_API_VALIDATION is True
 ################################################################
-LIVE_API_VALIDATION = config("LIVE_API_VALIDATION", default=False, cast=bool)
+LIVE_API_VALIDATION_LOG = config("LIVE_API_VALIDATION_LOG", default=False, cast=bool)
+LIVE_API_VALIDATION_LOG_MAX = config("LIVE_API_VALIDATION_LOG_MAX", default=1000, cast=int)
+LIVE_API_VALIDATION_PRINT = config("LIVE_API_VALIDATION_PRINT", default=False, cast=bool)
+LIVE_API_VALIDATION_PRINT_MAX = config("LIVE_API_VALIDATION_PRINT_MAX", default=10, cast=int)
 ################################################################
