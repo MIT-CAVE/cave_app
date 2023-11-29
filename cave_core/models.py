@@ -1,4 +1,5 @@
 # Framework Imports
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core.cache import cache
 from django.db import models
@@ -16,6 +17,9 @@ from cave_core.utils.broadcasting import Socket
 from cave_core.utils.constants import api_keys, background_api_keys
 from cave_api.api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
+
+# External Imports
+from cave_utils import Validator
 
 
 class CustomUser(AbstractUser):
@@ -930,7 +934,7 @@ class Sessions(models.Model):
             for obj in session_data.filter(data_name__in=keys)
         }
 
-    def broadcast_changed_data(self, previous_versions, broadcast=True):
+    def broadcast_changed_data(self, previous_versions):
         """
         Broadcasts and returns all data that has changed given some set of previous versions
 
@@ -949,12 +953,12 @@ class Sessions(models.Model):
             key for key, value in self.versions.items() if previous_versions.get(key) != value
         ]
         data = self.get_client_data(keys=updated_keys, session_data=session_data)
-        if broadcast:
-            Socket(self).broadcast(
-                event="overwrite",
-                versions=self.versions,
-                data=data,
-            )
+        # Broadcast the updated versions and data
+        Socket(self).broadcast(
+            event="overwrite",
+            versions=self.versions,
+            data=data,
+        )
         if not self.executing:
             self.broadcast_loading(False)
         return data
@@ -1039,6 +1043,20 @@ class Sessions(models.Model):
         extraKwargs = command_output.pop("extraKwargs", {})
         # Update the session data with the command output
         self.replace_data(data=command_output, wipeExisting=extraKwargs.get("wipeExisting", True))
+
+        # Validate if in debug + live api validation mode
+        if settings.DEBUG:
+            if settings.LIVE_API_VALIDATION_LOG or settings.LIVE_API_VALIDATION_PRINT:
+                validator = Validator(
+                    session_data=self.get_client_data(keys=list(self.versions.keys())),
+                    ignore_keys=["meta"],
+                )
+                if settings.LIVE_API_VALIDATION_PRINT:
+                    validator.log.print_logs(max_count=settings.LIVE_API_VALIDATION_PRINT_MAX)
+                if settings.LIVE_API_VALIDATION_LOG:
+                    validator.log.write_logs(f"./logs/validation/{self.name}.log", max_count=settings.LIVE_API_VALIDATION_LOG_MAX)
+
+
         # Update the execution state
         self.set_executing(False)
 
