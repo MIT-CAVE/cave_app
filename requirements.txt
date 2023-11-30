@@ -1,6 +1,6 @@
 autoflake==2.2.1
 black==23.9.1
-cave_utils>=2.0.1
+cave_utils>=2.0.3
 channels[daphne]==4.0.0
 Django==4.2.6
 django-cors-headers==4.2.0
