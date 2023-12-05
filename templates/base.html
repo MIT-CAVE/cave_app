@@ -37,7 +37,7 @@
 <!-- loader.js and loader.css handle this div -->
 <div id="loader-show-until-loaded"></div>
 <body>
-  {% block dialog %}{% endblock %}
+  {% include "modules/generic/browser_prompt.html" %}
   <div class="body-for-full-height">
     {% include "modules/base/nav_bar.html" %}
     <div class="bg-background">

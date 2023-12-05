@@ -3,10 +3,6 @@
 {% block title %}{{ globals.site_name }}: {{ page }}{% endblock %}
 {% block header_text %}{{ globals.site_name }}{% endblock %}
 
-{% block dialog %}
-{% include "modules/generic/browser_prompt.html" %}
-{% endblock %}
-
 {% block content %}
   {% include "modules/generic/utils/container_start.html" %}
   {% for page_section in page_sections %}
