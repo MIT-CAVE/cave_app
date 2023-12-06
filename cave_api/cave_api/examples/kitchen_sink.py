@@ -191,6 +191,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
+            "paneState": {"left": {}, "right": {}, "center": {}},
             "data": {
                 "exampleModal": {
                     "name": "Example Modal",
