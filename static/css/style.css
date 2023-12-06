@@ -140,4 +140,10 @@
 /* Full Height Body */
 .body-for-full-height {
   min-height: calc(100vh);
+  min-width: calc(100vw);
+  right: 0;
+}
+
+body.modal-open {
+  overflow-y: hidden !important;
 }

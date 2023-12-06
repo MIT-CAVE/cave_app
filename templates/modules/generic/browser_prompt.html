@@ -1,0 +1,42 @@
+<div class="modal" id="browserPrompt" data-bs-backdrop='static' tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Browser Settings</h5>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">&#x2715</button>
+      </div>
+      <div class="modal-body">
+        {% include "modules/generic/utils/browser_prompt_message.html" with id="useChrome" message="Please use Google Chrome." %}
+        {% include "modules/generic/utils/browser_prompt_message.html" with id="exitIncognito" message="Please exit from Incognito mode." %}
+        {% include "modules/generic/utils/browser_prompt_message.html" with id="enableCookies" message="Please ensure that cookies are enabled." %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(window).on('load', () => {
+    const cookies = navigator.cookieEnabled;
+    
+    const browsers = ["Chromium", "Edg", "Firefox", "MSIE", "OPR", "Opera"];
+    const chrome = navigator.userAgent.includes("Chrome") && browsers.every((browser) => {
+      return !navigator.userAgent.includes(browser)
+    });
+
+    if (chrome) {
+      $('#useChrome').css('display', 'none');
+      detectIncognito().then((result) => {
+        const isIncognito = result.isPrivate;
+        if (isIncognito || !cookies) {
+          if (!isIncognito) $('#exitIncognito').css('display', 'none');
+          if (cookies) $('#enableCookies').css('display', 'none');
+          $('#browserPrompt').modal('show');
+        }
+      });
+    } else {
+      $('#exitIncognito').css('display', 'none');
+      $('#enableCookies').css('display', 'none');
+      $('#browserPrompt').modal('show');
+    }
+  });
+</script>
