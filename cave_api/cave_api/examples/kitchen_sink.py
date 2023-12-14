@@ -1623,6 +1623,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "unit": "frowns",
                     "type": "num",
                     "variant": "icon",
+                    "draggable": True,
                 },
                 "key2": {
                     "name": "KPI Example 2",
@@ -1631,6 +1632,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "unit": "smiles",
                     "type": "num",
                     "variant": "icon",
+                    "draggable": True,
                 },
                 "key3": {
                     "name": "KPI Example 3",
