@@ -15,6 +15,7 @@ import type_enforced
 # Internal Imports
 from cave_core.utils.broadcasting import Socket
 from cave_core.utils.constants import api_keys, background_api_keys
+from cave_core.utils.validators import limit_upload_size
 from cave_api.api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
@@ -358,6 +359,7 @@ class CustomUser(AbstractUser):
         if team_info == {} and group_info == {}:
             return None
         return {"Team": team_info, "Group": group_info}
+    
 
     def __str__(self):
         """
@@ -613,6 +615,7 @@ class PageSections(models.Model):
         ),
         blank=True,
         storage=PublicMediaStorage(),
+        # validators=[limit_upload_size(max_size_mb=5)]
     )
     photo_private = models.ImageField(
         _("Photo Private"),
@@ -622,6 +625,7 @@ class PageSections(models.Model):
         ),
         blank=True,
         storage=PrivateMediaStorage(),
+        # validators=[limit_upload_size(max_size_mb=5)]
     )
     link = models.URLField(
         _("Link"),
@@ -671,6 +675,12 @@ class PageSections(models.Model):
             "Show this section - Used in Page Sections to enable/disable that section's visibility"
         ),
     )
+
+    def clean(self):
+        if self.photo:
+            limit_upload_size(max_size_mb=5, upload=self.photo)
+        if self.photo_private:
+            limit_upload_size(max_size_mb=5, upload=self.photo_private)
 
     # Metadata
     class Meta:
