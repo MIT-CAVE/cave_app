@@ -1,6 +1,7 @@
 # Framework Imports
 from django.contrib.auth.models import AbstractUser
 from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -354,6 +355,7 @@ class CustomUser(AbstractUser):
         if team_info == {} and group_info == {}:
             return None
         return {"Team": team_info, "Group": group_info}
+    
 
     def __str__(self):
         """
@@ -601,6 +603,12 @@ class PageSections(models.Model):
         default="",
         blank=True,
     )
+    # limit image size
+    def validate_image(img):
+        filesize = img.file.size
+        max_photo_size = 5*1024*1024  # 5MB in bytes
+        if filesize > max_photo_size:
+            raise ValidationError("Uploaded image must be under 5MB")
     photo = models.ImageField(
         _("Photo Public"),
         upload_to="page_section_photos",
@@ -609,6 +617,7 @@ class PageSections(models.Model):
         ),
         blank=True,
         storage=PublicMediaStorage(),
+        validators=[validate_image]
     )
     photo_private = models.ImageField(
         _("Photo Private"),
@@ -618,6 +627,7 @@ class PageSections(models.Model):
         ),
         blank=True,
         storage=PrivateMediaStorage(),
+        validators=[validate_image]
     )
     link = models.URLField(
         _("Link"),
