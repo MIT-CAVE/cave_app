@@ -1,7 +1,6 @@
 # Framework Imports
 from django.contrib.auth.models import AbstractUser
 from django.core.cache import cache
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -15,6 +14,7 @@ import type_enforced
 # Internal Imports
 from cave_core.utils.broadcasting import Socket
 from cave_core.utils.constants import api_keys, background_api_keys
+from cave_core.utils.validators import limit_upload_size
 from cave_api.api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
@@ -603,12 +603,6 @@ class PageSections(models.Model):
         default="",
         blank=True,
     )
-    # limit image size
-    def validate_image(img):
-        filesize = img.file.size
-        max_photo_size = 5*1024*1024  # 5MB in bytes
-        if filesize > max_photo_size:
-            raise ValidationError("Uploaded image must be under 5MB")
     photo = models.ImageField(
         _("Photo Public"),
         upload_to="page_section_photos",
@@ -617,7 +611,7 @@ class PageSections(models.Model):
         ),
         blank=True,
         storage=PublicMediaStorage(),
-        validators=[validate_image]
+        # validators=[limit_upload_size(max_size_mb=5)]
     )
     photo_private = models.ImageField(
         _("Photo Private"),
@@ -627,7 +621,7 @@ class PageSections(models.Model):
         ),
         blank=True,
         storage=PrivateMediaStorage(),
-        validators=[validate_image]
+        # validators=[limit_upload_size(max_size_mb=5)]
     )
     link = models.URLField(
         _("Link"),
@@ -677,6 +671,12 @@ class PageSections(models.Model):
             "Show this section - Used in Page Sections to enable/disable that section's visibility"
         ),
     )
+
+    def clean(self):
+        if self.photo:
+            limit_upload_size(max_size_mb=5, upload=self.photo)
+        if self.photo_private:
+            limit_upload_size(max_size_mb=5, upload=self.photo_private)
 
     # Metadata
     class Meta:
