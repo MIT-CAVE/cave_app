@@ -84,6 +84,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "node",
                     "name": "Warehouse",
                     "props": {
+                        "scenario": {
+                            "name": "Scenario",
+                            "type": "text",
+                            "enabled": False,
+                            "display": False,
+                            "help": "The scenario name",
+                        },
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
@@ -108,6 +115,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "capacity": [100, 80],
                             "includesAutomation": [True, False],
+                            "scenario": ["Scenario 1", "Scenario 2"],
                         },
                     }
                 },

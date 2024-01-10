@@ -43,6 +43,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Example Props Pane",
                     # Use an example of each prop and variant available in the api
                     "props": {
+                        "hiddenProp": {
+                            "name": "Hidden Prop",
+                            "type": "num",
+                            "display": False,
+                            "help": "This prop is hidden",
+                        },
                         "numericHeader": {
                             "name": "Numeric Props",
                             "type": "head",
@@ -234,6 +240,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     # Specify the values for each prop listed above
                     "values": {
+                        "hiddenProp": 0,
                         "numericInputExample": 50,
                         "numericSliderExample": 50,
                         "textInputExample": "Example Text Here",
