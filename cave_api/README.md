@@ -171,8 +171,9 @@ To add static data to the api:
 - Depending on how the `cave_api` package is installed, the location of this file may fundamentally change.
     - To access this file, use something similar to the following inside of your code to get the relative data path:
     ```
-    import importlib, json
-    data_location = importlib.resources.files("cave_api.data")
+    import json
+    from importlib import resources
+    data_location = resources.files("cave_api.data")
     relative_data_path = data_location.joinpath("api.json").__str__()
     ```
 
