@@ -97,10 +97,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for the toggle input example",
                         },
                         "buttonInputExample": {
-                            "name": "Button Input Example (Creates an Error)",
+                            "name": "Button Input Example",
                             "type": "button",
                             "apiCommand": "test",
-                            "help": "Press this button to create an error",
+                            "help": "Press this button tp fire the `test` command",
                         },
                         "pictureExample": {
                             "name": "Picture Example",
