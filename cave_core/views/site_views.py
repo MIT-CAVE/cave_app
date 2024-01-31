@@ -107,7 +107,7 @@ def app(request):
     if not globals.show_app_page:
         return redirect("/")
     if request.method == "GET":
-        return render(
+        appResponse = render(
             request,
             "app.html",
             {
@@ -119,6 +119,9 @@ def app(request):
                 "app_active": "active",
             },
         )
+        appResponse["Cross-Origin-Embedder-Policy"] = 'credentialless'
+        appResponse["Cross-Origin-Opener-Policy"] = 'same-origin'
+        return appResponse
     else:
         return redirect("/")
 
