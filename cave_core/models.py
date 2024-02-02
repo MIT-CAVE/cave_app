@@ -359,7 +359,6 @@ class CustomUser(AbstractUser):
         if team_info == {} and group_info == {}:
             return None
         return {"Team": team_info, "Group": group_info}
-    
 
     def __str__(self):
         """
@@ -939,10 +938,7 @@ class Sessions(models.Model):
             return {}
         if session_data == None:
             session_data = SessionData.objects.filter(session=self)
-        return {
-            obj.data_name: obj.get_data()
-            for obj in session_data.filter(data_name__in=keys)
-        }
+        return {obj.data_name: obj.get_data() for obj in session_data.filter(data_name__in=keys)}
 
     def broadcast_changed_data(self, previous_versions):
         """
@@ -999,7 +995,7 @@ class Sessions(models.Model):
             data_keys = list(data.keys())
             keys_to_delete = pamda.difference(data_keys, api_keys)
             keys_to_empty = pamda.difference(api_keys, data_keys)
-            if len(keys_to_delete)>0:
+            if len(keys_to_delete) > 0:
                 SessionData.objects.filter(session=self, data_name__in=keys_to_delete).delete()
             for k in keys_to_empty:
                 data[k] = {}
@@ -1037,7 +1033,9 @@ class Sessions(models.Model):
         self.broadcast_loading(True)
         self.set_executing(True)
         if data_queryset == None:
-            data_queryset = SessionData.objects.filter(session=self).exclude(data_name__in=background_api_keys)
+            data_queryset = SessionData.objects.filter(session=self).exclude(
+                data_name__in=background_api_keys
+            )
         if isinstance(command_keys, list):
             data_queryset = data_queryset.filter(data_name__in=command_keys)
         session_data = {i.data_name: i.get_data() for i in data_queryset}
@@ -1046,9 +1044,13 @@ class Sessions(models.Model):
             session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
         )
         # Ensure that no reserved api keys are returned
-        background_api_keys_used = pamda.intersection(list(command_output.keys()), background_api_keys)
-        if len(background_api_keys_used)>0:
-            raise Exception(f"Oops! The following reserved api keys were returned: {str(background_api_keys_used)}")
+        background_api_keys_used = pamda.intersection(
+            list(command_output.keys()), background_api_keys
+        )
+        if len(background_api_keys_used) > 0:
+            raise Exception(
+                f"Oops! The following reserved api keys were returned: {str(background_api_keys_used)}"
+            )
         # Pop out kwargs for use but not for storage
         extraKwargs = command_output.pop("extraKwargs", {})
         # Update the session data with the command output
@@ -1064,8 +1066,10 @@ class Sessions(models.Model):
                 if settings.LIVE_API_VALIDATION_PRINT:
                     validator.log.print_logs(max_count=settings.LIVE_API_VALIDATION_PRINT_MAX)
                 if settings.LIVE_API_VALIDATION_LOG:
-                    validator.log.write_logs(f"./logs/validation/{self.name}.log", max_count=settings.LIVE_API_VALIDATION_LOG_MAX)
-
+                    validator.log.write_logs(
+                        f"./logs/validation/{self.name}.log",
+                        max_count=settings.LIVE_API_VALIDATION_LOG_MAX,
+                    )
 
         # Update the execution state
         self.set_executing(False)

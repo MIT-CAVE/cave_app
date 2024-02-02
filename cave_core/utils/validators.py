@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 
-def limit_upload_size(upload, max_size_mb:int):
+
+def limit_upload_size(upload, max_size_mb: int):
     """
     Function:
 

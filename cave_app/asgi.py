@@ -3,6 +3,7 @@ ASGI config for cave_app project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 """
+
 import os
 
 if os.environ.get("DJANGO_SETTINGS_MODULE") is None:

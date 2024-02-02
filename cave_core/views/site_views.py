@@ -119,8 +119,8 @@ def app(request):
                 "app_active": "active",
             },
         )
-        appResponse["Cross-Origin-Embedder-Policy"] = 'credentialless'
-        appResponse["Cross-Origin-Opener-Policy"] = 'same-origin'
+        appResponse["Cross-Origin-Embedder-Policy"] = "credentialless"
+        appResponse["Cross-Origin-Opener-Policy"] = "same-origin"
         return appResponse
     else:
         return redirect("/")
