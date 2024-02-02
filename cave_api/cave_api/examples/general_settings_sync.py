@@ -8,7 +8,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # Once you select a version, you can see the available icons in the version
             # EG: https://react-icons.mitcave.com/4.10.1/icon_list.txt
             "iconUrl": "https://react-icons.mitcave.com/4.10.1",
-            # Specify to not sync the center pane state with the server 
+            # Specify to not sync the center pane state with the server
             # This will prevent other users in the same session from seeing launced modals from other clients in the same session
             # NOTE: By default, everything in the API is synced with the server
             #    - Only items that are synced with the server are able to be sent as `session_data` to this `execute_command` function
@@ -66,7 +66,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
-            "paneState":{"center":{"type":"pane", "open":"exampleModal", "pin":True}},
+            "paneState": {"center": {"type": "pane", "open": "exampleModal", "pin": True}},
             "data": {
                 # Create a modal with an example header and simple numeric input
                 # Note: This key must match the key used in the app bar above

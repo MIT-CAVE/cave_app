@@ -68,7 +68,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "capacity": {"min": 0, "max": 80, "startSize": "5px", "endSize": "10px"},
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "5px",
+                                            "endSize": "10px",
+                                        },
                                     },
                                 },
                             },
@@ -113,13 +118,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             # geoJsonValue must be a list of ids that match the geoJsonProp in the geoJson file
                             # The order of the ids must match the order of the values in the data.values fields
-                            "geoJsonValue": ["toronto-pittsburgh-indianapolis", "souix-falls-little-rock-memphis"],
+                            "geoJsonValue": [
+                                "toronto-pittsburgh-indianapolis",
+                                "souix-falls-little-rock-memphis",
+                            ],
                         },
                         "valueLists": {
                             "capacity": [65, 85],
                             "preferredRoute": [True, False],
                         },
-                    }
+                    },
                 },
             }
         },
@@ -133,7 +141,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
-                            "maximized": True},
+                            "maximized": True,
+                        },
                     ],
                 },
             },

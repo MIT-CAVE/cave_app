@@ -68,7 +68,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "capacity": {"min": 0, "max": 80, "startSize": "5px", "endSize": "10px"},
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "5px",
+                                            "endSize": "10px",
+                                        },
                                     },
                                 },
                             },
@@ -110,7 +115,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "capacity": [75, 105],
                             "preferredRoute": [True, False],
                         },
-                    }
+                    },
                 },
             }
         },
@@ -124,7 +129,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
-                            "maximized": True},
+                            "maximized": True,
+                        },
                     ],
                 },
             },

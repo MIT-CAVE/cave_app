@@ -631,7 +631,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "mapId": "map1",
                             "showToolbar": False,
                             "maximized": True,
-                         },
+                        },
                         {
                             "variant": "bar",
                             "groupingLevel": ["size"],
@@ -639,7 +639,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "lockedLayout": True,
                             "statAggregation": "sum",
                             "groupedOutputDataId": "locationGroup",
-                            "statId":"numericExampleCalculationStat",
+                            "statId": "numericExampleCalculationStat",
                         },
                     ],
                     "lockedLayout": False,
@@ -650,7 +650,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "bar",
                             "statAggregation": "mean",
                             "groupedOutputDataId": "locationGroup",
-                            "statId":"numericStatExampleB",
+                            "statId": "numericStatExampleB",
                         },
                         {
                             "type": "globalOutput",
@@ -667,13 +667,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupingId": ["sku"],
                             "statAggregation": "mean",
                             "groupedOutputDataId": "locationGroup",
-                            "statId":"numericExampleCalculationStat",
+                            "statId": "numericExampleCalculationStat",
                         },
                         {
                             "variant": "cumulative_line",
                             "statAggregation": "sum",
                             "groupedOutputDataId": "locationGroup",
-                            "statId":"numericStatExampleB",
+                            "statId": "numericStatExampleB",
                             "groupingId": ["location", "sku"],
                             "groupingLevel": ["state", "sku"],
                         },
@@ -694,9 +694,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "raster",
                                 # EG: See a list of raster sources based on OSM here:
                                 # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
-                                "tiles": [
-                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                ],
+                                "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
                                 "tileSize": 256,
                                 "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
                             },
@@ -845,8 +843,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 80, "startSize": "30px", "endSize": "45px"},
-                                        "numericPropExampleB": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "30px",
+                                            "endSize": "45px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
                                     },
                                     "icon": "fa6/FaIgloo",
                                 },
@@ -855,8 +863,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                     "colorByOptions": {
                                         "selectorPropForColor": {
@@ -916,8 +934,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 100, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 250, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 100,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 250,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                     "icon": "bs/BsBuilding",
                                 },
@@ -949,8 +977,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                     "lineBy": "dotted",
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                 },
                                 "state": {
@@ -1057,8 +1095,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 80, "startSize": "30px", "endSize": "45px"},
-                                        "numericPropExampleB": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "30px",
+                                            "endSize": "45px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
                                     },
                                     "icon": "fa6/FaIgloo",
                                 },
@@ -1067,8 +1115,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                     "colorByOptions": {
                                         "selectorPropForColor": {
@@ -1121,8 +1179,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 100, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 250, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 100,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 250,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                     "icon": "bs/BsBuilding",
                                 },
@@ -1154,8 +1222,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                     "lineBy": "dotted",
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                 },
                                 "state": {
@@ -1265,8 +1343,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleA": [15],
                             "numericPropExampleB": [40],
                             "selectorPropForColor": [["b"]],
-                        }
-                    }
+                        },
+                    },
                 },
                 "T2": {
                     "type": "arc",
@@ -1335,7 +1413,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleB": [20, 14, 6],
                             "selectorPropForColor": [["e"], ["d"], ["f"]],
                         },
-                    }
+                    },
                 },
                 "nodeTypeA": {
                     "type": "node",
@@ -1369,9 +1447,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "data": {
                         "location": {
                             "timeValues": {
-                                0: { "latitude": [43.78, 39.82], },
-                                1: { "latitude": [44.78, 39.82], },
-                                2: { "latitude": [45.78, 39.82], },
+                                0: {
+                                    "latitude": [43.78, 39.82],
+                                },
+                                1: {
+                                    "latitude": [44.78, 39.82],
+                                },
+                                2: {
+                                    "latitude": [45.78, 39.82],
+                                },
                             },
                             "latitude": [43.78, 39.82],
                             "longitude": [-79.63, -86.18],
@@ -1381,7 +1465,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleB": [50, 40],
                             "booleanPropExample": [True, True],
                         },
-                    }
+                    },
                 },
                 "nodeTypeB": {
                     "type": "node",
@@ -1423,7 +1507,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleB": [150, 250, 250],
                             "booleanPropExample": [True, True, True],
                         },
-                    }
+                    },
                 },
                 "state": {
                     "type": "geo",
@@ -1453,8 +1537,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "numericPropExampleC": [0, 300, 250, 100, 200],
                             "booleanPropExample": [True, True, False, False, False],
-                        }
-                    }
+                        },
+                    },
                 },
                 "country": {
                     "type": "geo",
@@ -1478,8 +1562,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "valueLists": {
                             "numericPropExampleC": [50, 800],
-                        }
-                    }
+                        },
+                    },
                 },
             }
         },
@@ -1494,10 +1578,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "id": ["locUsMi", "locUsMa", "locUsFl", "locUsIn", "locCaOn"],
-                        "region": ["North America", "North America", "North America", "North America", "North America"],
-                        "country": ["USA", "USA", "USA", "USA", "Canada"],  
+                        "region": [
+                            "North America",
+                            "North America",
+                            "North America",
+                            "North America",
+                            "North America",
+                        ],
+                        "country": ["USA", "USA", "USA", "USA", "Canada"],
                         "state": ["Michigan", "Massachusetts", "Florida", "Indiana", "Ontario"],
-                        },
+                    },
                     "name": "Locations",
                     "levels": {
                         "region": {
@@ -1608,13 +1698,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "head",
                     "name": "Example KPI Header 1",
                     "icon": "bs/BsInboxes",
-                    "variant": "icon"
+                    "variant": "icon",
                 },
                 "kpiHeader2": {
                     "type": "head",
                     "name": "Example KPI Header 2",
                     "icon": "bs/BsTruck",
-                    "variant": "icon"
+                    "variant": "icon",
                 },
                 "key1": {
                     "name": "KPI Example 1",
@@ -1750,7 +1840,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
     }
     if command == "init" or command == "reset":
         if command == "reset":
-            print ("The `reset` button has been pressed by the user!")
+            print("The `reset` button has been pressed by the user!")
         return example
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")

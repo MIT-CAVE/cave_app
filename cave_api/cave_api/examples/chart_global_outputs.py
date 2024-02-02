@@ -49,13 +49,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "head",
                     "name": "24H Loading Dock KPIs",
                     "icon": "fa/FaTruckLoading",
-                    "variant": "icon"
+                    "variant": "icon",
                 },
                 "manufacturingHead": {
                     "type": "head",
                     "name": "24H Manufacturing KPIs",
                     "icon": "md/MdPrecisionManufacturing",
-                    "variant": "icon"
+                    "variant": "icon",
                 },
                 "loadingPallets": {
                     "name": "Pallets Received",
@@ -145,5 +145,4 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
         },
-        
     }

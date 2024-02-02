@@ -68,7 +68,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "capacity": {"min": 0, "max": 80, "startSize": "30px", "endSize": "45px"},
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "30px",
+                                            "endSize": "45px",
+                                        },
                                     },
                                     "icon": "fa6/FaWarehouse",
                                 },
@@ -117,7 +122,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "includesAutomation": [True, False],
                             "scenario": ["Scenario 1", "Scenario 2"],
                         },
-                    }
+                    },
                 },
             }
         },
@@ -131,7 +136,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
-                            "maximized": True},
+                            "maximized": True,
+                        },
                     ],
                 },
             },

@@ -7,6 +7,7 @@ from importlib import resources
 data_folder = resources.files("cave_api.data")
 static_data_path = data_folder.joinpath("static_data_example.json").__str__()
 
+
 def execute_command(session_data, socket, command="init", **kwargs):
     # `init` is the default command that is run when a session is created
     # It should return an initial state for the app

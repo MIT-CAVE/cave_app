@@ -36,7 +36,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
-            "paneState":{"left":{"type":"pane", "open":"examplePane", "pin":True}},
+            "paneState": {"left": {"type": "pane", "open": "examplePane", "pin": True}},
             "data": {
                 # Create an options pane with all of the available props
                 "examplePane": {

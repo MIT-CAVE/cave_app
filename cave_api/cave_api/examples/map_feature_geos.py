@@ -104,8 +104,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "demand": [50, 80, 75],
                             "targetGrowthArea": [False, False, True],
-                        }
-                    }
+                        },
+                    },
                 },
             },
         },
@@ -119,7 +119,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
-                            "maximized": True},
+                            "maximized": True,
+                        },
                     ],
                 },
             },
