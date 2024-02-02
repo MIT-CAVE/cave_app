@@ -1,7 +1,7 @@
 # Cave App
 Quickly create interactive web applications for python based models.
 
-https://utils.mitcave.com/docs/cave_app-2.1.0/cave_app_intro.mp4
+![cave app intro](https://utils.mitcave.com/docs/cave_app-2.1.0/cave_app_intro.mp4)
 
 # Getting Started
 
