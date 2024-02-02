@@ -149,7 +149,7 @@ Use the CLI to keep your API code `pretty` and match CAVE coding format standard
 
 ## License Notice
 
-Copyright 2023 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
+Copyright 2024 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
