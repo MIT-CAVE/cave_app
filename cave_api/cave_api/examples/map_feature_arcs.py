@@ -59,12 +59,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "capacity": {
                                             "min": 0,
                                             "max": 105,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "preferredRoute": {
-                                            "false": "rgba(255,0,0, 255)",
-                                            "true": "rgba(0,255,0, 255)",
+                                            "false": "rgba(255, 0, 0, 1)",
+                                            "true": "rgba(0, 255, 0, 1)",
                                         },
                                     },
                                     "sizeByOptions": {
