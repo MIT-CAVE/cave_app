@@ -222,6 +222,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "field_a": {"name": "Field A"},
                                 "field_b": {"name": "Field B"},
                             },
+                            "help": "Toggle all relevant items",
+                        },
+                        "listCheckboxExample": {
+                            "name": "List Checkbox Example",
+                            "type": "selector",
+                            "variant": "listCheckbox",
+                            "options": {
+                                "option_a": {"name": "Option A", "field": "Field A"},
+                                "option_b": {"name": "Option B", "field": "Field A"},
+                                "option_c": {"name": "Option C", "field": "Field A"},
+                                "option_d": {"name": "Option D", "field": "Field B"},
+                                "option_e": {"name": "Option E", "field": "Field B"},
+                                "option_f": {"name": "Option F", "field": "Field B"},
+                            },
+                            "enabled": True,
                             "help": "Select all relevant items",
                         },
                         "dateTimeHeader": {
@@ -274,8 +289,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         ],
                         "listToggleExample": {
                             "field_a": True,
-                            "field_b": True
+                            "field_b": True,
                         },
+                        "listCheckboxExample": [
+                            "option_a", 
+                            "option_e", 
+                            "option_f",
+                        ],
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
@@ -411,6 +431,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 4,
                                 "row": 10,
                                 "itemId": "listToggleExample",
+                            },
+                            "col4Row11": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 11,
+                                "itemId": "listCheckboxExample",
                             },
                             "col5Row1": {
                                 "type": "item",
