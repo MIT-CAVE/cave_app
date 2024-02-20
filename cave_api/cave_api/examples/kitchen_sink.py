@@ -153,14 +153,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "resetButton": {
                     "icon": "md/MdSync",
-                    "color": "rgba(255, 101, 101, 255)",
+                    "color": "rgba(255, 101, 101, 1)",
                     "apiCommand": "reset",
                     "type": "button",
                     "bar": "upperLeft",
                 },
                 "buttonSolve": {
                     "icon": "bs/BsLightningFill",
-                    "color": "rgba(178, 179, 55, 255)",
+                    "color": "rgba(178, 179, 55, 1)",
                     "apiCommand": "solve",
                     "type": "button",
                     "bar": "upperLeft",
@@ -183,7 +183,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "exampleModal": {
                     "icon": "md/MdInfo",
-                    "color": "rgba(195, 164, 222, 255)",
+                    "color": "rgba(195, 164, 222, 1)",
                     "type": "pane",
                     "bar": "upperRight",
                     "variant": "modal",
@@ -191,6 +191,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
+            "paneState": {"left": {}, "right": {}, "center": {}},
             "data": {
                 "exampleModal": {
                     "name": "Example Modal",
@@ -630,7 +631,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "mapId": "map1",
                             "showToolbar": False,
                             "maximized": True,
-                         },
+                        },
                         {
                             "variant": "bar",
                             "groupingLevel": ["size"],
@@ -638,7 +639,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "lockedLayout": True,
                             "statAggregation": "sum",
                             "groupedOutputDataId": "locationGroup",
-                            "statId":"numericExampleCalculationStat",
+                            "statId": "numericExampleCalculationStat",
                         },
                     ],
                     "lockedLayout": False,
@@ -649,7 +650,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "bar",
                             "statAggregation": "mean",
                             "groupedOutputDataId": "locationGroup",
-                            "statId":"numericStatExampleB",
+                            "statId": "numericStatExampleB",
                         },
                         {
                             "type": "globalOutput",
@@ -666,13 +667,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupingId": ["sku"],
                             "statAggregation": "mean",
                             "groupedOutputDataId": "locationGroup",
-                            "statId":"numericExampleCalculationStat",
+                            "statId": "numericExampleCalculationStat",
                         },
                         {
                             "variant": "cumulative_line",
                             "statAggregation": "sum",
                             "groupedOutputDataId": "locationGroup",
-                            "statId":"numericStatExampleB",
+                            "statId": "numericStatExampleB",
                             "groupingId": ["location", "sku"],
                             "groupingLevel": ["state", "sku"],
                         },
@@ -693,9 +694,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "raster",
                                 # EG: See a list of raster sources based on OSM here:
                                 # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
-                                "tiles": [
-                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                ],
+                                "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
                                 "tileSize": 256,
                                 "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
                             },
@@ -828,24 +827,34 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                                 2: {"min": 20},
                                             },
                                             "max": 80,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "booleanPropExample": {
-                                            "false": "rgba(255,0,0, 255)",
-                                            "true": "rgba(0,255,0, 255)",
-                                            "nullColor": "rgba(0,255,0, 255)",
+                                            "false": "rgba(255, 0, 0, 1)",
+                                            "true": "rgba(0, 255, 0, 1)",
+                                            "nullColor": "rgba(0, 255, 0, 1)",
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 80, "startSize": "30px", "endSize": "45px"},
-                                        "numericPropExampleB": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "30px",
+                                            "endSize": "45px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
                                     },
                                     "icon": "fa6/FaIgloo",
                                 },
@@ -854,29 +863,39 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
-                                    },
-                                    "colorByOptions": {
-                                        "selectorPropForColor": {
-                                            "a": "rgba(128,255,255, 255)",
-                                            "b": "rgba(0,153,51, 255)",
-                                            "c": "rgba(0,0,128, 255)",
-                                            "d": "rgba(204,0,0, 255)",
-                                            "e": "rgba(153,77,0, 255)",
-                                            "f": "rgba(255,25,255, 255)",
-                                        },
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startSize": "15px",
+                                            "endSize": "30px",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 40,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
+                                    },
+                                    "colorByOptions": {
+                                        "selectorPropForColor": {
+                                            "a": "rgba(128, 255, 255, 1)",
+                                            "b": "rgba(0,153,51, 1)",
+                                            "c": "rgba(0, 0, 128, 1)",
+                                            "d": "rgba(204, 0, 0, 1)",
+                                            "e": "rgba(153, 77, 0, 1)",
+                                            "f": "rgba(255, 25, 255, 1)",
+                                        },
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                     },
                                 },
@@ -900,23 +919,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 1000,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "booleanPropExample": {
-                                            "false": "rgba(233, 0, 0, 255)",
-                                            "true": "rgba(0, 233, 0, 255)",
+                                            "false": "rgba(233, 0, 0, 1)",
+                                            "true": "rgba(0, 233, 0, 1)",
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 100, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 250, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 100,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 250,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                     "icon": "bs/BsBuilding",
                                 },
@@ -926,30 +955,40 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "value": True,
                                     "colorByOptions": {
                                         "selectorPropForColor": {
-                                            "a": "rgba(128,255,255, 255)",
-                                            "b": "rgba(0,153,51, 255)",
-                                            "c": "rgba(0,0,128, 255)",
-                                            "d": "rgba(204,0,0, 255)",
-                                            "e": "rgba(153,77,0, 255)",
-                                            "f": "rgba(255,25,255, 255)",
+                                            "a": "rgba(128, 255, 255, 1)",
+                                            "b": "rgba(0, 153, 51, 1)",
+                                            "c": "rgba(0, 0, 128, 1)",
+                                            "d": "rgba(204, 0, 0, 1)",
+                                            "e": "rgba(153, 77, 0, 1)",
+                                            "f": "rgba(255, 25, 255, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 40,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                     },
                                     "lineBy": "dotted",
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                 },
                                 "state": {
@@ -959,12 +998,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleC": {
                                             "min": 0,
                                             "max": 300,
-                                            "startGradientColor": "rgba(100, 100, 100, 255)",
-                                            "endGradientColor": "rgba(20, 205, 20, 255)",
+                                            "startGradientColor": "rgba(100, 100, 100, 1)",
+                                            "endGradientColor": "rgba(20, 205, 20, 1)",
                                         },
                                         "booleanPropExample": {
-                                            "false": "rgba(233, 0, 0, 255)",
-                                            "true": "rgba(0, 233, 0, 255)",
+                                            "false": "rgba(233, 0, 0, 1)",
+                                            "true": "rgba(0, 233, 0, 1)",
                                         },
                                     },
                                     "icon": "bs/BsHexagon",
@@ -976,8 +1015,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleC": {
                                             "min": 0,
                                             "max": 800,
-                                            "startGradientColor": "rgba(100, 100, 100, 255)",
-                                            "endGradientColor": "rgba(20, 205, 20, 255)",
+                                            "startGradientColor": "rgba(100, 100, 100, 1)",
+                                            "endGradientColor": "rgba(20, 205, 20, 1)",
                                         }
                                     },
                                     "icon": "bs/BsHexagon",
@@ -1041,23 +1080,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                                 2: {"min": 20},
                                             },
                                             "max": 80,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "booleanPropExample": {
-                                            "false": "rgba(255,0,0, 255)",
-                                            "true": "rgba(0,255,0, 255)",
+                                            "false": "rgba(255, 0, 0, 1)",
+                                            "true": "rgba(0, 255, 0, 1)",
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 80, "startSize": "30px", "endSize": "45px"},
-                                        "numericPropExampleB": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "30px",
+                                            "endSize": "45px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
                                     },
                                     "icon": "fa6/FaIgloo",
                                 },
@@ -1066,29 +1115,39 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
-                                    },
-                                    "colorByOptions": {
-                                        "selectorPropForColor": {
-                                            "a": "rgba(128,255,255, 255)",
-                                            "b": "rgba(0,153,51, 255)",
-                                            "c": "rgba(0,0,128, 255)",
-                                            "d": "rgba(204,0,0, 255)",
-                                            "e": "rgba(153,77,0, 255)",
-                                            "f": "rgba(255,25,255, 255)",
-                                        },
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startSize": "15px",
+                                            "endSize": "30px",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 40,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
+                                    },
+                                    "colorByOptions": {
+                                        "selectorPropForColor": {
+                                            "a": "rgba(128, 255, 255, 1)",
+                                            "b": "rgba(0, 153, 51, 1)",
+                                            "c": "rgba(0, 0, 128, 1)",
+                                            "d": "rgba(204, 0, 0, 1)",
+                                            "e": "rgba(153, 77, 0, 1)",
+                                            "f": "rgba(255, 25, 255, 1)",
+                                        },
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                     },
                                 },
@@ -1105,23 +1164,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 1000,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "booleanPropExample": {
-                                            "false": "rgba(233, 0, 0, 255)",
-                                            "true": "rgba(0, 233, 0, 255)",
+                                            "false": "rgba(233, 0, 0, 1)",
+                                            "true": "rgba(0, 233, 0, 1)",
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 100, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 250, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 100,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 250,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                     "icon": "bs/BsBuilding",
                                 },
@@ -1131,30 +1200,40 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "value": True,
                                     "colorByOptions": {
                                         "selectorPropForColor": {
-                                            "a": "rgba(128,255,255, 255)",
-                                            "b": "rgba(0,153,51, 255)",
-                                            "c": "rgba(0,0,128, 255)",
-                                            "d": "rgba(204,0,0, 255)",
-                                            "e": "rgba(153,77,0, 255)",
-                                            "f": "rgba(255,25,255, 255)",
+                                            "a": "rgba(128, 255, 255, 1)",
+                                            "b": "rgba(0, 153, 51, 1)",
+                                            "c": "rgba(0, 0, 128, 1)",
+                                            "d": "rgba(204, 0, 0, 1)",
+                                            "e": "rgba(153, 77, 0, 1)",
+                                            "f": "rgba(255, 25, 255, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
                                             "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "numericPropExampleB": {
                                             "min": 0,
                                             "max": 40,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                     },
                                     "lineBy": "dotted",
                                     "sizeByOptions": {
-                                        "numericPropExampleA": {"min": 0, "max": 50, "startSize": "15px", "endSize": "30px"},
-                                        "numericPropExampleB": {"min": 0, "max": 40, "startSize": "5px", "endSize": "15px"},
+                                        "numericPropExampleA": {
+                                            "min": 0,
+                                            "max": 50,
+                                            "startSize": "15px",
+                                            "endSize": "30px",
+                                        },
+                                        "numericPropExampleB": {
+                                            "min": 0,
+                                            "max": 40,
+                                            "startSize": "5px",
+                                            "endSize": "15px",
+                                        },
                                     },
                                 },
                                 "state": {
@@ -1164,12 +1243,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleC": {
                                             "min": 0,
                                             "max": 300,
-                                            "startGradientColor": "rgba(100, 100, 100, 255)",
-                                            "endGradientColor": "rgba(20, 205, 20, 255)",
+                                            "startGradientColor": "rgba(100, 100, 100, 1)",
+                                            "endGradientColor": "rgba(20, 205, 20, 1)",
                                         },
                                         "booleanPropExample": {
-                                            "false": "rgba(233, 0, 0, 255)",
-                                            "true": "rgba(0, 233, 0, 255)",
+                                            "false": "rgba(233, 0, 0, 1)",
+                                            "true": "rgba(0, 233, 0, 1)",
                                         },
                                     },
                                     "icon": "bs/BsHexagon",
@@ -1181,8 +1260,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "numericPropExampleC": {
                                             "min": 0,
                                             "max": 800,
-                                            "startGradientColor": "rgba(100, 100, 100, 255)",
-                                            "endGradientColor": "rgba(20, 205, 20, 255)",
+                                            "startGradientColor": "rgba(100, 100, 100, 1)",
+                                            "endGradientColor": "rgba(20, 205, 20, 1)",
                                         }
                                     },
                                     "icon": "bs/BsHexagon",
@@ -1264,8 +1343,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleA": [15],
                             "numericPropExampleB": [40],
                             "selectorPropForColor": [["b"]],
-                        }
-                    }
+                        },
+                    },
                 },
                 "T2": {
                     "type": "arc",
@@ -1334,7 +1413,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleB": [20, 14, 6],
                             "selectorPropForColor": [["e"], ["d"], ["f"]],
                         },
-                    }
+                    },
                 },
                 "nodeTypeA": {
                     "type": "node",
@@ -1368,9 +1447,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "data": {
                         "location": {
                             "timeValues": {
-                                0: { "latitude": [43.78, 39.82], },
-                                1: { "latitude": [44.78, 39.82], },
-                                2: { "latitude": [45.78, 39.82], },
+                                0: {
+                                    "latitude": [43.78, 39.82],
+                                },
+                                1: {
+                                    "latitude": [44.78, 39.82],
+                                },
+                                2: {
+                                    "latitude": [45.78, 39.82],
+                                },
                             },
                             "latitude": [43.78, 39.82],
                             "longitude": [-79.63, -86.18],
@@ -1380,7 +1465,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleB": [50, 40],
                             "booleanPropExample": [True, True],
                         },
-                    }
+                    },
                 },
                 "nodeTypeB": {
                     "type": "node",
@@ -1422,7 +1507,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleB": [150, 250, 250],
                             "booleanPropExample": [True, True, True],
                         },
-                    }
+                    },
                 },
                 "state": {
                     "type": "geo",
@@ -1452,8 +1537,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "numericPropExampleC": [0, 300, 250, 100, 200],
                             "booleanPropExample": [True, True, False, False, False],
-                        }
-                    }
+                        },
+                    },
                 },
                 "country": {
                     "type": "geo",
@@ -1477,8 +1562,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "valueLists": {
                             "numericPropExampleC": [50, 800],
-                        }
-                    }
+                        },
+                    },
                 },
             }
         },
@@ -1493,10 +1578,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "id": ["locUsMi", "locUsMa", "locUsFl", "locUsIn", "locCaOn"],
-                        "region": ["North America", "North America", "North America", "North America", "North America"],
-                        "country": ["USA", "USA", "USA", "USA", "Canada"],  
+                        "region": [
+                            "North America",
+                            "North America",
+                            "North America",
+                            "North America",
+                            "North America",
+                        ],
+                        "country": ["USA", "USA", "USA", "USA", "Canada"],
                         "state": ["Michigan", "Massachusetts", "Florida", "Indiana", "Ontario"],
-                        },
+                    },
                     "name": "Locations",
                     "levels": {
                         "region": {
@@ -1607,13 +1698,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "head",
                     "name": "Example KPI Header 1",
                     "icon": "bs/BsInboxes",
-                    "variant": "icon"
+                    "variant": "icon",
                 },
                 "kpiHeader2": {
                     "type": "head",
                     "name": "Example KPI Header 2",
                     "icon": "bs/BsTruck",
-                    "variant": "icon"
+                    "variant": "icon",
                 },
                 "key1": {
                     "name": "KPI Example 1",
@@ -1622,6 +1713,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "unit": "frowns",
                     "type": "num",
                     "variant": "icon",
+                    "draggable": True,
                 },
                 "key2": {
                     "name": "KPI Example 2",
@@ -1630,6 +1722,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "unit": "smiles",
                     "type": "num",
                     "variant": "icon",
+                    "draggable": True,
                 },
                 "key3": {
                     "name": "KPI Example 3",
@@ -1747,7 +1840,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
     }
     if command == "init" or command == "reset":
         if command == "reset":
-            print ("The `reset` button has been pressed by the user!")
+            print("The `reset` button has been pressed by the user!")
         return example
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")

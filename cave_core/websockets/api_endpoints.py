@@ -204,11 +204,7 @@ def get_associated_session_data(request):
     for obj in session_data:
         associated[obj.session.id]["data"][obj.data_name] = obj.get_data()
 
-    associated_data_object = {
-        "associated": {
-            "data": associated
-        }
-    }
+    associated_data_object = {"associated": {"data": associated}}
 
     session.replace_data(data=associated_data_object, wipeExisting=False)
 

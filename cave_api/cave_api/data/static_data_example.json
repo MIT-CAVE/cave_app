@@ -1,0 +1,24 @@
+{
+    "settings": {
+        "iconUrl": "https://react-icons.mitcave.com/4.10.1"
+    },
+    "appBar": {
+        "order": {
+            "data": ["refreshButton", "infoButton"]
+        },
+        "data": {
+            "refreshButton": {
+                "icon": "md/MdRefresh",
+                "apiCommand": "init",
+                "type": "button",
+                "bar": "upperLeft"
+            },
+            "infoButton": {
+                "icon": "md/MdInfo",
+                "apiCommand": "info",
+                "type": "button",
+                "bar": "upperLeft"
+            }
+        }
+    }
+}

@@ -8,11 +8,35 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # Once you select a version, you can see the available icons in the version
             # EG: https://react-icons.mitcave.com/4.10.1/icon_list.txt
             "iconUrl": "https://react-icons.mitcave.com/4.10.1",
+            # Specify to not sync the center pane state with the server
+            # This will prevent other users in the same session from seeing launced modals from other clients in the same session
+            # NOTE: By default, everything in the API is synced with the server
+            #    - Only items that are synced with the server are able to be sent as `session_data` to this `execute_command` function
+            #    - This means that you should only de-sync data if it is not needed / relevant in the `execute_command` function
+            "sync": {
+                # Specify an arbitrary name for each sync group (for use with pathing and validation purposes)
+                "launchedModal": {
+                    # Specify the name of the data item to sync (only relevant if `showToggle` is `True`)
+                    "name": "Launched Modal",
+                    # Specify if a special sync toggle should be shown in the settings pane.
+                    "showToggle": True,
+                    # Specify the default value of weather or not to sync the data item
+                    # NOTE: This value defaults to True if not specified
+                    "value": False,
+                    # Specify your sync data paths here
+                    "data": {
+                        # Specify the path to the data item to sync
+                        # NOTE: The key is arbitrary and can be anything you want (for use with pathing and validation purposes)
+                        # NOTE: The value is a list of keys that specify the path to the data item to sync/de-sync (depending on `value` above)
+                        "lm1": ["panes", "paneState", "center"]
+                    },
+                },
+            },
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
             "order": {
-                "data": ["refreshButton", "exampleModal"],
+                "data": ["refreshButton", "settingsPane" "exampleModal"],
             },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
@@ -21,6 +45,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "icon": "md/MdRefresh",
                     "apiCommand": "init",
                     "type": "button",
+                    "bar": "upperLeft",
+                },
+                # Add an appBar button to launch the app settings pane
+                "appSettings": {
+                    "icon": "md/MdOutlineSettings",
+                    "type": "settings",
                     "bar": "upperLeft",
                 },
                 # Add a modal to the app bar

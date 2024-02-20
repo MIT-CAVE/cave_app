@@ -36,13 +36,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
-            "paneState":{"left":{"type":"pane", "open":"examplePane", "pin":True}},
+            "paneState": {"left": {"type": "pane", "open": "examplePane", "pin": True}},
             "data": {
                 # Create an options pane with all of the available props
                 "examplePane": {
                     "name": "Example Props Pane",
                     # Use an example of each prop and variant available in the api
                     "props": {
+                        "hiddenProp": {
+                            "name": "Hidden Prop",
+                            "type": "num",
+                            "display": False,
+                            "help": "This prop is hidden",
+                        },
                         "numericHeader": {
                             "name": "Numeric Props",
                             "type": "head",
@@ -91,10 +97,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for the toggle input example",
                         },
                         "buttonInputExample": {
-                            "name": "Button Input Example (Creates an Error)",
+                            "name": "Button Input Example",
                             "type": "button",
                             "apiCommand": "test",
-                            "help": "Press this button to create an error",
+                            "help": "Press this button tp fire the `test` command",
                         },
                         "pictureExample": {
                             "name": "Picture Example",
@@ -234,6 +240,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     # Specify the values for each prop listed above
                     "values": {
+                        "hiddenProp": 0,
                         "numericInputExample": 50,
                         "numericSliderExample": 50,
                         "textInputExample": "Example Text Here",

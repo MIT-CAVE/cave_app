@@ -36,7 +36,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
-            "paneState":{"left":{"type":"pane", "open":"examplePane", "pin":False}},
+            "paneState": {"left": {"type": "pane", "open": "examplePane", "pin": False}},
             "data": {
                 # Create a pane with an example header and simple numeric input
                 # Note: This key must match the key used in the app bar above

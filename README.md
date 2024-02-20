@@ -1,6 +1,9 @@
 # Cave App
 Quickly create interactive web applications for python based models.
-![map view](https://utils.mitcave.com/docs/cave_app-0.3.0/map.jpg)
+
+Click the image below to see a video introduction to the cave app:
+
+[![cave app intro](https://img.youtube.com/vi/-wWrNW8qG18/maxresdefault.jpg)](https://youtu.be/-wWrNW8qG18)
 
 # Getting Started
 
@@ -146,7 +149,7 @@ Use the CLI to keep your API code `pretty` and match CAVE coding format standard
 
 ## License Notice
 
-Copyright 2023 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
+Copyright 2024 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

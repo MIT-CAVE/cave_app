@@ -42,7 +42,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupingLevel": ["color", "state"],
                             "statAggregation": "sum",
                             "groupedOutputDataId": "salesData",
-                            "statId":"sales",
+                            "statId": "sales",
                         }
                     ],
                 },
@@ -73,7 +73,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "parent": "country",
                         },
                     },
-                    "layoutDirection": "horizontal"
+                    "layoutDirection": "horizontal",
                 },
                 "product": {
                     "order": {
@@ -135,11 +135,36 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "sales": [95, 100, 100, 98, 60, 65, 67, 75, 80, 90, 99, 98],
                     },
                     "groupLists": {
-                        "location": ["UsMi", "UsMa", "CaOn", "CaQc", "UsMi", "UsMa", "CaOn", "CaQc", "UsMi", "UsMa", "CaOn", "CaQc"],
-                        "product": ["apple", "apple", "apple", "apple", "grape", "grape", "grape", "grape", "strawberry", "strawberry", "strawberry", "strawberry"],
+                        "location": [
+                            "UsMi",
+                            "UsMa",
+                            "CaOn",
+                            "CaQc",
+                            "UsMi",
+                            "UsMa",
+                            "CaOn",
+                            "CaQc",
+                            "UsMi",
+                            "UsMa",
+                            "CaOn",
+                            "CaQc",
+                        ],
+                        "product": [
+                            "apple",
+                            "apple",
+                            "apple",
+                            "apple",
+                            "grape",
+                            "grape",
+                            "grape",
+                            "grape",
+                            "strawberry",
+                            "strawberry",
+                            "strawberry",
+                            "strawberry",
+                        ],
                     },
                 },
             },
         },
-        
     }

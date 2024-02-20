@@ -59,16 +59,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "capacity": {
                                             "min": 0,
                                             "max": 105,
-                                            "startGradientColor": "rgba(233, 0, 0, 255)",
-                                            "endGradientColor": "rgba(96, 2, 2, 255)",
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
                                         "preferredRoute": {
-                                            "false": "rgba(255,0,0, 255)",
-                                            "true": "rgba(0,255,0, 255)",
+                                            "false": "rgba(255, 0, 0, 1)",
+                                            "true": "rgba(0, 255, 0, 1)",
                                         },
                                     },
                                     "sizeByOptions": {
-                                        "capacity": {"min": 0, "max": 80, "startSize": "5px", "endSize": "10px"},
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "5px",
+                                            "endSize": "10px",
+                                        },
                                     },
                                 },
                             },
@@ -110,7 +115,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "capacity": [75, 105],
                             "preferredRoute": [True, False],
                         },
-                    }
+                    },
                 },
             }
         },
@@ -124,7 +129,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
-                            "maximized": True},
+                            "maximized": True,
+                        },
                     ],
                 },
             },
