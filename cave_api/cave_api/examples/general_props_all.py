@@ -214,6 +214,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "help": "Select all relevant items",
                         },
+                        "listToggleExample": {
+                            "name": "List Toggle Example",
+                            "type": "selector",
+                            "variant": "listToggle",
+                            "options": {
+                                "field_a": {"name": "Field A"},
+                                "field_b": {"name": "Field B"},
+                            },
+                            "help": "Select all relevant items",
+                        },
                         "dateTimeHeader": {
                             "name": "Date and Time Props",
                             "type": "head",
@@ -262,6 +272,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "t2_b1_tw1",
                             "t2_b1_tw2",
                         ],
+                        "listToggleExample": {
+                            "field_a": True,
+                            "field_b": True
+                        },
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
@@ -391,6 +405,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 4,
                                 "row": 9,
                                 "itemId": "nestedItemExample",
+                            },
+                            "col4Row10": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 10,
+                                "itemId": "listToggleExample",
                             },
                             "col5Row1": {
                                 "type": "item",
