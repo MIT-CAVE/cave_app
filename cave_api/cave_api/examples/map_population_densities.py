@@ -28,7 +28,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         #Fill population_densities array with a list of population densities for each US state in the same order as above
         population_densities = []
         non_states = {"District of Columbia", "Puerto Rico"}
-        for [density, name, state_code] in population_data[1:]:
+        for [density, name, state_code] in sorted(population_data[1:],key = lambda x:x[2]):
             if name not in non_states:
                 population_densities.append(float(density))
 
