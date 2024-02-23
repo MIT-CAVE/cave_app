@@ -25,6 +25,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             population_data = {i[1]: i[0] for i in population_data_raw[1:]}
             # Notify the user that the population data was successfully fetched
             socket.notify("Fetched population data!", title="Success", theme="success")
+            socket.notify("This product uses the Census Bureau Data API but is not endorsed or certified by the Census Bureau.", title="Disclaimer", theme="info")
         except requests.RequestException as e:
             # If an exception is raised, notify the user that the population data was not fetched
             socket.notify("Unable to fetch population data.", title="Error", theme="error")
