@@ -239,6 +239,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Select all relevant items",
                         },
+                        "comboBoxMultiExample": {
+                            "name": "ComboBox Search Example",
+                            "type": "selector",
+                            "variant": "comboboxMulti",
+                            "placeholder": "Options",
+                            "options": {
+                                "option_a": {"name": "United States"},
+                                "option_b": {"name": "United Kingdom"},
+                                "option_c": {"name": "Canada"},
+                            },
+                            "help": "Select option(s) from the combobox",
+                        },
                         "dateTimeHeader": {
                             "name": "Date and Time Props",
                             "type": "head",
@@ -296,6 +308,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "option_e", 
                             "option_f",
                         ],
+                        "comboBoxMultiExample": ["option_a", "option_b"],
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
@@ -437,6 +450,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 4,
                                 "row": 11,
                                 "itemId": "listCheckboxExample",
+                            },
+                            "col4Row12": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 12,
+                                "itemId": "comboBoxMultiExample",
                             },
                             "col5Row1": {
                                 "type": "item",
