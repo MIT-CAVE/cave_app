@@ -4,7 +4,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
     # `init` is the default command that is run when a session is created
     # It should return an initial state for the app
     if command == "init":
-        #Define the API URL and the parameters for the request
+        # Make a request to the US Census Bureau API to get the population density data for each US state
+        # Define the API URL and the parameters for this request
         api_url = "https://api.census.gov/data/2021/pep/population"
         params = {
             "get": "DENSITY_2021,NAME",
@@ -12,25 +13,81 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "key": "260e4fe4b5850a56eb7bd98d35140fba57de6dae"
         }
         
-        #Make the API request and handle exceptions
+        # Make the API request with an exception handler
         try:
             response = requests.get(api_url, params=params)
-            population_data = response.json()
-            socket.notify("Notification: `refresh population` has been triggered!")
+            # The response from the API is a list of lists with the format:
+            # [['DENSITY_2021', 'NAME', 'state'], ['58.1171593930', 'Oklahoma', '40'],...]
+            population_data_raw = response.json()
+            # Convert the list of lists to a dictionary with the state name as the key 
+            # and the population density as the value:
+            # {'Oklahoma': '58.1171593930',...}
+            population_data = {i[1]: i[0] for i in population_data_raw[1:]}
+            # Notify the user that the population data was successfully fetched
+            socket.notify("Fetched population data!", title="Success", theme="success")
         except requests.RequestException as e:
-            print(f"Error fetching population density data: {e}")
-
-        #Fill geo_json_values array with a list of IDs that match the geoJsonProp in the geoJson file
-        geo_json_values = []
-        abbreviations = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY']
-        geo_json_values = ['US.' + abb for abb in abbreviations]
-
-        #Fill population_densities array with a list of population densities for each US state in the same order as above
-        population_densities = []
-        non_states = {"District of Columbia", "Puerto Rico"}
-        for [density, name, state_code] in sorted(population_data[1:],key = lambda x:x[2]):
-            if name not in non_states:
-                population_densities.append(float(density))
+            # If an exception is raised, notify the user that the population data was not fetched
+            socket.notify("Unable to fetch population data.", title="Error", theme="error")
+            population_data = {}
+        
+        # Define a dictionary of state codes to state names
+        state_code_map = {
+            'US.AL': "Alabama",
+            'US.AK': "Alaska",
+            'US.AZ': "Arizona",
+            'US.AR': "Arkansas",
+            'US.CA': "California",
+            'US.CO': "Colorado",
+            'US.CT': "Connecticut",
+            'US.DE': "Delaware",
+            'US.FL': "Florida",
+            'US.GA': "Georgia",
+            'US.HI': "Hawaii",
+            'US.ID': "Idaho",
+            'US.IL': "Illinois",
+            'US.IN': "Indiana",
+            'US.IA': "Iowa",
+            'US.KS': "Kansas",
+            'US.KY': "Kentucky",
+            'US.LA': "Louisiana",
+            'US.ME': "Maine",
+            'US.MD': "Maryland",
+            'US.MA': "Massachusetts",
+            'US.MI': "Michigan",
+            'US.MN': "Minnesota",
+            'US.MS': "Mississippi",
+            'US.MO': "Missouri",
+            'US.MT': "Montana",
+            'US.NE': "Nebraska",
+            'US.NV': "Nevada",
+            'US.NH': "New Hampshire",
+            'US.NJ': "New Jersey",
+            'US.NM': "New Mexico",
+            'US.NY': "New York",
+            'US.NC': "North Carolina",
+            'US.ND': "North Dakota",
+            'US.OH': "Ohio",
+            'US.OK': "Oklahoma",
+            'US.OR': "Oregon",
+            'US.PA': "Pennsylvania",
+            'US.RI': "Rhode Island",
+            'US.SC': "South Carolina",
+            'US.SD': "South Dakota",
+            'US.TN': "Tennessee",
+            'US.TX': "Texas",
+            'US.UT': "Utah",
+            'US.VT': "Vermont",
+            'US.VA': "Virginia",
+            'US.WA': "Washington",
+            'US.WV': "West Virginia",
+            'US.WI': "Wisconsin",
+            'US.WY': "Wyoming"
+        }
+        
+        # Create an ordered list of state geojson ids
+        geo_json_values = [k for k in state_code_map.keys()]
+        # Create an ordered list of population densities
+        population_densities = [round(float(population_data.get(v,0)), 2) for v in state_code_map.values()]
 
         session_data = {
             "settings": {
