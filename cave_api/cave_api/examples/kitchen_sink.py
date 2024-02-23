@@ -879,11 +879,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "colorByOptions": {
                                         "selectorPropForColor": {
                                             "a": "rgba(128, 255, 255, 1)",
-                                            "b": "rgba(0,153,51, 1)",
+                                            "b": "rgba(0, 153, 51, 1)",
                                             "c": "rgba(0, 0, 128, 1)",
                                             "d": "rgba(204, 0, 0, 1)",
                                             "e": "rgba(153, 77, 0, 1)",
                                             "f": "rgba(255, 25, 255, 1)",
+                                            "g": "rgba(0, 255, 0, 1)",
+                                            "h": "rgba(255, 255, 0, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
@@ -961,6 +963,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "d": "rgba(204, 0, 0, 1)",
                                             "e": "rgba(153, 77, 0, 1)",
                                             "f": "rgba(255, 25, 255, 1)",
+                                            "g": "rgba(0, 255, 0, 1)",
+                                            "h": "rgba(255, 255, 0, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
@@ -1136,6 +1140,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "d": "rgba(204, 0, 0, 1)",
                                             "e": "rgba(153, 77, 0, 1)",
                                             "f": "rgba(255, 25, 255, 1)",
+                                            "g": "rgba(0, 255, 0, 1)",
+                                            "h": "rgba(255, 255, 0, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
@@ -1206,6 +1212,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "d": "rgba(204, 0, 0, 1)",
                                             "e": "rgba(153, 77, 0, 1)",
                                             "f": "rgba(255, 25, 255, 1)",
+                                            "g": "rgba(0, 255, 0, 1)",
+                                            "h": "rgba(255, 255, 0, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
@@ -1309,6 +1317,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "d": {"name": "D"},
                                 "e": {"name": "E"},
                                 "f": {"name": "F"},
+                                "g": {"name": "G"},
+                                "h": {"name": "H"},
                             },
                             "enabled": True,
                         },
@@ -1375,6 +1385,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "d": {"name": "D"},
                                 "e": {"name": "E"},
                                 "f": {"name": "F"},
+                                "g": {"name": "G"},
+                                "h": {"name": "H"},
                             },
                             "enabled": True,
                         },
