@@ -439,9 +439,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "comboboxMulti",
                             "placeholder": "Options",
                             "options": {
-                                "option_a": {"name": "United States"},
-                                "option_b": {"name": "United Kingdom"},
-                                "option_c": {"name": "Canada"},
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
                             },
                             "help": "Select option(s) from the combobox",
                         },
