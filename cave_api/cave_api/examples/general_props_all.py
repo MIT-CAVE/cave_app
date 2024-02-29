@@ -214,31 +214,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "help": "Select all relevant items",
                         },
-                        "listToggleExample": {
-                            "name": "List Toggle Example",
-                            "type": "selector",
-                            "variant": "listToggle",
-                            "options": {
-                                "field_a": {"name": "Field A"},
-                                "field_b": {"name": "Field B"},
-                            },
-                            "help": "Toggle all relevant items",
-                        },
-                        "listCheckboxExample": {
-                            "name": "List Checkbox Example",
-                            "type": "selector",
-                            "variant": "listCheckbox",
-                            "options": {
-                                "option_a": {"name": "Option A", "field": "Field A"},
-                                "option_b": {"name": "Option B", "field": "Field A"},
-                                "option_c": {"name": "Option C", "field": "Field A"},
-                                "option_d": {"name": "Option D", "field": "Field B"},
-                                "option_e": {"name": "Option E", "field": "Field B"},
-                                "option_f": {"name": "Option F", "field": "Field B"},
-                            },
-                            "enabled": True,
-                            "help": "Select all relevant items",
-                        },
                         "comboBoxMultiExample": {
                             "name": "ComboBox Search Example",
                             "type": "selector",
