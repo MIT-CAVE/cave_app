@@ -381,7 +381,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "ComboBox Item Example",
                             "type": "selector",
                             "variant": "combobox",
-                            "placeholder": "Option",
+                            "placeholder": "Options",
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -407,6 +407,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "enabled": True,
                             "help": "Select all relevant items",
+                        },
+                        "comboBoxMultiExample": {
+                            "name": "ComboBox Search Example",
+                            "type": "selector",
+                            "variant": "comboboxMulti",
+                            "placeholder": "Options",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "help": "Select option(s) from the combobox",
                         },
                         "dateTimeHeader": {
                             "name": "Date and Time Props",
@@ -459,6 +471,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "t2_b1_tw1",
                             "t2_b1_tw2",
                         ],
+                        "comboBoxMultiExample": ["option_a", "option_b"],
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
@@ -587,6 +600,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 4,
                                 "row": 9,
                                 "itemId": "nestedItemExample",
+                            },
+                            "col4Row10": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 10,
+                                "itemId": "comboBoxMultiExample",
                             },
                             "col5Row1": {
                                 "type": "item",
