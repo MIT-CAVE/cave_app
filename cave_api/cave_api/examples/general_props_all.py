@@ -274,15 +274,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "t2_b1_tw1",
                             "t2_b1_tw2",
                         ],
-                        "listToggleExample": {
-                            "field_a": True,
-                            "field_b": True,
-                        },
-                        "listCheckboxExample": [
-                            "option_a", 
-                            "option_e", 
-                            "option_f",
-                        ],
                         "comboBoxMultiExample": ["option_a", "option_b"],
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
@@ -418,18 +409,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 4,
                                 "row": 10,
-                                "itemId": "listToggleExample",
-                            },
-                            "col4Row11": {
-                                "type": "item",
-                                "column": 4,
-                                "row": 11,
-                                "itemId": "listCheckboxExample",
-                            },
-                            "col4Row12": {
-                                "type": "item",
-                                "column": 4,
-                                "row": 12,
                                 "itemId": "comboBoxMultiExample",
                             },
                             "col5Row1": {
