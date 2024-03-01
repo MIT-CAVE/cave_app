@@ -75,7 +75,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "year_month_day": {
                             "name": "Days",
-                            "ordering": ["01", "02", "03", "04"],
+                            "ordering": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
                         },
                     },
                 },
