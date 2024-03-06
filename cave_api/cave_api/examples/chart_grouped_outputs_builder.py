@@ -13,8 +13,8 @@ from pamda import pamda
 
 def execute_command(session_data, socket, command="init", **kwargs):
 
-    # Specify some example base data to use for the grouped outputs
-    base_data = [
+    # Specify some example data to use for the grouped outputs
+    example_data = [
         {'country': 'USA', 'state': 'Michigan', 'color': 'Red', 'size': 'Medium', 'product': 'Apple', 'sales': 95, 'demand': 100},
         {'country': 'USA', 'state': 'Massachusetts', 'color': 'Red', 'size': 'Medium', 'product': 'Apple', 'sales': 100, 'demand': 108},
         {'country': 'Canada', 'state': 'Ontario', 'color': 'Red', 'size': 'Medium', 'product': 'Apple', 'sales': 100, 'demand': 115},
@@ -31,8 +31,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
 
     # Use the pamda project statement to pull out the data for the location and product groups
     # Project is analogous to a SQL SELECT statement only keeping the specified columns
-    location_group_data = pamda.project(['country', 'state'], base_data)
-    product_group_data = pamda.project(['color', 'size', 'product'], base_data)
+    location_group_data = pamda.project(['country', 'state'], example_data)
+    product_group_data = pamda.project(['color', 'size', 'product'], example_data)
 
     # Create a locations group builder
     location_group_builder = GroupsBuilder(
@@ -146,7 +146,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     # Select the appropriate columns and pivot them to be used in the grouped outputs
-                    "valueLists": pamda.pivot(pamda.project(['sales', 'demand'], base_data)),
+                    "valueLists": pamda.pivot(pamda.project(['sales', 'demand'], example_data)),
                     # Get the relevant group ids given each item in the base data
                     "groupLists": {
                         "location": [location_group_builder.get_id(i) for i in location_group_data],
