@@ -116,7 +116,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "order": {
                 "sync": ["panes", "modals", "pageSelection", "mapLayers", "pages"],
             },
-            "debug": True,
             "time": {
                 "timeLength": 3,
                 "timeUnits": "Century",
