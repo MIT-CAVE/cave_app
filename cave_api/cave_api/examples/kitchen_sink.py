@@ -1625,12 +1625,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "country": {
                             "name": "Countries",
-                            "ordering": ["USA", "Canada"],
+                            "ordering": ["Canada", "USA"],
                             "parent": "region",
                         },
                         "state": {
                             "name": "States",
                             "parent": "country",
+                            "ordering": ["Michigan", "Florida", "Indiana", "Massachusetts", "Ontario"],
+                            "orderWithParent": False, # True if not specified
                         },
                     },
                     "layoutDirection": "horizontal",
