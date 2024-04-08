@@ -112,7 +112,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "data": {"db1": ["pages", "data"]},
                 },
             },
-            "iconUrl": "https://react-icons.mitcave.com/4.10.1",
+            "iconUrl": "https://react-icons.mitcave.com/5.0.1",
             "order": {
                 "sync": ["panes", "modals", "pageSelection", "mapLayers", "pages"],
             },
