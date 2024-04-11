@@ -1622,11 +1622,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "levels": {
                         "region": {
                             "name": "Regions",
+                            "coloring": {"North America": "rgba(255, 255, 255, 1)"},
                         },
                         "country": {
                             "name": "Countries",
                             "ordering": ["Canada", "USA"],
                             "parent": "region",
+                            "coloring": {"Canada": "rgba(0, 0, 255, 1)", "USA": "rgba(255, 0, 0, 1)"}
                         },
                         "state": {
                             "name": "States",
