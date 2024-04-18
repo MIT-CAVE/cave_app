@@ -675,6 +675,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "statId": "numericStatExampleB",
                             "groupingId": ["location", "sku"],
                             "groupingLevel": ["state", "sku"],
+                            "defaultToZero": True,
                         },
                     ],
                     "lockedLayout": False,
