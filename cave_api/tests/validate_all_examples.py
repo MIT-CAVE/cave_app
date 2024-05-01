@@ -16,7 +16,7 @@ def get_examples():
 
 for i in get_examples():
     example_execute_command = importlib.import_module(f"cave_api.examples.{i}").execute_command
-    session_data = example_execute_command(session_data={}, socket=Socket(), command="init")
+    session_data = example_execute_command(session_data={}, socket=Socket(silent=True), command="init")
 
     x = Validator(session_data, ignore_keys=["meta"])
     if len(x.log.log) > 0:

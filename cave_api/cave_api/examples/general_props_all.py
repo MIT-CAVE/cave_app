@@ -12,7 +12,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "appBar": {
             # Specify the order of items as they will appear in the app bar
             "order": {
-                "data": ["refreshButton", "examplePropsPane"],
+                "data": ["refreshButton", "examplePane"],
             },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
@@ -223,6 +223,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Date Example",
                             "type": "date",
                             "variant": "date",
+                            "views": ["year", "month", "day"],
                             "help": "The Eagle has landed!",
                         },
                         "timeItemExample": {
