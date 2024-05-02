@@ -1,10 +1,6 @@
 # Pycache Files
 *__pycache__
 
-# Local Static and Media
-staticfiles
-media
-
 # Virtual Environment
 venv
 
