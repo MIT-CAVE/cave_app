@@ -1248,7 +1248,17 @@ class SessionData(models.Model):
         return f"data:{self.id}"
 
     def get_data(self):
-        return cache.get(self.get_cache_data_id())
+        data = cache.get(self.get_cache_data_id())
+        if data != None:
+            return data
+        else:
+            # Something went wrong with the cache and this data is missing so we need to reset the session
+            # Clear the session data including this object
+            SessionData.objects.filter(session=self.session).delete()
+            # Trigger a reinitialization of the session and broadcast the change
+            self.session.broadcast_changed_data(previous_versions={})
+            # This exception must be raised to prevent the calling function from continuing
+            raise Exception("Oops! Looks like something went wrong with this session. It has been reset its initial state.")
 
     def mutate(self, data_path, data_value=None):
         """

@@ -6,8 +6,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/4.10.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/4.10.1",
+            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.0.1",
             # Specify to not sync the center pane state with the server
             # This will prevent other users in the same session from seeing launced modals from other clients in the same session
             # NOTE: By default, everything in the API is synced with the server
@@ -36,7 +36,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "appBar": {
             # Specify the order of items as they will appear in the app bar
             "order": {
-                "data": ["refreshButton", "settingsPane" "exampleModal"],
+                "data": ["refreshButton", "appSettings", "exampleModal"],
             },
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command

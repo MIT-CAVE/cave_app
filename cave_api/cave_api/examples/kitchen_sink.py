@@ -112,11 +112,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "data": {"db1": ["pages", "data"]},
                 },
             },
-            "iconUrl": "https://react-icons.mitcave.com/4.10.1",
+            "iconUrl": "https://react-icons.mitcave.com/5.0.1",
             "order": {
                 "sync": ["panes", "modals", "pageSelection", "mapLayers", "pages"],
             },
-            "debug": True,
             "time": {
                 "timeLength": 3,
                 "timeUnits": "Century",
@@ -381,7 +380,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "ComboBox Item Example",
                             "type": "selector",
                             "variant": "combobox",
-                            "placeholder": "Option",
+                            "placeholder": "Options",
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -676,6 +675,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "statId": "numericStatExampleB",
                             "groupingId": ["location", "sku"],
                             "groupingLevel": ["state", "sku"],
+                            "defaultToZero": True,
                         },
                     ],
                     "lockedLayout": False,
@@ -879,11 +879,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "colorByOptions": {
                                         "selectorPropForColor": {
                                             "a": "rgba(128, 255, 255, 1)",
-                                            "b": "rgba(0,153,51, 1)",
+                                            "b": "rgba(0, 153, 51, 1)",
                                             "c": "rgba(0, 0, 128, 1)",
                                             "d": "rgba(204, 0, 0, 1)",
                                             "e": "rgba(153, 77, 0, 1)",
                                             "f": "rgba(255, 25, 255, 1)",
+                                            "g": "rgba(0, 255, 0, 1)",
+                                            "h": "rgba(255, 255, 0, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
@@ -961,6 +963,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "d": "rgba(204, 0, 0, 1)",
                                             "e": "rgba(153, 77, 0, 1)",
                                             "f": "rgba(255, 25, 255, 1)",
+                                            "g": "rgba(0, 255, 0, 1)",
+                                            "h": "rgba(255, 255, 0, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
@@ -1136,6 +1140,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "d": "rgba(204, 0, 0, 1)",
                                             "e": "rgba(153, 77, 0, 1)",
                                             "f": "rgba(255, 25, 255, 1)",
+                                            "g": "rgba(0, 255, 0, 1)",
+                                            "h": "rgba(255, 255, 0, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
@@ -1206,6 +1212,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "d": "rgba(204, 0, 0, 1)",
                                             "e": "rgba(153, 77, 0, 1)",
                                             "f": "rgba(255, 25, 255, 1)",
+                                            "g": "rgba(0, 255, 0, 1)",
+                                            "h": "rgba(255, 255, 0, 1)",
                                         },
                                         "numericPropExampleA": {
                                             "min": 0,
@@ -1309,6 +1317,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "d": {"name": "D"},
                                 "e": {"name": "E"},
                                 "f": {"name": "F"},
+                                "g": {"name": "G"},
+                                "h": {"name": "H"},
                             },
                             "enabled": True,
                         },
@@ -1375,6 +1385,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "d": {"name": "D"},
                                 "e": {"name": "E"},
                                 "f": {"name": "F"},
+                                "g": {"name": "G"},
+                                "h": {"name": "H"},
                             },
                             "enabled": True,
                         },
@@ -1592,15 +1604,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "levels": {
                         "region": {
                             "name": "Regions",
+                            "coloring": {"North America": "rgba(255, 255, 255, 1)"},
                         },
                         "country": {
                             "name": "Countries",
-                            "ordering": ["USA", "Canada"],
+                            "ordering": ["Canada", "USA"],
                             "parent": "region",
+                            "coloring": {"Canada": "rgba(0, 0, 255, 1)", "USA": "rgba(255, 0, 0, 1)"}
                         },
                         "state": {
                             "name": "States",
                             "parent": "country",
+                            "ordering": ["Michigan", "Florida", "Indiana", "Massachusetts", "Ontario"],
+                            "orderWithParent": False, # True if not specified
                         },
                     },
                     "layoutDirection": "horizontal",

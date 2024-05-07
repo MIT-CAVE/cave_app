@@ -37,9 +37,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "pageLayout": [
                         {
                             "type": "groupedOutput",
-                            "variant": "bar",
-                            "groupingId": ["product", "location"],
-                            "groupingLevel": ["color", "state"],
+                            "variant": "line",
+                            "groupingId": ["date", "product"],
+                            "groupingLevel": ["year_month_day", "product"],
                             "statAggregation": "sum",
                             "groupedOutputDataId": "salesData",
                             "statId": "sales",
@@ -50,30 +50,34 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "groupedOutputs": {
             "order": {
-                "groupings": ["location", "product"],
+                "groupings": ["date", "product"],
             },
             "groupings": {
-                "location": {
+                "date": {
                     "order": {
-                        "levels": ["country", "state"],
+                        "levels": ["year", "year_month", "year_month_day"],
                     },
                     "data": {
-                        "id": ["UsMi", "UsMa", "CaOn", "CaQc"],
-                        "country": ["USA", "USA", "Canada", "Canada"],
-                        "state": ["Michigan", "Massachusetts", "Ontario", "Quebec"],
+                        "id": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
+                        "year": ["2024", "2024", "2024", "2024"],
+                        "year_month": ["2024-01", "2024-01", "2024-01", "2024-01"],
+                        "year_month_day": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
                     },
-                    "name": "Locations",
+                    "name": "Dates",
                     "levels": {
-                        "country": {
-                            "name": "Countries",
-                            "ordering": ["USA", "Canada"],
+                        "year": {
+                            "name": "Years",
+                            "ordering": ["2024"],
                         },
-                        "state": {
-                            "name": "States",
-                            "parent": "country",
+                        "year_month": {
+                            "name": "Months",
+                            "ordering": ["2024-01"],
+                        },
+                        "year_month_day": {
+                            "name": "Days",
+                            "ordering": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
                         },
                     },
-                    "layoutDirection": "horizontal",
                 },
                 "product": {
                     "order": {
@@ -131,23 +135,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     "valueLists": {
-                        "demand": [100, 108, 115, 110, 70, 78, 67, 89, 95, 100, 100, 98],
-                        "sales": [95, 100, 100, 98, 60, 65, 67, 75, 80, 90, 99, 98],
+                        "demand": [100, 108, 115, 110, 70, 78, 67, 89, 100, 100, 98],
+                        "sales": [95, 100, 100, 98, 60, 65, 67, 75, 90, 99, 98],
                     },
                     "groupLists": {
-                        "location": [
-                            "UsMi",
-                            "UsMa",
-                            "CaOn",
-                            "CaQc",
-                            "UsMi",
-                            "UsMa",
-                            "CaOn",
-                            "CaQc",
-                            "UsMi",
-                            "UsMa",
-                            "CaOn",
-                            "CaQc",
+                        "date": [
+                            "2024-01-01",
+                            "2024-01-02",
+                            "2024-01-03",
+                            "2024-01-04",
+                            "2024-01-01",
+                            "2024-01-02",
+                            "2024-01-03",
+                            "2024-01-04",
+                            "2024-01-01",
+                            "2024-01-03",
+                            "2024-01-04",
                         ],
                         "product": [
                             "apple",
@@ -158,7 +161,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "grape",
                             "grape",
                             "grape",
-                            "strawberry",
                             "strawberry",
                             "strawberry",
                             "strawberry",
