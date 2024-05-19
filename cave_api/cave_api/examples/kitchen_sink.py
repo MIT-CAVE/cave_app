@@ -454,6 +454,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Some help",
                         },
+                        "latLngPathProp": {
+                            "name": "Lat/Lng Path Prop",
+                            "type": "coordinate",
+                            "variant": "latLngPath",
+                            "enabled": True,
+                            "help": "Some help",
+                        },
                     },
                     "values": {
                         "numericInputExample": 50,
@@ -481,8 +488,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputProp": [34.33, 43.44],
-                        "latLngMapProp": [34.33, 43.44],
+                        "latLngInputProp": [-71.092003, 42.360001],
+                        "latLngMapProp": [-71.092003, 42.360001],
+                        "latLngPathProp": [[-71.092003, 42.360001], [-71.093003, 42.361001]],
                     },
                     "layout": {
                         "type": "grid",
@@ -650,6 +658,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 6,
                                 "row": 3,
                                 "itemId": "latLngMapProp",
+                            },
+                            "col6Row4": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 4,
+                                "itemId": "latLngPathProp",
                             },
                         },
                     },
