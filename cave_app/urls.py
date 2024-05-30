@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.urls import path
 
 from cave_core import url_helpers
@@ -19,6 +19,7 @@ urlpatterns = [
     path("validate_email/", site_views.validate_email),
     # Secondary Pages
     path("signup/", site_views.signup),
+    path("logout/", site_views.user_logout),
     path("change_password/", site_views.change_password),
     # General API Pages
     path("health/", api_util_views.health),
@@ -30,10 +31,6 @@ urlpatterns = [
         LoginView.as_view(
             extra_context=url_helpers.get_extra_content(), redirect_authenticated_user=True
         ),
-    ),
-    path(
-        "logout/",
-        LogoutView.as_view(extra_context=url_helpers.get_extra_content()),
     ),
     # Password Reset (auth_views uses names for url navs)
     path(
