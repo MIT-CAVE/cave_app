@@ -1,6 +1,6 @@
 # Framework Imports
 from django.conf import settings
-from django.contrib.auth import login, authenticate, update_session_auth_hash
+from django.contrib.auth import login, authenticate, update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
@@ -184,7 +184,6 @@ def change_password(request):
         },
     )
 
-
 def signup(request):
     """
     User signup view
@@ -216,7 +215,6 @@ def signup(request):
         },
     )
 
-
 def validate_email(request):
     """
     Site endpoint to validate an email code and redirect back to the index view
@@ -247,3 +245,13 @@ def validate_email(request):
         "validation_email_failed.html",
         {"globals": globals},
     )
+
+@login_required
+def user_logout(request):
+    """
+    Logout view
+
+    Allows users to logout of the site
+    """
+    logout(request)
+    return redirect("/")
