@@ -119,6 +119,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "time": {
                 "timeLength": 3,
                 "timeUnits": "Century",
+                "looping": False,
+                "fps": 1,
             },
             "defaults": {
                 "precision": 4,
