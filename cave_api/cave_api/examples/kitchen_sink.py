@@ -252,6 +252,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "minValue": 0,
                             "unit": "%",
                         },
+                        "incrementalSliderExample": {
+                            "name": "Incrimental Slider Example",
+                            "type": "num",
+                            "variant": "incslider",
+                            "help": "Help for the incremental slider example",
+                            "options": [0,25,50,75,100],
+                            "unit": "%",
+                        },
                         "miscHeader": {
                             "name": "Misc Props",
                             "type": "head",
@@ -466,6 +474,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "values": {
                         "numericInputExample": 50,
                         "numericSliderExample": 50,
+                        "incrementalSliderExample": 50,
                         "toggleInputExample": True,
                         "buttonInputExample": "Press Me!",
                         "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
@@ -515,6 +524,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 1,
                                 "row": 3,
                                 "itemId": "numericSliderExample",
+                            },
+                            "col1Row4": {
+                                "type": "item",
+                                "column": 1,
+                                "row": 4,
+                                "itemId": "incrementalSliderExample",
                             },
                             "col2Row1": {
                                 "type": "item",
