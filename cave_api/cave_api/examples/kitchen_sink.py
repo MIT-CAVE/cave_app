@@ -255,9 +255,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "variant": "incslider",
                             "help": "Help for the incremental slider example",
-                            "maxValue": 100,
-                            "minValue": 0,
-                            "stepValue": 25,
+                            "options": [0,25,50,75,100],
                             "unit": "%",
                         },
                         "miscHeader": {
