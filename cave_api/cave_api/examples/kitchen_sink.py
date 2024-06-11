@@ -720,6 +720,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "statAggregation": "mean",
                             "groupedOutputDataId": "locationGroup",
                             "statId": "numericStatExampleB",
+                            "showNA": True,
                         },
                         {
                             "type": "globalOutput",
