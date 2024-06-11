@@ -498,8 +498,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputExample": [-71.092003, 42.360001],
-                        "latLngMapExample": [-71.092003, 42.360001],
+                        "latLngInputExample": [[-71.092003, 42.360001]],
+                        "latLngMapExample": [[-71.092003, 42.360001]],
                         "latLngPathExample": [[-71.092003, 42.360001], [-71.093003, 42.361001]],
                     },
                     "layout": {
