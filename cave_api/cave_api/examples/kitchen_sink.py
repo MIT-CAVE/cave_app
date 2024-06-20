@@ -926,6 +926,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "startSize": "15px",
                                             "endSize": "30px",
                                         },
+                                        "booleanPropExample": {
+                                            "false": "15px",
+                                            "true": "30px",
+                                        },
                                     },
                                     "icon": "fa6/FaIgloo",
                                 },
