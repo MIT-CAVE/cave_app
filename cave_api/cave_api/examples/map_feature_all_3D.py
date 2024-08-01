@@ -48,37 +48,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "minZoom": 2,
                     },
                     "legendGroups": {
-                        "facilities": {
-                            "name": "Facilities",
-                            "data": {
-                                "warehouse": {
-                                    "value": True,
-                                    "sizeBy": "capacity",
-                                    "colorBy": "includesAutomation",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 100,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "includesAutomation": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "30px",
-                                            "endSize": "45px",
-                                        },
-                                    },
-                                    "icon": "fa6/FaWarehouse",
-                                },
-                            },
-                        },
                         "demandZones": {
                             "name": "Demand Zones",
                             "data": {
@@ -101,12 +70,51 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 },
                             },
                         },
+                        "facilities": {
+                            "name": "Facilities",
+                            "data": {
+                                "warehouse": {
+                                    "value": True,
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": {
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "30px",
+                                            "endSize": "45px",
+                                        },
+                                    },
+                                    "colorBy": "includesAutomation",
+                                    "colorByOptions": {
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 100,
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
+                                        },
+                                        "includesAutomation": {
+                                            "false": "rgba(255, 0, 0, 1)",
+                                            "true": "rgba(0, 255, 0, 1)",
+                                        },
+                                    },
+                                    "icon": "fa6/FaWarehouse",
+                                },
+                            },
+                        },
                         "transportation": {
                             "name": "Transportation",
                             "data": {
                                 "truckRoutes": {
                                     "value": True,
                                     "sizeBy": "capacity",
+                                    "sizeByOptions": {
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "5px",
+                                            "endSize": "10px",
+                                        },
+                                    },
                                     "colorBy": "preferredRoute",
                                     "colorByOptions": {
                                         "capacity": {
@@ -120,12 +128,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "true": "rgba(0, 255, 0, 1)",
                                         },
                                     },
-                                    "sizeByOptions": {
+                                    "heightBy": "capacity",
+                                    "heightByOptions": {
                                         "capacity": {
                                             "min": 0,
                                             "max": 80,
-                                            "startSize": "5px",
-                                            "endSize": "10px",
+                                            "startHeight": "10px",
+                                            "endHeight": "40px",
                                         },
                                     },
                                 },
