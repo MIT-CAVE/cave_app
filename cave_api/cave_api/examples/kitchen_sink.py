@@ -714,7 +714,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupingId": ["location"],
                             "groupingLevel": ["state"],
                             "leftVariant": "bar",
-                            "rightVariant": "cumulative line",
+                            "rightVariant": "cumulative_line",
                         },
                         {
                             "variant": "box_plot",
