@@ -66,6 +66,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "true": "rgba(0, 255, 0, 1)",
                                         },
                                     },
+                                    "heightBy": "demand",
+                                    "heightByOptions": {
+                                        "demand": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startHeight": "10px",
+                                            "endHeight": "40px",
+                                        },
+                                    },
                                     "icon": "bs/BsHexagon",
                                 },
                             },
@@ -105,6 +114,40 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Transportation",
                             "data": {
                                 "truckRoutes": {
+                                    "value": True,
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": {
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startSize": "5px",
+                                            "endSize": "10px",
+                                        },
+                                    },
+                                    "colorBy": "preferredRoute",
+                                    "colorByOptions": {
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 105,
+                                            "startGradientColor": "rgba(233, 0, 0, 1)",
+                                            "endGradientColor": "rgba(96, 2, 2, 1)",
+                                        },
+                                        "preferredRoute": {
+                                            "false": "rgba(255, 0, 0, 1)",
+                                            "true": "rgba(0, 255, 0, 1)",
+                                        },
+                                    },
+                                    "heightBy": "capacity",
+                                    "heightByOptions": {
+                                        "capacity": {
+                                            "min": 0,
+                                            "max": 80,
+                                            "startHeight": "10px",
+                                            "endHeight": "40px",
+                                        },
+                                    },
+                                },
+                                "specialRoutes": {
                                     "value": True,
                                     "sizeBy": "capacity",
                                     "sizeByOptions": {
@@ -248,6 +291,51 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "valueLists": {
                             "capacity": [75, 105],
+                            "preferredRoute": [True, False],
+                        },
+                    },
+                },
+                "specialRoutes": {
+                    "type": "arc",
+                    "name": "Special Routes",
+                    "geoJson": {
+                        # geoJsonLayer must be a URL pointing to a raw geojson file
+                        # Local file support is not supported
+                        # To upload your own geojson file, use a service like GitHub and upload your file there
+                        # Then copy the raw URL and paste it in the geoJsonLayer field to use it
+                        # See data in https://github.com/MIT-CAVE/cave_app_extras/tree/main/example_data
+                        "geoJsonLayer": "https://raw.githubusercontent.com/MIT-CAVE/cave_app_extras/main/example_data/example.geojson",
+                        # geoJsonProp is the property in the geoJson file that contains the id you specify in the data.location.geoJsonValue field
+                        "geoJsonProp": "arc_id",
+                    },
+                    "props": {
+                        "capacity": {
+                            "name": "Capacity",
+                            "type": "num",
+                            "enabled": True,
+                            "help": "The warehouse capacity in cubic feet",
+                            "unit": "Cubic Feet",
+                            "legendNotation": "precision",
+                            "legendPrecision": 0,
+                        },
+                        "preferredRoute": {
+                            "name": "Preferred Route",
+                            "type": "toggle",
+                            "enabled": True,
+                            "help": "Whether the route is preferred",
+                        },
+                    },
+                    "data": {
+                        "location": {
+                            # geoJsonValue must be a list of ids that match the geoJsonProp in the geoJson file
+                            # The order of the ids must match the order of the values in the data.values fields
+                            "geoJsonValue": [
+                                "toronto-pittsburgh-indianapolis",
+                                "souix-falls-little-rock-memphis",
+                            ],
+                        },
+                        "valueLists": {
+                            "capacity": [65, 85],
                             "preferredRoute": [True, False],
                         },
                     },
