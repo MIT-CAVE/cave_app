@@ -1100,6 +1100,23 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                     "icon": "bs/BsHexagon",
                                 },
+                                "custom": {
+                                    "value": False,
+                                    "colorBy": "numericPropExampleC",
+                                    "colorByOptions": {
+                                        "numericPropExampleC": {
+                                            "min": 0,
+                                            "max": 800,
+                                            "startGradientColor": "rgba(100, 100, 100, 1)",
+                                            "endGradientColor": "rgba(20, 205, 20, 1)",
+                                        },
+                                        "booleanPropExample": {
+                                            "false": "rgba(233, 0, 0, 1)",
+                                            "true": "rgba(0, 233, 0, 1)",
+                                        },
+                                    },
+                                    "icon": "md/MdOutlineTouchApp",
+                                }
                             },
                         },
                     },
@@ -1652,6 +1669,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                 },
+                "custom": {
+                    "type": "geo",
+                    "name": "Custom",
+                    "props": {
+                        "numericPropExampleC": {
+                            "name": "Numeric Prop Example C",
+                            "type": "num",
+                            "enabled": True,
+                            "help": "Help with the example numeric prop for this Custom",
+                            "unit": "units",
+                        },
+                        "booleanPropExample": {
+                            "name": "Boolean Prop Example",
+                            "type": "toggle",
+                            "help": "Help for boolean prop",
+                        },
+                    },
+                    "data": {
+                        "location": {
+                            "path": [[[-75.447, 40.345], [-77.447, 42.345], [-77.447, 44.345], [-75.447, 40.345]]],
+                        },
+                        "valueLists": {
+                            "numericPropExampleC": [100],
+                            "booleanPropExample": [True],
+                        },
+                    },
+                }
             }
         },
         "groupedOutputs": {
