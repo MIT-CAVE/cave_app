@@ -220,7 +220,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             "latitude": [[43.78, 39.82]],
                             "longitude": [[-79.63, -86.18]],
-                            "height": [[0.4, 0.6]],
+                            "height": [[0.8, 0.6]],
                         },
                         "valueLists": {
                             "capacity": [100, 80],
