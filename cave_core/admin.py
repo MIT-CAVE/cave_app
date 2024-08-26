@@ -258,6 +258,15 @@ class CustomGroupAdmin(admin.ModelAdmin):
         CustomGroupUserInline,
     ]
 
+class CustomFileStorageAdmin(admin.ModelAdmin):
+    model = models.FileStorage
+    list_display = [
+        "id",
+        "name",
+        "file_public",
+        "file_private",
+    ]
+    search_fields = ["name"]
 
 admin.site.register(models.CustomUserFull, CustomUserFullAdmin)
 admin.site.register(models.Globals, CustomGlobalsAdmin)
@@ -268,6 +277,7 @@ admin.site.register(models.Teams, CustomTeamAdmin)
 admin.site.register(models.TeamUsers, CustomTeamUserAdmin)
 admin.site.register(models.Sessions, CustomSessionAdmin)
 admin.site.register(models.SessionData, CustomSessionDataAdmin)
+admin.site.register(models.FileStorage, CustomFileStorageAdmin)
 
 
 # Create a special Staff Admin Site
@@ -307,3 +317,4 @@ staff_site.register(models.GroupUsers, CustomGroupUserAdmin)
 staff_site.register(models.Teams, CustomTeamAdmin)
 staff_site.register(models.TeamUsers, CustomTeamUserAdmin)
 staff_site.register(models.Sessions, CustomSessionAdmin)
+staff_site.register(models.FileStorage, CustomFileStorageAdmin)
