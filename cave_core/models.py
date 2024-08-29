@@ -11,16 +11,27 @@ from rest_framework.authtoken.models import Token
 from solo.models import SingletonModel
 from pamda import pamda
 import type_enforced
+import os
 
 # Internal Imports
 from cave_core.utils.broadcasting import Socket
 from cave_core.utils.constants import api_keys, background_api_keys
+from cave_core.utils.persist import persist_cache
 from cave_core.utils.validators import limit_upload_size
 from cave_api.api import execute_command
-from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
+from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage, PersistentCache
 
 # External Imports
 from cave_utils import Validator
+
+persistent_cache = PersistentCache()
+
+# Run any background tasks
+# Checking if RUN_MAIN is true ensures that the background tasks are only run once on initial server start
+if os.environ.get('RUN_MAIN', None) == 'true':
+    print('Starting the cache persistence service...')
+    persist_cache_service = persist_cache(persistent_cache=persistent_cache, cache=cache)
+    persist_cache_service.asyncRun()
 
 
 class CustomUser(AbstractUser):
@@ -1244,21 +1255,29 @@ class SessionData(models.Model):
         default=0,
     )
 
-    def get_cache_data_id(self):
+    def get_external_data_id(self):
         return f"data:{self.id}"
 
     def get_data(self):
-        data = cache.get(self.get_cache_data_id())
+        edid = self.get_external_data_id()
+        # Try to get the data from the cache
+        data = cache.get(edid)
         if data != None:
             return data
-        else:
-            # Something went wrong with the cache and this data is missing so we need to reset the session
-            # Clear the session data including this object
-            SessionData.objects.filter(session=self.session).delete()
-            # Trigger a reinitialization of the session and broadcast the change
-            self.session.broadcast_changed_data(previous_versions={})
-            # This exception must be raised to prevent the calling function from continuing
-            raise Exception("Oops! Looks like something went wrong with this session. It has been reset its initial state.")
+        # If the data is not in the cache, try to get it from the persistent cache
+        data = persistent_cache.get(edid)
+        if data != None:
+            cache.set(edid, data)
+            return data
+        # Something went wrong and this data is missing so we need to reset the session
+        # Clear the session data including this object
+        SessionData.objects.filter(session=self.session).delete()
+        # Trigger a reinitialization of the session and broadcast the change
+        self.session.broadcast_changed_data(previous_versions={})
+        print("During development, this can be triggered by a server shutdown before the session data is persisted")
+        print("or deleting data in the persistent_cache folder.")
+        # This exception must be raised to prevent the calling function from continuing
+        raise Exception("Oops! Looks like something went wrong with this session. It has been reset its initial state.")
 
     def mutate(self, data_path, data_value=None):
         """
@@ -1294,7 +1313,8 @@ class SessionData(models.Model):
         self.session = session
         self.version = 0
         self.save()
-        cache.set(self.get_cache_data_id(), data, None)
+        cache.set(self.get_external_data_id(), data)
+
 
     def save_data(
         self,
@@ -1315,7 +1335,8 @@ class SessionData(models.Model):
             self.data_version = data_version
         else:
             self.data_version += 1
-        cache.set(self.get_cache_data_id(), data, None)
+        edid = self.get_external_data_id()
+        cache.set(edid, data)
         self.save()
 
     # Metadata
@@ -1388,12 +1409,15 @@ def update_sessions_list_for_team(sender, instance, **kwargs):
     instance.team.update_sessions_list()
 
 
-@receiver(post_delete, sender=SessionData, dispatch_uid="remove_session_data_from_cache_on_delete")
-def remove_session_data_from_cache(sender, instance, **kwargs):
+@receiver(post_delete, sender=SessionData, dispatch_uid="remove_session_data_on_delete")
+def remove_session_data(sender, instance, **kwargs):
     """
-    When a session data object is deleted, remove the session data from the cache
+    When a session data object is deleted, remove the session data from the cache and persistent storage
     """
-    cache.delete(instance.get_cache_data_id())
+    edid = instance.get_external_data_id()
+    cache.delete(edid)
+    persistent_cache.delete(edid)
+
 
 
 @receiver(post_save, sender=TeamUsers, dispatch_uid="update_team_ids_on_save")

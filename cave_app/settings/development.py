@@ -172,12 +172,17 @@ CHANNEL_LAYERS = {
 
 # Caching
 ################################################################
-## NOTE: This is not efficient for production environments
-## NOTE: For production, switch to a network based memcache or redis envronment
+CACHE_BACKUP_INTERVAL = config("CACHE_BACKUP_INTERVAL", default=60*60*1, cast=int)
+CACHE_TIMEOUT = config("CACHE_TIMEOUT", default=CACHE_BACKUP_INTERVAL*3, cast=int)
+if CACHE_TIMEOUT < CACHE_BACKUP_INTERVAL:
+    print("CACHE_TIMEOUT must be greater than CACHE_BACKUP_INTERVAL")
+    print("Setting CACHE_TIMEOUT to CACHE_BACKUP_INTERVAL*3")
+    CACHE_TIMEOUT = CACHE_BACKUP_INTERVAL*3
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
+        "TIMEOUT": CACHE_TIMEOUT,
     }
 }
 ################################################################

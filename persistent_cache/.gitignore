@@ -1,0 +1,4 @@
+# Dont commit any data to the repository
+*
+# Except for this file
+!.gitignore
