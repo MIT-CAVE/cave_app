@@ -1,7 +1,6 @@
 # Framework Imports
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.core.cache import cache
 from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
@@ -11,27 +10,19 @@ from rest_framework.authtoken.models import Token
 from solo.models import SingletonModel
 from pamda import pamda
 import type_enforced
-import os
 
 # Internal Imports
 from cave_core.utils.broadcasting import Socket
+from cave_core.utils.cache import Cache
 from cave_core.utils.constants import api_keys, background_api_keys
-from cave_core.utils.persist import persist_cache
 from cave_core.utils.validators import limit_upload_size
 from cave_api.api import execute_command
-from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage, PersistentCache
+from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
 # External Imports
 from cave_utils import Validator
 
-persistent_cache = PersistentCache()
-
-# Run any background tasks
-# Checking if RUN_MAIN is true ensures that the background tasks are only run once on initial server start
-if os.environ.get('RUN_MAIN', None) == 'true':
-    print('Starting the cache persistence service...')
-    persist_cache_service = persist_cache(persistent_cache=persistent_cache, cache=cache)
-    persist_cache_service.asyncRun()
+cache = Cache()
 
 
 class CustomUser(AbstractUser):
@@ -1259,15 +1250,9 @@ class SessionData(models.Model):
         return f"data:{self.id}"
 
     def get_data(self):
-        edid = self.get_external_data_id()
         # Try to get the data from the cache
-        data = cache.get(edid)
+        data = cache.get(self.get_external_data_id())
         if data != None:
-            return data
-        # If the data is not in the cache, try to get it from the persistent cache
-        data = persistent_cache.get(edid)
-        if data != None:
-            cache.set(edid, data)
             return data
         # Something went wrong and this data is missing so we need to reset the session
         # Clear the session data including this object
@@ -1275,7 +1260,7 @@ class SessionData(models.Model):
         # Trigger a reinitialization of the session and broadcast the change
         self.session.broadcast_changed_data(previous_versions={})
         print("During development, this can be triggered by a server shutdown before the session data is persisted")
-        print("or deleting data in the persistent_cache folder.")
+        print("or from deleting data in the persistent_cache folder.")
         # This exception must be raised to prevent the calling function from continuing
         raise Exception("Oops! Looks like something went wrong with this session. It has been reset its initial state.")
 
@@ -1335,8 +1320,7 @@ class SessionData(models.Model):
             self.data_version = data_version
         else:
             self.data_version += 1
-        edid = self.get_external_data_id()
-        cache.set(edid, data)
+        cache.set(self.get_external_data_id(), data)
         self.save()
 
     # Metadata
@@ -1412,11 +1396,9 @@ def update_sessions_list_for_team(sender, instance, **kwargs):
 @receiver(post_delete, sender=SessionData, dispatch_uid="remove_session_data_on_delete")
 def remove_session_data(sender, instance, **kwargs):
     """
-    When a session data object is deleted, remove the session data from the cache and persistent storage
+    When a session data object is deleted, remove the session data from the cache
     """
-    edid = instance.get_external_data_id()
-    cache.delete(edid)
-    persistent_cache.delete(edid)
+    cache.delete(instance.get_external_data_id())
 
 
 
