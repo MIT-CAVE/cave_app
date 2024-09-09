@@ -51,9 +51,6 @@ def cache_data_version(fn):
     API view wrapper to add a cached input version check prior to executing a view
 
     This is used to block multi window users from resolving out of sync versions individually
-
-    For low level docs on django's cache framework see
-    https://docs.djangoproject.com/en/4.0/topics/cache/
     """
 
     @wraps(fn)
@@ -70,7 +67,8 @@ def cache_data_version(fn):
 
 def ws_api_app(fn):
     """
-    API view wrapper to process websocket api app calls and handle exceptions that are raised sending them back to the end user.
+    API view wrapper to process websocket api app calls and handle exceptions that 
+    are raised sending them back to the end user.
     """
 
     @wraps(fn)
