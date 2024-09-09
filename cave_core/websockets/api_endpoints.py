@@ -34,10 +34,8 @@ def get_session_data(request):
         # Create a session and broadcast it to the user
         session = request.user.get_or_create_personal_session()
     else:
-        # Let the user know which session they are in
-        request.user.broadcast_current_session_id()
-        # Let the user know if their session is loading
-        request.user.broadcast_current_session_loading()
+        # Update the user about their session info
+        request.user.broadcast_current_session_info()
     # Broadcast any changed session data
     session.broadcast_changed_data(previous_versions=data_versions)
 

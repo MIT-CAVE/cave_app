@@ -75,12 +75,11 @@ def ws_api_app(fn):
 
     @wraps(fn)
     def wrap(request):
-        # Store the session of the user at request time for long running sessions
+        # This needs to occur prior to fn since request.user.session chan change during the fn execution.
         session = request.user.session
         try:
             fn(request)
         except Exception as e:
-            session = request.user.session
             traceback_str = format_exception(e)
             if settings.DEBUG:
                 print(traceback_str)
@@ -93,9 +92,7 @@ def ws_api_app(fn):
                 duration=10,
                 traceback=traceback_str,
             )
-            # Turn off loading and set execution as False if the error was not raised related to executing
-            if session.executing and not session.__dict__.get("__blocked_due_to_execution__"):
-                session.set_executing(False)
-                session.broadcast_loading(False)
+            # Set the executing / loading status to false
+            session.set_loading(False)
 
     return wrap

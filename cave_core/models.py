@@ -108,9 +108,8 @@ class CustomUser(AbstractUser):
             prev_session.update_user_ids()
         # Query all session data:
         # Broadcast the new session data
+        self.broadcast_current_session_info()
         session.broadcast_changed_data(previous_versions={})
-        self.broadcast_current_session_id()
-        self.broadcast_current_session_loading()
 
     @type_enforced.Enforcer
     def create_session(self, session_name: str, team_id: [int, str], session_description: str = ""):
@@ -253,24 +252,19 @@ class CustomUser(AbstractUser):
             return team_sessions[0]
         return self.create_session(session_name=f"Initial Session", team_id=team.id)
 
-    def broadcast_current_session_id(self):
+    def broadcast_current_session_info(self):
         """
-        Let the user know which session they are currently in
+        Let the user know their current session info (id and loading status)
         """
         Socket(self).broadcast(
             event="updateSessions",
             data={"data_path": ["session_id"], "data": self.session.id},
         )
-
-    def broadcast_current_session_loading(self):
-        """
-        Let the user know if the session is loading
-        """
         Socket(self).broadcast(
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],
-                "data": self.session.executing,
+                "data": cache.get(f"session:{self.session.id}:executing"),
             },
         )
 
@@ -912,14 +906,61 @@ class Sessions(models.Model):
         blank=True,
     )
     versions = models.JSONField(_("versions"), help_text=_("The session versions"), default=dict)
-    executing = models.BooleanField(
-        _("executing"),
-        help_text=_("Is this session currently executing?"),
-        default=False,
-    )
     user_ids = models.JSONField(
         _("user_ids"), help_text=_("A list of user_ids for this session"), default=list, blank=True
     )
+
+    def broadcast_loading(self, loading):
+        # Let the user know the updated loading state
+        Socket(self).broadcast(
+            event="updateLoading",
+            data={
+                "data_path": ["session_loading"],
+                "data": loading,
+            },
+        )
+    
+    def set_loading(self, value:bool, override_block:bool=False):
+        """
+        Set the loading status for this session
+
+        Requires:
+
+        - `value`:
+            - Type: bool
+            - What: The value to set the executing status to
+        
+        Optional:
+
+        - `override_block`:
+            - Type: bool
+            - What: If True, the session will be unblocked from execution status when set to False even if it was blocked due to execution status
+            - Default: False
+        """
+        is_executing = cache.get(f"session:{self.id}:executing")
+        if value:
+            if is_executing:
+                self.broadcast_loading(True)
+                # Create a block for the loading state to prevent this error from killing the execution block
+                self.__dict__['__blocked_due_to_execution__']=True
+                raise Exception("Oops! This session is already executing a task. Please wait for it to finish.")
+            cache.set(f"session:{self.id}:executing", True)
+            self.broadcast_loading(True)
+        else:
+            if override_block:
+                self.__dict__['__blocked_due_to_execution__']=False
+            if self.__dict__.get('__blocked_due_to_execution__'):
+                # Release the block to allow other errors to be thrown and stop the loading state
+                self.__dict__['__blocked_due_to_execution__']=False
+            else:
+                cache.set(f"session:{self.id}:executing", False)
+                self.broadcast_loading(False)
+
+    # def get_versions(self):
+    #     return cache.get(f"session:{self.id}:versions")
+    
+    # def get_user_ids(self):
+    #     return cache.get(f"session:{self.id}:user_ids")
 
     def update_versions(self):
         """
@@ -967,8 +1008,6 @@ class Sessions(models.Model):
             versions=self.versions,
             data=data,
         )
-        if not self.executing:
-            self.broadcast_loading(False)
         return data
 
     def replace_data(self, data, wipeExisting):
@@ -1031,9 +1070,7 @@ class Sessions(models.Model):
             - What: Queryset of SessionData objects
             - Default: All SessionData objects related to this session object
         """
-        self.error_on_executing()
-        self.broadcast_loading(True)
-        self.set_executing(True)
+        self.set_loading(True)
         if data_queryset == None:
             data_queryset = SessionData.objects.filter(session=self).exclude(
                 data_name__in=background_api_keys
@@ -1073,8 +1110,8 @@ class Sessions(models.Model):
                         max_count=settings.LIVE_API_VALIDATION_LOG_MAX,
                     )
 
-        # Update the execution state
-        self.set_executing(False)
+        # Update the execution state overriding any blocks
+        self.set_loading(False, override_block=True)
 
     def mutate(self, data_version, data_name, data_path, data_value=None, ignore_version=False):
         """
@@ -1175,30 +1212,6 @@ class Sessions(models.Model):
     def error_on_session_not_empty(self):
         if len(self.get_user_ids()) > 0:
             raise Exception("Oops! That session still has users in it.")
-
-    def error_on_executing(self):
-        if self.executing:
-            self.__dict__["__blocked_due_to_execution__"] = True
-            self.broadcast_loading(True)
-            raise Exception(
-                "Oops! This session is currently executing a process. Please wait until it is finished before making changes."
-            )
-
-    def set_executing(self, executing):
-        # Update the executing state only if it is changing
-        if executing != self.executing:
-            self.executing = executing
-            self.save(update_fields=["executing"])
-
-    def broadcast_loading(self, loading):
-        # Let the user know the updated loading state
-        Socket(self).broadcast(
-            event="updateLoading",
-            data={
-                "data_path": ["session_loading"],
-                "data": loading,
-            },
-        )
 
     def save(self, *args, **kwargs):
         """
