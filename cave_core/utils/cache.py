@@ -44,7 +44,7 @@ def persist_cache_background_service(persistent_cache, id_regex:str):
                     key = ":".join(full_key.decode().split(':')[2:])
                     data = persistent_cache.cache.get(key)
                     if data is not None:
-                        persistent_cache.persist_set(key, data)
+                        persistent_cache.set(key, data, memory=False, persistent=True)
         except Exception as e:
             print('Error: The persist_cache function failed with the following error:')
             print(e)
@@ -61,43 +61,62 @@ class Cache(CacheStorage):
             service = persist_cache_background_service(persistent_cache=self, id_regex='*data:*')
             service.asyncRun()
 
-    def get(self, name:str):
+    def get(self, data_id:str):
         """
         Gets the data from the cache if it exists, otherwise from the persistent storage and caches it
+
+        If the data does not exist in either the cache or the persistent storage, None is returned
+
+        data_id: str
+            The data_id of the data to be retrieved
         """
-        data = self.cache.get(name)
+        data = self.cache.get(data_id)
         if data != None:
             return data
-        if self.exists(name):
-            with self.open(name) as f:
+        if self.exists(data_id):
+            with self.open(data_id) as f:
                 data = json.load(f)
-            self.cache.set(name, data)
+            self.cache.set(data_id, data)
             return data
         return None
     
-    def set(self, name:str, data:dict):
+    def set(self, data_id:str, data:dict, memory:bool=True, persistent:bool=False):
         """
-        Sets the data in the cache but not in the persistent storage
-        """
-        self.cache.set(name, data)
+        Sets the data in one or both of the cache and the persistent storage
 
-    def delete(self, name:str):
+        data_id: str
+            The data_id of the data to be stored
+        data: dict
+            The data to be stored
+            Note: Must be JSON serializable
+        memory: bool
+            Whether to store the data in the cache
+            Default: True
+        persistent: bool
+            Whether to store the data in the persistent storage
+            Default: False
         """
-        Deletes the data in the cache and the persistent storage
-        """
-        self.cache.delete(name)
-        self.persist_delete(name)
+        if memory:
+            self.cache.set(data_id, data)
+        if persistent:
+            self.delete(data_id, memory=False, persistent=True)
+            self.save(data_id, ContentFile(json.dumps(data)))
 
-    def persist_delete(self, name:str):
+    def delete(self, data_id:str, memory:bool=True, persistent:bool=True):
         """
-        Deletes the data in the persistent storage but not in the cache
-        """
-        if self.exists(name):
-            super().delete(name)
+        Deletes the data in one or both of the cache and the persistent storage
 
-    def persist_set(self, name:str, data:dict):
+        data_id: str
+            The data_id of the data to be deleted
+        memory: bool
+            Whether to delete the data from the cache
+            Default: True
+        persistent: bool
+            Whether to delete the data from the persistent storage
+            Default: True
         """
-        Sets the data in the persistent storage but not in the cache
-        """
-        self.persist_delete(name)
-        self.save(name, ContentFile(json.dumps(data)))
+        if memory:
+            self.cache.delete(data_id)
+        if persistent:
+            if self.exists(data_id):
+                super().delete(data_id)
