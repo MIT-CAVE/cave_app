@@ -122,7 +122,7 @@ def mutate_session(request):
 
     for session_i in sessions:
         # Get the session data versions
-        session_i_pre_versions = session_i.versions
+        session_i_pre_versions = session_i.get_versions()
         # Apply the mutation only if a `data_name` is provided
         if data_name is not None:
             response = session_i.mutate(
@@ -156,7 +156,7 @@ def mutate_session(request):
         else:
             Socket(session_i).broadcast(
                 event="mutation",
-                versions=session_i.versions,
+                versions=session_i.get_versions(),
                 data=mutate_dict,
             )
 
@@ -209,7 +209,7 @@ def get_associated_session_data(request):
     # Notify users of updates
     Socket(session).broadcast(
         event="overwrite",
-        versions=session.versions,
+        versions=session.get_versions(),
         data=session.get_client_data(keys=["associated"]),
     )
 

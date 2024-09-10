@@ -905,10 +905,6 @@ class Sessions(models.Model):
         default="",
         blank=True,
     )
-    versions = models.JSONField(_("versions"), help_text=_("The session versions"), default=dict)
-    user_ids = models.JSONField(
-        _("user_ids"), help_text=_("A list of user_ids for this session"), default=list, blank=True
-    )
 
     def broadcast_loading(self, loading):
         # Let the user know the updated loading state
@@ -937,14 +933,16 @@ class Sessions(models.Model):
             - What: If True, the session will be unblocked from execution status when set to False even if it was blocked due to execution status
             - Default: False
         """
-        is_executing = cache.get(f"session:{self.id}:executing")
+        print(f'SET LOADING {value}')
+        self.__dict__['is_executing'] = cache.get(f"session:{self.id}:executing")
         if value:
-            if is_executing:
+            if self.__dict__['is_executing']:
                 self.broadcast_loading(True)
                 # Create a block for the loading state to prevent this error from killing the execution block
                 self.__dict__['__blocked_due_to_execution__']=True
                 raise Exception("Oops! This session is already executing a task. Please wait for it to finish.")
             cache.set(f"session:{self.id}:executing", True)
+            self.__dict__['is_executing'] = True
             self.broadcast_loading(True)
         else:
             if override_block:
@@ -954,23 +952,54 @@ class Sessions(models.Model):
                 self.__dict__['__blocked_due_to_execution__']=False
             else:
                 cache.set(f"session:{self.id}:executing", False)
+                self.__dict__['is_executing'] = False
                 self.broadcast_loading(False)
-
-    # def get_versions(self):
-    #     return cache.get(f"session:{self.id}:versions")
     
-    # def get_user_ids(self):
-    #     return cache.get(f"session:{self.id}:user_ids")
+    def get_user_ids(self) -> list:
+        """
+        Gets all user ids for users currently in this session as a list
 
+        - Used to determine which users are in this session
+        - EG to prevent deletion if more than one user is in the session
+        """
+        print('GET USER IDS')
+        user_ids = cache.get(f"session:{self.id}:user_ids")
+        return user_ids if user_ids != None else []
+    
+    def update_user_ids(self) -> None:
+        """
+        Gets all user ids for users currently in this session and stores it as a json object in the cache
+        """
+        print("UPDATE USER IDS")
+        cache.set(f"session:{self.id}:user_ids", list(CustomUser.objects.filter(session=self).values_list("id", flat=True)))
+
+    def get_versions(self) -> dict:
+        """
+        Gets the current versions object for this session
+
+        Note: Uses a local object for in memory storage of versions to prevent multiple calls to the cache if the session is_executing
+              This is because only one session object can be executing at a time and the versions object is only used during execution
+        """
+        # Used a local object cached versions object to prevent multiple calls to the cache
+        versions = self.__dict__.get('versions')
+        if self.__dict__.get('is_executing') and versions:
+            return versions
+        print('GET VERSIONS')
+        versions = cache.get(f"session:{self.id}:versions")
+        self.__dict__['versions'] = versions if versions != None else {}
+        return self.__dict__['versions']
+    
     def update_versions(self):
         """
         Updates the database stored versions object for this session given the current data items
         """
-        self.versions = {
+        print('UPDATE VERSIONS')
+        versions = {
             obj.data_name: obj.data_version
             for obj in SessionData.objects.filter(session=self).filter(data_name__in=api_keys)
         }
-        self.save(update_fields=["versions"])
+        cache.set(f"session:{self.id}:versions", versions)
+        self.__dict__['versions'] = versions
 
     def get_client_data(self, keys, session_data=None):
         """
@@ -993,21 +1022,24 @@ class Sessions(models.Model):
             - Type: dict
             - What: The endpoint provided previous versions to check vs the current server versions to determine which data has changed
         """
+        print ('\n==BROADCAST CHANGED DATA==')
         # Fill in missing session data if none is present
         session_data = SessionData.objects.filter(session=self)
         if len(session_data) == 0:
             self.execute_api_command(command="init", data_queryset=session_data)
-
+        # This can be a redundant call after an execute command but is necessary for creating / switching sessions (and to prevent an unlikely race event)
+        versions = self.get_versions()
         updated_keys = [
-            key for key, value in self.versions.items() if previous_versions.get(key) != value
+            key for key, value in versions.items() if previous_versions.get(key) != value
         ]
         data = self.get_client_data(keys=updated_keys, session_data=session_data)
         # Broadcast the updated versions and data
         Socket(self).broadcast(
             event="overwrite",
-            versions=self.versions,
+            versions=versions,
             data=data,
         )
+        print('==BROADCAST CHANGED DATA END==\n')
         return data
 
     def replace_data(self, data, wipeExisting):
@@ -1032,6 +1064,7 @@ class Sessions(models.Model):
         }
         ```
         """
+        print ('==REPLACE DATA==')
         if wipeExisting:
             data_keys = list(data.keys())
             keys_to_delete = pamda.difference(data_keys, api_keys)
@@ -1040,14 +1073,16 @@ class Sessions(models.Model):
                 SessionData.objects.filter(session=self, data_name__in=keys_to_delete).delete()
             for k in keys_to_empty:
                 data[k] = {}
+        versions = self.get_versions()
         for key, value in data.items():
             obj, created = SessionData.objects.get_or_create(session=self, data_name=key)
             obj.save_data(
                 data=value,
-                data_version=self.versions.get(key, 0) + 1,
+                data_version=versions.get(key, 0) + 1,
             )
         # Update versions post replacement
         self.update_versions()
+        print ('==REPLACE DATA END==')
 
     def execute_api_command(
         self, command, command_keys=None, data_queryset=None, mutate_dict=dict()
@@ -1070,6 +1105,7 @@ class Sessions(models.Model):
             - What: Queryset of SessionData objects
             - Default: All SessionData objects related to this session object
         """
+        print ('\n==EXECUTE API COMMAND==')
         self.set_loading(True)
         if data_queryset == None:
             data_queryset = SessionData.objects.filter(session=self).exclude(
@@ -1099,7 +1135,7 @@ class Sessions(models.Model):
         if settings.DEBUG:
             if settings.LIVE_API_VALIDATION_LOG or settings.LIVE_API_VALIDATION_PRINT:
                 validator = Validator(
-                    session_data=self.get_client_data(keys=list(self.versions.keys())),
+                    session_data=self.get_client_data(keys=list(self.get_versions().keys())),
                     ignore_keys=["meta"],
                 )
                 if settings.LIVE_API_VALIDATION_PRINT:
@@ -1112,6 +1148,7 @@ class Sessions(models.Model):
 
         # Update the execution state overriding any blocks
         self.set_loading(False, override_block=True)
+        print ('==EXECUTE API COMMAND END==\n')
 
     def mutate(self, data_version, data_name, data_path, data_value=None, ignore_version=False):
         """
@@ -1140,6 +1177,7 @@ class Sessions(models.Model):
             - What: A boolean indicator to specify if the current data version should be considered before processing the mutation request
             - Default: False
         """
+        print('==MUTATE==')
         session_data = SessionData.objects.filter(session=self, data_name=data_name).first()
         if not session_data:
             raise Exception(
@@ -1152,6 +1190,7 @@ class Sessions(models.Model):
         session_data.mutate(data_path=data_path, data_value=data_value)
         # Update versions post mutation
         self.update_versions()
+        print('==MUTATE END==')
 
     def get_associated_sessions(self, user=None):
         """
@@ -1172,22 +1211,6 @@ class Sessions(models.Model):
             if user.is_staff:
                 return Sessions.objects.filter(team__in=user.get_team_ids())
         return Sessions.objects.filter(team=self.team)
-
-    def get_user_ids(self):
-        """
-        Gets all user ids for users currently in this session
-
-        - Used to determine which users are in this session
-        - EG to prevent deletion if more than one user is in the session
-        """
-        return self.user_ids
-
-    def update_user_ids(self):
-        """
-        Gets all user ids for users currently in this session and stores it as a json object in self.user_ids to reduce query loads
-        """
-        self.user_ids = list(CustomUser.objects.filter(session=self).values_list("id", flat=True))
-        self.save(update_fields=["user_ids"])
 
     def clone(self, name, description):
         """
