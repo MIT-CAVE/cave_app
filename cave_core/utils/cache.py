@@ -61,7 +61,7 @@ class Cache(CacheStorage):
             service = persist_cache_background_service(persistent_cache=self, id_regex='*data:*')
             service.asyncRun()
 
-    def get(self, data_id:str):
+    def get(self, data_id:str, default=None):
         """
         Gets the data from the cache if it exists, otherwise from the persistent storage and caches it
 
@@ -69,16 +69,21 @@ class Cache(CacheStorage):
 
         data_id: str
             The data_id of the data to be retrieved
+        default: any
+            The default value to return if the data does not exist
+            Default: None
+
+        Returns: dict
         """
-        data = self.cache.get(data_id)
-        if data != None:
+        data = self.cache.get(data_id, "__NONE__")
+        if data != "__NONE__":
             return data
         if self.exists(data_id):
             with self.open(data_id) as f:
                 data = json.load(f)
             self.cache.set(data_id, data)
             return data
-        return None
+        return default
     
     def set(self, data_id:str, data:dict, memory:bool=True, persistent:bool=False):
         """

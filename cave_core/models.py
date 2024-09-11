@@ -906,8 +906,10 @@ class Sessions(models.Model):
         blank=True,
     )
 
-    def broadcast_loading(self, loading):
-        # Let the user know the updated loading state
+    def broadcast_loading(self, loading: bool) -> None:
+        """
+        Broadcast the loading status for this session
+        """
         Socket(self).broadcast(
             event="updateLoading",
             data={
@@ -916,7 +918,7 @@ class Sessions(models.Model):
             },
         )
     
-    def set_loading(self, value:bool, override_block:bool=False):
+    def set_loading(self, value:bool, override_block:bool=False) -> None:
         """
         Set the loading status for this session
 
@@ -961,8 +963,7 @@ class Sessions(models.Model):
         - Used to determine which users are in this session
         - EG to prevent deletion if more than one user is in the session
         """
-        user_ids = cache.get(f"session:{self.id}:user_ids")
-        return user_ids if user_ids != None else []
+        return cache.get(f"session:{self.id}:user_ids", [])
     
     def update_user_ids(self) -> None:
         """
@@ -981,11 +982,10 @@ class Sessions(models.Model):
         versions = self.__dict__.get('versions')
         if self.__dict__.get('is_executing') and versions:
             return versions
-        versions = cache.get(f"session:{self.id}:versions")
-        self.__dict__['versions'] = versions if versions != None else {}
+        self.__dict__['versions'] = cache.get(f"session:{self.id}:versions", {})
         return self.__dict__['versions']
     
-    def update_versions(self):
+    def update_versions(self) -> None:
         """
         Updates the database stored versions object for this session given the current data items
         """
@@ -997,7 +997,7 @@ class Sessions(models.Model):
         # Update the local object for in memory storage of versions to avoid the additional cache hit
         self.__dict__['versions'] = versions
 
-    def get_client_data(self, keys, session_data=None):
+    def get_client_data(self, keys, session_data=None) -> dict:
         """
         Returns all data for this session that should be sent to the client
         """
@@ -1008,7 +1008,7 @@ class Sessions(models.Model):
             session_data = SessionData.objects.filter(session=self)
         return {obj.data_name: obj.get_data() for obj in session_data.filter(data_name__in=keys)}
 
-    def broadcast_changed_data(self, previous_versions):
+    def broadcast_changed_data(self, previous_versions: dict) -> dict:
         """
         Broadcasts and returns all data that has changed given some set of previous versions
 
@@ -1239,9 +1239,7 @@ class Sessions(models.Model):
         """
         super(Sessions, self).save(*args, **kwargs)
         try:
-            update_fields = kwargs.get("update_fields", [])
-            if update_fields == [] or "name" in update_fields:
-                self.team.update_sessions_list()
+            self.team.update_sessions_list()
         except:
             pass
 
