@@ -104,7 +104,7 @@ class Cache(CacheStorage):
         """
         # print(f'Cache -> Getting: {data_ids}')
         data = self.cache.get_many(data_ids)
-        missing_ids = [data_id for data_id, value in data.items() if value == None]
+        missing_ids = [data_id for data_id in data_ids if data_id not in data]
         if len(missing_ids) > 0:
             # Only pull from the persistent storage if the CACHE_BACKUP_INTERVAL is greater than 0
             if settings.CACHE_BACKUP_INTERVAL > 0:

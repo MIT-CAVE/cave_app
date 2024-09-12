@@ -1013,14 +1013,14 @@ class Sessions(models.Model):
         cache.set(f"session:{self.id}:versions", versions)
         self.__dict__['versions'] = versions
 
-    def get_data(self, keys=None, client_only=True) -> dict:
+    def get_data(self, keys:list[str]=None, client_only:bool=True) -> dict:
         """
         Returns all data for this session
 
         Optional:
 
         - `keys`:
-            - Type: list
+            - Type: list of strings
             - What: The keys to get data for
             - Default: None
             - Note: If None, all keys are sent
@@ -1045,6 +1045,7 @@ class Sessions(models.Model):
         # If there any keys to get from the cache, get them all at once and update the session __dict__
         if len(keys_to_get_from_cache) > 0:
             new_data = cache.get_many([f'session:{self.id}:data:{key}' for key in keys_to_get_from_cache])
+            # TODO: Add check to see if some data was lost
             for key, value in new_data.items():
                 # Parse the key to get the actual key name
                 key = key.split(':')[-1]

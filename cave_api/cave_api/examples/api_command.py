@@ -50,7 +50,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         )
         # If you do not want to wipe the existing session data, you can set the `wipeExisting` flag to False
         # and only pass the top level keys that you want to update
-        session_data = {'appBar':session_data['appBar'], 'extraKwargs':{'wipeExisting':False}}
+        # session_data = {'appBar':session_data['appBar'], 'extraKwargs':{'wipeExisting':False}}
         # Send a message to app users
         socket.notify("Notification: `myCommand` has been triggered!")
         # Log a message in the console
