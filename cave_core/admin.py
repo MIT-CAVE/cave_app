@@ -157,16 +157,6 @@ class CustomSessionAdmin(admin.ModelAdmin):
     search_fields = ["name", "team__name"]
 
 
-class CustomSessionDataAdmin(admin.ModelAdmin):
-    model = models.SessionData
-    list_display = ["id", "session", "data_name", "data_version"]
-    search_fields = [
-        "session__name",
-        "session__team__name",
-        "session__user__email",
-    ]
-
-
 class CustomTeamUserAdmin(admin.ModelAdmin):
     model = models.TeamUsers
     list_display = ["id", "user", "team"]
@@ -276,7 +266,6 @@ admin.site.register(models.GroupUsers, CustomGroupUserAdmin)
 admin.site.register(models.Teams, CustomTeamAdmin)
 admin.site.register(models.TeamUsers, CustomTeamUserAdmin)
 admin.site.register(models.Sessions, CustomSessionAdmin)
-admin.site.register(models.SessionData, CustomSessionDataAdmin)
 admin.site.register(models.FileStorage, CustomFileStorageAdmin)
 
 

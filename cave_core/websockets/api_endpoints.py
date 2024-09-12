@@ -148,10 +148,12 @@ def mutate_session(request):
         # Apply an api command if provided and push updated output
         if api_command is not None:
             session_i.execute_api_command(
-                command=api_command, command_keys=api_command_keys, mutate_dict=mutate_dict
+                command=api_command, 
+                command_keys=api_command_keys, 
+                mutate_dict=mutate_dict,
+                previous_versions=session_i_pre_versions,
+                broadcast_changes=True
             )
-            # Broadcast any changed session data
-            session_i.broadcast_changed_data(previous_versions=session_i_pre_versions)
         # If no api command is provided, apply the mutation
         else:
             Socket(session_i).broadcast(
@@ -185,33 +187,21 @@ def get_associated_session_data(request):
 
     # Session validation
     session = request.user.session
-    # Get associated sessions
-    associated_sessions = session.get_associated_sessions(user=request.user)
-    # Session data
-    session_data = models.SessionData.objects.filter(
-        session__in=associated_sessions, data_name__in=data_names
+    # Store Previous Versions for comparison
+    previous_versions = session.get_versions()
+    # Get and replace the associated session data
+    session.replace_data(
+        data={"associated": {"data": {
+            obj.id: {
+                "name": obj.team.name + " -> " + obj.name,
+                "data": obj.get_data(keys=data_names),
+            }
+            for obj in session.get_associated_sessions(user=request.user)
+        }}},
+        wipeExisting=False
     )
-    # Associated Data
-    associated = {
-        obj.id: {
-            "name": obj.team.name + " -> " + obj.name,
-            "data": {},
-        }
-        for obj in associated_sessions
-    }
-    for obj in session_data:
-        associated[obj.session.id]["data"][obj.data_name] = obj.get_data()
-
-    associated_data_object = {"associated": {"data": associated}}
-
-    session.replace_data(data=associated_data_object, wipeExisting=False)
-
-    # Notify users of updates
-    Socket(session).broadcast(
-        event="overwrite",
-        versions=session.get_versions(),
-        data=session.get_client_data(keys=["associated"]),
-    )
+    # Broadcast any changed session data
+    session.broadcast_changed_data(previous_versions=previous_versions)
 
 
 @ws_api_app
