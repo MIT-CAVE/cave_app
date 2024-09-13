@@ -1045,10 +1045,21 @@ class Sessions(models.Model):
         # If there any keys to get from the cache, get them all at once and update the session __dict__
         if len(keys_to_get_from_cache) > 0:
             new_data = cache.get_many([f'session:{self.id}:data:{key}' for key in keys_to_get_from_cache])
-            # TODO: Add check to see if some data was lost
+            # Get the specific key names from the cache keys
+            new_data = {key.split(':')[-1]:value for key, value in new_data.items() if value != None}
+            # If the new data is not the same length as the keys to get from the cache, there was an error
+            # Likely, some data was lost from the persistent cache
+            if len(new_data.keys()) != len(keys_to_get_from_cache):
+                Socket(self).notify(
+                    title="Error:",
+                    message="Oops! There was an error with the data from this session. It will be reset to initial values to fix the issue.",
+                    theme="error",
+                )
+                self.set_loading(False, override_block=True)
+                self.execute_api_command(command="init", broadcast_changes=True, command_keys=[])
+                # Raise an exception to stop the current execution whatever it may be.
+                raise Exception("The data error should now be fixed. Please try your action again.")
             for key, value in new_data.items():
-                # Parse the key to get the actual key name
-                key = key.split(':')[-1]
                 if value != None:
                     # Update the local session __dict__ with the new data to prevent multiple cache hits later
                     pamda.assocPath(path=['data', key], value=value, data=self.__dict__)
@@ -1069,7 +1080,7 @@ class Sessions(models.Model):
         versions = self.get_versions()
         # If there is no versions data, initialize the session data and get the new versions
         if len(versions) == 0:
-            self.execute_api_command(command="init", broadcast_changes=True)
+            self.execute_api_command(command="init", broadcast_changes=True, command_keys=[])
             # print('==BROADCAST CHANGED DATA END==\n')
             # Execute API Command calls this function again and it will pass this if statement
             return
@@ -1281,7 +1292,7 @@ class Sessions(models.Model):
             - What: The new session object that was created
         """
         session_data = self.get_data(
-            keys=self.get_versions().keys(), 
+            keys=list(self.get_versions().keys()), 
             client_only=False
         )
         new_session = self
