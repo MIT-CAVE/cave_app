@@ -26,5 +26,7 @@ rm -r "./tmp"
 # Nuke the Cache
 python "$APP_DIR/manage.py" clearcache --deployment_type development 2>&1 | pipe_log "DEBUG"
 
+# Clear the current DB
+python "$APP_DIR/manage.py" flush --noinput --deployment_type development 2>&1 | pipe_log "DEBUG"
 # Generate data
 python "$APP_DIR/data_gen.py" --deployment_type development 2>&1 | pipe_log "DEBUG"
