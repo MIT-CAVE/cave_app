@@ -142,7 +142,6 @@ class Cache(CacheStorage):
         if memory:
             self.cache.set(data_id, data)
         if persistent:
-            self.delete(data_id, memory=False, persistent=True)
             self.save(data_id, ContentFile(json.dumps(data)))
 
     def set_many(self, data:dict, memory:bool=True, persistent:bool=False):

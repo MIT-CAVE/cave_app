@@ -12,3 +12,6 @@ class StaticStorage(StaticFilesStorage):
 
 class CacheStorage(FileSystemStorage):
     location = 'persistent_cache'
+    # Special code to always overwrite the file on a save
+    def get_available_name(self, name: str, max_length: int | None = None) -> str:
+        return name
