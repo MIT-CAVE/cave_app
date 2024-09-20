@@ -470,6 +470,8 @@ class Globals(SingletonModel):
             "Mapbox Token to use in the app - Used in the site views and data visualization"
         ),
         default="",
+        blank=True,
+        null=True,
     )
     app_screen_width = models.IntegerField(
         _("App Screen Width"),
