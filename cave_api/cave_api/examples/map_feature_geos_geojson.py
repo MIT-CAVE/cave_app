@@ -48,34 +48,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "minZoom": 2,
                     },
                     "legendGroups": {
-                        "facilities": {
-                            "name": "Facilities",
+                        "demandZones": {
+                            "name": "Demand Zones",
                             "data": {
-                                "warehouse": {
+                                "state": {
                                     "value": True,
-                                    "sizeBy": "capacity",
-                                    "colorBy": "includesAutomation",
+                                    "colorBy": "targetGrowthArea",
                                     "colorByOptions": {
-                                        "capacity": {
+                                        "demand": {
                                             "min": 0,
                                             "max": 100,
                                             "startGradientColor": "rgba(233, 0, 0, 1)",
                                             "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
-                                        "includesAutomation": {
+                                        "targetGrowthArea": {
                                             "false": "rgba(255, 0, 0, 1)",
                                             "true": "rgba(0, 255, 0, 1)",
                                         },
                                     },
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "30px",
-                                            "endSize": "45px",
-                                        },
-                                    },
-                                    "icon": "fa6/FaWarehouse",
+                                    "icon": "bs/BsHexagon",
                                 },
                             },
                         },
@@ -85,46 +76,38 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "mapFeatures": {
             "data": {
-                "warehouse": {
-                    "type": "node",
-                    "name": "Warehouse",
+                "state": {
+                    "type": "geo",
+                    "name": "State",
+                    "geoJson": {
+                        "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
+                        "geoJsonProp": "code_hasc",
+                    },
                     "props": {
-                        "scenario": {
-                            "name": "Scenario",
-                            "type": "text",
-                            "enabled": False,
-                            "display": False,
-                            "help": "The scenario name",
-                        },
-                        "capacity": {
-                            "name": "Capacity",
+                        "demand": {
+                            "name": "Demand",
                             "type": "num",
                             "enabled": True,
-                            "help": "The warehouse capacity in cubic feet",
-                            "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "Demand for this state",
+                            "unit": "units",
                         },
-                        "includesAutomation": {
-                            "name": "Includes Automation",
+                        "targetGrowthArea": {
+                            "name": "Target Growth Area",
                             "type": "toggle",
-                            "enabled": True,
-                            "help": "Whether the warehouse includes automation",
+                            "help": "Whether this state is a target growth area for the company",
                         },
                     },
                     "data": {
                         "location": {
-                            "latitude": [[43.78, 39.82]],
-                            "longitude": [[-79.63, -86.18]],
+                            "geoJsonValue": ["CA.ON", "US.MI", "US.PA"],
                         },
                         "valueLists": {
-                            "capacity": [100, 80],
-                            "includesAutomation": [True, False],
-                            "scenario": ["Scenario 1", "Scenario 2"],
+                            "demand": [50, 80, 75],
+                            "targetGrowthArea": [False, False, True],
                         },
                     },
                 },
-            }
+            },
         },
         # Add a map page to the app using the example map specified above
         "pages": {

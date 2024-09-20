@@ -57,8 +57,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "colorBy": "includesAutomation",
                                     "colorByOptions": {
                                         "capacity": {
-                                            "min": 0,
-                                            "max": 100,
                                             "startGradientColor": "rgba(233, 0, 0, 1)",
                                             "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
@@ -69,8 +67,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                     "sizeByOptions": {
                                         "capacity": {
-                                            "min": 0,
-                                            "max": 80,
                                             "startSize": "30px",
                                             "endSize": "45px",
                                         },
@@ -114,13 +110,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "latitude": [[43.78, 39.82]],
-                            "longitude": [[-79.63, -86.18]],
+                            "latitude": [[-90 + i * 0.01 for i in range(10000)]],
+                            "longitude": [[0 + i * 0.01 for i in range(10000)]],
                         },
                         "valueLists": {
-                            "capacity": [100, 80],
-                            "includesAutomation": [True, False],
-                            "scenario": ["Scenario 1", "Scenario 2"],
+                            "capacity": [100 + i for i in range(10000)],
+                            "includesAutomation": [i % 2 == 0 for i in range(10000)],
+                            "scenario": ["Scenario 1" if i % 2 == 0 else "Scenario 2" for i in range(10000)],
                         },
                     },
                 },

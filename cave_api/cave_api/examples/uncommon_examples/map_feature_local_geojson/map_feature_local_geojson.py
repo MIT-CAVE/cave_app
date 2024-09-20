@@ -1,5 +1,22 @@
+
+from cave_core import models
+
 def execute_command(session_data, socket, command="init", **kwargs):
-    # Return the following app state (create a static app with no custom logic)
+    # Before using this example, make sure to upload the geojson file to the server
+    # See the file: cave_api/cave_api/examples/gen_pretty_route_geojson.py
+    # Go to admin -> File Storage -> Add File
+    # Upload the geojson file from data and set the name to "multi_route"
+
+    # Get the URL of the uploaded geojson file
+    # On cloud servers, the URL generated should be a full path to a file in the file server (aws, azure, etc.)
+    # On local servers, the URL generated should be preceded by "http://localhost:8000"
+    multi_route_path  = "http://localhost:8000" + models.FileStorage.objects.filter(name="multi_route").first().file_public.url
+    # If you choose to use a private file on a cloud server
+        # - It is accessed the same way as the public file
+        # - The returned url will be a temporary url that can be used to access the file
+        # - The url will expire after a certain amount of time
+        # - The url can be accessed by using `file_private.url` instead of `file_public.url`
+        # - This can cause issues where users may need to reset/reinitialize the app to regain access to the file
     return {
         "settings": {
             # Icon Url is used to load icons from a custom icon library
@@ -48,21 +65,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "minZoom": 2,
                     },
                     "legendGroups": {
-                        "facilities": {
-                            "name": "Facilities",
+                        "transportation": {
+                            "name": "Transportation",
                             "data": {
-                                "warehouse": {
+                                "specialRoutes": {
                                     "value": True,
                                     "sizeBy": "capacity",
-                                    "colorBy": "includesAutomation",
+                                    "colorBy": "preferredRoute",
                                     "colorByOptions": {
                                         "capacity": {
                                             "min": 0,
-                                            "max": 100,
+                                            "max": 105,
                                             "startGradientColor": "rgba(233, 0, 0, 1)",
                                             "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
-                                        "includesAutomation": {
+                                        "preferredRoute": {
                                             "false": "rgba(255, 0, 0, 1)",
                                             "true": "rgba(0, 255, 0, 1)",
                                         },
@@ -71,11 +88,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "capacity": {
                                             "min": 0,
                                             "max": 80,
-                                            "startSize": "30px",
-                                            "endSize": "45px",
+                                            "startSize": "5px",
+                                            "endSize": "10px",
                                         },
                                     },
-                                    "icon": "fa6/FaWarehouse",
                                 },
                             },
                         },
@@ -85,17 +101,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "mapFeatures": {
             "data": {
-                "warehouse": {
-                    "type": "node",
-                    "name": "Warehouse",
+                "specialRoutes": {
+                    "type": "arc",
+                    "name": "Special Routes",
+                    "geoJson": {
+                        # geoJsonLayer must be a URL pointing to a raw geojson file
+                        # Local file support is not supported
+                        # To upload your own geojson file, use a service like GitHub and upload your file there
+                        # Then copy the raw URL and paste it in the geoJsonLayer field to use it
+                        # See data in https://github.com/MIT-CAVE/cave_app_extras/tree/main/example_data
+                        "geoJsonLayer": multi_route_path,
+                        # geoJsonProp is the property in the geoJson file that contains the id you specify in the data.location.geoJsonValue field
+                        "geoJsonProp": "id",
+                    },
                     "props": {
-                        "scenario": {
-                            "name": "Scenario",
-                            "type": "text",
-                            "enabled": False,
-                            "display": False,
-                            "help": "The scenario name",
-                        },
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
@@ -105,22 +124,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "legendNotation": "precision",
                             "legendPrecision": 0,
                         },
-                        "includesAutomation": {
-                            "name": "Includes Automation",
+                        "preferredRoute": {
+                            "name": "Preferred Route",
                             "type": "toggle",
                             "enabled": True,
-                            "help": "Whether the warehouse includes automation",
+                            "help": "Whether the route is preferred",
                         },
                     },
                     "data": {
                         "location": {
-                            "latitude": [[43.78, 39.82]],
-                            "longitude": [[-79.63, -86.18]],
+                            # geoJsonValue must be a list of ids that match the geoJsonProp in the geoJson file
+                            # The order of the ids must match the order of the values in the data.values fields
+                            "geoJsonValue": [
+                                "Baltimore-London",
+                                "Baltimore-Paris",
+                            ],
                         },
                         "valueLists": {
-                            "capacity": [100, 80],
-                            "includesAutomation": [True, False],
-                            "scenario": ["Scenario 1", "Scenario 2"],
+                            "capacity": [65, 85],
+                            "preferredRoute": [True, False],
                         },
                     },
                 },

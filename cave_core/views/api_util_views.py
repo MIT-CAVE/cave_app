@@ -12,6 +12,7 @@ from rest_framework.permissions import AllowAny
 # Internal Imports
 from cave_core import models
 from cave_core.utils.wrapping import api_util_response
+from cave_core.utils.emailing import send_email, format_validation_email_content
 
 
 # Views
@@ -78,10 +79,10 @@ def send_email_validation_code(request):
     # Execute View Procedures
     code = request.user.gen_new_email_validation_code()
     domain = request.build_absolute_uri("/")[:-1]
-    email_content = utils.emailing.format_validation_email_content(
+    email_content = format_validation_email_content(
         globals=globals, user=request.user, domain=domain, code=code
     )
     if settings.PRODUCTION_MODE:
-        utils.emailing.send_email(**email_content)
+        send_email(**email_content)
     else:
         print(email_content.get("EMAIL_CONTENT"))

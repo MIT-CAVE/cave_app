@@ -51,17 +51,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "demandZones": {
                             "name": "Demand Zones",
                             "data": {
-                                "state": {
+                                "custom": {
                                     "value": True,
-                                    "colorBy": "targetGrowthArea",
+                                    "colorBy": "booleanPropExample",
                                     "colorByOptions": {
-                                        "demand": {
+                                        "numericPropExampleC": {
                                             "min": 0,
                                             "max": 100,
                                             "startGradientColor": "rgba(233, 0, 0, 1)",
                                             "endGradientColor": "rgba(96, 2, 2, 1)",
                                         },
-                                        "targetGrowthArea": {
+                                        "booleanPropExample": {
                                             "false": "rgba(255, 0, 0, 1)",
                                             "true": "rgba(0, 255, 0, 1)",
                                         },
@@ -76,37 +76,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "mapFeatures": {
             "data": {
-                "state": {
+                "custom": {
                     "type": "geo",
-                    "name": "State",
-                    "geoJson": {
-                        "geoJsonLayer": "https://geojsons.mitcave.com/world/world-states-provinces-md.json",
-                        "geoJsonProp": "code_hasc",
-                    },
+                    "name": "Custom",
                     "props": {
-                        "demand": {
-                            "name": "Demand",
+                        "numericPropExampleC": {
+                            "name": "Numeric Prop Example C",
                             "type": "num",
                             "enabled": True,
-                            "help": "Demand for this state",
+                            "help": "Help with the example numeric prop for this Custom",
                             "unit": "units",
                         },
-                        "targetGrowthArea": {
-                            "name": "Target Growth Area",
+                        "booleanPropExample": {
+                            "name": "Boolean Prop Example",
                             "type": "toggle",
-                            "help": "Whether this state is a target growth area for the company",
+                            "help": "Help for boolean prop",
                         },
                     },
                     "data": {
                         "location": {
-                            "geoJsonValue": ["CA.ON", "US.MI", "US.PA"],
+                            "path": [[[-75.447, 40.345], [-77.447, 42.345], [-77.447, 44.345], [-75.447, 40.345]]],
                         },
                         "valueLists": {
-                            "demand": [50, 80, 75],
-                            "targetGrowthArea": [False, False, True],
+                            "numericPropExampleC": [100],
+                            "booleanPropExample": [True],
                         },
                     },
-                },
+                }
             },
         },
         # Add a map page to the app using the example map specified above

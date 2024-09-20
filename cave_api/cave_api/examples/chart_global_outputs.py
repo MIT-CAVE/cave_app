@@ -11,7 +11,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "chartPage"]},
+            "order": {"data": ["refreshButton", "session", "chartPage"]},
             "data": {
                 # Add a simple button to the app bar to trigger the `init` command
                 # This is useful for resetting the app to its initial state
@@ -19,6 +19,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "icon": "md/MdRefresh",
                     "apiCommand": "init",
                     "type": "button",
+                    "bar": "upperLeft",
+                },
+                # Add an appBar button to launch the sessions pane
+                "session": {
+                    "icon": "md/MdApi",
+                    "type": "session",
                     "bar": "upperLeft",
                 },
                 # Add an app bar button to launch a chart dashboard
@@ -96,7 +102,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
             "values": {
-                "loadingPallets": 54,
+                "loadingPallets": 60,
                 "loadingPalletDwellTime": 49.2,
                 "manufacturingUnitsPerHour": 4987.347,
                 "manufacturingUnits": round(4987.347 * 24),

@@ -252,6 +252,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "minValue": 0,
                             "unit": "%",
                         },
+                        "incrementalSliderExample": {
+                            "name": "Incrimental Slider Example",
+                            "type": "num",
+                            "variant": "incslider",
+                            "help": "Help for the incremental slider example",
+                            "valueOptions": [0,25,50,75,100],
+                            "unit": "%",
+                        },
                         "miscHeader": {
                             "name": "Misc Props",
                             "type": "head",
@@ -466,6 +474,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "values": {
                         "numericInputExample": 50,
                         "numericSliderExample": 50,
+                        "incrementalSliderExample": 50,
                         "toggleInputExample": True,
                         "buttonInputExample": "Press Me!",
                         "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
@@ -489,8 +498,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputExample": [-71.092003, 42.360001],
-                        "latLngMapExample": [-71.092003, 42.360001],
+                        "latLngInputExample": [[-71.092003, 42.360001]],
+                        "latLngMapExample": [[-71.092003, 42.360001]],
                         "latLngPathExample": [[-71.092003, 42.360001], [-71.093003, 42.361001]],
                     },
                     "layout": {
@@ -515,6 +524,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 1,
                                 "row": 3,
                                 "itemId": "numericSliderExample",
+                            },
+                            "col1Row4": {
+                                "type": "item",
+                                "column": 1,
+                                "row": 4,
+                                "itemId": "incrementalSliderExample",
                             },
                             "col2Row1": {
                                 "type": "item",
@@ -705,6 +720,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "statAggregation": "mean",
                             "groupedOutputDataId": "locationGroup",
                             "statId": "numericStatExampleB",
+                            "showNA": True,
                         },
                         {
                             "variant": "mixed",
@@ -912,6 +928,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "startSize": "15px",
                                             "endSize": "30px",
                                         },
+                                        "booleanPropExample": {
+                                            "false": "15px",
+                                            "true": "30px",
+                                        },
                                     },
                                     "icon": "fa6/FaIgloo",
                                 },
@@ -1082,6 +1102,23 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                     "icon": "bs/BsHexagon",
                                 },
+                                "custom": {
+                                    "value": False,
+                                    "colorBy": "numericPropExampleC",
+                                    "colorByOptions": {
+                                        "numericPropExampleC": {
+                                            "min": 0,
+                                            "max": 800,
+                                            "startGradientColor": "rgba(100, 100, 100, 1)",
+                                            "endGradientColor": "rgba(20, 205, 20, 1)",
+                                        },
+                                        "booleanPropExample": {
+                                            "false": "rgba(233, 0, 0, 1)",
+                                            "true": "rgba(0, 233, 0, 1)",
+                                        },
+                                    },
+                                    "icon": "md/MdOutlineTouchApp",
+                                }
                             },
                         },
                     },
@@ -1517,17 +1554,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             "timeValues": {
                                 0: {
-                                    "latitude": [43.78, 39.82],
+                                    "latitude": [[43.78, 39.82]],
                                 },
                                 1: {
-                                    "latitude": [44.78, 39.82],
+                                    "latitude": [[44.78, 39.82]],
                                 },
                                 2: {
-                                    "latitude": [45.78, 39.82],
+                                    "latitude": [[45.78, 39.82]],
                                 },
                             },
-                            "latitude": [43.78, 39.82],
-                            "longitude": [-79.63, -86.18],
+                            "latitude": [[43.78, 39.82]],
+                            "longitude": [[-79.63, -86.18]],
                         },
                         "valueLists": {
                             "numericPropExampleA": [100, 80],
@@ -1568,8 +1605,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "latitude": [42.89, 28.49, 42.361176],
-                            "longitude": [-85.68, -81.56, -71.084707],
+                            "latitude": [[42.89, 28.49, 42.361176]],
+                            "longitude": [[-85.68, -81.56, -71.084707]],
                         },
                         "valueLists": {
                             "numericPropExampleA": [500, 1000, 1000],
@@ -1634,6 +1671,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                 },
+                "custom": {
+                    "type": "geo",
+                    "name": "Custom",
+                    "props": {
+                        "numericPropExampleC": {
+                            "name": "Numeric Prop Example C",
+                            "type": "num",
+                            "enabled": True,
+                            "help": "Help with the example numeric prop for this Custom",
+                            "unit": "units",
+                        },
+                        "booleanPropExample": {
+                            "name": "Boolean Prop Example",
+                            "type": "toggle",
+                            "help": "Help for boolean prop",
+                        },
+                    },
+                    "data": {
+                        "location": {
+                            "path": [[[-75.447, 40.345], [-77.447, 42.345], [-77.447, 44.345], [-75.447, 40.345]]],
+                        },
+                        "valueLists": {
+                            "numericPropExampleC": [100],
+                            "booleanPropExample": [True],
+                        },
+                    },
+                }
             }
         },
         "groupedOutputs": {
