@@ -163,8 +163,11 @@ REST_FRAMEWORK = {
 ## Channels Layer Support
 INSTALLED_APPS = ["daphne"] + INSTALLED_APPS
 CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"],
+        },
     },
 }
 ################################################################
@@ -172,12 +175,23 @@ CHANNEL_LAYERS = {
 
 # Caching
 ################################################################
-## NOTE: This is not efficient for production environments
-## NOTE: For production, switch to a network based memcache or redis envronment
+CACHE_BACKUP_INTERVAL = config("CACHE_BACKUP_INTERVAL", default=0, cast=int)
+CACHE_TIMEOUT = config("CACHE_TIMEOUT", default=0, cast=int)
+assert CACHE_TIMEOUT >= 0, "CACHE_TIMEOUT must be greater than or equal to 0"
+assert CACHE_BACKUP_INTERVAL >= 0, "CACHE_BACKUP_INTERVAL must be greater than or equal to 0"
+if CACHE_TIMEOUT > 0 and CACHE_BACKUP_INTERVAL == 0:
+    print("CACHE_TIMEOUT is set but CACHE_BACKUP_INTERVAL is not set")
+    print("Setting CACHE_BACKUP_INTERVAL to a third of CACHE_TIMEOUT")
+    CACHE_BACKUP_INTERVAL = CACHE_TIMEOUT//3
+if CACHE_TIMEOUT>0 and CACHE_TIMEOUT < CACHE_BACKUP_INTERVAL*2:
+    print("CACHE_TIMEOUT must be greater than CACHE_BACKUP_INTERVAL * 2")
+    print("Setting CACHE_TIMEOUT to CACHE_BACKUP_INTERVAL*3")
+    CACHE_TIMEOUT = CACHE_BACKUP_INTERVAL*3
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
+        "TIMEOUT": None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT,
     }
 }
 ################################################################

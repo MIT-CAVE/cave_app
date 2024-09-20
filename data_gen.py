@@ -2,8 +2,6 @@
 import django, os
 from cave_utils import Arguments
 from decouple import config
-from django.contrib.auth import get_user_model
-from django.utils import timezone
 
 # Fetch terminal arguments
 arguments = Arguments()
@@ -32,7 +30,7 @@ def generate():
         admin_user.set_password(config("DJANGO_ADMIN_PASSWORD"))
         admin_user.save()
 
-    # End the data generation if the globals data exists
+    # End the data generation if the pages data exists
     if Globals.objects.first():
         return
     

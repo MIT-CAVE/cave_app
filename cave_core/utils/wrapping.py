@@ -51,9 +51,6 @@ def cache_data_version(fn):
     API view wrapper to add a cached input version check prior to executing a view
 
     This is used to block multi window users from resolving out of sync versions individually
-
-    For low level docs on django's cache framework see
-    https://docs.djangoproject.com/en/4.0/topics/cache/
     """
 
     @wraps(fn)
@@ -70,17 +67,17 @@ def cache_data_version(fn):
 
 def ws_api_app(fn):
     """
-    API view wrapper to process websocket api app calls and handle exceptions that are raised sending them back to the end user.
+    API view wrapper to process websocket api app calls and handle exceptions that 
+    are raised sending them back to the end user.
     """
 
     @wraps(fn)
     def wrap(request):
-        # Store the session of the user at request time for long running sessions
+        # This needs to occur prior to fn since request.user.session chan change during the fn execution.
         session = request.user.session
         try:
             fn(request)
         except Exception as e:
-            session = request.user.session
             traceback_str = format_exception(e)
             if settings.DEBUG:
                 print(traceback_str)
@@ -93,9 +90,7 @@ def ws_api_app(fn):
                 duration=10,
                 traceback=traceback_str,
             )
-            # Turn off loading and set execution as False if the error was not raised related to executing
-            if session.executing and not session.__dict__.get("__blocked_due_to_execution__"):
-                session.set_executing(False)
-                session.broadcast_loading(False)
+            # Set the executing / loading status to false
+            session.set_loading(False)
 
     return wrap
