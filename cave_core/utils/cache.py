@@ -59,7 +59,7 @@ class Cache(CacheStorage):
         # Checking if RUN_MAIN is true ensures that the background tasks are only run once on initial server start
         if os.environ.get('RUN_MAIN', None) == 'true' and settings.CACHE_BACKUP_INTERVAL > 0:
             service = persist_cache_background_service(persistent_cache=self, id_regex='*session:*')
-            service.asyncRun()
+            service.asyncRun(daemon=True)
 
     def get(self, data_id:str, default=None):
         """
@@ -81,11 +81,13 @@ class Cache(CacheStorage):
             return data
         # Only pull from the persistent storage if the CACHE_BACKUP_INTERVAL is greater than 0
         if settings.CACHE_BACKUP_INTERVAL > 0:
-            if self.exists(data_id):
+            try:
                 with self.open(data_id) as f:
                     data = json.load(f)
                 self.cache.set(data_id, data)
                 return data
+            except:
+                pass
         return default
     
     def get_many(self, data_ids:list, default=None):
@@ -110,11 +112,11 @@ class Cache(CacheStorage):
             if settings.CACHE_BACKUP_INTERVAL > 0:
                 missing_data = {}
                 for data_id in missing_ids:
-                    if self.exists(data_id):
+                    try:
                         with self.open(data_id) as f:
                             missing_data[data_id] = json.load(f)
                         self.cache.set(data_id, missing_data[data_id])
-                    else:
+                    except:
                         missing_data[data_id] = default
                 data.update(missing_data)
             else:
@@ -182,8 +184,10 @@ class Cache(CacheStorage):
         if memory:
             self.cache.delete(data_id)
         if persistent:
-            if self.exists(data_id):
+            try:
                 super().delete(data_id)
+            except:
+                pass
 
     def delete_many(self, data_ids:list, memory:bool=True, persistent:bool=True):
         """
