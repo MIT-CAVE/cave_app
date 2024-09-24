@@ -393,6 +393,7 @@ class Globals(SingletonModel):
         default="logo_photos/cave_logo_mit_dark.png",
         blank=True,
         null=True,
+        storage=PublicMediaStorage(),
     )
     show_custom_pages = models.BooleanField(
         _("Show Custom Pages"),
