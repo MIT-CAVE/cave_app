@@ -1,5 +1,7 @@
 # Framework Imports
 from django.conf import settings
+from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
 from rest_framework.response import Response
 from rest_framework.decorators import (
     api_view,
@@ -15,18 +17,26 @@ from cave_core.utils.wrapping import api_util_response
 from cave_core.utils.emailing import send_email, format_validation_email_content
 
 
-# Views
-@api_view()
-@permission_classes([AllowAny])
+# Static Views
+@cache_page(60*60*24)
 def health(request):
     """
     API endpoint to check server health
 
     Does not take in parameters
     """
-    return Response({"status": "pass"})
+    return JsonResponse({"status": "pass"})
 
+@cache_page(60*60*24)
+def page_not_found(request):
+    """
+    API endpoint to handle 404 errors
 
+    Does not take in parameters
+    """
+    return JsonResponse({"status": "404 page not found"})
+
+# API Views
 @api_view(["GET"])
 @authentication_classes((SessionAuthentication,))
 @api_util_response

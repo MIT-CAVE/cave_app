@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView
-from django.urls import path
+from django.urls import path, re_path
 
 from cave_core import url_helpers
 from cave_core.admin import staff_site
@@ -56,6 +56,8 @@ urlpatterns = [
     # Admin site
     path("admin/", admin.site.urls),
     path("staff/", staff_site.urls),
+    # Return valid pages for 404s to avoid hacking attempts that triger health issues
+    re_path(r'^.*$', api_util_views.page_not_found),
 ]
 
 if settings.DEBUG:
