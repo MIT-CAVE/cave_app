@@ -84,7 +84,7 @@ class Cache(CacheStorage):
             try:
                 with self.open(data_id) as f:
                     data = json.load(f)
-                self.cache.set(data_id, data)
+                self.set(data_id, data)
                 return data
             except:
                 pass
@@ -115,7 +115,7 @@ class Cache(CacheStorage):
                     try:
                         with self.open(data_id) as f:
                             missing_data[data_id] = json.load(f)
-                        self.cache.set(data_id, missing_data[data_id])
+                        self.set(data_id, missing_data[data_id])
                     except:
                         missing_data[data_id] = default
                 data.update(missing_data)
@@ -142,7 +142,7 @@ class Cache(CacheStorage):
         """
         # print(f'Cache -> Setting: {data_id}')
         if memory:
-            self.cache.set(data_id, data)
+            self.cache.set(data_id, data, timeout=settings.CACHE_TIMEOUT)
         if persistent:
             self.save(data_id, ContentFile(json.dumps(data)))
 
@@ -162,7 +162,7 @@ class Cache(CacheStorage):
         """
         # print(f'Cache -> Setting: {data.keys()}')
         if memory:
-            self.cache.set_many(data)
+            self.cache.set_many(data, timeout=settings.CACHE_TIMEOUT)
         if persistent:
             for data_id, value in data.items():
                 self.set(data_id, value, memory=False, persistent=True)

@@ -187,11 +187,12 @@ if CACHE_TIMEOUT>0 and CACHE_TIMEOUT < CACHE_BACKUP_INTERVAL*2:
     print("CACHE_TIMEOUT must be greater than CACHE_BACKUP_INTERVAL * 2")
     print("Setting CACHE_TIMEOUT to CACHE_BACKUP_INTERVAL*3")
     CACHE_TIMEOUT = CACHE_BACKUP_INTERVAL*3
+CACHE_TIMEOUT = None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
-        "TIMEOUT": None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT,
+        "TIMEOUT": CACHE_TIMEOUT,
     }
 }
 ################################################################
