@@ -57,7 +57,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("staff/", staff_site.urls),
     # Return valid pages for 404s to avoid hacking attempts that triger health issues
-    re_path(r'^.*$', api_util_views.page_not_found),
+    # re_path(r'^.*$', api_util_views.page_not_found),
 ]
 
 if settings.DEBUG:
