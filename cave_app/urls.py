@@ -56,9 +56,10 @@ urlpatterns = [
     # Admin site
     path("admin/", admin.site.urls),
     path("staff/", staff_site.urls),
-    # Return valid pages for 404s to avoid hacking attempts that triger health issues
-    re_path(r'^.*$', api_util_views.page_not_found),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Return valid pages for 404s to avoid hacking attempts that triger health issues
+urlpatterns += [re_path(r'^.*$', api_util_views.page_not_found)]
