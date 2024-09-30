@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView
-from django.urls import path, re_path
+from django.urls import path
 
 from cave_core import url_helpers
 from cave_core.admin import staff_site
