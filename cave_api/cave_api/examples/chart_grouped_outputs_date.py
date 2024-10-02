@@ -34,8 +34,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "chartPage",
             "data": {
                 "chartPage": {
-                    "pageLayout": [
-                        {
+                    "pageLayout": ["chart", None, None, None],
+                        "charts": {
+                            "chart": {
                             "type": "groupedOutput",
                             "variant": "line",
                             "groupingId": ["date", "product"],
@@ -44,7 +45,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupedOutputDataId": "salesData",
                             "statId": "sales",
                         }
-                    ],
+                    },
                 },
             },
         },

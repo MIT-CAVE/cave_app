@@ -690,18 +690,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "dash2",
             "data": {
                 "dash1": {
-                    "pageLayout": [
-                        {
+                    "charts": {
+                        "allBar": {
                             "variant": "bar",
                             "statAggregation": "mean",
                         },
-                        {
+                        "map1": {
                             "type": "map",
                             "mapId": "map1",
                             "showToolbar": False,
                             "maximized": True,
                         },
-                        {
+                        "statBar": {
                             "variant": "bar",
                             "groupingLevel": ["size"],
                             "groupingId": ["sku"],
@@ -710,19 +710,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupedOutputDataId": "locationGroup",
                             "statId": "numericExampleCalculationStat",
                         },
-                    ],
+                    },
+                    "pageLayout": ["allBar", "map1", None, "statBar"],
                     "lockedLayout": False,
                 },
                 "dash2": {
-                    "pageLayout": [
-                        {
+                    "charts": {
+                        "allBar": {
                             "variant": "bar",
                             "statAggregation": "mean",
                             "groupedOutputDataId": "locationGroup",
                             "statId": "numericStatExampleB",
                             "showNA": True,
                         },
-                        {
+                        "mixed": {
                             "variant": "mixed",
                             "statAggregation": "sum",
                             "groupedOutputDataId": ["locationGroup", "locationGroup"],
@@ -732,7 +733,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "leftVariant": "bar",
                             "rightVariant": "cumulative_line",
                         },
-                        {
+                        "boxPlot": {
                             "variant": "box_plot",
                             "groupingLevel": ["size"],
                             "lockedLayout": True,
@@ -741,7 +742,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupedOutputDataId": "locationGroup",
                             "statId": "numericExampleCalculationStat",
                         },
-                        {
+                        "cumulativeLine": {
                             "variant": "cumulative_line",
                             "statAggregation": "sum",
                             "groupedOutputDataId": "locationGroup",
@@ -750,6 +751,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupingLevel": ["state", "sku"],
                             "defaultToZero": True,
                         },
+                    },
+                    "pageLayout": [
+                        "allBar",
+                        "mixed",
+                        "boxPlot",
+                        "cumulativeLine",
                     ],
                     "lockedLayout": False,
                 },

@@ -192,14 +192,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "currentPage": "mapPage",
                 "data": {
                     "mapPage": {
-                        "pageLayout": [
-                            {
+                        "charts": {
+                            "map": {
                                 "type": "map",
                                 "mapId": "populationMap",
                                 "showToolbar": False,
                                 "maximized": True,
                             },
-                        ],
+                        },
+                        "pageLayout": ["map", None, None, None],
                     },
                 },
             }

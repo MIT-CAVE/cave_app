@@ -40,12 +40,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "chartPage",
             "data": {
                 "chartPage": {
-                    "pageLayout": [
-                        {
+                    "charts": {
+                        "chart1": {
                             "type": "globalOutput",
                             "variant": "overview",
                         }
-                    ],
+                    },
+                    "pageLayout": ["chart1", None, None, None],
                 },
             },
         },
