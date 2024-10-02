@@ -141,7 +141,7 @@ def profile(request):
         form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             user = form.save()
-        return redirect("/profile")
+        return redirect("/profile/")
     else:
         form = UpdateUserForm(instance=request.user)
         return render(
