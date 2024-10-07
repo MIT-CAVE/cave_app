@@ -141,3 +141,22 @@ class Socket:
             },
             loading=False,
         )
+    
+    @type_enforced.Enforcer
+    def send_session_data(
+        self,
+        data: dict,
+    ):
+        """
+        Send end users the current session data
+
+        Requires:
+
+        - `data`:
+            - Type: dict
+            - What: The session data to send to the user
+        """
+        self.broadcast(
+            event="message",
+            data=data,
+        )
