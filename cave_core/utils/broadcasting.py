@@ -15,6 +15,7 @@ acceptable_events = set(
         "message",
         "updateSessions",
         "updateLoading",
+        "export",
     ]
 )
 
@@ -157,6 +158,6 @@ class Socket:
             - What: The session data to send to the user
         """
         self.broadcast(
-            event="message",
+            event="export",
             data=data,
         )
