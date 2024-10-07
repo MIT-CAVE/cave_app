@@ -42,7 +42,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
     # For this example, `myCommand` defined in the api in appBar.data.myCommandButton.apiCommand
     elif command == "myCommand":
         # Send the current session data to app users
-        socket.send_session_data(session_data)
+        socket.export(session_data)
         # Log a message in the console
         print("Console Log: `myCommand` has been triggered!")
         return session_data

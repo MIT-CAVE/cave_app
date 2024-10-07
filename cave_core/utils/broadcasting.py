@@ -144,7 +144,7 @@ class Socket:
         )
     
     @type_enforced.Enforcer
-    def send_session_data(
+    def export(
         self,
         data: dict,
     ):
