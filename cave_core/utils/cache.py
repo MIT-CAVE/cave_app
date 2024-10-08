@@ -22,7 +22,6 @@ def persist_cache_background_service(persistent_cache, id_regex:str):
         - This function will only work for Redis based caches
     """
     print('Starting the cache persistence background service...')
-    lowLevelCache = persistent_cache.cache._cache.get_client()
     while True:
         try:
             # Interruptable sleep
@@ -37,11 +36,9 @@ def persist_cache_background_service(persistent_cache, id_regex:str):
             # Assume multiple servers are running - only run this if the last update was long enough ago
             if meta['last_update']+settings.CACHE_BACKUP_INTERVAL<now:
                 meta['last_update'] = now
-                persistent_cache.set('meta', meta)
+                persistent_cache.set('meta', meta, timeout=None)
                 # Note: This will only work for Redis based caches
-                for full_key in lowLevelCache.keys(id_regex):
-                    # Remove the prefix from the key to get the actual key (EG: '01:data:1' -> 'data:1')
-                    key = ":".join(full_key.decode().split(':')[2:])
+                for key in persistent_cache.cache.keys(id_regex):
                     data = persistent_cache.cache.get(key)
                     if data is not None:
                         persistent_cache.set(key, data, memory=False, persistent=True)
@@ -124,7 +121,7 @@ class Cache(CacheStorage):
                     data[data_id] = default
         return data
     
-    def set(self, data_id:str, data:dict, memory:bool=True, persistent:bool=False):
+    def set(self, data_id:str, data:dict, memory:bool=True, persistent:bool=False, timeout:[int|None]=settings.CACHE_TIMEOUT):
         """
         Sets the data in one or both of the cache and the persistent storage
 
@@ -139,14 +136,17 @@ class Cache(CacheStorage):
         persistent: bool
             Whether to store the data in the persistent storage
             Default: False
+        timeout: int
+            The timeout to use for the cache
+            Default: settings.CACHE_TIMEOUT
+            Note: If None, the cache will not expire
         """
-        # print(f'Cache -> Setting: {data_id}')
         if memory:
-            self.cache.set(data_id, data, timeout=settings.CACHE_TIMEOUT)
+            self.cache.set(data_id, data, timeout=timeout)
         if persistent:
             self.save(data_id, ContentFile(json.dumps(data)))
 
-    def set_many(self, data:dict, memory:bool=True, persistent:bool=False):
+    def set_many(self, data:dict, memory:bool=True, persistent:bool=False, timeout:[int|None]=settings.CACHE_TIMEOUT):
         """
         Sets the data in one or both of the cache and the persistent storage
 
@@ -159,10 +159,14 @@ class Cache(CacheStorage):
         persistent: bool
             Whether to store the data in the persistent storage
             Default: False
+        timeout: int
+            The timeout to use for the cache
+            Default: settings.CACHE_TIMEOUT
+            Note: If None, the cache will not expire        
         """
         # print(f'Cache -> Setting: {data.keys()}')
         if memory:
-            self.cache.set_many(data, timeout=settings.CACHE_TIMEOUT)
+            self.cache.set_many(data, timeout=timeout)
         if persistent:
             for data_id, value in data.items():
                 self.set(data_id, value, memory=False, persistent=True)
@@ -226,7 +230,7 @@ class Cache(CacheStorage):
         """
         # print(f'Cache -> Deleting: {pattern}')
         if memory:
-            keys = [":".join(full_key.decode().split(':')[2:]) for full_key in self.cache._cache.get_client().keys(f"*{pattern}")]
+            keys = self.cache.keys(f"*{pattern}")
             self.delete_many(keys, memory=True)
         if persistent:
             persistent_pattern = pattern.replace('*', '')
