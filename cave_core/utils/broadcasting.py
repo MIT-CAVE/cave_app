@@ -15,6 +15,7 @@ acceptable_events = set(
         "message",
         "updateSessions",
         "updateLoading",
+        "export",
     ]
 )
 
@@ -140,4 +141,23 @@ class Socket:
                 **kwargs,
             },
             loading=False,
+        )
+    
+    @type_enforced.Enforcer
+    def export(
+        self,
+        data: dict,
+    ):
+        """
+        Send end users the current session data
+
+        Requires:
+
+        - `data`:
+            - Type: dict
+            - What: The session data to send to the user
+        """
+        self.broadcast(
+            event="export",
+            data=data,
         )
