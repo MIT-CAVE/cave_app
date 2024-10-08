@@ -149,13 +149,13 @@ class Socket:
         data: dict,
     ):
         """
-        Send end users the current session data
+        Send end users a json serializable object which is downloaded by the client to the user's device
 
         Requires:
 
         - `data`:
             - Type: dict
-            - What: The session data to send to the user
+            - What: Json encodable data to send to the user
         """
         self.broadcast(
             event="export",
