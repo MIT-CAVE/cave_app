@@ -1130,7 +1130,7 @@ class Sessions(models.Model):
         if wipeExisting:
             data_keys = list(data.keys())
             keys_to_delete = pamda.difference(list(versions.keys()), data_keys)
-            cache.delete_many([f"session:{self.id}:data:{key}" for key in keys_to_delete])
+            cache.delete_many([f"session:{self.id}:data:{key}" for key in keys_to_delete], memory=True, persistent=True)
             for key in keys_to_delete:
                 versions.pop(key, None)
         # Update the cache with the new data

@@ -3,11 +3,9 @@ from django.core.cache import cache
 from django.core.files.base import ContentFile
 from cave_app.storage_backends import CacheStorage
 
-import json, time, os
-from pamda import pamda
+import json, time, multiprocessing, os
 
 
-@pamda.thunkify
 def persist_cache_background_service(persistent_cache, id_regex:str):
     """
     Persists the data in the cache to the persistent storage
@@ -32,13 +30,14 @@ def persist_cache_background_service(persistent_cache, id_regex:str):
             meta = persistent_cache.get('meta')
             if meta is None:
                 meta = {'last_update':0}
+
             now = time.time()
             # Assume multiple servers are running - only run this if the last update was long enough ago
             if meta['last_update']+settings.CACHE_BACKUP_INTERVAL<now:
                 meta['last_update'] = now
                 persistent_cache.set('meta', meta, timeout=None)
                 # Note: This will only work for Redis based caches
-                for key in persistent_cache.cache.keys(id_regex):
+                for key in persistent_cache.keys(id_regex, memory=True):
                     data = persistent_cache.cache.get(key)
                     if data is not None:
                         persistent_cache.set(key, data, memory=False, persistent=True)
@@ -55,8 +54,45 @@ class Cache(CacheStorage):
         # Run the persistence background tasks if CACHE_BACKUP_INTERVAL is greater than 0
         # Checking if RUN_MAIN is true ensures that the background tasks are only run once on initial server start
         if os.environ.get('RUN_MAIN', None) == 'true' and settings.CACHE_BACKUP_INTERVAL > 0:
-            service = persist_cache_background_service(persistent_cache=self, id_regex='*session:*')
-            service.asyncRun(daemon=True)
+            p = multiprocessing.Process(target=persist_cache_background_service, args=(self, '*session:*'))
+            p.daemon = True
+            p.start()
+
+    def __format_low_level_cache_key__(self, key: bytes):
+        return ":".join(key.decode().split(':')[2:])
+    
+    def __low_level_cache__(self):
+        return self.cache._cache.get_client()
+    
+    def __low_level_cache_keys__(self, pattern:str):
+        return [self.__format_low_level_cache_key__(key) for key in self.__low_level_cache__().keys(pattern)]
+
+    def keys(self, pattern:str, memory:bool=False, persistent:bool=False):
+        """
+        Gets the keys in the cache based on a pattern
+
+        pattern: str
+            The pattern to use to find the keys
+            Note: The pattern is a simple string pattern to indicate key starts with
+            Note: A '*' can be used as a wildcard at the end of the pattern but not in the middle
+        memory: bool
+            Whether to get the keys from the memory based cache
+            Default: False
+            Note: Can not be True if persistent is True
+        persistent: bool
+            Whether to get the keys from the persistent storage cache
+            Default: False
+            Note: Can not be True if memory is True
+        """
+        assert memory ^ persistent, "Cache.keys(): Either memory or persistent must be True but not both"
+        if memory:
+            pattern = f"*{pattern}" if not pattern.startswith("*") else pattern
+            return self.__low_level_cache_keys__(pattern)
+        else:
+            if pattern == '*':
+                return [item for item in self.listdir('')[1] if item != '.gitignore']
+            return [item for item in self.listdir('')[1] if item != '.gitignore' and item.contains(pattern.replace('*', ''))]
+
 
     def get(self, data_id:str, default=None):
         """
@@ -171,7 +207,7 @@ class Cache(CacheStorage):
             for data_id, value in data.items():
                 self.set(data_id, value, memory=False, persistent=True)
 
-    def delete(self, data_id:str, memory:bool=True, persistent:bool=True):
+    def delete(self, data_id:str, memory:bool=False, persistent:bool=False):
         """
         Deletes the data in one or both of the cache and the persistent storage
 
@@ -179,12 +215,13 @@ class Cache(CacheStorage):
             The data_id of the data to be deleted
         memory: bool
             Whether to delete the data from the cache
-            Default: True
+            Default: False
         persistent: bool
             Whether to delete the data from the persistent storage
-            Default: True
+            Default: False
         """
         # print(f'Cache -> Deleting: {data_id}')
+        assert memory or persistent, "Either memory or persistent must be True"
         if memory:
             self.cache.delete(data_id)
         if persistent:
@@ -193,7 +230,7 @@ class Cache(CacheStorage):
             except:
                 pass
 
-    def delete_many(self, data_ids:list, memory:bool=True, persistent:bool=True):
+    def delete_many(self, data_ids:list, memory:bool=False, persistent:bool=False):
         """
         Deletes the data in one or both of the cache and the persistent storage
 
@@ -201,17 +238,18 @@ class Cache(CacheStorage):
             The data_ids of the data to be deleted
         memory: bool
             Whether to delete the data from the cache
-            Default: True
+            Default: False
         persistent: bool
             Whether to delete the data from the persistent storage
-            Default: True
+            Default: False
         """
         # print(f'Cache -> Deleting: {data_ids}')
+        assert memory or persistent, "Cache.delete_many(): Either memory or persistent must be True"
         if memory:
             self.cache.delete_many(data_ids)
         if persistent:
             for data_id in data_ids:
-                self.delete(data_id, memory=False, persistent=True)
+                self.delete(data_id, persistent=True)
 
     def delete_pattern(self, pattern:str, memory:bool=True, persistent:bool=True):
         """
@@ -229,10 +267,8 @@ class Cache(CacheStorage):
             Default: True
         """
         # print(f'Cache -> Deleting: {pattern}')
+        assert memory or persistent, "Cache.delete_pattern(): Either memory or persistent must be True"
         if memory:
-            keys = self.cache.keys(f"*{pattern}")
-            self.delete_many(keys, memory=True)
+            self.delete_many(self.keys(pattern, memory=True), memory=True)
         if persistent:
-            persistent_pattern = pattern.replace('*', '')
-            keys = [item for item in self.listdir('')[1] if item != '.gitignore' and item.startswith(persistent_pattern)]
-            self.delete_many(keys, memory=False, persistent=True)
+            self.delete_many(self.keys(pattern, persistent=True), persistent=True)

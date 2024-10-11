@@ -190,12 +190,9 @@ if CACHE_TIMEOUT>0 and CACHE_TIMEOUT < CACHE_BACKUP_INTERVAL*2:
 CACHE_TIMEOUT = None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
         "TIMEOUT": CACHE_TIMEOUT,
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        },
     }
 }
 ################################################################
