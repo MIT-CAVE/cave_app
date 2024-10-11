@@ -36,7 +36,6 @@ def persist_cache_background_service(persistent_cache, id_regex:str):
             if meta['last_update']+settings.CACHE_BACKUP_INTERVAL<now:
                 meta['last_update'] = now
                 persistent_cache.set('meta', meta, timeout=None)
-                # Note: This will only work for Redis based caches
                 for key in persistent_cache.keys(id_regex, memory=True):
                     data = persistent_cache.cache.get(key)
                     if data is not None:
@@ -54,9 +53,8 @@ class Cache(CacheStorage):
         # Run the persistence background tasks if CACHE_BACKUP_INTERVAL is greater than 0
         # Checking if RUN_MAIN is true ensures that the background tasks are only run once on initial server start
         if os.environ.get('RUN_MAIN', None) == 'true' and settings.CACHE_BACKUP_INTERVAL > 0:
-            p = multiprocessing.Process(target=persist_cache_background_service, args=(self, '*session:*'))
-            p.daemon = True
-            p.start()
+            service = persist_cache_background_service(self, 'session:*')
+            service.asyncRun(daemon=True)
 
     def __format_low_level_cache_key__(self, key: bytes):
         return ":".join(key.decode().split(':')[2:])
@@ -70,6 +68,8 @@ class Cache(CacheStorage):
     def keys(self, pattern:str, memory:bool=False, persistent:bool=False):
         """
         Gets the keys in the cache based on a pattern
+
+        Note: This function will only work for Redis based caches
 
         pattern: str
             The pattern to use to find the keys

@@ -13,7 +13,7 @@ pamda>=2.5.0
 pillow==10.4.0
 psycopg2-binary==2.9.9
 python-decouple==3.8
-redis==5.0.8
+redis==5.1.1
 type_enforced>=1.5.0
 whitenoise==6.7.0
 -r ./utils/extra_requirements.txt
