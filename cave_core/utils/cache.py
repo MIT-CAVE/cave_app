@@ -3,9 +3,10 @@ from django.core.cache import cache
 from django.core.files.base import ContentFile
 from cave_app.storage_backends import CacheStorage
 
-import json, time, multiprocessing, os
+import json, time, os
+from pamda import pamda
 
-
+@pamda.thunkify
 def persist_cache_background_service(persistent_cache, id_regex:str):
     """
     Persists the data in the cache to the persistent storage
