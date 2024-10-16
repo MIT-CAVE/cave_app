@@ -1561,17 +1561,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             "timeValues": {
                                 0: {
-                                    "latitude": [[43.78, 39.82]],
+                                    "latitude": [[43.78], [39.82]],
                                 },
                                 1: {
-                                    "latitude": [[44.78, 39.82]],
+                                    "latitude": [[44.78], [39.82]],
                                 },
                                 2: {
-                                    "latitude": [[45.78, 39.82]],
+                                    "latitude": [[45.78], [39.82]],
                                 },
                             },
-                            "latitude": [[43.78, 39.82]],
-                            "longitude": [[-79.63, -86.18]],
+                            "latitude": [[43.78], [39.82]],
+                            "longitude": [[-79.63], [-86.18]],
                         },
                         "valueLists": {
                             "numericPropExampleA": [100, 80],
@@ -1612,8 +1612,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "latitude": [[42.89, 28.49, 42.361176]],
-                            "longitude": [[-85.68, -81.56, -71.084707]],
+                            "latitude": [[42.89], [28.49], [42.361176]],
+                            "longitude": [[-85.68], [-81.56], [-71.084707]],
                         },
                         "valueLists": {
                             "numericPropExampleA": [500, 1000, 1000],
