@@ -66,7 +66,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # stat[0] = left stat
                                     {
                                         "statId": "demand",
-                                        "aggregationType": "mean",
+                                        "aggregationType": "sum",
                                         # no aggregation grouping specified -> default None
                                     },
                                     # stat[1] = right stat
@@ -94,12 +94,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     },
                                     {
                                         "statId": "sales",
-                                        "aggregationType": "mean",
-                                        "aggregationGroupingId": "product", # specifies aggregation grouping
-                                        "aggregationGroupingLevel": "size",
-                                    },
-                                    {
-                                        "statId": "pctDemandMet",
                                         "aggregationType": "sum",
                                     },
                             ],
@@ -185,27 +179,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "stats": [
                             "demand",
                             "sales",
-                            "pctDemandMet",
                         ],
                     },
                     "stats": {
                         "demand": {
                             "name": "Demand",
-                            "calculation": "demand",
                             "unit": "units",
                         },
                         "sales": {
                             "name": "Sales",
-                            "calculation": "sales",
                             "unit": "units",
-                        },
-                        "pctDemandMet": {
-                            "name": "Percent of Demand Met",
-                            "calculation": 'sales / groupSum("demand")',
-                            "precision": 2,
-                            "trailingZeros": True,
-                            "unit": "%",
-                            "unitPlacement": "after",
                         },
                     },
                     "valueLists": {
