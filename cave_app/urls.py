@@ -16,7 +16,7 @@ urlpatterns = [
     path("app/people/", site_views.people),
     path("app/interface/", site_views.app),
     path("app/profile/", site_views.profile),
-    path("app/validate_email/", site_views.validate_email),
+    path("validate_email/", site_views.validate_email),
     # Secondary Pages
     path("signup/", site_views.signup),
     path("app/logout/", site_views.user_logout),
