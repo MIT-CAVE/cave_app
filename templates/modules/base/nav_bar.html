@@ -50,8 +50,6 @@
         </li>
         {% if user.is_authenticated %}
           {% include "modules/base/authenticated_nav.html" %}
-        {% else %}
-          {% include "modules/base/non_authenticated_nav.html" %}
         {% endif %}
       </ul>
     </div>
