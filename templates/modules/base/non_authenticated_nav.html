@@ -35,28 +35,3 @@
   </div>
 </li>
 {% endif %}
-
-<li class="nav-item">
-  <a class="nav-link" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="material-icons">login</span>
-    <p class="d-inline d-lg-none mx-3">Login</p>
-  </a>
-  <div class="dropdown-menu dropdown-menu-end" style="width: 300px; max-width: 90vw;" aria-labelledby="loginDropdown">
-    <a class="dropdown-item">
-      <form class="form-inline my-2 my-lg-0" method="post" action='/login/?next={{ request.get_full_path }}'>
-        {% csrf_token %}
-        <div class="col-12 p-1">
-          <input class="form-control" type="text" name="username" placeholder="Email/Username">
-        </div>
-        <div class="col-12 p-1">
-          <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <div class="col-12 p-1">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="submit">Login</button>
-        </div>
-      </form>
-    </a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="/reset_password/">Reset Password</a>
-  </div>
-</li>

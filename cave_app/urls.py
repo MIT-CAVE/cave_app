@@ -11,23 +11,23 @@ from cave_core.views import site_views, api_util_views
 
 urlpatterns = [
     # Main Pages
-    path("", site_views.index),
-    path("page/", site_views.page),
-    path("people/", site_views.people),
-    path("app/", site_views.app),
-    path("profile/", site_views.profile),
-    path("validate_email/", site_views.validate_email),
+    path("app/", site_views.index),
+    path("app/page/", site_views.page),
+    path("app/people/", site_views.people),
+    path("app/interface/", site_views.app),
+    path("app/profile/", site_views.profile),
+    path("app/validate_email/", site_views.validate_email),
     # Secondary Pages
     path("signup/", site_views.signup),
-    path("logout/", site_views.user_logout),
-    path("change_password/", site_views.change_password),
+    path("app/logout/", site_views.user_logout),
+    path("app/change_password/", site_views.change_password),
     # General API Pages
     path("health/", api_util_views.health),
     path("custom_pages/", api_util_views.custom_pages),
     path("send_email_validation_code/", api_util_views.send_email_validation_code),
     # User Authentication
     path(
-        "login/",
+        "",
         LoginView.as_view(
             extra_context=url_helpers.get_extra_content(), redirect_authenticated_user=True
         ),
@@ -54,8 +54,8 @@ urlpatterns = [
         name="password_reset_complete",
     ),
     # Admin site
-    path("admin/", admin.site.urls),
-    path("staff/", staff_site.urls),
+    path("app/admin/", admin.site.urls),
+    path("app/staff/", staff_site.urls),
 ]
 
 if settings.DEBUG:

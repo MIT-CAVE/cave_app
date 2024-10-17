@@ -10,6 +10,7 @@ from cave_core import forms, models
 
 
 # Views
+@login_required(login_url="")
 def index(request):
     """
     Index View
@@ -36,7 +37,7 @@ def index(request):
     )
 
 
-@login_required(login_url="/login")
+@login_required(login_url="")
 def page(request):
     """
     Generic page view
@@ -67,7 +68,7 @@ def page(request):
         return redirect("/")
 
 
-@login_required(login_url="/login")
+@login_required(login_url="")
 def people(request):
     """
     People view
@@ -93,7 +94,7 @@ def people(request):
         return redirect("/")
 
 
-@login_required(login_url="/login")
+@login_required(login_url="")
 def app(request):
     """
     App view
@@ -126,7 +127,7 @@ def app(request):
         return redirect("/")
 
 
-@login_required(login_url="/login")
+@login_required(login_url="")
 def profile(request):
     """
     User profile view
@@ -141,7 +142,7 @@ def profile(request):
         form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             user = form.save()
-        return redirect("/profile/")
+        return redirect("/app/profile/")
     else:
         form = UpdateUserForm(instance=request.user)
         return render(
@@ -157,7 +158,7 @@ def profile(request):
         )
 
 
-@login_required(login_url="/login")
+@login_required(login_url="")
 def change_password(request):
     """
     Change password view
