@@ -255,4 +255,4 @@ def user_logout(request):
     Allows users to logout of the site
     """
     logout(request)
-    return redirect("/app/")
+    return redirect("/")
