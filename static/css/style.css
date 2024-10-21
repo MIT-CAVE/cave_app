@@ -136,7 +136,7 @@
   margin-right: auto;
   margin-left: auto;
   overflow: auto;
-  padding: 5px;
+  padding: 10px;
 }
 
 .form-btn-container {
@@ -151,7 +151,7 @@
   padding-left: 10px;
   padding-right: 10px;
   margin-top: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: row;
   gap: 140px;
@@ -159,10 +159,12 @@
 
 .table-login {
   margin-bottom: 5px;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .table-login input {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
   color: white;
@@ -190,6 +192,26 @@ th, td {
 }
 
 .secondary-text-login:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-cancel {
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  border-color: white;
+  border-width: 2px;
+  font-weight: bold;
+}
+
+.cancel-text {
+  font-size: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+}
+
+.cancel-text:hover {
   color: rgba(255, 255, 255, 0.5);
 }
 

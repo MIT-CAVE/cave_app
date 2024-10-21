@@ -37,7 +37,7 @@ class CustomUser(AbstractUser):
         error_messages={
             "unique": _("A user with that email already exists."),
         },
-        help_text=_("Required. A valid email address"),
+        help_text=_("Required. A valid email address."),
     )
     photo = models.ImageField(
         _("photo"),

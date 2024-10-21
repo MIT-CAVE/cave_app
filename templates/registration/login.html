@@ -5,7 +5,7 @@
   <div class="section-heading form-container">
     <form method="post">
       {% csrf_token %}
-      <table class="table text-white table-login">
+      <table class="table table-login bg-primary text-white">
       {{ form.as_table }}
       </table>
       <div class="form-info-container">
@@ -13,7 +13,7 @@
         <a class="secondary-text-login" href="/reset_password" style="align-self:flex-end"><h10>Forgot Password?</h10></a>
       </div>
       <div class="form-btn-container">
-        <button type="submit" class="btn btn-md btn-login btn-login" name="submit" value="True">Log In</button>
+        <button type="submit" class="btn btn-md btn-login" name="submit" value="True">Log In</button>
       </div>
     </form>
   </div>
