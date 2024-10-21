@@ -92,7 +92,7 @@ class Cache(CacheStorage):
         else:
             if pattern == '*':
                 return [item for item in self.listdir('')[1] if item != '.gitignore']
-            return [item for item in self.listdir('')[1] if item != '.gitignore' and item.contains(pattern.replace('*', ''))]
+            return [item for item in self.listdir('')[1] if item != '.gitignore' and pattern.replace('*', '') in item]
 
 
     def get(self, data_id:str, default=None):
