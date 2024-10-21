@@ -10,6 +10,7 @@ from cave_core import forms, models
 
 
 # Views
+@login_required(login_url="/")
 def index(request):
     """
     Index View
@@ -36,7 +37,7 @@ def index(request):
     )
 
 
-@login_required(login_url="/login")
+@login_required(login_url="/")
 def page(request):
     """
     Generic page view
@@ -48,9 +49,9 @@ def page(request):
         globals = models.Globals.get_solo()
         page = models.Pages.objects.filter(show=True, url_name=request.GET.get("page")).first()
         if page == None:
-            return redirect("/")
+            return redirect("/app/")
         if (not request.user.has_access()) and page.require_access:
-            return redirect("/")
+            return redirect("/app/")
         return render(
             request,
             "generic.html",
@@ -64,10 +65,10 @@ def page(request):
             },
         )
     else:
-        return redirect("/")
+        return redirect("/app/")
 
 
-@login_required(login_url="/login")
+@login_required(login_url="/")
 def people(request):
     """
     People view
@@ -77,7 +78,7 @@ def people(request):
     # print("\n\nPeople\n")
     globals = models.Globals.get_solo()
     if not request.user.has_access() or not globals.show_people_page:
-        return redirect("/")
+        return redirect("/app/")
     if request.method == "GET":
         return render(
             request,
@@ -90,10 +91,10 @@ def people(request):
             },
         )
     else:
-        return redirect("/")
+        return redirect("/app/")
 
 
-@login_required(login_url="/login")
+@login_required(login_url="/")
 def app(request):
     """
     App view
@@ -103,9 +104,9 @@ def app(request):
     # print("\n\nApp\n")
     globals = models.Globals.get_solo()
     if not request.user.has_access():
-        return redirect("/")
+        return redirect("/app/")
     if not globals.show_app_page:
-        return redirect("/")
+        return redirect("/app/")
     if request.method == "GET":
         appResponse = render(
             request,
@@ -123,10 +124,10 @@ def app(request):
         appResponse["Cross-Origin-Opener-Policy"] = "same-origin"
         return appResponse
     else:
-        return redirect("/")
+        return redirect("/app/")
 
 
-@login_required(login_url="/login")
+@login_required(login_url="/")
 def profile(request):
     """
     User profile view
@@ -135,13 +136,13 @@ def profile(request):
     """
     globals = models.Globals.get_solo()
     if not globals.allow_user_edit_info:
-        return redirect("/")
+        return redirect("/app/")
     UpdateUserForm = forms.UpdateUserForm(globals)
     if request.method == "POST":
         form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             user = form.save()
-        return redirect("/profile/")
+        return redirect("/app/profile/")
     else:
         form = UpdateUserForm(instance=request.user)
         return render(
@@ -157,7 +158,7 @@ def profile(request):
         )
 
 
-@login_required(login_url="/login")
+@login_required(login_url="/")
 def change_password(request):
     """
     Change password view
@@ -169,7 +170,7 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
-            return redirect("/")
+            return redirect("/app/")
     else:
         form = PasswordChangeForm(request.user)
     return render(

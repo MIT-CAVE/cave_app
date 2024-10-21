@@ -16,7 +16,7 @@
                 link.classList.add('nav-link')
                 link.classList.add('dropdown-item')
                 link.id = 'cusom_page-'.concat(custom_page.url_name)
-                link.href = `/page/?page=${custom_page.url_name}`
+                link.href = `/app/page/?page=${custom_page.url_name}`
                 link.appendChild(document.createTextNode(custom_page.name))
                 document.getElementById('CustomPageDropdownItems').appendChild(link)
               })

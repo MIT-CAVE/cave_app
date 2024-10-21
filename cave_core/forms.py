@@ -27,8 +27,8 @@ class UpdateUserForm(forms.ModelForm):
 
 
 class CreateUserForm(UserCreationForm):
-    first_name = forms.CharField(max_length=30, required=True, help_text="Enter your First Name")
-    last_name = forms.CharField(max_length=30, required=True, help_text="Enter your Last Name")
+    first_name = forms.CharField(max_length=30, required=True, help_text="Enter your first name.")
+    last_name = forms.CharField(max_length=30, required=True, help_text="Enter your last name.")
 
     class Meta:
         model = models.CustomUser
