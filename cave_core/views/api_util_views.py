@@ -1,15 +1,11 @@
 # Framework Imports
 from django.conf import settings
 from django.http import JsonResponse
-from django.views.decorators.cache import cache_page
-from rest_framework.response import Response
 from rest_framework.decorators import (
     api_view,
-    permission_classes,
     authentication_classes,
 )
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import AllowAny
 
 # Internal Imports
 from cave_core import models
@@ -18,7 +14,6 @@ from cave_core.utils.emailing import send_email, format_validation_email_content
 
 
 # Static Views
-@cache_page(60*60*24)
 def health(request):
     """
     API endpoint to check server health
@@ -27,7 +22,6 @@ def health(request):
     """
     return JsonResponse({"status": "pass"})
 
-@cache_page(60*60*24)
 def page_not_found(request):
     """
     API endpoint to handle 404 errors
@@ -46,8 +40,6 @@ def custom_pages(request):
 
     Does not take in parameters
     """
-    # print("\n\nCustom Pages\n")
-    # Execute View Procedures
     filter_vars = {"show": True}
     if not request.user.has_access():
         filter_vars["require_access"] = False

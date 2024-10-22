@@ -37,7 +37,7 @@ class CustomUser(AbstractUser):
         error_messages={
             "unique": _("A user with that email already exists."),
         },
-        help_text=_("Required. A valid email address"),
+        help_text=_("Required. A valid email address."),
     )
     photo = models.ImageField(
         _("photo"),
@@ -395,6 +395,15 @@ class Globals(SingletonModel):
         null=True,
         storage=PublicMediaStorage(),
     )
+    site_background = models.ImageField(
+        _("Site Background"),
+        help_text=_("Background image of the app - Used as the background of many pages"),
+        upload_to="background_photos",
+        default="background_photos/cave_wallpaper.jpg",
+        blank=True,
+        null=True,
+        storage=PublicMediaStorage(),
+    )
     show_custom_pages = models.BooleanField(
         _("Show Custom Pages"),
         help_text=_("Should the custom pages be showed? - Used for every defined custom page"),
@@ -446,7 +455,7 @@ class Globals(SingletonModel):
     allow_anyone_create_user = models.BooleanField(
         _("Allow anyone to create a user"),
         help_text=_(
-            "Should anyone be allowed to create a user? - Used in non authenticated nav pages to allow/disallow account creation"
+            "Should anyone be allowed to create a user? - Used in login screen to allow anyone to create a user"
         ),
         default=False,
     )
