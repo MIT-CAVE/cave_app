@@ -4,11 +4,6 @@
   min-height: calc(100vh - 56px);
 }
 
-.bg-background-login {
-  background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/media/page_section_photos/cave_wallpaper.jpg");
-  background-size: cover;
-}
-
 .bg-empty {
   background-color: rgba(255, 255, 255, 0);
 }
@@ -154,6 +149,7 @@
   margin-bottom: 30px;
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: 140px;
 }
 

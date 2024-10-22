@@ -7,7 +7,7 @@
     {% if globals.allow_user_edit_info %}
     <a class="dropdown-item" href="/app/profile/">Edit Profile</a>
     {% endif %}
-    <a class="dropdown-item" href="/app/change_password/">Change Password</a>
+    <a class="dropdown-item" href="/auth/change_password/">Change Password</a>
   </div>
 </li>
 {% if access_dict %}
@@ -30,7 +30,7 @@
   </li>
   {% endif %}
 {% endif %}
-<li class="nav-item"><a class="nav-link" href="/app/logout/">
+<li class="nav-item"><a class="nav-link" href="/auth/logout/">
   <span class="material-icons">logout</span>
   <p class="d-inline d-lg-none mx-3">Logout</p>
 </a></li>

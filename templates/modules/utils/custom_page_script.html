@@ -1,7 +1,7 @@
 <script>
   function getCustomPages(){
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `/custom_pages/`);
+    xhr.open('GET', `/app/custom_pages/`);
     xhr.onreadystatechange = () => {
       if(xhr.readyState === 4){
         if(xhr.status === 200){

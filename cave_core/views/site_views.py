@@ -4,6 +4,9 @@ from django.contrib.auth import login, authenticate, update_session_auth_hash, l
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
+from django.contrib.auth.forms import AuthenticationForm
+from django.views.decorators.cache import cache_page
+
 
 # Internal Imports
 from cave_core import forms, models
@@ -95,11 +98,11 @@ def people(request):
 
 
 @login_required(login_url="/")
-def app(request):
+def workspace(request):
     """
-    App view
+    Workspace view
 
-    Users can see the app with this view
+    Users can see the app workspace with this view
     """
     # print("\n\nApp\n")
     globals = models.Globals.get_solo()
@@ -202,7 +205,7 @@ def signup(request):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect("/")
+            return redirect("/app/")
     else:
         form = forms.CreateUserForm()
     return render(
@@ -213,6 +216,39 @@ def signup(request):
             "form": form,
             "form_title": "Sign Up",
             "submit_button": "Create Account",
+        },
+    )
+
+# TODO: Figure out way to add caching for only get requests
+# @cache_page(60 * 10)
+def login_view(request):
+    """
+    User login view
+
+    Users can login to the site with this view
+    """
+    globals = models.Globals.get_solo()
+    if request.method == "POST":
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/app/")
+    else:
+        form = AuthenticationForm()
+    return render(
+        request,
+        "login.html",
+        {
+            "globals": globals,
+            "form": form,
+            # This is necessary to prevent caching anything about a user accessing the root page
+            "user": None,
+            "form_title": "Login",
+            "submit_button": "Login",
         },
     )
 
@@ -239,7 +275,7 @@ def validate_email(request):
             user.email_validated = True
             user.email_validation_code = None
             user.save()
-        return redirect("/")
+        return redirect("/app/")
     globals = models.Globals.get_solo()
     return render(
         request,
