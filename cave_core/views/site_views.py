@@ -214,8 +214,8 @@ def signup(request):
         {
             "globals": globals,
             "form": form,
-            "form_title": "Sign Up",
-            "submit_button": "Create Account",
+            "form_title": "Create Account",
+            "submit_button": "Create",
         },
     )
 
