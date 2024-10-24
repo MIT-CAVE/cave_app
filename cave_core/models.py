@@ -1407,7 +1407,15 @@ def handle_session_on_delete(sender, instance, **kwargs):
     When a session object is deleted, update the sessions list for the associated session team
     """
     instance.team.update_sessions_list()
-    cache.delete_pattern(f"session:{instance.id}:*")
+    # Clear the data from the cache and persistent cache if present
+    cache_session_id = f"session:{instance.id}"
+    generic_keys = [f"{cache_session_id}:{key}" for key in ['versions', 'executing','user_ids']]
+    data_keys = [f"{cache_session_id}:data:{key}" for key in cache.get(f"{cache_session_id}:versions", {}).keys()]
+    cache.delete_many(
+        data_keys + generic_keys,
+        memory=True,
+        persistent=True
+    )
 
 
 @receiver(post_save, sender=TeamUsers, dispatch_uid="update_team_ids_on_save")

@@ -70,7 +70,8 @@ class Cache(CacheStorage):
         """
         Gets the keys in the cache based on a pattern
 
-        Note: This function will only work for Redis based caches
+        Note: This function will only work for Valkey or Redis based caches
+        Note: This function will often not be supported by scalable or serverless Caches
 
         pattern: str
             The pattern to use to find the keys
@@ -202,11 +203,10 @@ class Cache(CacheStorage):
             Note: If None, the cache will not expire        
         """
         # print(f'Cache -> Setting: {data.keys()}')
-        if memory:
-            self.cache.set_many(data, timeout=timeout)
-        if persistent:
-            for data_id, value in data.items():
-                self.set(data_id, value, memory=False, persistent=True)
+        # Note: This uses a loop instead of self.cache.set_many() because the latter 
+        #       is not always supported by cache backends (esp Serverless Caches)
+        for data_id, data in data.items():
+            self.set(data_id, data, memory=memory, persistent=persistent, timeout=timeout)
 
     def delete(self, data_id:str, memory:bool=False, persistent:bool=False):
         """
@@ -246,15 +246,17 @@ class Cache(CacheStorage):
         """
         # print(f'Cache -> Deleting: {data_ids}')
         assert memory or persistent, "Cache.delete_many(): Either memory or persistent must be True"
-        if memory:
-            self.cache.delete_many(data_ids)
-        if persistent:
-            for data_id in data_ids:
-                self.delete(data_id, persistent=True)
+        # Note: This uses a loop instead of self.cache.delete_many() because the latter
+        #       is not always supported by cache backends (esp Serverless Caches)
+        for data_id in data_ids:
+            self.delete(data_id, memory=memory, persistent=persistent)
 
     def delete_pattern(self, pattern:str, memory:bool=True, persistent:bool=True):
         """
         Deletes the data in one or both of the cache and the persistent storage based on a pattern
+
+        Note: This requires the cache server to support the keys() function which is not always the case
+              (esp for Serverless Caches)
 
         pattern: str
             The pattern to use to find the data to be deleted
