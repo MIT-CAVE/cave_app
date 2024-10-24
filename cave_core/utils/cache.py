@@ -140,8 +140,9 @@ class Cache(CacheStorage):
         Returns: dict
         """
         # print(f'Cache -> Getting: {data_ids}')
-        data = self.cache.get_many(data_ids)
-        missing_ids = [data_id for data_id in data_ids if data_id not in data]
+        # Note: This has to be done in a loop because self.cache.get_many() is not always reliable (esp for Serverless Caches)
+        data = {data_id:self.cache.get(data_id, "__NONE__") for data_id in data_ids}
+        missing_ids = [data_id for data_id, data_value in data.items() if data_value == "__NONE__"]
         if len(missing_ids) > 0:
             # Only pull from the persistent storage if the CACHE_BACKUP_INTERVAL is greater than 0
             if settings.CACHE_BACKUP_INTERVAL > 0:
