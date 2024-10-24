@@ -57,7 +57,7 @@ AUTHENTICATION_BACKENDS = ["cave_core.auth.EmailThenUsernameModelBackend"]
 AUTH_USER_MODEL = "cave_core.CustomUser"
 ## Login/Logout redirection
 LOGIN_REDIRECT_URL = "app/"
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/auth/login/"
 # Django admin authentication information
 DJANGO_ADMIN_FIRST_NAME = config("DJANGO_ADMIN_FIRST_NAME", default="")
 DJANGO_ADMIN_LAST_NAME = config("DJANGO_ADMIN_LAST_NAME", default="")

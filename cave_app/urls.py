@@ -20,14 +20,14 @@ urlpatterns = [
     path("app/health/", api_util_views.health),
     path("app/custom_pages/", api_util_views.custom_pages),
     # User Authentication
+    path("", site_views.login_view),
+    path("auth/login/", site_views.login_view),
     path("auth/signup/", site_views.signup),
     path("auth/logout/", site_views.user_logout),
     path("auth/validate_email/", site_views.validate_email),
     path("auth/send_email_validation_code/", api_util_views.send_email_validation_code),
     path("auth/change_password/", site_views.change_password),
     # Password Reset (auth_views uses names for url navs)
-    path("", site_views.login_view),
-    path("auth/login/", site_views.login_view),
     path(
         "auth/password_reset/",
         auth_views.PasswordResetView.as_view(extra_context=url_helpers.get_extra_content()),
@@ -45,7 +45,7 @@ urlpatterns = [
     ),
     path(
         "auth/password_reset_complete/",
-        RedirectView.as_view(url="/", permanent=False),
+        RedirectView.as_view(url="/auth/login/", permanent=False),
         name="password_reset_complete",
     ),
     # Admin site

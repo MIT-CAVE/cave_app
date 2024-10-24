@@ -10,6 +10,7 @@
         <table class="table table-login text-white">
         {{ form.as_table }}
         </table>
+        <input name="next_url" type="hidden" value="{{ next_url }}"/>
         <div class="form-info-container">
           {% if globals.allow_anyone_create_user %}
             <a class="secondary-text-login" href="/auth/signup"><h10>Create Account</h10></a>

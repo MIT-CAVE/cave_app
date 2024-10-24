@@ -5,15 +5,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.views.decorators.cache import cache_page
 
 
 # Internal Imports
 from cave_core import forms, models
+from cave_core.utils.wrapping import redirect_logged_in_user
 
 
 # Views
-@login_required(login_url="/")
+@login_required(login_url="/auth/login/")
 def index(request):
     """
     Index View
@@ -40,7 +40,7 @@ def index(request):
     )
 
 
-@login_required(login_url="/")
+@login_required(login_url="/auth/login/")
 def page(request):
     """
     Generic page view
@@ -71,7 +71,7 @@ def page(request):
         return redirect("/app/")
 
 
-@login_required(login_url="/")
+@login_required(login_url="/auth/login/")
 def people(request):
     """
     People view
@@ -97,7 +97,7 @@ def people(request):
         return redirect("/app/")
 
 
-@login_required(login_url="/")
+@login_required(login_url="/auth/login/")
 def workspace(request):
     """
     Workspace view
@@ -130,7 +130,7 @@ def workspace(request):
         return redirect("/app/")
 
 
-@login_required(login_url="/")
+@login_required(login_url="/auth/login/")
 def profile(request):
     """
     User profile view
@@ -161,7 +161,7 @@ def profile(request):
         )
 
 
-@login_required(login_url="/")
+@login_required(login_url="/auth/login/")
 def change_password(request):
     """
     Change password view
@@ -188,6 +188,7 @@ def change_password(request):
         },
     )
 
+@redirect_logged_in_user
 def signup(request):
     """
     User signup view
@@ -196,7 +197,7 @@ def signup(request):
     """
     globals = models.Globals.get_solo()
     if not globals.allow_anyone_create_user:
-        return redirect("/")
+        return redirect("/auth/login/")
     if request.method == "POST":
         form = forms.CreateUserForm(request.POST)
         if form.is_valid():
@@ -219,8 +220,7 @@ def signup(request):
         },
     )
 
-# TODO: Figure out way to add caching for only get requests
-# @cache_page(60 * 10)
+@redirect_logged_in_user
 def login_view(request):
     """
     User login view
@@ -236,7 +236,13 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/app/")
+                next_url = request.POST.get("next_url")
+                if next_url == "None" or len(next_url) == 0:
+                    next_url = "/app/"
+                # Ensure next url ends with a trailing slash
+                if next_url[-1] != "/":
+                    next_url += "/"
+                return redirect(next_url)
     else:
         form = AuthenticationForm()
     return render(
@@ -245,8 +251,7 @@ def login_view(request):
         {
             "globals": globals,
             "form": form,
-            # This is necessary to prevent caching anything about a user accessing the root page
-            "user": None,
+            "next_url": request.GET.get("next"),
             "form_title": "Login",
             "submit_button": "Login",
         },
@@ -291,4 +296,4 @@ def user_logout(request):
     Allows users to logout of the site
     """
     logout(request)
-    return redirect("/")
+    return redirect("/auth/login/")
