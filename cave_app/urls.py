@@ -11,6 +11,7 @@ from cave_core.views import site_views, api_util_views
 
 urlpatterns = [
     # Main Pages
+    path("", site_views.root_view),
     path("app/", site_views.index),
     path("app/page/", site_views.page),
     path("app/people/", site_views.people),
@@ -20,7 +21,6 @@ urlpatterns = [
     path("app/health/", api_util_views.health),
     path("app/custom_pages/", api_util_views.custom_pages),
     # User Authentication
-    path("", site_views.login_view),
     path("auth/login/", site_views.login_view),
     path("auth/signup/", site_views.signup),
     path("auth/logout/", site_views.user_logout),

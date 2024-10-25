@@ -221,3 +221,29 @@ th, td {
 body.modal-open {
   overflow-y: hidden !important;
 }
+
+/* Loading properties */
+#loader-block-until-loaded {
+  display: none;
+}
+#loader-show-until-loaded {
+  display: none;
+  position: absolute;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Loader */
+.loader-container {
+width: 250px;
+height: 250px;
+position: relative;
+overflow: hidden;
+}
+
+.loader-item {
+position: absolute;
+width: calc(100%);
+height: calc(100%);  
+}

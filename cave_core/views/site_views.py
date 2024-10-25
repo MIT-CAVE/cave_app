@@ -5,12 +5,32 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
+from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Internal Imports
 from cave_core import forms, models
 from cave_core.utils.wrapping import redirect_logged_in_user
 
+
+# @cache_page(60 * 10)
+# @csrf_exempt
+def root_view(request):
+    """
+    Root view
+
+    Redirects to the login view
+    """
+    globals = models.Globals.get_solo()
+    return render(
+        request,
+        "root.html",
+        {
+            "globals": globals,
+            "user": None,
+        },
+    )
 
 # Views
 @login_required(login_url="/auth/login/")
@@ -285,7 +305,9 @@ def validate_email(request):
     return render(
         request,
         "validation_email_failed.html",
-        {"globals": globals},
+        {
+            "globals": globals
+        },
     )
 
 @login_required
