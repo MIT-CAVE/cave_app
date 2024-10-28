@@ -87,7 +87,11 @@ class CustomUser(AbstractUser):
         null=True,
     )
     team_ids = models.JSONField(
-        _("team_ids"), help_text=_("A list of team_ids for this user"), default=list
+        _("team_ids"), 
+        help_text=_("A list of team_ids for this user"),
+        default=list,
+        blank=True,
+        null=True,
     )
 
     #############################################
