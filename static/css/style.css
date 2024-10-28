@@ -1,7 +1,7 @@
 /* Background and Color Scheme */
 .bg-background {
   background-color: rgb(240, 240, 240);
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh - 58px);
 }
 
 .bg-empty {
@@ -127,11 +127,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 56px);
+  min-height: calc(100vh - 58px);
   margin-right: auto;
   margin-left: auto;
   overflow: auto;
-  padding: 10px;
 }
 
 .form-btn-container {
@@ -213,9 +212,8 @@ th, td {
 
 /* Full Height Body */
 .body-for-full-height {
-  min-height: calc(100vh);
-  min-width: calc(100vw);
-  right: 0;
+  height: calc(100vh);
+  width: calc(100vw);
 }
 
 body.modal-open {

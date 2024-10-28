@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}MIT CAVE{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/animations.css' %}" type="text/css" media="screen" />
+{% endblock %}
 
 {% block content %}
 <div class="bg-site-background">
   <div class="animation-container text-white" id="animation-container-div">
-    <h1 class="click_to_get_started">Click To<br/>Get Started</h1>
+    <img class="click_to_get_started pb-5 animation-logo-photo" src="{% static 'photos/cave_logo_mit_dark.png' %}" alt="MIT CAVE Logo">
+    <h3 class="click_to_get_started">Click To Get Started!</h3>
     <div class="material-icons mountain">landscape</div>
     <div class="material-icons front_loader">front_loader</div>
     <span class="material-icons factory">factory</span>
@@ -27,7 +35,7 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <script>
     const setAppDivWidth = () => {
-      var widthMin = 1200;
+      var widthMin = 1400;
       var widthMultiplier=Math.min(window.innerWidth, widthMin)/widthMin
       document.getElementById("animation-container-div").style.setProperty('--widthMultiplier', widthMultiplier)
     }

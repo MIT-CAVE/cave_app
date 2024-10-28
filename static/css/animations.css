@@ -5,17 +5,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 56px);
-    margin-right: auto;
-    margin-left: auto;
-    overflow: auto;
-    padding: 10px;
+    overflow: hidden;
     /* Code for auto resizing. See the page JS */
-    width: calc(100% / var(--widthMultiplier));
-    height: calc( 100vh / var(--widthMultiplier));
+    width: calc(100% / var(--widthMultiplier) );
+    height: calc( 100vh / var(--widthMultiplier) - 58px );
     transform: scale(var(--widthMultiplier));
     transform-origin: 0 0;
   }
+
+.animation-logo-photo {
+    width: calc(35vh);
+}
 
 .click_to_get_started {
     animation: click-to-get-started-animate 6s linear infinite;
@@ -27,16 +27,16 @@
         transform: scale(1);
     }
     10% {
-        transform: scale(1.1);
+        transform: scale(1.05);
     }
     15% {
-        transform: scale(.9);
+        transform: scale(.95);
     }
     25% {
-        transform: scale(1.1);
+        transform: scale(1.05);
     }
     30% {
-        transform: scale(.9);
+        transform: scale(.95);
     }
     35% {
         transform: scale(1);
@@ -51,43 +51,43 @@
 .mountain {
     font-size: 70px;
     position: absolute;
-    left: calc(30%);
-    top: calc(30%);
+    left: calc(30% - 35px);
+    top: calc(25%);
     animation: mountain-animate 12s linear infinite;
 }
 
 @keyframes mountain-animate {
     0% {
-        top: calc(30%);
-        left: calc(30%);
+        top: calc(25%);
+        left: calc(30% - 35px);
     }
     4% {
-        top: calc(30%);
-        left: calc(30%);
+        top: calc(25%);
+        left: calc(30% - 35px);
     }
     6% {
-        top: calc(30%);
-        left: calc(30% + 3px);
+        top: calc(25%);
+        left: calc(30% - 35px + 3px);
         transform: rotate(2deg);
     }
     8% {
-        top: calc(30%);
-        left: calc(30% - 3px);
+        top: calc(25%);
+        left: calc(30% - 35px - 3px);
         transform: rotate(-2deg);
     }
     10% {
-        top: calc(30%);
-        left: calc(30% + 3px);
+        top: calc(25%);
+        left: calc(30% - 35px + 3px);
         transform: rotate(2deg);
     }
     12% {
-        top: calc(30%);
-        left: calc(30%);
+        top: calc(25%);
+        left: calc(30% - 35px);
         transform: rotate(0deg);
     }
     100% {
-        top: calc(30%);
-        left: calc(30%);
+        top: calc(25%);
+        left: calc(30% - 35px);
     }
 }
 
@@ -95,8 +95,8 @@
 .factory {
     font-size: 70px;
     position: absolute;
-    left: calc(30%);
-    top: calc(60%);
+    left: calc(30% - 35px);
+    top: calc(71%);
     animation: factory-animate 12s linear infinite;
 }
 
@@ -130,8 +130,8 @@
 .factory_cloud {
     font-size: 35px;
     position: absolute;
-    left: calc(30% + 45px);
-    top: calc(60% - 30px);
+    left: calc(30% - 35px + 45px);
+    top: calc(71% - 30px);
     animation: factory-cloud-animate 12s linear infinite;
 }
 
@@ -144,26 +144,26 @@
     }
     28.1% {
         opacity: 1;
-        left: calc(30% + 45px);
-        top: calc(60% - 30px);
+        left: calc(30% - 35px + 45px);
+        top: calc(71% - 30px);
     }
     30% {
         opacity: 0;
-        left: calc(30% + 50px);
-        top: calc(60% - 60px);
+        left: calc(30% - 35px + 50px);
+        top: calc(71% - 60px);
     }
     32% {
         opacity: 0;
     }
     32.1% {
         opacity: 1;
-        left: calc(30% + 45px);
-        top: calc(60% - 30px);
+        left: calc(30% - 35px + 45px);
+        top: calc(71% - 30px);
     }
     34% {
         opacity: 0;
-        left: calc(30% + 50px);
-        top: calc(60% - 60px);
+        left: calc(30% - 35px + 50px);
+        top: calc(71% - 60px);
     }
     100% {
         opacity: 0;
@@ -173,15 +173,15 @@
 .robot_arm {
     font-size: 70px;
     position: absolute;
-    left: calc(50%);
-    top: calc(60%);
+    left: calc(50% - 35px);
+    top: calc(71%);
 }
 
 .robot_cog {
     font-size: 45px;
     position: absolute;
-    left: calc(50% + 7px);
-    top: calc(60% + 60px);
+    left: calc(50% - 35px + 7px);
+    top: calc(71% + 60px);
     animation: robot-cog-animate 12s linear infinite;
 }
 
@@ -206,8 +206,8 @@
 .shelves {
     font-size: 70px;
     position: absolute;
-    left: calc(70%);
-    top: calc(60%);
+    left: calc(70% - 35px);
+    top: calc(71%);
     animation: shelves-animate 12s linear infinite;
 }
 
@@ -243,76 +243,76 @@
 .package {
     font-size: 45px;
     position: absolute;
-    left: calc(70% + 20px);
-    top: calc(60% - 30px);
+    left: calc(70% - 35px + 20px);
+    top: calc(71% - 30px);
     animation: package-animate 12s linear infinite;
 }
 
 @keyframes package-animate {
     0% {
         opacity: 1;
-        left: calc(70% + 80px);
-        top: calc(60% + 30px);
+        left: calc(70% - 35px + 80px);
+        top: calc(71% + 30px);
         transform: rotate(90deg);
     }
     22% {
         opacity: 1;
-        left: calc(70% + 80px);
-        top: calc(60% + 30px);
+        left: calc(70% - 35px + 80px);
+        top: calc(71% + 30px);
         transform: rotate(90deg);
     }
     24% {
         opacity: 0;
-        left: calc(70% + 120px);
-        top: calc(60% + 25px);
+        left: calc(70% - 35px + 120px);
+        top: calc(71% + 25px);
         transform: rotate(90deg);
     }
     32% {
         opacity: 0;
-        left: calc(70% + 20px);
-        top: calc(60% - 30px);
+        left: calc(70% - 35px + 20px);
+        top: calc(71% - 30px);
         transform: rotate(0deg);
     }
     38% {
         opacity: 1;
-        left: calc(70% + 20px);
-        top: calc(60% - 30px);
+        left: calc(70% - 35px + 20px);
+        top: calc(71% - 30px);
         transform: rotate(0deg);
     }
     86% {
         opacity: 1;
-        left: calc(70% + 20px);
-        top: calc(60% - 30px);
+        left: calc(70% - 35px + 20px);
+        top: calc(71% - 30px);
         transform: rotate(0deg);
     }
     87% {
         opacity: 1;
-        left: calc(70% + 24px);
-        top: calc(60% - 30px);
+        left: calc(70% - 35px + 24px);
+        top: calc(71% - 30px);
         transform: rotate(5deg);
     }
     89% {
         opacity: 1;
-        left: calc(70% + 14px);
-        top: calc(60% - 30px);
+        left: calc(70% - 35px + 14px);
+        top: calc(71% - 30px);
         transform: rotate(-10deg);
     }
     90% {
         opacity: 1;
-        left: calc(70% + 40px);
-        top: calc(60% - 30px);
+        left: calc(70% - 35px + 40px);
+        top: calc(71% - 30px);
         transform: rotate(0deg);
     }
     91% {
         opacity: 1;
-        left: calc(70% + 80px);
-        top: calc(60% + 30px);
+        left: calc(70% - 35px + 80px);
+        top: calc(71% + 30px);
         transform: rotate(90deg);
     }
     100% {
         opacity: 1;
-        left: calc(70% + 80px);
-        top: calc(60% + 30px);
+        left: calc(70% - 35px + 80px);
+        top: calc(71% + 30px);
         transform: rotate(90deg);
     }
 }
@@ -322,8 +322,8 @@
 .store {
     font-size: 70px;
     position: absolute;
-    left: calc(70%);
-    top: calc(30%);
+    left: calc(70% - 35px);
+    top: calc(25%);
 }
 
 
@@ -333,67 +333,67 @@
 .front_loader {
     font-size: 70px;
     position: absolute;
-    left: calc(30% -100px);
-    top: calc(30%);
+    left: calc(30% - 35px -100px);
+    top: calc(25%);
     animation: front-loader-drive 12s linear infinite;
 }
 
 @keyframes front-loader-drive {
     0% {
-        left: calc(30% - 100px);
-        top: calc(30%);
+        left: calc(30% - 35px - 100px);
+        top: calc(25%);
         opacity: 0;
     }
     4% {
-        left: calc(30% - 65px);
-        top: calc(30%);
+        left: calc(30% - 35px - 65px);
+        top: calc(25%);
         opacity: 1;
     }
     6% {
-        left: calc(30% - 65px);
-        top: calc(30%);
+        left: calc(30% - 35px - 65px);
+        top: calc(25%);
         opacity: 1;
         transform: rotate(5deg);
     }
     8% {
-        left: calc(30% - 65px);
-        top: calc(30%);
+        left: calc(30% - 35px - 65px);
+        top: calc(25%);
         opacity: 1;
         transform: rotate(-5deg);
     }
     10% {
-        left: calc(30% - 65px);
-        top: calc(30%);
+        left: calc(30% - 35px - 65px);
+        top: calc(25%);
         opacity: 1;
         transform: rotate(5deg);
     }
     12% {
-        left: calc(30% - 65px);
-        top: calc(30%);
+        left: calc(30% - 35px - 65px);
+        top: calc(25%);
         opacity: 1;
         transform: rotate(0deg);
     }
     24% {
-        left: calc(30% - 70px);
-        top: calc(60%);
+        left: calc(30% - 35px - 70px);
+        top: calc(71%);
         opacity: 1;
         transform: rotate(0deg);
     }
     26% {
-        left: calc(30% - 70px);
-        top: calc(60%);
+        left: calc(30% - 35px - 70px);
+        top: calc(71%);
         opacity: 1;
         transform: rotate(15deg);
     }
     32% {
-        left: calc(30% - 70px);
-        top: calc(60%);
+        left: calc(30% - 35px - 70px);
+        top: calc(71%);
         opacity: 1;
         transform: rotate(0deg);
     }
     36% {
-        left: calc(30% - 100px);
-        top: calc(60%);
+        left: calc(30% - 35px - 100px);
+        top: calc(71%);
         opacity: 0;
     }
     100% {
@@ -406,8 +406,8 @@
 .trolley {
     font-size: 70px;
     position: absolute;
-    left: calc(30%);
-    top: calc(60% + 80px);
+    left: calc(30% - 35px);
+    top: calc(71% + 80px);
     animation: trolley-drive 12s linear infinite;
 }
 
@@ -416,23 +416,23 @@
         opacity: 0;
     }
     34% {
-        left: calc(30% + 50px);
-        top: calc(60%);
+        left: calc(30% - 35px + 50px);
+        top: calc(71%);
         opacity: 0;
     }
     38% {
-        left: calc(30% + 80px);
-        top: calc(60%);
+        left: calc(30% - 35px + 80px);
+        top: calc(71%);
         opacity: 1;
     }
     46% {
-        left: calc(50% - 80px);
-        top: calc(60%);
+        left: calc(50% - 35px - 80px);
+        top: calc(71%);
         opacity: 1;
     }
     52% {
-        left: calc(50% - 50px);
-        top: calc(60%);
+        left: calc(50% - 35px - 50px);
+        top: calc(71%);
         opacity: 0;
     }
     100% {
@@ -446,8 +446,8 @@
 .forklift {
     font-size: 70px;
     position: absolute;
-    left: calc(50%);
-    top: calc(60% + 100px);
+    left: calc(50% - 35px);
+    top: calc(71% + 100px);
     animation: forklift-drive 12s linear infinite;
 }
 
@@ -456,23 +456,23 @@
         opacity: 0;
     }
     72% {
-        left: calc(50% + 50px);
-        top: calc(60%);
+        left: calc(50% - 35px + 50px);
+        top: calc(71%);
         opacity: 0;
     }
     76% {
-        left: calc(50% + 80px);
-        top: calc(60%);
+        left: calc(50% - 35px + 80px);
+        top: calc(71%);
         opacity: 1;
     }
     84% {
-        left: calc(70% - 80px);
+        left: calc(70% - 35px - 80px);
         top: calc(60);
         opacity: 1;
     }
     88% {
-        left: calc(70% - 50px);
-        top: calc(60%);
+        left: calc(70% - 35px - 50px);
+        top: calc(71%);
         opacity: 0;
     }
     100% {
@@ -486,8 +486,8 @@
 .truck {
     font-size: 70px;
     position: absolute;
-    left: calc(70% + 100px);
-    top: calc(60%);
+    left: calc(70% - 35px + 100px);
+    top: calc(71%);
     animation: truck-drive 12s linear infinite;
 }
 
@@ -496,52 +496,52 @@
         opacity: 0;
     }
     16% {
-        left: calc(70% + 250px);
-        top: calc(60%);
+        left: calc(70% - 35px + 250px);
+        top: calc(71%);
         opacity: 0;
     }
     20% {
-        left: calc(70% + 150px);
-        top: calc(60%);
+        left: calc(70% - 35px + 150px);
+        top: calc(71%);
         opacity: 1;
     }
     24% {
-        left: calc(70% + 150px);
-        top: calc(60%);
+        left: calc(70% - 35px + 150px);
+        top: calc(71%);
         opacity: 1;
         transform: rotate(0deg);
     }
     26% {
-        left: calc(70% + 150px);
-        top: calc(60%);
+        left: calc(70% - 35px + 150px);
+        top: calc(71%);
         opacity: 1;
         transform: rotate(-90deg);
     }
     35% {
-        left: calc(70% + 150px);
-        top: calc(30%);
+        left: calc(70% - 35px + 150px);
+        top: calc(25%);
         opacity: 1;
         transform: rotate(-90deg);
     }
     38% {
-        left: calc(70% + 150px);
-        top: calc(30%);
+        left: calc(70% - 35px + 150px);
+        top: calc(25%);
         opacity: 1;
         transform: rotate(0deg);
     }
     40% {
-        left: calc(70% + 80px);
-        top: calc(30%);
+        left: calc(70% - 35px + 80px);
+        top: calc(25%);
         opacity: 1;
     }
     50% {
-        left: calc(70% + 80px);
-        top: calc(30%);
+        left: calc(70% - 35px + 80px);
+        top: calc(25%);
         opacity: 1;
     }
     56% {
-        left: calc(70% + 250px);
-        top: calc(30%);
+        left: calc(70% - 35px + 250px);
+        top: calc(25%);
         opacity: 0;
     }
     100% {
@@ -555,66 +555,66 @@
 .person {
     font-size: 70px;
     position: absolute;
-    left: calc(70% - 200px);
-    top: calc(30%);
+    left: calc(70% - 35px - 200px);
+    top: calc(25%);
     animation: person-animate 12s linear infinite;
 }
 
 @keyframes person-animate {
     0% {
         opacity: 0;
-        left: calc(70% - 200px);
-        top: calc(30%);
+        left: calc(70% - 35px - 200px);
+        top: calc(25%);
     }
     10% {
-        left: calc(70% - 200px);
-        top: calc(30%);
+        left: calc(70% - 35px - 200px);
+        top: calc(25%);
         opacity: 0;
     }
     18% {
-        left: calc(70% - 80px);
-        top: calc(30%);
+        left: calc(70% - 35px - 80px);
+        top: calc(25%);
         opacity: 1;
     }
     24% {
-        left: calc(70% - 50px);
-        top: calc(30%);
+        left: calc(70% - 35px - 50px);
+        top: calc(25%);
         opacity: 0;
     }
     100% {
         opacity: 0;
-        left: calc(70% - 200px);
-        top: calc(30%);
+        left: calc(70% - 35px - 200px);
+        top: calc(25%);
     }
 }
 
 .person_with_package {
     font-size: 60px;
     position: absolute;
-    left: calc(70% - 50px);
-    top: calc(30%);
+    left: calc(70% - 35px - 50px);
+    top: calc(25%);
     animation: person-with-package-animate 12s linear infinite;
 }
 
 @keyframes person-with-package-animate {
     0% {
         opacity: 0;
-        left: calc(70% - 50px);
-        top: calc(30%);
+        left: calc(70% - 35px - 50px);
+        top: calc(25%);
     }
     64% {
-        left: calc(70% - 50px);
-        top: calc(30%);
+        left: calc(70% - 35px - 50px);
+        top: calc(25%);
         opacity: 0;
     }
     70% {
-        left: calc(70% - 80px);
-        top: calc(30%);
+        left: calc(70% - 35px - 80px);
+        top: calc(25%);
         opacity: 1;
     }
     78%{
-        left: calc(70% - 200px);
-        top: calc(30%);
+        left: calc(70% - 35px - 200px);
+        top: calc(25%);
         opacity: 1;
     }
     80% {
@@ -634,53 +634,53 @@
     }
 
     99% {
-        left: calc(70% - 200px);
-        top: calc(30%);
+        left: calc(70% - 35px - 200px);
+        top: calc(25%);
         opacity: 0;
     }
     100% {
         opacity: 0;
-        left: calc(70% - 50px);
-        top: calc(30%);
+        left: calc(70% - 35px - 50px);
+        top: calc(25%);
     }
 }
 
 .happy_face {
     font-size: 70px;
     position: absolute;
-    left: calc(70% - 200px);
-    top: calc(30%);
+    left: calc(70% - 35px - 200px);
+    top: calc(25%);
     animation: happy-face-animate 12s linear infinite;
 }
 
 @keyframes happy-face-animate {
     0% {
         opacity: 0;
-        left: calc(70% - 200px);
-        top: calc(30%);
+        left: calc(70% - 35px - 200px);
+        top: calc(25%);
         opacity: 0;
     }
     78% {
-        left: calc(70% - 200px);
-        top: calc(30%);
+        left: calc(70% - 35px - 200px);
+        top: calc(25%);
         opacity: 0;
         transform: scale(1);
     }
     83% {
-        left: calc(70% - 180px);
-        top: calc(30% - 80px);
+        left: calc(70% - 35px - 180px);
+        top: calc(25% - 80px);
         opacity: 1;
         transform: scale(1.2)
     }
     89% {
-        left: calc(70% - 160px);
-        top: calc(30% - 160px);
+        left: calc(70% - 35px - 160px);
+        top: calc(25% - 160px);
         opacity: 0;
         transform: scale(1)
     }
     100% {
-        left: calc(70% - 200px);
-        top: calc(30%);
+        left: calc(70% - 35px - 200px);
+        top: calc(25%);
         opacity: 0;
     }
 }

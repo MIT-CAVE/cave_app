@@ -7,26 +7,28 @@ from django.views.generic import RedirectView
 
 from cave_core import url_helpers
 from cave_core.admin import staff_site
-from cave_core.views import site_views, api_util_views
+from cave_core.views import site_views, api_util_views, site_util_views
 
 urlpatterns = [
     # Main Pages
     path("", site_views.root_view),
-    path("app/", site_views.index),
+    path("app/info/", site_views.info),
     path("app/page/", site_views.page),
     path("app/people/", site_views.people),
     path("app/workspace/", site_views.workspace),
     path("app/profile/", site_views.profile),
+    # Util Pages
+    path("app/", site_util_views.app_router),
     # General API Pages
     path("app/health/", api_util_views.health),
     path("app/custom_pages/", api_util_views.custom_pages),
     # User Authentication
-    path("auth/login/", site_views.login_view),
-    path("auth/signup/", site_views.signup),
-    path("auth/logout/", site_views.user_logout),
-    path("auth/validate_email/", site_views.validate_email),
+    path("auth/login/", site_util_views.login_view),
+    path("auth/signup/", site_util_views.signup),
+    path("auth/logout/", site_util_views.user_logout),
+    path("auth/validate_email/", site_util_views.validate_email),
     path("auth/send_email_validation_code/", api_util_views.send_email_validation_code),
-    path("auth/change_password/", site_views.change_password),
+    path("auth/change_password/", site_util_views.change_password),
     # Password Reset (auth_views uses names for url navs)
     path(
         "auth/password_reset/",
