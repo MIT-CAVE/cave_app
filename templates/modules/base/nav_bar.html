@@ -15,7 +15,7 @@
     {% if globals.site_logo %}
     <img src="{{ globals.site_logo.url }}" alt="{{ globals.site_name }}" style="height: 40px;">
     {% else %}
-      <a class="navbar-brand" href="/">{{ globals.site_name }}</a>
+      <a class="navbar-brand" href="/app/">{{ globals.site_name }}</a>
     {% endif %}
     <div></div>
   </div>
@@ -23,15 +23,13 @@
     <div>
       {% if user.is_authenticated %}
         {% include "modules/base/authenticated_nav_pages.html" %}
-      {% else %}
-        {% include "modules/base/non_authenticated_nav_pages.html" %}
       {% endif %}
     </div>
     <div class="d-none d-lg-flex">
       {% if globals.site_logo %}
         <img src="{{ globals.site_logo.url }}" alt="{{ globals.site_name }}" style="height: 40px;">
       {% else %}
-        <a class="navbar-brand" href="/">{{ globals.site_name }}</a>
+        <a class="navbar-brand" href="/app/">{{ globals.site_name }}</a>
       {% endif %}
     </div>
     <div>
@@ -52,8 +50,6 @@
         </li>
         {% if user.is_authenticated %}
           {% include "modules/base/authenticated_nav.html" %}
-        {% else %}
-          {% include "modules/base/non_authenticated_nav.html" %}
         {% endif %}
       </ul>
     </div>

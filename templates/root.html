@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-site-background">
+  <div class="animation-container text-white" id="animation-container-div">
+    <h1 class="click_to_get_started">Click To<br/>Get Started</h1>
+    <div class="material-icons mountain">landscape</div>
+    <div class="material-icons front_loader">front_loader</div>
+    <span class="material-icons factory">factory</span>
+    <span class="material-icons factory_cloud">cloud</span>
+    <span class="material-icons forklift">forklift</span>
+    <span class="material-icons robot_arm">precision_manufacturing</span>
+    <span class="material-icons robot_cog">settings</span>
+    <span class="material-icons trolley">trolley</span>
+    <span class="material-icons shelves">shelves</span>
+    <span class="material-icons truck">local_shipping</span>
+    <span class="material-icons store">store</span>
+    <span class="material-icons person">person</span>
+    <span class="material-icons person_with_package">deployed_code_account</span>
+    <span class="material-icons happy_face">mood</span>
+    <span class="material-icons package">package</span>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <script>
+    const setAppDivWidth = () => {
+      var widthMin = 1200;
+      var widthMultiplier=Math.min(window.innerWidth, widthMin)/widthMin
+      document.getElementById("animation-container-div").style.setProperty('--widthMultiplier', widthMultiplier)
+    }
+    window.addEventListener('resize', setAppDivWidth);
+    window.addEventListener('load', setAppDivWidth);
+    document.querySelector('.bg-site-background').addEventListener('click', () => {
+      window.location.href = '/auth/login';
+    });
+  </script>
+{% endblock %}

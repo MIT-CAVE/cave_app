@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.core.cache import cache
 from rest_framework.response import Response
+from django.shortcuts import redirect
 
 # External Imports
 from functools import wraps
@@ -21,6 +22,18 @@ def format_exception(e):
         return "".join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))
     except:
         return "".join(traceback.format_exception(e))
+    
+
+def redirect_logged_in_user(fn):
+    """
+    View wrapper to redirect logged in users to the app page if they try to access the login page
+    """
+    @wraps(fn)
+    def wrap(request):
+        if request.user.is_authenticated:
+            return redirect("/app/")
+        return fn(request)
+    return wrap
 
 
 def api_util_response(fn):

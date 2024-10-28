@@ -110,8 +110,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "latitude": [[-90 + i * 0.01 for i in range(10000)]],
-                            "longitude": [[0 + i * 0.01 for i in range(10000)]],
+                            "latitude": [[-90 + i * 0.01] for i in range(10000)],
+                            "longitude": [[0 + i * 0.01] for i in range(10000)],
                         },
                         "valueLists": {
                             "capacity": [100 + i for i in range(10000)],

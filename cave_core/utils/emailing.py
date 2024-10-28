@@ -45,6 +45,6 @@ def send_email(
 def format_validation_email_content(globals, user, domain, code):
     return {
         "EMAIL_SUBJECT": f"Verify Email ({globals.site_name})",
-        "EMAIL_CONTENT": f"Hi {user.first_name} {user.last_name},<br/><br/>Welcome to {globals.site_name}!<br/><br/>To get started please verify your email by clicking <a href='{domain}/validate_email?code={code}'>here</a>.<br/><br/> Thank you!<br/><br/>The {globals.site_name} Team",
+        "EMAIL_CONTENT": f"Hi {user.first_name} {user.last_name},<br/><br/>Welcome to {globals.site_name}!<br/><br/>To get started please verify your email by clicking <a href='{domain}/auth/validate_email?code={code}'>here</a>.<br/><br/> Thank you!<br/><br/>The {globals.site_name} Team",
         "EMAIL_TO": user.email,
     }

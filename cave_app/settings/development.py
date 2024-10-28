@@ -56,8 +56,8 @@ AUTHENTICATION_BACKENDS = ["cave_core.auth.EmailThenUsernameModelBackend"]
 ## Custom Users Model
 AUTH_USER_MODEL = "cave_core.CustomUser"
 ## Login/Logout redirection
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "app/"
+LOGOUT_REDIRECT_URL = "/auth/login/"
 # Django admin authentication information
 DJANGO_ADMIN_FIRST_NAME = config("DJANGO_ADMIN_FIRST_NAME", default="")
 DJANGO_ADMIN_LAST_NAME = config("DJANGO_ADMIN_LAST_NAME", default="")
@@ -190,12 +190,9 @@ if CACHE_TIMEOUT>0 and CACHE_TIMEOUT < CACHE_BACKUP_INTERVAL*2:
 CACHE_TIMEOUT = None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
         "TIMEOUT": CACHE_TIMEOUT,
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        },
     }
 }
 ################################################################

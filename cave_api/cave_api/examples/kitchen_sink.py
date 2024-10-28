@@ -399,6 +399,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": True,
                             "help": "Select an option from the combobox",
                         },
+                        "comboBoxMultiExample": {
+                            "name": "ComboBox Multi Example",
+                            "type": "selector",
+                            "variant": "comboboxMulti",
+                            "placeholder": "Select multiple options",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "help": "Select multiple options from the combobox",
+                        },
                         "nestedItemExample": {
                             "name": "Nested Item Example",
                             "type": "selector",
@@ -488,6 +500,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "vstepperItemExample": ["option_c"],
                         "hradioItemExample": ["option_c"],
                         "comboBoxItemExample": ["option_b"],
+                        "comboBoxMultiExample": ["option_a", "option_b"],
                         "nestedItemExample": [
                             "t1_b1_tw1",
                             "t1_b1_tw2",
@@ -613,24 +626,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 4,
                                 "row": 6,
-                                "itemId": "hstepperItemExample",
+                                "itemId": "comboBoxMultiExample",
                             },
                             "col4Row7": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 7,
-                                "itemId": "vstepperItemExample",
+                                "itemId": "hstepperItemExample",
                             },
                             "col4Row8": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 8,
-                                "itemId": "hradioItemExample",
+                                "itemId": "vstepperItemExample",
                             },
                             "col4Row9": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 9,
+                                "itemId": "hradioItemExample",
+                            },
+                            "col4Row10": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 10,
                                 "itemId": "nestedItemExample",
                             },
                             "col5Row1": {
@@ -1561,17 +1580,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             "timeValues": {
                                 0: {
-                                    "latitude": [[43.78, 39.82]],
+                                    "latitude": [[43.78], [39.82]],
                                 },
                                 1: {
-                                    "latitude": [[44.78, 39.82]],
+                                    "latitude": [[44.78], [39.82]],
                                 },
                                 2: {
-                                    "latitude": [[45.78, 39.82]],
+                                    "latitude": [[45.78], [39.82]],
                                 },
                             },
-                            "latitude": [[43.78, 39.82]],
-                            "longitude": [[-79.63, -86.18]],
+                            "latitude": [[43.78], [39.82]],
+                            "longitude": [[-79.63], [-86.18]],
                         },
                         "valueLists": {
                             "numericPropExampleA": [100, 80],
@@ -1612,8 +1631,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "latitude": [[42.89, 28.49, 42.361176]],
-                            "longitude": [[-85.68, -81.56, -71.084707]],
+                            "latitude": [[42.89], [28.49], [42.361176]],
+                            "longitude": [[-85.68], [-81.56], [-71.084707]],
                         },
                         "valueLists": {
                             "numericPropExampleA": [500, 1000, 1000],

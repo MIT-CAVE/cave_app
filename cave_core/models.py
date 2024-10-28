@@ -37,7 +37,7 @@ class CustomUser(AbstractUser):
         error_messages={
             "unique": _("A user with that email already exists."),
         },
-        help_text=_("Required. A valid email address"),
+        help_text=_("Required. A valid email address."),
     )
     photo = models.ImageField(
         _("photo"),
@@ -395,6 +395,15 @@ class Globals(SingletonModel):
         null=True,
         storage=PublicMediaStorage(),
     )
+    site_background = models.ImageField(
+        _("Site Background"),
+        help_text=_("Background image of the app - Used as the background of many pages"),
+        upload_to="background_photos",
+        default="background_photos/cave_wallpaper.jpg",
+        blank=True,
+        null=True,
+        storage=PublicMediaStorage(),
+    )
     show_custom_pages = models.BooleanField(
         _("Show Custom Pages"),
         help_text=_("Should the custom pages be showed? - Used for every defined custom page"),
@@ -446,7 +455,7 @@ class Globals(SingletonModel):
     allow_anyone_create_user = models.BooleanField(
         _("Allow anyone to create a user"),
         help_text=_(
-            "Should anyone be allowed to create a user? - Used in non authenticated nav pages to allow/disallow account creation"
+            "Should anyone be allowed to create a user? - Used in login screen to allow anyone to create a user"
         ),
         default=False,
     )
@@ -1130,7 +1139,7 @@ class Sessions(models.Model):
         if wipeExisting:
             data_keys = list(data.keys())
             keys_to_delete = pamda.difference(list(versions.keys()), data_keys)
-            cache.delete_many([f"session:{self.id}:data:{key}" for key in keys_to_delete])
+            cache.delete_many([f"session:{self.id}:data:{key}" for key in keys_to_delete], memory=True, persistent=True)
             for key in keys_to_delete:
                 versions.pop(key, None)
         # Update the cache with the new data
@@ -1398,7 +1407,15 @@ def handle_session_on_delete(sender, instance, **kwargs):
     When a session object is deleted, update the sessions list for the associated session team
     """
     instance.team.update_sessions_list()
-    cache.delete_pattern(f"session:{instance.id}:*")
+    # Clear the data from the cache and persistent cache if present
+    cache_session_id = f"session:{instance.id}"
+    generic_keys = [f"{cache_session_id}:{key}" for key in ['versions', 'executing','user_ids']]
+    data_keys = [f"{cache_session_id}:data:{key}" for key in cache.get(f"{cache_session_id}:versions", {}).keys()]
+    cache.delete_many(
+        data_keys + generic_keys,
+        memory=True,
+        persistent=True
+    )
 
 
 @receiver(post_save, sender=TeamUsers, dispatch_uid="update_team_ids_on_save")

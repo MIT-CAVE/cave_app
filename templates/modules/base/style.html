@@ -1,4 +1,9 @@
 <style>
   .bg-primary {background-color: {{ globals.primary_color }} !important;}
   .bg-secondary {background-color: {{ globals.secondary_color }} !important;}
+  .bg-site-background {
+    background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url({{ globals.site_background.url }});
+    background-size: cover;
+    background-position: center;
+  }
 </style>
