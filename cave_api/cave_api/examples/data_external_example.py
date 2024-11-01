@@ -12,14 +12,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "for": "state:*",
             "key": "260e4fe4b5850a56eb7bd98d35140fba57de6dae"
         }
-        
+
         # Make the API request with an exception handler
         try:
             response = requests.get(api_url, params=params)
             # The response from the API is a list of lists with the format:
             # [['DENSITY_2021', 'NAME', 'state'], ['58.1171593930', 'Oklahoma', '40'],...]
             population_data_raw = response.json()
-            # Convert the list of lists to a dictionary with the state name as the key 
+            # Convert the list of lists to a dictionary with the state name as the key
             # and the population density as the value:
             # {'Oklahoma': '58.1171593930',...}
             population_data = {i[1]: i[0] for i in population_data_raw[1:]}
@@ -30,7 +30,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # If an exception is raised, notify the user that the population data was not fetched
             socket.notify("Unable to fetch population data.", title="Error", theme="error")
             population_data = {}
-        
+
         # Define a dictionary of state codes to state names
         state_code_map = {
             'US.AL': "Alabama",
@@ -84,7 +84,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             'US.WI': "Wisconsin",
             'US.WY': "Wyoming"
         }
-        
+
         # Create an ordered list of state geojson ids
         geo_json_values = [k for k in state_code_map.keys()]
         # Create an ordered list of population densities
@@ -169,7 +169,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "populationDensity": {
                                 "name": "Population Density",
                                 "type": "num",
-                                "enabled": True,
                                 "help": "The state's population density in people per square mile",
                                 "unit": "People per Square Mile",
                             },
@@ -185,7 +184,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             }
                         }
                     },
-                },     
+                },
             },
             # Add a map page to the app using the population map specified above
             "pages": {

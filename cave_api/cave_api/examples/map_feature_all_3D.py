@@ -203,7 +203,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
                             "help": "The warehouse capacity in cubic feet",
                             "unit": "Cubic Feet",
                             "legendNotation": "precision",
@@ -212,7 +211,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "includesAutomation": {
                             "name": "Includes Automation",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Whether the warehouse includes automation",
                         },
                     },
@@ -240,7 +238,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "demand": {
                             "name": "Demand",
                             "type": "num",
-                            "enabled": True,
                             "help": "Demand for this state",
                             "unit": "units",
                         },
@@ -267,7 +264,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
                             "help": "The warehouse capacity in cubic feet",
                             "unit": "Cubic Feet",
                             "legendNotation": "precision",
@@ -276,7 +272,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "preferredRoute": {
                             "name": "Preferred Route",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Whether the route is preferred",
                         },
                     },
@@ -312,7 +307,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
                             "help": "The warehouse capacity in cubic feet",
                             "unit": "Cubic Feet",
                             "legendNotation": "precision",
@@ -321,7 +315,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "preferredRoute": {
                             "name": "Preferred Route",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Whether the route is preferred",
                         },
                     },

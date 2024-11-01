@@ -201,7 +201,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Info Button",
                             "type": "button",
                             "apiCommand": "viewInfo",
-                            "enabled": True,
                             "help": "Press this button to view info",
                         },
                     },
@@ -233,7 +232,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericInputExample": {
                             "name": "Numeric Input Example",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for the numeric input example",
                             "maxValue": 100,
                             "minValue": 0,
@@ -245,7 +243,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericSliderExample": {
                             "name": "Numeric Slider Example",
                             "type": "num",
-                            "enabled": True,
                             "variant": "slider",
                             "help": "Help for the numeric slider example",
                             "maxValue": 100,
@@ -268,14 +265,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "toggleInputExample": {
                             "name": "Toggle Input Example",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Help for the toggle input example",
                         },
                         "buttonInputExample": {
                             "name": "Button Input Example (Creates an Error)",
                             "type": "button",
                             "apiCommand": "test",
-                            "enabled": True,
                             "help": "Press this button to create an error",
                         },
                         "pictureExample": {
@@ -298,7 +293,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "textInputExample": {
                             "name": "Text Input Example",
                             "type": "text",
-                            "enabled": True,
                             "help": "Help for the text input example",
                         },
                         "textAreaInputExample": {
@@ -306,7 +300,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "text",
                             "variant": "textarea",
                             "rows": 6,
-                            "enabled": True,
                             "help": "Help for the text area input example",
                         },
                         "selectorHeader": {
@@ -323,7 +316,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the dropdown",
                         },
                         "checkboxItemExample": {
@@ -335,7 +327,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select all relevant items",
                         },
                         "radioItemExample": {
@@ -347,7 +338,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select one item from the list",
                         },
                         "hstepperItemExample": {
@@ -359,7 +349,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the stepper",
                         },
                         "vstepperItemExample": {
@@ -371,7 +360,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the stepper",
                         },
                         "hradioItemExample": {
@@ -383,7 +371,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the radio",
                         },
                         "comboBoxItemExample": {
@@ -396,7 +383,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the combobox",
                         },
                         "comboBoxMultiExample": {
@@ -426,7 +412,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "t2_b2_tw1": {"name": "Twig1", "path": ["Tree2", "Branch2"]},
                                 "t2_b2_tw2": {"name": "Twig2", "path": ["Tree2", "Branch2"]},
                             },
-                            "enabled": True,
                             "help": "Select all relevant items",
                         },
                         "dateTimeHeader": {
@@ -438,14 +423,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Date Example",
                             "type": "date",
                             "variant": "date",
-                            "enabled": True,
                             "help": "The Eagle has landed!",
                         },
                         "timeItemExample": {
                             "name": "Time Example",
                             "type": "date",
                             "variant": "time",
-                            "enabled": True,
                             "views": ["hours", "minutes", "seconds"],
                             "help": "The Eagle has landed!",
                         },
@@ -453,7 +436,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Date and Time Example",
                             "type": "date",
                             "variant": "datetime",
-                            "enabled": True,
                             "help": "The Eagle has landed!",
                         },
                         "coordinateHeader": {
@@ -465,21 +447,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Lat/Lng Input Example",
                             "type": "coordinate",
                             "variant": "latLngInput",
-                            "enabled": True,
                             "help": "Help for the latLngInput example",
                         },
                         "latLngMapExample": {
                             "name": "Lat/Lng Map Example",
                             "type": "coordinate",
                             "variant": "latLngMap",
-                            "enabled": True,
                             "help": "Help for the latLngMap example",
                         },
                         "latLngPathExample": {
                             "name": "Lat/Lng Path Example",
                             "type": "coordinate",
                             "variant": "latLngPath",
-                            "enabled": True,
                             "help": "Help for the latLngPath example",
                         },
                     },
@@ -1413,7 +1392,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for numeric prop example A",
                             "unit": "A units",
                             "legendNotation": "compact",
@@ -1422,7 +1400,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for numeric prop example B",
                             "unit": "B units",
                         },
@@ -1440,7 +1417,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "g": {"name": "G"},
                                 "h": {"name": "H"},
                             },
-                            "enabled": True,
                         },
                     },
                     "layout": {
@@ -1483,14 +1459,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for numeric prop example A",
                             "unit": "A units",
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for numeric prop example B",
                             "unit": "B units",
                         },
@@ -1508,7 +1482,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "g": {"name": "G"},
                                 "h": {"name": "H"},
                             },
-                            "enabled": True,
                         },
                     },
                     "layout": {
@@ -1554,7 +1527,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for numeric prop example A",
                             "unit": "A units",
                             "legendNotation": "precision",
@@ -1563,7 +1535,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for numeric prop example B",
                             "unit": "B units",
                             "legendNotation": "scientific",
@@ -1572,7 +1543,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Help for boolean prop",
                         },
                     },
@@ -1606,7 +1576,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for numeric prop example A",
                             "precision": 2,
                             "unit": "A units",
@@ -1616,7 +1585,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for numeric prop example B",
                             "unit": "B units",
                             "legendMinLabel": "Lo",
@@ -1625,7 +1593,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Help for boolean prop",
                         },
                     },
@@ -1652,7 +1619,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help with the example numeric prop for this State",
                             "unit": "C units",
                         },
@@ -1683,7 +1649,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help with the example numeric prop for this Country",
                             "unit": "units",
                         },
@@ -1704,7 +1669,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help with the example numeric prop for this Custom",
                             "unit": "units",
                         },

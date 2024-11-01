@@ -87,7 +87,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "demand": {
                             "name": "Demand",
                             "type": "num",
-                            "enabled": True,
                             "help": "Demand for this state",
                             "unit": "units",
                         },

@@ -83,7 +83,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help with the example numeric prop for this Custom",
                             "unit": "units",
                         },
