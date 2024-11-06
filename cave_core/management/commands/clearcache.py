@@ -9,6 +9,6 @@ class Command(BaseCommand):
         self.stdout.write("Clearing the Cache (memory and persistent)...")
         try:
             cache = Cache()
-            cache.clear()
+            cache.delete_pattern("*")
         except Exception as e:
             raise CommandError(f"Failed to clear the cache with the following error: {e}")

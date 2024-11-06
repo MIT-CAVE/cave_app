@@ -1,8 +1,12 @@
 from django.core.management.base import BaseCommand
 from cave_core.utils.cache import Cache
 
-from channels.layers import get_channel_layer
+from cave_core.websockets.django_sockets.sockets import BaseSocketServer
 from asgiref.sync import async_to_sync
+
+class Socket_Server(BaseSocketServer):
+    def receive(self, data):
+        print('Receiving:', data)
 
 class Command(BaseCommand):
     help = 'Clearing the Cache'
@@ -12,7 +16,6 @@ class Command(BaseCommand):
         cache.set("test", "test value")
         print(cache.get("test"))
 
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.send)("test_channel", {"type": "test.message", "text": "Hello Redis!"})
-        message = async_to_sync(channel_layer.receive)("test_channel")
-        print("Message received from Redis:", message)
+        socket_server = Socket_Server.as_asgi()(None, None, None)
+        socket_server.subscribe("test_channel")
+        socket_server.broadcast("test_channel", "test message")

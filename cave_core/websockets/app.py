@@ -1,7 +1,11 @@
-from channels.routing import URLRouter
-from .middleware import TokenAuthMiddleware
-from .urls import websocket_urlpatterns
+from .django_sockets.utils import URLRouter
+from .django_sockets.middleware import DRFTokenAuthMiddleware
+from django.urls import path
+from .socket_server import SocketServer
 
+websocket_urlpatterns = [
+    path("ws/", SocketServer.as_asgi()),
+]
 
 def get_ws_asgi_application():
-    return TokenAuthMiddleware(URLRouter(websocket_urlpatterns))
+    return DRFTokenAuthMiddleware(URLRouter(websocket_urlpatterns))

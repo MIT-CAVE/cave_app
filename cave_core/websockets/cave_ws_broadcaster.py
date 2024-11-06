@@ -1,13 +1,11 @@
-# Framework Imports
-from channels.layers import get_channel_layer
-
 # External Imports
-from asgiref.sync import async_to_sync
-import json, type_enforced
+import type_enforced
 
-channel_layer = get_channel_layer()
-sync_send = async_to_sync(channel_layer.group_send)
+from .django_sockets.broadcaster import Broadcaster
 
+broadcaster = Broadcaster()
+
+# Constants
 acceptable_events = set(
     [
         "mutation",
@@ -18,11 +16,13 @@ acceptable_events = set(
         "export",
     ]
 )
-
 theme_list = set(["primary", "secondary", "error", "warning", "info", "success"])
 
+# Loading Events
+loading_true = {"event": "updateLoading", "data": {"data_path": ["data_loading"], "data": True}}
+loading_false = {"event": "updateLoading", "data": {"data_path": ["data_loading"], "data": False}}
 
-class Socket:
+class CaveWSBroadcaster:
     def __init__(self, model_object):
         self.model_object = model_object
 
@@ -51,7 +51,7 @@ class Socket:
             )
         if not isinstance(data, dict):
             raise TypeError(f"Invalid `data` type ('{type(data)}'). `data` must be a dict.")
-        return json.dumps({"event": event, "data": data, **kwargs})
+        return {"event": event, "data": data, **kwargs}
 
     def broadcast(self, event: str, data: dict, **kwargs):
         """
@@ -68,11 +68,8 @@ class Socket:
             - Type: dict
             - What: The data to broadcast
         """
-        payload = self.format_broadcast_payload(event=event, data=data, **kwargs)
-        # Note: broadcast_type refers to the function called in consumer.py
-        broadcast_type = "loadingbroadcast" if event == "overwrite" else "broadcast"
         for user_id in self.model_object.get_user_ids():
-            sync_send(str(user_id), {"type": broadcast_type, "payload": payload})
+            broadcaster.broadcast(str(user_id), self.format_broadcast_payload(event=event, data=data, **kwargs))
 
     @type_enforced.Enforcer
     def notify(

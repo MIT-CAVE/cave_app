@@ -1,0 +1,24 @@
+from django.conf import settings
+
+from .commands import get_command
+from .django_sockets.sockets import BaseSocketServer
+
+class Request:
+    """
+    A simple request object class to mimic the behavior of the request object passed by DRF
+    """
+    def __init__(self, user, data):
+        self.data = data
+        self.user = user
+    
+class SocketServer(BaseSocketServer):
+    def receive(self, data):
+        if settings.DEBUG:
+            print("WS RECEIVE ", data['command'])
+        request = Request(self.__scope__.get("user"), data.get("data"))
+        command = get_command(data.get("command"))
+        command(request)
+
+    def connect(self):
+        self.channel_id = str(self.__scope__.get("user").id)
+        self.subscribe(self.channel_id)

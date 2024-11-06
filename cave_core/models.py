@@ -12,7 +12,7 @@ from pamda import pamda
 import type_enforced
 
 # Internal Imports
-from cave_core.utils.broadcasting import Socket
+from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 from cave_core.utils.cache import Cache
 from cave_core.utils.constants import api_keys, background_api_keys
 from cave_core.utils.validators import limit_upload_size
@@ -230,7 +230,7 @@ class CustomUser(AbstractUser):
         """
         Used to get the current user id in a list by itself.
 
-        Required by Socket for generic functionaility.
+        Required by CaveWSBroadcaster for generic functionaility.
         """
         return [self.id]
 
@@ -259,11 +259,11 @@ class CustomUser(AbstractUser):
         """
         Let the user know their current session info (id and loading status)
         """
-        Socket(self).broadcast(
+        CaveWSBroadcaster(self).broadcast(
             event="updateSessions",
             data={"data_path": ["session_id"], "data": self.session.id},
         )
-        Socket(self).broadcast(
+        CaveWSBroadcaster(self).broadcast(
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],
@@ -839,7 +839,7 @@ class Teams(models.Model):
     def update_sessions_list(self):
         sessions = self.get_sessions()
         self.set_session_count(len(sessions))
-        Socket(self).broadcast(
+        CaveWSBroadcaster(self).broadcast(
             event="updateSessions",
             data={
                 "data_path": ["data", str(self.id)],
@@ -931,7 +931,7 @@ class Sessions(models.Model):
             - Type: bool
             - What: The loading status to broadcast
         """
-        Socket(self).broadcast(
+        CaveWSBroadcaster(self).broadcast(
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],
@@ -1066,7 +1066,7 @@ class Sessions(models.Model):
             # If the new data is not the same length as the keys to get from the cache, there was an error
             # Likely, some data was lost from the persistent cache
             if len(new_data.keys()) != len(keys_to_get_from_cache):
-                Socket(self).notify(
+                CaveWSBroadcaster(self).notify(
                     title="Error:",
                     message="Oops! There was an error with the data from this session. It will be reset to initial values to fix the issue.",
                     theme="error",
@@ -1105,11 +1105,13 @@ class Sessions(models.Model):
         ]
         data = self.get_data(client_only=True, keys=updated_keys)
         # Broadcast the updated versions and data
-        Socket(self).broadcast(
+        self.broadcast_loading(True)
+        CaveWSBroadcaster(self).broadcast(
             event="overwrite",
             versions=versions,
             data=data,
         )
+        self.broadcast_loading(False)
         # print('==BROADCAST CHANGED DATA END==')
 
     def replace_data(self, data, wipeExisting):
@@ -1190,7 +1192,7 @@ class Sessions(models.Model):
         # print('\n==EXECUTE API COMMAND==')
         self.set_loading(True)
         session_data = self.get_data(keys=command_keys, client_only=False)
-        socket = Socket(self)
+        socket = CaveWSBroadcaster(self)
         command_output = execute_command(
             session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
         )
