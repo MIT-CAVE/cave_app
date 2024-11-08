@@ -1,3 +1,5 @@
+import json
+
 def execute_command(session_data, socket, command="init", **kwargs):
     # `init` is the default command that is run when a session is created
     # It should return an initial state for the app
@@ -42,7 +44,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
     # For this example, `myCommand` defined in the api in appBar.data.myCommandButton.apiCommand
     elif command == "myCommand":
         # Send the current session data to app users
-        socket.export(session_data)
+        socket.export(f'data:application/json,{json.dumps(session_data)}')
         # Log a message in the console
         print("Console Log: `myCommand` has been triggered!")
         return session_data
