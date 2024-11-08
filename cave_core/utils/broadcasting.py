@@ -142,11 +142,11 @@ class Socket:
             },
             loading=False,
         )
-    
-    @type_enforced.Enforcer
+
     def export(
         self,
-        data: dict,
+        data,
+        name="session-data.json",
     ):
         """
         Send end users a json serializable object which is downloaded by the client to the user's device
@@ -156,8 +156,15 @@ class Socket:
         - `data`:
             - Type: dict
             - What: Json encodable data to send to the user
+
+        Optional:
+
+        - `name`:
+            - Type: str
+            - What: The name of the file to download
+            - Default: "session-data.json"
         """
         self.broadcast(
             event="export",
-            data=data,
+            data={"data": data, "name": name},
         )
