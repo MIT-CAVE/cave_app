@@ -1,7 +1,7 @@
 # External Imports
 import type_enforced
 
-from .django_sockets.broadcaster import Broadcaster
+from django_sockets.broadcaster import Broadcaster
 
 broadcaster = Broadcaster()
 

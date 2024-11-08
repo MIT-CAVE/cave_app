@@ -1,7 +1,7 @@
 from django.conf import settings
 
 from .commands import get_command
-from .django_sockets.sockets import BaseSocketServer
+from django_sockets.sockets import BaseSocketServer
 
 class Request:
     """

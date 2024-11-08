@@ -12,7 +12,7 @@ if os.environ.get("DJANGO_SETTINGS_MODULE") is None:
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cave_app.settings.development")
 
 from django.core.asgi import get_asgi_application
-from cave_core.websockets.django_sockets.utils import ProtocolTypeRouter
+from django_sockets.utils import ProtocolTypeRouter
 from cave_core.websockets.app import get_ws_asgi_application
 
 # Initialize asgi app items when the app starts
