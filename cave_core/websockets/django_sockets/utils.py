@@ -1,12 +1,30 @@
+from django.conf import settings
 from django.db import close_old_connections
 from django.core.exceptions import ImproperlyConfigured
 from django.urls.exceptions import Resolver404
 from django.urls.resolvers import RegexPattern, RoutePattern, URLResolver
 
-import threading, asyncio, logging
+import asyncio, logging, threading
 from asgiref.sync import SyncToAsync
 
 logger = logging.getLogger(__name__)
+
+def get_config(config=None):
+    """
+    Get the configuration for the socket server
+    """
+    # If the config is passed, return it.
+    if config is not None:
+        return config
+    # If the config is not passed, try to get it from the Django settings
+    elif hasattr(settings, 'DJANGO_SOCKETS_CONFIG'):
+        return settings.DJANGO_SOCKETS_CONFIG
+    # If nothing has been returned yet, return a default configuration
+    return {
+        "hosts": [
+            {"address": "redis://localhost:6379"}
+        ]
+    }
 
 def run_in_thread(command, *args, **kwargs):
     """

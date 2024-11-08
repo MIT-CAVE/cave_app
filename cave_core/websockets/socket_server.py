@@ -15,10 +15,10 @@ class SocketServer(BaseSocketServer):
     def receive(self, data):
         if settings.DEBUG:
             print("WS RECEIVE ", data['command'])
-        request = Request(self.__scope__.get("user"), data.get("data"))
+        request = Request(self.scope.get("user"), data.get("data"))
         command = get_command(data.get("command"))
         command(request)
 
     def connect(self):
-        self.channel_id = str(self.__scope__.get("user").id)
+        self.channel_id = str(self.scope.get("user").id)
         self.subscribe(self.channel_id)

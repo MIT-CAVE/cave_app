@@ -158,22 +158,9 @@ REST_FRAMEWORK = {
 ################################################################
 
 
-# Django Channels
-################################################################
-## Channels Layer Support
-INSTALLED_APPS = ["daphne"] + INSTALLED_APPS
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"],
-        },
-    },
-}
-################################################################
-
 # DJANGO_SOCKETS_CONFIG
 ################################################################
+INSTALLED_APPS = ["daphne"] + INSTALLED_APPS
 DJANGO_SOCKETS_CONFIG = {
     "hosts": [
         {"address": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"}

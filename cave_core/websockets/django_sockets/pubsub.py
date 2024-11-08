@@ -1,4 +1,4 @@
-import asyncio, logging, binascii, msgpack, logging
+import asyncio, logging, binascii, msgpack, logging, uuid
 from redis.asyncio import Redis, ConnectionPool, sentinel
 
 logger = logging.getLogger(__name__)
@@ -22,8 +22,13 @@ class PubSubLayer:
             - Note: This uses a redis connection pool or a sentinel connection pool to connect to the Redis server.
             - Each dictionary should contain the following key value pairs (depending on the connection pool type):
                 - ConnectionPool:
+                    - address: The address of the Redis server 
+                        - EG: 'redis://localhost:6379'
+                        - Note: This can be used alone or in conjunction with other connection pool keys
                     - host: The host of the Redis server
+                        - Note: This must be used with the port key and can be used in conjunction with the other connection pool keys
                     - port: The port of the Redis server
+                        - Note: This must be used with the host key and can be used in conjunction with the other connection pool keys
                     - Other keys listed in the redis-py ConnectionPool documentation
                 - SentinelConnectionPool:
                     - master_name: The name of the master in a Redis Sentinel setup
@@ -83,7 +88,7 @@ class PubSubLayer:
             # Cleanup / unsubscribe on interruptions / exits / timeouts
             await self.flush()
             # Raise an exception to exit the calling task
-            raise
+            raise asyncio.CancelledError
 
     async def flush(self):
         """
@@ -92,8 +97,10 @@ class PubSubLayer:
         for shard in set(self.subscriptions.values()):
             try:
                 await shard.flush()
-            except BaseException:
-                logger.exception("Exception while flushing shard connection")
+            except asyncio.CancelledError:
+                raise asyncio.CancelledError
+            except BaseException as e:
+                logger.exception(f"Exception while flushing shard connection: {e}")
         self.subscriptions=dict()
 
 
@@ -143,14 +150,22 @@ class ShardConnection:
             await self.__ensure_connection__()
             await self.pubsub.unsubscribe(channel)
             self.subscriptions.remove(channel)
-            if len(self.subscriptions) == 0:
-                self.flush()
+        if len(self.subscriptions) == 0:
+            await self.flush()
 
     async def publish(self, channel, message):
         channel = self.__get_channel_name__(channel)
         async with self.lock:
             await self.__ensure_connection__()
-            await self.connection.publish(channel, self.__serialize__(message))
+            message = self.__serialize__(message)
+            # if the message is larger than 1MB, then save it as a uuid in the same cache and send the uuid
+            # This helps bypass the 32 MB limit on pubsub queue size for most cache servers
+            # Ensure that this objeect times out after 60s to keep the cache clean
+            if len(message) > 1024*1024:
+                msg_loc_key = f"{self.prefix}.{str(uuid.uuid4())}"
+                await self.connection.set(msg_loc_key, message, ex=60)
+                message = self.__serialize__(f'msg:{msg_loc_key}')
+            await self.connection.publish(channel, message)
 
     async def ensure_receiver_task(self):
         async with self.lock:
@@ -169,10 +184,10 @@ class ShardConnection:
                 pass
             self.receiver_task = None
         if self.pubsub:
-            self.pubsub.close()
+            await self.pubsub.close()
             self.pubsub = None
         if self.connection:
-            self.connection.close()
+            await self.connection.close()
             self.connection = None
 
     # Tasks
@@ -193,9 +208,15 @@ class ShardConnection:
                     message = await self.pubsub.get_message(ignore_subscribe_messages=True)
                     # If message is not None, put it in the channel queue
                     if message:
+                        message_data = self.__deserialize__(message["data"])
+                        # If the message was too large, then get that message from the cache
+                        if isinstance(message_data, str):
+                            if message_data.startswith('msg:'):
+                                msg_loc_key = message_data[4:]
+                                message_data = self.__deserialize__(await self.connection.get(msg_loc_key))
                         self.pubsub_layer_obj.queue.put_nowait({
                             'channel':self.__get_channel_from_name__(message["channel"].decode()),
-                            'data':self.__deserialize__(message["data"])
+                            'data': message_data
                         })
                 # Wait for a short time to prevent busy waiting
                 # This also serves to wait for the pubsub layer to be subscribed to the channel
@@ -203,8 +224,7 @@ class ShardConnection:
             # Exit on cancellation, timeout, or generator exit (for cleanup afer connection is closed)
             except (asyncio.CancelledError,asyncio.TimeoutError,GeneratorExit):
                 # print("RECEIVER TASK KILLED")
-                self.flush()
-                raise 
+                raise asyncio.CancelledError
             except:
                 logger.exception("Exception while receiving message from pubsub")
         await self.flush()

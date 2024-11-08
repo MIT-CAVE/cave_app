@@ -4,7 +4,7 @@ from django.urls import path
 from .socket_server import SocketServer
 
 websocket_urlpatterns = [
-    path("ws/", SocketServer.as_asgi()),
+    path("ws/", SocketServer.as_asgi),
 ]
 
 def get_ws_asgi_application():

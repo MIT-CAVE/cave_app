@@ -1,34 +1,15 @@
 import asyncio, logging
 
-from django.conf import settings
-
 from .pubsub import PubSubLayer
-from .utils import ensure_loop_running
+from .utils import ensure_loop_running, get_config
 
 logger = logging.getLogger(__name__)
 
 class Broadcaster:
-    def __init__(self, *args, loop=None, **kwargs):
+    def __init__(self, *args, loop=None, config=None, **kwargs):
         self.__loop__ = ensure_loop_running(loop)
-        self.pubsub_layer = self.__get_pubsub_layer__()
+        self.pubsub_layer = self.__get_pubsub_layer__(config=config)
         self.__usable__ = self.pubsub_layer is not None
-
-    def __get_pubsub_layer__(self):
-        """
-        A method to get the PubSubLayer given the settings.DJANGO_SOCKETS_CONFIG
-        """
-        if hasattr(settings, "DJANGO_SOCKETS_CONFIG"):
-            if isinstance(settings.DJANGO_SOCKETS_CONFIG, dict):
-                if "hosts" in settings.DJANGO_SOCKETS_CONFIG:
-                    return PubSubLayer(**settings.DJANGO_SOCKETS_CONFIG)
-        return None
-
-    def __warn_on_not_usable__(self):
-        """
-        Warn the user if the broadcaster is not usable
-        """
-        if not self.__usable__:
-            logger.log(logging.ERROR, "No hosts provided in settings.DJANGO_SOCKETS_CONFIG. Broadcasting / Subscribing is not possible.")
 
     # Sync Functions
     def broadcast(self, channel:str, data:[dict|list]):
@@ -92,3 +73,20 @@ class Broadcaster:
         """
         data = await self.pubsub_layer.receive()
         return data['channel'], data['data']
+
+    # Internal Methods
+    def __get_pubsub_layer__(self, config=None):
+        """
+        A method to get the PubSubLayer given the settings.DJANGO_SOCKETS_CONFIG
+        """
+        config = get_config(config)
+        if "hosts" in config:
+            return PubSubLayer(**config)
+        return None
+
+    def __warn_on_not_usable__(self):
+        """
+        Warn the user if the broadcaster is not usable
+        """
+        if not self.__usable__:
+            logger.log(logging.ERROR, "No hosts provided in settings.DJANGO_SOCKETS_CONFIG. Broadcasting / Subscribing is not possible.")
