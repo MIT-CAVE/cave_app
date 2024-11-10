@@ -898,22 +898,44 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupScaleWithZoom": True,
                                     # "groupScale": 10,
                                     "icon": "fa6/FaIgloo",
-                                    # NOTE: Example of how prop attributes are overriden in the legend
+                                    # NOTE: Example of overriding prop attributes in the legend
                                     "props": {
                                         "numericPropExampleA": {
                                             "startGradientColor": "rgba(33, 200, 100, 1)",
                                             "endGradientColor": "rgba(196, 220, 112, 1)",
                                             "startSize": "40px",
                                             "endSize": "60px",
+                                            # REVIEW: Preferred key name -> `default` or `fallback`?
+                                            "default": {"name": "Undefined", "color": "rgba(128, 128, 128, 1)", "size": "20px"},
+                                            # REVIEW: Option to use separate names for color and size
+                                            # "default": {
+                                            #     "color": {"name": "No Color", "color": "rgba(128, 128, 128, 1)"},
+                                            #     "size": {"name": "No Size", "size": "20px"},
+                                            # }
                                         },
                                         "booleanPropExample": {
                                             "options":{
                                                 "false": {"name": "Idle", "color": "rgba(255, 0, 0, 1)", "size": "15px"},
                                                 "true": {"name": "Active", "color": "rgba(0, 255, 0, 1)", "size": "30px"},
-                                                "nullColor": {"name": "Unknown", "color": "rgba(100, 100, 100, 1)"},
                                             },
+                                            # REVIEW: Preferred key name -> `default` or `fallback`?
+                                            "default": {"name": "Unknown", "color": "rgba(128, 128, 128, 1)", "size": "20px"},
+                                            # REVIEW: Option to use separate names for color and size
+                                            # "default": {
+                                            #     "color": {"name": "No Color", "color": "rgba(128, 128, 128, 1)"},
+                                            #     "size": {"name": "No Size", "size": "20px"},
+                                            # }
                                         }
                                     },
+                                    # REVIEW:
+                                    # Current implemented behavior on `cave_static`: `colorBy` and `sizeB`` dropdowns are populated with props
+                                    # that have at least one gradient/color or size range/option value after left-merging
+                                    # `legendGroups.lga.data.nodeTypeA.props` with `mapFeatures.data.nodeTypeA.props`.
+                                    # We could define a list of prop keys to specify which props should appear in the dropdowns  by using
+                                    # `colorByOptions` and `sizeByOptions`. Note that `colorByOptions` and `sizeByOptions` are now different
+                                    # from the old structure and will only point to the keys.
+                                    "colorByOptions": [],
+                                    "sizeByOptions": [],
                                 },
                                 "T1": {
                                     "colorBy": "numericPropExampleA",
@@ -1070,7 +1092,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "legendMinLabel": "small",
                             "startGradientColor": "rgba(233, 0, 0, 1)",
                             "endGradientColor": "rgba(96, 2, 2, 1)",
-                            # # IDEA: Implement intermediate gradients
+                            # IDEA: Implement intermediate gradients
                             # "interGradientColors": [
                             #     {"color": "rgba(125, 80, 255, 1)", "cutoff": 15},
                             #     {"color": "rgba(125, 80, 255, 1)", "cutoff": 20},
@@ -1092,19 +1114,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "endGradientColor": "rgba(96, 2, 2, 1)",
                             "help": "Help for numeric prop example B",
                         },
-                        "selectorPropForColor": {
+                        "selectorPropExample": {
                             "name": "Example Categorical Prop",
                             "type": "selector",
                             "variant": "dropdown",
                             "options": {
-                                "a": {"name": "A", "color": "rgba(128, 255, 255, 1)"},
-                                "b": {"name": "B", "color": "rgba(0, 153, 51, 1)"},
-                                "c": {"name": "C", "color": "rgba(0, 0, 128, 1)"},
-                                "d": {"name": "D", "color": "rgba(204, 0, 0, 1)"},
-                                "e": {"name": "E", "color": "rgba(153, 77, 0, 1)"},
-                                "f": {"name": "F", "color": "rgba(255, 25, 255, 1)"},
-                                "g": {"name": "G", "color": "rgba(0, 255, 0, 1)"},
-                                "h": {"name": "H", "color": "rgba(255, 255, 0, 1)"},
+                                "a": {"name": "A", "color": "rgba(128, 255, 255, 1)", "size": "3px"},
+                                "b": {"name": "B", "color": "rgba(0, 153, 51, 1)", "size": "8px"},
+                                "c": {"name": "C", "color": "rgba(0, 0, 128, 1)", "size": "13px"},
+                                "d": {"name": "D", "color": "rgba(204, 0, 0, 1)", "size": "18px"},
+                                "e": {"name": "E", "color": "rgba(153, 77, 0, 1)", "size": "23px"},
+                                "f": {"name": "F", "color": "rgba(255, 25, 255, 1)", "size": "28px"},
+                                "g": {"name": "G", "color": "rgba(0, 255, 0, 1)", "size": "33px"},
+                                "h": {"name": "H", "color": "rgba(255, 255, 0, 1)", "size": "38px"},
                             },
                         },
                     },
@@ -1125,7 +1147,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "col3": {
                                 "type": "item",
-                                "itemId": "selectorPropForColor",
+                                "itemId": "selectorPropExample",
                                 "column": 3,
                             },
                         },
@@ -1137,7 +1159,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "numericPropExampleA": [15],
                             "numericPropExampleB": [40],
-                            "selectorPropForColor": [["b"]],
+                            "selectorPropExample": [["b"]],
                         },
                     },
                 },
@@ -1169,19 +1191,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Help for numeric prop example B",
                             "unit": "B units",
                         },
-                        "selectorPropForColor": {
+                        "selectorPropExample": {
                             "name": "Example Categorical Prop",
                             "type": "selector",
                             "variant": "dropdown",
                             "options": {
-                                "a": {"name": "A", "color": "rgba(128, 255, 255, 1)"},
-                                "b": {"name": "B", "color": "rgba(0, 153, 51, 1)"},
-                                "c": {"name": "C", "color": "rgba(0, 0, 128, 1)"},
-                                "d": {"name": "D", "color": "rgba(204, 0, 0, 1)"},
-                                "e": {"name": "E", "color": "rgba(153, 77, 0, 1)"},
-                                "f": {"name": "F", "color": "rgba(255, 25, 255, 1)"},
-                                "g": {"name": "G", "color": "rgba(0, 255, 0, 1)"},
-                                "h": {"name": "H", "color": "rgba(255, 255, 0, 1)"},
+                                 "a": {"name": "A", "color": "rgba(128, 255, 255, 1)", "size": "3px"},
+                                "b": {"name": "B", "color": "rgba(0, 153, 51, 1)", "size": "8px"},
+                                "c": {"name": "C", "color": "rgba(0, 0, 128, 1)", "size": "13px"},
+                                "d": {"name": "D", "color": "rgba(204, 0, 0, 1)", "size": "18px"},
+                                "e": {"name": "E", "color": "rgba(153, 77, 0, 1)", "size": "23px"},
+                                "f": {"name": "F", "color": "rgba(255, 25, 255, 1)", "size": "28px"},
+                                "g": {"name": "G", "color": "rgba(0, 255, 0, 1)", "size": "33px"},
+                                "h": {"name": "H", "color": "rgba(255, 255, 0, 1)", "size": "38px"},
                             },
                         },
                     },
@@ -1202,7 +1224,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "row3": {
                                 "type": "item",
-                                "itemId": "selectorPropForColor",
+                                "itemId": "selectorPropExample",
                                 "row": 3,
                             },
                         },
@@ -1217,7 +1239,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "numericPropExampleA": [30, 30, 30],
                             "numericPropExampleB": [20, 14, 6],
-                            "selectorPropForColor": [["e"], ["d"], ["f"]],
+                            "selectorPropExample": [["e"], ["d"], ["f"]],
                         },
                     },
                 },
@@ -1264,9 +1286,23 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "options":{
                                 "false": {"name": "False", "color": "rgba(255, 0, 0, 1)", "size": "15px"},
                                 "true": {"name": "True", "color": "rgba(0, 255, 0, 1)", "size": "30px"},
-                                "nullColor": {"name": "Null color", "color": "rgba(0, 255, 0, 1)"},
                             },
                             "help": "Help for boolean prop",
+                        },
+                        "selectorPropExample": {
+                            "name": "Example Categorical Prop",
+                            "type": "selector",
+                            "variant": "dropdown",
+                            "options": {
+                                "a": {"name": "A", "color": "rgba(128, 255, 255, 1)", "size": "3px"},
+                                "b": {"name": "B", "color": "rgba(0, 153, 51, 1)", "size": "8px"},
+                                "c": {"name": "C", "color": "rgba(0, 0, 128, 1)", "size": "13px"},
+                                "d": {"name": "D", "color": "rgba(204, 0, 0, 1)", "size": "18px"},
+                                "e": {"name": "E", "color": "rgba(153, 77, 0, 1)", "size": "23px"},
+                                "f": {"name": "F", "color": "rgba(255, 25, 255, 1)", "size": "28px"},
+                                "g": {"name": "G", "color": "rgba(0, 255, 0, 1)", "size": "33px"},
+                                "h": {"name": "H", "color": "rgba(255, 255, 0, 1)", "size": "38px"},
+                            },
                         },
                     },
                     "data": {
@@ -1289,6 +1325,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleA": [100, 80],
                             "numericPropExampleB": [50, 40],
                             "booleanPropExample": [True, True],
+                            "selectorPropExample": [["a"], ["b"]],
                         },
                     },
                 },
@@ -1332,7 +1369,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            # REVIEW: Reusing the `options` structure from selector props for consistency, as the data types are similar in nature
                             "options":{
                                 "false": {"color": "rgba(233, 0, 0, 1)"},
                                 "true": {"color": "rgba(0, 233, 0, 1)"},
@@ -1373,7 +1409,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            # REVIEW: Reusing the `options` structure from selector props for consistency, as the data types are similar in nature
                             "options":{
                                 "false": {"color": "rgba(233, 0, 0, 1)"},
                                 "true": {"color": "rgba(0, 233, 0, 1)"},
@@ -1436,7 +1471,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            # REVIEW: Reusing the `options` structure from selector props for consistency, as the data types are similar in nature
                             "options":{
                                 "false": {"color": "rgba(233, 0, 0, 1)"},
                                 "true": {"color": "rgba(0, 233, 0, 1)"},
