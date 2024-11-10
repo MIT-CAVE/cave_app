@@ -906,6 +906,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "startSize": "40px",
                                             "endSize": "60px",
                                             # REVIEW: Preferred key name -> `default` or `fallback`?
+                                            # This would replace `nullColor` and `nullSize` and add the option of including a `name`
                                             "default": {"name": "Undefined", "color": "rgba(128, 128, 128, 1)", "size": "20px"},
                                             # REVIEW: Option to use separate names for color and size
                                             # "default": {
@@ -919,6 +920,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                                 "true": {"name": "Active", "color": "rgba(0, 255, 0, 1)", "size": "30px"},
                                             },
                                             # REVIEW: Preferred key name -> `default` or `fallback`?
+                                            # This would replace `nullColor` and `nullSize` and add the option of including a `name`
                                             "default": {"name": "Unknown", "color": "rgba(128, 128, 128, 1)", "size": "20px"},
                                             # REVIEW: Option to use separate names for color and size
                                             # "default": {
