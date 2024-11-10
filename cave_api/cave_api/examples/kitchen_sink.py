@@ -930,12 +930,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         }
                                     },
                                     # REVIEW:
-                                    # Current implemented behavior on `cave_static`: `colorBy` and `sizeB`` dropdowns are populated with props
+                                    # Current implemented behavior on `cave_static`: `colorBy` and `sizeBy` dropdowns are populated with props
                                     # that have at least one gradient/color or size range/option value after left-merging
                                     # `legendGroups.lga.data.nodeTypeA.props` with `mapFeatures.data.nodeTypeA.props`.
-                                    # We could define a list of prop keys to specify which props should appear in the dropdowns  by using
-                                    # `colorByOptions` and `sizeByOptions`. Note that `colorByOptions` and `sizeByOptions` are now different
-                                    # from the old structure and will only point to the keys.
+
+                                    # REVIEW: The following is not implemented yet:
+                                    # I think we could define a list of prop keys to specify which props should appear in the dropdowns by
+                                    # using `colorByOptions` and `sizeByOptions`. Note that `colorByOptions` and `sizeByOptions` would be
+                                    # different from the old structure and will only point to the keys.
                                     "colorByOptions": [],
                                     "sizeByOptions": [],
                                 },
