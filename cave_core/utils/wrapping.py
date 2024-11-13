@@ -9,7 +9,7 @@ from functools import wraps
 import traceback
 
 # Internal Imports
-from cave_core.utils.broadcasting import Socket
+from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 
 
 def format_exception(e):
@@ -95,7 +95,7 @@ def ws_api_app(fn):
             if settings.DEBUG:
                 print(traceback_str)
             # Notify the user of the exception
-            Socket(session).notify(
+            CaveWSBroadcaster(session).notify(
                 message=str(e),
                 title="Error:",
                 show=True,
