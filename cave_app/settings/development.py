@@ -175,7 +175,9 @@ CACHE_BACKUP_INTERVAL = config("CACHE_BACKUP_INTERVAL", default=0, cast=int)
 CACHE_TIMEOUT = config("CACHE_TIMEOUT", default=0, cast=int)
 assert CACHE_TIMEOUT >= 0, "CACHE_TIMEOUT must be greater than or equal to 0"
 assert CACHE_BACKUP_INTERVAL >= 0, "CACHE_BACKUP_INTERVAL must be greater than or equal to 0"
-assert CACHE_TIMEOUT >= CACHE_BACKUP_INTERVAL*2, "CACHE_TIMEOUT must be at least twice as long as CACHE_BACKUP_INTERVAL"
+if CACHE_TIMEOUT > 0:
+    assert CACHE_TIMEOUT >= CACHE_BACKUP_INTERVAL*2, "CACHE_TIMEOUT must be at least twice as long as CACHE_BACKUP_INTERVAL"
+    assert CACHE_BACKUP_INTERVAL > 0, "CACHE_BACKUP_INTERVAL must be greater than 0 if CACHE_TIMEOUT is greater than 0"
 assert CACHE_TIMEOUT == 0 or CACHE_BACKUP_INTERVAL > 0, "CACHE_BACKUP_INTERVAL must be greater than 0 if CACHE_TIMEOUT is greater than 0"
 CACHE_TIMEOUT = None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT
 CACHE_BACKUP_INTERVAL = None if CACHE_BACKUP_INTERVAL == 0 else CACHE_BACKUP_INTERVAL
