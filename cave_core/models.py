@@ -990,7 +990,12 @@ class Sessions(models.Model):
             - EG To broadcast messgaes to everyone in the session
             - EG to prevent deletion if more than one user is in the session
         """
-        return cache.get(f"session:{self.id}:user_ids", [])
+        user_ids = cache.get(f"session:{self.id}:user_ids", None)
+        # Auto heal User Ids On Cache Data Loss
+        if user_ids == None:
+            self.update_user_ids()
+            user_ids = cache.get(f"session:{self.id}:user_ids", [])
+        return user_ids
     
     def update_user_ids(self) -> None:
         """
@@ -1112,6 +1117,7 @@ class Sessions(models.Model):
         ]
         data = self.get_data(client_only=True, keys=updated_keys)
         # Broadcast the updated versions and data
+
         if broadcast_loading:
             self.broadcast_loading(True)
         CaveWSBroadcaster(self).broadcast(
