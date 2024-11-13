@@ -12,6 +12,9 @@ class Request:
         self.user = user
     
 class SocketServer(BaseSocketServer):
+    def get_config(self):
+        return settings.DJANGO_SOCKETS_CONFIG
+
     def receive(self, data):
         if settings.DEBUG:
             print("WS RECEIVE ", data['command'])

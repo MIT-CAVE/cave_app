@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from cave_core.utils.cache import Cache
 from django_sockets.sockets import BaseSocketServer
@@ -16,7 +17,7 @@ class Command(BaseCommand):
 
         # Test the socket server cache process
         base_receive = asyncio.Queue()
-        base_socket_server = BaseSocketServer(scope={}, receive=base_receive.get, send=send)
+        base_socket_server = BaseSocketServer(scope={}, receive=base_receive.get, send=send, config=settings.DJANGO_SOCKETS_CONFIG)
         base_socket_server.start_listeners()
         base_socket_server.subscribe("test_channel")
         # Small message
