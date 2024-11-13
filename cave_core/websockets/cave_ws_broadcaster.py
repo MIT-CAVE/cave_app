@@ -18,10 +18,6 @@ acceptable_events = set(
 )
 theme_list = set(["primary", "secondary", "error", "warning", "info", "success"])
 
-# Loading Events
-loading_true = {"event": "updateLoading", "data": {"data_path": ["data_loading"], "data": True}}
-loading_false = {"event": "updateLoading", "data": {"data_path": ["data_loading"], "data": False}}
-
 class CaveWSBroadcaster:
     def __init__(self, model_object):
         self.model_object = model_object
@@ -63,7 +59,6 @@ class CaveWSBroadcaster:
             - Type: str
             - What: The event to broadcast
             - Allowed Values: "mutation", "overwrite", "message", "updateSessions", "updateLoading"
-            - Note: If `event` is "overwrite", then a loading broadcast will be sent instead
         - `data`:
             - Type: dict
             - What: The data to broadcast

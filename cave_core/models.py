@@ -1081,7 +1081,7 @@ class Sessions(models.Model):
                     pamda.assocPath(path=['data', key], value=value, data=self.__dict__)
         return {key:pamda.path(['data', key], self.__dict__) for key in keys}
 
-    def broadcast_changed_data(self, previous_versions: dict) -> None:
+    def broadcast_changed_data(self, previous_versions: dict, broadcast_loading:bool=True) -> None:
         """
         Broadcasts and returns all data that has changed given some set of previous versions
 
@@ -1090,6 +1090,13 @@ class Sessions(models.Model):
         - `previous_versions`:
             - Type: dict
             - What: The endpoint provided previous versions to check vs the current server versions to determine which data has changed
+
+        Optional:
+
+        - `broadcast_loading`:
+            - Type: bool
+            - What: If True, the loading state will be broadcasted to all users before and after the data is broadcasted
+            - Default: True
         """
         # print('==BROADCAST CHANGED DATA==')
         # Fill in missing session data if none is present
@@ -1105,13 +1112,15 @@ class Sessions(models.Model):
         ]
         data = self.get_data(client_only=True, keys=updated_keys)
         # Broadcast the updated versions and data
-        self.broadcast_loading(True)
+        if broadcast_loading:
+            self.broadcast_loading(True)
         CaveWSBroadcaster(self).broadcast(
             event="overwrite",
             versions=versions,
             data=data,
         )
-        self.broadcast_loading(False)
+        if broadcast_loading:
+            self.broadcast_loading(False)
         # print('==BROADCAST CHANGED DATA END==')
 
     def replace_data(self, data, wipeExisting):
@@ -1226,7 +1235,7 @@ class Sessions(models.Model):
 
         # Broadcast the changed data if specified
         if broadcast_changes:
-            self.broadcast_changed_data(previous_versions=previous_versions)
+            self.broadcast_changed_data(previous_versions=previous_versions, broadcast_loading=False)
         # Update the execution state overriding any blocks
         self.set_loading(False, override_block=True)
         # print('==EXECUTE API COMMAND END==\n')
