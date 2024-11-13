@@ -16,6 +16,7 @@ from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 from cave_core.utils.cache import Cache
 from cave_core.utils.constants import api_keys, background_api_keys
 from cave_core.utils.validators import limit_upload_size
+from cave_core.utils.session_persistence import session_persistence_service
 from cave_api.api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
@@ -1336,6 +1337,20 @@ class Sessions(models.Model):
         cache.set_many({f"session:{new_session.id}:data:{key}": value for key, value in session_data.items()})
         new_session.set_versions({key:0 for key in session_data.keys()})            
         return new_session
+    
+    def get_cache_keys(self):
+        """
+        Gets all cache keys for this session
+        """
+        keys = [f"session:{self.id}:{key}" for key in ["versions", "executing", "user_ids"]]
+        keys += [f"session:{self.id}:data:{key}" for key in list(cache.get(f"session:{self.id}:versions", {}).keys())]
+        return keys
+    
+    def persist_cache_data(self):
+        """
+        Persists the current session data to the persistent cache
+        """
+        cache.persist_many(self.get_cache_keys())
 
     def error_on_session_not_empty(self):
         """
@@ -1429,11 +1444,8 @@ def handle_session_on_delete(sender, instance, **kwargs):
     """
     instance.team.update_sessions_list()
     # Clear the data from the cache and persistent cache if present
-    cache_session_id = f"session:{instance.id}"
-    generic_keys = [f"{cache_session_id}:{key}" for key in ['versions', 'executing','user_ids']]
-    data_keys = [f"{cache_session_id}:data:{key}" for key in cache.get(f"{cache_session_id}:versions", {}).keys()]
     cache.delete_many(
-        data_keys + generic_keys,
+        instance.get_cache_keys(),
         memory=True,
         persistent=True
     )
@@ -1452,3 +1464,6 @@ def update_team_ids(sender, instance, **kwargs):
 def create_personal_team(sender, instance, created, **kwargs):
     if created:
         instance.create_personal_team()
+
+# Services
+session_persistence_service(cache=cache, Sessions=Sessions)

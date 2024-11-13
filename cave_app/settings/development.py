@@ -175,20 +175,14 @@ CACHE_BACKUP_INTERVAL = config("CACHE_BACKUP_INTERVAL", default=0, cast=int)
 CACHE_TIMEOUT = config("CACHE_TIMEOUT", default=0, cast=int)
 assert CACHE_TIMEOUT >= 0, "CACHE_TIMEOUT must be greater than or equal to 0"
 assert CACHE_BACKUP_INTERVAL >= 0, "CACHE_BACKUP_INTERVAL must be greater than or equal to 0"
-if CACHE_TIMEOUT > 0 and CACHE_BACKUP_INTERVAL == 0:
-    print("CACHE_TIMEOUT is set but CACHE_BACKUP_INTERVAL is not set")
-    print("Setting CACHE_BACKUP_INTERVAL to a third of CACHE_TIMEOUT")
-    CACHE_BACKUP_INTERVAL = CACHE_TIMEOUT//3
-if CACHE_TIMEOUT>0 and CACHE_TIMEOUT < CACHE_BACKUP_INTERVAL*2:
-    print("CACHE_TIMEOUT must be greater than CACHE_BACKUP_INTERVAL * 2")
-    print("Setting CACHE_TIMEOUT to CACHE_BACKUP_INTERVAL*3")
-    CACHE_TIMEOUT = CACHE_BACKUP_INTERVAL*3
+assert CACHE_TIMEOUT >= CACHE_BACKUP_INTERVAL*2, "CACHE_TIMEOUT must be at least twice as long as CACHE_BACKUP_INTERVAL"
+assert CACHE_TIMEOUT == 0 or CACHE_BACKUP_INTERVAL > 0, "CACHE_BACKUP_INTERVAL must be greater than 0 if CACHE_TIMEOUT is greater than 0"
 CACHE_TIMEOUT = None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT
+CACHE_BACKUP_INTERVAL = None if CACHE_BACKUP_INTERVAL == 0 else CACHE_BACKUP_INTERVAL
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
-        "TIMEOUT": CACHE_TIMEOUT,
+        "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"
     }
 }
 ################################################################
