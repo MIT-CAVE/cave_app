@@ -904,6 +904,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "longitude": 14,
                         },
                     },
+                    "legendView": "full",
+                    "showLegendGroupNames": False,
                     "legendGroups": {
                         "lga": {
                             "name": "Legend Group A",

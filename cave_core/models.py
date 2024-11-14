@@ -1035,7 +1035,7 @@ class Sessions(models.Model):
         cache.set(f"session:{self.id}:versions", versions)
         self.__dict__['versions'] = versions
 
-    def get_data(self, keys:list[str]=None, client_only:bool=True) -> dict:
+    def get_data(self, keys:list[str]=None, client_only:bool=True, omit_keys=list()) -> dict:
         """
         Returns all data for this session
 
@@ -1050,6 +1050,11 @@ class Sessions(models.Model):
             - Type: bool
             - What: If True, only relevant client keys are returned
             - Default: True
+        - `omit_keys`:
+            - Type: list of strings
+            - What: The keys to omit from the data
+            - Default: []
+            - Note: If None, no keys are omitted
 
         Returns:
             - Type: dict
@@ -1059,6 +1064,8 @@ class Sessions(models.Model):
             keys = list(self.get_versions().keys())
         if client_only:
             keys = pamda.intersection(keys, api_keys)
+        if len(omit_keys) > 0:
+            keys = pamda.difference(keys, omit_keys)
         keys_to_get_from_cache = []
         for key in keys:
             # Avoid additional cache hits by checking if the data is already in the session __dict__
@@ -1207,7 +1214,7 @@ class Sessions(models.Model):
         """
         # print('\n==EXECUTE API COMMAND==')
         self.set_loading(True)
-        session_data = self.get_data(keys=command_keys, client_only=False)
+        session_data = self.get_data(keys=command_keys, client_only=False, omit_keys=background_api_keys)
         socket = CaveWSBroadcaster(self)
         command_output = execute_command(
             session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
