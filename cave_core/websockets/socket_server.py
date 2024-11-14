@@ -12,8 +12,8 @@ class Request:
         self.user = user
     
 class SocketServer(BaseSocketServer):
-    def get_config(self):
-        return settings.DJANGO_SOCKETS_CONFIG
+    def configure(self):
+        self.hosts = settings.DJANGO_SOCKET_HOSTS
 
     def receive(self, data):
         if settings.DEBUG:

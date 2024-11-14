@@ -17,7 +17,7 @@ class Command(BaseCommand):
 
         # Test the socket server cache process
         base_receive = asyncio.Queue()
-        base_socket_server = BaseSocketServer(scope={}, receive=base_receive.get, send=send, config=settings.DJANGO_SOCKETS_CONFIG)
+        base_socket_server = BaseSocketServer(scope={}, receive=base_receive.get, send=send, hosts=settings.DJANGO_SOCKET_HOSTS)
         base_socket_server.start_listeners()
         base_socket_server.subscribe("test_channel")
         # Small message
