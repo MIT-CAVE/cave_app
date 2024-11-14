@@ -2,7 +2,7 @@ from django.conf import settings
 import type_enforced
 from django_sockets.broadcaster import Broadcaster
 
-broadcaster = Broadcaster(config=settings.DJANGO_SOCKETS_CONFIG)
+broadcaster = Broadcaster(hosts=settings.DJANGO_SOCKET_HOSTS)
 
 # Constants
 acceptable_events = set(

@@ -30,7 +30,7 @@ def root_view(request):
     )
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="/cave/auth/login/")
 def info(request):
     """
     Info View
@@ -57,7 +57,7 @@ def info(request):
     )
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="/cave/auth/login/")
 def page(request):
     """
     Generic page view
@@ -69,9 +69,9 @@ def page(request):
         globals = models.Globals.get_solo()
         page = models.Pages.objects.filter(show=True, url_name=request.GET.get("page")).first()
         if page == None:
-            return redirect("/app/")
+            return redirect("/cave/info/")
         if (not request.user.has_access()) and page.require_access:
-            return redirect("/app/")
+            return redirect("/cave/info/")
         return render(
             request,
             "generic.html",
@@ -85,10 +85,10 @@ def page(request):
             },
         )
     else:
-        return redirect("/app/")
+        return redirect("/cave/info/")
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="/cave/auth/login/")
 def people(request):
     """
     People view
@@ -98,7 +98,7 @@ def people(request):
     # print("\n\nPeople\n")
     globals = models.Globals.get_solo()
     if not request.user.has_access() or not globals.show_people_page:
-        return redirect("/app/")
+        return redirect("/cave/info/")
     if request.method == "GET":
         return render(
             request,
@@ -111,10 +111,10 @@ def people(request):
             },
         )
     else:
-        return redirect("/app/")
+        return redirect("/cave/info/")
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="/cave/auth/login/")
 def workspace(request):
     """
     Workspace view
@@ -124,9 +124,9 @@ def workspace(request):
     # print("\n\nApp\n")
     globals = models.Globals.get_solo()
     if not request.user.has_access():
-        return redirect("/app/")
+        return redirect("/cave/info/")
     if not globals.show_app_page:
-        return redirect("/app/")
+        return redirect("/cave/info/")
     if request.method == "GET":
         appResponse = render(
             request,
@@ -144,10 +144,10 @@ def workspace(request):
         appResponse["Cross-Origin-Opener-Policy"] = "same-origin"
         return appResponse
     else:
-        return redirect("/app/")
+        return redirect("/cave/info/")
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="/cave/auth/login/")
 def profile(request):
     """
     User profile view
@@ -156,13 +156,13 @@ def profile(request):
     """
     globals = models.Globals.get_solo()
     if not globals.allow_user_edit_info:
-        return redirect("/app/")
+        return redirect("/cave/info/")
     UpdateUserForm = forms.UpdateUserForm(globals)
     if request.method == "POST":
         form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             user = form.save()
-        return redirect("/app/profile/")
+        return redirect("/cave/profile/")
     else:
         form = UpdateUserForm(instance=request.user)
         return render(

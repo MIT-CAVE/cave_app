@@ -57,7 +57,7 @@ AUTHENTICATION_BACKENDS = ["cave_core.auth.EmailThenUsernameModelBackend"]
 AUTH_USER_MODEL = "cave_core.CustomUser"
 ## Login/Logout redirection
 LOGIN_REDIRECT_URL = "app/"
-LOGOUT_REDIRECT_URL = "/auth/login/"
+LOGOUT_REDIRECT_URL = "/cave/auth/login/"
 # Django admin authentication information
 DJANGO_ADMIN_FIRST_NAME = config("DJANGO_ADMIN_FIRST_NAME", default="")
 DJANGO_ADMIN_LAST_NAME = config("DJANGO_ADMIN_LAST_NAME", default="")
@@ -129,8 +129,8 @@ DATABASES = {
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
-STATIC_URL = "/static/"
+MEDIA_URL = "/cave/media/"
+STATIC_URL = "/cave/static/"
 STATICFILES_STORAGE = "cave_app.storage_backends.StaticStorage"
 ################################################################
 
@@ -158,14 +158,10 @@ REST_FRAMEWORK = {
 ################################################################
 
 
-# DJANGO_SOCKETS_CONFIG
+# DJANGO_SOCKETS
 ################################################################
 INSTALLED_APPS = ["daphne"] + INSTALLED_APPS
-DJANGO_SOCKETS_CONFIG = {
-    "hosts": [
-        {"address": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"}
-    ],
-}
+DJANGO_SOCKET_HOSTS = [{"address": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"}]
 ################################################################
 
 

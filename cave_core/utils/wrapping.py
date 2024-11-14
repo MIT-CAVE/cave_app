@@ -31,7 +31,7 @@ def redirect_logged_in_user(fn):
     @wraps(fn)
     def wrap(request):
         if request.user.is_authenticated:
-            return redirect("/app/")
+            return redirect("/cave/router/")
         return fn(request)
     return wrap
 

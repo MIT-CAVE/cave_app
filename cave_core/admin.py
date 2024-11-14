@@ -5,7 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from solo.admin import SingletonModelAdmin
 
 # Admin site attributes
-admin.site.site_url = "/app/"
+admin.site.site_url = "/cave/"
 admin.site.site_title = "CAVE App Admin Site"
 admin.site.site_header = "Admin"
 admin.site.index_title = "CAVE App"

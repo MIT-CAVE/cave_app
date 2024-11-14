@@ -4,7 +4,7 @@ from django_sockets.middleware import DRFTokenAuthMiddleware
 from .socket_server import SocketServer
 
 websocket_urlpatterns = [
-    path("ws/", SocketServer.as_asgi),
+    path("cave/ws/", SocketServer.as_asgi),
 ]
 
 def get_ws_asgi_application():
