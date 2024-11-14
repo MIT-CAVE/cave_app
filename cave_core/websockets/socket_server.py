@@ -2,7 +2,6 @@ from django.conf import settings
 
 from .commands import get_command
 from django_sockets.sockets import BaseSocketServer
-import msgpack
 
 class Request:
     """
@@ -15,8 +14,6 @@ class Request:
 class SocketServer(BaseSocketServer):
     def configure(self):
         self.hosts = settings.DJANGO_SOCKET_HOSTS
-        self.ws_encoder = msgpack.packb
-        self.ws_encoder_is_bytes = True
 
     def receive(self, data):
         if settings.DEBUG:
