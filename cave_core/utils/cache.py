@@ -28,16 +28,14 @@ class Cache(CacheStorage):
         data = self.cache.get(data_id, "__NONE__")
         if data != "__NONE__":
             return data
-        else:
-            # Only check the persistent storage if backups are enabled
-            if settings.CACHE_BACKUP_INTERVAL is not None:
-                try:
-                    with self.open(data_id) as f:
-                        data = json.load(f)
-                    self.set(data_id, data)
-                    return data
-                except:
-                    pass
+        if settings.CACHE_BACKUP_INTERVAL is not None:
+            try:
+                with self.open(data_id) as f:
+                    data = json.load(f)
+                self.set(data_id, data)
+                return data
+            except:
+                pass
         return default
     
     def get_many(self, data_ids:list, default=None):
