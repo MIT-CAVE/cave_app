@@ -12,17 +12,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "appBar": {
             # Specify the order of items as they will appear in the app bar
             "order": {
-                "data": ["refreshButton", "mapPage"],
+                "data": [
+                    "mapPage",
+                ],
             },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",
@@ -68,7 +62,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "raster",
                                 # EG: See a list of raster sources based on OSM here:
                                 # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
-                                "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+                                "tiles": [
+                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                ],
                                 "tileSize": 256,
                                 "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
                             },

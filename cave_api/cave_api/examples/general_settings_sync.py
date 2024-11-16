@@ -9,7 +9,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
             "iconUrl": "https://react-icons.mitcave.com/5.0.1",
             # Specify to not sync the center pane state with the server
-            # This will prevent other users in the same session from seeing launced modals from other clients in the same session
+            # This will prevent other users in the same session from seeing launched modals from other clients in the same session
             # NOTE: By default, everything in the API is synced with the server
             #    - Only items that are synced with the server are able to be sent as `session_data` to this `execute_command` function
             #    - This means that you should only de-sync data if it is not needed / relevant in the `execute_command` function
@@ -36,23 +36,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "appBar": {
             # Specify the order of items as they will appear in the app bar
             "order": {
-                "data": ["refreshButton", "appSettings", "exampleModal"],
+                "data": [
+                    "exampleModal",
+                ],
             },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
-                # Add an appBar button to launch the app settings pane
-                "appSettings": {
-                    "icon": "md/MdOutlineSettings",
-                    "type": "settings",
-                    "bar": "upperLeft",
-                },
                 # Add a modal to the app bar
                 # This will add a button to the app bar that opens a modal
                 # Modals are used to display additional options / data to the user
@@ -66,7 +54,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
-            "paneState": {"center": {"type": "pane", "open": "exampleModal", "pin": True}},
+            "paneState": {
+                "center": {"type": "pane", "open": "exampleModal", "pin": True}
+            },
             "data": {
                 # Create a modal with an example header and simple numeric input
                 # Note: This key must match the key used in the app bar above

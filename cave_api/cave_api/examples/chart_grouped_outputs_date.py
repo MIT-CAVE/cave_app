@@ -11,16 +11,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "chartPage"]},
+            "order": {
+                "data": [
+                    "chartPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an app bar button to launch a chart dashboard
                 "chartPage": {
                     "icon": "md/MdBarChart",
@@ -35,8 +31,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "chartPage": {
                     "pageLayout": ["chart", None, None, None],
-                        "charts": {
-                            "chart": {
+                    "charts": {
+                        "chart": {
                             "type": "groupedOutput",
                             "variant": "line",
                             "groupingId": ["date", "product"],
@@ -62,7 +58,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "id": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
                         "year": ["2024", "2024", "2024", "2024"],
                         "year_month": ["2024-01", "2024-01", "2024-01", "2024-01"],
-                        "year_month_day": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
+                        "year_month_day": [
+                            "2024-01-01",
+                            "2024-01-02",
+                            "2024-01-03",
+                            "2024-01-04",
+                        ],
                     },
                     "name": "Dates",
                     "levels": {
@@ -76,7 +77,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "year_month_day": {
                             "name": "Days",
-                            "ordering": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
+                            "ordering": [
+                                "2024-01-01",
+                                "2024-01-02",
+                                "2024-01-03",
+                                "2024-01-04",
+                            ],
                         },
                     },
                 },
