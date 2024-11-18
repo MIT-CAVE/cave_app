@@ -1,5 +1,5 @@
-
 from cave_core import models
+
 
 def execute_command(session_data, socket, command="init", **kwargs):
     # Before using this example, make sure to upload the geojson file to the server
@@ -10,13 +10,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
     # Get the URL of the uploaded geojson file
     # On cloud servers, the URL generated should be a full path to a file in the file server (aws, azure, etc.)
     # On local servers, the URL generated should be preceded by "http://localhost:8000"
-    multi_route_path  = "http://localhost:8000" + models.FileStorage.objects.filter(name="multi_route").first().file_public.url
+    multi_route_path = (
+        "http://localhost:8000"
+        + models.FileStorage.objects.filter(name="multi_route").first().file_public.url
+    )
     # If you choose to use a private file on a cloud server
-        # - It is accessed the same way as the public file
-        # - The returned url will be a temporary url that can be used to access the file
-        # - The url will expire after a certain amount of time
-        # - The url can be accessed by using `file_private.url` instead of `file_public.url`
-        # - This can cause issues where users may need to reset/reinitialize the app to regain access to the file
+    # - It is accessed the same way as the public file
+    # - The returned url will be a temporary url that can be used to access the file
+    # - The url will expire after a certain amount of time
+    # - The url can be accessed by using `file_private.url` instead of `file_public.url`
+    # - This can cause issues where users may need to reset/reinitialize the app to regain access to the file
     return {
         "settings": {
             # Icon Url is used to load icons from a custom icon library
@@ -28,16 +31,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "mapPage"]},
+            "order": {
+                "data": [
+                    "mapPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",

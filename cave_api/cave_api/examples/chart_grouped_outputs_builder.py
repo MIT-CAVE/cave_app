@@ -11,28 +11,125 @@ This file is equivalent in output to the cave_api/cave_api/examples/chart_global
 from cave_utils.builders.groups import GroupsBuilder
 from pamda import pamda
 
+
 def execute_command(session_data, socket, command="init", **kwargs):
 
     # Specify some example data to use for the grouped outputs
     example_data = [
-        {'country': 'USA', 'state': 'Michigan', 'color': 'Red', 'size': 'Medium', 'product': 'Apple', 'sales': 95, 'demand': 100},
-        {'country': 'USA', 'state': 'Massachusetts', 'color': 'Red', 'size': 'Medium', 'product': 'Apple', 'sales': 100, 'demand': 108},
-        {'country': 'Canada', 'state': 'Ontario', 'color': 'Red', 'size': 'Medium', 'product': 'Apple', 'sales': 100, 'demand': 115},
-        {'country': 'Canada', 'state': 'Quebec', 'color': 'Red', 'size': 'Medium', 'product': 'Apple', 'sales': 98, 'demand': 110},
-        {'country': 'USA', 'state': 'Michigan', 'color': 'Purple', 'size': 'Small', 'product': 'Grape', 'sales': 60, 'demand': 70},
-        {'country': 'USA', 'state': 'Massachusetts', 'color': 'Purple', 'size': 'Small', 'product': 'Grape', 'sales': 65, 'demand': 78},
-        {'country': 'Canada', 'state': 'Ontario', 'color': 'Purple', 'size': 'Small', 'product': 'Grape', 'sales': 67, 'demand': 67},
-        {'country': 'Canada', 'state': 'Quebec', 'color': 'Purple', 'size': 'Small', 'product': 'Grape', 'sales': 75, 'demand': 89},
-        {'country': 'USA', 'state': 'Michigan', 'color': 'Red', 'size': 'Small', 'product': 'Strawberry', 'sales': 80, 'demand': 95},
-        {'country': 'USA', 'state': 'Massachusetts', 'color': 'Red', 'size': 'Small', 'product': 'Strawberry', 'sales': 90, 'demand': 100},
-        {'country': 'Canada', 'state': 'Ontario', 'color': 'Red', 'size': 'Small', 'product': 'Strawberry', 'sales': 99, 'demand': 100},
-        {'country': 'Canada', 'state': 'Quebec', 'color': 'Red', 'size': 'Small', 'product': 'Strawberry', 'sales': 98, 'demand': 98},
+        {
+            "country": "USA",
+            "state": "Michigan",
+            "color": "Red",
+            "size": "Medium",
+            "product": "Apple",
+            "sales": 95,
+            "demand": 100,
+        },
+        {
+            "country": "USA",
+            "state": "Massachusetts",
+            "color": "Red",
+            "size": "Medium",
+            "product": "Apple",
+            "sales": 100,
+            "demand": 108,
+        },
+        {
+            "country": "Canada",
+            "state": "Ontario",
+            "color": "Red",
+            "size": "Medium",
+            "product": "Apple",
+            "sales": 100,
+            "demand": 115,
+        },
+        {
+            "country": "Canada",
+            "state": "Quebec",
+            "color": "Red",
+            "size": "Medium",
+            "product": "Apple",
+            "sales": 98,
+            "demand": 110,
+        },
+        {
+            "country": "USA",
+            "state": "Michigan",
+            "color": "Purple",
+            "size": "Small",
+            "product": "Grape",
+            "sales": 60,
+            "demand": 70,
+        },
+        {
+            "country": "USA",
+            "state": "Massachusetts",
+            "color": "Purple",
+            "size": "Small",
+            "product": "Grape",
+            "sales": 65,
+            "demand": 78,
+        },
+        {
+            "country": "Canada",
+            "state": "Ontario",
+            "color": "Purple",
+            "size": "Small",
+            "product": "Grape",
+            "sales": 67,
+            "demand": 67,
+        },
+        {
+            "country": "Canada",
+            "state": "Quebec",
+            "color": "Purple",
+            "size": "Small",
+            "product": "Grape",
+            "sales": 75,
+            "demand": 89,
+        },
+        {
+            "country": "USA",
+            "state": "Michigan",
+            "color": "Red",
+            "size": "Small",
+            "product": "Strawberry",
+            "sales": 80,
+            "demand": 95,
+        },
+        {
+            "country": "USA",
+            "state": "Massachusetts",
+            "color": "Red",
+            "size": "Small",
+            "product": "Strawberry",
+            "sales": 90,
+            "demand": 100,
+        },
+        {
+            "country": "Canada",
+            "state": "Ontario",
+            "color": "Red",
+            "size": "Small",
+            "product": "Strawberry",
+            "sales": 99,
+            "demand": 100,
+        },
+        {
+            "country": "Canada",
+            "state": "Quebec",
+            "color": "Red",
+            "size": "Small",
+            "product": "Strawberry",
+            "sales": 98,
+            "demand": 98,
+        },
     ]
 
     # Use the pamda project statement to pull out the data for the location and product groups
     # Project is analogous to a SQL SELECT statement only keeping the specified columns
-    location_group_data = pamda.project(['country', 'state'], example_data)
-    product_group_data = pamda.project(['color', 'size', 'product'], example_data)
+    location_group_data = pamda.project(["country", "state"], example_data)
+    product_group_data = pamda.project(["color", "size", "product"], example_data)
 
     # Create a locations group builder
     location_group_builder = GroupsBuilder(
@@ -56,7 +153,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "product": "Products",
         },
     )
-    
+
     return {
         "settings": {
             # Icon Url is used to load icons from a custom icon library
@@ -68,16 +165,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "chartPage"]},
+            "order": {
+                "data": [
+                    "chartPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an app bar button to launch a chart dashboard
                 "chartPage": {
                     "icon": "md/MdBarChart",
@@ -147,11 +240,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     # Select the appropriate columns and pivot them to be used in the grouped outputs
-                    "valueLists": pamda.pivot(pamda.project(['sales', 'demand'], example_data)),
+                    "valueLists": pamda.pivot(
+                        pamda.project(["sales", "demand"], example_data)
+                    ),
                     # Get the relevant group ids given each item in the base data
                     "groupLists": {
-                        "location": [location_group_builder.get_id(i) for i in location_group_data],
-                        "product": [product_group_builder.get_id(i) for i in product_group_data],
+                        "location": [
+                            location_group_builder.get_id(i)
+                            for i in location_group_data
+                        ],
+                        "product": [
+                            product_group_builder.get_id(i) for i in product_group_data
+                        ],
                     },
                 },
             },

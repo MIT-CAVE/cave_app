@@ -17,17 +17,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "appBar": {
                 # Specify the order of items as they will appear in the app bar
                 "order": {
-                    "data": ["refreshButton", "myCommandButton"],
+                    "data": [
+                        "myCommandButton",
+                    ],
                 },
                 "data": {
-                    # Add a simple button to the app bar to trigger the `init` command
-                    # This is useful for resetting the app to its initial state
-                    "refreshButton": {
-                        "icon": "md/MdRefresh",
-                        "apiCommand": "init",
-                        "type": "button",
-                        "bar": "upperLeft",
-                    },
                     # `myCommandButton` is a custom button that is added to the app bar
                     # Buttons are be used to trigger custom back end logic
                     "myCommandButton": {
@@ -49,18 +43,26 @@ def execute_command(session_data, socket, command="init", **kwargs):
         current_icon = session_data["appBar"]["data"]["myCommandButton"]["icon"]
         # Update the icon in the session data
         session_data["appBar"]["data"]["myCommandButton"]["icon"] = (
-            "md/MdLightbulb" if current_icon == "md/MdLightbulbOutline" else "md/MdLightbulbOutline"
+            "md/MdLightbulb"
+            if current_icon == "md/MdLightbulbOutline"
+            else "md/MdLightbulbOutline"
         )
         # Send a series of notifications to the end user
-        socket.notify("Priming Thrusters...", title="Initialization", theme="info", duration=3)
+        socket.notify(
+            "Priming Thrusters...", title="Initialization", theme="info", duration=3
+        )
         time.sleep(1)
         socket.notify("Ignition...", title="Initialization", theme="info")
         time.sleep(1)
-        socket.notify("Leak detected in primary power core!", title="Warning:", theme="warning")
+        socket.notify(
+            "Leak detected in primary power core!", title="Warning:", theme="warning"
+        )
         time.sleep(1)
         socket.notify("Engine Failure!", title="Error:", theme="error")
         time.sleep(1)
-        socket.notify("Recalibrating Gravitons!", title="Attempting Fix:", theme="warning")
+        socket.notify(
+            "Recalibrating Gravitons!", title="Attempting Fix:", theme="warning"
+        )
         time.sleep(1)
         socket.notify("Fix Succeded!", title="Attempting Fix:", theme="success")
         time.sleep(1)

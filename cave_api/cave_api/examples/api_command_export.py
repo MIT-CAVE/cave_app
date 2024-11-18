@@ -16,17 +16,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "appBar": {
                 # Specify the order of items as they will appear in the app bar
                 "order": {
-                    "data": ["refreshButton", "myCommandButton"],
+                    "data": [
+                        "myCommandButton",
+                    ],
                 },
                 "data": {
-                    # Add a simple button to the app bar to trigger the `init` command
-                    # This is useful for resetting the app to its initial state
-                    "refreshButton": {
-                        "icon": "md/MdRefresh",
-                        "apiCommand": "init",
-                        "type": "button",
-                        "bar": "upperLeft",
-                    },
                     # `myCommandButton` is a custom button that is added to the app bar
                     # Buttons are be used to trigger custom back end logic
                     "myCommandButton": {
