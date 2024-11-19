@@ -1,6 +1,6 @@
 from django.urls import path
 from django_sockets.utils import URLRouter
-from django_sockets.middleware import DRFTokenAuthMiddleware
+from django_sockets.middleware import AuthMiddlewareStack
 from .socket_server import SocketServer
 
 websocket_urlpatterns = [
@@ -8,4 +8,4 @@ websocket_urlpatterns = [
 ]
 
 def get_ws_asgi_application():
-    return DRFTokenAuthMiddleware(URLRouter(websocket_urlpatterns))
+    return AuthMiddlewareStack(URLRouter(websocket_urlpatterns))
