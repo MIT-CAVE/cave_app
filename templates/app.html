@@ -46,6 +46,7 @@
       sendToApp({
         event: 'initialize',
         data:{
+          user_token: '{{ user_token }}',
           mapbox_token: '{{ globals.mapbox_token }}',
           ws_path: '/cave/ws/',
           ws_encoding: 'json'

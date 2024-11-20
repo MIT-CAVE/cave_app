@@ -134,6 +134,7 @@ def workspace(request):
             {
                 "globals": globals,
                 "access_dict": request.user.get_access_dict(),
+                "user_token": request.user.get_token(),
                 "static_url": settings.STATIC_APP_URL,
                 "session": request.user.session,
                 "app_active": "active",

@@ -6,6 +6,7 @@ from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
+from rest_framework.authtoken.models import Token
 from solo.models import SingletonModel
 from pamda import pamda
 import type_enforced
@@ -308,6 +309,16 @@ class CustomUser(AbstractUser):
         self.email_validation_code = get_random_string(length=16)
         self.save(update_fields=["email_validation_code"])
         return self.email_validation_code
+    
+    def get_token(self):
+        """
+        Returns the token for this user
+        """
+        try:
+            token, created = Token.objects.get_or_create(user=self)
+            return token
+        except:
+            return "none"
 
     #############################################
     # Misc Utils

@@ -32,7 +32,7 @@ SECRET_KEY = config("SECRET_KEY")
 ## Allow All Hosts For Development
 ### NOTE: This Should be explicit in a production setting
 ALLOWED_HOSTS = ["*"]
-##
+## CSRF Trusted Origins
 allowed_host = os.environ.get("CSRF_TRUSTED_ORIGIN")
 if allowed_host:
     CSRF_TRUSTED_ORIGINS = [f"https://{allowed_host}"]
@@ -107,6 +107,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 STATIC_APP_URL = config("STATIC_APP_URL")
 ## Allow the static app through CORS
 CORS_ALLOWED_ORIGINS = [STATIC_APP_URL]
+INSTALLED_APPS += ["rest_framework.authtoken"]
 ################################################################
 
 
