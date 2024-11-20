@@ -309,7 +309,7 @@ class CustomUser(AbstractUser):
         self.email_validation_code = get_random_string(length=16)
         self.save(update_fields=["email_validation_code"])
         return self.email_validation_code
-
+    
     def get_token(self):
         """
         Returns the token for this user
@@ -420,7 +420,7 @@ class Globals(SingletonModel):
         help_text=_(
             "The name for the custom pages tab in the UI - Used at the top of every custom page"
         ),
-        default="Info",
+        default="More",
     )
     show_app_page = models.BooleanField(
         _("Show App Page"),

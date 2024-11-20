@@ -1,7 +1,7 @@
 # Framework Imports
 from django.conf import settings
 from django.core.cache import cache
-from rest_framework.response import Response
+from django.http import JsonResponse
 from django.shortcuts import redirect
 
 # External Imports
@@ -49,12 +49,12 @@ def api_util_response(fn):
             response = fn(request)
             if not response:
                 response = {}
-            return Response({"success": True, **response})
+            return JsonResponse({"success": True, **response})
         except Exception as e:
             traceback_str = format_exception(e)
             if settings.DEBUG:
                 print(traceback_str)
-            return Response({"success": False, "error": str(e)})
+            return JsonResponse({"success": False, "error": str(e)})
 
     return wrap
 
