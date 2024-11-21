@@ -1,3 +1,5 @@
+import json
+
 def execute_command(session_data, socket, command="init", **kwargs):
     # `init` is the default command that is run when a session is created
     # It should return an initial state for the app
@@ -14,17 +16,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "appBar": {
                 # Specify the order of items as they will appear in the app bar
                 "order": {
-                    "data": ["refreshButton", "myCommandButton"],
+                    "data": [
+                        "myCommandButton",
+                    ],
                 },
                 "data": {
-                    # Add a simple button to the app bar to trigger the `init` command
-                    # This is useful for resetting the app to its initial state
-                    "refreshButton": {
-                        "icon": "md/MdRefresh",
-                        "apiCommand": "init",
-                        "type": "button",
-                        "bar": "upperLeft",
-                    },
                     # `myCommandButton` is a custom button that is added to the app bar
                     # Buttons are be used to trigger custom back end logic
                     "myCommandButton": {
@@ -42,7 +38,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
     # For this example, `myCommand` defined in the api in appBar.data.myCommandButton.apiCommand
     elif command == "myCommand":
         # Send the current session data to app users
-        socket.export(session_data)
+        socket.export(f'data:application/json,{json.dumps(session_data)}')
         # Log a message in the console
         print("Console Log: `myCommand` has been triggered!")
         return session_data

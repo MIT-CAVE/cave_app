@@ -1,11 +1,7 @@
 # Framework Imports
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from rest_framework.decorators import (
-    api_view,
-    authentication_classes,
-)
-from rest_framework.authentication import SessionAuthentication
 
 # Internal Imports
 from cave_core import models
@@ -31,8 +27,6 @@ def page_not_found(request):
     return JsonResponse({"status": "404 page not found"})
 
 # API Views
-@api_view(["GET"])
-@authentication_classes((SessionAuthentication,))
 @api_util_response
 def custom_pages(request):
     """
@@ -40,6 +34,8 @@ def custom_pages(request):
 
     Does not take in parameters
     """
+    if request.method != "GET":
+        raise Exception("Invalid request method")
     filter_vars = {"show": True}
     if not request.user.has_access():
         filter_vars["require_access"] = False
@@ -54,8 +50,8 @@ def custom_pages(request):
     return {"custom_pages": custom_pages}
 
 
-@api_view(["POST"])
-@authentication_classes((SessionAuthentication,))
+
+@login_required(login_url="/cave/auth/login/")
 @api_util_response
 def send_email_validation_code(request):
     """
@@ -71,6 +67,8 @@ def send_email_validation_code(request):
     }
     -----------------------------------
     """
+    if request.method != "POST":
+        raise Exception("Invalid request method")
     # print("\n\nSend Email Validation Code\n")
     # Globals
     globals = models.Globals.get_solo()

@@ -13,7 +13,7 @@ from cave_core.utils.wrapping import redirect_logged_in_user
 
 
 # Views
-@login_required(login_url="/auth/login/")
+@login_required(login_url="/cave/auth/login/")
 def app_router(request):
     """
     App Router View
@@ -22,11 +22,11 @@ def app_router(request):
     """
     globals = models.Globals.get_solo()
     if globals.show_app_page and request.user.get_access_dict().get("status") == 'accepted':
-        return redirect("/app/workspace/")
-    return redirect("/app/info/")
+        return redirect("/cave/workspace/")
+    return redirect("/cave/info/")
 
 
-@login_required(login_url="/auth/login/")
+@login_required(login_url="/cave/auth/login/")
 def change_password(request):
     """
     Change password view
@@ -38,7 +38,7 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
-            return redirect("/app/")
+            return redirect("/cave/router/")
     else:
         form = PasswordChangeForm(request.user)
     return render(
@@ -62,7 +62,7 @@ def signup(request):
     """
     globals = models.Globals.get_solo()
     if not globals.allow_anyone_create_user:
-        return redirect("/auth/login/")
+        return redirect("/cave/auth/login/")
     if request.method == "POST":
         form = forms.CreateUserForm(request.POST)
         if form.is_valid():
@@ -71,7 +71,7 @@ def signup(request):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect("/app/")
+            return redirect("/cave/router/")
     else:
         form = forms.CreateUserForm()
     return render(
@@ -103,7 +103,7 @@ def login_view(request):
                 login(request, user)
                 next_url = request.POST.get("next_url")
                 if next_url == "None" or len(next_url) == 0:
-                    next_url = "/app/"
+                    next_url = "/cave/router/"
                 # Ensure next url ends with a trailing slash
                 if next_url[-1] != "/":
                     next_url += "/"
@@ -145,7 +145,7 @@ def validate_email(request):
             user.email_validated = True
             user.email_validation_code = None
             user.save()
-        return redirect("/app/")
+        return redirect("/cave/info/")
     globals = models.Globals.get_solo()
     return render(
         request,
@@ -163,4 +163,4 @@ def user_logout(request):
     Allows users to logout of the site
     """
     logout(request)
-    return redirect("/")
+    return redirect("/cave/")

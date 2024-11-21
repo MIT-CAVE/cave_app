@@ -11,16 +11,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "mapPage"]},
+            "order": {
+                "data": [
+                    "mapPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",
@@ -94,7 +90,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "path": [[[-75.447, 40.345], [-77.447, 42.345], [-77.447, 44.345], [-75.447, 40.345]]],
+                            "path": [
+                                [
+                                    [-75.447, 40.345],
+                                    [-77.447, 42.345],
+                                    [-77.447, 44.345],
+                                    [-75.447, 40.345],
+                                ]
+                            ],
                         },
                         "valueLists": {
                             "numericPropExampleC": [100],

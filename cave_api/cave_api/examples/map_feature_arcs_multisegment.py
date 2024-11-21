@@ -11,16 +11,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "mapPage"]},
+            "order": {
+                "data": [
+                    "mapPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",
@@ -106,9 +102,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "location": {
                             "path": [
                                 # Boston to Albany to New York City path [longitude, latitude]
-                                [[-71.0589, 42.3601], [-73.7562, 42.6526], [-74.0059, 40.7128]],
+                                [
+                                    [-71.0589, 42.3601],
+                                    [-73.7562, 42.6526],
+                                    [-74.0059, 40.7128],
+                                ],
                                 # Knoxville to Talahassee to Orlando path [longitude, latitude]
-                                [[-83.9207, 35.9606], [-84.2533, 30.4383], [-81.3792, 28.5383]],
+                                [
+                                    [-83.9207, 35.9606],
+                                    [-84.2533, 30.4383],
+                                    [-81.3792, 28.5383],
+                                ],
                             ]
                         },
                         "valueLists": {

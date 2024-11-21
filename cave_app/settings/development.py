@@ -32,7 +32,7 @@ SECRET_KEY = config("SECRET_KEY")
 ## Allow All Hosts For Development
 ### NOTE: This Should be explicit in a production setting
 ALLOWED_HOSTS = ["*"]
-##
+## CSRF Trusted Origins
 allowed_host = os.environ.get("CSRF_TRUSTED_ORIGIN")
 if allowed_host:
     CSRF_TRUSTED_ORIGINS = [f"https://{allowed_host}"]
@@ -56,8 +56,7 @@ AUTHENTICATION_BACKENDS = ["cave_core.auth.EmailThenUsernameModelBackend"]
 ## Custom Users Model
 AUTH_USER_MODEL = "cave_core.CustomUser"
 ## Login/Logout redirection
-LOGIN_REDIRECT_URL = "app/"
-LOGOUT_REDIRECT_URL = "/auth/login/"
+LOGOUT_REDIRECT_URL = "/cave/auth/login/"
 # Django admin authentication information
 DJANGO_ADMIN_FIRST_NAME = config("DJANGO_ADMIN_FIRST_NAME", default="")
 DJANGO_ADMIN_LAST_NAME = config("DJANGO_ADMIN_LAST_NAME", default="")
@@ -108,6 +107,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 STATIC_APP_URL = config("STATIC_APP_URL")
 ## Allow the static app through CORS
 CORS_ALLOWED_ORIGINS = [STATIC_APP_URL]
+INSTALLED_APPS += ["rest_framework.authtoken"]
 ################################################################
 
 
@@ -129,8 +129,8 @@ DATABASES = {
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
-STATIC_URL = "/static/"
+MEDIA_URL = "/cave/media/"
+STATIC_URL = "/cave/static/"
 STATICFILES_STORAGE = "cave_app.storage_backends.StaticStorage"
 ################################################################
 
@@ -145,31 +145,11 @@ USE_L10N = True
 USE_TZ = True
 ################################################################
 
-# Django Rest Framework
-################################################################
-INSTALLED_APPS += ["rest_framework", "rest_framework.authtoken"]
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
-    ],
-}
-################################################################
 
-
-# Django Channels
+# DJANGO_SOCKETS
 ################################################################
-## Channels Layer Support
 INSTALLED_APPS = ["daphne"] + INSTALLED_APPS
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"],
-        },
-    },
-}
+DJANGO_SOCKET_HOSTS = [{"address": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"}]
 ################################################################
 
 
@@ -179,20 +159,15 @@ CACHE_BACKUP_INTERVAL = config("CACHE_BACKUP_INTERVAL", default=0, cast=int)
 CACHE_TIMEOUT = config("CACHE_TIMEOUT", default=0, cast=int)
 assert CACHE_TIMEOUT >= 0, "CACHE_TIMEOUT must be greater than or equal to 0"
 assert CACHE_BACKUP_INTERVAL >= 0, "CACHE_BACKUP_INTERVAL must be greater than or equal to 0"
-if CACHE_TIMEOUT > 0 and CACHE_BACKUP_INTERVAL == 0:
-    print("CACHE_TIMEOUT is set but CACHE_BACKUP_INTERVAL is not set")
-    print("Setting CACHE_BACKUP_INTERVAL to a third of CACHE_TIMEOUT")
-    CACHE_BACKUP_INTERVAL = CACHE_TIMEOUT//3
-if CACHE_TIMEOUT>0 and CACHE_TIMEOUT < CACHE_BACKUP_INTERVAL*2:
-    print("CACHE_TIMEOUT must be greater than CACHE_BACKUP_INTERVAL * 2")
-    print("Setting CACHE_TIMEOUT to CACHE_BACKUP_INTERVAL*3")
-    CACHE_TIMEOUT = CACHE_BACKUP_INTERVAL*3
+if CACHE_TIMEOUT > 0:
+    assert CACHE_TIMEOUT >= CACHE_BACKUP_INTERVAL*2, "CACHE_TIMEOUT must be at least twice as long as CACHE_BACKUP_INTERVAL"
+    assert CACHE_BACKUP_INTERVAL > 0, "CACHE_BACKUP_INTERVAL must be greater than 0 if CACHE_TIMEOUT is greater than 0"
 CACHE_TIMEOUT = None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT
+CACHE_BACKUP_INTERVAL = None if CACHE_BACKUP_INTERVAL == 0 else CACHE_BACKUP_INTERVAL
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
-        "TIMEOUT": CACHE_TIMEOUT,
+        "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"
     }
 }
 ################################################################

@@ -1,6 +1,5 @@
 # Internal Imports
-from cave_core import models
-from cave_core.utils.broadcasting import Socket
+from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 from cave_core.utils.wrapping import cache_data_version, ws_api_app
 
 
@@ -135,7 +134,7 @@ def mutate_session(request):
                 # In the case of a synch_error broadcast a version fix to the user
                 # and break from any more session work
                 if response.get("synch_error"):
-                    Socket(request.user).notify(
+                    CaveWSBroadcaster(request.user).notify(
                         message="Oops! You are out of sync. Fix in progress...",
                         title="Warning:",
                         show=True,
@@ -156,7 +155,7 @@ def mutate_session(request):
             )
         # If no api command is provided, apply the mutation
         else:
-            Socket(session_i).broadcast(
+            CaveWSBroadcaster(session_i).broadcast(
                 event="mutation",
                 versions=session_i.get_versions(),
                 data=mutate_dict,

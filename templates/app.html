@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}{{globals.site_name}}: App{% endblock %}
+{% block title %}{{globals.site_name}}: Workspace{% endblock %}
 {% block header_text %}{{globals.site_name}}{% endblock %}
 
 {% block content %}
@@ -48,6 +48,8 @@
         data:{
           user_token: '{{ user_token }}',
           mapbox_token: '{{ globals.mapbox_token }}',
+          ws_path: '/cave/ws/',
+          ws_encoding: 'json'
         }
       })
     }

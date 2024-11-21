@@ -12,10 +12,11 @@ from pamda import pamda
 import type_enforced
 
 # Internal Imports
-from cave_core.utils.broadcasting import Socket
+from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 from cave_core.utils.cache import Cache
 from cave_core.utils.constants import api_keys, background_api_keys
 from cave_core.utils.validators import limit_upload_size
+from cave_core.utils.session_persistence import session_persistence_service
 from cave_api.api import execute_command
 from cave_app.storage_backends import PrivateMediaStorage, PublicMediaStorage
 
@@ -230,7 +231,7 @@ class CustomUser(AbstractUser):
         """
         Used to get the current user id in a list by itself.
 
-        Required by Socket for generic functionaility.
+        Required by CaveWSBroadcaster for generic functionaility.
         """
         return [self.id]
 
@@ -259,11 +260,11 @@ class CustomUser(AbstractUser):
         """
         Let the user know their current session info (id and loading status)
         """
-        Socket(self).broadcast(
+        CaveWSBroadcaster(self).broadcast(
             event="updateSessions",
             data={"data_path": ["session_id"], "data": self.session.id},
         )
-        Socket(self).broadcast(
+        CaveWSBroadcaster(self).broadcast(
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],
@@ -308,7 +309,7 @@ class CustomUser(AbstractUser):
         self.email_validation_code = get_random_string(length=16)
         self.save(update_fields=["email_validation_code"])
         return self.email_validation_code
-
+    
     def get_token(self):
         """
         Returns the token for this user
@@ -419,7 +420,7 @@ class Globals(SingletonModel):
         help_text=_(
             "The name for the custom pages tab in the UI - Used at the top of every custom page"
         ),
-        default="Info",
+        default="More",
     )
     show_app_page = models.BooleanField(
         _("Show App Page"),
@@ -839,7 +840,7 @@ class Teams(models.Model):
     def update_sessions_list(self):
         sessions = self.get_sessions()
         self.set_session_count(len(sessions))
-        Socket(self).broadcast(
+        CaveWSBroadcaster(self).broadcast(
             event="updateSessions",
             data={
                 "data_path": ["data", str(self.id)],
@@ -931,7 +932,7 @@ class Sessions(models.Model):
             - Type: bool
             - What: The loading status to broadcast
         """
-        Socket(self).broadcast(
+        CaveWSBroadcaster(self).broadcast(
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],
@@ -990,7 +991,12 @@ class Sessions(models.Model):
             - EG To broadcast messgaes to everyone in the session
             - EG to prevent deletion if more than one user is in the session
         """
-        return cache.get(f"session:{self.id}:user_ids", [])
+        user_ids = cache.get(f"session:{self.id}:user_ids", None)
+        # Auto heal User Ids On Cache Data Loss
+        if user_ids == None:
+            self.update_user_ids()
+            user_ids = cache.get(f"session:{self.id}:user_ids", [])
+        return user_ids
     
     def update_user_ids(self) -> None:
         """
@@ -1029,7 +1035,7 @@ class Sessions(models.Model):
         cache.set(f"session:{self.id}:versions", versions)
         self.__dict__['versions'] = versions
 
-    def get_data(self, keys:list[str]=None, client_only:bool=True) -> dict:
+    def get_data(self, keys:list[str]=None, client_only:bool=True, omit_keys=list()) -> dict:
         """
         Returns all data for this session
 
@@ -1044,6 +1050,11 @@ class Sessions(models.Model):
             - Type: bool
             - What: If True, only relevant client keys are returned
             - Default: True
+        - `omit_keys`:
+            - Type: list of strings
+            - What: The keys to omit from the data
+            - Default: []
+            - Note: If None, no keys are omitted
 
         Returns:
             - Type: dict
@@ -1053,6 +1064,8 @@ class Sessions(models.Model):
             keys = list(self.get_versions().keys())
         if client_only:
             keys = pamda.intersection(keys, api_keys)
+        if len(omit_keys) > 0:
+            keys = pamda.difference(keys, omit_keys)
         keys_to_get_from_cache = []
         for key in keys:
             # Avoid additional cache hits by checking if the data is already in the session __dict__
@@ -1066,7 +1079,7 @@ class Sessions(models.Model):
             # If the new data is not the same length as the keys to get from the cache, there was an error
             # Likely, some data was lost from the persistent cache
             if len(new_data.keys()) != len(keys_to_get_from_cache):
-                Socket(self).notify(
+                CaveWSBroadcaster(self).notify(
                     title="Error:",
                     message="Oops! There was an error with the data from this session. It will be reset to initial values to fix the issue.",
                     theme="error",
@@ -1081,7 +1094,7 @@ class Sessions(models.Model):
                     pamda.assocPath(path=['data', key], value=value, data=self.__dict__)
         return {key:pamda.path(['data', key], self.__dict__) for key in keys}
 
-    def broadcast_changed_data(self, previous_versions: dict) -> None:
+    def broadcast_changed_data(self, previous_versions: dict, broadcast_loading:bool=True) -> None:
         """
         Broadcasts and returns all data that has changed given some set of previous versions
 
@@ -1090,6 +1103,13 @@ class Sessions(models.Model):
         - `previous_versions`:
             - Type: dict
             - What: The endpoint provided previous versions to check vs the current server versions to determine which data has changed
+
+        Optional:
+
+        - `broadcast_loading`:
+            - Type: bool
+            - What: If True, the loading state will be broadcasted to all users before and after the data is broadcasted
+            - Default: True
         """
         # print('==BROADCAST CHANGED DATA==')
         # Fill in missing session data if none is present
@@ -1105,11 +1125,16 @@ class Sessions(models.Model):
         ]
         data = self.get_data(client_only=True, keys=updated_keys)
         # Broadcast the updated versions and data
-        Socket(self).broadcast(
+
+        if broadcast_loading:
+            self.broadcast_loading(True)
+        CaveWSBroadcaster(self).broadcast(
             event="overwrite",
             versions=versions,
             data=data,
         )
+        if broadcast_loading:
+            self.broadcast_loading(False)
         # print('==BROADCAST CHANGED DATA END==')
 
     def replace_data(self, data, wipeExisting):
@@ -1189,8 +1214,8 @@ class Sessions(models.Model):
         """
         # print('\n==EXECUTE API COMMAND==')
         self.set_loading(True)
-        session_data = self.get_data(keys=command_keys, client_only=False)
-        socket = Socket(self)
+        session_data = self.get_data(keys=command_keys, client_only=False, omit_keys=background_api_keys)
+        socket = CaveWSBroadcaster(self)
         command_output = execute_command(
             session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
         )
@@ -1224,7 +1249,7 @@ class Sessions(models.Model):
 
         # Broadcast the changed data if specified
         if broadcast_changes:
-            self.broadcast_changed_data(previous_versions=previous_versions)
+            self.broadcast_changed_data(previous_versions=previous_versions, broadcast_loading=False)
         # Update the execution state overriding any blocks
         self.set_loading(False, override_block=True)
         # print('==EXECUTE API COMMAND END==\n')
@@ -1319,6 +1344,20 @@ class Sessions(models.Model):
         cache.set_many({f"session:{new_session.id}:data:{key}": value for key, value in session_data.items()})
         new_session.set_versions({key:0 for key in session_data.keys()})            
         return new_session
+    
+    def get_cache_keys(self):
+        """
+        Gets all cache keys for this session
+        """
+        keys = [f"session:{self.id}:{key}" for key in ["versions", "executing", "user_ids"]]
+        keys += [f"session:{self.id}:data:{key}" for key in list(cache.get(f"session:{self.id}:versions", {}).keys())]
+        return keys
+    
+    def persist_cache_data(self):
+        """
+        Persists the current session data to the persistent cache
+        """
+        cache.persist_many(self.get_cache_keys())
 
     def error_on_session_not_empty(self):
         """
@@ -1412,11 +1451,8 @@ def handle_session_on_delete(sender, instance, **kwargs):
     """
     instance.team.update_sessions_list()
     # Clear the data from the cache and persistent cache if present
-    cache_session_id = f"session:{instance.id}"
-    generic_keys = [f"{cache_session_id}:{key}" for key in ['versions', 'executing','user_ids']]
-    data_keys = [f"{cache_session_id}:data:{key}" for key in cache.get(f"{cache_session_id}:versions", {}).keys()]
     cache.delete_many(
-        data_keys + generic_keys,
+        instance.get_cache_keys(),
         memory=True,
         persistent=True
     )
@@ -1435,3 +1471,6 @@ def update_team_ids(sender, instance, **kwargs):
 def create_personal_team(sender, instance, created, **kwargs):
     if created:
         instance.create_personal_team()
+
+# Services
+session_persistence_service(cache=cache, Sessions=Sessions)

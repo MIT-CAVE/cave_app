@@ -4,15 +4,9 @@
     },
     "appBar": {
         "order": {
-            "data": ["refreshButton", "infoButton"]
+            "data": ["infoButton"]
         },
         "data": {
-            "refreshButton": {
-                "icon": "md/MdRefresh",
-                "apiCommand": "init",
-                "type": "button",
-                "bar": "upperLeft"
-            },
             "infoButton": {
                 "icon": "md/MdInfo",
                 "apiCommand": "info",

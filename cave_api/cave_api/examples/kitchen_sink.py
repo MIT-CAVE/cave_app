@@ -132,9 +132,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "appBar": {
             "order": {
                 "data": [
-                    "session",
-                    "appSettings",
-                    "resetButton",
                     "buttonSolve",
                     "examplePropsPane",
                     "dash1",
@@ -142,23 +139,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 ],
             },
             "data": {
-                "session": {
-                    "icon": "md/MdApi",
-                    "type": "session",
-                    "bar": "upperLeft",
-                },
-                "appSettings": {
-                    "icon": "md/MdOutlineSettings",
-                    "type": "settings",
-                    "bar": "upperLeft",
-                },
-                "resetButton": {
-                    "icon": "md/MdSync",
-                    "color": "rgba(255, 101, 101, 1)",
-                    "apiCommand": "reset",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 "buttonSolve": {
                     "icon": "bs/BsLightningFill",
                     "color": "rgba(178, 179, 55, 1)",
@@ -254,7 +234,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "variant": "incslider",
                             "help": "Help for the incremental slider example",
-                            "valueOptions": [0,25,50,75,100],
+                            "valueOptions": [0, 25, 50, 75, 100],
                             "unit": "%",
                         },
                         "miscHeader": {
@@ -402,15 +382,42 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "nested",
                             "options": {
-                                "t1_b1_tw1": {"name": "Twig1", "path": ["Tree1", "Branch1"]},
-                                "t1_b1_tw2": {"name": "Twig2", "path": ["Tree1", "Branch1"]},
-                                "t1_b1_tw3": {"name": "Twig3", "path": ["Tree1", "Branch1"]},
-                                "t1_b2_tw1": {"name": "Twig1", "path": ["Tree1", "Branch2"]},
-                                "t1_b2_tw2": {"name": "Twig2", "path": ["Tree1", "Branch2"]},
-                                "t2_b1_tw1": {"name": "Twig1", "path": ["Tree2", "Branch1"]},
-                                "t2_b1_tw2": {"name": "Twig2", "path": ["Tree2", "Branch1"]},
-                                "t2_b2_tw1": {"name": "Twig1", "path": ["Tree2", "Branch2"]},
-                                "t2_b2_tw2": {"name": "Twig2", "path": ["Tree2", "Branch2"]},
+                                "t1_b1_tw1": {
+                                    "name": "Twig1",
+                                    "path": ["Tree1", "Branch1"],
+                                },
+                                "t1_b1_tw2": {
+                                    "name": "Twig2",
+                                    "path": ["Tree1", "Branch1"],
+                                },
+                                "t1_b1_tw3": {
+                                    "name": "Twig3",
+                                    "path": ["Tree1", "Branch1"],
+                                },
+                                "t1_b2_tw1": {
+                                    "name": "Twig1",
+                                    "path": ["Tree1", "Branch2"],
+                                },
+                                "t1_b2_tw2": {
+                                    "name": "Twig2",
+                                    "path": ["Tree1", "Branch2"],
+                                },
+                                "t2_b1_tw1": {
+                                    "name": "Twig1",
+                                    "path": ["Tree2", "Branch1"],
+                                },
+                                "t2_b1_tw2": {
+                                    "name": "Twig2",
+                                    "path": ["Tree2", "Branch1"],
+                                },
+                                "t2_b2_tw1": {
+                                    "name": "Twig1",
+                                    "path": ["Tree2", "Branch2"],
+                                },
+                                "t2_b2_tw2": {
+                                    "name": "Twig2",
+                                    "path": ["Tree2", "Branch2"],
+                                },
                             },
                             "help": "Select all relevant items",
                         },
@@ -492,7 +499,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "dateTimeItemExample": "1969-07-20T20:17:40",
                         "latLngInputExample": [[-71.092003, 42.360001]],
                         "latLngMapExample": [[-71.092003, 42.360001]],
-                        "latLngPathExample": [[-71.092003, 42.360001], [-71.093003, 42.361001]],
+                        "latLngPathExample": [
+                            [-71.092003, 42.360001],
+                            [-71.093003, 42.361001],
+                        ],
                     },
                     "layout": {
                         "type": "grid",
@@ -772,7 +782,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "raster",
                                 # EG: See a list of raster sources based on OSM here:
                                 # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
-                                "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+                                "tiles": [
+                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                ],
                                 "tileSize": 256,
                                 "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
                             },
@@ -883,6 +895,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "longitude": 14,
                         },
                     },
+                    "legendView": "full",
+                    "showLegendGroupNames": False,
                     "legendGroups": {
                         "lga": {
                             "name": "Legend Group A",
@@ -984,7 +998,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
                                     "icon": "md/MdOutlineTouchApp",
-                                }
+                                },
                             },
                         },
                     },
@@ -1422,7 +1436,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "geoJsonValue": ["CA.ON", "US.MI", "US.MA", "US.FL", "US.IN"],
+                            "geoJsonValue": [
+                                "CA.ON",
+                                "US.MI",
+                                "US.MA",
+                                "US.FL",
+                                "US.IN",
+                            ],
                         },
                         "valueLists": {
                             "numericPropExampleC": [0, 300, 250, 100, 200],
@@ -1484,14 +1504,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "path": [[[-75.447, 40.345], [-77.447, 42.345], [-77.447, 44.345], [-75.447, 40.345]]],
+                            "path": [
+                                [
+                                    [-75.447, 40.345],
+                                    [-77.447, 42.345],
+                                    [-77.447, 44.345],
+                                    [-75.447, 40.345],
+                                ]
+                            ],
                         },
                         "valueLists": {
                             "numericPropExampleC": [100],
                             "booleanPropExample": [True],
                         },
                     },
-                }
+                },
             }
         },
         "groupedOutputs": {
@@ -1513,7 +1540,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "North America",
                         ],
                         "country": ["USA", "USA", "USA", "USA", "Canada"],
-                        "state": ["Michigan", "Massachusetts", "Florida", "Indiana", "Ontario"],
+                        "state": [
+                            "Michigan",
+                            "Massachusetts",
+                            "Florida",
+                            "Indiana",
+                            "Ontario",
+                        ],
                     },
                     "name": "Locations",
                     "levels": {
@@ -1525,13 +1558,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Countries",
                             "ordering": ["Canada", "USA"],
                             "parent": "region",
-                            "coloring": {"Canada": "rgba(0, 0, 255, 1)", "USA": "rgba(255, 0, 0, 1)"}
+                            "coloring": {
+                                "Canada": "rgba(0, 0, 255, 1)",
+                                "USA": "rgba(255, 0, 0, 1)",
+                            },
                         },
                         "state": {
                             "name": "States",
                             "parent": "country",
-                            "ordering": ["Michigan", "Florida", "Indiana", "Massachusetts", "Ontario"],
-                            "orderWithParent": False, # True if not specified
+                            "ordering": [
+                                "Michigan",
+                                "Florida",
+                                "Indiana",
+                                "Massachusetts",
+                                "Ontario",
+                            ],
+                            "orderWithParent": False,  # True if not specified
                         },
                     },
                     "layoutDirection": "horizontal",
@@ -1776,15 +1818,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")
         time.sleep(3)
-        socket.notify("Priming Thrusters...", title="Initialization", theme="info", duration=3)
+        socket.notify(
+            "Priming Thrusters...", title="Initialization", theme="info", duration=3
+        )
         time.sleep(3)
         socket.notify("Ignition...", title="Initialization", theme="info")
         time.sleep(3)
-        socket.notify("Leak detected in primary power core!", title="Warning:", theme="warning")
+        socket.notify(
+            "Leak detected in primary power core!", title="Warning:", theme="warning"
+        )
         time.sleep(3)
         socket.notify("Engine Failure!", title="Error:", theme="error")
         time.sleep(3)
-        socket.notify("Recalibrating Gravitons!", title="Attempting Fix:", theme="warning")
+        socket.notify(
+            "Recalibrating Gravitons!", title="Attempting Fix:", theme="warning"
+        )
         time.sleep(3)
         socket.notify("Fix Succeded!", title="Attempting Fix:", theme="success")
         time.sleep(3)

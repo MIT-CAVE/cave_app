@@ -11,16 +11,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "chartPage"]},
+            "order": {
+                "data": [
+                    "chartPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an app bar button to launch a chart dashboard
                 "chartPage": {
                     "icon": "md/MdBarChart",
@@ -132,7 +128,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     "valueLists": {
-                        "demand": [100, 108, 115, 110, 70, 78, 67, 89, 95, 100, 100, 98],
+                        "demand": [
+                            100,
+                            108,
+                            115,
+                            110,
+                            70,
+                            78,
+                            67,
+                            89,
+                            95,
+                            100,
+                            100,
+                            98,
+                        ],
                         "sales": [95, 100, 100, 98, 60, 65, 67, 75, 80, 90, 99, 98],
                     },
                     "groupLists": {
