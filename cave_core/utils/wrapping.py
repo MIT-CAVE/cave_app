@@ -86,7 +86,7 @@ def ws_api_app(fn):
 
     @wraps(fn)
     def wrap(request):
-        # This needs to occur prior to fn since request.user.session chan change during the fn execution.
+        # This needs to occur prior to fn since request.user.session can change during the fn execution.
         session = request.user.session
         try:
             fn(request)
