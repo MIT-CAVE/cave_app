@@ -912,22 +912,31 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupScaleWithZoom": True,
                                     # "groupScale": 10,
                                     "icon": "fa6/FaIgloo",
-                                    # REVIEW:
-                                    # Current implemented behavior on `cave_static`: the `colorBy` and `sizeBy` dropdowns are populated
-                                    # with props that have at least one gradient/color or size range/option value after left-merging
-                                    # `legendGroups.lga.data.nodeTypeA.props` with `mapFeatures.data.nodeTypeA.props`.
-                                    #
-                                    # Alternatively (not implemented yet):
-                                    # We could define a list of prop keys to specify which props should appear in the dropdowns by
-                                    # using `colorByOptions` and `sizeByOptions`. Note that `colorByOptions` and `sizeByOptions` would
-                                    # be different from the old structure and will only point to the keys.
-                                    "colorByOptions": [],
-                                    "sizeByOptions": [],
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                        "selectorPropExample",
+                                    ],
                                 },
                                 "T1": {
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "selectorPropExample",
+                                    ],
                                 },
                             },
                         },
@@ -946,27 +955,54 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
                                     "icon": "bs/BsBuilding",
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "booleanPropExample",
+                                    ],
                                 },
                                 "T2": {
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
                                     "lineBy": "dotted",
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
                                 },
                                 "state": {
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
                                     "icon": "bs/BsHexagon",
+                                    "colorByOptions": [
+                                        "numericPropExampleC",
+                                        "booleanPropExample",
+                                    ],
                                 },
                                 "country": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
                                     "icon": "bs/BsHexagon",
+                                    "colorByOptions": ["numericPropExampleC"],
                                 },
                                 "custom": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
                                     "icon": "md/MdOutlineTouchApp",
+                                    "colorByOptions": [
+                                        "numericPropExampleC",
+                                        "booleanPropExample",
+                                    ],
                                 },
                             },
                         },
@@ -1020,11 +1056,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
                                     "icon": "fa6/FaIgloo",
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                        "selectorPropExample",
+                                    ],
                                 },
                                 "T1": {
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
                                 },
                             },
                         },
@@ -1036,22 +1094,47 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
                                     "icon": "bs/BsBuilding",
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                    ],
                                 },
                                 "T2": {
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
                                     "lineBy": "dotted",
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
                                 },
                                 "state": {
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
                                     "icon": "bs/BsHexagon",
+                                    "colorByOptions": [
+                                        "numericPropExampleC",
+                                        "booleanPropExample",
+                                    ],
                                 },
                                 "country": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
                                     "icon": "bs/BsHexagon",
+                                    "colorByOptions": ["numericPropExampleC"],
                                 },
                             },
                         },
