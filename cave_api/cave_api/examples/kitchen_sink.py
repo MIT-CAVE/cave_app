@@ -903,8 +903,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "nodeTypeA": {
                                     "value": True,
-                                    "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
+                                    "sizeBy": "numericPropExampleA",
                                     "allowGrouping": True,
                                     "group": True,
                                     "groupCalcBySize": "sum",
@@ -926,8 +926,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     ],
                                 },
                                 "T1": {
-                                    "colorBy": "numericPropExampleA",
-                                    "sizeBy": "numericPropExampleB",
+                                    "colorBy": "numericPropExampleB",
+                                    "sizeBy": "numericPropExampleA",
                                     "value": True,
                                     "colorByOptions": [
                                         "numericPropExampleA",
@@ -945,8 +945,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "nodeTypeB": {
                                     "value": True,
-                                    "sizeBy": "numericPropExampleB",
-                                    "colorBy": "booleanPropExample",
+                                    "colorBy": "numericPropExampleB",
+                                    "sizeBy": "numericPropExampleA",
                                     "allowGrouping": True,
                                     "group": True,
                                     "groupCalcBySize": "count",
@@ -965,7 +965,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     ],
                                 },
                                 "T2": {
-                                    "colorBy": "numericPropExampleA",
+                                    "colorBy": "selectorPropExample",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
                                     "lineBy": "dotted",
@@ -1053,8 +1053,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "nodeTypeA": {
                                     "value": True,
-                                    "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
+                                    "sizeBy": "numericPropExampleA",
                                     "icon": "fa6/FaIgloo",
                                     "colorByOptions": [
                                         "numericPropExampleA",
@@ -1091,8 +1091,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "nodeTypeB": {
                                     "value": True,
-                                    "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
+                                    "sizeBy": "numericPropExampleB",
                                     "icon": "bs/BsBuilding",
                                     "colorByOptions": [
                                         "numericPropExampleA",
@@ -1158,18 +1158,26 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "min": 0,
                             "max": 50,
                             "unit": "A units",
-                            "legendNotation": "compact",
-                            "legendMinLabel": "small",
-                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                            # IDEA: Implement intermediate gradients
-                            # "interGradientColors": [
-                            #     {"color": "rgba(125, 80, 255, 1)", "cutoff": 15},
-                            #     {"color": "rgba(125, 80, 255, 1)", "cutoff": 20},
-                            #     {"color": "rgba(125, 80, 255, 1)", "cutoff": 35}
-                            # ],
-                            "startSize": "15px",
-                            "endSize": "30px",
+                            "colorGradient": {
+                                "scale": "linear",
+                                "notation": "compact",
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(233, 0, 0, 1)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(96, 2, 2, 1)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "15px", "label": "Small"},
+                                    {"value": "max", "size": "30px"},
+                                ],
+                            },
                             "help": "Help for numeric prop example A",
                         },
                         "numericPropExampleB": {
@@ -1177,11 +1185,43 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "min": 0,
                             "max": 40,
-                            "startSize": "5px",
-                            "endSize": "15px",
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(0, 128, 255)",
+                                        "label": "Very Low",
+                                    },
+                                    {
+                                        "value": 5,
+                                        "color": "rgb(0, 200, 150)",
+                                        "label": "Low-Mid",
+                                    },
+                                    {
+                                        "value": 15,
+                                        "color": "rgb(255, 165, 0)",
+                                        "label": "Moderate-High",
+                                    },
+                                    {
+                                        "value": 28,
+                                        "color": "rgb(255, 69, 0)",
+                                        "label": "Very High",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(255, 0, 0)",
+                                        "label": "Critical",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "5px"},
+                                    {"value": 20, "size": "8px"},
+                                    {"value": "max", "size": "15px"},
+                                ],
+                            },
                             "unit": "B units",
-                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                            "endGradientColor": "rgba(96, 2, 2, 1)",
                             "help": "Help for numeric prop example B",
                         },
                         "selectorPropExample": {
@@ -1274,10 +1314,24 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "min": 0,
                             "max": 50,
-                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                            "startSize": "15px",
-                            "endSize": "30px",
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(233, 0, 0, 1)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(96, 2, 2, 1)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "15px"},
+                                    {"value": "max", "size": "30px"},
+                                ],
+                            },
                             "help": "Help for numeric prop example A",
                             "unit": "A units",
                         },
@@ -1286,10 +1340,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "min": 0,
                             "max": 40,
-                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                            "startSize": "5px",
-                            "endSize": "15px",
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(233, 0, 0, 1)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(96, 2, 2, 1)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "5px"},
+                                    {"value": 20, "size": "8px"},
+                                    {"value": "max", "size": "15px"},
+                                ],
+                            },
                             "help": "Help for numeric prop example B",
                             "unit": "B units",
                         },
@@ -1390,15 +1459,31 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 2: {"min": 20},
                             },
                             "max": 80,
-                            "legendNotation": "precision",
-                            "legendPrecision": 5,
                             "unit": "A units",
-                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                            "startSize": "30px",
-                            "endSize": "45px",
+                            "colorGradient": {
+                                "notation": "precision",
+                                "precision": 5,
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(233, 0, 0, 1)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(96, 2, 2, 1)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "precision",
+                                "precision": 5,
+                                "data": [
+                                    {"value": "min", "size": "30px"},
+                                    {"value": "max", "size": "45px"},
+                                ],
+                            },
                             "fallback": {
-                                "name": "Undefined",
+                                "name": "Outlier",
                                 "color": "rgba(128, 128, 128, 1)",
                                 "size": "20px",
                             },
@@ -1409,13 +1494,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "min": 0,
                             "max": 50,
-                            "legendNotation": "scientific",
-                            "legendNotationDisplay": "x10^",
                             "unit": "B units",
-                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                            "startSize": "15px",
-                            "endSize": "30px",
+                            "colorGradient": {
+                                "notation": "scientific",
+                                "notationDisplay": "x10^",
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(233, 0, 0, 1)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(96, 2, 2, 1)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "scientific",
+                                "notationDisplay": "x10^",
+                                "data": [
+                                    {"value": "min", "size": "10px"},
+                                    {"value": 10, "size": "40px"},
+                                    {"value": "max", "size": "70px"},
+                                ],
+                            },
                             "help": "Help for numeric prop example B",
                         },
                         "booleanPropExample": {
@@ -1521,14 +1623,29 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "min": 0,
                             "max": 1000,
-                            "precision": 2,
-                            "legendPrecision": 5,
-                            "legendNotation": "precision",
                             "unit": "A units",
-                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                            "startSize": "15px",
-                            "endSize": "30px",
+                            "colorGradient": {
+                                "notation": "precision",
+                                "precision": 5,
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(233, 0, 0, 1)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(96, 2, 2, 1)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "precision",
+                                "precision": 5,
+                                "data": [
+                                    {"value": "min", "size": "15px"},
+                                    {"value": "max", "size": "30px"},
+                                ],
+                            },
                             "help": "Help for numeric prop example A",
                         },
                         "numericPropExampleB": {
@@ -1537,12 +1654,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "min": 0,
                             "max": 50,
                             "unit": "B units",
-                            "legendMinLabel": "Lo",
-                            "legendMaxLabel": "Hi",
-                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                            "startSize": "5px",
-                            "endSize": "15px",
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(233, 0, 0, 1)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(96, 2, 2, 1)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "10px", "label": "Lo"},
+                                    {"value": 10, "size": "40px"},
+                                    {"value": "max", "size": "70px", "label": "Hi"},
+                                ],
+                            },
                             "help": "Help for numeric prop example B",
                         },
                         "booleanPropExample": {
@@ -1578,11 +1708,42 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "min": 0,
-                            "max": 300,
+                            "min": 1,
+                            "max": 10000,
                             "unit": "C units",
-                            "startGradientColor": "rgba(100, 100, 100, 1)",
-                            "endGradientColor": "rgba(20, 205, 20, 1)",
+                            "colorGradient": {
+                                "scale": "log",
+                                "scaleParams": {
+                                    "exponent": 0.5,
+                                    "base": 10,
+                                },
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(200, 230, 255)",
+                                        "label": "Very Sparse",
+                                    },
+                                    {
+                                        "value": 100,
+                                        "color": "rgb(120, 180, 240)",
+                                        "label": "Sparse",
+                                    },
+                                    {
+                                        "value": 1000,
+                                        "color": "rgb(50, 130, 220)",
+                                        "label": "Moderate",
+                                    },
+                                    {
+                                        "value": 5000,
+                                        "color": "rgb(255, 140, 0)",
+                                        "label": "Dense",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(255, 0, 0)",
+                                    },
+                                ],
+                            },
                             "help": "Help with the example numeric prop for this State",
                         },
                         "booleanPropExample": {
@@ -1606,7 +1767,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             ],
                         },
                         "valueLists": {
-                            "numericPropExampleC": [0, 300, 250, 100, 200],
+                            "numericPropExampleC": [1, 8000, 250, 50, 2000],
                             "booleanPropExample": [True, True, False, False, False],
                         },
                     },
@@ -1625,8 +1786,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "min": 0,
                             "max": 800,
                             "unit": "units",
-                            "startGradientColor": "rgba(100, 100, 100, 1)",
-                            "endGradientColor": "rgba(20, 205, 20, 1)",
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(100, 100, 100, 1)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(20, 205, 20, 1)",
+                                    },
+                                ],
+                            },
                             "help": "Help with the example numeric prop for this Country",
                         },
                     },
@@ -1649,8 +1820,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "min": 0,
                             "max": 800,
                             "unit": "units",
-                            "startGradientColor": "rgba(100, 100, 100, 1)",
-                            "endGradientColor": "rgba(20, 205, 20, 1)",
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(100, 100, 100, 1)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(20, 205, 20, 1)",
+                                    },
+                                ],
+                            },
                             "help": "Help with the example numeric prop for this Custom",
                         },
                         "booleanPropExample": {
