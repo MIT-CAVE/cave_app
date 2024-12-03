@@ -49,28 +49,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "unusualRoutes": {
                                     "value": True,
-                                    "sizeBy": "capacity",
                                     "colorBy": "preferredRoute",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 105,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "preferredRoute": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "5px",
-                                            "endSize": "10px",
-                                        },
-                                    },
+                                    "colorByOptions": ["capacity", "preferredRoute"],
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": ["capacity"],
                                 },
                             },
                         },
@@ -87,15 +69,35 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "help": "The warehouse capacity in cubic feet",
+                            "min": 0,
+                            "max": 105,
                             "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "The warehouse capacity in cubic feet",
+                            "colorGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "5px"},
+                                    {"value": "max", "size": "10px"},
+                                ],
+                            },
                         },
                         "preferredRoute": {
                             "name": "Preferred Route",
                             "type": "toggle",
                             "help": "Whether the route is preferred",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {

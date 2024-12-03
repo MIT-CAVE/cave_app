@@ -49,28 +49,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "warehouse": {
                                     "value": True,
-                                    "sizeBy": "capacity",
                                     "colorBy": "includesAutomation",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 100,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "includesAutomation": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "30px",
-                                            "endSize": "45px",
-                                        },
-                                    },
+                                    "colorByOptions": [
+                                        "capacity",
+                                        "includesAutomation",
+                                    ],
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": ["capacity"],
                                     "icon": "fa6/FaWarehouse",
                                 },
                             },
@@ -95,15 +80,35 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "help": "The warehouse capacity in cubic feet",
+                            "min": 0,
+                            "max": 100,
                             "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "The warehouse capacity in cubic feet",
+                            "colorGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "30px"},
+                                    {"value": "max", "size": "45px"},
+                                ],
+                            },
                         },
                         "includesAutomation": {
                             "name": "Includes Automation",
                             "type": "toggle",
                             "help": "Whether the warehouse includes automation",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {

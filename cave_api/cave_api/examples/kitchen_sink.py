@@ -1741,6 +1741,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     {
                                         "value": "max",
                                         "color": "rgb(255, 0, 0)",
+                                        "label": "Very Dense",
                                     },
                                 ],
                             },
