@@ -1228,7 +1228,7 @@ class Sessions(models.Model):
                 f"Oops! The following reserved api keys were returned: {str(background_api_keys_used)}"
             )
         # Pop out kwargs for use but not for storage
-        extraKwargs = command_output.pop("extraKwargs", {})
+        extraKwargs = command_output.pop("extraKwargs", command_output.pop("kwargs", {}))
         # Update the session data with the command output
         self.replace_data(data=command_output, wipeExisting=extraKwargs.get("wipeExisting", True))
 
