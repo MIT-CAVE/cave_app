@@ -3,14 +3,10 @@
 ################ Settings ################
 # Choose your base image and tag
 # Alpine Based Python Image
-ARG ROOT_CONTAINER=python:3.12-alpine
+FROM python:3.12-alpine
 # Debian Based Python Image
-# ARG ROOT_CONTAINER=python:3.12-bullseye
+# FROM python:3.12-bullseye
 ################ Settings ################
-
-
-# Create a builder image to install any requirements
-FROM ${ROOT_CONTAINER}
 
 # Set python to unbuffered mode
 ENV PYTHONUNBUFFERED=1
