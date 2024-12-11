@@ -141,7 +141,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "buttonSolve": {
                     "icon": "bs/BsLightningFill",
-                    "color": "rgba(178, 179, 55, 1)",
+                    "color": "rgb(178 179 55)",
                     "apiCommand": "solve",
                     "type": "button",
                     "bar": "upperLeft",
@@ -164,7 +164,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "exampleModal": {
                     "icon": "md/MdInfo",
-                    "color": "rgba(195, 164, 222, 1)",
+                    "color": "rgb(195 164 222)",
                     "type": "pane",
                     "bar": "upperRight",
                     "variant": "modal",
@@ -1164,11 +1164,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "color": "rgba(233, 0, 0, 1)",
+                                        "color": "rgb(233 0 0)",
                                     },
                                     {
                                         "value": "max",
-                                        "color": "rgba(96, 2, 2, 1)",
+                                        "color": "rgb(96 2 2)",
                                     },
                                 ],
                             },
@@ -1231,42 +1231,42 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "options": {
                                 "a": {
                                     "name": "A",
-                                    "color": "rgba(128, 255, 255, 1)",
+                                    "color": "rgb(128 255 255)",
                                     "size": "3px",
                                 },
                                 "b": {
                                     "name": "B",
-                                    "color": "rgba(0, 153, 51, 1)",
+                                    "color": "rgb(0 153 51)",
                                     "size": "8px",
                                 },
                                 "c": {
                                     "name": "C",
-                                    "color": "rgba(0, 0, 128, 1)",
+                                    "color": "rgb(0 0 128)",
                                     "size": "13px",
                                 },
                                 "d": {
                                     "name": "D",
-                                    "color": "rgba(204, 0, 0, 1)",
+                                    "color": "rgb(204 0 0)",
                                     "size": "18px",
                                 },
                                 "e": {
                                     "name": "E",
-                                    "color": "rgba(153, 77, 0, 1)",
+                                    "color": "rgb(153 77 0)",
                                     "size": "23px",
                                 },
                                 "f": {
                                     "name": "F",
-                                    "color": "rgba(255, 25, 255, 1)",
+                                    "color": "rgb(255 25 255)",
                                     "size": "28px",
                                 },
                                 "g": {
                                     "name": "G",
-                                    "color": "rgba(0, 255, 0, 1)",
+                                    "color": "rgb(0 255 0)",
                                     "size": "33px",
                                 },
                                 "h": {
                                     "name": "H",
-                                    "color": "rgba(255, 255, 0, 1)",
+                                    "color": "rgb(255 255 0)",
                                     "size": "38px",
                                 },
                             },
@@ -1318,11 +1318,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "color": "rgba(233, 0, 0, 1)",
+                                        "color": "rgb(233 0 0)",
                                     },
                                     {
                                         "value": "max",
-                                        "color": "rgba(96, 2, 2, 1)",
+                                        "color": "rgb(96 2 2)",
                                     },
                                 ],
                             },
@@ -1344,11 +1344,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "color": "rgba(233, 0, 0, 1)",
+                                        "color": "rgb(233 0 0)",
                                     },
                                     {
                                         "value": "max",
-                                        "color": "rgba(96, 2, 2, 1)",
+                                        "color": "rgb(96 2 2)",
                                     },
                                 ],
                             },
@@ -1369,42 +1369,42 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "options": {
                                 "a": {
                                     "name": "A",
-                                    "color": "rgba(128, 255, 255, 1)",
+                                    "color": "rgb(128 255 255)",
                                     "size": "3px",
                                 },
                                 "b": {
                                     "name": "B",
-                                    "color": "rgba(0, 153, 51, 1)",
+                                    "color": "rgb(0 153 51)",
                                     "size": "8px",
                                 },
                                 "c": {
                                     "name": "C",
-                                    "color": "rgba(0, 0, 128, 1)",
+                                    "color": "rgb(0 0 128)",
                                     "size": "13px",
                                 },
                                 "d": {
                                     "name": "D",
-                                    "color": "rgba(204, 0, 0, 1)",
+                                    "color": "rgb(204 0 0)",
                                     "size": "18px",
                                 },
                                 "e": {
                                     "name": "E",
-                                    "color": "rgba(153, 77, 0, 1)",
+                                    "color": "rgb(153 77 0)",
                                     "size": "23px",
                                 },
                                 "f": {
                                     "name": "F",
-                                    "color": "rgba(255, 25, 255, 1)",
+                                    "color": "rgb(255 25 255)",
                                     "size": "28px",
                                 },
                                 "g": {
                                     "name": "G",
-                                    "color": "rgba(0, 255, 0, 1)",
+                                    "color": "rgb(0 255 0)",
                                     "size": "33px",
                                 },
                                 "h": {
                                     "name": "H",
-                                    "color": "rgba(255, 255, 0, 1)",
+                                    "color": "rgb(255 255 0)",
                                     "size": "38px",
                                 },
                             },
@@ -1466,11 +1466,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "color": "rgba(233, 0, 0, 1)",
+                                        "color": "rgb(233 0 0)",
                                     },
                                     {
                                         "value": "max",
-                                        "color": "rgba(96, 2, 2, 1)",
+                                        "color": "rgb(96 2 2)",
                                     },
                                 ],
                             },
@@ -1484,7 +1484,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "fallback": {
                                 "name": "Outlier",
-                                "color": "rgba(128, 128, 128, 1)",
+                                "color": "rgb(128 128 128)",
                                 "size": "20px",
                             },
                             "help": "Help for numeric prop example A",
@@ -1501,11 +1501,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "color": "rgba(233, 0, 0, 1)",
+                                        "color": "rgb(233 0 0)",
                                     },
                                     {
                                         "value": "max",
-                                        "color": "rgba(96, 2, 2, 1)",
+                                        "color": "rgb(96 2 2)",
                                     },
                                 ],
                             },
@@ -1526,18 +1526,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "options": {
                                 "false": {
                                     "name": "Idle",
-                                    "color": "rgba(255, 0, 0, 1)",
+                                    "color": "rgb(255 0 0)",
                                     "size": "15px",
                                 },
                                 "true": {
                                     "name": "Active",
-                                    "color": "rgba(0, 255, 0, 1)",
+                                    "color": "rgb(0 255 0)",
                                     "size": "30px",
                                 },
                             },
                             "fallback": {
                                 "name": "Unknown",
-                                "color": "rgba(128, 128, 128, 1)",
+                                "color": "rgb(128 128 128)",
                                 "size": "100px",
                             },
                             "help": "Help for boolean prop",
@@ -1549,42 +1549,42 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "options": {
                                 "a": {
                                     "name": "A",
-                                    "color": "rgba(128, 255, 255, 1)",
+                                    "color": "rgb(128 255 255)",
                                     "size": "3px",
                                 },
                                 "b": {
                                     "name": "B",
-                                    "color": "rgba(0, 153, 51, 1)",
+                                    "color": "rgb(0 153 51)",
                                     "size": "8px",
                                 },
                                 "c": {
                                     "name": "C",
-                                    "color": "rgba(0, 0, 128, 1)",
+                                    "color": "rgb(0 0 128)",
                                     "size": "13px",
                                 },
                                 "d": {
                                     "name": "D",
-                                    "color": "rgba(204, 0, 0, 1)",
+                                    "color": "rgb(204 0 0)",
                                     "size": "18px",
                                 },
                                 "e": {
                                     "name": "E",
-                                    "color": "rgba(153, 77, 0, 1)",
+                                    "color": "rgb(153 77 0)",
                                     "size": "23px",
                                 },
                                 "f": {
                                     "name": "F",
-                                    "color": "rgba(255, 25, 255, 1)",
+                                    "color": "rgb(255 25 255)",
                                     "size": "28px",
                                 },
                                 "g": {
                                     "name": "G",
-                                    "color": "rgba(0, 255, 0, 1)",
+                                    "color": "rgb(0 255 0)",
                                     "size": "33px",
                                 },
                                 "h": {
                                     "name": "H",
-                                    "color": "rgba(255, 255, 0, 1)",
+                                    "color": "rgb(255 255 0)",
                                     "size": "38px",
                                 },
                             },
@@ -1630,11 +1630,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "color": "rgba(233, 0, 0, 1)",
+                                        "color": "rgb(233 0 0)",
                                     },
                                     {
                                         "value": "max",
-                                        "color": "rgba(96, 2, 2, 1)",
+                                        "color": "rgb(96 2 2)",
                                     },
                                 ],
                             },
@@ -1658,11 +1658,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "color": "rgba(233, 0, 0, 1)",
+                                        "color": "rgb(233 0 0)",
                                     },
                                     {
                                         "value": "max",
-                                        "color": "rgba(96, 2, 2, 1)",
+                                        "color": "rgb(96 2 2)",
                                     },
                                 ],
                             },
@@ -1679,8 +1679,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Boolean Prop Example",
                             "type": "toggle",
                             "options": {
-                                "false": {"color": "rgba(233, 0, 0, 1)"},
-                                "true": {"color": "rgba(0, 233, 0, 1)"},
+                                "false": {"color": "rgb(233 0 0)"},
+                                "true": {"color": "rgb(0 233 0)"},
                             },
                             "help": "Help for boolean prop",
                         },
@@ -1751,8 +1751,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Boolean Prop Example",
                             "type": "toggle",
                             "options": {
-                                "false": {"color": "rgba(233, 0, 0, 1)"},
-                                "true": {"color": "rgba(0, 233, 0, 1)"},
+                                "false": {"color": "rgb(233 0 0)"},
+                                "true": {"color": "rgb(0 233 0)"},
                             },
                             "help": "Help for boolean prop",
                         },
@@ -1791,11 +1791,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "color": "rgba(100, 100, 100, 1)",
+                                        "color": "rgb(100 100 100)",
                                     },
                                     {
                                         "value": "max",
-                                        "color": "rgba(20, 205, 20, 1)",
+                                        "color": "rgb(20 205 20)",
                                     },
                                 ],
                             },
@@ -1825,11 +1825,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "color": "rgba(100, 100, 100, 1)",
+                                        "color": "rgb(100 100 100)",
                                     },
                                     {
                                         "value": "max",
-                                        "color": "rgba(20, 205, 20, 1)",
+                                        "color": "rgb(20 205 20)",
                                     },
                                 ],
                             },
@@ -1839,8 +1839,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Boolean Prop Example",
                             "type": "toggle",
                             "options": {
-                                "false": {"color": "rgba(233, 0, 0, 1)"},
-                                "true": {"color": "rgba(0, 233, 0, 1)"},
+                                "false": {"color": "rgb(233 0 0)"},
+                                "true": {"color": "rgb(0 233 0)"},
                             },
                             "help": "Help for boolean prop",
                         },
@@ -1895,15 +1895,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "levels": {
                         "region": {
                             "name": "Regions",
-                            "coloring": {"North America": "rgba(255, 255, 255, 1)"},
+                            "coloring": {"North America": "rgb(255 255 255)"},
                         },
                         "country": {
                             "name": "Countries",
                             "ordering": ["Canada", "USA"],
                             "parent": "region",
                             "coloring": {
-                                "Canada": "rgba(0, 0, 255, 1)",
-                                "USA": "rgba(255, 0, 0, 1)",
+                                "Canada": "rgb(0 0 255)",
+                                "USA": "rgb(255 0 0)",
                             },
                         },
                         "state": {
