@@ -1715,7 +1715,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "scale": "log",
                                 "scaleParams": {
                                     "exponent": 0.5,
-                                    "base": 10,
                                 },
                                 "data": [
                                     {
