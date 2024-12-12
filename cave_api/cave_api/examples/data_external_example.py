@@ -133,13 +133,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": {
                                     "state": {
                                         "value": True,
+                                        "icon": "bs/BsHexagon",
                                         "colorBy": "populationDensity",
-                                        "colorByOptions": {
-                                            "populationDensity": {
-                                                "startGradientColor": "rgba(255, 0, 0, 255)",
-                                                "endGradientColor": "rgba(0, 255, 0, 255)",
-                                            },
-                                        },
+                                        "colorByOptions": ["populationDensity"],
                                     },
                                 },
                             },
@@ -166,8 +162,38 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "populationDensity": {
                                 "name": "Population Density",
                                 "type": "num",
-                                "enabled": True,
                                 "help": "The state's population density in people per square mile",
+                                "colorGradient": {
+                                    "scale": "log",
+                                    "scaleParams": {"base": 10},
+                                    "data": [
+                                        {
+                                            "value": "min",
+                                            "color": "rgb(200, 230, 255)",
+                                            "label": "Very Sparse",
+                                        },
+                                        {
+                                            "value": 10,
+                                            "color": "rgb(120, 180, 240)",
+                                            "label": "Sparse",
+                                        },
+                                        {
+                                            "value": 100,
+                                            "color": "rgb(50, 130, 220)",
+                                            "label": "Moderate",
+                                        },
+                                        {
+                                            "value": 1000,
+                                            "color": "rgb(255, 140, 0)",
+                                            "label": "Dense",
+                                        },
+                                        {
+                                            "value": "max",
+                                            "color": "rgb(255, 0, 0)",
+                                            "label": "Very Dense",
+                                        },
+                                    ],
+                                },
                                 "unit": "People per Square Mile",
                             },
                         },

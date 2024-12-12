@@ -50,27 +50,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "state": {
                                     "value": True,
                                     "colorBy": "targetGrowthArea",
-                                    "colorByOptions": {
-                                        "demand": {
-                                            "min": 0,
-                                            "max": 100,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "targetGrowthArea": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
+                                    "colorByOptions": ["demand", "targetGrowthArea"],
                                     "heightBy": "demand",
-                                    "heightByOptions": {
-                                        "demand": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startHeight": "10px",
-                                            "endHeight": "40px",
-                                        },
-                                    },
+                                    "heightByOptions": ["demand"],
                                     "icon": "bs/BsHexagon",
                                 },
                             },
@@ -81,27 +63,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "warehouse": {
                                     "value": True,
                                     "sizeBy": "capacity",
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "30px",
-                                            "endSize": "45px",
-                                        },
-                                    },
+                                    "sizeByOptions": ["capacity"],
                                     "colorBy": "includesAutomation",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 100,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "includesAutomation": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
+                                    "colorByOptions": [
+                                        "capacity",
+                                        "includesAutomation",
+                                    ],
                                     "icon": "fa6/FaWarehouse",
                                 },
                             },
@@ -111,71 +78,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "truckRoutes": {
                                     "value": True,
-                                    "sizeBy": "capacity",
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "5px",
-                                            "endSize": "10px",
-                                        },
-                                    },
                                     "colorBy": "preferredRoute",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 105,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "preferredRoute": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
+                                    "colorByOptions": ["capacity", "preferredRoute"],
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": ["capacity"],
                                     "heightBy": "capacity",
-                                    "heightByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startHeight": "10px",
-                                            "endHeight": "40px",
-                                        },
-                                    },
+                                    "heightByOptions": ["capacity"],
                                 },
                                 "specialRoutes": {
                                     "value": True,
                                     "sizeBy": "capacity",
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "5px",
-                                            "endSize": "10px",
-                                        },
-                                    },
+                                    "sizeByOptions": ["capacity"],
                                     "colorBy": "preferredRoute",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 105,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "preferredRoute": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
+                                    "colorByOptions": ["capacity", "preferredRoute"],
                                     "heightBy": "capacity",
-                                    "heightByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startHeight": "10px",
-                                            "endHeight": "40px",
-                                        },
-                                    },
+                                    "heightByOptions": ["capacity"],
                                 },
                             },
                         },
@@ -199,17 +116,35 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
-                            "help": "The warehouse capacity in cubic feet",
+                            "min": 0,
+                            "max": 100,
                             "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "The warehouse capacity in cubic feet",
+                            "sizeGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "30px"},
+                                    {"value": "max", "size": "45px"},
+                                ],
+                            },
+                            "colorGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                ],
+                            },
                         },
                         "includesAutomation": {
                             "name": "Includes Automation",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Whether the warehouse includes automation",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {
@@ -236,14 +171,31 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "demand": {
                             "name": "Demand",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Demand for this state",
+                            "min": 0,
+                            "max": 100,
                             "unit": "units",
+                            "help": "Demand for this state",
+                            "colorGradient": {
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                ],
+                            },
+                            "heightGradient": {
+                                "data": [
+                                    {"value": "min", "height": "10px"},
+                                    {"value": "max", "height": "40px"},
+                                ]
+                            },
                         },
                         "targetGrowthArea": {
                             "name": "Target Growth Area",
                             "type": "toggle",
                             "help": "Whether this state is a target growth area for the company",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {
@@ -263,17 +215,43 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
-                            "help": "The warehouse capacity in cubic feet",
+                            "min": 0,
+                            "max": 105,
                             "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "The warehouse capacity in cubic feet",
+                            "colorGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "5px"},
+                                    {"value": "max", "size": "10px"},
+                                ],
+                            },
+                            "heightGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "height": "10px"},
+                                    {"value": "max", "height": "40px"},
+                                ],
+                            },
                         },
                         "preferredRoute": {
                             "name": "Preferred Route",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Whether the route is preferred",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {
@@ -308,17 +286,43 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
-                            "help": "The warehouse capacity in cubic feet",
+                            "min": 0,
+                            "max": 105,
                             "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "The warehouse capacity in cubic feet",
+                            "colorGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "5px"},
+                                    {"value": "max", "size": "10px"},
+                                ],
+                            },
+                            "heightGradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "height": "10px"},
+                                    {"value": "max", "height": "40px"},
+                                ],
+                            },
                         },
                         "preferredRoute": {
                             "name": "Preferred Route",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Whether the route is preferred",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {

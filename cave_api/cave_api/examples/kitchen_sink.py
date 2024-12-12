@@ -141,7 +141,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "buttonSolve": {
                     "icon": "bs/BsLightningFill",
-                    "color": "rgba(178, 179, 55, 1)",
+                    "color": "rgb(178 179 55)",
                     "apiCommand": "solve",
                     "type": "button",
                     "bar": "upperLeft",
@@ -164,7 +164,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "exampleModal": {
                     "icon": "md/MdInfo",
-                    "color": "rgba(195, 164, 222, 1)",
+                    "color": "rgb(195 164 222)",
                     "type": "pane",
                     "bar": "upperRight",
                     "variant": "modal",
@@ -181,7 +181,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Info Button",
                             "type": "button",
                             "apiCommand": "viewInfo",
-                            "enabled": True,
                             "help": "Press this button to view info",
                         },
                     },
@@ -213,7 +212,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericInputExample": {
                             "name": "Numeric Input Example",
                             "type": "num",
-                            "enabled": True,
                             "help": "Help for the numeric input example",
                             "maxValue": 100,
                             "minValue": 0,
@@ -225,7 +223,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericSliderExample": {
                             "name": "Numeric Slider Example",
                             "type": "num",
-                            "enabled": True,
                             "variant": "slider",
                             "help": "Help for the numeric slider example",
                             "maxValue": 100,
@@ -248,14 +245,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "toggleInputExample": {
                             "name": "Toggle Input Example",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Help for the toggle input example",
                         },
                         "buttonInputExample": {
                             "name": "Button Input Example (Creates an Error)",
                             "type": "button",
                             "apiCommand": "test",
-                            "enabled": True,
                             "help": "Press this button to create an error",
                         },
                         "pictureExample": {
@@ -278,7 +273,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "textInputExample": {
                             "name": "Text Input Example",
                             "type": "text",
-                            "enabled": True,
                             "help": "Help for the text input example",
                         },
                         "textAreaInputExample": {
@@ -286,7 +280,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "text",
                             "variant": "textarea",
                             "rows": 6,
-                            "enabled": True,
                             "help": "Help for the text area input example",
                         },
                         "selectorHeader": {
@@ -303,7 +296,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the dropdown",
                         },
                         "checkboxItemExample": {
@@ -315,7 +307,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select all relevant items",
                         },
                         "radioItemExample": {
@@ -327,7 +318,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select one item from the list",
                         },
                         "hstepperItemExample": {
@@ -339,7 +329,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the stepper",
                         },
                         "vstepperItemExample": {
@@ -351,7 +340,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the stepper",
                         },
                         "hradioItemExample": {
@@ -363,7 +351,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the radio",
                         },
                         "comboBoxItemExample": {
@@ -376,7 +363,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {"name": "Option B"},
                                 "option_c": {"name": "Option C"},
                             },
-                            "enabled": True,
                             "help": "Select an option from the combobox",
                         },
                         "comboBoxMultiExample": {
@@ -433,7 +419,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "path": ["Tree2", "Branch2"],
                                 },
                             },
-                            "enabled": True,
                             "help": "Select all relevant items",
                         },
                         "dateTimeHeader": {
@@ -445,14 +430,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Date Example",
                             "type": "date",
                             "variant": "date",
-                            "enabled": True,
                             "help": "The Eagle has landed!",
                         },
                         "timeItemExample": {
                             "name": "Time Example",
                             "type": "date",
                             "variant": "time",
-                            "enabled": True,
                             "views": ["hours", "minutes", "seconds"],
                             "help": "The Eagle has landed!",
                         },
@@ -460,7 +443,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Date and Time Example",
                             "type": "date",
                             "variant": "datetime",
-                            "enabled": True,
                             "help": "The Eagle has landed!",
                         },
                         "coordinateHeader": {
@@ -472,21 +454,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Lat/Lng Input Example",
                             "type": "coordinate",
                             "variant": "latLngInput",
-                            "enabled": True,
                             "help": "Help for the latLngInput example",
                         },
                         "latLngMapExample": {
                             "name": "Lat/Lng Map Example",
                             "type": "coordinate",
                             "variant": "latLngMap",
-                            "enabled": True,
                             "help": "Help for the latLngMap example",
                         },
                         "latLngPathExample": {
                             "name": "Lat/Lng Path Example",
                             "type": "coordinate",
                             "variant": "latLngPath",
-                            "enabled": True,
                             "help": "Help for the latLngPath example",
                         },
                     },
@@ -916,107 +895,48 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "longitude": 14,
                         },
                     },
-                    "legendView": "full",
-                    "showLegendGroupNames": False,
+                    "legendView": "minimal",
+                    "showLegendGroupNames": True,
                     "legendGroups": {
                         "lga": {
                             "name": "Legend Group A",
                             "data": {
                                 "nodeTypeA": {
                                     "value": True,
-                                    "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
+                                    "sizeBy": "numericPropExampleA",
                                     "allowGrouping": True,
                                     "group": True,
                                     "groupCalcBySize": "sum",
                                     "groupCalcByColor": "mode",
                                     # "groupScaleWithZoom": True,
                                     # "groupScale": 10,
-                                    "colorByOptions": {
-                                        "numericPropExampleA": {
-                                            "timeValues": {
-                                                0: {"min": 50},
-                                                1: {"min": 0},
-                                                2: {"min": 20},
-                                            },
-                                            "max": 80,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "booleanPropExample": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                            "nullColor": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "30px",
-                                            "endSize": "45px",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startSize": "15px",
-                                            "endSize": "30px",
-                                        },
-                                        "booleanPropExample": {
-                                            "false": "15px",
-                                            "true": "30px",
-                                        },
-                                    },
                                     "icon": "fa6/FaIgloo",
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                        "selectorPropExample",
+                                    ],
                                 },
                                 "T1": {
-                                    "colorBy": "numericPropExampleA",
-                                    "sizeBy": "numericPropExampleB",
+                                    "colorBy": "numericPropExampleB",
+                                    "sizeBy": "numericPropExampleA",
                                     "value": True,
-                                    "sizeByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startSize": "15px",
-                                            "endSize": "30px",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 40,
-                                            "startSize": "5px",
-                                            "endSize": "15px",
-                                        },
-                                    },
-                                    "colorByOptions": {
-                                        "selectorPropForColor": {
-                                            "a": "rgba(128, 255, 255, 1)",
-                                            "b": "rgba(0, 153, 51, 1)",
-                                            "c": "rgba(0, 0, 128, 1)",
-                                            "d": "rgba(204, 0, 0, 1)",
-                                            "e": "rgba(153, 77, 0, 1)",
-                                            "f": "rgba(255, 25, 255, 1)",
-                                            "g": "rgba(0, 255, 0, 1)",
-                                            "h": "rgba(255, 255, 0, 1)",
-                                        },
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 40,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                    },
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "selectorPropExample",
+                                    ],
                                 },
                             },
                         },
@@ -1025,8 +945,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "nodeTypeB": {
                                     "value": True,
-                                    "sizeBy": "numericPropExampleB",
-                                    "colorBy": "booleanPropExample",
+                                    "colorBy": "numericPropExampleB",
+                                    "sizeBy": "numericPropExampleA",
                                     "allowGrouping": True,
                                     "group": True,
                                     "groupCalcBySize": "count",
@@ -1034,130 +954,55 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     # "groupScaleWithZoom": True,
                                     # # Equivalent to zoom level unless groupScale is set
                                     # "groupScale": 10,
-                                    "colorByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 1000,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "booleanPropExample": {
-                                            "false": "rgba(233, 0, 0, 1)",
-                                            "true": "rgba(0, 233, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 100,
-                                            "startSize": "15px",
-                                            "endSize": "30px",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 250,
-                                            "startSize": "5px",
-                                            "endSize": "15px",
-                                        },
-                                    },
                                     "icon": "bs/BsBuilding",
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "booleanPropExample",
+                                    ],
                                 },
                                 "T2": {
-                                    "colorBy": "numericPropExampleA",
+                                    "colorBy": "selectorPropExample",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
-                                    "colorByOptions": {
-                                        "selectorPropForColor": {
-                                            "a": "rgba(128, 255, 255, 1)",
-                                            "b": "rgba(0, 153, 51, 1)",
-                                            "c": "rgba(0, 0, 128, 1)",
-                                            "d": "rgba(204, 0, 0, 1)",
-                                            "e": "rgba(153, 77, 0, 1)",
-                                            "f": "rgba(255, 25, 255, 1)",
-                                            "g": "rgba(0, 255, 0, 1)",
-                                            "h": "rgba(255, 255, 0, 1)",
-                                        },
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 40,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                    },
                                     "lineBy": "dotted",
-                                    "sizeByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startSize": "15px",
-                                            "endSize": "30px",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 40,
-                                            "startSize": "5px",
-                                            "endSize": "15px",
-                                        },
-                                    },
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
                                 },
                                 "state": {
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
-                                    "colorByOptions": {
-                                        "numericPropExampleC": {
-                                            "min": 0,
-                                            "max": 300,
-                                            "startGradientColor": "rgba(100, 100, 100, 1)",
-                                            "endGradientColor": "rgba(20, 205, 20, 1)",
-                                        },
-                                        "booleanPropExample": {
-                                            "false": "rgba(233, 0, 0, 1)",
-                                            "true": "rgba(0, 233, 0, 1)",
-                                        },
-                                    },
                                     "icon": "bs/BsHexagon",
+                                    "colorByOptions": [
+                                        "numericPropExampleC",
+                                        "booleanPropExample",
+                                    ],
                                 },
                                 "country": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
-                                    "colorByOptions": {
-                                        "numericPropExampleC": {
-                                            "min": 0,
-                                            "max": 800,
-                                            "startGradientColor": "rgba(100, 100, 100, 1)",
-                                            "endGradientColor": "rgba(20, 205, 20, 1)",
-                                        }
-                                    },
                                     "icon": "bs/BsHexagon",
+                                    "colorByOptions": ["numericPropExampleC"],
                                 },
                                 "custom": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
-                                    "colorByOptions": {
-                                        "numericPropExampleC": {
-                                            "min": 0,
-                                            "max": 800,
-                                            "startGradientColor": "rgba(100, 100, 100, 1)",
-                                            "endGradientColor": "rgba(20, 205, 20, 1)",
-                                        },
-                                        "booleanPropExample": {
-                                            "false": "rgba(233, 0, 0, 1)",
-                                            "true": "rgba(0, 233, 0, 1)",
-                                        },
-                                    },
                                     "icon": "md/MdOutlineTouchApp",
+                                    "colorByOptions": [
+                                        "numericPropExampleC",
+                                        "booleanPropExample",
+                                    ],
                                 },
                             },
                         },
@@ -1208,88 +1053,36 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "nodeTypeA": {
                                     "value": True,
-                                    "sizeBy": "numericPropExampleA",
                                     "colorBy": "booleanPropExample",
-                                    "colorByOptions": {
-                                        "numericPropExampleA": {
-                                            "timeValues": {
-                                                0: {"min": 50},
-                                                1: {"min": 0},
-                                                2: {"min": 20},
-                                            },
-                                            "max": 80,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "booleanPropExample": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "30px",
-                                            "endSize": "45px",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startSize": "15px",
-                                            "endSize": "30px",
-                                        },
-                                    },
+                                    "sizeBy": "numericPropExampleA",
                                     "icon": "fa6/FaIgloo",
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                        "selectorPropExample",
+                                    ],
                                 },
                                 "T1": {
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
-                                    "sizeByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startSize": "15px",
-                                            "endSize": "30px",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 40,
-                                            "startSize": "5px",
-                                            "endSize": "15px",
-                                        },
-                                    },
-                                    "colorByOptions": {
-                                        "selectorPropForColor": {
-                                            "a": "rgba(128, 255, 255, 1)",
-                                            "b": "rgba(0, 153, 51, 1)",
-                                            "c": "rgba(0, 0, 128, 1)",
-                                            "d": "rgba(204, 0, 0, 1)",
-                                            "e": "rgba(153, 77, 0, 1)",
-                                            "f": "rgba(255, 25, 255, 1)",
-                                            "g": "rgba(0, 255, 0, 1)",
-                                            "h": "rgba(255, 255, 0, 1)",
-                                        },
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 40,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                    },
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
                                 },
                             },
                         },
@@ -1298,115 +1091,50 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "nodeTypeB": {
                                     "value": True,
-                                    "sizeBy": "numericPropExampleB",
                                     "colorBy": "booleanPropExample",
-                                    "colorByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 1000,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "booleanPropExample": {
-                                            "false": "rgba(233, 0, 0, 1)",
-                                            "true": "rgba(0, 233, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 100,
-                                            "startSize": "15px",
-                                            "endSize": "30px",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 250,
-                                            "startSize": "5px",
-                                            "endSize": "15px",
-                                        },
-                                    },
+                                    "sizeBy": "numericPropExampleB",
                                     "icon": "bs/BsBuilding",
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "booleanPropExample",
+                                    ],
                                 },
                                 "T2": {
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
-                                    "colorByOptions": {
-                                        "selectorPropForColor": {
-                                            "a": "rgba(128, 255, 255, 1)",
-                                            "b": "rgba(0, 153, 51, 1)",
-                                            "c": "rgba(0, 0, 128, 1)",
-                                            "d": "rgba(204, 0, 0, 1)",
-                                            "e": "rgba(153, 77, 0, 1)",
-                                            "f": "rgba(255, 25, 255, 1)",
-                                            "g": "rgba(0, 255, 0, 1)",
-                                            "h": "rgba(255, 255, 0, 1)",
-                                        },
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 40,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                    },
                                     "lineBy": "dotted",
-                                    "sizeByOptions": {
-                                        "numericPropExampleA": {
-                                            "min": 0,
-                                            "max": 50,
-                                            "startSize": "15px",
-                                            "endSize": "30px",
-                                        },
-                                        "numericPropExampleB": {
-                                            "min": 0,
-                                            "max": 40,
-                                            "startSize": "5px",
-                                            "endSize": "15px",
-                                        },
-                                    },
+                                    "colorByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
+                                    "sizeByOptions": [
+                                        "numericPropExampleA",
+                                        "numericPropExampleB",
+                                        "selectorPropExample",
+                                    ],
                                 },
                                 "state": {
                                     "value": True,
                                     "colorBy": "numericPropExampleC",
-                                    "colorByOptions": {
-                                        "numericPropExampleC": {
-                                            "min": 0,
-                                            "max": 300,
-                                            "startGradientColor": "rgba(100, 100, 100, 1)",
-                                            "endGradientColor": "rgba(20, 205, 20, 1)",
-                                        },
-                                        "booleanPropExample": {
-                                            "false": "rgba(233, 0, 0, 1)",
-                                            "true": "rgba(0, 233, 0, 1)",
-                                        },
-                                    },
                                     "icon": "bs/BsHexagon",
+                                    "colorByOptions": [
+                                        "numericPropExampleC",
+                                        "booleanPropExample",
+                                    ],
                                 },
                                 "country": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
-                                    "colorByOptions": {
-                                        "numericPropExampleC": {
-                                            "min": 0,
-                                            "max": 800,
-                                            "startGradientColor": "rgba(100, 100, 100, 1)",
-                                            "endGradientColor": "rgba(20, 205, 20, 1)",
-                                        }
-                                    },
                                     "icon": "bs/BsHexagon",
+                                    "colorByOptions": ["numericPropExampleC"],
                                 },
                             },
                         },
@@ -1427,34 +1155,121 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help for numeric prop example A",
+                            "min": 0,
+                            "max": 50,
                             "unit": "A units",
-                            "legendNotation": "compact",
-                            "legendMinLabel": "small",
+                            "colorGradient": {
+                                "scale": "linear",
+                                "notation": "compact",
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(96 2 2)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "15px", "label": "Small"},
+                                    {"value": "max", "size": "30px"},
+                                ],
+                            },
+                            "help": "Help for numeric prop example A",
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help for numeric prop example B",
+                            "min": 0,
+                            "max": 40,
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(0, 128, 255)",
+                                        "label": "Very Low",
+                                    },
+                                    {
+                                        "value": 5,
+                                        "color": "rgb(0, 200, 150)",
+                                        "label": "Low-Mid",
+                                    },
+                                    {
+                                        "value": 15,
+                                        "color": "rgb(255, 165, 0)",
+                                        "label": "Moderate-High",
+                                    },
+                                    {
+                                        "value": 28,
+                                        "color": "rgb(255, 69, 0)",
+                                        "label": "Very High",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(255, 0, 0)",
+                                        "label": "Critical",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "5px"},
+                                    {"value": 20, "size": "8px"},
+                                    {"value": "max", "size": "15px"},
+                                ],
+                            },
                             "unit": "B units",
+                            "help": "Help for numeric prop example B",
                         },
-                        "selectorPropForColor": {
+                        "selectorPropExample": {
                             "name": "Example Categorical Prop",
                             "type": "selector",
                             "variant": "dropdown",
                             "options": {
-                                "a": {"name": "A"},
-                                "b": {"name": "B"},
-                                "c": {"name": "C"},
-                                "d": {"name": "D"},
-                                "e": {"name": "E"},
-                                "f": {"name": "F"},
-                                "g": {"name": "G"},
-                                "h": {"name": "H"},
+                                "a": {
+                                    "name": "A",
+                                    "color": "rgb(128 255 255)",
+                                    "size": "3px",
+                                },
+                                "b": {
+                                    "name": "B",
+                                    "color": "rgb(0 153 51)",
+                                    "size": "8px",
+                                },
+                                "c": {
+                                    "name": "C",
+                                    "color": "rgb(0 0 128)",
+                                    "size": "13px",
+                                },
+                                "d": {
+                                    "name": "D",
+                                    "color": "rgb(204 0 0)",
+                                    "size": "18px",
+                                },
+                                "e": {
+                                    "name": "E",
+                                    "color": "rgb(153 77 0)",
+                                    "size": "23px",
+                                },
+                                "f": {
+                                    "name": "F",
+                                    "color": "rgb(255 25 255)",
+                                    "size": "28px",
+                                },
+                                "g": {
+                                    "name": "G",
+                                    "color": "rgb(0 255 0)",
+                                    "size": "33px",
+                                },
+                                "h": {
+                                    "name": "H",
+                                    "color": "rgb(255 255 0)",
+                                    "size": "38px",
+                                },
                             },
-                            "enabled": True,
                         },
                     },
                     "layout": {
@@ -1474,7 +1289,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "col3": {
                                 "type": "item",
-                                "itemId": "selectorPropForColor",
+                                "itemId": "selectorPropExample",
                                 "column": 3,
                             },
                         },
@@ -1486,7 +1301,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "numericPropExampleA": [15],
                             "numericPropExampleB": [40],
-                            "selectorPropForColor": [["b"]],
+                            "selectorPropExample": [["b"]],
                         },
                     },
                 },
@@ -1497,32 +1312,102 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": True,
+                            "min": 0,
+                            "max": 50,
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(96 2 2)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "15px"},
+                                    {"value": "max", "size": "30px"},
+                                ],
+                            },
                             "help": "Help for numeric prop example A",
                             "unit": "A units",
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "enabled": True,
+                            "min": 0,
+                            "max": 40,
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(96 2 2)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "5px"},
+                                    {"value": 20, "size": "8px"},
+                                    {"value": "max", "size": "15px"},
+                                ],
+                            },
                             "help": "Help for numeric prop example B",
                             "unit": "B units",
                         },
-                        "selectorPropForColor": {
+                        "selectorPropExample": {
                             "name": "Example Categorical Prop",
                             "type": "selector",
                             "variant": "dropdown",
                             "options": {
-                                "a": {"name": "A"},
-                                "b": {"name": "B"},
-                                "c": {"name": "C"},
-                                "d": {"name": "D"},
-                                "e": {"name": "E"},
-                                "f": {"name": "F"},
-                                "g": {"name": "G"},
-                                "h": {"name": "H"},
+                                "a": {
+                                    "name": "A",
+                                    "color": "rgb(128 255 255)",
+                                    "size": "3px",
+                                },
+                                "b": {
+                                    "name": "B",
+                                    "color": "rgb(0 153 51)",
+                                    "size": "8px",
+                                },
+                                "c": {
+                                    "name": "C",
+                                    "color": "rgb(0 0 128)",
+                                    "size": "13px",
+                                },
+                                "d": {
+                                    "name": "D",
+                                    "color": "rgb(204 0 0)",
+                                    "size": "18px",
+                                },
+                                "e": {
+                                    "name": "E",
+                                    "color": "rgb(153 77 0)",
+                                    "size": "23px",
+                                },
+                                "f": {
+                                    "name": "F",
+                                    "color": "rgb(255 25 255)",
+                                    "size": "28px",
+                                },
+                                "g": {
+                                    "name": "G",
+                                    "color": "rgb(0 255 0)",
+                                    "size": "33px",
+                                },
+                                "h": {
+                                    "name": "H",
+                                    "color": "rgb(255 255 0)",
+                                    "size": "38px",
+                                },
                             },
-                            "enabled": True,
                         },
                     },
                     "layout": {
@@ -1542,7 +1427,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "row3": {
                                 "type": "item",
-                                "itemId": "selectorPropForColor",
+                                "itemId": "selectorPropExample",
                                 "row": 3,
                             },
                         },
@@ -1557,7 +1442,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "numericPropExampleA": [30, 30, 30],
                             "numericPropExampleB": [20, 14, 6],
-                            "selectorPropForColor": [["e"], ["d"], ["f"]],
+                            "selectorPropExample": [["e"], ["d"], ["f"]],
                         },
                     },
                 },
@@ -1568,26 +1453,141 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help for numeric prop example A",
+                            "timeValues": {
+                                0: {"min": 50},
+                                1: {"min": 0},
+                                2: {"min": 20},
+                            },
+                            "max": 80,
                             "unit": "A units",
-                            "legendNotation": "precision",
-                            "legendPrecision": 5,
+                            "colorGradient": {
+                                "notation": "precision",
+                                "precision": 5,
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(96 2 2)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "precision",
+                                "precision": 5,
+                                "data": [
+                                    {"value": "min", "size": "30px"},
+                                    {"value": "max", "size": "45px"},
+                                ],
+                            },
+                            "fallback": {
+                                "name": "Outlier",
+                                "color": "rgb(128 128 128)",
+                                "size": "20px",
+                            },
+                            "help": "Help for numeric prop example A",
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help for numeric prop example B",
+                            "min": 0,
+                            "max": 50,
                             "unit": "B units",
-                            "legendNotation": "scientific",
-                            "legendNotationDisplay": "x10^",
+                            "colorGradient": {
+                                "notation": "scientific",
+                                "notationDisplay": "x10^",
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(96 2 2)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "scientific",
+                                "notationDisplay": "x10^",
+                                "data": [
+                                    {"value": "min", "size": "10px"},
+                                    {"value": 10, "size": "40px"},
+                                    {"value": "max", "size": "70px"},
+                                ],
+                            },
+                            "help": "Help for numeric prop example B",
                         },
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            "enabled": True,
+                            "options": {
+                                "false": {
+                                    "name": "Idle",
+                                    "color": "rgb(255 0 0)",
+                                    "size": "15px",
+                                },
+                                "true": {
+                                    "name": "Active",
+                                    "color": "rgb(0 255 0)",
+                                    "size": "30px",
+                                },
+                            },
+                            "fallback": {
+                                "name": "Unknown",
+                                "color": "rgb(128 128 128)",
+                                "size": "100px",
+                            },
                             "help": "Help for boolean prop",
+                        },
+                        "selectorPropExample": {
+                            "name": "Example Categorical Prop",
+                            "type": "selector",
+                            "variant": "dropdown",
+                            "options": {
+                                "a": {
+                                    "name": "A",
+                                    "color": "rgb(128 255 255)",
+                                    "size": "3px",
+                                },
+                                "b": {
+                                    "name": "B",
+                                    "color": "rgb(0 153 51)",
+                                    "size": "8px",
+                                },
+                                "c": {
+                                    "name": "C",
+                                    "color": "rgb(0 0 128)",
+                                    "size": "13px",
+                                },
+                                "d": {
+                                    "name": "D",
+                                    "color": "rgb(204 0 0)",
+                                    "size": "18px",
+                                },
+                                "e": {
+                                    "name": "E",
+                                    "color": "rgb(153 77 0)",
+                                    "size": "23px",
+                                },
+                                "f": {
+                                    "name": "F",
+                                    "color": "rgb(255 25 255)",
+                                    "size": "28px",
+                                },
+                                "g": {
+                                    "name": "G",
+                                    "color": "rgb(0 255 0)",
+                                    "size": "33px",
+                                },
+                                "h": {
+                                    "name": "H",
+                                    "color": "rgb(255 255 0)",
+                                    "size": "38px",
+                                },
+                            },
                         },
                     },
                     "data": {
@@ -1610,6 +1610,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "numericPropExampleA": [100, 80],
                             "numericPropExampleB": [50, 40],
                             "booleanPropExample": [True, True],
+                            "selectorPropExample": [["a"], ["b"]],
                         },
                     },
                 },
@@ -1620,26 +1621,67 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help for numeric prop example A",
-                            "precision": 2,
+                            "min": 0,
+                            "max": 1000,
                             "unit": "A units",
-                            "legendNotation": "precision",
-                            "legendPrecision": 5,
+                            "colorGradient": {
+                                "notation": "precision",
+                                "precision": 5,
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(96 2 2)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "notation": "precision",
+                                "precision": 5,
+                                "data": [
+                                    {"value": "min", "size": "15px"},
+                                    {"value": "max", "size": "30px"},
+                                ],
+                            },
+                            "help": "Help for numeric prop example A",
                         },
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help for numeric prop example B",
+                            "min": 0,
+                            "max": 50,
                             "unit": "B units",
-                            "legendMinLabel": "Lo",
-                            "legendMaxLabel": "Hi",
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(96 2 2)",
+                                    },
+                                ],
+                            },
+                            "sizeGradient": {
+                                "data": [
+                                    {"value": "min", "size": "10px", "label": "Lo"},
+                                    {"value": 10, "size": "40px"},
+                                    {"value": "max", "size": "70px", "label": "Hi"},
+                                ],
+                            },
+                            "help": "Help for numeric prop example B",
                         },
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
-                            "enabled": True,
+                            "options": {
+                                "false": {"color": "rgb(233 0 0)"},
+                                "true": {"color": "rgb(0 233 0)"},
+                            },
                             "help": "Help for boolean prop",
                         },
                     },
@@ -1666,13 +1708,51 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help with the example numeric prop for this State",
+                            "min": 1,
+                            "max": 10000,
                             "unit": "C units",
+                            "colorGradient": {
+                                "scale": "log",
+                                "scaleParams": {
+                                    "exponent": 0.5,
+                                },
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(200, 230, 255)",
+                                        "label": "Very Sparse",
+                                    },
+                                    {
+                                        "value": 100,
+                                        "color": "rgb(120, 180, 240)",
+                                        "label": "Sparse",
+                                    },
+                                    {
+                                        "value": 1000,
+                                        "color": "rgb(50, 130, 220)",
+                                        "label": "Moderate",
+                                    },
+                                    {
+                                        "value": 5000,
+                                        "color": "rgb(255, 140, 0)",
+                                        "label": "Dense",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(255, 0, 0)",
+                                        "label": "Very Dense",
+                                    },
+                                ],
+                            },
+                            "help": "Help with the example numeric prop for this State",
                         },
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
+                            "options": {
+                                "false": {"color": "rgb(233 0 0)"},
+                                "true": {"color": "rgb(0 233 0)"},
+                            },
                             "help": "Help for boolean prop",
                         },
                     },
@@ -1687,7 +1767,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             ],
                         },
                         "valueLists": {
-                            "numericPropExampleC": [0, 300, 250, 100, 200],
+                            "numericPropExampleC": [1, 8000, 250, 50, 2000],
                             "booleanPropExample": [True, True, False, False, False],
                         },
                     },
@@ -1703,9 +1783,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help with the example numeric prop for this Country",
+                            "min": 0,
+                            "max": 800,
                             "unit": "units",
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(100 100 100)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(20 205 20)",
+                                    },
+                                ],
+                            },
+                            "help": "Help with the example numeric prop for this Country",
                         },
                     },
                     "data": {
@@ -1724,13 +1817,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help with the example numeric prop for this Custom",
+                            "min": 0,
+                            "max": 800,
                             "unit": "units",
+                            "colorGradient": {
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(100 100 100)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(20 205 20)",
+                                    },
+                                ],
+                            },
+                            "help": "Help with the example numeric prop for this Custom",
                         },
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
+                            "options": {
+                                "false": {"color": "rgb(233 0 0)"},
+                                "true": {"color": "rgb(0 233 0)"},
+                            },
                             "help": "Help for boolean prop",
                         },
                     },
@@ -1784,15 +1894,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "levels": {
                         "region": {
                             "name": "Regions",
-                            "coloring": {"North America": "rgba(255, 255, 255, 1)"},
+                            "coloring": {"North America": "rgb(255 255 255)"},
                         },
                         "country": {
                             "name": "Countries",
                             "ordering": ["Canada", "USA"],
                             "parent": "region",
                             "coloring": {
-                                "Canada": "rgba(0, 0, 255, 1)",
-                                "USA": "rgba(255, 0, 0, 1)",
+                                "Canada": "rgb(0 0 255)",
+                                "USA": "rgb(255 0 0)",
                             },
                         },
                         "state": {

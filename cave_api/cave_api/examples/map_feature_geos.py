@@ -49,20 +49,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "custom": {
                                     "value": True,
-                                    "colorBy": "booleanPropExample",
-                                    "colorByOptions": {
-                                        "numericPropExampleC": {
-                                            "min": 0,
-                                            "max": 100,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "booleanPropExample": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
                                     "icon": "bs/BsHexagon",
+                                    "colorBy": "booleanPropExample",
+                                    "colorByOptions": ["numericPropExampleC", "booleanPropExample"],
                                 },
                             },
                         },
@@ -79,14 +68,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Help with the example numeric prop for this Custom",
+                            "min": 0,
+                            "max": 100,
                             "unit": "units",
+                            "help": "Help with the example numeric prop for this Custom",
+                            "colorGradient": {
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                ],
+                            },
                         },
                         "booleanPropExample": {
                             "name": "Boolean Prop Example",
                             "type": "toggle",
                             "help": "Help for boolean prop",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {
