@@ -53,7 +53,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "colorByOptions": ["demand", "targetGrowthArea"],
                                     "heightBy": "demand",
                                     "heightByOptions": ["demand"],
-                                    "icon": "bs/BsHexagon",
+                                    "icon": "pi/PiMountains",
                                 },
                             },
                         },

@@ -49,7 +49,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "state": {
                                     "value": True,
-                                    "icon": "bs/BsHexagon",
+                                    "icon": "pi/PiMountains",
                                     "colorBy": "targetGrowthArea",
                                     "colorByOptions": ["demand", "targetGrowthArea"],
                                 },

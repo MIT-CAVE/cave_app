@@ -49,7 +49,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "custom": {
                                     "value": True,
-                                    "icon": "bs/BsHexagon",
+                                    "icon": "pi/PiMountains",
                                     "colorBy": "booleanPropExample",
                                     "colorByOptions": ["numericPropExampleC", "booleanPropExample"],
                                 },

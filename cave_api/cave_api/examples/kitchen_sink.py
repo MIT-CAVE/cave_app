@@ -992,13 +992,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "country": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
-                                    "icon": "bs/BsHexagon",
+                                    "icon": "pi/PiMountains",
                                     "colorByOptions": ["numericPropExampleC"],
                                 },
                                 "custom": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
-                                    "icon": "md/MdOutlineTouchApp",
+                                    "icon": "tb/TbLassoPolygon",
                                     "colorByOptions": [
                                         "numericPropExampleC",
                                         "booleanPropExample",
@@ -1133,7 +1133,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "country": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
-                                    "icon": "bs/BsHexagon",
+                                    "icon": "pi/PiMountains",
                                     "colorByOptions": ["numericPropExampleC"],
                                 },
                             },
