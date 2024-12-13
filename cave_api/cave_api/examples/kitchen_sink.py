@@ -968,7 +968,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "colorBy": "selectorPropExample",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
-                                    "lineBy": "dotted",
+                                    "lineStyle": "dotted",
                                     "colorByOptions": [
                                         "numericPropExampleA",
                                         "numericPropExampleB",
@@ -1109,7 +1109,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "colorBy": "numericPropExampleA",
                                     "sizeBy": "numericPropExampleB",
                                     "value": True,
-                                    "lineBy": "dotted",
+                                    "lineStyle": "dotted",
                                     "colorByOptions": [
                                         "numericPropExampleA",
                                         "numericPropExampleB",
