@@ -163,12 +163,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "stats": {
                         "demand": {
                             "name": "Demand",
-                            "calculation": "demand",
                             "unit": "units",
                         },
                         "sales": {
                             "name": "Sales",
-                            "calculation": "sales",
                             "unit": "units",
                         },
                     },

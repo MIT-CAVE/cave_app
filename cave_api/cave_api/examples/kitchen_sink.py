@@ -715,7 +715,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "aggregationType": "mean",
                                 }
                             ],
-                            "groupedOutputDataId": "locationGroup",
                             "groupingId": [],
                             "groupingLevel": [],
                             "showNA": True,
@@ -731,12 +730,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "chartType": "bar",
                             "stats": [
                                 {
-                                    # "statId": "numericStatExampleA",
-                                    "statId": "numericExampleCalculationStat",
+                                    "statId": "numericStatExampleA",
                                     "aggregationType": "sum",
                                 }
                             ],
-                            "groupedOutputDataId": "locationGroup",
                             "groupingId": [],
                             "groupingLevel": [],
                         },
@@ -755,7 +752,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "aggregationType": "mean",
                                 }
                             ],
-                            "groupedOutputDataId": "locationGroup",
                             "groupingId": [],
                             "groupingLevel": [],
                             "showNA": True,
@@ -783,12 +779,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "chartType": "box_plot",
                             "stats": [
                                 {
-                                    # "statId": "numericStatExampleA",
-                                    "statId": "numericExampleCalculationStat",
+                                    "statId": "numericStatExampleA",
                                     "aggregationType": "mean",
                                 },
                             ],
-                            "groupedOutputDataId": "locationGroup",
                             "groupingId": ["sku"],
                             "groupingLevel": ["size"],
                             "showNA": True,
@@ -802,7 +796,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "aggregationType": "sum",
                                 },
                             ],
-                            "groupedOutputDataId": "locationGroup",
                             "groupingId": ["location", "sku"],
                             "groupingLevel": ["state", "sku"],
                             "defaultToZero": True,
@@ -2001,27 +1994,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "stats": [
                             "numericStatExampleA",
                             "numericStatExampleB",
-                            "numericExampleCalculationStat",
                         ],
                     },
                     "stats": {
                         "numericStatExampleA": {
                             "name": "Stat Example A",
-                            "calculation": "numericStatExampleA",
                             "unit": "units",
                         },
                         "numericStatExampleB": {
                             "name": "Stat Example B",
-                            "calculation": "numericStatExampleB",
                             "unit": "units",
-                        },
-                        "numericExampleCalculationStat": {
-                            "name": "Stat A as a percentage of Stat B",
-                            "calculation": 'numericStatExampleA / groupSum("numericStatExampleB")',
-                            "precision": 2,
-                            "trailingZeros": True,
-                            "unit": "%",
-                            "unitPlacement": "after",
                         },
                     },
                     "valueLists": {
@@ -2044,7 +2026,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "stats": {
                         "numericStatExampleD": {
                             "name": "Stat Example D",
-                            "calculation": "numericStatExampleD",
                             "unit": "units",
                         },
                     },

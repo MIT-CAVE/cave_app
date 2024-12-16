@@ -33,7 +33,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "charts": {
                         "chart1": {
                             "type": "globalOutput",
-                            "variant": "overview",
+                            "chartType": "overview",
                         }
                     },
                     "pageLayout": ["chart1", None, None, None],
