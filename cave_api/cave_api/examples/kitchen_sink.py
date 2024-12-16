@@ -1652,7 +1652,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Numeric Prop Example B",
                             "type": "num",
                             "min": 0,
-                            "max": 50,
+                            "max": 250,
                             "unit": "B units",
                             "colorGradient": {
                                 "data": [
