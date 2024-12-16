@@ -707,8 +707,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "dash1": {
                     "charts": {
                         "allBar": {
-                            "variant": "bar",
-                            "statAggregation": "mean",
+                            "dataset": "locationGroup",
+                            "chartType": "bar",
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "mean",
+                                }
+                            ],
+                            "groupedOutputDataId": "locationGroup",
+                            "groupingId": [],
+                            "groupingLevel": [],
+                            "showNA": True,
                         },
                         "map1": {
                             "type": "map",
@@ -717,13 +727,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "maximized": True,
                         },
                         "statBar": {
-                            "variant": "bar",
-                            "groupingLevel": ["size"],
-                            "groupingId": ["sku"],
-                            "lockedLayout": True,
-                            "statAggregation": "sum",
+                            "dataset": "locationGroup",
+                            "chartType": "bar",
+                            "stats": [
+                                {
+                                    # "statId": "numericStatExampleA",
+                                    "statId": "numericExampleCalculationStat",
+                                    "aggregationType": "sum",
+                                }
+                            ],
                             "groupedOutputDataId": "locationGroup",
-                            "statId": "numericExampleCalculationStat",
+                            "groupingId": [],
+                            "groupingLevel": [],
                         },
                     },
                     "pageLayout": ["allBar", "map1", None, "statBar"],
@@ -734,10 +749,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "allBar": {
                             "dataset": "locationGroup",
                             "chartType": "bar",
-                            "stats": [{
+                            "stats": [
+                                {
                                     "statId": "numericStatExampleB",
-                                    "aggregationType": "mean"
-                            }],
+                                    "aggregationType": "mean",
+                                }
+                            ],
                             "groupedOutputDataId": "locationGroup",
                             "groupingId": [],
                             "groupingLevel": [],
@@ -749,11 +766,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "stats": [
                                 {
                                     "statId": "numericStatExampleA",
-                                    "aggregationType": "sum"
+                                    "aggregationType": "sum",
                                 },
                                 {
                                     "statId": "numericStatExampleB",
-                                    "aggregationType": "sum"
+                                    "aggregationType": "sum",
                                 },
                             ],
                             "groupingId": ["location"],
@@ -762,19 +779,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "rightVariant": "cumulative_line",
                         },
                         "boxPlot": {
-                            "variant": "box_plot",
-                            "groupingLevel": ["size"],
-                            "lockedLayout": True,
-                            "groupingId": ["sku"],
-                            "statAggregation": "mean",
+                            "dataset": "locationGroup",
+                            "chartType": "box_plot",
+                            "stats": [
+                                {
+                                    # "statId": "numericStatExampleA",
+                                    "statId": "numericExampleCalculationStat",
+                                    "aggregationType": "mean",
+                                },
+                            ],
                             "groupedOutputDataId": "locationGroup",
-                            "statId": "numericExampleCalculationStat",
+                            "groupingId": ["sku"],
+                            "groupingLevel": ["size"],
+                            "showNA": True,
                         },
                         "cumulativeLine": {
-                            "variant": "cumulative_line",
-                            "statAggregation": "sum",
+                            "dataset": "locationGroup",
+                            "chartType": "cumulative_line",
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "sum",
+                                },
+                            ],
                             "groupedOutputDataId": "locationGroup",
-                            "statId": "numericStatExampleB",
                             "groupingId": ["location", "sku"],
                             "groupingLevel": ["state", "sku"],
                             "defaultToZero": True,
@@ -2206,8 +2234,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
         raise Exception("Test Exception!")
     elif command == "viewInfo":
         socket.notify("The info button has been pressed!", title="Info", theme="info")
-    elif command =="exportData":
-        socket.export('data:application/json,'+json.dumps(session_data))
+    elif command == "exportData":
+        socket.export("data:application/json," + json.dumps(session_data))
     if session_data:
         for key, value in session_data.items():
             example[key] = value
