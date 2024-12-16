@@ -1,4 +1,4 @@
-import time
+import time, json
 
 
 def execute_command(session_data, socket, command="init", **kwargs):
@@ -134,6 +134,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "data": [
                     "buttonSolve",
                     "examplePropsPane",
+                    "buttonExport",
                     "dash1",
                     "dash2",
                 ],
@@ -151,6 +152,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "pane",
                     "bar": "upperLeft",
                     "variant": "wall",
+                },
+                "buttonExport": {
+                    "icon": "md/MdFileDownload",
+                    "apiCommand": "exportData",
+                    "type": "button",
+                    "bar": "upperLeft",
                 },
                 "dash1": {
                     "type": "page",
@@ -725,17 +732,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "dash2": {
                     "charts": {
                         "allBar": {
-                            "variant": "bar",
-                            "statAggregation": "mean",
+                            "dataset": "locationGroup",
+                            "chartType": "bar",
+                            "stats": [{
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "mean"
+                            }],
                             "groupedOutputDataId": "locationGroup",
-                            "statId": "numericStatExampleB",
+                            "groupingId": [],
+                            "groupingLevel": [],
                             "showNA": True,
                         },
                         "mixed": {
-                            "variant": "mixed",
-                            "statAggregation": "sum",
-                            "groupedOutputDataId": ["locationGroup", "locationGroup"],
-                            "statId": ["numericStatExampleA", "numericStatExampleB"],
+                            "dataset": "locationGroup",
+                            "chartType": "mixed",
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleA",
+                                    "aggregationType": "sum"
+                                },
+                                {
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "sum"
+                                },
+                            ],
                             "groupingId": ["location"],
                             "groupingLevel": ["state"],
                             "leftVariant": "bar",
@@ -801,8 +821,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "fog": {
                         "range": [0.5, 10],
-                        "color": "#ffffff",
-                        "high-color": "#245cdf",
+                        "color": "rgba(255, 255, 255, 1)",
+                        "high-color": "rgba(36, 92, 223, 1)",
                         "space-color": [
                             "interpolate",
                             ["linear"],
@@ -2184,8 +2204,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
     elif command == "test":
         print("The `test` button has been pressed by the user!")
         raise Exception("Test Exception!")
-    if command == "viewInfo":
+    elif command == "viewInfo":
         socket.notify("The info button has been pressed!", title="Info", theme="info")
+    elif command =="exportData":
+        socket.export('data:application/json,'+json.dumps(session_data))
     if session_data:
         for key, value in session_data.items():
             example[key] = value
