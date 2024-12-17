@@ -186,13 +186,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "chartPage": {
                     "charts": {
                         "chart": {
-                            "type": "groupedOutput",
-                            "variant": "bar",
+                            "dataset": "salesData",
+                            "chartType": "bar",
+                            "stats": [
+                                {
+                                    "statId": "sales",
+                                    "aggregationType": "sum",
+                                }
+                            ],
                             "groupingId": ["product", "location"],
                             "groupingLevel": ["color", "state"],
-                            "statAggregation": "sum",
-                            "groupedOutputDataId": "salesData",
-                            "statId": "sales",
                         }
                     },
                     "pageLayout": ["chart", None, None, None],
@@ -215,28 +218,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "stats": [
                             "demand",
                             "sales",
-                            "pctDemandMet",
                         ],
                     },
                     # Specify the stats to be used in the grouped outputs
                     "stats": {
                         "demand": {
                             "name": "Demand",
-                            "calculation": "demand",
                             "unit": "units",
                         },
                         "sales": {
                             "name": "Sales",
-                            "calculation": "sales",
                             "unit": "units",
-                        },
-                        "pctDemandMet": {
-                            "name": "Percent of Demand Met",
-                            "calculation": 'sales / groupSum("demand")',
-                            "precision": 2,
-                            "trailingZeros": True,
-                            "unit": "%",
-                            "unitPlacement": "after",
                         },
                     },
                     # Select the appropriate columns and pivot them to be used in the grouped outputs
