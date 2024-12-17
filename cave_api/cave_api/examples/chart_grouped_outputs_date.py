@@ -33,13 +33,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "pageLayout": ["chart", None, None, None],
                     "charts": {
                         "chart": {
-                            "type": "groupedOutput",
-                            "variant": "line",
+                            "dataset": "salesData",
+                            "chartType": "line",
+                            "stats": [
+                                {
+                                    "statId": "sales",
+                                    "aggregationType": "sum",
+                                }
+                            ],
                             "groupingId": ["date", "product"],
                             "groupingLevel": ["year_month_day", "product"],
-                            "statAggregation": "sum",
-                            "groupedOutputDataId": "salesData",
-                            "statId": "sales",
                         }
                     },
                 },
@@ -118,27 +121,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "stats": [
                             "demand",
                             "sales",
-                            "pctDemandMet",
                         ],
                     },
                     "stats": {
                         "demand": {
                             "name": "Demand",
-                            "calculation": "demand",
                             "unit": "units",
                         },
                         "sales": {
                             "name": "Sales",
-                            "calculation": "sales",
                             "unit": "units",
-                        },
-                        "pctDemandMet": {
-                            "name": "Percent of Demand Met",
-                            "calculation": 'sales / groupSum("demand")',
-                            "precision": 2,
-                            "trailingZeros": True,
-                            "unit": "%",
-                            "unitPlacement": "after",
                         },
                     },
                     "valueLists": {

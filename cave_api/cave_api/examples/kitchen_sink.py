@@ -1,4 +1,4 @@
-import time
+import time, json
 
 
 def execute_command(session_data, socket, command="init", **kwargs):
@@ -134,6 +134,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "data": [
                     "buttonSolve",
                     "examplePropsPane",
+                    "buttonExport",
                     "dash1",
                     "dash2",
                 ],
@@ -151,6 +152,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "pane",
                     "bar": "upperLeft",
                     "variant": "wall",
+                },
+                "buttonExport": {
+                    "icon": "md/MdFileDownload",
+                    "apiCommand": "exportData",
+                    "type": "button",
+                    "bar": "upperLeft",
                 },
                 "dash1": {
                     "type": "page",
@@ -700,8 +707,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "dash1": {
                     "charts": {
                         "allBar": {
-                            "variant": "bar",
-                            "statAggregation": "mean",
+                            "dataset": "locationGroup",
+                            "chartType": "bar",
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "mean",
+                                }
+                            ],
+                            "groupingId": [],
+                            "groupingLevel": [],
+                            "showNA": True,
                         },
                         "map1": {
                             "type": "map",
@@ -710,13 +726,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "maximized": True,
                         },
                         "statBar": {
-                            "variant": "bar",
-                            "groupingLevel": ["size"],
-                            "groupingId": ["sku"],
-                            "lockedLayout": True,
-                            "statAggregation": "sum",
-                            "groupedOutputDataId": "locationGroup",
-                            "statId": "numericExampleCalculationStat",
+                            "dataset": "locationGroup",
+                            "chartType": "bar",
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleA",
+                                    "aggregationType": "sum",
+                                }
+                            ],
+                            "groupingId": [],
+                            "groupingLevel": [],
                         },
                     },
                     "pageLayout": ["allBar", "map1", None, "statBar"],
@@ -725,36 +744,58 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "dash2": {
                     "charts": {
                         "allBar": {
-                            "variant": "bar",
-                            "statAggregation": "mean",
-                            "groupedOutputDataId": "locationGroup",
-                            "statId": "numericStatExampleB",
+                            "dataset": "locationGroup",
+                            "chartType": "bar",
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "mean",
+                                }
+                            ],
+                            "groupingId": [],
+                            "groupingLevel": [],
                             "showNA": True,
                         },
                         "mixed": {
-                            "variant": "mixed",
-                            "statAggregation": "sum",
-                            "groupedOutputDataId": ["locationGroup", "locationGroup"],
-                            "statId": ["numericStatExampleA", "numericStatExampleB"],
+                            "dataset": "locationGroup",
+                            "chartType": "mixed",
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleA",
+                                    "aggregationType": "sum",
+                                },
+                                {
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "sum",
+                                },
+                            ],
                             "groupingId": ["location"],
                             "groupingLevel": ["state"],
                             "leftVariant": "bar",
                             "rightVariant": "cumulative_line",
                         },
                         "boxPlot": {
-                            "variant": "box_plot",
-                            "groupingLevel": ["size"],
-                            "lockedLayout": True,
+                            "dataset": "locationGroup",
+                            "chartType": "box_plot",
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleA",
+                                    "aggregationType": "mean",
+                                },
+                            ],
                             "groupingId": ["sku"],
-                            "statAggregation": "mean",
-                            "groupedOutputDataId": "locationGroup",
-                            "statId": "numericExampleCalculationStat",
+                            "groupingLevel": ["size"],
+                            "showNA": True,
                         },
                         "cumulativeLine": {
-                            "variant": "cumulative_line",
-                            "statAggregation": "sum",
-                            "groupedOutputDataId": "locationGroup",
-                            "statId": "numericStatExampleB",
+                            "dataset": "locationGroup",
+                            "chartType": "cumulative_line",
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "sum",
+                                },
+                            ],
                             "groupingId": ["location", "sku"],
                             "groupingLevel": ["state", "sku"],
                             "defaultToZero": True,
@@ -801,8 +842,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "fog": {
                         "range": [0.5, 10],
-                        "color": "#ffffff",
-                        "high-color": "#245cdf",
+                        "color": "rgba(255, 255, 255, 1)",
+                        "high-color": "rgba(36, 92, 223, 1)",
                         "space-color": [
                             "interpolate",
                             ["linear"],
@@ -1953,27 +1994,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "stats": [
                             "numericStatExampleA",
                             "numericStatExampleB",
-                            "numericExampleCalculationStat",
                         ],
                     },
                     "stats": {
                         "numericStatExampleA": {
                             "name": "Stat Example A",
-                            "calculation": "numericStatExampleA",
                             "unit": "units",
                         },
                         "numericStatExampleB": {
                             "name": "Stat Example B",
-                            "calculation": "numericStatExampleB",
                             "unit": "units",
-                        },
-                        "numericExampleCalculationStat": {
-                            "name": "Stat A as a percentage of Stat B",
-                            "calculation": 'numericStatExampleA / groupSum("numericStatExampleB")',
-                            "precision": 2,
-                            "trailingZeros": True,
-                            "unit": "%",
-                            "unitPlacement": "after",
                         },
                     },
                     "valueLists": {
@@ -1996,7 +2026,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "stats": {
                         "numericStatExampleD": {
                             "name": "Stat Example D",
-                            "calculation": "numericStatExampleD",
                             "unit": "units",
                         },
                     },
@@ -2184,8 +2213,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
     elif command == "test":
         print("The `test` button has been pressed by the user!")
         raise Exception("Test Exception!")
-    if command == "viewInfo":
+    elif command == "viewInfo":
         socket.notify("The info button has been pressed!", title="Info", theme="info")
+    elif command == "exportData":
+        socket.export("data:application/json," + json.dumps(session_data))
     if session_data:
         for key, value in session_data.items():
             example[key] = value
