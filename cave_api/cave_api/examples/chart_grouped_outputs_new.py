@@ -42,8 +42,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "stats": [
                                 {
                                     "statId": "sales",
-                                    "aggregationType": "divisor",
-                                    "statIdDivisor": "demand",
+                                    "aggregationType": "mean",
+                                    "aggregationGroupingId": "product",
+                                    "aggregationGroupingLevel": "color"
                                 },
                             ],
                             # optional chartOptions to configure
@@ -86,7 +87,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "stats": [
                                 {
                                     "statId": "demand",
-                                    "aggregationType": "sum",
+                                    "aggregationType": "divisor",
+                                    "statIdDivisor": "sales",
                                 },
                                 {
                                     "statId": "sales",

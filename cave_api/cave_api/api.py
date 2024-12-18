@@ -7,4 +7,5 @@
 # This is not a great example for how you should code, but rather offers an easy way to view all of our examples in one place
 # To view the code for an example, open the corresponding file in cave_api/cave_api/examples
 # If you want to manually change the example that is loaded, you can change `example_selector` below to any of the other examples
-from cave_api.examples.example_selector import execute_command
+# EG: from cave_api.cave_api.examples.api_command import execute_command
+from cave_api.cave_api.example_selector import execute_command
