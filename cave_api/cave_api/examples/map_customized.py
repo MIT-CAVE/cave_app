@@ -93,6 +93,38 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         ],
                     },
                 },
+                            # For custom tiling styles from other raster sources (eg: stamen or open street map),
+                # you can use the more complex spec dictionary based interface
+                "osmRasterTiles": {
+                    "name": "OSM Raster Tiles",
+                    "icon": "md/MdBrush",
+                    # See the `style` key in the following mapbox gl reference spec:
+                    # https://docs.mapbox.com/mapbox-gl-js/example/map-tiles/
+                    "spec": {
+                        "version": 8,
+                        "sources": {
+                            "raster-tiles": {
+                                "type": "raster",
+                                # EG: See a list of raster sources based on OSM here:
+                                # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
+                                "tiles": [
+                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                ],
+                                "tileSize": 256,
+                                "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
+                            },
+                        },
+                        "layers": [
+                            {
+                                "id": "simple-tiles",
+                                "type": "raster",
+                                "source": "raster-tiles",
+                                "minzoom": 0,
+                                "maxzoom": 22,
+                            },
+                        ],
+                    },
+                },
             },
             # Specify available map projections that can be selected in the dashboards by the user
             "data": {

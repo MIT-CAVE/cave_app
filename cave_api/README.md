@@ -56,7 +56,7 @@ To make changes to the `cave_api`, navigate to `your_app/cave_api/cave_api` and 
 
 The main entrypoint to the `cave_api` is in `your_app/cave_api/cave_api/api.py`. This file must have a function `execute_command` that serves as the primary entrypoint for all incoming requests. This function is responsible for parsing the incoming request and handling it accordingly. This function is also responsible for returning the appropriate response to the request.
 
-By default the `your_app/cave_api/cave_api/api.py` imports `execute_command` from `your_app/cave_api/cave_api/examples/example_selector.py`. This is a meta model that allows you to choose from any of the api models listed in `your_app/cave_api/cave_api/examples`. You can modify any of the examples while using the default example selector and see your changes live by choosing the example in the app menu.
+By default the `your_app/cave_api/cave_api/api.py` imports `execute_command` from `your_app/cave_api/cave_api/example_selector.py`. This is a meta model that allows you to choose from any of the api models listed in `your_app/cave_api/cave_api/examples`. You can modify any of the examples while using the default example selector and see your changes live by choosing the example in the app menu.
 
 To change over to any specific example or your own code, you can edit `your_app/cave_api/cave_api/api.py` accordingly. Replace the import location for `execute_command` or simply define `execute_command` in this file and save. You may need to reset your database to see these changes take effect. To do this, run `cave reset` from your project root.
 

@@ -9,7 +9,7 @@ def get_examples():
         [
             i.replace(".py", "")
             for i in os.listdir(examples_location)
-            if i.endswith(".py") and i != "__init__.py" and i != "example_selector.py"
+            if i.endswith(".py") and not i.startswith("__")
         ]
     )
 

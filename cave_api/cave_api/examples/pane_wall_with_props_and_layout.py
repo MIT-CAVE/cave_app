@@ -40,19 +40,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Example Options Pane",
                     # Create a set of example props to be rendered in the pane
                     "props": {
-                        "topLeft": {
-                            "name": "Top Left",
+                        "exampleHeader": {
+                            "name": "Example Header",
                             "type": "head",
-                            # Convert the header variant from the default of col to row
-                            # This creates a box rather than an underlined header
-                            "variant": "row",
+                            "help": "Some help for the Example Header",
                         },
-                        "bottomRight": {
-                            "name": "Bottom Right",
-                            "type": "head",
-                            # Convert the header variant from the default of col to row
-                            # This creates a box rather than an underlined header
-                            "variant": "row",
+                        "numericInputExample": {
+                            "name": "Numeric Input Example",
+                            "type": "num",
+                            "help": "Help for the numeric input example",
+                            "unit": "widgets",
                         },
                     },
                     # Layout is used to define the layout of props in a modal or pane
@@ -65,15 +62,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 1,
                                 "row": 1,
-                                "itemId": "topLeft",
+                                "itemId": "exampleHeader",
                             },
                             "col1Row2": {
                                 "type": "item",
                                 "column": 2,
                                 "row": 2,
-                                "itemId": "bottomRight",
+                                "itemId": "numericInputExample",
                             },
                         },
+                    },
+                    "values": {
+                        "numericInputExample": 100,
                     },
                 },
             },
