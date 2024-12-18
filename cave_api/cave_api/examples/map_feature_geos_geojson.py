@@ -76,7 +76,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Demand for this state",
                             "min": 0,
                             "max": 100,
-                            "colorGradient": {
+                            "gradient": {
                                 "data": [
                                     {"value": "min", "color": "rgb(233 0 0)"},
                                     {"value": "max", "color": "rgb(96 2 2)"},

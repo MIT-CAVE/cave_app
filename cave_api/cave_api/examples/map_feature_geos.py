@@ -72,7 +72,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "max": 100,
                             "unit": "units",
                             "help": "Help with the example numeric prop for this Custom",
-                            "colorGradient": {
+                            "gradient": {
                                 "data": [
                                     {"value": "min", "color": "rgb(233 0 0)"},
                                     {"value": "max", "color": "rgb(96 2 2)"},

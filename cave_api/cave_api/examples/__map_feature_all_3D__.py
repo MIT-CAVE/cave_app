@@ -120,20 +120,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "max": 100,
                             "unit": "Cubic Feet",
                             "help": "The warehouse capacity in cubic feet",
-                            "sizeGradient": {
+                            "gradient": {
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "size": "30px"},
-                                    {"value": "max", "size": "45px"},
-                                ],
-                            },
-                            "colorGradient": {
-                                "notation": "precision",
-                                "precision": 0,
-                                "data": [
-                                    {"value": "min", "color": "rgb(233 0 0)"},
-                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                    {"value": "min", "size": "30px", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "size": "45px", "color": "rgb(96 2 2)"},
                                 ],
                             },
                         },
@@ -175,17 +167,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "max": 100,
                             "unit": "units",
                             "help": "Demand for this state",
-                            "colorGradient": {
+                            "gradient": {
                                 "data": [
-                                    {"value": "min", "color": "rgb(233 0 0)"},
-                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                    {"value": "min", "color": "rgb(233 0 0)", "height": "10px"},
+                                    {"value": "max", "color": "rgb(96 2 2)", "height": "40px"},
                                 ],
-                            },
-                            "heightGradient": {
-                                "data": [
-                                    {"value": "min", "height": "10px"},
-                                    {"value": "max", "height": "40px"},
-                                ]
                             },
                         },
                         "targetGrowthArea": {
@@ -219,28 +205,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "max": 105,
                             "unit": "Cubic Feet",
                             "help": "The warehouse capacity in cubic feet",
-                            "colorGradient": {
+                            "gradient": {
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "color": "rgb(233 0 0)"},
-                                    {"value": "max", "color": "rgb(96 2 2)"},
-                                ],
-                            },
-                            "sizeGradient": {
-                                "notation": "precision",
-                                "precision": 0,
-                                "data": [
-                                    {"value": "min", "size": "5px"},
-                                    {"value": "max", "size": "10px"},
-                                ],
-                            },
-                            "heightGradient": {
-                                "notation": "precision",
-                                "precision": 0,
-                                "data": [
-                                    {"value": "min", "height": "10px"},
-                                    {"value": "max", "height": "40px"},
+                                    {"value": "min", "color": "rgb(233 0 0)", "size": "5px", "height": "10px"},
+                                    {"value": "max", "color": "rgb(96 2 2)", "size": "10px", "height": "40px"},
                                 ],
                             },
                         },
@@ -290,28 +260,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "max": 105,
                             "unit": "Cubic Feet",
                             "help": "The warehouse capacity in cubic feet",
-                            "colorGradient": {
+                            "gradient": {
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "color": "rgb(233 0 0)"},
-                                    {"value": "max", "color": "rgb(96 2 2)"},
-                                ],
-                            },
-                            "sizeGradient": {
-                                "notation": "precision",
-                                "precision": 0,
-                                "data": [
-                                    {"value": "min", "size": "5px"},
-                                    {"value": "max", "size": "10px"},
-                                ],
-                            },
-                            "heightGradient": {
-                                "notation": "precision",
-                                "precision": 0,
-                                "data": [
-                                    {"value": "min", "height": "10px"},
-                                    {"value": "max", "height": "40px"},
+                                    {"value": "min", "size": "5px", "color": "rgb(233 0 0)", "height": "10px"},
+                                    {"value": "max", "size": "10px", "color": "rgb(96 2 2)", "height": "40px"},
                                 ],
                             },
                         },

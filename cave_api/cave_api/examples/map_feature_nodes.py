@@ -84,20 +84,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "max": 100,
                             "unit": "Cubic Feet",
                             "help": "The warehouse capacity in cubic feet",
-                            "colorGradient": {
+                            "gradient": {
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "color": "rgb(233 0 0)"},
-                                    {"value": "max", "color": "rgb(96 2 2)"},
-                                ],
-                            },
-                            "sizeGradient": {
-                                "notation": "precision",
-                                "precision": 0,
-                                "data": [
-                                    {"value": "min", "size": "30px"},
-                                    {"value": "max", "size": "45px"},
+                                    {"value": "min", "size": "30px", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "size": "45px", "color": "rgb(96 2 2)"},
                                 ],
                             },
                         },
