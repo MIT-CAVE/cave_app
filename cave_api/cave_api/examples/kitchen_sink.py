@@ -939,7 +939,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "longitude": 14,
                         },
                     },
-                    "legendView": "minimal",
+                    "legendView": "compact",
                     "legendLayout": "auto",
                     "legendWidth": "auto",
                     "showLegendGroupNames": True,
