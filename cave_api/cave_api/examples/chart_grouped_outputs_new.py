@@ -35,7 +35,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "chart1": {
                             "type": "groupedOutput",
                             "dataset": "salesData",  # changed groupedOutputDataId -> dataset
-                            "chartType": "line",  # changed variant -> chartType
+                            "chartType": "cumulative_line",  # changed variant -> chartType
                             "groupingId": ["product"],
                             "groupingLevel": ["color"],
                             # single-stat chart -> len(stats) == 1
@@ -47,10 +47,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "aggregationGroupingLevel": "color"
                                 },
                             ],
-                            # optional chartOptions to configure
-                            "chartOptions": {
-                                "cumulative": True,  # optional parameter to turn line -> cumulative line
-                            },
                         },
                         # mixed chart
                         "chart2": {

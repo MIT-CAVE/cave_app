@@ -164,8 +164,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "num",
                                 "help": "The state's population density in people per square mile",
                                 "gradient": {
-                                    "scale": "log",
-                                    "scaleParams": {"base": 10},
+                                    "scale": "pow",
+                                    "scaleParams": {"exponent": 10},
                                     "data": [
                                         {
                                             "value": "min",

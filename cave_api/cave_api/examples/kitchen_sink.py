@@ -1245,7 +1245,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "value": 28,
                                         "color": "rgb(255, 69, 0)",
                                         "label": "Very High",
-                                        "sie": "12px",
+                                        "size": "12px",
                                     },
                                     {
                                         "value": 40,
