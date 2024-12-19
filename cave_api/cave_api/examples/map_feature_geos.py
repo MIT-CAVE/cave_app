@@ -47,7 +47,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "demandZones": {
                             "name": "Demand Zones",
                             "data": {
-                                "custom": {
+                                "customGeoJson": {
                                     "value": True,
                                     "icon": "pi/PiMountains",
                                     "colorBy": "booleanPropExample",
@@ -61,15 +61,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "mapFeatures": {
             "data": {
-                "custom": {
+                "customGeoJson": {
                     "type": "geo",
                     "name": "Custom",
                     "props": {
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "min": 0,
-                            "max": 100,
                             "unit": "units",
                             "help": "Help with the example numeric prop for this Custom",
                             "gradient": {

@@ -47,7 +47,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "transportation": {
                             "name": "Transportation",
                             "data": {
-                                "truckRoutes": {
+                                "unusualRoutes": {
                                     "value": True,
                                     "colorBy": "preferredRoute",
                                     "colorByOptions": ["capacity", "preferredRoute"],
@@ -62,23 +62,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "mapFeatures": {
             "data": {
-                "truckRoutes": {
+                "unusualRoutes": {
                     "type": "arc",
-                    "name": "Truck Routes",
+                    "name": "Unusual Routes",
                     "props": {
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "min": 0,
-                            "max": 105,
                             "unit": "Cubic Feet",
                             "help": "The warehouse capacity in cubic feet",
                             "gradient": {
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "size": "5px", "color": "rgb(233 0 0)"},
-                                    {"value": "max", "size": "10px", "color": "rgb(96 2 2)"},
+                                    {"value": 0, "size": "5px", "color": "rgb(233 0 0)"},
+                                    {"value": 105, "size": "10px", "color": "rgb(96 2 2)"},
                                 ],
                             },
                         },
@@ -94,10 +92,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "startLatitude": [43.78, 39.82],
-                            "startLongitude": [-79.63, -86.18],
-                            "endLatitude": [39.82, 39.95],
-                            "endLongitude": [-86.18, -75.16],
+                            "path": [
+                                # Boston to Albany to New York City path [longitude, latitude]
+                                [
+                                    [-71.0589, 42.3601],
+                                    [-73.7562, 42.6526],
+                                    [-74.0059, 40.7128],
+                                ],
+                                # Knoxville to Talahassee to Orlando path [longitude, latitude]
+                                [
+                                    [-83.9207, 35.9606],
+                                    [-84.2533, 30.4383],
+                                    [-81.3792, 28.5383],
+                                ],
+                            ]
                         },
                         "valueLists": {
                             "capacity": [75, 105],
