@@ -757,8 +757,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "showNA": True,
                         },
                         "mixed": {
+                            "type": "groupedOutput",
                             "dataset": "locationGroup",
                             "chartType": "mixed",
+                            "groupingId": ["location"],
+                            "groupingLevel": ["state"],
                             "stats": [
                                 {
                                     "statId": "numericStatExampleA",
@@ -769,10 +772,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "aggregationType": "sum",
                                 },
                             ],
-                            "groupingId": ["location"],
-                            "groupingLevel": ["state"],
-                            "leftVariant": "bar",
-                            "rightVariant": "cumulative_line",
+                            "chartOptions": {
+                                "leftChartType": "bar",
+                                "rightChartType": "cumulative_line",
+                            },
                         },
                         "boxPlot": {
                             "dataset": "locationGroup",
@@ -949,7 +952,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "colorBy": "booleanPropExample",
                                     "sizeBy": "numericPropExampleA",
                                     "allowGrouping": True,
-                                    "group": True,
+                                    "group": False,
                                     "groupCalcBySize": "sum",
                                     "groupCalcByColor": "mode",
                                     # "groupScaleWithZoom": True,
@@ -1038,7 +1041,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "icon": "pi/PiMountains",
                                     "colorByOptions": ["numericPropExampleC"],
                                 },
-                                "custom": {
+                                "customGeoJson": {
                                     "value": False,
                                     "colorBy": "numericPropExampleC",
                                     "icon": "tb/TbLassoPolygon",
@@ -1198,8 +1201,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "min": 0,
-                            "max": 50,
                             "unit": "A units",
                             "gradient": {
                                 "scale": "linear",
@@ -1220,12 +1221,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "min": 0,
-                            "max": 40,
                             "gradient": {
                                 "data": [
                                     {
-                                        "value": "min",
+                                        "value": 0,
                                         "color": "rgb(0, 128, 255)",
                                         "label": "Very Low",
                                         "size": "5px",
@@ -1249,7 +1248,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "sie": "12px",
                                     },
                                     {
-                                        "value": "max",
+                                        "value": 40,
                                         "color": "rgb(255, 0, 0)",
                                         "label": "Critical",
                                         "size": "15px"
@@ -1347,12 +1346,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "min": 0,
-                            "max": 50,
                             "gradient": {
                                 "data": [
                                     {
-                                        "value": "min",
+                                        "value": 0,
                                         "color": "rgb(233 0 0)",
                                         "size": "15px",
                                     },
@@ -1369,8 +1366,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "min": 0,
-                            "max": 40,
                             "gradient": {
                                 "data": [
                                     {
@@ -1460,10 +1455,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "startLatitude": [39.82, 39.82, 39.82],
-                            "startLongitude": [-86.18, -86.18, -86.18],
-                            "endLatitude": [42.89, 28.49, 42.361176],
-                            "endLongitude": [-85.68, -81.56, -71.084707],
+                            "path":[
+                                [[-86.18, 39.82], [-84.39, 41.82], [-85.68, 42.89]],
+                                [[-86.18, 39.82], [-81.56, 28.49]],
+                                [[-86.18, 39.82], [-71.08, 42.36]],
+                            ],
                         },
                         "valueLists": {
                             "numericPropExampleA": [30, 30, 30],
@@ -1479,24 +1475,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "timeValues": {
-                                0: {"min": 50},
-                                1: {"min": 0},
-                                2: {"min": 20},
-                            },
-                            "max": 80,
                             "unit": "A units",
                             "gradient": {
                                 "notation": "precision",
                                 "precision": 5,
                                 "data": [
                                     {
-                                        "value": "min",
+                                        "timeValues": {
+                                            0: {"value": 50},
+                                            1: {"value": 0},
+                                            2: {"value": 20},
+                                        },
                                         "color": "rgb(233 0 0)",
                                         "size": "30px",
                                     },
                                     {
-                                        "value": "max",
+                                        "value": 80,
                                         "color": "rgb(96 2 2)",
                                         "size": "45px",
                                     },
@@ -1512,15 +1506,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "min": 0,
-                            "max": 50,
                             "unit": "B units",
                             "gradient": {
                                 "notation": "scientific",
                                 "notationDisplay": "x10^",
                                 "data": [
                                     {
-                                        "value": "min",
+                                        "value": 0,
                                         "color": "rgb(233 0 0)",
                                         "size": "10px",
                                     },
@@ -1634,8 +1626,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleA": {
                             "name": "Numeric Prop Example A",
                             "type": "num",
-                            "min": 0,
-                            "max": 1000,
                             "unit": "A units",
                             "gradient": {
                                 "notation": "precision",
@@ -1658,20 +1648,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleB": {
                             "name": "Numeric Prop Example B",
                             "type": "num",
-                            "min": 0,
-                            "max": 250,
                             "unit": "B units",
                             "gradient": {
                                 "data": [
                                     {
-                                        "value": "min",
+                                        "value": 0,
                                         "color": "rgb(233 0 0)",
                                         "size": "5px",
                                         "label": "Lo"
                                     },
                                     {"value": 10, "size": "40px", "color": "rgb(150, 1, 1)"},
                                     {
-                                        "value": "max",
+                                        "value": 250,
                                         "color": "rgb(96 2 2)",
                                         "size": "70px",
                                         "label": "Hi"
@@ -1713,8 +1701,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "min": 1,
-                            "max": 10000,
                             "unit": "C units",
                             "gradient": {
                                 "scale": "log",
@@ -1723,7 +1709,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 },
                                 "data": [
                                     {
-                                        "value": "min",
+                                        "value": 1,
                                         "color": "rgb(200, 230, 255)",
                                         "label": "Very Sparse",
                                     },
@@ -1743,7 +1729,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "label": "Dense",
                                     },
                                     {
-                                        "value": "max",
+                                        "value": 10000,
                                         "color": "rgb(255, 0, 0)",
                                         "label": "Very Dense",
                                     },
@@ -1788,8 +1774,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "min": 0,
-                            "max": 800,
                             "unit": "units",
                             "gradient": {
                                 "data": [
@@ -1815,15 +1799,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                 },
-                "custom": {
+                "customGeoJson": {
                     "type": "geo",
                     "name": "Custom",
                     "props": {
                         "numericPropExampleC": {
                             "name": "Numeric Prop Example C",
                             "type": "num",
-                            "min": 0,
-                            "max": 800,
                             "unit": "units",
                             "gradient": {
                                 "data": [

@@ -79,8 +79,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "min": 0,
-                            "max": 105,
                             "unit": "Cubic Feet",
                             "help": "The warehouse capacity in cubic feet",
                             "gradient": {

@@ -116,8 +116,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "min": 0,
-                            "max": 100,
                             "unit": "Cubic Feet",
                             "help": "The warehouse capacity in cubic feet",
                             "gradient": {
@@ -163,8 +161,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "demand": {
                             "name": "Demand",
                             "type": "num",
-                            "min": 0,
-                            "max": 100,
                             "unit": "units",
                             "help": "Demand for this state",
                             "gradient": {
@@ -201,8 +197,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "min": 0,
-                            "max": 105,
                             "unit": "Cubic Feet",
                             "help": "The warehouse capacity in cubic feet",
                             "gradient": {
@@ -256,8 +250,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "min": 0,
-                            "max": 105,
                             "unit": "Cubic Feet",
                             "help": "The warehouse capacity in cubic feet",
                             "gradient": {

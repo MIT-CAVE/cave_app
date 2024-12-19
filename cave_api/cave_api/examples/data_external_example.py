@@ -200,7 +200,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "data": {
                             "location": {
                                 # geoJsonValue must be a list of ids that match the geoJsonProp in the geoJson file
-                                # The order of the ids must match the order of the values in the data.values fields
+                                # The order of the ids must match the order of the values in the data.valueLists fields
                                 "geoJsonValue": geo_json_values,
                             },
                             "valueLists": {
