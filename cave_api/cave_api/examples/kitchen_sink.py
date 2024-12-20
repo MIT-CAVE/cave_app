@@ -1007,6 +1007,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     ],
                                     "sizeByOptions": [
                                         "numericPropExampleA",
+                                        "numericPropExampleB",
                                         "booleanPropExample",
                                     ],
                                 },
