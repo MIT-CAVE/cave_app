@@ -6,21 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "mapPage"]},
+            "order": {
+                "data": [
+                    "mapPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",
@@ -51,30 +47,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "transportation": {
                             "name": "Transportation",
                             "data": {
-                                "specialRoutes": {
+                                "geoJsonRoutes": {
                                     "value": True,
-                                    "sizeBy": "capacity",
                                     "colorBy": "preferredRoute",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 105,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "preferredRoute": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "5px",
-                                            "endSize": "10px",
-                                        },
-                                    },
+                                    "colorByOptions": ["capacity", "preferredRoute"],
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": ["capacity"],
+                                },
+                                "customRoutes": {
+                                    "value": True,
+                                    "colorBy": "preferredRoute",
+                                    "colorByOptions": ["capacity", "preferredRoute"],
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": ["capacity"],
                                 },
                             },
                         },
@@ -84,9 +69,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "mapFeatures": {
             "data": {
-                "specialRoutes": {
+                "geoJsonRoutes": {
                     "type": "arc",
-                    "name": "Special Routes",
+                    "name": "GeoJson Routes",
                     "geoJson": {
                         # geoJsonLayer must be a URL pointing to a raw geojson file
                         # Local file support is not supported
@@ -101,17 +86,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
-                            "help": "The warehouse capacity in cubic feet",
                             "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "The route capacity in shipments possible per week.",
+                            "gradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "5px", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "size": "10px", "color": "rgb(96 2 2)"},
+                                ],
+                            },
                         },
                         "preferredRoute": {
                             "name": "Preferred Route",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Whether the route is preferred",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {
@@ -129,6 +122,57 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                 },
+                "customRoutes": {
+                    "type": "arc",
+                    "name": "Custom Routes",
+                    "props": {
+                        "capacity": {
+                            "name": "Capacity",
+                            "type": "num",
+                            "unit": "Cubic Feet",
+                            "help": "The warehouse capacity in cubic feet",
+                            "gradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": 0, "size": "5px", "color": "rgb(233 0 0)"},
+                                    {"value": 105, "size": "10px", "color": "rgb(96 2 2)"},
+                                ],
+                            },
+                        },
+                        "preferredRoute": {
+                            "name": "Preferred Route",
+                            "type": "toggle",
+                            "help": "Whether the route is preferred",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
+                        },
+                    },
+                    "data": {
+                        "location": {
+                            "path": [
+                                # Boston to Albany to New York City path [longitude, latitude]
+                                [
+                                    [-71.0589, 42.3601],
+                                    [-73.7562, 42.6526],
+                                    [-74.0059, 40.7128],
+                                ],
+                                # Knoxville to Talahassee to Orlando path [longitude, latitude]
+                                [
+                                    [-83.9207, 35.9606],
+                                    [-84.2533, 30.4383],
+                                    [-81.3792, 28.5383],
+                                ],
+                            ]
+                        },
+                        "valueLists": {
+                            "capacity": [75, 105],
+                            "preferredRoute": [True, False],
+                        },
+                    },
+                },
             }
         },
         # Add a map page to the app using the example map specified above
@@ -136,14 +180,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "mapPage",
             "data": {
                 "mapPage": {
-                    "pageLayout": [
-                        {
+                    "charts": {
+                        "map": {
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
                             "maximized": True,
                         },
-                    ],
+                    },
+                    "pageLayout": ["map", None, None, None],
                 },
             },
         },

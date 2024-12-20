@@ -6,21 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "chartPage"]},
+            "order": {
+                "data": [
+                    "chartPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an app bar button to launch a chart dashboard
                 "chartPage": {
                     "icon": "md/MdBarChart",
@@ -34,12 +30,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "chartPage",
             "data": {
                 "chartPage": {
-                    "pageLayout": [
-                        {
+                    "charts": {
+                        "chart1": {
                             "type": "globalOutput",
-                            "variant": "overview",
+                            "chartType": "overview",
                         }
-                    ],
+                    },
+                    "pageLayout": ["chart1", None, None, None],
                 },
             },
         },
@@ -96,7 +93,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             },
             "values": {
-                "loadingPallets": 54,
+                "loadingPallets": 60,
                 "loadingPalletDwellTime": 49.2,
                 "manufacturingUnitsPerHour": 4987.347,
                 "manufacturingUnits": round(4987.347 * 24),

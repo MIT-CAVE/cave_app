@@ -6,21 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "chartPage"]},
+            "order": {
+                "data": [
+                    "chartPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an app bar button to launch a chart dashboard
                 "chartPage": {
                     "icon": "md/MdBarChart",
@@ -34,17 +30,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "chartPage",
             "data": {
                 "chartPage": {
-                    "pageLayout": [
-                        {
-                            "type": "groupedOutput",
-                            "variant": "line",
+                    "pageLayout": ["chart", None, None, None],
+                    "charts": {
+                        "chart": {
+                            "dataset": "salesData",
+                            "chartType": "line",
+                            "stats": [
+                                {
+                                    "statId": "sales",
+                                    "aggregationType": "sum",
+                                }
+                            ],
                             "groupingId": ["date", "product"],
                             "groupingLevel": ["year_month_day", "product"],
-                            "statAggregation": "sum",
-                            "groupedOutputDataId": "salesData",
-                            "statId": "sales",
                         }
-                    ],
+                    },
                 },
             },
         },
@@ -61,7 +61,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "id": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
                         "year": ["2024", "2024", "2024", "2024"],
                         "year_month": ["2024-01", "2024-01", "2024-01", "2024-01"],
-                        "year_month_day": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
+                        "year_month_day": [
+                            "2024-01-01",
+                            "2024-01-02",
+                            "2024-01-03",
+                            "2024-01-04",
+                        ],
                     },
                     "name": "Dates",
                     "levels": {
@@ -75,7 +80,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "year_month_day": {
                             "name": "Days",
-                            "ordering": ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"],
+                            "ordering": [
+                                "2024-01-01",
+                                "2024-01-02",
+                                "2024-01-03",
+                                "2024-01-04",
+                            ],
                         },
                     },
                 },
@@ -111,27 +121,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "stats": [
                             "demand",
                             "sales",
-                            "pctDemandMet",
                         ],
                     },
                     "stats": {
                         "demand": {
                             "name": "Demand",
-                            "calculation": "demand",
                             "unit": "units",
                         },
                         "sales": {
                             "name": "Sales",
-                            "calculation": "sales",
                             "unit": "units",
-                        },
-                        "pctDemandMet": {
-                            "name": "Percent of Demand Met",
-                            "calculation": 'sales / groupSum("demand")',
-                            "precision": 2,
-                            "trailingZeros": True,
-                            "unit": "%",
-                            "unitPlacement": "after",
                         },
                     },
                     "valueLists": {

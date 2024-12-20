@@ -6,23 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
             "order": {
-                "data": ["refreshButton", "examplePane"],
+                "data": [
+                    "examplePane",
+                ],
             },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add a pane to the app bar
                 # This will add a button to the app bar that opens a pane
                 # Panes are used to display additional options / data to the user
@@ -36,7 +30,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
-            "paneState": {"left": {"type": "pane", "open": "examplePane", "pin": False}},
+            "paneState": {"left": {"open": "examplePane", "pin": False}},
             "data": {
                 # Create a pane with an example header and simple numeric input
                 # Note: This key must match the key used in the app bar above
@@ -44,40 +38,40 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "name": "Example Options Pane",
                     # Create a set of example props to be rendered in the pane
                     "props": {
-                        "topLeft": {
-                            "name": "Top Left",
+                        "exampleHeader": {
+                            "name": "Example Header",
                             "type": "head",
-                            # Convert the header variant from the default of col to row
-                            # This creates a box rather than an underlined header
-                            "variant": "row",
+                            "help": "Some help for the Example Header",
                         },
-                        "bottomRight": {
-                            "name": "Bottom Right",
-                            "type": "head",
-                            # Convert the header variant from the default of col to row
-                            # This creates a box rather than an underlined header
-                            "variant": "row",
+                        "numericInputExample": {
+                            "name": "Numeric Input Example",
+                            "type": "num",
+                            "help": "Help for the numeric input example",
+                            "unit": "widgets",
                         },
                     },
                     # Layout is used to define the layout of props in a modal or pane
                     "layout": {
                         "type": "grid",
-                        "numColumns": 2,
+                        "numColumns": 1,
                         "numRows": 2,
                         "data": {
                             "col1Row1": {
                                 "type": "item",
                                 "column": 1,
                                 "row": 1,
-                                "itemId": "topLeft",
+                                "itemId": "exampleHeader",
                             },
                             "col1Row2": {
                                 "type": "item",
-                                "column": 2,
+                                "column": 1,
                                 "row": 2,
-                                "itemId": "bottomRight",
+                                "itemId": "numericInputExample",
                             },
                         },
+                    },
+                    "values": {
+                        "numericInputExample": 100,
                     },
                 },
             },

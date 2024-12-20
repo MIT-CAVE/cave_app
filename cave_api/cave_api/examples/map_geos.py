@@ -6,21 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "mapPage"]},
+            "order": {
+                "data": [
+                    "mapPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",
@@ -48,25 +44,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "minZoom": 2,
                     },
                     "legendGroups": {
-                        "demandZones": {
-                            "name": "Demand Zones",
+                        "coreGeographicRegions": {
+                            "name": "Core Geographic Regions",
                             "data": {
                                 "state": {
                                     "value": True,
-                                    "colorBy": "targetGrowthArea",
-                                    "colorByOptions": {
-                                        "demand": {
-                                            "min": 0,
-                                            "max": 100,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "targetGrowthArea": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
                                     "icon": "bs/BsHexagon",
+                                    "colorBy": "targetGrowthArea",
+                                    "colorByOptions": ["demand", "targetGrowthArea"],
+                                },
+                                "customGeoJson": {
+                                    "value": True,
+                                    "icon": "pi/PiMountains",
+                                    "colorBy": "isTargetArea",
+                                    "colorByOptions": ["customerSentiment", "isTargetArea"],
                                 },
                             },
                         },
@@ -87,14 +78,23 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "demand": {
                             "name": "Demand",
                             "type": "num",
-                            "enabled": True,
-                            "help": "Demand for this state",
                             "unit": "units",
+                            "help": "Demand for this state",
+                            "gradient": {
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": 100, "color": "rgb(96 2 2)"},
+                                ],
+                            },
                         },
                         "targetGrowthArea": {
                             "name": "Target Growth Area",
                             "type": "toggle",
                             "help": "Whether this state is a target growth area for the company",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {
@@ -107,6 +107,49 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                 },
+                "customGeoJson": {
+                    "type": "geo",
+                    "name": "Custom",
+                    "props": {
+                        "customerSentiment": {
+                            "name": "Customer Sentiment",
+                            "type": "num",
+                            "unit": "units",
+                            "help": "A value between 0 and 100 representing customer sentiment in this area",
+                            "gradient": {
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                ],
+                            },
+                        },
+                        "isTargetArea": {
+                            "name": "Is Target Area",
+                            "type": "toggle",
+                            "help": "Whether this area is a target area for the company",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
+                        },
+                    },
+                    "data": {
+                        "location": {
+                            "path": [
+                                [
+                                    [-75.447, 40.345],
+                                    [-77.447, 41.176],
+                                    [-78.447, 40.561],
+                                    [-75.447, 40.345],
+                                ]
+                            ],
+                        },
+                        "valueLists": {
+                            "customerSentiment": [100],
+                            "isTargetArea": [True],
+                        },
+                    },
+                },
             },
         },
         # Add a map page to the app using the example map specified above
@@ -114,14 +157,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "mapPage",
             "data": {
                 "mapPage": {
-                    "pageLayout": [
-                        {
+                    "charts": {
+                        "map": {
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
                             "maximized": True,
                         },
-                    ],
+                    },
+                    "pageLayout": ["map", None, None, None],
                 },
             },
         },

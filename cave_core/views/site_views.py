@@ -1,20 +1,42 @@
 # Framework Imports
 from django.conf import settings
-from django.contrib.auth import login, authenticate, update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
+from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
+
 
 # Internal Imports
 from cave_core import forms, models
 
-
 # Views
-def index(request):
-    """
-    Index View
 
-    Render the server configured index page
+
+@cache_page(60)
+@csrf_exempt
+def root_view(request):
+    """
+    Root view
+
+    Redirects to the login view
+    """
+    globals = models.Globals.get_solo()
+    return render(
+        request,
+        "root.html",
+        {
+            "globals": globals,
+            "user": None,
+        },
+    )
+
+
+@login_required(login_url="/cave/auth/login/")
+def info(request):
+    """
+    Info View
+
+    Render the server configured info page
     """
     # print("\n\nIndex\n")
     globals = models.Globals.get_solo()
@@ -36,7 +58,7 @@ def index(request):
     )
 
 
-@login_required(login_url="/login")
+@login_required(login_url="/cave/auth/login/")
 def page(request):
     """
     Generic page view
@@ -48,9 +70,9 @@ def page(request):
         globals = models.Globals.get_solo()
         page = models.Pages.objects.filter(show=True, url_name=request.GET.get("page")).first()
         if page == None:
-            return redirect("/")
+            return redirect("/cave/info/")
         if (not request.user.has_access()) and page.require_access:
-            return redirect("/")
+            return redirect("/cave/info/")
         return render(
             request,
             "generic.html",
@@ -64,10 +86,10 @@ def page(request):
             },
         )
     else:
-        return redirect("/")
+        return redirect("/cave/info/")
 
 
-@login_required(login_url="/login")
+@login_required(login_url="/cave/auth/login/")
 def people(request):
     """
     People view
@@ -77,7 +99,7 @@ def people(request):
     # print("\n\nPeople\n")
     globals = models.Globals.get_solo()
     if not request.user.has_access() or not globals.show_people_page:
-        return redirect("/")
+        return redirect("/cave/info/")
     if request.method == "GET":
         return render(
             request,
@@ -90,22 +112,22 @@ def people(request):
             },
         )
     else:
-        return redirect("/")
+        return redirect("/cave/info/")
 
 
-@login_required(login_url="/login")
-def app(request):
+@login_required(login_url="/cave/auth/login/")
+def workspace(request):
     """
-    App view
+    Workspace view
 
-    Users can see the app with this view
+    Users can see the app workspace with this view
     """
     # print("\n\nApp\n")
     globals = models.Globals.get_solo()
     if not request.user.has_access():
-        return redirect("/")
+        return redirect("/cave/info/")
     if not globals.show_app_page:
-        return redirect("/")
+        return redirect("/cave/info/")
     if request.method == "GET":
         appResponse = render(
             request,
@@ -123,10 +145,10 @@ def app(request):
         appResponse["Cross-Origin-Opener-Policy"] = "same-origin"
         return appResponse
     else:
-        return redirect("/")
+        return redirect("/cave/info/")
 
 
-@login_required(login_url="/login")
+@login_required(login_url="/cave/auth/login/")
 def profile(request):
     """
     User profile view
@@ -135,13 +157,13 @@ def profile(request):
     """
     globals = models.Globals.get_solo()
     if not globals.allow_user_edit_info:
-        return redirect("/")
+        return redirect("/cave/info/")
     UpdateUserForm = forms.UpdateUserForm(globals)
     if request.method == "POST":
         form = UpdateUserForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             user = form.save()
-        return redirect("/profile")
+        return redirect("/cave/profile/")
     else:
         form = UpdateUserForm(instance=request.user)
         return render(
@@ -155,103 +177,3 @@ def profile(request):
                 "submit_button": "Update Profile",
             },
         )
-
-
-@login_required(login_url="/login")
-def change_password(request):
-    """
-    Change password view
-
-    Allows users to change their password
-    """
-    if request.method == "POST":
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            user = form.save()
-            update_session_auth_hash(request, user)  # Important!
-            return redirect("/")
-    else:
-        form = PasswordChangeForm(request.user)
-    return render(
-        request,
-        "form.html",
-        {
-            "globals": models.Globals.get_solo(),
-            "access_dict": request.user.get_access_dict(),
-            "form": form,
-            "form_title": "Change Your Password",
-            "submit_button": "Change Password",
-        },
-    )
-
-def signup(request):
-    """
-    User signup view
-
-    Users can create an account with this view
-    """
-    globals = models.Globals.get_solo()
-    if not globals.allow_anyone_create_user:
-        return redirect("/")
-    if request.method == "POST":
-        form = forms.CreateUserForm(request.POST)
-        if form.is_valid():
-            new_user = form.save()
-            username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect("/")
-    else:
-        form = forms.CreateUserForm()
-    return render(
-        request,
-        "form.html",
-        {
-            "globals": globals,
-            "form": form,
-            "form_title": "Sign Up",
-            "submit_button": "Create Account",
-        },
-    )
-
-def validate_email(request):
-    """
-    Site endpoint to validate an email code and redirect back to the index view
-
-    Requires:
-    - `code`:
-    ----- What: The randomly generated code used to validate the requesting user's email address
-    ----- Type: str
-
-    Example input (GET JSON):
-
-    -----------------------------------
-    {
-    "code":"myRandomCodeHere",
-    }
-    -----------------------------------
-    """
-    user = models.CustomUser.objects.filter(email_validation_code=request.GET.get("code")).first()
-    if user:
-        if user.email_validated == False:
-            user.email_validated = True
-            user.email_validation_code = None
-            user.save()
-        return redirect("/")
-    globals = models.Globals.get_solo()
-    return render(
-        request,
-        "validation_email_failed.html",
-        {"globals": globals},
-    )
-
-@login_required
-def user_logout(request):
-    """
-    Logout view
-
-    Allows users to logout of the site
-    """
-    logout(request)
-    return redirect("/")

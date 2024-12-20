@@ -6,21 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "mapPage"]},
+            "order": {
+                "data": [
+                    "mapPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",
@@ -48,33 +44,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "minZoom": 2,
                     },
                     "legendGroups": {
-                        "transportation": {
-                            "name": "Transportation",
+                        "facilities": {
+                            "name": "Facilities",
                             "data": {
-                                "truckRoutes": {
+                                "warehouse": {
                                     "value": True,
+                                    "colorBy": "includesAutomation",
+                                    "colorByOptions": [
+                                        "capacity",
+                                        "includesAutomation",
+                                    ],
                                     "sizeBy": "capacity",
-                                    "colorBy": "preferredRoute",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 105,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "preferredRoute": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "5px",
-                                            "endSize": "10px",
-                                        },
-                                    },
+                                    "sizeByOptions": ["capacity"],
+                                    "icon": "fa6/FaWarehouse",
                                 },
                             },
                         },
@@ -84,36 +66,52 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "mapFeatures": {
             "data": {
-                "truckRoutes": {
-                    "type": "arc",
-                    "name": "Truck Routes",
+                "warehouse": {
+                    "type": "node",
+                    "name": "Warehouse",
                     "props": {
+                        "scenario": {
+                            "name": "Scenario",
+                            "type": "text",
+                            "enabled": False,
+                            "display": False,
+                            "help": "The scenario name",
+                        },
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
-                            "help": "The warehouse capacity in cubic feet",
                             "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "The warehouse capacity in cubic feet",
+                            "gradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "4px", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "size": "6px", "color": "rgb(96 2 2)"},
+                                ],
+                            },
                         },
-                        "preferredRoute": {
-                            "name": "Preferred Route",
+                        "includesAutomation": {
+                            "name": "Includes Automation",
                             "type": "toggle",
-                            "enabled": True,
-                            "help": "Whether the route is preferred",
+                            "help": "Whether the warehouse includes automation",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {
                         "location": {
-                            "startLatitude": [43.78, 39.82],
-                            "startLongitude": [-79.63, -86.18],
-                            "endLatitude": [39.82, 39.95],
-                            "endLongitude": [-86.18, -75.16],
+                            "latitude": [[-90 + (i % 90 * 2)] for i in range(90**2)],
+                            "longitude": [[-180 + (i // 90 * 4)] for i in range(90**2)],
                         },
                         "valueLists": {
-                            "capacity": [75, 105],
-                            "preferredRoute": [True, False],
+                            "capacity": [100 + i for i in range(90**2)],
+                            "includesAutomation": [i % 2 == 0 for i in range(90**2)],
+                            "scenario": [
+                                "Scenario 1" if i % 2 == 0 else "Scenario 2" for i in range(90**2)
+                            ],
                         },
                     },
                 },
@@ -124,14 +122,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "mapPage",
             "data": {
                 "mapPage": {
-                    "pageLayout": [
-                        {
+                    "charts": {
+                        "map": {
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
                             "maximized": True,
                         },
-                    ],
+                    },
+                    "pageLayout": ["map", None, None, None],
                 },
             },
         },

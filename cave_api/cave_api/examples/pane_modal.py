@@ -6,23 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1",
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0",
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
             "order": {
-                "data": ["refreshButton", "exampleModal"],
+                "data": [
+                    "exampleModal",
+                ],
             },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add a modal to the app bar
                 # This will add a button to the app bar that opens a modal
                 # Modals are used to display additional options / data to the user
@@ -36,7 +30,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
-            "paneState": {"center": {"type": "pane", "open": "exampleModal", "pin": True}},
+            "paneState": {"center": {"open": "exampleModal", "pin": True}},
             "data": {
                 # Create a modal with an example header and simple numeric input
                 # Note: This key must match the key used in the app bar above
@@ -57,6 +51,26 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "values": {
                         "numericInputExample": 100,
+                    },
+                    # Layout is used to define the layout of props in a modal or pane
+                    "layout": {
+                        "type": "grid",
+                        "numColumns": 1,
+                        "numRows": 2,
+                        "data": {
+                            "col1Row1": {
+                                "type": "item",
+                                "column": 1,
+                                "row": 1,
+                                "itemId": "exampleHeader",
+                            },
+                            "col1Row2": {
+                                "type": "item",
+                                "column": 1,
+                                "row": 2,
+                                "itemId": "numericInputExample",
+                            },
+                        },
                     },
                 },
             },

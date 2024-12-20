@@ -9,14 +9,16 @@ def get_examples():
         [
             i.replace(".py", "")
             for i in os.listdir(examples_location)
-            if i.endswith(".py") and i != "__init__.py" and i != "example_selector.py"
+            if i.endswith(".py") and not i.startswith("__")
         ]
     )
 
 
 for i in get_examples():
     example_execute_command = importlib.import_module(f"cave_api.examples.{i}").execute_command
-    session_data = example_execute_command(session_data={}, socket=Socket(silent=True), command="init")
+    session_data = example_execute_command(
+        session_data={}, socket=Socket(silent=True), command="init"
+    )
 
     x = Validator(session_data, ignore_keys=["meta"])
     if len(x.log.log) > 0:

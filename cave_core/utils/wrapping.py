@@ -1,14 +1,15 @@
 # Framework Imports
 from django.conf import settings
 from django.core.cache import cache
-from rest_framework.response import Response
+from django.http import JsonResponse
+from django.shortcuts import redirect
 
 # External Imports
 from functools import wraps
 import traceback
 
 # Internal Imports
-from cave_core.utils.broadcasting import Socket
+from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 
 
 def format_exception(e):
@@ -21,6 +22,20 @@ def format_exception(e):
         return "".join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))
     except:
         return "".join(traceback.format_exception(e))
+
+
+def redirect_logged_in_user(fn):
+    """
+    View wrapper to redirect logged in users to the app page if they try to access the login page
+    """
+
+    @wraps(fn)
+    def wrap(request):
+        if request.user.is_authenticated:
+            return redirect("/cave/router/")
+        return fn(request)
+
+    return wrap
 
 
 def api_util_response(fn):
@@ -36,12 +51,12 @@ def api_util_response(fn):
             response = fn(request)
             if not response:
                 response = {}
-            return Response({"success": True, **response})
+            return JsonResponse({"success": True, **response})
         except Exception as e:
             traceback_str = format_exception(e)
             if settings.DEBUG:
                 print(traceback_str)
-            return Response({"success": False, "error": str(e)})
+            return JsonResponse({"success": False, "error": str(e)})
 
     return wrap
 
@@ -51,9 +66,6 @@ def cache_data_version(fn):
     API view wrapper to add a cached input version check prior to executing a view
 
     This is used to block multi window users from resolving out of sync versions individually
-
-    For low level docs on django's cache framework see
-    https://docs.djangoproject.com/en/4.0/topics/cache/
     """
 
     @wraps(fn)
@@ -70,22 +82,22 @@ def cache_data_version(fn):
 
 def ws_api_app(fn):
     """
-    API view wrapper to process websocket api app calls and handle exceptions that are raised sending them back to the end user.
+    API view wrapper to process websocket api app calls and handle exceptions that
+    are raised sending them back to the end user.
     """
 
     @wraps(fn)
     def wrap(request):
-        # Store the session of the user at request time for long running sessions
+        # This needs to occur prior to fn since request.user.session can change during the fn execution.
         session = request.user.session
         try:
             fn(request)
         except Exception as e:
-            session = request.user.session
             traceback_str = format_exception(e)
             if settings.DEBUG:
                 print(traceback_str)
             # Notify the user of the exception
-            Socket(session).notify(
+            CaveWSBroadcaster(session).notify(
                 message=str(e),
                 title="Error:",
                 show=True,
@@ -93,9 +105,7 @@ def ws_api_app(fn):
                 duration=10,
                 traceback=traceback_str,
             )
-            # Turn off loading and set execution as False if the error was not raised related to executing
-            if session.executing and not session.__dict__.get("__blocked_due_to_execution__"):
-                session.set_executing(False)
-                session.broadcast_loading(False)
+            # Set the executing / loading status to false
+            session.set_loading(False)
 
     return wrap

@@ -1,3 +1,6 @@
+import time
+
+
 def execute_command(session_data, socket, command="init", **kwargs):
     # `init` is the default command that is run when a session is created
     # It should return an initial state for the app
@@ -8,23 +11,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 # See the available versions provided by the cave team here:
                 # https://react-icons.mitcave.com/versions.txt
                 # Once you select a version, you can see the available icons in the version
-                # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-                "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+                # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+                "iconUrl": "https://react-icons.mitcave.com/5.4.0"
             },
             "appBar": {
                 # Specify the order of items as they will appear in the app bar
                 "order": {
-                    "data": ["refreshButton", "myCommandButton"],
+                    "data": [
+                        "myCommandButton",
+                    ],
                 },
                 "data": {
-                    # Add a simple button to the app bar to trigger the `init` command
-                    # This is useful for resetting the app to its initial state
-                    "refreshButton": {
-                        "icon": "md/MdRefresh",
-                        "apiCommand": "init",
-                        "type": "button",
-                        "bar": "upperLeft",
-                    },
                     # `myCommandButton` is a custom button that is added to the app bar
                     # Buttons are be used to trigger custom back end logic
                     "myCommandButton": {
@@ -48,8 +45,27 @@ def execute_command(session_data, socket, command="init", **kwargs):
         session_data["appBar"]["data"]["myCommandButton"]["icon"] = (
             "md/MdLightbulb" if current_icon == "md/MdLightbulbOutline" else "md/MdLightbulbOutline"
         )
-        # Send a message to app users
-        socket.notify("Notification: `myCommand` has been triggered!")
+
+        # If you do not want to wipe the existing session data, you can set the `wipeExisting` flag to False
+        # and only pass the top level keys that you want to update
+        # session_data = {'appBar':session_data['appBar'], 'extraKwargs':{'wipeExisting':False}}
+
+        # Send a series of notifications to the end user
+        socket.notify("Priming Thrusters...", title="Initialization", theme="info", duration=3)
+        time.sleep(0.2)
+        socket.notify("Ignition...", title="Initialization", theme="info")
+        time.sleep(0.2)
+        socket.notify("Leak detected in primary power core!", title="Warning:", theme="warning")
+        time.sleep(0.2)
+        socket.notify("Engine Failure!", title="Error:", theme="error")
+        time.sleep(0.2)
+        socket.notify("Recalibrating Gravitons!", title="Attempting Fix:", theme="warning")
+        time.sleep(0.2)
+        socket.notify("Fix Succeded!", title="Attempting Fix:", theme="success")
+        time.sleep(0.2)
+        socket.notify("All Systems Normal!", title="Status:", theme="info")
+        time.sleep(0.2)
+        socket.notify("Liftoff Achieved!", title="Status:", theme="success")
         # Log a message in the console
         print("Console Log: `myCommand` has been triggered!")
         # Return the updated session data

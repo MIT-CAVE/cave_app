@@ -1,7 +1,7 @@
 <script>
   function getCustomPages(){
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', `/custom_pages/`);
+    xhr.open('GET', `/cave/custom_pages/`);
     xhr.onreadystatechange = () => {
       if(xhr.readyState === 4){
         if(xhr.status === 200){
@@ -16,7 +16,7 @@
                 link.classList.add('nav-link')
                 link.classList.add('dropdown-item')
                 link.id = 'cusom_page-'.concat(custom_page.url_name)
-                link.href = `/page/?page=${custom_page.url_name}`
+                link.href = `/cave/page/?page=${custom_page.url_name}`
                 link.appendChild(document.createTextNode(custom_page.name))
                 document.getElementById('CustomPageDropdownItems').appendChild(link)
               })

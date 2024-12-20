@@ -6,23 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
             "order": {
-                "data": ["refreshButton", "examplePane"],
+                "data": [
+                    "examplePane",
+                ],
             },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add a pane to the app bar
                 # This will add a button to the app bar that opens a pane
                 # Panes are used to display additional options / data to the user
@@ -58,6 +52,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Numeric Input Example",
                             "type": "num",
                             "help": "Help for the numeric input example",
+                            "maxValue": 100,
+                            "minValue": 0,
+                            "notation": "scientific",
+                            "notationDisplay": "x10^+",
+                            "precision": 0,
                             "unit": "units",
                         },
                         "numericSliderExample": {
@@ -74,8 +73,36 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "num",
                             "variant": "incslider",
                             "help": "Help for the incremental slider example",
-                            "valueOptions": [0,25,50,75,100],
+                            "valueOptions": [0, 25, 50, 75, 100],
                             "unit": "%",
+                        },
+                        "miscHeader": {
+                            "name": "Misc Props",
+                            "type": "head",
+                            "help": "Some help for miscelanous props",
+                        },
+                        "toggleInputExample": {
+                            "name": "Toggle Input Example",
+                            "type": "toggle",
+                            "help": "Help for the toggle input example",
+                        },
+                        "buttonInputExample": {
+                            "name": "Button Input Example",
+                            "type": "button",
+                            "apiCommand": "test",
+                            "help": "Press this button to test the api",
+                        },
+                        "pictureExample": {
+                            "name": "Picture Example",
+                            "type": "media",
+                            "variant": "picture",
+                            "help": "Click the expand button to view an enlarged version",
+                        },
+                        "videoExample": {
+                            "name": "Video Example",
+                            "type": "media",
+                            "variant": "video",
+                            "help": "Click the play button to start the video",
                         },
                         "textHeader": {
                             "name": "Text Props",
@@ -93,34 +120,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "textarea",
                             "rows": 6,
                             "help": "Help for the text area input example",
-                        },
-                        "miscHeader": {
-                            "name": "Misc Props",
-                            "type": "head",
-                            "help": "Some help for miscelanous props",
-                        },
-                        "toggleInputExample": {
-                            "name": "Toggle Input Example",
-                            "type": "toggle",
-                            "help": "Help for the toggle input example",
-                        },
-                        "buttonInputExample": {
-                            "name": "Button Input Example",
-                            "type": "button",
-                            "apiCommand": "test",
-                            "help": "Press this button tp fire the `test` command",
-                        },
-                        "pictureExample": {
-                            "name": "Picture Example",
-                            "type": "media",
-                            "variant": "picture",
-                            "help": "Click the expand button to view an enlarged version",
-                        },
-                        "videoExample": {
-                            "name": "Video Example",
-                            "type": "media",
-                            "variant": "video",
-                            "help": "Click the play button to start the video",
                         },
                         "selectorHeader": {
                             "name": "Selection Props",
@@ -197,7 +196,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "ComboBox Item Example",
                             "type": "selector",
                             "variant": "combobox",
-                            "placeholder": "Option",
+                            "placeholder": "Options",
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -205,20 +204,59 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "help": "Select an option from the combobox",
                         },
+                        "comboBoxMultiExample": {
+                            "name": "ComboBox Multi Example",
+                            "type": "selector",
+                            "variant": "comboboxMulti",
+                            "placeholder": "Select multiple options",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "help": "Select multiple options from the combobox",
+                        },
                         "nestedItemExample": {
                             "name": "Nested Item Example",
                             "type": "selector",
                             "variant": "nested",
                             "options": {
-                                "t1_b1_tw1": {"name": "Twig1", "path": ["Tree1", "Branch1"]},
-                                "t1_b1_tw2": {"name": "Twig2", "path": ["Tree1", "Branch1"]},
-                                "t1_b1_tw3": {"name": "Twig3", "path": ["Tree1", "Branch1"]},
-                                "t1_b2_tw1": {"name": "Twig1", "path": ["Tree1", "Branch2"]},
-                                "t1_b2_tw2": {"name": "Twig2", "path": ["Tree1", "Branch2"]},
-                                "t2_b1_tw1": {"name": "Twig1", "path": ["Tree2", "Branch1"]},
-                                "t2_b1_tw2": {"name": "Twig2", "path": ["Tree2", "Branch1"]},
-                                "t2_b2_tw1": {"name": "Twig1", "path": ["Tree2", "Branch2"]},
-                                "t2_b2_tw2": {"name": "Twig2", "path": ["Tree2", "Branch2"]},
+                                "t1_b1_tw1": {
+                                    "name": "Twig1",
+                                    "path": ["Tree1", "Branch1"],
+                                },
+                                "t1_b1_tw2": {
+                                    "name": "Twig2",
+                                    "path": ["Tree1", "Branch1"],
+                                },
+                                "t1_b1_tw3": {
+                                    "name": "Twig3",
+                                    "path": ["Tree1", "Branch1"],
+                                },
+                                "t1_b2_tw1": {
+                                    "name": "Twig1",
+                                    "path": ["Tree1", "Branch2"],
+                                },
+                                "t1_b2_tw2": {
+                                    "name": "Twig2",
+                                    "path": ["Tree1", "Branch2"],
+                                },
+                                "t2_b1_tw1": {
+                                    "name": "Twig1",
+                                    "path": ["Tree2", "Branch1"],
+                                },
+                                "t2_b1_tw2": {
+                                    "name": "Twig2",
+                                    "path": ["Tree2", "Branch1"],
+                                },
+                                "t2_b2_tw1": {
+                                    "name": "Twig1",
+                                    "path": ["Tree2", "Branch2"],
+                                },
+                                "t2_b2_tw2": {
+                                    "name": "Twig2",
+                                    "path": ["Tree2", "Branch2"],
+                                },
                             },
                             "help": "Select all relevant items",
                         },
@@ -238,6 +276,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Time Example",
                             "type": "date",
                             "variant": "time",
+                            "views": ["hours", "minutes", "seconds"],
                             "help": "The Eagle has landed!",
                         },
                         "dateTimeItemExample": {
@@ -246,6 +285,29 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "datetime",
                             "help": "The Eagle has landed!",
                         },
+                        "coordinateHeader": {
+                            "name": "Coordinate Props",
+                            "type": "head",
+                            "help": "Some help for Coordinate Props",
+                        },
+                        "latLngInputExample": {
+                            "name": "Lat/Lng Input Example",
+                            "type": "coordinate",
+                            "variant": "latLngInput",
+                            "help": "Help for the latLngInput example",
+                        },
+                        "latLngMapExample": {
+                            "name": "Lat/Lng Map Example",
+                            "type": "coordinate",
+                            "variant": "latLngMap",
+                            "help": "Help for the latLngMap example",
+                        },
+                        "latLngPathExample": {
+                            "name": "Lat/Lng Path Example",
+                            "type": "coordinate",
+                            "variant": "latLngPath",
+                            "help": "Help for the latLngPath example",
+                        },
                     },
                     # Specify the values for each prop listed above
                     "values": {
@@ -253,11 +315,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericInputExample": 50,
                         "numericSliderExample": 50,
                         "incrementalSliderExample": 50,
-                        "textInputExample": "Example Text Here",
-                        "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                         "toggleInputExample": True,
+                        "buttonInputExample": "Press Me!",
                         "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                        "textInputExample": "Example Text Here",
+                        "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                         "dropdownItemExample": ["option_c"],
                         "checkboxItemExample": ["option_a", "option_c"],
                         "radioItemExample": ["option_a"],
@@ -265,6 +328,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "vstepperItemExample": ["option_c"],
                         "hradioItemExample": ["option_c"],
                         "comboBoxItemExample": ["option_b"],
+                        "comboBoxMultiExample": ["option_a", "option_b"],
                         "nestedItemExample": [
                             "t1_b1_tw1",
                             "t1_b1_tw2",
@@ -275,6 +339,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
+                        "latLngInputExample": [[-71.092003, 42.360001]],
+                        "latLngMapExample": [[-71.092003, 42.360001]],
+                        "latLngPathExample": [
+                            [-71.092003, 42.360001],
+                            [-71.093003, 42.361001],
+                        ],
                     },
                     # Create a custom grid layout for the pane items
                     "layout": {
@@ -388,24 +458,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 4,
                                 "row": 6,
-                                "itemId": "hstepperItemExample",
+                                "itemId": "comboBoxMultiExample",
                             },
                             "col4Row7": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 7,
-                                "itemId": "vstepperItemExample",
+                                "itemId": "hstepperItemExample",
                             },
                             "col4Row8": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 8,
-                                "itemId": "hradioItemExample",
+                                "itemId": "vstepperItemExample",
                             },
                             "col4Row9": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 9,
+                                "itemId": "hradioItemExample",
+                            },
+                            "col4Row10": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 10,
                                 "itemId": "nestedItemExample",
                             },
                             "col5Row1": {
@@ -431,6 +507,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 5,
                                 "row": 4,
                                 "itemId": "dateTimeItemExample",
+                            },
+                            "col6Row1": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 1,
+                                "itemId": "coordinateHeader",
+                            },
+                            "col6Row2": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 2,
+                                "itemId": "latLngInputExample",
+                            },
+                            "col6Row3": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 3,
+                                "itemId": "latLngMapExample",
+                            },
+                            "col6Row4": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 4,
+                                "itemId": "latLngPathExample",
                             },
                         },
                     },

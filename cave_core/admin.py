@@ -5,6 +5,7 @@ from import_export.admin import ImportExportModelAdmin
 from solo.admin import SingletonModelAdmin
 
 # Admin site attributes
+admin.site.site_url = "/cave/info/"
 admin.site.site_title = "CAVE App Admin Site"
 admin.site.site_header = "Admin"
 admin.site.index_title = "CAVE App"
@@ -117,7 +118,15 @@ class CustomGlobalsAdmin(SingletonModelAdmin):
     fieldsets = (
         (
             "General",
-            {"fields": ("site_name", "site_logo", "primary_color", "secondary_color")},
+            {
+                "fields": (
+                    "site_name",
+                    "site_logo",
+                    "site_background",
+                    "primary_color",
+                    "secondary_color",
+                )
+            },
         ),
         (
             "User Settings",
@@ -155,16 +164,6 @@ class CustomSessionAdmin(admin.ModelAdmin):
         "team",
     ]
     search_fields = ["name", "team__name"]
-
-
-class CustomSessionDataAdmin(admin.ModelAdmin):
-    model = models.SessionData
-    list_display = ["id", "session", "data_name", "data_version"]
-    search_fields = [
-        "session__name",
-        "session__team__name",
-        "session__user__email",
-    ]
 
 
 class CustomTeamUserAdmin(admin.ModelAdmin):
@@ -258,6 +257,7 @@ class CustomGroupAdmin(admin.ModelAdmin):
         CustomGroupUserInline,
     ]
 
+
 class CustomFileStorageAdmin(admin.ModelAdmin):
     model = models.FileStorage
     list_display = [
@@ -268,6 +268,7 @@ class CustomFileStorageAdmin(admin.ModelAdmin):
     ]
     search_fields = ["name"]
 
+
 admin.site.register(models.CustomUserFull, CustomUserFullAdmin)
 admin.site.register(models.Globals, CustomGlobalsAdmin)
 admin.site.register(models.Pages, CustomPageAdmin)
@@ -276,7 +277,6 @@ admin.site.register(models.GroupUsers, CustomGroupUserAdmin)
 admin.site.register(models.Teams, CustomTeamAdmin)
 admin.site.register(models.TeamUsers, CustomTeamUserAdmin)
 admin.site.register(models.Sessions, CustomSessionAdmin)
-admin.site.register(models.SessionData, CustomSessionDataAdmin)
 admin.site.register(models.FileStorage, CustomFileStorageAdmin)
 
 

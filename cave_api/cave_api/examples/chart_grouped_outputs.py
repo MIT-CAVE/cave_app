@@ -6,21 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "chartPage"]},
+            "order": {
+                "data": [
+                    "chartPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an app bar button to launch a chart dashboard
                 "chartPage": {
                     "icon": "md/MdBarChart",
@@ -34,17 +30,34 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "chartPage",
             "data": {
                 "chartPage": {
-                    "pageLayout": [
-                        {
-                            "type": "groupedOutput",
-                            "variant": "bar",
+                    "charts": {
+                        "chart1": {
+                            "dataset": "salesData",
+                            "chartType": "bar",
+                            "stats": [
+                                {
+                                    "statId": "sales",
+                                    "aggregationType": "sum",
+                                }
+                            ],
                             "groupingId": ["product", "location"],
                             "groupingLevel": ["color", "state"],
-                            "statAggregation": "sum",
-                            "groupedOutputDataId": "salesData",
-                            "statId": "sales",
-                        }
-                    ],
+                        },
+                        "chart2": {
+                            "dataset": "salesData",
+                            "chartType": "line",
+                            "stats": [
+                                {
+                                    "statId": "sales",
+                                    "aggregationType": "divisor",
+                                    "statIdDivisor": "demand",
+                                },
+                            ],
+                            "groupingId": ["product", "location"],
+                            "groupingLevel": ["color", "state"],
+                        },
+                    },
+                    "pageLayout": ["chart1", "chart2", None, None],
                 },
             },
         },
@@ -107,31 +120,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "stats": [
                             "demand",
                             "sales",
-                            "pctDemandMet",
                         ],
                     },
                     "stats": {
                         "demand": {
                             "name": "Demand",
-                            "calculation": "demand",
                             "unit": "units",
                         },
                         "sales": {
                             "name": "Sales",
-                            "calculation": "sales",
                             "unit": "units",
-                        },
-                        "pctDemandMet": {
-                            "name": "Percent of Demand Met",
-                            "calculation": 'sales / groupSum("demand")',
-                            "precision": 2,
-                            "trailingZeros": True,
-                            "unit": "%",
-                            "unitPlacement": "after",
                         },
                     },
                     "valueLists": {
-                        "demand": [100, 108, 115, 110, 70, 78, 67, 89, 95, 100, 100, 98],
+                        "demand": [
+                            100,
+                            108,
+                            115,
+                            110,
+                            70,
+                            78,
+                            67,
+                            89,
+                            95,
+                            100,
+                            100,
+                            98,
+                        ],
                         "sales": [95, 100, 100, 98, 60, 65, 67, 75, 80, 90, 99, 98],
                     },
                     "groupLists": {

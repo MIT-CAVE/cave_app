@@ -1,6 +1,5 @@
 # Internal Imports
-from cave_core import models
-from cave_core.utils.broadcasting import Socket
+from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 from cave_core.utils.wrapping import cache_data_version, ws_api_app
 
 
@@ -34,10 +33,8 @@ def get_session_data(request):
         # Create a session and broadcast it to the user
         session = request.user.get_or_create_personal_session()
     else:
-        # Let the user know which session they are in
-        request.user.broadcast_current_session_id()
-        # Let the user know if their session is loading
-        request.user.broadcast_current_session_loading()
+        # Update the user about their session info
+        request.user.broadcast_current_session_info()
     # Broadcast any changed session data
     session.broadcast_changed_data(previous_versions=data_versions)
 
@@ -124,7 +121,7 @@ def mutate_session(request):
 
     for session_i in sessions:
         # Get the session data versions
-        session_i_pre_versions = session_i.versions
+        session_i_pre_versions = session_i.get_versions()
         # Apply the mutation only if a `data_name` is provided
         if data_name is not None:
             response = session_i.mutate(
@@ -137,7 +134,7 @@ def mutate_session(request):
                 # In the case of a synch_error broadcast a version fix to the user
                 # and break from any more session work
                 if response.get("synch_error"):
-                    Socket(request.user).notify(
+                    CaveWSBroadcaster(request.user).notify(
                         message="Oops! You are out of sync. Fix in progress...",
                         title="Warning:",
                         show=True,
@@ -150,15 +147,17 @@ def mutate_session(request):
         # Apply an api command if provided and push updated output
         if api_command is not None:
             session_i.execute_api_command(
-                command=api_command, command_keys=api_command_keys, mutate_dict=mutate_dict
+                command=api_command,
+                command_keys=api_command_keys,
+                mutate_dict=mutate_dict,
+                previous_versions=session_i_pre_versions,
+                broadcast_changes=True,
             )
-            # Broadcast any changed session data
-            session_i.broadcast_changed_data(previous_versions=session_i_pre_versions)
         # If no api command is provided, apply the mutation
         else:
-            Socket(session_i).broadcast(
+            CaveWSBroadcaster(session_i).broadcast(
                 event="mutation",
-                versions=session_i.versions,
+                versions=session_i.get_versions(),
                 data=mutate_dict,
             )
 
@@ -187,33 +186,25 @@ def get_associated_session_data(request):
 
     # Session validation
     session = request.user.session
-    # Get associated sessions
-    associated_sessions = session.get_associated_sessions(user=request.user)
-    # Session data
-    session_data = models.SessionData.objects.filter(
-        session__in=associated_sessions, data_name__in=data_names
+    # Store Previous Versions for comparison
+    previous_versions = session.get_versions()
+    # Get and replace the associated session data
+    session.replace_data(
+        data={
+            "associated": {
+                "data": {
+                    obj.id: {
+                        "name": obj.team.name + " -> " + obj.name,
+                        "data": obj.get_data(keys=data_names),
+                    }
+                    for obj in session.get_associated_sessions(user=request.user)
+                }
+            }
+        },
+        wipeExisting=False,
     )
-    # Associated Data
-    associated = {
-        obj.id: {
-            "name": obj.team.name + " -> " + obj.name,
-            "data": {},
-        }
-        for obj in associated_sessions
-    }
-    for obj in session_data:
-        associated[obj.session.id]["data"][obj.data_name] = obj.get_data()
-
-    associated_data_object = {"associated": {"data": associated}}
-
-    session.replace_data(data=associated_data_object, wipeExisting=False)
-
-    # Notify users of updates
-    Socket(session).broadcast(
-        event="overwrite",
-        versions=session.versions,
-        data=session.get_client_data(keys=["associated"]),
-    )
+    # Broadcast any changed session data
+    session.broadcast_changed_data(previous_versions=previous_versions)
 
 
 @ws_api_app

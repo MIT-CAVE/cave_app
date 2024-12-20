@@ -6,21 +6,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "mapPage"]},
+            "order": {
+                "data": [
+                    "mapPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",
@@ -53,28 +49,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "warehouse": {
                                     "value": True,
-                                    "sizeBy": "capacity",
                                     "colorBy": "includesAutomation",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 100,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "includesAutomation": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "30px",
-                                            "endSize": "45px",
-                                        },
-                                    },
+                                    "colorByOptions": [
+                                        "capacity",
+                                        "includesAutomation",
+                                    ],
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": ["capacity"],
                                     "icon": "fa6/FaWarehouse",
                                 },
                             },
@@ -99,23 +80,31 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
-                            "help": "The warehouse capacity in cubic feet",
                             "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "The warehouse capacity in cubic feet",
+                            "gradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "30px", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "size": "45px", "color": "rgb(96 2 2)"},
+                                ],
+                            },
                         },
                         "includesAutomation": {
                             "name": "Includes Automation",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Whether the warehouse includes automation",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {
                         "location": {
-                            "latitude": [43.78, 39.82],
-                            "longitude": [-79.63, -86.18],
+                            "latitude": [[43.78], [39.82]],
+                            "longitude": [[-79.63], [-86.18]],
                         },
                         "valueLists": {
                             "capacity": [100, 80],
@@ -131,14 +120,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "mapPage",
             "data": {
                 "mapPage": {
-                    "pageLayout": [
-                        {
+                    "charts": {
+                        "map": {
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
                             "maximized": True,
                         },
-                    ],
+                    },
+                    "pageLayout": ["map", None, None, None],
                 },
             },
         },

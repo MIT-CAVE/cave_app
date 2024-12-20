@@ -5,9 +5,9 @@
   </a>
   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="ProfileDropdown">
     {% if globals.allow_user_edit_info %}
-    <a class="dropdown-item" href="/profile/">Edit Profile</a>
+    <a class="dropdown-item" href="/cave/profile/">Edit Profile</a>
     {% endif %}
-    <a class="dropdown-item" href="/change_password/">Change Password</a>
+    <a class="dropdown-item" href="/cave/auth/change_password/">Change Password</a>
   </div>
 </li>
 {% if access_dict %}
@@ -16,21 +16,21 @@
 {% if user.is_staff %}
   {% if user.is_superuser %}
     <li class="nav-item">
-      <a class="nav-link" href="/admin/">
+      <a class="nav-link" href="/cave/admin/">
         <span class="material-icons">admin_panel_settings</span>
         <p class="d-inline d-lg-none mx-3">Admin</p>
       </a>
     </li>
   {% else %}
   <li class="nav-item">
-    <a class="nav-link" href="/staff/">
+    <a class="nav-link" href="/cave/staff/">
       <span class="d-inline material-icons">admin_panel_settings</span>
       <p class="d-inline d-lg-none mx-3">Admin</p>
     </a>
   </li>
   {% endif %}
 {% endif %}
-<li class="nav-item"><a class="nav-link" href="/logout">
+<li class="nav-item"><a class="nav-link" href="/cave/auth/logout/">
   <span class="material-icons">logout</span>
   <p class="d-inline d-lg-none mx-3">Logout</p>
 </a></li>

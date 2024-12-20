@@ -1,5 +1,5 @@
-
 from cave_core import models
+
 
 def execute_command(session_data, socket, command="init", **kwargs):
     # Before using this example, make sure to upload the geojson file to the server
@@ -10,34 +10,33 @@ def execute_command(session_data, socket, command="init", **kwargs):
     # Get the URL of the uploaded geojson file
     # On cloud servers, the URL generated should be a full path to a file in the file server (aws, azure, etc.)
     # On local servers, the URL generated should be preceded by "http://localhost:8000"
-    multi_route_path  = "http://localhost:8000" + models.FileStorage.objects.filter(name="multi_route").first().file_public.url
+    multi_route_path = (
+        "http://localhost:8000"
+        + models.FileStorage.objects.filter(name="multi_route").first().file_public.url
+    )
     # If you choose to use a private file on a cloud server
-        # - It is accessed the same way as the public file
-        # - The returned url will be a temporary url that can be used to access the file
-        # - The url will expire after a certain amount of time
-        # - The url can be accessed by using `file_private.url` instead of `file_public.url`
-        # - This can cause issues where users may need to reset/reinitialize the app to regain access to the file
+    # - It is accessed the same way as the public file
+    # - The returned url will be a temporary url that can be used to access the file
+    # - The url will expire after a certain amount of time
+    # - The url can be accessed by using `file_private.url` instead of `file_public.url`
+    # - This can cause issues where users may need to reset/reinitialize the app to regain access to the file
     return {
         "settings": {
             # Icon Url is used to load icons from a custom icon library
             # See the available versions provided by the cave team here:
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
-            # EG: https://react-icons.mitcave.com/5.0.1/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.0.1"
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
-            "order": {"data": ["refreshButton", "mapPage"]},
+            "order": {
+                "data": [
+                    "mapPage",
+                ],
+            },
             "data": {
-                # Add a simple button to the app bar to trigger the `init` command
-                # This is useful for resetting the app to its initial state
-                "refreshButton": {
-                    "icon": "md/MdRefresh",
-                    "apiCommand": "init",
-                    "type": "button",
-                    "bar": "upperLeft",
-                },
                 # Add an appBar button to launch a map focused dashboard
                 "mapPage": {
                     "icon": "md/MdMap",
@@ -70,28 +69,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "specialRoutes": {
                                     "value": True,
-                                    "sizeBy": "capacity",
                                     "colorBy": "preferredRoute",
-                                    "colorByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 105,
-                                            "startGradientColor": "rgba(233, 0, 0, 1)",
-                                            "endGradientColor": "rgba(96, 2, 2, 1)",
-                                        },
-                                        "preferredRoute": {
-                                            "false": "rgba(255, 0, 0, 1)",
-                                            "true": "rgba(0, 255, 0, 1)",
-                                        },
-                                    },
-                                    "sizeByOptions": {
-                                        "capacity": {
-                                            "min": 0,
-                                            "max": 80,
-                                            "startSize": "5px",
-                                            "endSize": "10px",
-                                        },
-                                    },
+                                    "colorByOptions": ["capacity", "preferredRoute"],
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": ["capacity"],
                                 },
                             },
                         },
@@ -118,17 +99,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "capacity": {
                             "name": "Capacity",
                             "type": "num",
-                            "enabled": True,
-                            "help": "The warehouse capacity in cubic feet",
                             "unit": "Cubic Feet",
-                            "legendNotation": "precision",
-                            "legendPrecision": 0,
+                            "help": "The warehouse capacity in cubic feet",
+                            "gradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "5px", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "size": "10px", "color": "rgb(96 2 2)"},
+                                ],
+                            },
                         },
                         "preferredRoute": {
                             "name": "Preferred Route",
                             "type": "toggle",
-                            "enabled": True,
                             "help": "Whether the route is preferred",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
                         },
                     },
                     "data": {
@@ -153,14 +142,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "currentPage": "mapPage",
             "data": {
                 "mapPage": {
-                    "pageLayout": [
-                        {
+                    "charts": {
+                        "map": {
                             "type": "map",
                             "mapId": "exampleMap",
                             "showToolbar": False,
                             "maximized": True,
                         },
-                    ],
+                    },
+                    "pageLayout": ["map", None, None, None],
                 },
             },
         },

@@ -1,8 +1,16 @@
   <ul class="navbar-nav mr-auto">
+    {% if globals.show_app_page and access_dict.status == 'accepted' %}
     <li class="nav-item">
-      <a class="nav-link {{home_active}}" href="/">
-        <span class="material-icons">home</span>
-        <p class="d-inline d-lg-none mx-3">Home</p>
+      <a class="nav-link {{ app_active }}" href="/cave/workspace/">
+        <span class="material-icons">interactive_space</span>
+        <p class="d-inline d-lg-none mx-3">App</p>
+      </a>
+    </li>
+    {% endif %}
+    <li class="nav-item">
+      <a class="nav-link {{home_active}}" href="/cave/info/">
+        <span class="material-icons">info</span>
+        <p class="d-inline d-lg-none mx-3">Info</p>
       </a>
     </li>
     {% if globals.show_custom_pages %}
@@ -28,18 +36,9 @@
 
       {% if globals.show_people_page %}
       <li class="nav-item">
-        <a class="nav-link {{ people_active }}" href="/people/">
+        <a class="nav-link {{ people_active }}" href="/cave/people/">
           <span class="material-icons">people</span>
           <p class="d-inline d-lg-none mx-3">People</p>
-        </a>
-      </li>
-      {% endif %}
-
-      {% if globals.show_app_page %}
-      <li class="nav-item">
-        <a class="nav-link {{ app_active }}" href="/app/">
-          <span class="material-icons">pages</span>
-          <p class="d-inline d-lg-none mx-3">App</p>
         </a>
       </li>
       {% endif %}

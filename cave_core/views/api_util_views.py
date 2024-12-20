@@ -1,33 +1,34 @@
 # Framework Imports
 from django.conf import settings
-from rest_framework.response import Response
-from rest_framework.decorators import (
-    api_view,
-    permission_classes,
-    authentication_classes,
-)
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import AllowAny
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 # Internal Imports
 from cave_core import models
 from cave_core.utils.wrapping import api_util_response
+from cave_core.utils.emailing import send_email, format_validation_email_content
 
 
-# Views
-@api_view()
-@permission_classes([AllowAny])
+# Static Views
 def health(request):
     """
     API endpoint to check server health
 
     Does not take in parameters
     """
-    return Response({"status": "pass"})
+    return JsonResponse({"status": "pass"})
 
 
-@api_view(["GET"])
-@authentication_classes((SessionAuthentication,))
+def page_not_found(request):
+    """
+    API endpoint to handle 404 errors
+
+    Does not take in parameters
+    """
+    return JsonResponse({"status": "404 page not found"})
+
+
+# API Views
 @api_util_response
 def custom_pages(request):
     """
@@ -35,8 +36,8 @@ def custom_pages(request):
 
     Does not take in parameters
     """
-    # print("\n\nCustom Pages\n")
-    # Execute View Procedures
+    if request.method != "GET":
+        raise Exception("Invalid request method")
     filter_vars = {"show": True}
     if not request.user.has_access():
         filter_vars["require_access"] = False
@@ -51,8 +52,7 @@ def custom_pages(request):
     return {"custom_pages": custom_pages}
 
 
-@api_view(["POST"])
-@authentication_classes((SessionAuthentication,))
+@login_required(login_url="/cave/auth/login/")
 @api_util_response
 def send_email_validation_code(request):
     """
@@ -68,6 +68,8 @@ def send_email_validation_code(request):
     }
     -----------------------------------
     """
+    if request.method != "POST":
+        raise Exception("Invalid request method")
     # print("\n\nSend Email Validation Code\n")
     # Globals
     globals = models.Globals.get_solo()
@@ -78,10 +80,10 @@ def send_email_validation_code(request):
     # Execute View Procedures
     code = request.user.gen_new_email_validation_code()
     domain = request.build_absolute_uri("/")[:-1]
-    email_content = utils.emailing.format_validation_email_content(
+    email_content = format_validation_email_content(
         globals=globals, user=request.user, domain=domain, code=code
     )
     if settings.PRODUCTION_MODE:
-        utils.emailing.send_email(**email_content)
+        send_email(**email_content)
     else:
         print(email_content.get("EMAIL_CONTENT"))
