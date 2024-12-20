@@ -149,7 +149,9 @@ USE_TZ = True
 # DJANGO_SOCKETS
 ################################################################
 INSTALLED_APPS = ["daphne"] + INSTALLED_APPS
-DJANGO_SOCKET_HOSTS = [{"address": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"}]
+DJANGO_SOCKET_HOSTS = [
+    {"address": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"}
+]
 ################################################################
 
 
@@ -160,14 +162,18 @@ CACHE_TIMEOUT = config("CACHE_TIMEOUT", default=0, cast=int)
 assert CACHE_TIMEOUT >= 0, "CACHE_TIMEOUT must be greater than or equal to 0"
 assert CACHE_BACKUP_INTERVAL >= 0, "CACHE_BACKUP_INTERVAL must be greater than or equal to 0"
 if CACHE_TIMEOUT > 0:
-    assert CACHE_TIMEOUT >= CACHE_BACKUP_INTERVAL*2, "CACHE_TIMEOUT must be at least twice as long as CACHE_BACKUP_INTERVAL"
-    assert CACHE_BACKUP_INTERVAL > 0, "CACHE_BACKUP_INTERVAL must be greater than 0 if CACHE_TIMEOUT is greater than 0"
+    assert (
+        CACHE_TIMEOUT >= CACHE_BACKUP_INTERVAL * 2
+    ), "CACHE_TIMEOUT must be at least twice as long as CACHE_BACKUP_INTERVAL"
+    assert (
+        CACHE_BACKUP_INTERVAL > 0
+    ), "CACHE_BACKUP_INTERVAL must be greater than 0 if CACHE_TIMEOUT is greater than 0"
 CACHE_TIMEOUT = None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT
 CACHE_BACKUP_INTERVAL = None if CACHE_BACKUP_INTERVAL == 0 else CACHE_BACKUP_INTERVAL
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"
+        "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
     }
 }
 ################################################################

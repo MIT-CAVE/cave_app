@@ -5,12 +5,13 @@ from cave_app.storage_backends import CacheStorage
 
 import json
 
+
 class Cache(CacheStorage):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.cache = cache
 
-    def get(self, data_id:str, default=None):
+    def get(self, data_id: str, default=None):
         """
         Gets the data from the cache if it exists, otherwise from the persistent storage and caches it
 
@@ -37,8 +38,8 @@ class Cache(CacheStorage):
             except:
                 pass
         return default
-    
-    def get_many(self, data_ids:list, default=None):
+
+    def get_many(self, data_ids: list, default=None):
         """
         Gets the data from the cache if it exists, otherwise from the persistent storage and caches it
 
@@ -53,9 +54,16 @@ class Cache(CacheStorage):
         Returns: dict
         """
         # print(f'Cache -> Getting: {data_ids}')
-        return {data_id:self.get(data_id, default) for data_id in data_ids}
-    
-    def set(self, data_id:str, data:dict, memory:bool=True, persistent:bool=False, timeout:[int|None]=settings.CACHE_TIMEOUT):
+        return {data_id: self.get(data_id, default) for data_id in data_ids}
+
+    def set(
+        self,
+        data_id: str,
+        data: dict,
+        memory: bool = True,
+        persistent: bool = False,
+        timeout: [int | None] = settings.CACHE_TIMEOUT,
+    ):
         """
         Sets the data in one or both of the cache and the persistent storage
 
@@ -80,7 +88,13 @@ class Cache(CacheStorage):
         if persistent:
             self.save(data_id, ContentFile(json.dumps(data)))
 
-    def set_many(self, data:dict, memory:bool=True, persistent:bool=False, timeout:[int|None]=settings.CACHE_TIMEOUT):
+    def set_many(
+        self,
+        data: dict,
+        memory: bool = True,
+        persistent: bool = False,
+        timeout: [int | None] = settings.CACHE_TIMEOUT,
+    ):
         """
         Sets the data in one or both of the cache and the persistent storage
 
@@ -96,15 +110,15 @@ class Cache(CacheStorage):
         timeout: int
             The timeout to use for the cache
             Default: settings.CACHE_TIMEOUT
-            Note: If None, the cache will not expire        
+            Note: If None, the cache will not expire
         """
         # print(f'Cache -> Setting: {data.keys()}')
-        # Note: This uses a loop instead of self.cache.set_many() because the latter 
+        # Note: This uses a loop instead of self.cache.set_many() because the latter
         #       is not always supported by cache backends (esp Serverless Caches)
         for data_id, data in data.items():
             self.set(data_id, data, memory=memory, persistent=persistent, timeout=timeout)
 
-    def persist(self, data_id:str):
+    def persist(self, data_id: str):
         """
         Persists the data in the cache to the persistent storage
 
@@ -115,7 +129,7 @@ class Cache(CacheStorage):
         if data != "__NONE__":
             self.set(data_id, data, memory=False, persistent=True)
 
-    def persist_many(self, data_ids:list):
+    def persist_many(self, data_ids: list):
         """
         Persists the data in the cache to the persistent storage
 
@@ -125,7 +139,7 @@ class Cache(CacheStorage):
         for data_id in data_ids:
             self.persist(data_id)
 
-    def delete(self, data_id:str, memory:bool=False, persistent:bool=False):
+    def delete(self, data_id: str, memory: bool = False, persistent: bool = False):
         """
         Deletes the data in one or both of the cache and the persistent storage
 
@@ -148,7 +162,7 @@ class Cache(CacheStorage):
             except:
                 pass
 
-    def delete_many(self, data_ids:list, memory:bool=False, persistent:bool=False):
+    def delete_many(self, data_ids: list, memory: bool = False, persistent: bool = False):
         """
         Deletes the data in one or both of the cache and the persistent storage
 
@@ -168,7 +182,7 @@ class Cache(CacheStorage):
         for data_id in data_ids:
             self.delete(data_id, memory=memory, persistent=persistent)
 
-    def flush(self, memory:bool=False, persistent:bool=False):
+    def flush(self, memory: bool = False, persistent: bool = False):
         """
         Flushes the cache and/or the persistent storage
 

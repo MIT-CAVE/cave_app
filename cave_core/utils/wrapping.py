@@ -22,17 +22,19 @@ def format_exception(e):
         return "".join(traceback.format_exception(etype=type(e), value=e, tb=e.__traceback__))
     except:
         return "".join(traceback.format_exception(e))
-    
+
 
 def redirect_logged_in_user(fn):
     """
     View wrapper to redirect logged in users to the app page if they try to access the login page
     """
+
     @wraps(fn)
     def wrap(request):
         if request.user.is_authenticated:
             return redirect("/cave/router/")
         return fn(request)
+
     return wrap
 
 
@@ -80,7 +82,7 @@ def cache_data_version(fn):
 
 def ws_api_app(fn):
     """
-    API view wrapper to process websocket api app calls and handle exceptions that 
+    API view wrapper to process websocket api app calls and handle exceptions that
     are raised sending them back to the end user.
     """
 

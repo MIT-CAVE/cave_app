@@ -118,7 +118,15 @@ class CustomGlobalsAdmin(SingletonModelAdmin):
     fieldsets = (
         (
             "General",
-            {"fields": ("site_name", "site_logo", "site_background", "primary_color", "secondary_color")},
+            {
+                "fields": (
+                    "site_name",
+                    "site_logo",
+                    "site_background",
+                    "primary_color",
+                    "secondary_color",
+                )
+            },
         ),
         (
             "User Settings",
@@ -249,6 +257,7 @@ class CustomGroupAdmin(admin.ModelAdmin):
         CustomGroupUserInline,
     ]
 
+
 class CustomFileStorageAdmin(admin.ModelAdmin):
     model = models.FileStorage
     list_display = [
@@ -258,6 +267,7 @@ class CustomFileStorageAdmin(admin.ModelAdmin):
         "file_private",
     ]
     search_fields = ["name"]
+
 
 admin.site.register(models.CustomUserFull, CustomUserFullAdmin)
 admin.site.register(models.Globals, CustomGlobalsAdmin)

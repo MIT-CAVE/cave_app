@@ -17,6 +17,7 @@ acceptable_events = set(
 )
 theme_list = set(["primary", "secondary", "error", "warning", "info", "success"])
 
+
 class CaveWSBroadcaster:
     def __init__(self, model_object):
         self.model_object = model_object
@@ -63,7 +64,9 @@ class CaveWSBroadcaster:
             - What: The data to broadcast
         """
         for user_id in self.model_object.get_user_ids():
-            broadcaster.broadcast(str(user_id), self.format_broadcast_payload(event=event, data=data, **kwargs))
+            broadcaster.broadcast(
+                str(user_id), self.format_broadcast_payload(event=event, data=data, **kwargs)
+            )
 
     @type_enforced.Enforcer
     def notify(

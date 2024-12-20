@@ -18,6 +18,7 @@ def health(request):
     """
     return JsonResponse({"status": "pass"})
 
+
 def page_not_found(request):
     """
     API endpoint to handle 404 errors
@@ -25,6 +26,7 @@ def page_not_found(request):
     Does not take in parameters
     """
     return JsonResponse({"status": "404 page not found"})
+
 
 # API Views
 @api_util_response
@@ -48,7 +50,6 @@ def custom_pages(request):
     if len(custom_pages) == 0:
         custom_pages = [{"name": "Currently Unavailable", "url_name": "home"}]
     return {"custom_pages": custom_pages}
-
 
 
 @login_required(login_url="/cave/auth/login/")

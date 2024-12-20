@@ -25,6 +25,7 @@ from cave_utils import Validator
 
 cache = Cache()
 
+
 class CustomUser(AbstractUser):
     """
     Extends the standard django user class to allow for additional fields for each user.
@@ -88,7 +89,7 @@ class CustomUser(AbstractUser):
         null=True,
     )
     team_ids = models.JSONField(
-        _("team_ids"), 
+        _("team_ids"),
         help_text=_("A list of team_ids for this user"),
         default=list,
         blank=True,
@@ -309,7 +310,7 @@ class CustomUser(AbstractUser):
         self.email_validation_code = get_random_string(length=16)
         self.save(update_fields=["email_validation_code"])
         return self.email_validation_code
-    
+
     def get_token(self):
         """
         Returns the token for this user
@@ -939,8 +940,8 @@ class Sessions(models.Model):
                 "data": loading,
             },
         )
-    
-    def set_loading(self, value:bool, override_block:bool=False) -> None:
+
+    def set_loading(self, value: bool, override_block: bool = False) -> None:
         """
         Set the loading status for this session and broadcast it to all users
 
@@ -949,7 +950,7 @@ class Sessions(models.Model):
         - `value`:
             - Type: bool
             - What: The value to set the executing status to
-        
+
         Optional:
 
         - `override_block`:
@@ -957,27 +958,29 @@ class Sessions(models.Model):
             - What: If True, the session will be unblocked from execution status when set to False even if it was blocked due to execution status
             - Default: False
         """
-        self.__dict__['is_executing'] = cache.get(f"session:{self.id}:executing", False)
+        self.__dict__["is_executing"] = cache.get(f"session:{self.id}:executing", False)
         if value:
-            if self.__dict__['is_executing']:
+            if self.__dict__["is_executing"]:
                 self.broadcast_loading(True)
                 # Create a block for the loading state to prevent this error from killing the execution block
-                self.__dict__['__blocked_due_to_execution__']=True
-                raise Exception("Oops! This session is already executing a task. Please wait for it to finish.")
+                self.__dict__["__blocked_due_to_execution__"] = True
+                raise Exception(
+                    "Oops! This session is already executing a task. Please wait for it to finish."
+                )
             cache.set(f"session:{self.id}:executing", True)
-            self.__dict__['is_executing'] = True
+            self.__dict__["is_executing"] = True
             self.broadcast_loading(True)
         else:
             if override_block:
-                self.__dict__['__blocked_due_to_execution__']=False
-            if self.__dict__.get('__blocked_due_to_execution__'):
+                self.__dict__["__blocked_due_to_execution__"] = False
+            if self.__dict__.get("__blocked_due_to_execution__"):
                 # Release the block to allow other errors to be thrown and stop the loading state
-                self.__dict__['__blocked_due_to_execution__']=False
+                self.__dict__["__blocked_due_to_execution__"] = False
             else:
                 cache.set(f"session:{self.id}:executing", False)
-                self.__dict__['is_executing'] = False
+                self.__dict__["is_executing"] = False
                 self.broadcast_loading(False)
-    
+
     def get_user_ids(self) -> list:
         """
         Gets all user ids for users currently in this session as a list
@@ -997,12 +1000,15 @@ class Sessions(models.Model):
             self.update_user_ids()
             user_ids = cache.get(f"session:{self.id}:user_ids", [])
         return user_ids
-    
+
     def update_user_ids(self) -> None:
         """
         Gets all user ids for users currently in this session and stores it as a json object in the cache
         """
-        cache.set(f"session:{self.id}:user_ids", list(CustomUser.objects.filter(session=self).values_list("id", flat=True)))
+        cache.set(
+            f"session:{self.id}:user_ids",
+            list(CustomUser.objects.filter(session=self).values_list("id", flat=True)),
+        )
 
     def get_versions(self) -> dict:
         """
@@ -1016,26 +1022,26 @@ class Sessions(models.Model):
               This is because only one session object can be executing at a time and the versions object is only used during execution
         """
         # Used a local object cached versions object to prevent multiple calls to the cache
-        versions = self.__dict__.get('versions')
-        if self.__dict__.get('is_executing') and versions:
+        versions = self.__dict__.get("versions")
+        if self.__dict__.get("is_executing") and versions:
             return versions
-        self.__dict__['versions'] = cache.get(f"session:{self.id}:versions", {})
-        return dict(self.__dict__['versions'])
-    
-    def set_versions(self, versions:dict) -> None:
+        self.__dict__["versions"] = cache.get(f"session:{self.id}:versions", {})
+        return dict(self.__dict__["versions"])
+
+    def set_versions(self, versions: dict) -> None:
         """
         Sets the versions object for this session
 
         Requires:
-        
+
         - `versions`:
             - Type: dict
             - What: The data keys and their current versions for this session
         """
         cache.set(f"session:{self.id}:versions", versions)
-        self.__dict__['versions'] = versions
+        self.__dict__["versions"] = versions
 
-    def get_data(self, keys:list[str]=None, client_only:bool=True, omit_keys=list()) -> dict:
+    def get_data(self, keys: list[str] = None, client_only: bool = True, omit_keys=list()) -> dict:
         """
         Returns all data for this session
 
@@ -1069,13 +1075,17 @@ class Sessions(models.Model):
         keys_to_get_from_cache = []
         for key in keys:
             # Avoid additional cache hits by checking if the data is already in the session __dict__
-            if not pamda.hasPath(path=['data', key], data=self.__dict__):
+            if not pamda.hasPath(path=["data", key], data=self.__dict__):
                 keys_to_get_from_cache.append(key)
         # If there any keys to get from the cache, get them all at once and update the session __dict__
         if len(keys_to_get_from_cache) > 0:
-            new_data = cache.get_many([f'session:{self.id}:data:{key}' for key in keys_to_get_from_cache])
+            new_data = cache.get_many(
+                [f"session:{self.id}:data:{key}" for key in keys_to_get_from_cache]
+            )
             # Get the specific key names from the cache keys
-            new_data = {key.split(':')[-1]:value for key, value in new_data.items() if value != None}
+            new_data = {
+                key.split(":")[-1]: value for key, value in new_data.items() if value != None
+            }
             # If the new data is not the same length as the keys to get from the cache, there was an error
             # Likely, some data was lost from the persistent cache
             if len(new_data.keys()) != len(keys_to_get_from_cache):
@@ -1091,10 +1101,12 @@ class Sessions(models.Model):
             for key, value in new_data.items():
                 if value != None:
                     # Update the local session __dict__ with the new data to prevent multiple cache hits later
-                    pamda.assocPath(path=['data', key], value=value, data=self.__dict__)
-        return {key:pamda.path(['data', key], self.__dict__) for key in keys}
+                    pamda.assocPath(path=["data", key], value=value, data=self.__dict__)
+        return {key: pamda.path(["data", key], self.__dict__) for key in keys}
 
-    def broadcast_changed_data(self, previous_versions: dict, broadcast_loading:bool=True) -> None:
+    def broadcast_changed_data(
+        self, previous_versions: dict, broadcast_loading: bool = True
+    ) -> None:
         """
         Broadcasts and returns all data that has changed given some set of previous versions
 
@@ -1143,10 +1155,10 @@ class Sessions(models.Model):
 
         Requires:
 
-        - `data`: 
+        - `data`:
             - Type: dict
             - What: The data to be replaced
-        - `wipeExisting`: 
+        - `wipeExisting`:
             - Type: bool
             - What: Boolean to indicate if previously existing data should be wiped
 
@@ -1168,21 +1180,30 @@ class Sessions(models.Model):
         if wipeExisting:
             data_keys = list(data.keys())
             keys_to_delete = pamda.difference(list(versions.keys()), data_keys)
-            cache.delete_many([f"session:{self.id}:data:{key}" for key in keys_to_delete], memory=True, persistent=True)
+            cache.delete_many(
+                [f"session:{self.id}:data:{key}" for key in keys_to_delete],
+                memory=True,
+                persistent=True,
+            )
             for key in keys_to_delete:
                 versions.pop(key, None)
         # Update the cache with the new data
         cache.set_many({f"session:{self.id}:data:{key}": value for key, value in data.items()})
         # Store the new data locally in the session __dict__ to prevent multiple cache hits
         for key, value in data.items():
-            pamda.assocPath(path=['data', key], value=value, data=self.__dict__)
+            pamda.assocPath(path=["data", key], value=value, data=self.__dict__)
             versions[key] = versions.get(key, 0) + 1
         # Update versions post replacement
         self.set_versions(versions)
         # print('==REPLACE DATA END==')
 
     def execute_api_command(
-        self, command, command_keys=None, mutate_dict=dict(), previous_versions=dict(), broadcast_changes=True
+        self,
+        command,
+        command_keys=None,
+        mutate_dict=dict(),
+        previous_versions=dict(),
+        broadcast_changes=True,
     ):
         """
         Execute an API Command given the current data and replaces the entire current session state
@@ -1214,7 +1235,9 @@ class Sessions(models.Model):
         """
         # print('\n==EXECUTE API COMMAND==')
         self.set_loading(True)
-        session_data = self.get_data(keys=command_keys, client_only=False, omit_keys=background_api_keys)
+        session_data = self.get_data(
+            keys=command_keys, client_only=False, omit_keys=background_api_keys
+        )
         socket = CaveWSBroadcaster(self)
         command_output = execute_command(
             session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
@@ -1249,7 +1272,9 @@ class Sessions(models.Model):
 
         # Broadcast the changed data if specified
         if broadcast_changes:
-            self.broadcast_changed_data(previous_versions=previous_versions, broadcast_loading=False)
+            self.broadcast_changed_data(
+                previous_versions=previous_versions, broadcast_loading=False
+            )
         # Update the execution state overriding any blocks
         self.set_loading(False, override_block=True)
         # print('==EXECUTE API COMMAND END==\n')
@@ -1290,9 +1315,10 @@ class Sessions(models.Model):
             )
         if not ignore_version and versions.get(data_name) != data_version:
             return {"synch_error": True}
-        self.replace_data(data={
-            data_name: pamda.assocPath(path=data_path, value=data_value, data=data)
-        }, wipeExisting=False)
+        self.replace_data(
+            data={data_name: pamda.assocPath(path=data_path, value=data_value, data=data)},
+            wipeExisting=False,
+        )
         # print('==MUTATE END==')
 
     def get_associated_sessions(self, user=None):
@@ -1332,27 +1358,29 @@ class Sessions(models.Model):
             - Type: Session object
             - What: The new session object that was created
         """
-        session_data = self.get_data(
-            keys=list(self.get_versions().keys()), 
-            client_only=False
-        )
+        session_data = self.get_data(keys=list(self.get_versions().keys()), client_only=False)
         new_session = self
         new_session.name = str(name)
         new_session.description = str(description)
         new_session.pk = None
         new_session.save()
-        cache.set_many({f"session:{new_session.id}:data:{key}": value for key, value in session_data.items()})
-        new_session.set_versions({key:0 for key in session_data.keys()})            
+        cache.set_many(
+            {f"session:{new_session.id}:data:{key}": value for key, value in session_data.items()}
+        )
+        new_session.set_versions({key: 0 for key in session_data.keys()})
         return new_session
-    
+
     def get_cache_keys(self):
         """
         Gets all cache keys for this session
         """
         keys = [f"session:{self.id}:{key}" for key in ["versions", "executing", "user_ids"]]
-        keys += [f"session:{self.id}:data:{key}" for key in list(cache.get(f"session:{self.id}:versions", {}).keys())]
+        keys += [
+            f"session:{self.id}:data:{key}"
+            for key in list(cache.get(f"session:{self.id}:versions", {}).keys())
+        ]
         return keys
-    
+
     def persist_cache_data(self):
         """
         Persists the current session data to the persistent cache
@@ -1399,12 +1427,8 @@ class FileStorage(models.Model):
     """
     Model for storing arbitrary files for access by the api
     """
-    name = models.CharField(
-        _("name"), 
-        max_length=128, 
-        help_text=_("Name of the file"),
-        unique=True
-    )
+
+    name = models.CharField(_("name"), max_length=128, help_text=_("Name of the file"), unique=True)
     file_public = models.FileField(
         _("File Public"),
         upload_to="file_storage",
@@ -1435,13 +1459,12 @@ class FileStorage(models.Model):
     class Meta:
         verbose_name = _("File Storage")
         verbose_name_plural = _("File Storage")
-        ordering = (
-            "name",
-        )
+        ordering = ("name",)
 
     # Methods
     def __str__(self):
         return f"{self.name}"
+
 
 # Signals
 @receiver(post_delete, sender=Sessions, dispatch_uid="execute_handle_session_on_delete")
@@ -1451,11 +1474,7 @@ def handle_session_on_delete(sender, instance, **kwargs):
     """
     instance.team.update_sessions_list()
     # Clear the data from the cache and persistent cache if present
-    cache.delete_many(
-        instance.get_cache_keys(),
-        memory=True,
-        persistent=True
-    )
+    cache.delete_many(instance.get_cache_keys(), memory=True, persistent=True)
 
 
 @receiver(post_save, sender=TeamUsers, dispatch_uid="update_team_ids_on_save")
@@ -1471,6 +1490,7 @@ def update_team_ids(sender, instance, **kwargs):
 def create_personal_team(sender, instance, created, **kwargs):
     if created:
         instance.create_personal_team()
+
 
 # Services
 session_persistence_service(cache=cache, Sessions=Sessions)

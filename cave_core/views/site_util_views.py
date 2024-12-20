@@ -1,5 +1,4 @@
 # Framework Imports
-from django.conf import settings
 from django.contrib.auth import login, authenticate, update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
@@ -21,7 +20,7 @@ def app_router(request):
     Redirects to the correct app view based on user access
     """
     globals = models.Globals.get_solo()
-    if globals.show_app_page and request.user.get_access_dict().get("status") == 'accepted':
+    if globals.show_app_page and request.user.get_access_dict().get("status") == "accepted":
         return redirect("/cave/workspace/")
     return redirect("/cave/info/")
 
@@ -52,6 +51,7 @@ def change_password(request):
             "submit_button": "Change Password",
         },
     )
+
 
 @redirect_logged_in_user
 def signup(request):
@@ -84,6 +84,7 @@ def signup(request):
             "submit_button": "Create",
         },
     )
+
 
 @redirect_logged_in_user
 def login_view(request):
@@ -122,6 +123,7 @@ def login_view(request):
         },
     )
 
+
 def validate_email(request):
     """
     Site endpoint to validate an email code and redirect back to the index view
@@ -150,10 +152,9 @@ def validate_email(request):
     return render(
         request,
         "validation_email_failed.html",
-        {
-            "globals": globals
-        },
+        {"globals": globals},
     )
+
 
 @login_required
 def user_logout(request):

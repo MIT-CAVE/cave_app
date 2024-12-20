@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
 from cave_core.utils.cache import Cache
 
+
 class Command(BaseCommand):
-    help = 'Clearing the Cache'
+    help = "Clearing the Cache"
 
     def handle(self, *args, **options):
         # Your command logic here

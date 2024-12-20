@@ -103,15 +103,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "latitude": [[-90 + (i%90*2)] for i in range(90**2)],
-                            "longitude": [[-180 + (i//90*4)] for i in range(90**2)],
+                            "latitude": [[-90 + (i % 90 * 2)] for i in range(90**2)],
+                            "longitude": [[-180 + (i // 90 * 4)] for i in range(90**2)],
                         },
                         "valueLists": {
                             "capacity": [100 + i for i in range(90**2)],
                             "includesAutomation": [i % 2 == 0 for i in range(90**2)],
                             "scenario": [
-                                "Scenario 1" if i % 2 == 0 else "Scenario 2"
-                                for i in range(90**2)
+                                "Scenario 1" if i % 2 == 0 else "Scenario 2" for i in range(90**2)
                             ],
                         },
                     },

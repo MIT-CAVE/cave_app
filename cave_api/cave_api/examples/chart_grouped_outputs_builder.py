@@ -232,18 +232,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     # Select the appropriate columns and pivot them to be used in the grouped outputs
-                    "valueLists": pamda.pivot(
-                        pamda.project(["sales", "demand"], example_data)
-                    ),
+                    "valueLists": pamda.pivot(pamda.project(["sales", "demand"], example_data)),
                     # Get the relevant group ids given each item in the base data
                     "groupLists": {
-                        "location": [
-                            location_group_builder.get_id(i)
-                            for i in location_group_data
-                        ],
-                        "product": [
-                            product_group_builder.get_id(i) for i in product_group_data
-                        ],
+                        "location": [location_group_builder.get_id(i) for i in location_group_data],
+                        "product": [product_group_builder.get_id(i) for i in product_group_data],
                     },
                 },
             },

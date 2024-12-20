@@ -147,11 +147,11 @@ def mutate_session(request):
         # Apply an api command if provided and push updated output
         if api_command is not None:
             session_i.execute_api_command(
-                command=api_command, 
-                command_keys=api_command_keys, 
+                command=api_command,
+                command_keys=api_command_keys,
                 mutate_dict=mutate_dict,
                 previous_versions=session_i_pre_versions,
-                broadcast_changes=True
+                broadcast_changes=True,
             )
         # If no api command is provided, apply the mutation
         else:
@@ -190,14 +190,18 @@ def get_associated_session_data(request):
     previous_versions = session.get_versions()
     # Get and replace the associated session data
     session.replace_data(
-        data={"associated": {"data": {
-            obj.id: {
-                "name": obj.team.name + " -> " + obj.name,
-                "data": obj.get_data(keys=data_names),
+        data={
+            "associated": {
+                "data": {
+                    obj.id: {
+                        "name": obj.team.name + " -> " + obj.name,
+                        "data": obj.get_data(keys=data_names),
+                    }
+                    for obj in session.get_associated_sessions(user=request.user)
+                }
             }
-            for obj in session.get_associated_sessions(user=request.user)
-        }}},
-        wipeExisting=False
+        },
+        wipeExisting=False,
     )
     # Broadcast any changed session data
     session.broadcast_changed_data(previous_versions=previous_versions)

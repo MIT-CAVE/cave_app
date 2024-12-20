@@ -7,5 +7,6 @@ websocket_urlpatterns = [
     path("cave/ws/", SocketServer.as_asgi),
 ]
 
+
 def get_ws_asgi_application():
     return DRFTokenAuthMiddleware(URLRouter(websocket_urlpatterns))

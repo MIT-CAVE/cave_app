@@ -203,8 +203,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "color": "rgb(233 0 0)", "size": "5px", "height": "10px"},
-                                    {"value": "max", "color": "rgb(96 2 2)", "size": "10px", "height": "40px"},
+                                    {
+                                        "value": "min",
+                                        "color": "rgb(233 0 0)",
+                                        "size": "5px",
+                                        "height": "10px",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(96 2 2)",
+                                        "size": "10px",
+                                        "height": "40px",
+                                    },
                                 ],
                             },
                         },
@@ -256,8 +266,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "size": "5px", "color": "rgb(233 0 0)", "height": "10px"},
-                                    {"value": "max", "size": "10px", "color": "rgb(96 2 2)", "height": "40px"},
+                                    {
+                                        "value": "min",
+                                        "size": "5px",
+                                        "color": "rgb(233 0 0)",
+                                        "height": "10px",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "size": "10px",
+                                        "color": "rgb(96 2 2)",
+                                        "height": "40px",
+                                    },
                                 ],
                             },
                         },

@@ -1,4 +1,6 @@
 import time
+
+
 def execute_command(session_data, socket, command="init", **kwargs):
     # `init` is the default command that is run when a session is created
     # It should return an initial state for the app
@@ -43,32 +45,26 @@ def execute_command(session_data, socket, command="init", **kwargs):
         session_data["appBar"]["data"]["myCommandButton"]["icon"] = (
             "md/MdLightbulb" if current_icon == "md/MdLightbulbOutline" else "md/MdLightbulbOutline"
         )
-        
+
         # If you do not want to wipe the existing session data, you can set the `wipeExisting` flag to False
         # and only pass the top level keys that you want to update
         # session_data = {'appBar':session_data['appBar'], 'extraKwargs':{'wipeExisting':False}}
 
         # Send a series of notifications to the end user
-        socket.notify(
-            "Priming Thrusters...", title="Initialization", theme="info", duration=3
-        )
-        time.sleep(.2)
+        socket.notify("Priming Thrusters...", title="Initialization", theme="info", duration=3)
+        time.sleep(0.2)
         socket.notify("Ignition...", title="Initialization", theme="info")
-        time.sleep(.2)
-        socket.notify(
-            "Leak detected in primary power core!", title="Warning:", theme="warning"
-        )
-        time.sleep(.2)
+        time.sleep(0.2)
+        socket.notify("Leak detected in primary power core!", title="Warning:", theme="warning")
+        time.sleep(0.2)
         socket.notify("Engine Failure!", title="Error:", theme="error")
-        time.sleep(.2)
-        socket.notify(
-            "Recalibrating Gravitons!", title="Attempting Fix:", theme="warning"
-        )
-        time.sleep(.2)
+        time.sleep(0.2)
+        socket.notify("Recalibrating Gravitons!", title="Attempting Fix:", theme="warning")
+        time.sleep(0.2)
         socket.notify("Fix Succeded!", title="Attempting Fix:", theme="success")
-        time.sleep(.2)
+        time.sleep(0.2)
         socket.notify("All Systems Normal!", title="Status:", theme="info")
-        time.sleep(.2)
+        time.sleep(0.2)
         socket.notify("Liftoff Achieved!", title="Status:", theme="success")
         # Log a message in the console
         print("Console Log: `myCommand` has been triggered!")

@@ -30,9 +30,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "panes": {
-            "paneState": {
-                "center": {"open": "exampleModal", "pin": True}
-            },
+            "paneState": {"center": {"open": "exampleModal", "pin": True}},
             "data": {
                 # Create a modal with an example header and simple numeric input
                 # Note: This key must match the key used in the app bar above

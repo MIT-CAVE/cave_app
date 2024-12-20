@@ -11,6 +11,7 @@ from cave_core import forms, models
 
 # Views
 
+
 @cache_page(60)
 @csrf_exempt
 def root_view(request):
