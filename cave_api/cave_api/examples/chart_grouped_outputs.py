@@ -31,7 +31,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "chartPage": {
                     "charts": {
-                        "chart": {
+                        "chart1": {
                             "dataset": "salesData",
                             "chartType": "bar",
                             "stats": [
@@ -42,9 +42,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             ],
                             "groupingId": ["product", "location"],
                             "groupingLevel": ["color", "state"],
-                        }
+                        },
+                        "chart2": {
+                            "dataset": "salesData",
+                            "chartType": "line",
+                            "stats": [
+                                {
+                                    "statId": "sales",
+                                    "aggregationType": "divisor",
+                                    "statIdDivisor": "demand",
+                                },
+                            ],
+                            "groupingId": ["product", "location"],
+                            "groupingLevel": ["color", "state"],
+                        },
                     },
-                    "pageLayout": ["chart", None, None, None],
+                    "pageLayout": ["chart1", "chart2", None, None],
                 },
             },
         },

@@ -137,6 +137,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "buttonExport",
                     "dash1",
                     "dash2",
+                    "dash3",
                 ],
             },
             "data": {
@@ -167,6 +168,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "dash2": {
                     "type": "page",
                     "icon": "md/MdInsertChartOutlined",
+                    "bar": "lowerLeft",
+                },
+                "dash3": {
+                    "type": "page",
+                    "icon": "fa/FaChartArea",
                     "bar": "lowerLeft",
                 },
                 "exampleModal": {
@@ -812,6 +818,55 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     ],
                     "lockedLayout": False,
                 },
+                "dash3": {
+                    "charts": {
+                        # mixed chart
+                        "chart1": {
+                            "type": "groupedOutput",
+                            "dataset": "locationGroup",
+                            "chartType": "mixed",
+                            "groupingId": ["sku", "location"],
+                            "groupingLevel": ["size", "state"],
+                            "stats": [
+                                # stat[0] = left stat
+                                {
+                                    "statId": "numericStatExampleA",
+                                    "aggregationType": "sum",
+                                },
+                                # stat[1] = right stat
+                                {
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "sum",
+                                },
+                            ],
+                            "chartOptions": {
+                                "leftChartType": "bar",
+                                "rightChartType": "cumulative_line",
+                            },
+                        },
+                        # table chart
+                        "chart2": {
+                            "type": "groupedOutput",
+                            "dataset": "locationGroup",
+                            "chartType": "table",
+                            "groupingId": ["sku"],
+                            "groupingLevel": ["size"],
+                            "stats": [
+                                {
+                                    "statId": "numericStatExampleA",
+                                    "aggregationType": "divisor",
+                                    "statIdDivisor": "numericStatExampleB",
+                                },
+                                {
+                                    "statId": "numericStatExampleB",
+                                    "aggregationType": "sum",
+                                },
+                            ],
+                        },
+                    },
+                    "pageLayout": ["chart1", "chart2", None, None],
+                },
+            
             },
         },
         "maps": {

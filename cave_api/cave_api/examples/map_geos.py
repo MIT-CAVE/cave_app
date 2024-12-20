@@ -44,14 +44,20 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "minZoom": 2,
                     },
                     "legendGroups": {
-                        "demandZones": {
-                            "name": "Demand Zones",
+                        "coreGeographicRegions": {
+                            "name": "Core Geographic Regions",
                             "data": {
                                 "state": {
                                     "value": True,
-                                    "icon": "pi/PiMountains",
+                                    "icon": "bs/BsHexagon",
                                     "colorBy": "targetGrowthArea",
                                     "colorByOptions": ["demand", "targetGrowthArea"],
+                                },
+                                "customGeoJson": {
+                                    "value": True,
+                                    "icon": "pi/PiMountains",
+                                    "colorBy": "isTargetArea",
+                                    "colorByOptions": ["customerSentiment", "isTargetArea"],
                                 },
                             },
                         },
@@ -98,6 +104,49 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "demand": [50, 80, 75],
                             "targetGrowthArea": [False, False, True],
+                        },
+                    },
+                },
+                "customGeoJson": {
+                    "type": "geo",
+                    "name": "Custom",
+                    "props": {
+                        "customerSentiment": {
+                            "name": "Customer Sentiment",
+                            "type": "num",
+                            "unit": "units",
+                            "help": "A value between 0 and 100 representing customer sentiment in this area",
+                            "gradient": {
+                                "data": [
+                                    {"value": "min", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "color": "rgb(96 2 2)"},
+                                ],
+                            },
+                        },
+                        "isTargetArea": {
+                            "name": "Is Target Area",
+                            "type": "toggle",
+                            "help": "Whether this area is a target area for the company",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
+                        },
+                    },
+                    "data": {
+                        "location": {
+                            "path": [
+                                [
+                                    [-75.447, 40.345],
+                                    [-77.447, 41.176],
+                                    [-78.447, 40.561],
+                                    [-75.447, 40.345],
+                                ]
+                            ],
+                        },
+                        "valueLists": {
+                            "customerSentiment": [100],
+                            "isTargetArea": [True],
                         },
                     },
                 },

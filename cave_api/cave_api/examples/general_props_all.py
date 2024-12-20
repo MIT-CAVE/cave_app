@@ -52,6 +52,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Numeric Input Example",
                             "type": "num",
                             "help": "Help for the numeric input example",
+                            "maxValue": 100,
+                            "minValue": 0,
+                            "notation": "scientific",
+                            "notationDisplay": "x10^+",
+                            "precision": 0,
                             "unit": "units",
                         },
                         "numericSliderExample": {
@@ -71,6 +76,34 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "valueOptions": [0, 25, 50, 75, 100],
                             "unit": "%",
                         },
+                        "miscHeader": {
+                            "name": "Misc Props",
+                            "type": "head",
+                            "help": "Some help for miscelanous props",
+                        },
+                        "toggleInputExample": {
+                            "name": "Toggle Input Example",
+                            "type": "toggle",
+                            "help": "Help for the toggle input example",
+                        },
+                        "buttonInputExample": {
+                            "name": "Button Input Example",
+                            "type": "button",
+                            "apiCommand": "test",
+                            "help": "Press this button to test the api",
+                        },
+                        "pictureExample": {
+                            "name": "Picture Example",
+                            "type": "media",
+                            "variant": "picture",
+                            "help": "Click the expand button to view an enlarged version",
+                        },
+                        "videoExample": {
+                            "name": "Video Example",
+                            "type": "media",
+                            "variant": "video",
+                            "help": "Click the play button to start the video",
+                        },
                         "textHeader": {
                             "name": "Text Props",
                             "type": "head",
@@ -87,34 +120,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "textarea",
                             "rows": 6,
                             "help": "Help for the text area input example",
-                        },
-                        "miscHeader": {
-                            "name": "Misc Props",
-                            "type": "head",
-                            "help": "Some help for miscelanous props",
-                        },
-                        "toggleInputExample": {
-                            "name": "Toggle Input Example",
-                            "type": "toggle",
-                            "help": "Help for the toggle input example",
-                        },
-                        "buttonInputExample": {
-                            "name": "Button Input Example",
-                            "type": "button",
-                            "apiCommand": "test",
-                            "help": "Press this button tp fire the `test` command",
-                        },
-                        "pictureExample": {
-                            "name": "Picture Example",
-                            "type": "media",
-                            "variant": "picture",
-                            "help": "Click the expand button to view an enlarged version",
-                        },
-                        "videoExample": {
-                            "name": "Video Example",
-                            "type": "media",
-                            "variant": "video",
-                            "help": "Click the play button to start the video",
                         },
                         "selectorHeader": {
                             "name": "Selection Props",
@@ -191,7 +196,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "ComboBox Item Example",
                             "type": "selector",
                             "variant": "combobox",
-                            "placeholder": "Option",
+                            "placeholder": "Options",
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -271,6 +276,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Time Example",
                             "type": "date",
                             "variant": "time",
+                            "views": ["hours", "minutes", "seconds"],
                             "help": "The Eagle has landed!",
                         },
                         "dateTimeItemExample": {
@@ -279,6 +285,29 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "datetime",
                             "help": "The Eagle has landed!",
                         },
+                        "coordinateHeader": {
+                            "name": "Coordinate Props",
+                            "type": "head",
+                            "help": "Some help for Coordinate Props",
+                        },
+                        "latLngInputExample": {
+                            "name": "Lat/Lng Input Example",
+                            "type": "coordinate",
+                            "variant": "latLngInput",
+                            "help": "Help for the latLngInput example",
+                        },
+                        "latLngMapExample": {
+                            "name": "Lat/Lng Map Example",
+                            "type": "coordinate",
+                            "variant": "latLngMap",
+                            "help": "Help for the latLngMap example",
+                        },
+                        "latLngPathExample": {
+                            "name": "Lat/Lng Path Example",
+                            "type": "coordinate",
+                            "variant": "latLngPath",
+                            "help": "Help for the latLngPath example",
+                        },
                     },
                     # Specify the values for each prop listed above
                     "values": {
@@ -286,11 +315,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericInputExample": 50,
                         "numericSliderExample": 50,
                         "incrementalSliderExample": 50,
-                        "textInputExample": "Example Text Here",
-                        "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                         "toggleInputExample": True,
+                        "buttonInputExample": "Press Me!",
                         "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                        "textInputExample": "Example Text Here",
+                        "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                         "dropdownItemExample": ["option_c"],
                         "checkboxItemExample": ["option_a", "option_c"],
                         "radioItemExample": ["option_a"],
@@ -309,6 +339,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
+                        "latLngInputExample": [[-71.092003, 42.360001]],
+                        "latLngMapExample": [[-71.092003, 42.360001]],
+                        "latLngPathExample": [
+                            [-71.092003, 42.360001],
+                            [-71.093003, 42.361001],
+                        ],
                     },
                     # Create a custom grid layout for the pane items
                     "layout": {
@@ -471,6 +507,30 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 5,
                                 "row": 4,
                                 "itemId": "dateTimeItemExample",
+                            },
+                            "col6Row1": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 1,
+                                "itemId": "coordinateHeader",
+                            },
+                            "col6Row2": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 2,
+                                "itemId": "latLngInputExample",
+                            },
+                            "col6Row3": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 3,
+                                "itemId": "latLngMapExample",
+                            },
+                            "col6Row4": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 4,
+                                "itemId": "latLngPathExample",
                             },
                         },
                     },

@@ -47,7 +47,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "transportation": {
                             "name": "Transportation",
                             "data": {
-                                "unusualRoutes": {
+                                "geoJsonRoutes": {
+                                    "value": True,
+                                    "colorBy": "preferredRoute",
+                                    "colorByOptions": ["capacity", "preferredRoute"],
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": ["capacity"],
+                                },
+                                "customRoutes": {
                                     "value": True,
                                     "colorBy": "preferredRoute",
                                     "colorByOptions": ["capacity", "preferredRoute"],
@@ -62,9 +69,62 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "mapFeatures": {
             "data": {
-                "unusualRoutes": {
+                "geoJsonRoutes": {
                     "type": "arc",
-                    "name": "Unusual Routes",
+                    "name": "GeoJson Routes",
+                    "geoJson": {
+                        # geoJsonLayer must be a URL pointing to a raw geojson file
+                        # Local file support is not supported
+                        # To upload your own geojson file, use a service like GitHub and upload your file there
+                        # Then copy the raw URL and paste it in the geoJsonLayer field to use it
+                        # See data in https://github.com/MIT-CAVE/cave_app_extras/tree/main/example_data
+                        "geoJsonLayer": "https://raw.githubusercontent.com/MIT-CAVE/cave_app_extras/main/example_data/example.geojson",
+                        # geoJsonProp is the property in the geoJson file that contains the id you specify in the data.location.geoJsonValue field
+                        "geoJsonProp": "arc_id",
+                    },
+                    "props": {
+                        "capacity": {
+                            "name": "Capacity",
+                            "type": "num",
+                            "unit": "Cubic Feet",
+                            "help": "The route capacity in shipments possible per week.",
+                            "gradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {"value": "min", "size": "5px", "color": "rgb(233 0 0)"},
+                                    {"value": "max", "size": "10px" , "color": "rgb(96 2 2)"},
+                                ],
+                            },
+                        },
+                        "preferredRoute": {
+                            "name": "Preferred Route",
+                            "type": "toggle",
+                            "help": "Whether the route is preferred",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
+                        },
+                    },
+                    "data": {
+                        "location": {
+                            # geoJsonValue must be a list of ids that match the geoJsonProp in the geoJson file
+                            # The order of the ids must match the order of the values in the data.values fields
+                            "geoJsonValue": [
+                                "toronto-pittsburgh-indianapolis",
+                                "souix-falls-little-rock-memphis",
+                            ],
+                        },
+                        "valueLists": {
+                            "capacity": [65, 85],
+                            "preferredRoute": [True, False],
+                        },
+                    },
+                },
+                "customRoutes": {
+                    "type": "arc",
+                    "name": "Custom Routes",
                     "props": {
                         "capacity": {
                             "name": "Capacity",
