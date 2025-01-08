@@ -114,7 +114,7 @@ class CustomUser(AbstractUser):
         # Query all session data:
         # Broadcast the new session data
         self.broadcast_current_session_info()
-        session.broadcast_changed_data(previous_versions={})
+        session.broadcast_changed_data(previous_versions={}, force_overwrite=True)
 
     @type_enforced.Enforcer
     def create_session(self, session_name: str, team_id: [int, str], session_description: str = ""):
@@ -1105,7 +1105,7 @@ class Sessions(models.Model):
         return {key: pamda.path(["data", key], self.__dict__) for key in keys}
 
     def broadcast_changed_data(
-        self, previous_versions: dict, broadcast_loading: bool = True
+        self, previous_versions: dict, broadcast_loading: bool = True, force_overwrite: bool = False
     ) -> None:
         """
         Broadcasts and returns all data that has changed given some set of previous versions
@@ -1122,6 +1122,12 @@ class Sessions(models.Model):
             - Type: bool
             - What: If True, the loading state will be broadcasted to all users before and after the data is broadcasted
             - Default: True
+        - `force_overwrite`:
+            - Type: bool
+            - What: If True, the data will be broadcasted to the client to force an update (even with matching versions) and will trigger reloading client side 
+            - Default: False
+            - Note: Used primarily for switching between sessions
+
         """
         # print('==BROADCAST CHANGED DATA==')
         # Fill in missing session data if none is present
@@ -1140,10 +1146,13 @@ class Sessions(models.Model):
 
         if broadcast_loading:
             self.broadcast_loading(True)
+        # Pass force overwrite as an extra kwarg to keep backwards compatibiiity
+        extra_kwargs = {"forceOverwrite": True} if force_overwrite else {}
         CaveWSBroadcaster(self).broadcast(
             event="overwrite",
             versions=versions,
             data=data,
+            **extra_kwargs,
         )
         if broadcast_loading:
             self.broadcast_loading(False)
