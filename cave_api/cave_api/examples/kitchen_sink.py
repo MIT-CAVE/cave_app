@@ -880,7 +880,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "raster",
                                 # EG: See a list of raster sources based on OSM here:
                                 # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
-                                "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+                                "tiles": [
+                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                ],
                                 "tileSize": 256,
                                 "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
                             },
@@ -1265,7 +1267,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "size": "15px",
                                         "label": "Small",
                                     },
-                                    {"value": "max", "color": "rgb(96 2 2)", "size": "30px"},
+                                    {
+                                        "value": "max",
+                                        "color": "rgb(96 2 2)",
+                                        "size": "30px",
+                                    },
                                 ],
                             },
                             "help": "Help for numeric prop example A",
@@ -1533,11 +1539,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "precision": 5,
                                 "data": [
                                     {
-                                        "timeValues": {
-                                            0: {"value": 50},
-                                            1: {"value": 0},
-                                            2: {"value": 20},
-                                        },
+                                        "value": 0,
                                         "color": "rgb(233 0 0)",
                                         "size": "30px",
                                     },
@@ -1709,7 +1711,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                         "size": "5px",
                                         "label": "Lo",
                                     },
-                                    {"value": 10, "size": "40px", "color": "rgb(150, 1, 1)"},
+                                    {
+                                        "value": 10,
+                                        "size": "40px",
+                                        "color": "rgb(150 1 1)",
+                                    },
                                     {
                                         "value": 250,
                                         "color": "rgb(96 2 2)",
@@ -1762,27 +1768,27 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": 1,
-                                        "color": "rgb(200, 230, 255)",
+                                        "color": "rgb(200 230 255)",
                                         "label": "Very Sparse",
                                     },
                                     {
                                         "value": 100,
-                                        "color": "rgb(120, 180, 240)",
+                                        "color": "rgb(120 180 240)",
                                         "label": "Sparse",
                                     },
                                     {
                                         "value": 1000,
-                                        "color": "rgb(50, 130, 220)",
+                                        "color": "rgb(50 130 220)",
                                         "label": "Moderate",
                                     },
                                     {
                                         "value": 5000,
-                                        "color": "rgb(255, 140, 0)",
+                                        "color": "rgb(255 140 0)",
                                         "label": "Dense",
                                     },
                                     {
                                         "value": 10000,
-                                        "color": "rgb(255, 0, 0)",
+                                        "color": "rgb(255 0 0)",
                                         "label": "Very Dense",
                                     },
                                 ],
@@ -2187,15 +2193,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")
         time.sleep(3)
-        socket.notify("Priming Thrusters...", title="Initialization", theme="info", duration=3)
+        socket.notify(
+            "Priming Thrusters...", title="Initialization", theme="info", duration=3
+        )
         time.sleep(3)
         socket.notify("Ignition...", title="Initialization", theme="info")
         time.sleep(3)
-        socket.notify("Leak detected in primary power core!", title="Warning:", theme="warning")
+        socket.notify(
+            "Leak detected in primary power core!", title="Warning:", theme="warning"
+        )
         time.sleep(3)
         socket.notify("Engine Failure!", title="Error:", theme="error")
         time.sleep(3)
-        socket.notify("Recalibrating Gravitons!", title="Attempting Fix:", theme="warning")
+        socket.notify(
+            "Recalibrating Gravitons!", title="Attempting Fix:", theme="warning"
+        )
         time.sleep(3)
         socket.notify("Fix Succeded!", title="Attempting Fix:", theme="success")
         time.sleep(3)
