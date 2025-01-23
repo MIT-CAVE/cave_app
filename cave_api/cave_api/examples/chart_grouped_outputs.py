@@ -42,6 +42,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             ],
                             "groupingId": ["product", "location"],
                             "groupingLevel": ["color", "state"],
+                            "xAxisOrder": "value_descending",
                         },
                         "chart2": {
                             "dataset": "salesData",
