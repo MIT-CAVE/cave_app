@@ -86,8 +86,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "size": "4px", "color": "rgb(233 0 0)"},
-                                    {"value": "max", "size": "6px", "color": "rgb(96 2 2)"},
+                                    {
+                                        "value": "min",
+                                        "size": "4px",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "size": "6px",
+                                        "color": "rgb(96 2 2)",
+                                    },
                                 ],
                             },
                         },
@@ -110,7 +118,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "capacity": [100 + i for i in range(90**2)],
                             "includesAutomation": [i % 2 == 0 for i in range(90**2)],
                             "scenario": [
-                                "Scenario 1" if i % 2 == 0 else "Scenario 2" for i in range(90**2)
+                                "Scenario 1" if i % 2 == 0 else "Scenario 2"
+                                for i in range(90**2)
                             ],
                         },
                     },
@@ -126,7 +135,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "map": {
                             "type": "map",
                             "mapId": "exampleMap",
-                            "showToolbar": False,
                             "maximized": True,
                         },
                     },
