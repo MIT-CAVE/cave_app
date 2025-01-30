@@ -14,7 +14,7 @@
   ">
     <iframe
       id="app-frame"
-      src="{{ static_url }}/{{ globals.static_app_url_path }}"
+      src="{{ static_url }}/{{ globals.static_app_url_path|default:'' }}"
       onload="onIframeLoad(this)"
       frameBorder="0"
       style="
