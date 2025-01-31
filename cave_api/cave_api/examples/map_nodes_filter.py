@@ -76,6 +76,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": False,
                             "display": False,
                             "help": "The scenario name",
+                            "allowFiltering": False,  # This prop cannot be used for filtering
                         },
                         "capacity": {
                             "name": "Capacity",
