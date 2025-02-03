@@ -14,7 +14,7 @@
   ">
     <iframe
       id="app-frame"
-      src="{{ static_url }}/{{ globals.static_app_url_path }}"
+      src="{{ static_url }}/{{ globals.static_app_url_path|default:'' }}"
       onload="onIframeLoad(this)"
       frameBorder="0"
       style="
@@ -47,7 +47,7 @@
         event: 'initialize',
         data:{
           user_token: '{{ user_token }}',
-          mapbox_token: '{{ globals.mapbox_token }}',
+          mapbox_token: {% if globals.mapbox_token %} '{{ globals.mapbox_token }}' {% else %} null {% endif %},
           ws_path: '/cave/ws/',
           ws_encoding: 'json'
         }
