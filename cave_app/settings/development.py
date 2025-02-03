@@ -38,21 +38,22 @@ if allowed_host:
     CSRF_TRUSTED_ORIGINS = [f"https://{allowed_host}"]
     CSRF_COOKIE_NAME = f"csrftoken-{allowed_host}"
     SESSION_COOKIE_NAME = f"sessionid-{allowed_host}"
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 
 ## Middleware
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.security.SecurityMiddleware",
+    "cave_core.middleware.CustomSecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 ## Special Authentication backend to allow email or username logins
-AUTHENTICATION_BACKENDS = ["cave_core.auth.EmailThenUsernameModelBackend"]
+AUTHENTICATION_BACKENDS = ["cave_core.auth.AuthModelBackend"]
 ## Custom Users Model
 AUTH_USER_MODEL = "cave_core.CustomUser"
 ## Login/Logout redirection
@@ -77,7 +78,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "cave_core.apps.cave_core_config",
-    "corsheaders",
     "solo",
     "import_export",
 ]
@@ -104,9 +104,8 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Static App Support
 ################################################################
+## Static App URL for Access-Control-Allow-Origin Header
 STATIC_APP_URL = config("STATIC_APP_URL")
-## Allow the static app through CORS
-CORS_ALLOWED_ORIGINS = [STATIC_APP_URL]
 INSTALLED_APPS += ["rest_framework.authtoken"]
 ################################################################
 
@@ -132,6 +131,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/cave/media/"
 STATIC_URL = "/cave/static/"
 STATICFILES_STORAGE = "cave_app.storage_backends.StaticStorage"
+# Note this is used for headers in the CustomSecurityMiddleware
+# This is not needed in local development, but is included here for completeness
+CONTENT_SOURCE_URLS = []
 ################################################################
 
 

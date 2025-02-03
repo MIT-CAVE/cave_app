@@ -10,6 +10,7 @@ from rest_framework.authtoken.models import Token
 from solo.models import SingletonModel
 from pamda import pamda
 import type_enforced
+from datetime import datetime, timedelta, timezone
 
 # Internal Imports
 from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
@@ -95,6 +96,29 @@ class CustomUser(AbstractUser):
         blank=True,
         null=True,
     )
+    failed_login_attempts = models.IntegerField(
+        _("Failed Login Attempts"),
+        help_text=_("The number of failed login attempts for this user"),
+        default=0,
+    )
+    locked_out_until = models.DateTimeField(
+        _("Locked Out Until"),
+        help_text=_("The time this user is locked out until"),
+        blank=True,
+        null=True,
+    )
+
+    #############################################
+    # Authentication
+    def login_attempt(self, success:bool):
+        if success:
+            self.failed_login_attempts = 0
+            self.locked_out_until = None
+        else:
+            self.failed_login_attempts += 1
+            if self.failed_login_attempts >= 5:
+                self.locked_out_until = datetime.now(timezone.utc) + timedelta(minutes=min(15,(self.failed_login_attempts - 4)))
+        self.save(update_fields=["failed_login_attempts", "locked_out_until"])
 
     #############################################
     # User Session Management
