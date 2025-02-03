@@ -1,11 +1,5 @@
-import json
-
 def execute_command(session_data, socket, command="init", **kwargs):
     # Return the following app state (create a static app with no custom logic)
-    if command == "myCommand":
-        socket.export(f"data:application/json,{json.dumps(session_data)}")
-        print("Console Log: `myCommand` has been triggered!")
-        return session_data
     return {
         "settings": {
             # Icon Url is used to load icons from a custom icon library
@@ -20,7 +14,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "order": {
                 "data": [
                     "mapPage",
-                    "myCommandButton",
                 ],
             },
             "data": {
@@ -28,12 +21,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "mapPage": {
                     "icon": "md/MdMap",
                     "type": "page",
-                    "bar": "upperLeft",
-                },
-                "myCommandButton": {
-                    "icon": "md/MdFileDownload",
-                    "apiCommand": "myCommand",
-                    "type": "button",
                     "bar": "upperLeft",
                 },
             },
@@ -70,6 +57,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "capacity",
                                     "sizeByOptions": ["capacity"],
                                     "icon": "fa6/FaWarehouse",
+                                    # Add a filter to the map to only show capacity > 90
                                     "filters": [
                                         {
                                             "id": 0,
