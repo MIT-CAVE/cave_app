@@ -105,8 +105,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "size": "5px", "color": "rgb(233 0 0)"},
-                                    {"value": "max", "size": "10px", "color": "rgb(96 2 2)"},
+                                    {
+                                        "value": "min",
+                                        "size": "5px",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "size": "10px",
+                                        "color": "rgb(96 2 2)",
+                                    },
                                 ],
                             },
                         },
@@ -146,7 +154,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "map": {
                             "type": "map",
                             "mapId": "exampleMap",
-                            "showToolbar": False,
                             "maximized": True,
                         },
                     },
