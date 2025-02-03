@@ -33,7 +33,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
             )
         except requests.RequestException as e:
             # If an exception is raised, notify the user that the population data was not fetched
-            socket.notify("Unable to fetch population data.", title="Error", theme="error")
+            socket.notify(
+                "Unable to fetch population data.", title="Error", theme="error"
+            )
             population_data = {}
 
         # Define a dictionary of state codes to state names
@@ -217,7 +219,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "map": {
                                 "type": "map",
                                 "mapId": "populationMap",
-                                "showToolbar": False,
                                 "maximized": True,
                             },
                         },

@@ -126,7 +126,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "precision": 4,
                 "trailingZeros": True,
                 "unitPlacement": "afterWithSpace",
-                "showToolbar": True,
             },
         },
         "appBar": {
@@ -728,7 +727,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "map1": {
                             "type": "map",
                             "mapId": "map1",
-                            "showToolbar": False,
                             "maximized": True,
                         },
                         "statBar": {

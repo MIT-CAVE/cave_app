@@ -57,6 +57,24 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeBy": "capacity",
                                     "sizeByOptions": ["capacity"],
                                     "icon": "fa6/FaWarehouse",
+                                    # Add a filter to the map to only show capacity > 90
+                                    "filters": [
+                                        {
+                                            "id": 0,
+                                            "type": "group",
+                                            "groupId": 0,
+                                            "logic": "and",
+                                            "edit": False,
+                                        },
+                                        {
+                                            "id": 1,
+                                            "type": "rule",
+                                            "parentGroupId": 0,
+                                            "prop": "capacity",
+                                            "option": "gt",
+                                            "value": "90"
+                                        }
+                                    ]
                                 },
                             },
                         },
@@ -76,6 +94,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "enabled": False,
                             "display": False,
                             "help": "The scenario name",
+                            "allowFiltering": False,  # This prop cannot be used for filtering
                         },
                         "capacity": {
                             "name": "Capacity",
@@ -88,12 +107,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "size": "4px",
+                                        "size": "30px",
                                         "color": "rgb(233 0 0)",
                                     },
                                     {
                                         "value": "max",
-                                        "size": "6px",
+                                        "size": "45px",
                                         "color": "rgb(96 2 2)",
                                     },
                                 ],
@@ -111,16 +130,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "latitude": [[-90 + (i % 90 * 2)] for i in range(90**2)],
-                            "longitude": [[-180 + (i // 90 * 4)] for i in range(90**2)],
+                            "latitude": [[43.78], [39.82]],
+                            "longitude": [[-79.63], [-86.18]],
                         },
                         "valueLists": {
-                            "capacity": [100 + i for i in range(90**2)],
-                            "includesAutomation": [i % 2 == 0 for i in range(90**2)],
-                            "scenario": [
-                                "Scenario 1" if i % 2 == 0 else "Scenario 2"
-                                for i in range(90**2)
-                            ],
+                            "capacity": [100, 80],
+                            "includesAutomation": [True, False],
+                            "scenario": ["Scenario 1", "Scenario 2"],
                         },
                     },
                 },
@@ -135,6 +151,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "map": {
                             "type": "map",
                             "mapId": "exampleMap",
+                            "showToolbar": False,
                             "maximized": True,
                         },
                     },
