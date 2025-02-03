@@ -43,6 +43,23 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupingId": ["product", "location"],
                             "groupingLevel": ["color", "state"],
                             "xAxisOrder": "value_descending",
+                            "filters": [
+                                {
+                                    "format": "location",
+                                    "prop": "state",
+                                    "value": [
+                                        "Quebec"
+                                    ],
+                                    "option": "exc"
+                                },
+                                {
+                                    "id": 1,
+                                    "type": "rule",
+                                    "prop": "demand",
+                                    "option": "gt",
+                                    "value": "5"
+                                }
+                            ]
                         },
                         "chart2": {
                             "dataset": "salesData",
