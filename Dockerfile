@@ -3,9 +3,9 @@
 ################ Settings ################
 # Choose your base image and tag
 # Alpine Based Python Image
-FROM python:3.12-alpine
+FROM python:3.13-alpine
 # Debian Based Python Image
-# FROM python:3.12-bullseye
+# FROM python:3.13-bullseye
 ################ Settings ################
 
 # Set python to unbuffered mode
