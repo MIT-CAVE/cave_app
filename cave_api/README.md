@@ -32,23 +32,23 @@ The core `cave_app` projet and supporting projects are versioned and offered in 
 
 This structure guarantees some nice features for API developers who want forward compatible upgrades. As an example:
 
-1. You start a project using `cave_app 2.0.0` using `cave_static 2.0.0`
-2. A new chart type becomes available in `cave_static 2.2.0`
-3. You choose to update `your_app` running `cave_app 2.0.0` to now point to `cave_static 2.2.0`
+1. You start a project using `cave_app 3.0.0` using `cave_static 3.0.0`
+2. A new chart type becomes available in `cave_static 3.2.0`
+3. You choose to update `your_app` running `cave_app 3.0.0` to now point to `cave_static 3.2.0`
     - You go to your admin page and edit `globals.static_app_url_path` value in the admin page
-        - Alternatively, you can run `cave reset-db` after updating your `your_app/.env`
-    - Your app will continue to work as it worked on `cave_static 2.0.0` with the new chart available
+        - Alternatively, you can run `cave reset` after updating your `your_app/.env`
+    - Your app will continue to work as it worked on `cave_static 3.0.0` with the new chart available
         - Remember: breaking API changes only occur between major version changes
-        - Since you stayed on `2.x.y` you get a free forward compatible upgrade with no updates needed for your api or server code.
+        - Since you stayed on `3.x.y` you get a free forward compatible upgrade with no updates needed for your api or server code.
 
-- Note: If you start developing on `cave_app 2.x.y`, it is only guaranteed to work with `cave_static 2.a.b` where the `a>x` or `a=x & b>y`
+- Note: If you start developing on `cave_app 3.x.y`, it is only guaranteed to work with `cave_static 3.a.b` where the `a>x` or `a=x & b>y`
 
 App creators will have access to new `cave_static` versions as they they become stable releases. You can see the list of `cave_static` versions by checking our [cave_static branches on github](https://github.com/MIT-CAVE/cave_static/branches/all). Stable branches are branches that do not include `-dev` in their name. When it is time for a version to become stable, we remove the `-dev` tag from the branch and upload the accompaning build. These releases are accessable via our CDN at `https://builds.mitcave.com/major.minor.patch/index.html`. At the same time, the new `cave_app` version is released which includes updates to any example APIs and this documentation. 
 
-New versions of `cave_utils` will be released as needed. These will be available on [pypi](https://pypi.org/project/cave-utils). In your `your_app/requirements.txt` file, this package is listed as `cave-utils>=x.y.z` where `x.y.z` is the version you are using. Because Docker may cache your individual package versions, you may need to update your `your_app/requirements.txt` file to get the latest version of `cave_utils`. To do this, simply update the version number to the latest version available on [pypi](https://pypi.org/project/cave-utils). As an example, if you are using `cave_utils 2.0.0` and `cave_utils 2.0.1` is released, you may need to update your `your_app/requirements.txt` file to `cave-utils>=2.0.1`. This will ensure you are using the latest major version of `cave_utils` available on [pypi](https://pypi.org/project/cave-utils).
+New versions of `cave_utils` will be released as needed. These will be available on [pypi](https://pypi.org/project/cave-utils). In your `your_app/requirements.txt` file, this package is listed as `cave-utils>=x.y.z` where `x.y.z` is the version you are using. Because Docker may cache your individual package versions, you may need to update your `your_app/requirements.txt` file to get the latest version of `cave_utils`. To do this, simply update the version number to the latest version available on [pypi](https://pypi.org/project/cave-utils). As an example, if you are using `cave_utils 3.0.0` and `cave_utils 3.0.1` is released, you may need to update your `your_app/requirements.txt` file to `cave-utils>=3.0.0`. This will ensure you are using the latest major version of `cave_utils` available on [pypi](https://pypi.org/project/cave-utils).
 
 
-Special Note: Patch version releases may not align between projects, but major and minor versions will always align. As an example, `cave_app 2.0.0` will always be released with `cave_static 2.0.0` and `cave_utils 2.0.0`. However, `cave_app 2.0.1` may be released with `cave_static 2.0.1` and `cave_utils 2.0.2`. This is because `cave_utils` may have a bug fix that is not needed in `cave_static` or `cave_app`.
+Special Note: Patch version releases may not align between projects, but major and minor versions will always align. As an example, `cave_app 3.0.0` will always be released with `cave_static 3.0.0` and `cave_utils 3.0.0`. However, `cave_app 3.0.1` may be released with `cave_static 3.0.1` and `cave_utils 3.0.2`. This is because `cave_utils` may have a bug fix that is not needed in `cave_static` or `cave_app`.
 
 # Making changes
 
@@ -70,7 +70,7 @@ As an example of how to edit the api, lets add a flag button to the `api_command
     cd path/to/your_app
     cave run
     ```
-2. Open `http://localhost:8000` in Google Chrome.
+2. Open `http://localhost:8000/cave/` in Google Chrome.
 3. Log in using the login icon in the top right corner of the app.
     - For now, you can log in with:
         - Username: `admin`

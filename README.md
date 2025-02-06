@@ -20,7 +20,7 @@ Click the image below to see a video introduction to the cave app:
     cd my_app
     ```
 
-4. Run the app at `localhost:8000` (while in the directory `my_app`):
+4. Run the app at `localhost:8000/cave/` (while in the directory `my_app`):
     ```
     cave run
     ```
@@ -36,7 +36,7 @@ Click the image below to see a video introduction to the cave app:
           ```
           cave run 192.168.1.100:8000
           ```
-          - Access with `https://192.168.1.100:8000`
+          - Access with `https://192.168.1.100:8000/cave/`
         - Note: When LAN hosting, an SSL connection is required. The `cave_cli` does this automatically, however there are a few caveats:
             - This uses a self signed and insecure certificate for SSL/TLS reasons
             - The certificates are self signed and shared openly in the cave open source project
@@ -100,7 +100,7 @@ The cave app includes a variety of core components to allow for rapid prototypin
 
   1. Login using the admin information that you used during setup, or look in the `.env` file in the root of your app directory).
 
-  2. To view the admin page navigate to: `localhost:8000/admin`
+  2. To view the admin page navigate to: `localhost:8000/cave/admin`
   ![admin page](https://utils.mitcave.com/docs/cave_app-0.3.0/admin.png)
 
   3. From the Admin page, you can add pages and content to your website
@@ -120,16 +120,19 @@ Use the CLI to keep your API code `pretty` and match CAVE coding format standard
 
 ## Project Contributors
 
-- Willem Guter - CAVE Developer
+- Willem Guter - CAVE Researcher
 - Luis Vasquez - CAVE Developer
 - Alice Zhao - CAVE Developer
-- Max Katz-Christy - CAVE Developer
-- Elaine Wang - CAVE Developer
+- Ella Wang - CAVE Developer
 - Tim Russell - CAVE Researcher
 - Connor Makowski - CAVE Researcher / Development Lead
 - Matthias Winkenbach - CAVE Director
 
 ## Previous Contributors
+- Max Katz-Christy - CAVE Developer
+- Brian Zheng - CAVE Developer
+- Katherine Li - CAVE Developer
+- Elaine Wang - CAVE Developer
 - Robert Tran - CAVE Developer
 - Yang Dai - CAVE Developer
 - Margaret Sands - CAVE Developer
@@ -149,7 +152,7 @@ Use the CLI to keep your API code `pretty` and match CAVE coding format standard
 
 ## License Notice
 
-Copyright 2024 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
+Copyright 2025 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
