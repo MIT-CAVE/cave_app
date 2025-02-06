@@ -185,7 +185,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "chartPage": {
                     "charts": {
-                        "chart": {
+                        "stretchedChart": {
                             "dataset": "salesData",
                             "chartType": "bar",
                             "stats": [
@@ -198,9 +198,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupingLevel": ["color", "state"],
                         }
                     },
-                    "pageLayout": ["chart", "left", None, 
-                                   "up", "up", None,
-                                   "up", "up", None],
+                    "pageLayout": [
+                        "stretchedChart", "left", None, 
+                        "up", "up", None,
+                        "up", "up", None,
+                    ],
                 },
             },
         },
