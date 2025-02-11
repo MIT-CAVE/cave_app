@@ -1281,33 +1281,43 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": 0,
-                                        "color": "rgb(0, 128, 255)",
+                                        "color": "rgb(0 128 255)",
                                         "label": "Very Low",
                                         "size": "5px",
                                     },
                                     {
                                         "value": 5,
-                                        "color": "rgb(0, 200, 150)",
+                                        "color": "rgb(0 200 150)",
                                         "label": "Low-Mid",
                                         "size": "8px",
                                     },
                                     {
+                                        "value": 8.5,
+                                        "color": "rgb(173 255 47)",
+                                        "label": "Nominal",
+                                    },
+                                    {
                                         "value": 15,
-                                        "color": "rgb(255, 165, 0)",
+                                        "color": "rgb(255 165 0)",
                                         "label": "Moderate-High",
                                         "size": "10px",
                                     },
                                     {
                                         "value": 28,
-                                        "color": "rgb(255, 69, 0)",
+                                        "color": "rgb(255 69 0)",
                                         "label": "Very High",
                                         "size": "12px",
                                     },
                                     {
                                         "value": 40,
-                                        "color": "rgb(255, 0, 0)",
+                                        "color": "rgb(255 0 0)",
                                         "label": "Critical",
                                         "size": "15px",
+                                    },
+                                    {
+                                        "value": 100,
+                                        "label": "Unrealistic",
+                                        "size": "100px",
                                     },
                                 ],
                             },
