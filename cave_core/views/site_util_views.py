@@ -115,7 +115,7 @@ def login_view(request):
                     # Get the current device for the user
                     device = TOTPDevice.objects.filter(user=user).first()
                     if device is None:
-                        device, created = TOTPDevice.objects.get_or_create(user=user, name=f'cave: {user.username}', confirmed=False)
+                        device, created = TOTPDevice.objects.get_or_create(user=user, name=f'{settings.MFA_ISSUER}:{user.username}', confirmed=False)
                     # If the device is not confirmed, allow users to confirm it
                     verified = device.verify_token(request.POST.get("otp_token"))
                     if not device.confirmed:
@@ -124,7 +124,7 @@ def login_view(request):
                             device.save()
                         else:
                             form.add_error(None, "No MFA device found. Use the QR code below to set up MFA.")
-                            uri = f"otpauth://totp/{settings.MFA_ISSUER}:{user.username}?{device.config_url.split('?')[1]}"
+                            uri = f"otpauth://totp/{device.name}?{device.config_url.split('?')[1]}"
                             qr = qrcode.make(uri)
                             buffer = BytesIO()
                             qr.save(buffer, format="PNG")
