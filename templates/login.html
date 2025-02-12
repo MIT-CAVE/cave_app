@@ -3,7 +3,7 @@
 {% block content %}
 <div class="bg-site-background">
   <div class="section-heading form-container">
-    <div class="p-4 border border-secondary rounded-2 bg-black bg-opacity-50">
+    <div class="p-4 m-4 border border-secondary rounded-2 bg-black bg-opacity-50">
       <h1 class="main-title my-3 text-white text-center">Sign In</h1>
       <form method="post">
         {% csrf_token %}
@@ -23,7 +23,7 @@
         {% if qr_base64 %}
           <br/>
           <div class="form-info-container">
-            <img class="rounded-2" src="data:image/png;base64,{{ qr_base64 }}" alt="Scan the QR Code">
+            <img class="rounded-2" src="data:image/png;base64,{{ qr_base64 }}" alt="Scan the QR Code", style="width: 90%;"/>
           </div>
         {% endif %}
       </form>

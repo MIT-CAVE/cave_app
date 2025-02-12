@@ -123,7 +123,7 @@ def login_view(request):
                             device.confirmed = True
                             device.save()
                         else:
-                            form.add_error(None, "User does not have an MFA device for OTP setup yet. Use the QR code below to setup an MFA device.")
+                            form.add_error(None, "No MFA device found. Use the QR code below to set up MFA.")
                             uri = device.config_url
                             qr = qrcode.make(uri)
                             buffer = BytesIO()
