@@ -20,6 +20,12 @@
         <div class="form-btn-container">
           <button type="submit" class="btn btn-md btn-login" name="submit" value="True">Log In</button>
         </div>
+        {% if qr_base64 %}
+          <br/>
+          <div class="form-info-container">
+            <img class="rounded-2" src="data:image/png;base64,{{ qr_base64 }}" alt="Scan the QR Code">
+          </div>
+        {% endif %}
       </form>
     </div>
   </div>
