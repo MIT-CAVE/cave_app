@@ -12,7 +12,7 @@ class CustomSecurityMiddleware:
         #     return HttpResponsePermanentRedirect(f"https://{request.get_host()}{request.get_full_path()}")
         response = self.get_response(request)
         response['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
-        response['Content-Security-Policy'] = f"default-src 'self' {" ".join(settings.CONTENT_SOURCE_URLS)} 'unsafe-inline'; frame-src 'self' {settings.STATIC_APP_URL}; form-action 'self'; frame-ancestors 'none';" 
+        response['Content-Security-Policy'] = f"default-src 'self' {" ".join(settings.CONTENT_SOURCE_URLS)} 'unsafe-inline'; img-src 'self' data:; frame-src 'self' {settings.STATIC_APP_URL}; form-action 'self'; frame-ancestors 'none';" 
         response['Cross-Origin-Opener-Policy'] = 'same-origin'
         response['Cross-Origin-Embedder-Policy'] = 'credentialless'
         response['Cross-Origin-Resource-Policy'] = 'same-site'

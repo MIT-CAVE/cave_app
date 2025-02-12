@@ -55,6 +55,10 @@ urlpatterns = [
     path("cave/staff/", staff_site.urls),
 ]
 
+if settings.REQUIRE_MFA:
+    # Prevent users from accessing the admin login site when requiring MFA
+    urlpatterns = [path("cave/admin/login/", RedirectView.as_view(url="/cave/auth/login/?next=/cave/admin/", permanent=False))] + urlpatterns
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += [path("", RedirectView.as_view(url="/cave/", permanent=False))]
