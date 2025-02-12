@@ -124,7 +124,7 @@ def login_view(request):
                             device.save()
                         else:
                             form.add_error(None, "No MFA device found. Use the QR code below to set up MFA.")
-                            uri = device.config_url
+                            uri = f"otpauth://totp/{settings.MFA_ISSUER}:{user.username}?{device.config_url.split('?')[1]}"
                             qr = qrcode.make(uri)
                             buffer = BytesIO()
                             qr.save(buffer, format="PNG")

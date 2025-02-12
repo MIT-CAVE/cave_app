@@ -106,6 +106,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 REQUIRE_MFA = config("REQUIRE_MFA", default=False, cast=bool)
 # Keep out of if block to avoid needing extra migrations on change
 INSTALLED_APPS += ["django_otp", "django_otp.plugins.otp_totp"]
+MFA_ISSUER = config("MFA_ISSUER", default="Cave")
 if REQUIRE_MFA:
     MIDDLEWARE += ["django_otp.middleware.OTPMiddleware"]
 ################################################################
