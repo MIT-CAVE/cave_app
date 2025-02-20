@@ -41,6 +41,13 @@ if allowed_host:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
+## Session Auth Settings
+AUTH_TIMEOUT = config("AUTH_TIMEOUT", default=0, cast=int)
+if AUTH_TIMEOUT > 0:
+    SESSION_COOKIE_AGE = AUTH_TIMEOUT
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+    SESSION_SAVE_EVERY_REQUEST = True
+
 
 ## Middleware
 MIDDLEWARE = [

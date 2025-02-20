@@ -20,4 +20,9 @@ class CustomSecurityMiddleware:
         response['X-Content-Type-Options'] = 'nosniff'
         response['X-Frame-Options'] = 'DENY'
         response['referrer-policy'] = 'same-origin'
+        # If an auth timeout exists, add a cookie to the response to let the js script know how long the session is valid for 
+        if settings.SESSION_COOKIE_AGE>0:
+            if request.user.is_authenticated:
+                # Note: 'max_age' is set to 3 seconds since it is only needed to start the js timer
+                response.set_cookie('session-timeout', f'{settings.SESSION_COOKIE_AGE}', max_age=3)
         return response
