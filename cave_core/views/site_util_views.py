@@ -1,4 +1,5 @@
 # Framework Imports
+from django.conf import settings
 from django.contrib.auth import login, authenticate, update_session_auth_hash, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
@@ -9,6 +10,12 @@ from django.contrib.auth.forms import AuthenticationForm
 # Internal Imports
 from cave_core import forms, models
 from cave_core.utils.wrapping import redirect_logged_in_user
+
+if settings.REQUIRE_MFA:
+    from django_otp.plugins.otp_totp.models import TOTPDevice
+    import qrcode
+    import base64
+    from io import BytesIO
 
 
 # Views
@@ -94,23 +101,55 @@ def login_view(request):
     Users can login to the site with this view
     """
     globals = models.Globals.get_solo()
+    qr_base64 = None
     if request.method == "POST":
-        form = AuthenticationForm(request, request.POST)
+        if settings.REQUIRE_MFA:
+            form = forms.OTPAuthForm(request, request.POST)
+        else:
+            form = AuthenticationForm(request, request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get("username")
-            password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=password)
+            user = form.get_user()
             if user is not None:
-                login(request, user)
-                next_url = request.POST.get("next_url")
-                if next_url == "None" or len(next_url) == 0:
-                    next_url = "/cave/router/"
-                # Ensure next url ends with a trailing slash
-                if next_url[-1] != "/":
-                    next_url += "/"
-                return redirect(next_url)
+                verified = True
+                if settings.REQUIRE_MFA:
+                    # Get the current device for the user
+                    device = TOTPDevice.objects.filter(user=user).first()
+                    if device is None:
+                        device, created = TOTPDevice.objects.get_or_create(user=user, name=f'{settings.MFA_ISSUER}:{user.username}', confirmed=False)
+                    # If the device is not confirmed, allow users to confirm it
+                    verified = device.verify_token(request.POST.get("otp_token"))
+                    if not device.confirmed:
+                        if verified:
+                            device.confirmed = True
+                            device.save()
+                        else:
+                            form.add_error(None, "No MFA device found. Use the QR code below to set up MFA.")
+                            uri = f"otpauth://totp/{device.name}?{device.config_url.split('?')[1]}"
+                            qr = qrcode.make(uri)
+                            buffer = BytesIO()
+                            qr.save(buffer, format="PNG")
+                            qr_base64 = base64.b64encode(buffer.getvalue()).decode()
+                if verified:
+                    login(request, user)
+                    # Handle Login and next page
+                    next_url = request.POST.get("next_url")
+                    if next_url == "None" or len(next_url) == 0:
+                        next_url = "/cave/router/"
+                    # Ensure next url ends with a trailing slash
+                    if next_url[-1] != "/":
+                        next_url += "/"
+                    return redirect(next_url)
+                # Else raise a validation error that the token is invalid
+                elif settings.REQUIRE_MFA:
+                    # Raise a validation error if the token is invalid
+                    form.add_error("otp_token", "Invalid OTP Token")
+                else:
+                    raise Exception("Authentication Error")
     else:
-        form = AuthenticationForm()
+        if settings.REQUIRE_MFA:
+            form = forms.OTPAuthForm()
+        else:
+            form = AuthenticationForm()
     return render(
         request,
         "login.html",
@@ -118,6 +157,7 @@ def login_view(request):
             "globals": globals,
             "form": form,
             "next_url": request.GET.get("next"),
+            "qr_base64": qr_base64,
             "form_title": "Login",
             "submit_button": "Login",
         },
