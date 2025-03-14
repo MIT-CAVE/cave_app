@@ -8,7 +8,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-import os
+import os, logging
 from decouple import config
 
 # General Variables
@@ -40,6 +40,13 @@ if allowed_host:
     SESSION_COOKIE_NAME = f"sessionid-{allowed_host}"
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
+## Session Auth Settings
+AUTH_TIMEOUT = config("AUTH_TIMEOUT", default=0, cast=int)
+if AUTH_TIMEOUT > 0:
+    SESSION_COOKIE_AGE = AUTH_TIMEOUT
+    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+    SESSION_SAVE_EVERY_REQUEST = True
 
 
 ## Middleware
@@ -99,6 +106,16 @@ TEMPLATES = [
     },
 ]
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+################################################################
+
+# OTP Settings
+################################################################
+REQUIRE_MFA = config("REQUIRE_MFA", default=False, cast=bool)
+# Keep out of if block to avoid needing extra migrations on change
+INSTALLED_APPS += ["django_otp", "django_otp.plugins.otp_totp"]
+MFA_ISSUER = config("MFA_ISSUER", default="Cave")
+if REQUIRE_MFA:
+    MIDDLEWARE += ["django_otp.middleware.OTPMiddleware"]
 ################################################################
 
 
@@ -180,69 +197,73 @@ CACHES = {
 }
 ################################################################
 
-# Configure logging if USE_LOGGING is True
+# Configure logging
 ################################################################
-if config("USE_LOGGING", default=False, cast=bool):
-    from pathlib import Path
+LOG_REQUESTS = config("LOG_REQUESTS", default=False, cast=bool)
+LOG_SERVER = config("LOG_SERVER", default=False, cast=bool)
+LOG_DB = config("LOG_DB", default=False, cast=bool)
+LOG_AUTH = config("LOG_AUTH", default=False, cast=bool)
 
-    Path(f"{BASE_DIR}/logs/general").mkdir(parents=True, exist_ok=True)
+handlers = {}
+loggers = {}
+
+if LOG_REQUESTS:
+    handlers["request_file"] = {
+        "level": "DEBUG",
+        "class": "logging.FileHandler",
+        "filename": f"{BASE_DIR}/logs/request.log",
+    }
+    loggers["django.request"] = {
+        "handlers": ["request_file"],
+        "level": "DEBUG",
+        "propagate": True,
+    }
+    AUTH_LOGGER = logging.getLogger("django.security.Authentication")
+if LOG_SERVER:
+    handlers["server_file"] = {
+        "level": "DEBUG",
+        "class": "logging.FileHandler",
+        "filename": f"{BASE_DIR}/logs/server.log",
+    }
+    loggers["django.server"] = {
+        "handlers": ["server_file"],
+        "level": "DEBUG",
+        "propagate": True,
+    }
+    SERVER_LOGGER = logging.getLogger("django.server")
+if LOG_DB:
+    handlers["sql_file"] = {
+        "level": "DEBUG",
+        "class": "logging.FileHandler",
+        "filename": f"{BASE_DIR}/logs/sql.log",
+    }
+    loggers["django.db.backends"] = {
+        "handlers": ["sql_file"],
+        "level": "DEBUG",
+        "propagate": True,
+    }
+    DB_LOGGER = logging.getLogger("django.db.backends")
+if LOG_AUTH:
+    handlers["security_file"] = {
+        "level": "DEBUG",
+        "class": "logging.FileHandler",
+        "filename": f"{BASE_DIR}/logs/security.log",
+    }
+    loggers["django.security.Authentication"] = {
+        "handlers": ["security_file"],
+        "level": "DEBUG",
+        "propagate": True,
+    }
+    AUTH_LOGGER = logging.getLogger("django.security.Authentication")
+
+if any([LOG_REQUESTS, LOG_SERVER, LOG_DB, LOG_AUTH]):
+    from pathlib import Path
+    Path(f"{BASE_DIR}/logs").mkdir(parents=True, exist_ok=True)
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": False,
-        "handlers": {
-            "request_file": {
-                "level": "DEBUG",
-                "class": "logging.FileHandler",
-                "filename": f"{BASE_DIR}/logs/general/request.log",
-            },
-            "server_file": {
-                "level": "DEBUG",
-                "class": "logging.FileHandler",
-                "filename": f"{BASE_DIR}/logs/general/server.log",
-            },
-            "sql_file": {
-                "level": "DEBUG",
-                "class": "logging.FileHandler",
-                "filename": f"{BASE_DIR}/logs/general/sql.log",
-            },
-            "template_file": {
-                "level": "DEBUG",
-                "class": "logging.FileHandler",
-                "filename": f"{BASE_DIR}/logs/general/template.log",
-            },
-            "security_file": {
-                "level": "DEBUG",
-                "class": "logging.FileHandler",
-                "filename": f"{BASE_DIR}/logs/general/security.log",
-            },
-        },
-        "loggers": {
-            "django.request": {
-                "handlers": ["request_file"],
-                "level": "DEBUG",
-                "propagate": True,
-            },
-            "django.server": {
-                "handlers": ["server_file"],
-                "level": "DEBUG",
-                "propagate": True,
-            },
-            "django.db.backends": {
-                "handlers": ["sql_file"],
-                "level": "DEBUG",
-                "propagate": True,
-            },
-            "django.template": {
-                "handlers": ["template_file"],
-                "level": "DEBUG",
-                "propagate": True,
-            },
-            "django.security": {
-                "handlers": ["security_file"],
-                "level": "DEBUG",
-                "propagate": True,
-            },
-        },
+        "handlers": handlers,
+        "loggers": loggers,
     }
 ################################################################
 

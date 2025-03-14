@@ -10,6 +10,13 @@ source ./utils/helpers/ensure_postgres_running.sh
 mkdir "./tmp"
 printf "$(ls ./cave_core/migrations/*.py)" > "./tmp/init.txt"
 
+# Check if the app is functional before proceeding
+if [ "$(python ./manage.py check --deployment_type development | grep "System check identified no issues" | wc -l)" -eq "0" ]; then
+  printf "Unable to reset the db due to an error in the code. See the stacktrace above." 2>&1 | pipe_log "ERROR"
+  rm -r "./tmp"
+  exit 1
+fi
+
 # Make and apply any new migrations
 python "$APP_DIR/manage.py" makemigrations cave_core --deployment_type development 2>&1 | pipe_log "DEBUG"
 python "$APP_DIR/manage.py" migrate --deployment_type development 2>&1 | pipe_log "DEBUG"

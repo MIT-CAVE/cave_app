@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from cave_core import models
 from pamda import pamda
 
@@ -40,3 +40,14 @@ class CreateUserForm(UserCreationForm):
             "first_name",
             "last_name",
         ]
+
+
+class OTPAuthForm(AuthenticationForm):
+    otp_token = forms.CharField(
+        label="OTP Token",
+        max_length=6,
+        min_length=6,
+        strip=False,
+        required=False,
+        widget=forms.TextInput(attrs={"autofocus": True}),
+    )

@@ -116,8 +116,15 @@ class CustomUser(AbstractUser):
             self.locked_out_until = None
         else:
             self.failed_login_attempts += 1
+            if self.failed_login_attempts >= 10:
+                self.locked_out_until = datetime.now(timezone.utc) + timedelta(years=99)
             if self.failed_login_attempts >= 5:
-                self.locked_out_until = datetime.now(timezone.utc) + timedelta(minutes=min(15,(self.failed_login_attempts - 4)))
+                lockout_minutes = min(15,(self.failed_login_attempts - 4))
+                self.locked_out_until = datetime.now(timezone.utc) + timedelta(minutes=lockout_minutes)
+        if settings.LOG_AUTH:
+            settings.AUTH_LOGGER.info(f"Auth - {self.username}: Login attempt {'succeeded' if success else 'failed'}")
+            if self.locked_out_until is not None:
+                settings.AUTH_LOGGER.warning(f"Auth - {self.username}: Locked out for {lockout_minutes} minute(s)")
         self.save(update_fields=["failed_login_attempts", "locked_out_until"])
 
     #############################################
