@@ -69,7 +69,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "%",
                         },
                         "incrementalSliderExample": {
-                            "name": "Incrimental Slider Example",
+                            "name": "Incremental Slider Example",
                             "type": "num",
                             "variant": "incslider",
                             "help": "Help for the incremental slider example",
@@ -131,9 +131,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "dropdown",
                             "options": {
-                                "option_a": {"name": "Option A"},
-                                "option_b": {"name": "Option B"},
-                                "option_c": {"name": "Option C"},
+                                "option_a": {
+                                    "name": "Option A",
+                                    "color": "rgb(255 0 0)",
+                                    "size": "10px",
+                                },
+                                "option_b": {
+                                    "name": "Option B",
+                                    "size": "20px",
+                                },
+                                "option_c": {
+                                    "name": "Option C",
+                                    "color": "rgb(0 0 255)",
+                                    "size": "30px",
+                                },
+                                "option_d": {"name": "Option D"},
                             },
                             "help": "Select an option from the dropdown",
                         },
@@ -142,9 +154,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "checkbox",
                             "options": {
-                                "option_a": {"name": "Option A"},
-                                "option_b": {"name": "Option B"},
-                                "option_c": {"name": "Option C"},
+                                "option_a": {
+                                    "name": "Option A",
+                                    "color": "rgb(255 0 0)",
+                                },
+                                "option_b": {
+                                    "name": "Option B",
+                                    "color": "rgb(0 255 0)",
+                                },
+                                "option_c": {
+                                    "name": "Option C",
+                                    "color": "rgb(0 0 255)",
+                                },
+                                "option_d": {"name": "Option D"},
                             },
                             "help": "Select all relevant items",
                         },
@@ -153,9 +175,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "radio",
                             "options": {
-                                "option_a": {"name": "Option A"},
-                                "option_b": {"name": "Option B"},
-                                "option_c": {"name": "Option C"},
+                                "option_a": {
+                                    "name": "Option A",
+                                    "color": "rgb(255 0 0)",
+                                },
+                                "option_b": {
+                                    "name": "Option B",
+                                    "color": "rgb(0 255 0)",
+                                },
+                                "option_c": {
+                                    "name": "Option C",
+                                    "color": "rgb(0 0 255)",
+                                },
+                                "option_d": {"name": "Option D"},
                             },
                             "help": "Select one item from the list",
                         },
@@ -164,9 +196,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "hstepper",
                             "options": {
-                                "option_a": {"name": "Option A"},
-                                "option_b": {"name": "Option B"},
-                                "option_c": {"name": "Option C"},
+                                "option_a": {
+                                    "name": "Option A",
+                                    "color": "rgb(255 0 0)",
+                                },
+                                "option_b": {
+                                    "name": "Option B",
+                                    "color": "rgb(0 255 0)",
+                                },
+                                "option_c": {
+                                    "name": "Option C",
+                                    "color": "rgb(0 0 255)",
+                                },
+                                "option_d": {"name": "Option D"},
                             },
                             "help": "Select an option from the stepper",
                         },
@@ -175,9 +217,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "vstepper",
                             "options": {
-                                "option_a": {"name": "Option A"},
-                                "option_b": {"name": "Option B"},
-                                "option_c": {"name": "Option C"},
+                                "option_a": {
+                                    "name": "Option A",
+                                    "color": "rgb(255 0 0)",
+                                },
+                                "option_b": {
+                                    "name": "Option B",
+                                    "color": "rgb(0 255 0)",
+                                },
+                                "option_c": {
+                                    "name": "Option C",
+                                    "color": "rgb(0 0 255)",
+                                },
+                                "option_d": {"name": "Option D"},
+                                "option_e": {"name": "Option E"},
+                                "option_f": {"name": "Option F"},
+                                "option_g": {"name": "Option G"},
                             },
                             "help": "Select an option from the stepper",
                         },
@@ -186,9 +241,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "hradio",
                             "options": {
-                                "option_a": {"name": "Option A"},
-                                "option_b": {"name": "Option B"},
-                                "option_c": {"name": "Option C"},
+                                "option_a": {
+                                    "name": "Option A",
+                                    "color": "rgb(255 0 0)",
+                                },
+                                "option_b": {
+                                    "name": "Option B",
+                                    "color": "rgb(0 255 0)",
+                                },
+                                "option_c": {
+                                    "name": "Option C",
+                                    "color": "rgb(0 0 255)",
+                                },
+                                "option_d": {"name": "Option D"},
                             },
                             "help": "Select an option from the radio",
                         },
@@ -198,9 +263,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "combobox",
                             "placeholder": "Options",
                             "options": {
-                                "option_a": {"name": "Option A"},
-                                "option_b": {"name": "Option B"},
-                                "option_c": {"name": "Option C"},
+                                "option_a": {
+                                    "name": "Option A",
+                                    "color": "rgb(255 0 0)",
+                                },
+                                "option_b": {
+                                    "name": "Option B",
+                                    "color": "rgb(0 255 0)",
+                                },
+                                "option_c": {
+                                    "name": "Option C",
+                                    "color": "rgb(0 0 255)",
+                                },
+                                "option_d": {"name": "Option D"},
                             },
                             "help": "Select an option from the combobox",
                         },
@@ -210,9 +285,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "comboboxMulti",
                             "placeholder": "Select multiple options",
                             "options": {
-                                "option_a": {"name": "Option A"},
-                                "option_b": {"name": "Option B"},
-                                "option_c": {"name": "Option C"},
+                                "option_a": {
+                                    "name": "Option A",
+                                    "color": "rgb(255 0 0)",
+                                },
+                                "option_b": {
+                                    "name": "Option B",
+                                    "color": "rgb(0 255 0)",
+                                },
+                                "option_c": {
+                                    "name": "Option C",
+                                    "color": "rgb(0 0 255)",
+                                },
+                                "option_d": {"name": "Option D"},
                             },
                             "help": "Select multiple options from the combobox",
                         },
@@ -224,37 +309,50 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "t1_b1_tw1": {
                                     "name": "Twig1",
                                     "path": ["Tree1", "Branch1"],
+                                    "color": "rgb(0 128 255)",
                                 },
                                 "t1_b1_tw2": {
                                     "name": "Twig2",
                                     "path": ["Tree1", "Branch1"],
+                                    "color": "rgb(0 0 255)",
                                 },
                                 "t1_b1_tw3": {
                                     "name": "Twig3",
                                     "path": ["Tree1", "Branch1"],
+                                    "color": "rgb(128 0 255)",
                                 },
                                 "t1_b2_tw1": {
                                     "name": "Twig1",
                                     "path": ["Tree1", "Branch2"],
+                                    "color": "rgb(128 255 0)",
                                 },
                                 "t1_b2_tw2": {
                                     "name": "Twig2",
                                     "path": ["Tree1", "Branch2"],
+                                    "color": "rgb(0 255 0)",
                                 },
                                 "t2_b1_tw1": {
                                     "name": "Twig1",
                                     "path": ["Tree2", "Branch1"],
+                                    "color": "rgb(255 128 255)",
                                 },
                                 "t2_b1_tw2": {
                                     "name": "Twig2",
                                     "path": ["Tree2", "Branch1"],
+                                    "color": "rgb(0 128 0)",
                                 },
                                 "t2_b2_tw1": {
                                     "name": "Twig1",
                                     "path": ["Tree2", "Branch2"],
+                                    "color": "rgb(255 0 255)",
                                 },
                                 "t2_b2_tw2": {
                                     "name": "Twig2",
+                                    "path": ["Tree2", "Branch2"],
+                                    "color": "rgb(0 128 128)",
+                                },
+                                "t2_b2_tw3": {
+                                    "name": "Twig3",
                                     "path": ["Tree2", "Branch2"],
                                 },
                             },
