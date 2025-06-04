@@ -137,7 +137,6 @@ class CaveWSBroadcaster:
             loading=False,
         )
 
-    @type_enforced.Enforcer
     def export(
         self,
         data,
