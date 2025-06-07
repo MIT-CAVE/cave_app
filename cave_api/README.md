@@ -100,6 +100,54 @@ As an example of how to edit the api, lets add a flag button to the `api_command
     - You should now see your new button (the flag) in the bottom left corner.
     - Click on your button to see the output `Hello World!` sent to the chrome page as a notification and printed in your terminal.
 
+## GroupsBuilder
+
+The `GroupsBuilder` is a useful tool that quickly creates grouped outputs for data charts. It conveniently shortens the amount of manual work needed in your `execute_command` function by doing the data grouping for you.
+
+<details>
+  <summary>Using the GroupsBuilder</summary>
+
+  1. Ensure you have installed `cave_utils` by running `pip install cave_utils`. Then import `GroupsBuilder`:
+  ```
+  from cave_utils.builders.groups import GroupsBuilder
+  ```
+
+  2. Initialize the data you want to group as a `list` of `dict` objects, with category keys mapped to corresponding values. For example,
+  ```
+  data = [{"category": "value1", "subcategory": "value2", "product": "value3"}, ...]
+  ```
+
+  3. For each `GroupsBuilder`, create new data with just the categories that will be groups for each `GroupsBuilder`. Using the `project` function from the [pamda](https://pypi.org/project/pamda/) module, this process becomes a lot easier:
+  ```
+  example_group_data = pamda.project(["category", "subcategory"], data)
+  ```
+  4. Create a `GroupsBuilder` object for each newly created data variable. The GroupsBuilder documentation can be accessed in more detail in the `cave_utils` project in `cave_utils/cave_utils/builders/groups.py`. It can also be accessed on the [API Spec Documentation](https://mit-cave.github.io/cave_utils/cave_utils/builders/groups.html#GroupsBuilder).
+  ```
+  example_group_builder = GroupsBuilder(
+    group_name="Example",
+    group_data=example_group_data,
+    group_parents={"subcategory": "category"},
+    group_names={
+        "category": "Categories",
+        "subcategory": "Subcategories",
+        },
+    ) 
+  ```
+  5. The created `GroupsBuilder` objects can now be used:
+  ```
+  {
+    "groupedOutputs": {
+        "groupings": {
+            "groupingId": example_group_builder.serialize()  
+        }
+    },
+    ...
+  }
+  ```
+</details>
+
+A full example of creating a grouped output data chart using the `GroupBuilder`, is accessible in your `cave_app` at `your_app/cave_api/cave_api/examples/chart_grouped_outputs_builder.py`.
+
 ## Adding Requirements to the API
 
 Python requirements can be added to the API by adding line items to `your_app/cave_api/requirements.txt`.
