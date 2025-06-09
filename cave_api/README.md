@@ -107,38 +107,43 @@ The `GroupsBuilder` is a useful tool that quickly creates grouped outputs for da
 <details>
   <summary>Using the GroupsBuilder</summary>
 
-  1. Ensure you have installed `cave_utils` by running `pip install cave_utils`. Then import `GroupsBuilder`:
+  1. Import the `GroupsBuilder` from the `cave_utils.builders.groups` module:
+      - Note: This is part of the `cave_utils` package, which is automatically installed when you run your app.
   ```
   from cave_utils.builders.groups import GroupsBuilder
   ```
 
   2. Initialize the data you want to group as a `list` of `dict` objects, with category keys mapped to corresponding values. For example,
   ```
-  data = [{"category": "value1", "subcategory": "value2", "product": "value3"}, ...]
+  data = [{"continent": "North America", "country": "USA", "state":"Maine"}, ...]
   ```
-
-  3. For each `GroupsBuilder`, create new data with just the categories that will be groups for each `GroupsBuilder`. Using the `project` function from the [pamda](https://pypi.org/project/pamda/) module, this process becomes a lot easier:
-  ```
-  example_group_data = pamda.project(["category", "subcategory"], data)
-  ```
-  4. Create a `GroupsBuilder` object for each newly created data variable. The GroupsBuilder documentation can be accessed in more detail in the `cave_utils` project in `cave_utils/cave_utils/builders/groups.py`. It can also be accessed on the [API Spec Documentation](https://mit-cave.github.io/cave_utils/cave_utils/builders/groups.html#GroupsBuilder).
+  3. Create a `GroupsBuilder` object for the data. The GroupsBuilder documentation can be accessed in more detail in the `cave_utils` project in `cave_utils/cave_utils/builders/groups.py`. It can also be accessed on the [API Spec Documentation](https://mit-cave.github.io/cave_utils/cave_utils/builders/groups.html#GroupsBuilder).
   ```
   example_group_builder = GroupsBuilder(
     group_name="Example",
     group_data=example_group_data,
-    group_parents={"subcategory": "category"},
+    group_parents={"continent": "country", "country": "state"},
     group_names={
-        "category": "Categories",
-        "subcategory": "Subcategories",
+        "continent": "Continents",
+        "country": "Countries",
+        "state": "States",
         },
     ) 
   ```
-  5. The created `GroupsBuilder` objects can now be used:
+  4. The created `GroupsBuilder` objects can now be used:
   ```
   {
     "groupedOutputs": {
         "groupings": {
-            "groupingId": example_group_builder.serialize()  
+            "groupingId": example_group_builder.serialize()
+        },
+        "data": {
+            "customDataName": {
+                ...,
+                "groupLists": {
+                    "groupingId": example_group_builder.get_id_list(),
+                }
+            }
         }
     },
     ...
