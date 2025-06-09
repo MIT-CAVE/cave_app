@@ -115,7 +115,7 @@ The `GroupsBuilder` is a useful tool that quickly creates grouped outputs for da
 
   2. Initialize the data you want to group as a `list` of `dict` objects, with category keys mapped to corresponding values. For example,
   ```
-  data = [{"continent": "North America", "country": "USA", "state":"Maine"}, ...]
+  example_group_data = [{"continent": "North America", "country": "USA", "state":"Maine"}, ...]
   ```
   3. Create a `GroupsBuilder` object for the data. The GroupsBuilder documentation can be accessed in more detail in the `cave_utils` project in `cave_utils/cave_utils/builders/groups.py`. It can also be accessed on the [API Spec Documentation](https://mit-cave.github.io/cave_utils/cave_utils/builders/groups.html#GroupsBuilder).
   ```
