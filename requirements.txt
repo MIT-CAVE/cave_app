@@ -1,18 +1,18 @@
 autoflake==2.3.1
 black==25.1.0
-cave_utils==3.2.0
+cave_utils==3.3.0b1
 Django==5.1.5
 django-import-export==4.3.5
 djangorestframework==3.15.2
 django_otp==1.5.4
 django_sockets==2.0.0
 django-solo==2.4.0
-pamda~=2.6.1
+pamda>=2.7.0,<3.0.0
 pillow==11.1.0
 psycopg2-binary==2.9.10
 python-decouple==3.8
 qrcode==8.0
 redis==5.2.1
-type_enforced~=1.10.2
+type_enforced>=2.1.0,<3.0.0
 whitenoise==6.8.2
 -r ./utils/extra_requirements.txt
