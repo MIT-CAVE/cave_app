@@ -187,7 +187,7 @@ def execute_command(
                         "buttonHeader": {
                             "name": "Button Props",
                             "type": "head",
-                            "help": "Action triggers with different visual styles."
+                            "help": "Action triggers with different visual styles.",
                         },
                         "filledButtonExample": {
                             "name": "Save Changes",
@@ -269,22 +269,22 @@ def execute_command(
                             "variant": "dropdown",
                             "options": {
                                 "python": {
-                                    "label": "Python",
+                                    "name": "Python",
                                     "icon": "si/SiPython",
                                     "color": "#3776ab",
                                 },
                                 "rust": {
-                                    "label": "Rust",
+                                    "name": "Rust",
                                     "icon": "si/SiRust",
                                     "color": "#000",
                                 },
                                 "typescript": {
-                                    "label": "TypeScript",
+                                    "name": "TypeScript",
                                     "icon": "si/SiTypescript",
                                     "color": "#3178c6",
                                 },
                                 "go": {
-                                    "label": "Go",
+                                    "name": "Go",
                                     "icon": "si/SiGo",
                                     "color": "#00add8",
                                 },
@@ -411,6 +411,10 @@ def execute_command(
                             "subtitle": "This example uses the `selector`'s `hstepper` variant",
                             "type": "selector",
                             "variant": "hstepper",
+                            "color": "#bdbdbd",
+                            "size": "20px",
+                            "activeColor": "#66bb6a",
+                            "activeSize": "32px",
                             "options": {
                                 "requirements": {
                                     "name": "Requirements",
@@ -445,6 +449,10 @@ def execute_command(
                             "subtitle": "This example uses the `selector`'s `vstepper` variant",
                             "type": "selector",
                             "variant": "vstepper",
+                            "color": "#bdbdbd",
+                            "size": "20px",
+                            "activeColor": "#ce93d8",
+                            "activeSize": "40px",
                             "options": {
                                 "submit": {
                                     "name": "Submit PR",
