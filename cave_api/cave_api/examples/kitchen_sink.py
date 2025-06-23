@@ -976,10 +976,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "maps": {
+            "order": {
+                "additionalMapStyles": ["smoothLight", "smoothDark"],
+            },
             "additionalMapStyles": {
+                "smoothLight": {
+                    "name": "Smooth Light",
+                    "icon": "fi/FiSun",
+                    "spec": "https://tiles.stadiamaps.com/styles/alidade_smooth.json",
+                    # "light": True,  # Enforces a light theme for map properties, root styling, and controls to improve viz on light maps.
+                },
+                "smoothDark": {
+                    "name": "Smooth Dark",
+                    "icon": "fi/FiMoon",
+                    "spec": "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json",
+                },
                 "osmRasterTiles": {
                     "name": "OSM Raster Tiles",
                     "icon": "md/MdBrush",
+                    "mapbox": True,  # Enforces Mapbox rendering engine for this map style, even if using non-Mapbox tile sources.
                     "spec": {
                         "version": 8,
                         "sources": {
@@ -1006,8 +1021,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "fog": {
                         "range": [0.5, 10],
-                        "color": "rgba(255, 255, 255, 1)",
-                        "high-color": "rgba(36, 92, 223, 1)",
+                        "color": "rgb(255 255 255)",
+                        "high-color": "rgb(36 92 223)",
                         "space-color": [
                             "interpolate",
                             ["linear"],

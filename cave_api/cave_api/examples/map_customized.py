@@ -58,6 +58,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     # For CartoDB based Mapbox GL styles:
                     # See: https://github.com/CartoDB/basemap-styles/blob/master/docs/basemap_styles.json
                     "spec": "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+                    "mapbox": True,
+                    "light": True,
                     # Complex fog specs allow for even more customization
                     # See: https://docs.mapbox.com/mapbox-gl-js/api/map/#map#setfog
                     "fog": {
@@ -98,6 +100,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "osmRasterTiles": {
                     "name": "OSM Raster Tiles",
                     "icon": "md/MdBrush",
+                    "light": True,
                     # See the `style` key in the following mapbox gl reference spec:
                     # https://docs.mapbox.com/mapbox-gl-js/example/map-tiles/
                     "spec": {
@@ -122,6 +125,27 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "minzoom": 0,
                                 "maxzoom": 22,
                             },
+                        ],
+                    },
+                    # Sky docs are available at:
+                    # https://maplibre.org/maplibre-style-spec/sky/
+                    "sky": {
+                        "sky-color": "#88c6fc",
+                        "horizon-color": "#fe9b06",
+                        "fog-color": "#041223",
+                        "sky-horizon-blend": 0.85,
+                        "horizon-fog-blend": 0.9,
+                        "fog-ground-blend": 0.6,
+                        "atmosphere-blend": [
+                            "interpolate",
+                            ["linear"],
+                            ["zoom"],
+                            0,
+                            0.8,
+                            10,
+                            1,
+                            12,
+                            0.3,
                         ],
                     },
                 },
