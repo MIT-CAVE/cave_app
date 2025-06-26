@@ -1021,8 +1021,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "fog": {
                         "range": [0.5, 10],
-                        "color": "rgb(255 255 255)",
-                        "high-color": "rgb(36 92 223)",
+                        "color": "rgb(255, 255, 255)",
+                        "high-color": "rgb(36, 92, 223)",
                         "space-color": [
                             "interpolate",
                             ["linear"],
