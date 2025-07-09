@@ -1,4 +1,3 @@
-from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster as Socket
 from pathlib import Path
 
 
@@ -15,7 +14,7 @@ def load_help_content(name: str) -> str:
 
 def execute_command(
     session_data: dict,
-    socket: Socket,
+    socket,
     command: str = "init",
     **kwargs,
 ) -> dict:
@@ -150,11 +149,11 @@ def execute_command(
                         },
                         "toggleButtonExample": {
                             "name": "Simulation Control",
-                            "subtitle": "This example uses the `toggle`'s `switch` variant",
+                            "subtitle": "This example uses the `toggle`'s `button` variant",
                             "type": "toggle",
                             "variant": "button",
                             "icon": "md/MdOutlinePlayCircle",
-                            "size": 48,
+                            "size": "48px",
                             "color": "#4caf50",
                             "label": "Start Simulation",
                             "fullWidth": True,
@@ -176,7 +175,7 @@ def execute_command(
                             "variant": "checkbox",
                             "icon": "lu/LuPackage",
                             "color": "#bd9a7a",
-                            "size": 128,
+                            "size": "128px",
                             "label": "Package sealed",
                             "activeIcon": "lu/LuPackageOpen",
                             "activeLabel": "Package opened",
@@ -663,10 +662,10 @@ def execute_command(
                         "textAreaInputExample": "This project aims to optimize last-mile delivery routes using machine learning algorithms. Key features include real-time traffic integration, dynamic route adjustment, and driver mobile app integration. Target completion: Q3 2025.",
                         "dropdownItemExample": ["python"],
                         "checkboxItemExample": ["flag", "pin"],
-                        "radioItemExample": ["alice"],
+                        "radioItemExample": ["bubble"],
                         "hstepperItemExample": ["requirements"],
                         "vstepperItemExample": ["submit"],
-                        "hradioItemExample": ["option_c"],
+                        "hradioItemExample": ["alice"],
                         "comboBoxItemExample": ["dev"],
                         "comboBoxMultiExample": ["auth", "api"],
                         "nestedItemExample": [
