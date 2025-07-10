@@ -80,8 +80,9 @@ def execute_command(
                             "precision": 0,
                             "color": "#66bb6a",
                             "propStyle": {
-                                "& .MuiSlider-track": {
-                                    "background": "linear-gradient(90deg, #f44336 0%, #ffa726 30%, #66bb6a 60%)"
+                                "& .MuiSlider-rail": {
+                                    "height": "6px",
+                                    "background": "linear-gradient(90deg, #f44336 0%, #ffa726 30%, #66bb6a 60%)",
                                 },
                             },
                             "help": "Current electric vehicle battery charge level",
