@@ -286,7 +286,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "label": "Inactive",
                             "icon": "md/MdCheck",
                             "color": "#9e9e9e",
-                            "size": 32,
+                            "size": "32px",
                             "activeColor": "#66bb6a",
                             "activeLabel": "Active",
                             "help": "Help for the toggle button example",
