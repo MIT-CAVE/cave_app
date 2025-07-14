@@ -121,15 +121,17 @@ Use the CLI to keep your API code `pretty` and match CAVE coding format standard
 
 ## Project Contributors
 
-- Willem Guter - CAVE Researcher
-- Luis Vasquez - CAVE Developer
-- Alice Zhao - CAVE Developer
-- Ella Wang - CAVE Developer
-- Tim Russell - CAVE Researcher
+- Anthony Zheng - CAVE Developer
+- Bianca Rosini - CAVE Developer
+- Luis Vasquez - CAVE Senior Developer
+- Alice Zhao - CAVE Research Assistant / Developer
+- Willem Guter - CAVE Researcher / Developer
 - Connor Makowski - CAVE Researcher / Development Lead
+- Tim Russell - CAVE Researcher / Manager
 - Matthias Winkenbach - CAVE Director
 
 ## Previous Contributors
+- Ella Wang - CAVE Developer
 - Max Katz-Christy - CAVE Developer
 - Brian Zheng - CAVE Developer
 - Katherine Li - CAVE Developer
