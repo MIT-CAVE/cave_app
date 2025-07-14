@@ -2,18 +2,14 @@
 
 ################ Settings ################
 # Choose your base image and tag
-# Alpine Based Python Image
-FROM python:3.13-alpine
-# Debian Based Python Image
-# FROM python:3.13-bullseye
+FROM python:3.13-slim
 ################ Settings ################
 
 # Set python to unbuffered mode
 ENV PYTHONUNBUFFERED=1
 
 # Install any additional requirements
-# EG: Use bash for alpine images / install some build tools and cryptography dependencies
-RUN apk update && apk --no-cache add bash build-base libffi-dev
+# This section can be used to install system dependencies
 
 # Set the working directory to /app
 WORKDIR /app/

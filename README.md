@@ -39,8 +39,9 @@ Click the image below to see a video introduction to the cave app:
           - Access with `https://192.168.1.100:8000/cave/`
         - Note: When LAN hosting, an SSL connection is required. The `cave_cli` does this automatically, however there are a few caveats:
             - This uses a self signed and insecure certificate for SSL/TLS reasons
-            - The certificates are self signed and shared openly in the cave open source project
-            - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
+              - The included certificates are self signed and shared openly in the cave open source project
+              - You should consider appropriate security measures like generating your own SSL certificates
+              - See the [Cave App SSL/TLS documentation](utils/lan_hosting/readme.md) for more information on how to set up your own SSL certificates and integrate them with the cave app.
     </details>
 
 5. In Chrome, you can now open the web app:
@@ -120,15 +121,17 @@ Use the CLI to keep your API code `pretty` and match CAVE coding format standard
 
 ## Project Contributors
 
-- Willem Guter - CAVE Researcher
-- Luis Vasquez - CAVE Developer
-- Alice Zhao - CAVE Developer
-- Ella Wang - CAVE Developer
-- Tim Russell - CAVE Researcher
+- Anthony Zheng - CAVE Developer
+- Bianca Rosini - CAVE Developer
+- Luis Vasquez - CAVE Senior Developer
+- Alice Zhao - CAVE Research Assistant / Developer
+- Willem Guter - CAVE Researcher / Developer
 - Connor Makowski - CAVE Researcher / Development Lead
+- Tim Russell - CAVE Researcher / Manager
 - Matthias Winkenbach - CAVE Director
 
 ## Previous Contributors
+- Ella Wang - CAVE Developer
 - Max Katz-Christy - CAVE Developer
 - Brian Zheng - CAVE Developer
 - Katherine Li - CAVE Developer

@@ -242,40 +242,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "%",
                         },
                         "incrementalSliderExample": {
-                            "name": "Incrimental Slider Example",
+                            "name": "Incremental Slider Example",
                             "type": "num",
                             "variant": "incslider",
                             "help": "Help for the incremental slider example",
                             "valueOptions": [0, 25, 50, 75, 100],
                             "unit": "%",
-                        },
-                        "miscHeader": {
-                            "name": "Misc Props",
-                            "type": "head",
-                            "help": "Some help for miscelanous props",
-                        },
-                        "toggleInputExample": {
-                            "name": "Toggle Input Example",
-                            "type": "toggle",
-                            "help": "Help for the toggle input example",
-                        },
-                        "buttonInputExample": {
-                            "name": "Button Input Example (Creates an Error)",
-                            "type": "button",
-                            "apiCommand": "test",
-                            "help": "Press this button to create an error",
-                        },
-                        "pictureExample": {
-                            "name": "Picture Example",
-                            "type": "media",
-                            "variant": "picture",
-                            "help": "Click the expand button to view an enlarged version",
-                        },
-                        "videoExample": {
-                            "name": "Video Example",
-                            "type": "media",
-                            "variant": "video",
-                            "help": "Click the play button to start the video",
                         },
                         "textHeader": {
                             "name": "Text Props",
@@ -293,6 +265,97 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "textarea",
                             "rows": 6,
                             "help": "Help for the text area input example",
+                        },
+                        "toggleHeader": {
+                            "name": "Toggle Props",
+                            "type": "head",
+                            "help": "Some help for toggle props",
+                        },
+                        "toggleSwitchExample": {
+                            "name": "Toggle Switch Example",
+                            "type": "toggle",
+                            "variant": "switch",
+                            "label": "The switch is off",
+                            "activeLabel": "The switch is on",
+                            "help": "Help for the toggle switch example",
+                        },
+                        "toggleButtonExample": {
+                            "name": "Toggle Button Example",
+                            "type": "toggle",
+                            "variant": "button",
+                            "label": "Inactive",
+                            "icon": "md/MdCheck",
+                            "color": "#9e9e9e",
+                            "size": "32px",
+                            "activeColor": "#66bb6a",
+                            "activeLabel": "Active",
+                            "help": "Help for the toggle button example",
+                        },
+                        "toggleCheckboxExample": {
+                            "name": "Toggle Checkbox Example",
+                            "type": "toggle",
+                            "variant": "checkbox",
+                            "label": "Activate",
+                            "help": "Help for the toggle checkbox example",
+                        },
+                        "buttonHeader": {
+                            "name": "Button Props",
+                            "type": "head",
+                            "help": "Some help for numeric props",
+                        },
+                        "filledButtonExample": {
+                            "name": "Filled Button Example",
+                            "type": "button",
+                            "apiCommand": "testSuccess",
+                            "help": "Press this button to trigger an action",
+                        },
+                        "outlinedButtonExample": {
+                            "name": "Outlined Button Example",
+                            "type": "button",
+                            "variant": "outlined",
+                            "color": "#ed3e3e",
+                            "fullWidth": True,
+                            "startIcon": "vsc/VscError",
+                            "endIcon": "md/MdSend",
+                            "apiCommand": "test",
+                            "help": "Press this button to throw an error",
+                        },
+                        "textButtonExample": {
+                            "name": "Text Button Example",
+                            "type": "button",
+                            "variant": "text",
+                            "color": "#ff0",
+                            "startIcon": "fa/FaExclamationTriangle",
+                            "apiCommand": "testWarning",
+                            "help": "Press this button to trigger a warning",
+                        },
+                        "iconButtonExample": {
+                            "name": "Icon Button Example",
+                            "type": "button",
+                            "size": "32px",
+                            "variant": "icon",
+                            "icon": "fa/FaGithub",
+                            "placement": "center",
+                            # "container": "minimal",  # Unstyled container that will keep the prop in its layout position
+                            "url": "https://github.com/MIT-CAVE",
+                            "help": "Help for the icon button example",
+                        },
+                        "mediaHeader": {
+                            "name": "Media Props",
+                            "type": "head",
+                            "help": "Some help for media props",
+                        },
+                        "pictureExample": {
+                            "name": "Picture Example",
+                            "type": "media",
+                            "variant": "picture",
+                            "help": "Click or tap the image to view an enlarged version",
+                        },
+                        "videoExample": {
+                            "name": "Video Example",
+                            "type": "media",
+                            "variant": "video",
+                            "help": "Click or tap the play button to start the video",
                         },
                         "selectorHeader": {
                             "name": "Selection Props",
@@ -485,8 +548,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "numericInputExample": 50,
                         "numericSliderExample": 50,
                         "incrementalSliderExample": 50,
-                        "toggleInputExample": True,
-                        "buttonInputExample": "Press Me!",
+                        "toggleSwitchExample": True,
+                        "toggleButtonExample": False,
+                        "toggleCheckboxExample": False,
+                        "filledButtonExample": "Press Me!",
+                        "outlinedButtonExample": "Press Me to Throw an Error!",
+                        "textButtonExample": "Press Me to Show a Warning!",
                         "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
                         "textInputExample": "Example Text Here",
@@ -567,137 +634,179 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 3,
                                 "row": 1,
-                                "itemId": "miscHeader",
+                                "itemId": "toggleHeader",
                             },
                             "col3Row2": {
                                 "type": "item",
                                 "column": 3,
                                 "row": 2,
-                                "itemId": "toggleInputExample",
+                                "itemId": "toggleSwitchExample",
                             },
                             "col3Row3": {
                                 "type": "item",
                                 "column": 3,
                                 "row": 3,
-                                "itemId": "buttonInputExample",
+                                "itemId": "toggleButtonExample",
                             },
                             "col3Row4": {
                                 "type": "item",
                                 "column": 3,
                                 "row": 4,
-                                "itemId": "pictureExample",
-                            },
-                            "col3Row5": {
-                                "type": "item",
-                                "column": 3,
-                                "row": 5,
-                                "itemId": "videoExample",
+                                "itemId": "toggleCheckboxExample",
                             },
                             "col4Row1": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 1,
-                                "itemId": "selectorHeader",
+                                "itemId": "buttonHeader",
                             },
                             "col4Row2": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 2,
-                                "itemId": "dropdownItemExample",
+                                "itemId": "filledButtonExample",
                             },
                             "col4Row3": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 3,
-                                "itemId": "checkboxItemExample",
+                                "itemId": "outlinedButtonExample",
                             },
                             "col4Row4": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 4,
-                                "itemId": "radioItemExample",
+                                "itemId": "textButtonExample",
                             },
                             "col4Row5": {
                                 "type": "item",
                                 "column": 4,
                                 "row": 5,
-                                "itemId": "comboBoxItemExample",
-                            },
-                            "col4Row6": {
-                                "type": "item",
-                                "column": 4,
-                                "row": 6,
-                                "itemId": "comboBoxMultiExample",
-                            },
-                            "col4Row7": {
-                                "type": "item",
-                                "column": 4,
-                                "row": 7,
-                                "itemId": "hstepperItemExample",
-                            },
-                            "col4Row8": {
-                                "type": "item",
-                                "column": 4,
-                                "row": 8,
-                                "itemId": "vstepperItemExample",
-                            },
-                            "col4Row9": {
-                                "type": "item",
-                                "column": 4,
-                                "row": 9,
-                                "itemId": "hradioItemExample",
-                            },
-                            "col4Row10": {
-                                "type": "item",
-                                "column": 4,
-                                "row": 10,
-                                "itemId": "nestedItemExample",
+                                "itemId": "iconButtonExample",
                             },
                             "col5Row1": {
                                 "type": "item",
                                 "column": 5,
                                 "row": 1,
-                                "itemId": "dateTimeHeader",
+                                "itemId": "mediaHeader",
                             },
                             "col5Row2": {
                                 "type": "item",
                                 "column": 5,
                                 "row": 2,
-                                "itemId": "dateItemExample",
+                                "itemId": "pictureExample",
                             },
                             "col5Row3": {
                                 "type": "item",
                                 "column": 5,
                                 "row": 3,
-                                "itemId": "timeItemExample",
-                            },
-                            "col5Row4": {
-                                "type": "item",
-                                "column": 5,
-                                "row": 4,
-                                "itemId": "dateTimeItemExample",
+                                "itemId": "videoExample",
                             },
                             "col6Row1": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 1,
-                                "itemId": "coordinateHeader",
+                                "itemId": "selectorHeader",
                             },
                             "col6Row2": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 2,
-                                "itemId": "latLngInputExample",
+                                "itemId": "dropdownItemExample",
                             },
                             "col6Row3": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 3,
-                                "itemId": "latLngMapExample",
+                                "itemId": "checkboxItemExample",
                             },
                             "col6Row4": {
                                 "type": "item",
                                 "column": 6,
+                                "row": 4,
+                                "itemId": "radioItemExample",
+                            },
+                            "col6Row5": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 5,
+                                "itemId": "comboBoxItemExample",
+                            },
+                            "col6Row6": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 6,
+                                "itemId": "comboBoxMultiExample",
+                            },
+                            "col6Row7": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 7,
+                                "itemId": "hstepperItemExample",
+                            },
+                            "col6Row8": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 8,
+                                "itemId": "vstepperItemExample",
+                            },
+                            "col6Row9": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 9,
+                                "itemId": "hradioItemExample",
+                            },
+                            "col6Row10": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 10,
+                                "itemId": "nestedItemExample",
+                            },
+                            "col7Row1": {
+                                "type": "item",
+                                "column": 7,
+                                "row": 1,
+                                "itemId": "dateTimeHeader",
+                            },
+                            "col7Row2": {
+                                "type": "item",
+                                "column": 7,
+                                "row": 2,
+                                "itemId": "dateItemExample",
+                            },
+                            "col7Row3": {
+                                "type": "item",
+                                "column": 7,
+                                "row": 3,
+                                "itemId": "timeItemExample",
+                            },
+                            "col7Row4": {
+                                "type": "item",
+                                "column": 7,
+                                "row": 4,
+                                "itemId": "dateTimeItemExample",
+                            },
+                            "col8Row1": {
+                                "type": "item",
+                                "column": 8,
+                                "row": 1,
+                                "itemId": "coordinateHeader",
+                            },
+                            "col8Row2": {
+                                "type": "item",
+                                "column": 8,
+                                "row": 2,
+                                "itemId": "latLngInputExample",
+                            },
+                            "col8Row3": {
+                                "type": "item",
+                                "column": 8,
+                                "row": 3,
+                                "itemId": "latLngMapExample",
+                            },
+                            "col8Row4": {
+                                "type": "item",
+                                "column": 8,
                                 "row": 4,
                                 "itemId": "latLngPathExample",
                             },
@@ -867,10 +976,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
         },
         "maps": {
+            "order": {
+                "additionalMapStyles": ["smoothLight", "smoothDark"],
+            },
             "additionalMapStyles": {
+                "smoothLight": {
+                    "name": "Smooth Light",
+                    "icon": "fi/FiSun",
+                    "spec": "https://tiles.stadiamaps.com/styles/alidade_smooth.json",
+                    # "light": True,  # Enforces a light theme for map properties, root styling, and controls to improve viz on light maps.
+                },
+                "smoothDark": {
+                    "name": "Smooth Dark",
+                    "icon": "fi/FiMoon",
+                    "spec": "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json",
+                },
                 "osmRasterTiles": {
                     "name": "OSM Raster Tiles",
                     "icon": "md/MdBrush",
+                    "mapbox": True,  # Enforces Mapbox rendering engine for this map style, even if using non-Mapbox tile sources.
                     "spec": {
                         "version": 8,
                         "sources": {
@@ -890,15 +1014,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "id": "simple-tiles",
                                 "type": "raster",
                                 "source": "raster-tiles",
-                                "minzoom": 0,
-                                "maxzoom": 22,
+                                "minzoom": 0,  # REVIEW: camelCase?
+                                "maxzoom": 22,  # REVIEW: camelCase?
                             },
                         ],
                     },
                     "fog": {
                         "range": [0.5, 10],
-                        "color": "rgba(255, 255, 255, 1)",
-                        "high-color": "rgba(36, 92, 223, 1)",
+                        "color": "rgb(255, 255, 255)",
+                        "high-color": "rgb(36, 92, 223)",
                         "space-color": [
                             "interpolate",
                             ["linear"],
@@ -991,10 +1115,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "longitude": 14,
                         },
                     },
-                    "legendView": "compact",
-                    "legendLayout": "auto",
-                    "legendWidth": "auto",
-                    "showLegendGroupNames": True,
+                    # "legendView": "full",
+                    # "legendLayout": "row",
+                    # "legendWidth": "wide",
+                    # "showLegendGroupNames": False,
                     "legendGroups": {
                         "lga": {
                             "name": "Legend Group A",
@@ -2226,6 +2350,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
     elif command == "test":
         print("The `test` button has been pressed by the user!")
         raise Exception("Test Exception!")
+    elif command == "testSuccess":
+        socket.notify(
+            "The filled button has been pressed!",
+            title="Filled Button",
+            theme="success",
+        )
+    elif command == "testWarning":
+        socket.notify(
+            "The text button has been pressed!", title="Text Button", theme="warning"
+        )
     elif command == "viewInfo":
         socket.notify("The info button has been pressed!", title="Info", theme="info")
     elif command == "exportData":

@@ -114,6 +114,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "true": {"color": "rgb(0 255 0)"},
                             },
                         },
+                        "name": {
+                            "name": "Name",
+                            "type": "text",
+                            "help": "The name of the route",
+                        },
                     },
                     "data": {
                         "location": {
@@ -127,6 +132,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "valueLists": {
                             "capacity": [65, 85],
                             "preferredRoute": [True, False],
+                            "name": [
+                                "Toronto to Pittsburgh to Indianapolis",
+                                "Souix Falls to Little Rock to Memphis",
+                            ],
                         },
                     },
                 },
