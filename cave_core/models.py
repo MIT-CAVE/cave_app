@@ -148,7 +148,7 @@ class CustomUser(AbstractUser):
         session.broadcast_changed_data(previous_versions={}, force_overwrite=True)
 
     @type_enforced.Enforcer
-    def create_session(self, session_name: str, team_id: [int, str], session_description: str = ""):
+    def create_session(self, session_name: str, team_id: int | str, session_description: str = ""):
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
         team = self.get_team(team_id)
@@ -163,7 +163,7 @@ class CustomUser(AbstractUser):
         return session
 
     @type_enforced.Enforcer
-    def join_session(self, session_id: [int, str]):
+    def join_session(self, session_id: int | str):
         session_id = int(session_id)
         self.error_on_no_access()
         # Query Sessions
@@ -175,7 +175,7 @@ class CustomUser(AbstractUser):
 
     @type_enforced.Enforcer
     def clone_session(
-        self, session_id: [int, str], session_name: str, session_description: str = ""
+        self, session_id: int | str, session_name: str, session_description: str = ""
     ):
         session_id = int(session_id)
         self.error_on_no_access()
@@ -192,7 +192,7 @@ class CustomUser(AbstractUser):
         self.switch_session_no_validation(new_session)
 
     @type_enforced.Enforcer
-    def delete_session(self, session_id: [int, str]):
+    def delete_session(self, session_id: int | str):
         session_id = int(session_id)
         self.error_on_no_access()
         # Query Sessions
@@ -208,7 +208,7 @@ class CustomUser(AbstractUser):
 
     @type_enforced.Enforcer
     def edit_session(
-        self, session_id: [int, str], session_name: str, session_description: str = ""
+        self, session_id: int | str, session_name: str, session_description: str = ""
     ):
         session_id = int(session_id)
         self.error_on_no_access()
