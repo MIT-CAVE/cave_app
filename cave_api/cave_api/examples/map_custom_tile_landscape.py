@@ -17,12 +17,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
             coordinates.append([x_coord, y_coord])
 
     # Convert (x,y) coordinates to (lat,long) to properly display the points on the Mercator projection map
-    converted_coordinates = coordinate_system.convert_to_long_lat(coordinates)
+    locations_dict = coordinate_system.serialize_nodes(coordinates)
 
-    longitudes = [[coordinate[0]] for coordinate in converted_coordinates]
-    latitudes = [[coordinate[1]] for coordinate in converted_coordinates]
-    amounts = [100] * len(converted_coordinates)
-    availabilities = [False] * len(converted_coordinates)
+    amounts = [100] * len(coordinates)
+    availabilities = [False] * len(coordinates)
 
     return {
         "settings": {
@@ -164,10 +162,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                     },
                     "data": {
-                        "location": {
-                            "latitude": latitudes,
-                            "longitude": longitudes,
-                        },
+                        "location": locations_dict,
                         "valueLists": {
                             "amount": amounts,
                             "availability": availabilities,
