@@ -28,8 +28,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
     landscape_locations_dict = landscape_coordinate_system.serialize_nodes(landscape_coordinates)
     portrait_locations_dict = portrait_coordinate_system.serialize_nodes(portrait_coordinates)
 
-    amounts = [100] * len(square_coordinates)
-    availabilities = [False] * len(square_coordinates)
+    square_amounts = [100] * len(square_coordinates)
+    square_availabilities = [False] * len(square_coordinates)
+
+    landscape_amounts = [100] * len(landscape_coordinates)
+    landscape_availabilities = [False] * len(landscape_coordinates)
+
+    portrait_amounts = [100] * len(portrait_coordinates)
+    portrait_availabilities = [False] * len(portrait_coordinates)
 
     return {
         "settings": {
@@ -298,8 +304,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "data": {
                         "location": square_locations_dict,
                         "valueLists": {
-                            "amount": amounts,
-                            "availability": availabilities,
+                            "amount": square_amounts,
+                            "availability": square_availabilities,
                         },
                     },
                 },
@@ -342,8 +348,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "data": {
                         "location": landscape_locations_dict,
                         "valueLists": {
-                            "amount": amounts,
-                            "availability": availabilities,
+                            "amount": landscape_amounts,
+                            "availability": landscape_availabilities,
                         },
                     },
                 },
@@ -386,8 +392,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "data": {
                         "location": portrait_locations_dict,
                         "valueLists": {
-                            "amount": amounts,
-                            "availability": availabilities,
+                            "amount": portrait_amounts,
+                            "availability": portrait_availabilities,
                         },
                     },
                 },
