@@ -13,6 +13,6 @@ psycopg[binary, pool]==3.2.9
 python-decouple==3.8
 qrcode==8.2
 redis==6.2.0
-type_enforced>=2.1.0,<3.0.0
+type_enforced>=2.2.0,<3.0.0
 whitenoise==6.9.0
 -r ./utils/extra_requirements.txt
