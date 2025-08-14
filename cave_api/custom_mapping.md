@@ -55,7 +55,9 @@ Once the tiles have been created, host them on a third-party website of your cho
 https://website.com/{z}/{x}/{y}.png
 ```
 
-This URL can now be used in your `cave_api` as the source for your raster tiles. Example maps using custom tiles are found in `your_app/cave_api/cave_api/examples/map_custom_tiles`, which contains three different map projections. Upon running the cave app with your new tiles, you should be able to see your tiles as such:
+This URL can now be used in your `cave_api` as the source for your raster tiles. Example maps using custom tiles are found in `your_app/cave_api/cave_api/examples/map_custom_tiles`, which contains four different map projections in a 2x2 grid format. This includes three grid maps with different aspect ratios (1:1, 2:1, 1:2) and a simple warehouse map.
+
+Upon running the cave app with your new tiles, you should be able to see your tiles as such:
 
 ![base warehouse](https://raw.githubusercontent.com/MIT-CAVE/cave_app/refs/heads/main/static/photos/base_warehouse_example.png)
 
