@@ -127,7 +127,7 @@ Then create the coordinate system that best works for you. A coordinate system t
 grid_coordinate_system = CustomCoordinateSystem(14, 14)
 ```
 
-Finally, convert the (x,y) coordinates based on your coordinate system into (long,lat) coordinates, which can now be used to plot the points. The `CustomCoordinateSystem` object currently supports three conversion methods to fit your needs. The three methods are briefly described below, though we encourage you to also read their docstrings. The object can be accessed in more detail at `cave_utils/cave_utils/custom_coordinates.py`.
+Finally, convert the (x,y) coordinates based on your coordinate system into (long,lat) coordinates, which can now be used to plot the points. The `CustomCoordinateSystem` object currently supports four conversion methods to fit your needs. The four methods are briefly described below, though we encourage you to also read their docstrings. The object can be accessed in more detail at `cave_utils/cave_utils/custom_coordinates.py`.
 - `serialize_coordinates` converts a list of coordinates in your coordinate system to a list of coordinates in (longitude, latitude, optional altitude) format. Requires manual manipulation of output to use in your API.
 - `serialize_nodes` converts node coordinates in your coordinate system to a dictionary that can be used directly in your API without additional manual work.
   - For `mapFeatures.data.*` with type `node`.
@@ -135,6 +135,7 @@ Finally, convert the (x,y) coordinates based on your coordinate system into (lon
 - `serialize_arcs` converts path coordinates in your coordinate system to a dictionary that can be used directly in your API without additional manual work.
   - For `mapFeatures.data.*` with type `arc` or `geo` but **no provided `geoJson` dictionary**.
   - Created dictionary is directly used under `mapFeatures.data.*.data.location`.
+- `convert_geojson` converts coordinates of a raw GeoJSON object in your coordinate system to (longitude, latitude, optional altitude) coordinates
 
 The `serialize_nodes` and `serialize_arcs` methods accept `list` type and `dict` type arguments as shown below:
 ```
