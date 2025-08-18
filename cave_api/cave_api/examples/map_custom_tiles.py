@@ -33,6 +33,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
             [1026, 524]
         ]
     ]
+    region_coordinates = [
+        [
+            [1400, 1024],
+            [2000, 1024],
+            [2000, 2000],
+            [1400, 2000],
+            [1400, 1024]
+        ]
+    ]
 
     # Convert (x,y) coordinates to (lat,long) to properly display the points on the Mercator projection map
     square_locations_dict = square_coordinate_system.serialize_nodes(square_coordinates)
@@ -40,6 +49,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
     portrait_locations_dict = portrait_coordinate_system.serialize_nodes(portrait_coordinates)
     robot_node_locations_dict = warehouse_coordinate_system.serialize_nodes(robot_node_coordinates)
     robot_path_locations_dict = warehouse_coordinate_system.serialize_arcs(robot_path_coordinates)
+    region_locations_dict = warehouse_coordinate_system.serialize_arcs(region_coordinates)
 
     # Generate valueLists values
     square_amounts = [100] * len(square_coordinates)
@@ -79,7 +89,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         "maps": {
             # Specify the order of map style items as they will appear in the style selector
             "order": {
-                "additionalMapStyles": ["squareGrid", "landscapeGrid", "portraitGrid"],
+                "additionalMapStyles": ["squareGrid", "landscapeGrid", "portraitGrid", "warehouse"],
             },
             # Add custom map styles
             "additionalMapStyles": {
@@ -213,7 +223,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "legendGroups": {
                         "items": {
-                            "name": "Items",
+                            "name": "Points",
                             "data": {
                                 "squareGridPoint": {
                                     "value": True,
@@ -249,7 +259,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "legendGroups": {
                         "items": {
-                            "name": "Items",
+                            "name": "Points",
                             "data": {
                                 "landscapeGridPoint": {
                                     "value": True,
@@ -285,7 +295,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "legendGroups": {
                         "items": {
-                            "name": "Items",
+                            "name": "Points",
                             "data": {
                                 "portraitGridPoint": {
                                     "value": True,
@@ -320,7 +330,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "minZoom": 0,
                     },
                     "legendGroups": {
-                        "items": {
+                        "robot": {
                             "name": "Robot",
                             "data": {
                                 "robot": {
@@ -334,18 +344,24 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeByOptions": ["amount"],
                                     "icon": "fa/FaRobot",
                                 },
-                            },
-                        },
-                        "paths": {
-                            "name": "Robot Path",
-                            "data": {
                                 "robotPath": {
                                     "value": True,
                                     "colorBy": "preferredRoute",
                                     "colorByOptions": ["capacity", "preferredRoute"],
                                     "sizeBy": "capacity",
                                     "sizeByOptions": ["capacity"],
-                                }
+                                },
+                            },
+                        },
+                        "regions": {
+                            "name": "Regions",
+                            "data": {
+                                "region": {
+                                    "value": True,
+                                    "icon": "bi/BiPolygon",
+                                    "colorBy": "isAvailable",
+                                    "colorByOptions": ["isAvailable"],
+                                },
                             },
                         },
                     },
@@ -573,7 +589,28 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "preferredRoute": [True],
                         },
                     },
-                },         
+                },
+                "region": {
+                    "type": "geo",
+                    "name": "Warehouse Region",
+                    "props": {
+                        "isAvailable": {
+                            "name": "Is Available",
+                            "type": "toggle",
+                            "help": "Whether this area is available",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
+                        },
+                    },
+                    "data": {
+                        "location": region_locations_dict,
+                        "valueLists": {
+                            "isAvailable": [True],
+                        },
+                    },
+                },
             }
         },
         # Add a map page to the app using the example map specified above
