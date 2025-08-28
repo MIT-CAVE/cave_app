@@ -209,8 +209,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     # Specify the default projection for the map
                     # Note: globe can only be used if you have a mapbox token
                     "currentProjection": "mercator",
+                    # Lock projection so users only see flat view
+                    "lockProjection": True,
                     # Specify the current style for the map
                     "currentStyle": "squareGrid",
+                    # Lock style so users only see one tileset
+                    "lockStyle": True,
                     # Specify the default viewport for the map
                     "defaultViewport": {
                         "longitude": 0,
@@ -245,8 +249,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     # Specify the default projection for the map
                     # Note: globe can only be used if you have a mapbox token
                     "currentProjection": "mercator",
+                    # Lock projection so users only see flat view
+                    "lockProjection": True,
                     # Specify the current style for the map
                     "currentStyle": "landscapeGrid",
+                    # Lock style so users only see one tileset
+                    "lockStyle": True,
                     # Specify the default viewport for the map
                     "defaultViewport": {
                         "longitude": 0,
@@ -281,8 +289,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     # Specify the default projection for the map
                     # Note: globe can only be used if you have a mapbox token
                     "currentProjection": "mercator",
+                    # Lock projection so users only see flat view
+                    "lockProjection": True,
                     # Specify the current style for the map
                     "currentStyle": "portraitGrid",
+                    # Lock style so users only see one tileset
+                    "lockStyle": True,
                     # Specify the default viewport for the map
                     "defaultViewport": {
                         "longitude": 0,
@@ -317,8 +329,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     # Specify the default projection for the map
                     # Note: globe can only be used if you have a mapbox token
                     "currentProjection": "mercator",
+                    # Lock projection so users only see flat view
+                    "lockProjection": True,
                     # Specify the current style for the map
                     "currentStyle": "warehouse",
+                    # Lock style so users only see one tileset
+                    "lockStyle": True,
                     # Specify the default viewport for the map
                     "defaultViewport": {
                         "longitude": 0,
