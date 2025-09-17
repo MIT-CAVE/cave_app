@@ -1,6 +1,6 @@
 autoflake==2.3.1
 black==25.1.0
-cave_utils==3.4.0b2
+cave_utils==3.4.0
 Django==5.2.4
 django-import-export==4.3.8
 djangorestframework==3.16.0
