@@ -135,7 +135,7 @@ Finally, convert the (x,y) coordinates based on your coordinate system into (lon
 - `serialize_arcs` converts path coordinates in your coordinate system to a dictionary that can be used directly in your API without additional manual work.
   - For `mapFeatures.data.*` with type `arc` or `geo` but **no provided `geoJson` dictionary**.
   - Created dictionary is directly used under `mapFeatures.data.*.data.location`.
-- `convert_geojson` converts coordinates of a raw GeoJSON object in your coordinate system to (longitude, latitude, optional altitude) coordinates and writes the converted object to a new file.
+- `convert_geojson` Converts the coordinates of the given GeoJSON filename using this coordinate system to a longitude-latitude-altitude system and writes the new object to a file.
 
 The `serialize_nodes` and `serialize_arcs` methods accept `list` type and `dict` type arguments as shown below:
 ```
