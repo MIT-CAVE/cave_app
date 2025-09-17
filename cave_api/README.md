@@ -8,6 +8,8 @@ Specifically, this covers topics related to the `cave_api` as part of `cave_app`
 
 **Detailed API examples can be found [here](https://github.com/MIT-CAVE/cave_app/tree/main/cave_api/cave_api/examples)**
 
+**Custom mapping information can be found [here](https://github.com/MIT-CAVE/cave_app/blob/main/cave_api/custom_mapping.md)**
+
 # What is a `CAVE App`?
 
 ## Designed for Customization and Deployment
