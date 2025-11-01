@@ -1,6 +1,7 @@
 api_keys = [
     "settings",
     "appBar",
+    "draggables",
     "panes",
     "pages",
     "maps",
