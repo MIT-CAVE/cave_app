@@ -105,6 +105,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "value": False,
                     "data": {"pn1": ["panes", "paneState", "center"]},
                 },
+                "draggables": {
+                    "name": "Draggables",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "dr1": ["draggables", "data"],
+                        # TODO (idea): Implement wildcard (or RegEx) syncing
+                        "dr2": ["globalOutputs", "props", "*", "draggable"],
+                    },
+                },
                 "pages": {
                     "name": "Dashboards",
                     "showToggle": True,
@@ -127,6 +137,25 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "trailingZeros": True,
                 "unitPlacement": "afterWithSpace",
             },
+        },
+        "draggables": {
+            "data": {
+                "session": {
+                    "open": True,
+                    "position": {
+                        "x": 80,  # distance from left edge of screen; the width of the left app bar is 70px
+                        "y": 8,
+                    },
+                },
+                "globalOutputs": {
+                    "open": True,
+                    "position": {
+                        "x": 80,
+                        "y": 68,  # 68 pixels from top edge of screen which is below the session draggable
+                    },
+                },
+                # "time": {"open": True},
+            }
         },
         "appBar": {
             "order": {
