@@ -1293,7 +1293,7 @@ class Sessions(models.Model):
         # Pop out kwargs for use but not for storage
         extraKwargs = command_output.pop("extraKwargs", command_output.pop("kwargs", {}))
         # Update the session data with the command output
-        self.replace_data(data=command_output, wipeExisting=extraKwargs.get("wipeExisting", True))
+        self.replace_data(data=command_output, wipeExisting=extraKwargs.get("wipeExisting", False))
 
         # Validate if in debug + live api validation mode
         if settings.DEBUG:
