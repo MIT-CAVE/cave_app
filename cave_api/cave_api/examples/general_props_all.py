@@ -443,7 +443,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "incrementalSliderExample": 50,
                         "toggleInputExample": True,
                         "buttonInputExample": "Press Me!",
-                        "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
+                        "pictureExample": "https://cave.mit.edu/wp-content/uploads/2019/01/CAVE_CTL_Live.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
                         "textInputExample": "Example Text Here",
                         "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
