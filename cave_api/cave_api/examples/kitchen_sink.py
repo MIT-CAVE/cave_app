@@ -99,6 +99,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "value": False,
                     "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
                 },
+                "chartColors": {
+                    "name": "Chart Colors",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "go1": ["groupedOutputs", "groupings"],
+                    }
+                },
                 "modals": {
                     "name": "Open Modal",
                     "showToggle": True,
@@ -107,7 +115,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "draggables": {
                     "name": "Draggables",
-                    "showToggle": True,
+                    "showToggle": False,
                     "value": False,
                     "data": {
                         "dr1": ["draggables", "data"],
