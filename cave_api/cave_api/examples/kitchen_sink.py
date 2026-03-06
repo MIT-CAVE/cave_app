@@ -99,13 +99,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "value": False,
                     "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
                 },
+                "mapViewports": {
+                    "name": "Map Viewports",
+                    "showToggle": True,
+                    "value": False,
+                    "data": {
+                        "mv1": ["maps", "data", "map1", "mapControls", "viewport"],
+                        "mv2": ["maps", "data", "map2", "mapControls", "viewport"],
+                    },
+                },
                 "chartColors": {
                     "name": "Chart Colors",
                     "showToggle": True,
                     "value": False,
                     "data": {
                         "go1": ["groupedOutputs", "groupings"],
-                    }
+                    },
                 },
                 "modals": {
                     "name": "Open Modal",
