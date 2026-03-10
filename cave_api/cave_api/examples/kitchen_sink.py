@@ -159,17 +159,24 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "session": {
                     "open": True,
-                    "hideCloseButton": True,
                     "position": {
-                        "x": 80,  # distance from left edge of screen; the width of the left app bar is 70px
+                        "x": 8,  # distance from left app bar
                         "y": 8,
                     },
                 },
                 "globalOutputs": {
                     "open": True,
                     "position": {
-                        "x": 80,
+                        "x": 8,
                         "y": 68,  # 68 pixels from top edge of screen which is below the session draggable
+                    },
+                },
+                "mapNames": {
+                    "open": True,
+                    "hideCloseButton": True,
+                    "position": {
+                        "x": 8,  # distance from left app bar
+                        "y": 8,
                     },
                 },
                 # "time": {"open": True},
