@@ -173,13 +173,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "mapNames": {
                     "open": True,
-                    "hideCloseButton": True,
+                    "hideCloseOption": True,
+                    "hideDragOption": True,
                     "position": {
                         "x": 8,  # distance from left app bar
                         "y": 8,
                     },
                 },
-                # "time": {"open": True},
+                "time": {
+                    "showDragHandle": True,
+                },
             }
         },
         "appBar": {
