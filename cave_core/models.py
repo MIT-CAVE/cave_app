@@ -1282,6 +1282,10 @@ class Sessions(models.Model):
         command_output = execute_command(
             session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
         )
+        # Ensure that session data includes a `draggables.data` object if it is missing on initialization
+        if command == "init":
+            if not pamda.hasPath(path=["draggables", "data"], data=command_output):
+                command_output["draggables"] = {"data": {}}
         # Ensure that no reserved api keys are returned
         background_api_keys_used = pamda.intersection(
             list(command_output.keys()), background_api_keys
