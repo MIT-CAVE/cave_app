@@ -73,6 +73,14 @@ class CustomUser(AbstractUser):
         help_text=_("Has the user validated their email?"),
         default=False,
     )
+    get_multi_team_sessions = models.BooleanField(
+        _("Get Multi Team Sessions"),
+        help_text=_(
+            "When calling get_associated_sessions, should all teams for this user be returned? "
+            "Good for conducting debriefs, but exposes data from other teams if done in a team session."
+        ),
+        default=False,
+    )
     email_validation_code = models.CharField(
         _("Email Validation Code"),
         max_length=16,
@@ -1372,12 +1380,12 @@ class Sessions(models.Model):
 
         - `user`:
             - Type: User object
-            - What: A user object that is used to validate if the requesting user is staff
+            - What: A user object that is used to validate if the requesting user is staff or has multi-team session access
                 - If so: This request will also return related group team sessions
             - Default: None
         """
         if user is not None:
-            if user.is_staff:
+            if user.get_multi_team_sessions:
                 return Sessions.objects.filter(team__in=user.get_team_ids())
         return Sessions.objects.filter(team=self.team)
 
