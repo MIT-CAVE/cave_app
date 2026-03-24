@@ -258,6 +258,7 @@ if LOG_AUTH:
 
 if any([LOG_REQUESTS, LOG_SERVER, LOG_DB, LOG_AUTH]):
     from pathlib import Path
+
     Path(f"{BASE_DIR}/logs").mkdir(parents=True, exist_ok=True)
     LOGGING = {
         "version": 1,

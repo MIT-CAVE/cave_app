@@ -47,19 +47,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 {
                                     "format": "location",
                                     "prop": "state",
-                                    "value": [
-                                        "Quebec"
-                                    ],
-                                    "option": "exc"
+                                    "value": ["Quebec"],
+                                    "option": "exc",
                                 },
                                 {
                                     "id": 1,
                                     "type": "rule",
                                     "prop": "demand",
                                     "option": "gt",
-                                    "value": "5"
-                                }
-                            ]
+                                    "value": "5",
+                                },
+                            ],
                         },
                         "chart2": {
                             "dataset": "salesData",

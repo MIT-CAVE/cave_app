@@ -1059,9 +1059,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "raster",
                                 # EG: See a list of raster sources based on OSM here:
                                 # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
-                                "tiles": [
-                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                ],
+                                "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
                                 "tileSize": 256,
                                 "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
                             },
@@ -2383,21 +2381,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
     elif command == "solve":
         print("The `solve` button has been pressed by the user!")
         time.sleep(3)
-        socket.notify(
-            "Priming Thrusters...", title="Initialization", theme="info", duration=3
-        )
+        socket.notify("Priming Thrusters...", title="Initialization", theme="info", duration=3)
         time.sleep(3)
         socket.notify("Ignition...", title="Initialization", theme="info")
         time.sleep(3)
-        socket.notify(
-            "Leak detected in primary power core!", title="Warning:", theme="warning"
-        )
+        socket.notify("Leak detected in primary power core!", title="Warning:", theme="warning")
         time.sleep(3)
         socket.notify("Engine Failure!", title="Error:", theme="error")
         time.sleep(3)
-        socket.notify(
-            "Recalibrating Gravitons!", title="Attempting Fix:", theme="warning"
-        )
+        socket.notify("Recalibrating Gravitons!", title="Attempting Fix:", theme="warning")
         time.sleep(3)
         socket.notify("Fix Succeded!", title="Attempting Fix:", theme="success")
         time.sleep(3)
@@ -2414,9 +2406,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             theme="success",
         )
     elif command == "testWarning":
-        socket.notify(
-            "The text button has been pressed!", title="Text Button", theme="warning"
-        )
+        socket.notify("The text button has been pressed!", title="Text Button", theme="warning")
     elif command == "viewInfo":
         socket.notify("The info button has been pressed!", title="Info", theme="info")
     elif command == "exportData":

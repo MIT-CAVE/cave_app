@@ -118,8 +118,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "capacity": [100 + i for i in range(90**2)],
                             "includesAutomation": [i % 2 == 0 for i in range(90**2)],
                             "scenario": [
-                                "Scenario 1" if i % 2 == 0 else "Scenario 2"
-                                for i in range(90**2)
+                                "Scenario 1" if i % 2 == 0 else "Scenario 2" for i in range(90**2)
                             ],
                         },
                     },

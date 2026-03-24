@@ -118,7 +118,7 @@ class CustomUser(AbstractUser):
 
     #############################################
     # Authentication
-    def login_attempt(self, success:bool):
+    def login_attempt(self, success: bool):
         if success:
             self.failed_login_attempts = 0
             self.locked_out_until = None
@@ -127,12 +127,18 @@ class CustomUser(AbstractUser):
             if self.failed_login_attempts >= 10:
                 self.locked_out_until = datetime.now(timezone.utc) + timedelta(years=99)
             if self.failed_login_attempts >= 5:
-                lockout_minutes = min(15,(self.failed_login_attempts - 4))
-                self.locked_out_until = datetime.now(timezone.utc) + timedelta(minutes=lockout_minutes)
+                lockout_minutes = min(15, (self.failed_login_attempts - 4))
+                self.locked_out_until = datetime.now(timezone.utc) + timedelta(
+                    minutes=lockout_minutes
+                )
         if settings.LOG_AUTH:
-            settings.AUTH_LOGGER.info(f"Auth - {self.username}: Login attempt {'succeeded' if success else 'failed'}")
+            settings.AUTH_LOGGER.info(
+                f"Auth - {self.username}: Login attempt {'succeeded' if success else 'failed'}"
+            )
             if self.locked_out_until is not None:
-                settings.AUTH_LOGGER.warning(f"Auth - {self.username}: Locked out for {lockout_minutes} minute(s)")
+                settings.AUTH_LOGGER.warning(
+                    f"Auth - {self.username}: Locked out for {lockout_minutes} minute(s)"
+                )
         self.save(update_fields=["failed_login_attempts", "locked_out_until"])
 
     #############################################
@@ -215,9 +221,7 @@ class CustomUser(AbstractUser):
         session.delete()
 
     @type_enforced.Enforcer
-    def edit_session(
-        self, session_id: int | str, session_name: str, session_description: str = ""
-    ):
+    def edit_session(self, session_id: int | str, session_name: str, session_description: str = ""):
         session_id = int(session_id)
         self.error_on_no_access()
         Sessions.error_on_invalid_name(session_name)
@@ -1163,7 +1167,7 @@ class Sessions(models.Model):
             - Default: True
         - `force_overwrite`:
             - Type: bool
-            - What: If True, the data will be broadcasted to the client to force an update (even with matching versions) and will trigger reloading client side 
+            - What: If True, the data will be broadcasted to the client to force an update (even with matching versions) and will trigger reloading client side
             - Default: False
             - Note: Used primarily for switching between sessions
 

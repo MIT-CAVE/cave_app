@@ -679,9 +679,7 @@ def execute_command(
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputExample": [
-                            [-71.082524, 42.361145]
-                        ],  # MIT CTL Building (E40)
+                        "latLngInputExample": [[-71.082524, 42.361145]],  # MIT CTL Building (E40)
                         "latLngMapExample": [[-71.093773, 42.359244]],  # Killian Court
                         "latLngPathExample": [
                             [-71.093773, 42.359244],  # Start: Killian Court

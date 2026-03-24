@@ -158,7 +158,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_a": {
                                     "name": "Option A",
                                     "color": "#f44336",
-                                    "activeColor": "#f0fa08"
+                                    "activeColor": "#f0fa08",
                                 },
                                 "option_b": {
                                     "name": "Option B",
