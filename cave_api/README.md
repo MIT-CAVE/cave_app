@@ -231,7 +231,7 @@ To add static data to the api:
     data_location = resources.files("cave_api.data")
     relative_data_path = data_location.joinpath("api.json").__str__()
     ```
-- See: [static data example](/cave_api/cave_api/examples/static_data_example.py) for a simple example.
+- See: [static data example](/cave_api/cave_api/examples/data_local_example.py) for a simple example.
 - Note: It is important to use `importlib.resources` to access files in the package.
     - The actual location of the data folder might change depending on how the package is installed.
     - This is particularly important when deploying the package (EG: AWS using Elastic Beanstalk).
