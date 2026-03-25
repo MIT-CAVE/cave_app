@@ -1084,7 +1084,7 @@ class Sessions(models.Model):
         cache.set(f"session:{self.id}:versions", versions)
         self.__dict__["versions"] = versions
 
-    def get_data(self, keys: list[str] = None, client_only: bool = True, omit_keys=list()) -> dict:
+    def get_data(self, keys: list[str] = None, client_only: bool = True, omit_keys=list(), create_missing_cache_keys=False) -> dict:
         """
         Returns all data for this session
 
@@ -1104,7 +1104,11 @@ class Sessions(models.Model):
             - What: The keys to omit from the data
             - Default: []
             - Note: If None, no keys are omitted
-
+        - `create_missing_cache_keys`:
+            - Type: bool
+            - What: If True, the function will create missing cache keys with empty dictionaries
+            - Note: This is useful for initializing new data structures
+            - Default: False
         Returns:
             - Type: dict
             - What: The related data given the inputs to this function
@@ -1129,6 +1133,12 @@ class Sessions(models.Model):
             new_data = {
                 key.split(":")[-1]: value for key, value in new_data.items() if value != None
             }
+            if create_missing_cache_keys:
+                # If creating missing cache keys, fill in any missing keys with empty dictionaries to prevent errors in the client
+                for key in keys_to_get_from_cache:
+                    if key not in new_data:
+                        new_data[key] = {}
+                        cache.set(f"session:{self.id}:data:{key}", new_data[key])
             # If the new data is not the same length as the keys to get from the cache, there was an error
             # Likely, some data was lost from the persistent cache
             if len(new_data.keys()) != len(keys_to_get_from_cache):
@@ -1331,7 +1341,7 @@ class Sessions(models.Model):
         self.set_loading(False, override_block=True)
         # print('==EXECUTE API COMMAND END==\n')
 
-    def mutate(self, data_version, data_name, data_path, data_value=None, ignore_version=False):
+    def mutate(self, data_version, data_name, data_path, data_value=None, ignore_version=False, create_missing_cache_keys=False):
         """
         Mutate a specific data_name inside of this session
 
@@ -1357,11 +1367,16 @@ class Sessions(models.Model):
             - Type: bool
             - What: A boolean indicator to specify if the current data version should be considered before processing the mutation request
             - Default: False
+        - `create_missing_cache_keys`:
+            - Type: bool
+            - What: If True, the function will create missing cache keys with empty dictionaries
+            - Note: This is useful for creating missing data structures when syncing from local state
+            - Default: False
         """
         # print('==MUTATE==')
-        data = self.get_data(keys=[data_name], client_only=False)[data_name]
+        data = self.get_data(keys=[data_name], client_only=False, create_missing_cache_keys=create_missing_cache_keys).get(data_name)
         versions = self.get_versions()
-        if not data:
+        if data == None:
             raise Exception(
                 "Session Error: No session data found. This could be caused by an incorrect `data_name` or not being in a session."
             )
