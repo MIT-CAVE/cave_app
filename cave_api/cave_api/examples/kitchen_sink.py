@@ -124,12 +124,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "draggables": {
                     "name": "Draggables",
-                    "showToggle": False,
-                    "value": False,
+                    "showToggle": True,
+                    "value": True,
                     "data": {
                         "dr1": ["draggables", "data"],
-                        # TODO (idea): Implement wildcard (or RegEx) syncing
-                        "dr2": ["globalOutputs", "props", "*", "draggable"],
                     },
                 },
                 "pages": {
