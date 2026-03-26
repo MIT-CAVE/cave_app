@@ -6,7 +6,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
     # Return the following app state (create a static app with no custom logic)
     date_ids = ["2024-01-01", "2024-01-02", "2024-01-03", "2024-01-04"]
     date_builder = DateGroupsBuilder("Date", date_ids)
-    print(date_builder.serialize())
     return {
         "settings": {
             # Icon Url is used to load icons from a custom icon library
