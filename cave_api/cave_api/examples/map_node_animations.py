@@ -11,7 +11,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
             "iconUrl": "https://react-icons.mitcave.com/5.4.0",
             "time": {
-                "timeLength": 6,
+                "timeLength": 15,
                 "timeUnits": "seconds",
                 "looping": False,
                 "speed": 1
