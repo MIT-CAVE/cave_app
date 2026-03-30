@@ -1,5 +1,3 @@
-import random
-
 def execute_command(session_data, socket, command="init", **kwargs):
     # Return the following app state (create a static app with no custom logic)
     return {
