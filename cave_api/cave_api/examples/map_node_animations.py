@@ -68,10 +68,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 },
                                 "robot": {
                                     "value": True,
-                                    "colorBy": "includesAutomation",
+                                    "colorBy": "isAvailable",
                                     "colorByOptions": [
                                         "capacity",
-                                        "includesAutomation",
+                                        "isAvailable",
                                     ],
                                     "sizeBy": "capacity",
                                     "sizeByOptions": ["capacity"],
@@ -177,7 +177,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Capacity",
                             "type": "num",
                             "unit": "Cubic Feet",
-                            "help": "The warehouse capacity in cubic feet",
+                            "help": "The robot carrying capacity in cubic feet",
                             "gradient": {
                                 "notation": "precision",
                                 "precision": 0,
@@ -195,10 +195,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 ],
                             },
                         },
-                        "includesAutomation": {
-                            "name": "Includes Automation",
+                        "isAvailable": {
+                            "name": "Is Available",
                             "type": "toggle",
-                            "help": "Whether the warehouse includes automation",
+                            "help": "Whether the robot is available",
                             "options": {
                                 "false": {"color": "rgb(255 0 0)"},
                                 "true": {"color": "rgb(0 255 0)"},
@@ -215,7 +215,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "valueLists": {
                             "capacity": [80, 100],
-                            "includesAutomation": [True, False],
+                            "isAvailable": [True, False],
                             "scenario": ["Scenario 1", "Scenario 2"],
                         },
                     },
