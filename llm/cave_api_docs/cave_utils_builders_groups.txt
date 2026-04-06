@@ -1,0 +1,31 @@
+MODULE: cave_utils.builders.groups
+==================================
+
+CLASSES
+-------
+
+class DateGroupsBuilder
+-----------------------
+
+  get_id(self, *args, **kwargs)
+    Ensure that the get_id function is not called with date Groups.
+
+class GroupsBuilder
+-------------------
+
+  get_id(self, group: dict[str, str])
+
+class GroupsUtils
+-----------------
+
+  get_id_list(self)
+    Get the list of ids for the groups in the same order as the provided group_data.
+    
+            Returns:
+            * `[list]` &rarr; The list of ids for the groups in the same order as the provided group_data.
+
+  serialize(self)
+    Serialize the group structure to a dictionary of the proper format.
+    
+            Returns:
+            * `[dict]` &rarr; The serialized group structure.

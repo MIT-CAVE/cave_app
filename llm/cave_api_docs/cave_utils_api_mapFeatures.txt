@@ -1,0 +1,101 @@
+MODULE: cave_utils.api.mapFeatures
+==================================
+
+Create visualizations for your map, including `arc`s, `node`s, and `geo`s, and customize their appearance.
+
+CLASSES
+-------
+
+class mapFeatures
+-----------------
+The map features are located under the path **`mapFeatures`**.
+
+  staticmethod spec(data: dict = {}, **kwargs)
+    Arguments:
+    
+            * **`data`**: `[dict]` = `{}` &rarr; The data to pass to `mapFeatures.data.*`.
+
+class mapFeatures_data_star
+---------------------------
+The map features data is located under the path **`mapFeatures.data.*`**.
+
+  staticmethod spec(type: str, name: str, props: dict, data: dict, layout: dict | None = None, geoJson: dict | None = None, **kwargs)
+    Arguments:
+    
+            * **`type`**: `[str]` &rarr; The type of the map feature.
+                * **Accepted Values**:
+                    * `"arc"`: An `arc` layer
+                    * `"node"`: A `node` layer
+                    * `"geo"`: A `geo` layer
+            * **`name`**: `[str]` &rarr; The name of the map feature.
+            * **`props`**: `[dict]` &rarr; The props that will be rendered in the map feature.
+                * **See**: `cave_utils.api_utils.general.props`
+            * **`data`**: `[dict]` &rarr; The data that will be passed to the props.
+                * **See**: `cave_utils.api_utils.general.values`
+            * **`layout`**: `[dict]` =`{"type": "grid", "numColumns": "auto", "numRows": "auto"}` &rarr;
+                * The layout of the map feature data presented in a map modal.
+                * **See**: `cave_utils.api_utils.general.layout`
+            * **`geoJson`**: `[dict]` =`{}` &rarr; A dictionary specifying the GeoJSON data to use.
+                * **See**: `cave_utils.api.mapFeatures.mapFeatures_data_star_geoJson`
+
+class mapFeatures_data_star_data
+--------------------------------
+The map features data is located under the path **`mapFeatures.data.*.data`**.
+
+  staticmethod spec(location: dict, valueLists: dict, **kwargs)
+    Arguments:
+    
+            * **`location`**: `[dict]` &rarr; The location lists of the map feature.
+                * **See**: `cave_utils.api.mapFeatures.mapFeatures_data_star_data_location`
+            * **`valueLists`**: `[dict]` &rarr; The value lists of the map feature.
+                * **See**: `cave_utils.api_utils.general.valueLists`
+
+class mapFeatures_data_star_data_location
+-----------------------------------------
+The map features data is located under the path **`mapFeatures.data.*.data.location`**.
+
+  staticmethod spec(latitude: list[list[float | int]] | None = None, longitude: list[list[float | int]] | None = None, altitude: list[list[float | int]] | None = None, path: list[list[list[float | int]]] | None = None, geoJsonValue: list[str] | None = None, animationTime: list[list[float | int | None]] | None = None, visibilityIndex: list[list[float | int]] | None = None, visibilityTime: list[list[float | int]] | None = None, **kwargs)
+    Arguments:
+    
+            * **`latitude`**: `list[list[float | int]]` = `None` &rarr; A list of latitudes for each node. If a node has a single position, it is stationary. Else, it is animated through the list of latitudes.
+                * ** Example **: `[[45.34], [46.27], [47.34], [48.34]]`
+                * ** Notes **: Used for `node` layers
+            * **`longitude`**: `list[list[float | int]]` = `None` &rarr; A list of longitudes for each node. If a node has a single position, it is stationary. Else, it is animated through the list of longitudes.
+                * ** Example **: `[[120.34], [121.27], [122.34], [123.34]]`
+                * ** Note **: Used for `node` layers
+            * **`altitude`**: `list[list[float | int]]` = `None` &rarr; The altitude for each node / geo in kilometers.
+                * ** Example **: `[[0], [1000], [2000], [3000]]`
+                * ** Notes **:
+                    * Used for `node` and `geo` layers
+                    * This is currently ignored but is planned to be supported in the future.
+            * **`path`**: `list[list[list[float | int]]]` = `None` &rarr; A path for each arc in the format `[[long1,lat1,(optional alt1)],[long2,lat2,(optional alt2)],...]`.
+                * ** Example **: `[[[0,0],[1,1]],[[2,2],[3,3],[4,4],[5,5]]]`
+                * ** Example with Altitude **: `[[[0,0,0],[1,1,1000]],[[2,2,2000],[3,3,3000],[4,4,4000],[5,5,5000]]]`
+                * ** Note **: Used for `arc` layers
+            * **`geoJsonValue`**: `[list[str]]` = `None` &rarr; A list of geoJsonValue keys that correspond to the `properties` key specified as geoJsonProp in `mapFeatures.data.*.geoJson`.
+                * ** Note **: Used for `arc`, `node`, and `geo` layers
+            * **`animationTime`**: `list[list[float | int | None]]` = `None` &rarr; If animating, the time (in seconds) a node will be at a particular location. If a node is stationary, use `[None]`.
+                * ** Example **: `[[0, 1, 5], [0, 10]]`
+                * ** Notes **:
+                    * Used for `node` layers
+                    * Must start from 0 and strongly increase
+            * **`visibilityIndex`**: `list[list[float | int]]` = `None` & rarr; The indices of nodes with visibility logic.
+                * ** Example **: `[[0], [2]]`
+                * ** Notes **:
+                    * Used for `node` layers
+            * **`visibilityTime`**: `list[list[float | int]]` = `None` & rarr; The times (in seconds) at which each nodes' visibility toggles. The times at `visibilityTime[i]` corresponds to node with index `visibilityIndex[i][0]`.
+                * ** Example **: `[[3.4, 6], [2, 10, 12]]`
+                * ** Notes **:
+                    * Used for `node` layers
+                    * Must be in increasing order
+
+class mapFeatures_data_star_geoJson
+-----------------------------------
+The map feature GeoJSON data is located under the path **`mapFeatures.data.*.geoJson`**.
+
+  staticmethod spec(geoJsonLayer: str, geoJsonProp: str, **kwargs)
+    Arguments:
+    
+            * **`geoJsonLayer`**: `[str]` &rarr; The URL of the GeoJSON layer to use.
+            * **`geoJsonProp`**: `[str]` &rarr;
+                * The `properties` key (from the object fetched from the `geoJsonLayer` URL) to match with the value at `mapFeatures.data.*.data.location.geoJsonValue.*`.

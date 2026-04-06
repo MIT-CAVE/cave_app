@@ -1,0 +1,46 @@
+MODULE: cave_utils.api.draggables
+=================================
+
+Configure the state of draggable UI elements (floating panels, time control, etc.).
+
+CLASSES
+-------
+
+class draggables
+----------------
+The draggables are located under the path **`draggables`**.
+
+  staticmethod spec(data: dict, **kwargs)
+    Arguments:
+    
+            * **`data`**: `[dict]` &rarr; A dictionary of draggable items to configure.
+                * **See**: `cave_utils.api.draggables.draggables_data_star`
+
+class draggables_data_star
+--------------------------
+The draggable item configuration is located under the path **`draggables.data.*`**.
+
+  staticmethod spec(open: bool | None = None, position: dict | None = None, hideCloseOption: bool | None = None, hideDragOption: bool | None = None, showDragHandle: bool | None = None, **kwargs)
+    Arguments:
+    
+            * **`open`**: `[bool]` = `None` &rarr; If `True`, the draggable will be visible when the application loads.
+                * **Note**: If left unspecified (i.e., `None`), the default visibility is determined by the application.
+            * **`position`**: `[dict]` = `None` &rarr; The initial pixel position of the draggable on screen.
+                * **See**: `cave_utils.api.draggables.draggables_data_star_position`
+                * **Note**: If left unspecified (i.e., `None`), the default position is determined by the application.
+            * **`hideCloseOption`**: `[bool]` = `None` &rarr; If `True`, the close button will be hidden on the draggable.
+                * **Note**: If left unspecified (i.e., `None`), the close button is shown by default.
+            * **`hideDragOption`**: `[bool]` = `None` &rarr; If `True`, the drag handle will be hidden on the draggable.
+                * **Note**: If left unspecified (i.e., `None`), the drag handle is shown by default.
+            * **`showDragHandle`**: `[bool]` = `None` &rarr; If `True`, the drag handle will be shown on the draggable.
+                * **Note**: If left unspecified (i.e., `None`), the drag handle visibility is determined by the application.
+
+class draggables_data_star_position
+-----------------------------------
+The draggable position is located under the path **`draggables.data.*.position`**.
+
+  staticmethod spec(x: int, y: int, **kwargs)
+    Arguments:
+    
+            * **`x`**: `[int]` &rarr; The horizontal offset in pixels from the left edge of the application (excluding the app bar).
+            * **`y`**: `[int]` &rarr; The vertical offset in pixels from the top edge of the screen.

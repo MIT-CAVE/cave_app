@@ -1,0 +1,12 @@
+MODULE: cave_utils.socket
+=========================
+
+CLASSES
+-------
+
+class Socket
+------------
+
+  broadcast(self, *args, **kwargs)
+
+  notify(self, *args, **kwargs)

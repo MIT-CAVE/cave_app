@@ -1,0 +1,22 @@
+MODULE: cave_utils.api_utils.validator_utils
+============================================
+
+Special utility functions to help in validating your data against the CAVE API. This is not a key that should be passed as part of your `session_data`.
+
+CLASSES
+-------
+
+class ApiValidator
+------------------
+
+  spec(self, **kwargs)
+    The default `spec` method.
+    
+            This provides a baseline spec for some utility validators.
+    
+            This should be overridden by any non utility child class.
+
+class CustomKeyValidator
+------------------------
+
+  staticmethod spec(**kwargs)

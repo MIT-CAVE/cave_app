@@ -1,0 +1,22 @@
+MODULE: cave_utils.generate_docs
+================================
+
+FUNCTIONS
+---------
+
+_cli()
+
+_is_dunder(name: str) -> bool
+
+_render_module(mod) -> str
+
+generate_docs(output_dir: str = 'cave_utils_docs')
+Generate plain text documentation for all cave_utils modules.
+
+    Recursively discovers all cave_utils submodules and writes one .txt file
+    per module (skipping dunder methods) plus a README.txt index.
+
+    Arguments:
+
+    * **`output_dir`**: `[str]` = `"cave_utils_docs"` &rarr; Path to the output directory.
+      Created if it does not exist.
