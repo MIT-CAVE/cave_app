@@ -37,7 +37,12 @@ The codebase is organized into several directories, each serving a specific purp
             - map_nodes.py: This example demonstrates how to create node visualizations on a map within the CAVE app. It shows how to plot nodes (points of interest) on a map, which can be used to represent locations, events, or other significant points in a visually compelling way.
             - pane_modal.py: This example illustrates how to create a modal pane within the CAVE app. It demonstrates how to design and implement a pane that appears like a modal dialog, allowing for the display of additional information, forms, or interactive content in a way that overlays the main app interface.
             - pane_wall.py: This example demonstrates how to create a wall pane within the CAVE app. It shows how to design and implement a pane that appears like a wall, which can be used to display information, visualizations, or interactive content in a way that is integrated into the main app interface without overlaying it like a modal.
-    - The default application uses the `cave_api/cave_api/api.py` file which acts as a selector for each example in the `cave_api/cave_api/examples/` directory.
+    - The CAVE app entrypoint must always be defined as `execute_command` in `cave_api/cave_api/api.py`.
+    - `api.py` offers three clearly labelled options (Option 1 / Option 2 / Option 3):
+        - **Option 1 (default):** Imports from `cave_api/cave_api/examples/selector/example_selector.py`, a meta-selector that lets users browse all examples from within the running app. It is not a coding template; it is a convenience tool for exploration.
+        - **Option 2:** Imports from `cave_api/cave_api/src/app.py`, the minimal starting template for building a real app. This is the recommended path when transitioning from examples to custom code. The `src/` directory is where all custom app logic should live.
+        - **Option 3:** Imports a specific example directly (e.g. `cave_api.cave_api.examples.api_command`). Useful for quickly running or testing a single example.
+    - Keeping examples intact in `cave_api/cave_api/examples/` while developing custom code in `cave_api/cave_api/src/` is the recommended workflow. Examples remain available for reference without interfering with the user's app.
     - There is also a `README.md` file that is specific for `cave_api` which provides instructions and details about the API code and how to use it effectively.
     - Full api docs can be found at https://mit-cave.github.io/cave_utils/cave_utils/api.html
 - /cave_app: This directory contains basic settings, asgi setup, storage_backends, and urls that are needed by Django projects to operate.

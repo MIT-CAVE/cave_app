@@ -104,19 +104,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
 
 1. Open `my_app/cave_api/cave_api/api.py`.
 
-2. By default it imports from the example selector. Replace that import with your own code:
+2. By default it imports from the example selector. To start your own app, replace that import with the pre-built starting template:
 
     ```python
     # Before (default):
-    from cave_api.cave_api.example_selector import execute_command
+    from cave_api.cave_api.examples.selector.example_selector import execute_command
 
-    # After (your model):
-    from cave_api.cave_api.my_model import execute_command
+    # After (your app):
+    from cave_api.cave_api.src.app import execute_command
     ```
 
-    Or define `execute_command` directly in `api.py`.
+    `cave_api/cave_api/src/app.py` is the minimal starting template. Edit it directly, or create a new file and import from there instead.
 
-3. Create `my_app/cave_api/cave_api/my_model.py` and write your function:
+3. Extend `cave_api/cave_api/src/app.py` with your own logic:
 
     ```python
     def execute_command(session_data, socket, command="init", **kwargs):
@@ -142,7 +142,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
 
 Here is a concrete end-to-end example of modifying an existing example. We will add a flag button to `api_command.py` that sends `Hello World!` to the browser.
 
-> **Note:** Make sure `your_app/cave_api/cave_api/api.py` is importing from `cave_api.examples.example_selector`.
+> **Note:** Make sure `your_app/cave_api/cave_api/api.py` is using Option 1 (the default), which imports from `cave_api.cave_api.examples.selector.example_selector`.
 
 1. Start the app:
     ```
