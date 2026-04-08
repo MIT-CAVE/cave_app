@@ -130,7 +130,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "data": {
                         "location": {
                             "latitude": [[43.78], [39.82]],
-                            "longitude": [[-79.63], [-86.18], [-87]],
+                            "longitude": [[-79.63], [-86.18]],
                             "timeValues": {
                                 0: {
                                     "latitude": [[43.78], [39.82]],
