@@ -1,16 +1,26 @@
 # Cave App
-Quickly create interactive web applications for python based models.
+
+Cave App is an open-source framework for rapidly building interactive web applications on top of Python models and data pipelines. It handles the full stack: web server, real-time session management, admin interface, and a React-based frontend. You can focus entirely on your Python logic. It is designed for researchers, data scientists, and engineers who want to turn models into shareable, interactive tools without writing frontend or backend code.
 
 Click the image below to see a video introduction to the cave app:
 
 [![cave app intro](https://img.youtube.com/vi/-wWrNW8qG18/maxresdefault.jpg)](https://youtu.be/-wWrNW8qG18)
 
+# Prerequisites
+
+Before getting started, ensure you have the following installed:
+
+- [Google Chrome](https://www.google.com/chrome/): the only fully supported browser
+- [Docker](https://www.docker.com/get-started/): required to run the app locally
+- [Python 3](https://www.python.org/downloads/): required for the Cave CLI
+- [Cave CLI](https://github.com/MIT-CAVE/cave_cli): the command-line tool used to create and run apps
+
 # Getting Started
 
-1. Install the [Cave CLI](https://github.com/MIT-CAVE/cave_cli). See the full instructions how how to install the Cave CLI [here](https://github.com/MIT-CAVE/cave_cli).
+1. Install the [Cave CLI](https://github.com/MIT-CAVE/cave_cli).
     - If you do not want to use the CLI (or for production deployments), see the instructions [here](NON_CLI_README.md).
 
-2. Create a new cave app:
+2. Create a new cave app (replace `my_app` with your desired app name):
     ```
     cave create my_app
     ```
@@ -44,44 +54,50 @@ Click the image below to see a video introduction to the cave app:
               - See the [Cave App SSL/TLS documentation](utils/lan_hosting/readme.md) for more information on how to set up your own SSL certificates and integrate them with the cave app.
     </details>
 
-5. In Chrome, you can now open the web app:
-    - EG: If you use the standard settings
+5. In Chrome, open the web app:
     ```
-    http://localhost:8000
+    http://localhost:8000/cave/
     ```
 
 ## Using The Example App
-To fully understand how the cave app works, it is best to dive into some of our examples. The cave app comes with pre-built examples to help you understand all the components you can take advantage of and how to use them. To use the example app, follow the steps below:
 
-- Ensure the app is running (while in the directory `your_app`):
-  ```
-  cave run
-  ```
-- Open the app in Chrome:
-  - EG: If you use the standard settings
-  ```
-  http://localhost:8000
-  ```
+To fully understand how the cave app works, it is best to dive into some of our examples. The cave app comes with pre-built examples to help you understand all the components you can take advantage of and how to use them.
+
+Once your app is running (see [Getting Started](#getting-started) above) and you have opened it in Chrome:
+
 - Login (or create an account)
   - For example purposes, we recommend you login as the default admin
     - Use the info from when you created the cave app.
-    - This can also be found in `your_app/.env`
+    - This can also be found in `my_app/.env`
   - The login button appears in the main app bar
-- Click on the app page icon (A square with spaces along its edges)
-- We supply multiple example code structures for you to use for reference and to build on top of. You can find them in `your_app/cave_api/cave_api/examples`
-  - By default, you will get an app with a button (three sliders) in the top left corner that allows you to switch between all of our examples. 
+- Click on the app page icon (a square with spaces along its edges)
+- By default, you will see a button (three sliders) in the top left corner that allows you to switch between all of our examples.
   - Click on the three sliders to open the example menu and choose an example to view.
-  - To see the code for each example, navigate to `your_app/cave_api/cave_api/examples` and open the example you want to view.
-
+  - To see the code for each example, navigate to `my_app/cave_api/cave_api/examples` and open the example you want to view.
 
 ## Making API Changes
-See the API documentation:
+
+The `cave_api` is where you integrate your own Python models, data, and logic into the app. You expose functionality through a simple `execute_command` function, and the Cave App handles the rest: routing commands, managing sessions, and updating the frontend in real time.
+
+See the API documentation to get started:
 
 - [General API Topics](cave_api/README.md)
 - [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html)
 
+## Development Workflow
+
+### Prettify Code
+
+Use the CLI to keep your API code formatted and consistent with CAVE coding standards:
+
+```sh
+cave prettify
+```
+
+**NOTE**: All prettify commands write over existing code (in place).
 
 ## Cave App Components
+
 The cave app includes a variety of core components to allow for rapid prototyping, development and testing. The main components include:
 
 - Customizable web pages that allow for creating and modifying simple information based web content on the fly
@@ -99,59 +115,13 @@ The cave app includes a variety of core components to allow for rapid prototypin
   <details>
   <summary>Admin Getting Started</summary>
 
-  1. Login using the admin information that you used during setup, or look in the `.env` file in the root of your app directory).
+  1. Login using the admin information that you used during setup, or look in the `.env` file in the root of your app directory.
 
   2. To view the admin page navigate to: `localhost:8000/cave/admin`
-  ![admin page](https://utils.mitcave.com/docs/cave_app-0.3.0/admin.png)
 
   3. From the Admin page, you can add pages and content to your website
     - The following content types are supported: photos, videos, breaks, headers, HTML content, quotes, resources, and FAQs
-    - As an example, a created page can look like:
-    ![example page](https://utils.mitcave.com/docs/cave_app-0.3.0/example_page.png)
   </details>
-
-
-### Prettify Code
-Use the CLI to keep your API code `pretty` and match CAVE coding format standards.
-
-  ```sh
-  cave prettify
-  ```
-  **NOTE**: All prettify commands write over existing code (in place).
-
-## Project Contributors
-
-- Anthony Zheng - CAVE Developer
-- Bianca Rosini - CAVE Developer
-- Luis Vasquez - CAVE Senior Developer
-- Alice Zhao - CAVE Research Assistant / Developer
-- Willem Guter - CAVE Researcher / Developer
-- Connor Makowski - CAVE Researcher / Development Lead
-- Tim Russell - CAVE Researcher / Manager
-- Matthias Winkenbach - CAVE Director
-
-## Previous Contributors
-- Ella Wang - CAVE Developer
-- Max Katz-Christy - CAVE Developer
-- Brian Zheng - CAVE Developer
-- Katherine Li - CAVE Developer
-- Elaine Wang - CAVE Developer
-- Robert Tran - CAVE Developer
-- Yang Dai - CAVE Developer
-- Margaret Sands - CAVE Developer
-- Kristen Manning - CAVE Developer
-- Alan Yan - CAVE Developer
-- Chris Larry - CAVE Developer
-- Chloe Wang - CAVE Developer
-- Shepherd Jiang - CAVE Developer
-- Samip Jain - CAVE Developer
-- Erin Liu - CAVE Developer
-- Sanjay Seshan - CAVE Developer
-- Jean Billa - CAVE Developer
-- Austin Lee - Conarrative Developer
-- Alex Dixon - Conarrative Developer
-- Steven Achstein - Conarrative Developer
-- Mike Gai - Conarrative Developer
 
 ## License Notice
 

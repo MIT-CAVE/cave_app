@@ -1,11 +1,20 @@
-# Write any code here to create an execute_command function
-# This will serve as the api execution entry point for your app
-# This can be directly defined in this file or imported from another file
-# Example execute_command functions can be found in cave_api/cave_api/examples
+# This is the entry point for the Cave API.
+# It must define or import a function named `execute_command`.
 
-# By default we show a special meta execute_command function that allows you to select any of the examples to view
-# This is not a great example for how you should code, but rather offers an easy way to view all of our examples in one place
-# To view the code for an example, open the corresponding file in cave_api/cave_api/examples
-# If you want to manually change the example that is loaded, you can change `example_selector` below to any of the other examples
-# EG: from cave_api.cave_api.examples.api_command import execute_command
-from cave_api.cave_api.example_selector import execute_command
+# ── Option 1 (default): Browse all examples via the example selector ──────────
+# The example selector lets you switch between all included examples from
+# within the running app. It is useful for exploring what is possible, but
+# is not intended as a coding template.
+# To view the code for a specific example, open the corresponding file in:
+#   cave_api/cave_api/examples/
+from cave_api.cave_api.examples.selector.example_selector import execute_command
+
+# ── Option 2: Start your own app ──────────────────────────────────────────────
+# Uncomment the line below and comment out Option 1 above.
+# cave_api/cave_api/src/app.py is a minimal starting template for your app.
+# from cave_api.cave_api.src.app import execute_command
+
+# ── Option 3: Load a specific example directly ────────────────────────────────
+# Uncomment one of the lines below and comment out Option 1 above.
+# from cave_api.cave_api.examples.api_command import execute_command
+# from cave_api.cave_api.examples.map_nodes import execute_command

@@ -1,18 +1,18 @@
 autoflake==2.3.1
-black==25.1.0
-cave_utils==3.4.0
-Django==5.2.4
-django-import-export==4.3.8
-djangorestframework==3.16.0
-django_otp==1.6.1
+black==25.12.0
+cave_utils==3.5.2
+Django==6.0
+django-import-export==4.3.14
+djangorestframework==3.16.1
+django_otp==1.6.3
 django_sockets==2.0.0
 django-solo==2.4.0
-pamda>=2.8.0,<3.0.0
-pillow==11.3.0
-psycopg[binary, pool]==3.2.9
+pamda>=2.9.0,<3.0.0
+pillow==12.0.0
+psycopg[binary, pool]==3.3.2
 python-decouple==3.8
 qrcode==8.2
-redis==6.2.0
-type_enforced>=2.2.0,<3.0.0
-whitenoise==6.9.0
+redis==7.1.0
+type_enforced>=2.3.0,<3.0.0
+whitenoise==6.11.0
 -r ./utils/extra_requirements.txt

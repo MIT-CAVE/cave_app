@@ -258,6 +258,7 @@ if LOG_AUTH:
 
 if any([LOG_REQUESTS, LOG_SERVER, LOG_DB, LOG_AUTH]):
     from pathlib import Path
+
     Path(f"{BASE_DIR}/logs").mkdir(parents=True, exist_ok=True)
     LOGGING = {
         "version": 1,
@@ -274,4 +275,5 @@ LIVE_API_VALIDATION_LOG = config("LIVE_API_VALIDATION_LOG", default=False, cast=
 LIVE_API_VALIDATION_LOG_MAX = config("LIVE_API_VALIDATION_LOG_MAX", default=1000, cast=int)
 LIVE_API_VALIDATION_PRINT = config("LIVE_API_VALIDATION_PRINT", default=False, cast=bool)
 LIVE_API_VALIDATION_PRINT_MAX = config("LIVE_API_VALIDATION_PRINT_MAX", default=10, cast=int)
+DEFAULT_WIPE_EXISTING = config("DEFAULT_WIPE_EXISTING", default=True, cast=bool)
 ################################################################

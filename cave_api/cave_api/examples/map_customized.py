@@ -110,9 +110,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "raster",
                                 # EG: See a list of raster sources based on OSM here:
                                 # https://wiki.openstreetmap.org/wiki/Raster_tile_providers
-                                "tiles": [
-                                    "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                ],
+                                "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
                                 "tileSize": 256,
                                 "attribution": "Map tiles by <a target='_top' rel='noopener' href='https://osmfoundation.org/'>OpenStreetMap</a>, under <a target='_top' rel='noopener' href='https://osmfoundation.org/copyright'>Open Database License</a>.",
                             },

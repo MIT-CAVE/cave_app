@@ -199,9 +199,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         }
                     },
                     "pageLayout": [
-                        "stretchedChart", "left", None, 
-                        "up", "up", None,
-                        "up", "up", None,
+                        "stretchedChart",
+                        "left",
+                        None,
+                        "up",
+                        "up",
+                        None,
+                        "up",
+                        "up",
+                        None,
                     ],
                 },
             },

@@ -72,9 +72,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                             "parentGroupId": 0,
                                             "prop": "capacity",
                                             "option": "gt",
-                                            "value": "90"
-                                        }
-                                    ]
+                                            "value": "90",
+                                        },
+                                    ],
                                 },
                             },
                         },
