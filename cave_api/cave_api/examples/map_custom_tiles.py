@@ -23,25 +23,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
             if y < 8:
                 landscape_coordinates.append([x_coord, y_coord])
             square_coordinates.append([x_coord, y_coord])
-    
+
     robot_node_coordinates = [[399, 1798]]
-    robot_path_coordinates = [
-        [
-            [395, 1744],
-            [400, 1171],
-            [1017, 1171],
-            [1026, 524]
-        ]
-    ]
-    region_coordinates = [
-        [
-            [1400, 1024],
-            [2000, 1024],
-            [2000, 2000],
-            [1400, 2000],
-            [1400, 1024]
-        ]
-    ]
+    robot_path_coordinates = [[[395, 1744], [400, 1171], [1017, 1171], [1026, 524]]]
+    region_coordinates = [[[1400, 1024], [2000, 1024], [2000, 2000], [1400, 2000], [1400, 1024]]]
 
     # Convert (x,y) coordinates to (lat,long) to properly display the points on the Mercator projection map
     square_locations_dict = square_coordinate_system.serialize_nodes(square_coordinates)

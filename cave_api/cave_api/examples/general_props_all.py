@@ -59,6 +59,24 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "precision": 0,
                             "unit": "units",
                         },
+                        "numericInputExampleAlt": {
+                            "name": "Numeric Input Example with Custom Attributes",
+                            "type": "num",
+                            "help": "Help for the numeric input example with left/right spinners and custom attributes",
+                            "minValue": 0,
+                            "label": "This label is intentionally long to demonstrate how text is truncated when it exceeds the available space.",
+                            "marqueeLabel": False,
+                            "maxValue": 1_073_741_824,
+                            "spinner": "leftAndRight",
+                            "notation": "compact",
+                            "notationDisplay": "short",
+                            "smallStep": 2,
+                            "step": 16,
+                            "largeStep": 8192,
+                            "precision": 3,
+                            "hideKeyboardToggle": True,
+                            "unit": "units",
+                        },
                         "numericSliderExample": {
                             "name": "Numeric Slider Example",
                             "type": "num",
@@ -158,7 +176,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_a": {
                                     "name": "Option A",
                                     "color": "#f44336",
-                                    "activeColor": "#f0fa08"
+                                    "activeColor": "#f0fa08",
                                 },
                                 "option_b": {
                                     "name": "Option B",
@@ -439,11 +457,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "values": {
                         "hiddenProp": 0,
                         "numericInputExample": 50,
+                        "numericInputExampleAlt": 32,
                         "numericSliderExample": 50,
                         "incrementalSliderExample": 50,
                         "toggleInputExample": True,
                         "buttonInputExample": "Press Me!",
-                        "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
+                        "pictureExample": "https://cave.mit.edu/wp-content/uploads/2019/01/CAVE_CTL_Live.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
                         "textInputExample": "Example Text Here",
                         "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
@@ -494,12 +513,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 1,
                                 "row": 3,
-                                "itemId": "numericSliderExample",
+                                "itemId": "numericInputExampleAlt",
                             },
                             "col1Row4": {
                                 "type": "item",
                                 "column": 1,
                                 "row": 4,
+                                "itemId": "numericSliderExample",
+                            },
+                            "col1Row5": {
+                                "type": "item",
+                                "column": 1,
+                                "row": 5,
                                 "itemId": "incrementalSliderExample",
                             },
                             "col2Row1": {

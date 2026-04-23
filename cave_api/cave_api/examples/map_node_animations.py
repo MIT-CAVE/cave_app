@@ -7,7 +7,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # https://react-icons.mitcave.com/versions.txt
             # Once you select a version, you can see the available icons in the version
             # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
-            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0",
+            "time": {
+                "timeLength": 15,
+                "timeUnits": "seconds",
+                "looping": False,
+                "speed": 1
+            },
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
@@ -35,9 +41,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "currentProjection": "globe",
                     # Specify the default viewport for the map
                     "defaultViewport": {
-                        "longitude": -75.447,
-                        "latitude": 40.345,
-                        "zoom": 4.66,
+                        "longitude": 0,
+                        "latitude": 0,
+                        "zoom": 3,
                         "pitch": 0,
                         "bearing": 0,
                         "maxZoom": 12,
@@ -58,6 +64,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "sizeByOptions": ["capacity"],
                                     "icon": "fa6/FaWarehouse",
                                 },
+                                "robot": {
+                                    "value": True,
+                                    "colorBy": "isAvailable",
+                                    "colorByOptions": [
+                                        "capacity",
+                                        "isAvailable",
+                                    ],
+                                    "sizeBy": "capacity",
+                                    "sizeByOptions": ["capacity"],
+                                    "icon": "fa/FaRobot",
+                                },
                             },
                         },
                     },
@@ -66,6 +83,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "mapFeatures": {
             "data": {
+                # Discrete animations
                 "warehouse": {
                     "type": "node",
                     "name": "Warehouse",
@@ -88,12 +106,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "data": [
                                     {
                                         "value": "min",
-                                        "size": "4px",
+                                        "size": "30px",
                                         "color": "rgb(233 0 0)",
                                     },
                                     {
                                         "value": "max",
-                                        "size": "6px",
+                                        "size": "45px",
                                         "color": "rgb(96 2 2)",
                                     },
                                 ],
@@ -111,15 +129,92 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                     "data": {
                         "location": {
-                            "latitude": [[-90 + (i % 90 * 2)] for i in range(90**2)],
-                            "longitude": [[-180 + (i // 90 * 4)] for i in range(90**2)],
+                            "latitude": [[43.78], [39.82]],
+                            "longitude": [[-79.63], [-86.18]],
+                            "timeValues": {
+                                0: {
+                                    "latitude": [[43.78], [39.82]],
+                                },
+                                4: {
+                                    "latitude": [[44.78], [39.82]],
+                                },
+                                5: {
+                                    "latitude": [[45.78], [39.82]],
+                                },
+                                6: {
+                                    "latitude": [[46.78], [39.82]],
+                                },
+                                7: {
+                                    "latitude": [[46.78], [40.82]],
+                                },
+                                8: {
+                                    "latitude": [[46.78], [40.82]],
+                                },
+                            },    
                         },
                         "valueLists": {
-                            "capacity": [100 + i for i in range(90**2)],
-                            "includesAutomation": [i % 2 == 0 for i in range(90**2)],
-                            "scenario": [
-                                "Scenario 1" if i % 2 == 0 else "Scenario 2" for i in range(90**2)
-                            ],
+                            "capacity": [80, 100],
+                            "includesAutomation": [True, False],
+                            "scenario": ["Scenario 1", "Scenario 2"],
+                        },
+                    },
+                },
+                # Smooth animations
+                "robot": {
+                    "type": "node",
+                    "name": "Robot",
+                    "props": {
+                        "scenario": {
+                            "name": "Scenario",
+                            "type": "text",
+                            "enabled": False,
+                            "display": False,
+                            "help": "The scenario name",
+                        },
+                        "capacity": {
+                            "name": "Capacity",
+                            "type": "num",
+                            "unit": "Cubic Feet",
+                            "help": "The robot carrying capacity in cubic feet",
+                            "gradient": {
+                                "notation": "precision",
+                                "precision": 0,
+                                "data": [
+                                    {
+                                        "value": "min",
+                                        "size": "30px",
+                                        "color": "rgb(233 0 0)",
+                                    },
+                                    {
+                                        "value": "max",
+                                        "size": "45px",
+                                        "color": "rgb(96 2 2)",
+                                    },
+                                ],
+                            },
+                        },
+                        "isAvailable": {
+                            "name": "Is Available",
+                            "type": "toggle",
+                            "help": "Whether the robot is available",
+                            "options": {
+                                "false": {"color": "rgb(255 0 0)"},
+                                "true": {"color": "rgb(0 255 0)"},
+                            },
+                        },
+                    },
+                    "data": {
+                        "location": {
+                            "latitude": [[38.78, 38.78, 38.78], [25, 25, 15]],
+                            "longitude": [[-79.63, -78.6, -77.55], [-75, -70, -70]],
+                            "animationTime": [[0, 3, 5], [0, 4, 7]],
+                            "visibilityIndex": [[0]],
+                            "visibilityTime": [[1.4, 2, 4, 10]],              
+                        },
+                        "valueLists": {
+                            "capacity": [80, 100],
+                            "isAvailable": [True, False],
+                            "scenario": ["Scenario 1", "Scenario 2"],
                         },
                     },
                 },

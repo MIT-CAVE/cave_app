@@ -23,6 +23,7 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
         "last_name",
         "status",
         "email_validated",
+        "get_multi_team_sessions",
         "is_staff",
     ]
     list_filter = [
@@ -33,6 +34,7 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
     list_editable = [
         "status",
         "email_validated",
+        "get_multi_team_sessions",
     ]
     fieldsets = (
         (
@@ -53,7 +55,7 @@ class CustomUserAdmin(UserAdmin, ImportExportModelAdmin):
         ),
         (
             "Session Info",
-            {"fields": ("session", "team_ids")},
+            {"fields": ("session", "team_ids", "get_multi_team_sessions")},
         ),
     )
     add_fieldsets = (

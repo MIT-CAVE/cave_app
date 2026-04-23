@@ -69,6 +69,24 @@ def execute_command(
                             "fullWidth": True,
                             "help": "Enter the maximum cargo weight capacity for this delivery vehicle",
                         },
+                        "numericInputExampleAlt": {
+                            "name": "Network Bandwidth",
+                            "subtitle": "This example uses the `num`'s `field` variant with custom attributes",
+                            "type": "num",
+                            "help": "Set the maximum network bandwidth in Mbps to ensure stable and efficient data transmission across connections",
+                            "minValue": 0,
+                            "label": "Maximum network bandwidth limit in Mbps for connection optimization and performance management",
+                            "marqueeLabel": True,
+                            "maxValue": 1_000_000_000,
+                            "spinner": "left",
+                            "notation": "compact",
+                            "notationDisplay": "short",
+                            "smallStep": 10,  # Fine-grained adjustment (via Alt key)
+                            "step": 100,  # Default increment/decrement (via arrow keys or spinner)
+                            "largeStep": 1000,  # Larger step (via Shift key) for quick jumps
+                            "precision": 3,
+                            "unit": "Mbps",
+                        },
                         "numericSliderExample": {
                             "name": "Battery Level",
                             "subtitle": "This example uses the `num`'s `slider` variant",
@@ -649,6 +667,7 @@ def execute_command(
                     },
                     "values": {
                         "numericInputExample": 750.50,
+                        "numericInputExampleAlt": 1000,
                         "numericSliderExample": 75,
                         "incrementalSliderExample": 3,
                         "toggleSwitchExample": True,
@@ -657,7 +676,7 @@ def execute_command(
                         "filledButtonExample": "Save",
                         "outlinedButtonExample": "Delete",
                         "textButtonExample": "Archive",
-                        "pictureExample": "https://ctl.mit.edu/sites/ctl.mit.edu/files/inline-images/MIT_CTL_CAVE_Lab_2.png",
+                        "pictureExample": "https://cave.mit.edu/wp-content/uploads/2019/01/CAVE_CTL_Live.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
                         "textInputExample": "cave-routing-2025",
                         "textAreaInputExample": "This project aims to optimize last-mile delivery routes using machine learning algorithms. Key features include real-time traffic integration, dynamic route adjustment, and driver mobile app integration. Target completion: Q3 2025.",
@@ -679,9 +698,7 @@ def execute_command(
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputExample": [
-                            [-71.082524, 42.361145]
-                        ],  # MIT CTL Building (E40)
+                        "latLngInputExample": [[-71.082524, 42.361145]],  # MIT CTL Building (E40)
                         "latLngMapExample": [[-71.093773, 42.359244]],  # Killian Court
                         "latLngPathExample": [
                             [-71.093773, 42.359244],  # Start: Killian Court
@@ -711,12 +728,18 @@ def execute_command(
                                 "type": "item",
                                 "column": 1,
                                 "row": 3,
-                                "itemId": "numericSliderExample",
+                                "itemId": "numericInputExampleAlt",
                             },
                             "col1Row4": {
                                 "type": "item",
                                 "column": 1,
                                 "row": 4,
+                                "itemId": "numericSliderExample",
+                            },
+                            "col1Row5": {
+                                "type": "item",
+                                "column": 1,
+                                "row": 5,
                                 "itemId": "incrementalSliderExample",
                             },
                             "col2Row1": {
