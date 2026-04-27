@@ -1,8 +1,10 @@
-
+#!/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 APP_DIR=$(dirname "$SCRIPT_DIR")
 
 source ./utils/helpers/shell_functions.sh
+
+export PYTHONPATH=$PYTHONPATH:.
 
 if [[ ! -f "./cave_api/tests/$1" && "${ALL_FLAG}" != "true" ]]; then
     printf "Test $1 not found. Ensure you entered a valid test name.\n" | pipe_log "ERROR"
