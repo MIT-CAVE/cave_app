@@ -1,7 +1,7 @@
 import os
 import django
 
-# Note: We must first setup django - then we can import and use modules etc
+# Note: We must first setup django - then we can import and use models or other django features
 os.environ.setdefault(
     "DJANGO_SETTINGS_MODULE",
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cave_app.settings.development"),
