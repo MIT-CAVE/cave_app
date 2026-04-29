@@ -81,7 +81,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "panes": {
                     "name": "Open Pane",
                     "showToggle": True,
-                    "value": False,
+                    "value": True,
                     "data": {
                         "ab1": ["panes", "paneState", "left"],
                         "ab2": ["panes", "paneState", "right"],
@@ -90,19 +90,19 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "pageSelection": {
                     "name": "Page Selection",
                     "showToggle": True,
-                    "value": False,
+                    "value": True,
                     "data": {"ps1": ["pages", "currentPage"]},
                 },
                 "mapLayers": {
                     "name": "Map Layers",
                     "showToggle": True,
-                    "value": False,
+                    "value": True,
                     "data": {"ml1": ["maps", "data", "map1", "legendGroups"]},
                 },
                 "chartColors": {
                     "name": "Chart Colors",
                     "showToggle": True,
-                    "value": False,
+                    "value": True,
                     "data": {
                         "go1": ["groupedOutputs", "groupings"],
                     },
@@ -110,7 +110,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "modals": {
                     "name": "Open Modal",
                     "showToggle": True,
-                    "value": False,
+                    "value": True,
                     "data": {"pn1": ["panes", "paneState", "center"]},
                 },
                 "draggables": {
@@ -124,7 +124,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "pages": {
                     "name": "Dashboards",
                     "showToggle": True,
-                    "value": False,
+                    "value": True,
                     "data": {"db1": ["pages", "data"]},
                 },
             },
