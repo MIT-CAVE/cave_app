@@ -1,0 +1,9 @@
+{
+    "$schema": "https://raw.githubusercontent.com/google-gemini/gemini-cli/main/schemas/settings.schema.json",
+    "general": {
+        "defaultApprovalMode": "auto_edit"
+    },
+    "tools": {
+        "allowed": []
+    }
+}
