@@ -47,7 +47,6 @@ cave test <test_file.py>
 cave test init.py          # validate your app's init command (most common)
 cave test examples.py  # validate all bundled examples
 cave test django.py        # server-layer DB check
-cave test -all                  # run everything
 ```
 
 ### Standard pattern
@@ -332,8 +331,7 @@ The `examples/selector/example_selector.py` file is infrastructure for the selec
 
 Always use the Cave CLI formatter before committing:
 ```
-cave prettify        # api code and tests only
-cave prettify -all   # entire codebase
+cave prettify
 ```
 
 ---
