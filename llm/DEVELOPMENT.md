@@ -23,6 +23,75 @@ Only escalate to server-level changes if the request is clearly about:
 If in doubt, it is an API change.
 
 ---
+## Testing
+
+After making changes, you will often want to run a test to validate your work.
+
+Tests live in `cave_api/tests/`. Do not try to run them directly with python. You can only run them using the cave CLI. 
+
+```
+cave test <test_file.py>
+```
+
+### Default Available test files
+
+| File | Purpose | When to run |
+|---|---|---|
+| `init.py` | Calls `execute_command` with `command="init"` and validates the output. **Your primary test.** | After any API change |
+| `examples.py` | Runs `init` on every bundled example and validates each. | After touching any file in `examples/` |
+| `django.py` | Checks DB state (users, personal teams). Server-layer only. | After Django model or auth changes |
+
+### Running tests
+
+```
+cave test init.py          # validate your app's init command (most common)
+cave test examples.py  # validate all bundled examples
+cave test django.py        # server-layer DB check
+cave test -all                  # run everything
+```
+
+### Standard pattern
+
+`init.py` ships configured to match whatever you are seeing in your live application.
+
+```python
+from cave_api.api import execute_command
+from cave_utils import Socket, Validator
+
+def test_init():
+    init_session_data = execute_command(session_data={}, socket=Socket(), command="init")
+
+    validator = Validator(init_session_data, ignore_keys=["meta"])
+    validator.log.print_logs()
+    assert len(validator.log.log) == 0
+
+if __name__ == "__main__":
+    test_init()
+```
+
+### Testing additional commands
+
+If your app has commands beyond `init`, test them by chaining calls:
+
+```python
+from cave_api.api import execute_command
+from cave_utils import Socket, Validator
+
+def test_command_chain():
+    init_session_data = execute_command(session_data={}, socket=Socket(), command="init")
+    my_command_session_data = execute_command(session_data=init_session_data, socket=Socket(), command="my_command")
+
+    validator = Validator(my_command_session_data, ignore_keys=["meta"])
+    validator.log.print_logs()
+    assert len(validator.log.log) == 0
+
+if __name__ == "__main__":
+    test_command_chain()
+```
+
+Create a new file (e.g., `cave_api/tests/test_my_command.py`) for command-specific tests. Run it with `cave test test_my_command.py`.
+
+---
 
 ## The API: One Function
 
@@ -256,27 +325,6 @@ with open(data_folder.joinpath("my_data.json").__str__()) as f:
 | `kitchen_sink.py` | Comprehensive multi-feature example |
 
 The `examples/selector/example_selector.py` file is infrastructure for the selector UI — it is not a coding example.
-
----
-
-## Testing
-
-Tests live in `cave_api/tests/`. Standard pattern:
-
-```python
-from cave_api.cave_api.src.app import execute_command
-from cave_utils import Socket, Validator
-
-session_data = execute_command(session_data={}, socket=Socket(), command="init")
-validator = Validator(session_data, ignore_keys=["meta"])
-validator.log.print_logs()
-```
-
-Run in Docker:
-```
-cave test test_init.py    # single file
-cave test -all            # all tests
-```
 
 ---
 

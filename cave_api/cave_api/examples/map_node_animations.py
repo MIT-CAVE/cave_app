@@ -8,12 +8,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # Once you select a version, you can see the available icons in the version
             # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
             "iconUrl": "https://react-icons.mitcave.com/5.4.0",
-            "time": {
-                "timeLength": 15,
-                "timeUnits": "seconds",
-                "looping": False,
-                "speed": 1
-            },
+            "time": {"timeLength": 15, "timeUnits": "seconds", "looping": False, "speed": 1},
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
@@ -150,7 +145,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 8: {
                                     "latitude": [[46.78], [40.82]],
                                 },
-                            },    
+                            },
                         },
                         "valueLists": {
                             "capacity": [80, 100],
@@ -209,7 +204,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "longitude": [[-79.63, -78.6, -77.55], [-75, -70, -70]],
                             "animationTime": [[0, 3, 5], [0, 4, 7]],
                             "visibilityIndex": [[0]],
-                            "visibilityTime": [[1.4, 2, 4, 10]],              
+                            "visibilityTime": [[1.4, 2, 4, 10]],
                         },
                         "valueLists": {
                             "capacity": [80, 100],

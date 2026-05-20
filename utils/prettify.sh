@@ -7,7 +7,7 @@ cd $(dirname "$0")
 
 # Lint and Autoformat the API code in place
 # Remove unused imports
-autoflake --in-place --remove-all-unused-imports --ignore-init-module-imports -r ../cave_api
+autoflake --in-place --remove-all-unused-imports --ignore-init-module-imports --exclude=api.py -r ../cave_api
 # Perform all other steps
 black --config pyproject.toml ../cave_api
 
