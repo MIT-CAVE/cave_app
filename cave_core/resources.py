@@ -20,3 +20,8 @@ class CustomUserResource(resources.ModelResource):
             "bio",
             "email_validation_code",
         )
+
+
+class MutationLogsResource(resources.ModelResource):
+    class Meta:
+        model = models.MutationLogs

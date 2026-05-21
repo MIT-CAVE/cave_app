@@ -1,7 +1,13 @@
+# Framework Imports
+from django.conf import settings
+
 # Internal Imports
 from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 from cave_core.utils.constants import api_keys_set
 from cave_core.utils.wrapping import cache_data_version, ws_api_app
+from cave_core.models import MutationLogs
+
+USE_MUTATION_LOGGING = settings.USE_MUTATION_LOGGING
 
 
 # Websocket API Command Endpoints
@@ -148,6 +154,18 @@ def mutate_session(request):
                     # Broadcast any changed session data
                     session_i.broadcast_changed_data(previous_versions=data_versions)
                     break
+        # Log mutation event if enabled
+        if USE_MUTATION_LOGGING:
+            MutationLogs.objects.create(
+                user_id=request.user.id,
+                session_id=session_i.id,
+                data_name=data_name,
+                data_path=request.data.get("data_path"),
+                data_value=request.data.get("data_value"),
+                api_command=api_command,
+                api_command_keys=api_command_keys,
+                data_versions=data_versions,
+            )
         # Apply an api command if provided and push updated output
         if api_command is not None:
             session_i.execute_api_command(

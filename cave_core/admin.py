@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from cave_core import models, admin_forms, resources
-from import_export.admin import ImportExportModelAdmin
+from import_export.admin import ImportExportModelAdmin, ExportMixin
 from solo.admin import SingletonModelAdmin
 
 # Admin site attributes
@@ -271,6 +271,25 @@ class CustomFileStorageAdmin(admin.ModelAdmin):
     search_fields = ["name"]
 
 
+class CustomMutationLogAdmin(ExportMixin, admin.ModelAdmin):
+    model = models.MutationLogs
+    resource_class = resources.MutationLogsResource
+    list_display = ["id", "user_id", "session_id", "data_name", "api_command", "timestamp"]
+    list_filter = ["session_id", "user_id"]
+    search_fields = ["data_name", "api_command"]
+    readonly_fields = [
+        "user_id",
+        "session_id",
+        "timestamp",
+        "data_name",
+        "data_path",
+        "data_value",
+        "api_command",
+        "api_command_keys",
+        "data_versions",
+    ]
+
+
 admin.site.register(models.CustomUserFull, CustomUserFullAdmin)
 admin.site.register(models.Globals, CustomGlobalsAdmin)
 admin.site.register(models.Pages, CustomPageAdmin)
@@ -280,6 +299,7 @@ admin.site.register(models.Teams, CustomTeamAdmin)
 admin.site.register(models.TeamUsers, CustomTeamUserAdmin)
 admin.site.register(models.Sessions, CustomSessionAdmin)
 admin.site.register(models.FileStorage, CustomFileStorageAdmin)
+admin.site.register(models.MutationLogs, CustomMutationLogAdmin)
 
 
 # Create a special Staff Admin Site
