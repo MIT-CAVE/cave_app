@@ -45,7 +45,7 @@ cave test <test_file.py>
 
 ```
 cave test init.py          # validate your app's init command (most common)
-cave test examples.py  # validate all bundled examples
+cave test examples.py      # validate all bundled examples
 cave test django.py        # server-layer DB check
 ```
 

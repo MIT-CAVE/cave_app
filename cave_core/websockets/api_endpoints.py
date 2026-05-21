@@ -164,7 +164,6 @@ def mutate_session(request):
                 data_value=request.data.get("data_value"),
                 api_command=api_command,
                 api_command_keys=api_command_keys,
-                data_versions=data_versions,
             )
         # Apply an api command if provided and push updated output
         if api_command is not None:

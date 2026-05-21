@@ -1587,17 +1587,11 @@ class MutationLogs(models.Model):
         null=True,
         blank=True,
     )
-    data_versions = models.JSONField(
-        _("Data Versions"),
-        help_text=_("The client-reported data versions at the time of the mutation"),
-        null=True,
-        blank=True,
-    )
 
     class Meta:
         verbose_name = _("Mutation Log")
         verbose_name_plural = _("Mutation Logs")
-        ordering = ("-timestamp",)
+        ordering = ("session_id", "-timestamp")
 
     def __str__(self):
         return f"{self.id}"
