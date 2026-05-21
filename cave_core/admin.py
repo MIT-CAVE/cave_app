@@ -7,7 +7,7 @@ from django.urls import path, reverse
 from cave_core import models, admin_forms, resources
 from cave_core.models import MutationLogs
 from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
-from import_export.admin import ImportExportModelAdmin, ExportMixin, ImportExportMixin
+from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from solo.admin import SingletonModelAdmin
 
 # Admin site attributes

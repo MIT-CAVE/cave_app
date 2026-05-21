@@ -135,7 +135,7 @@ def mutate_session(request):
                 # Ignore version validation if this is not the current session
                 ignore_version=session_i.id != session.id,
                 data_version=data_versions.get(data_name),
-                # Allow missing cache keys to be created in the cache if they are are top level keys not in the cache yet 
+                # Allow missing cache keys to be created in the cache if they are are top level keys not in the cache yet
                 # (prevents mutation errors when syncing new data structures from local state)
                 create_missing_cache_keys=data_name in api_keys_set,
                 **mutate_dict,

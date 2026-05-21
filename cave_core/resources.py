@@ -28,9 +28,9 @@ class MutationLogsResource(resources.ModelResource):
     timestamp = import_export_fields.Field(attribute="timestamp", column_name="timestamp")
 
     def before_import(self, dataset, **kwargs):
-        min_negative = models.MutationLogs.objects.filter(
-            session_id__lt=0
-        ).aggregate(Min("session_id"))["session_id__min"]
+        min_negative = models.MutationLogs.objects.filter(session_id__lt=0).aggregate(
+            Min("session_id")
+        )["session_id__min"]
         self._next_negative_id = (min_negative - 1) if min_negative is not None else -1
         self._session_id_map = {}
 
