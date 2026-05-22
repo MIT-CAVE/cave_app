@@ -141,9 +141,20 @@ class Replay:
                 data=self.session_data,
             )
         if event.get("api_command"):
-            self.session_data = self.execute_command(
-                session_data=self.session_data, socket=self.__socket__, command=event.get("api_command")
+            api_command_keys = event.get("api_command_keys")
+            session_data = (
+                {k: v for k, v in self.session_data.items() if k in api_command_keys}
+                if api_command_keys is not None
+                else self.session_data
             )
+            command_output = self.execute_command(
+                session_data=session_data, socket=self.__socket__, command=event.get("api_command")
+            )
+            extra_kwargs = command_output.pop("extraKwargs", command_output.pop("kwargs", {}))
+            if extra_kwargs.get("wipeExisting", True):
+                self.session_data = command_output
+            else:
+                self.session_data = {**self.session_data, **command_output}
                 
     def validate(self):
         """
@@ -191,7 +202,9 @@ class Replay:
         while steps_advanced < num_steps and self.__current_step__ + 1 < len(self.events):
             # Initialize session data if this is the first time advance is called
             if self.session_data is None:
-                self.session_data = self.execute_command(session_data={}, socket=self.__socket__, command="init")
+                command_output = self.execute_command(session_data={}, socket=self.__socket__, command="init")
+                command_output.pop("extraKwargs", command_output.pop("kwargs", {}))
+                self.session_data = command_output
             else:
                 self.__execute_step__()
             self.__current_step__ += 1
