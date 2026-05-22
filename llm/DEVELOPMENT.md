@@ -40,6 +40,7 @@ cave test <test_file.py>
 | `init.py` | Calls `execute_command` with `command="init"` and validates the output. **Your primary test.** | After any API change |
 | `examples.py` | Runs `init` on every bundled example and validates each. | After touching any file in `examples/` |
 | `django.py` | Checks DB state (users, personal teams). Server-layer only. | After Django model or auth changes |
+| `replay.py` | Replays a recorded mutation log and validates the resulting session state. | After capturing a mutation log or to regression-test a recorded session |
 
 ### Running tests
 
@@ -47,6 +48,7 @@ cave test <test_file.py>
 cave test init.py          # validate your app's init command (most common)
 cave test examples.py      # validate all bundled examples
 cave test django.py        # server-layer DB check
+cave test replay.py        # replay a mutation log and validate session state
 ```
 
 ### Standard pattern
@@ -89,6 +91,36 @@ if __name__ == "__main__":
 ```
 
 Create a new file (e.g., `cave_api/tests/test_my_command.py`) for command-specific tests. Run it with `cave test test_my_command.py`.
+
+### Replay testing
+
+`cave_api/tests/replay.py` replays a recorded mutation log through `execute_command` and validates the final session state. This is useful for reproducing bugs and regression-testing a specific user session.
+
+**Mutation logs** are CSV or JSON files captured from a live session. Place them in `cave_api/tests/mutation_logs/`. The bundled example is `MutationLogExample.csv`.
+
+`cave_api/tests/replay.py` ships with two helpers:
+
+- `test_replay(log_file)` — replays a single log file and validates the result. Edit this function to add path assertions specific to your app.
+- `test_all_logs()` — runs `test_replay` for every file in `mutation_logs/`.
+
+The underlying utility is `Replay` from `cave_api.utils.replay`:
+
+```python
+from cave_api.utils.replay import Replay
+
+replay = Replay("cave_api/tests/mutation_logs/MutationLogExample.csv")
+replay.advance("all")                        # replay every event
+replay.validate()                            # validate final state
+value = replay.get_path(["settings", "iconUrl"])  # inspect a specific path
+```
+
+Key `advance()` options:
+
+| Option | Default | What it does |
+|---|---|---|
+| `num_steps` | `1` | Steps to advance, or `"all"` for every remaining event |
+| `validate_each_step` | `False` | Validate after every event — slower, but pinpoints the exact failing event |
+| `validate_on_completion` | `True` | Validate once after all steps complete |
 
 ---
 
@@ -365,6 +397,8 @@ cave_api/               ← API layer (your app)
       selector/         ← example browser UI (infrastructure, not a template)
     data/               ← static data files
   tests/                ← test files
+    mutation_logs/      ← CSV/JSON mutation logs for replay testing
+  utils/                ← shared utilities (e.g. Replay)
   requirements.txt      ← Python deps for the API
 
 cave_core/              ← Django app: models, views, WebSockets, auth
@@ -377,7 +411,7 @@ utils/                  ← Cave CLI utilities (start, reset, etc.)
 
 ### Server-layer files (only modify for infrastructure needs)
 
-- `cave_core/models.py` — database models and model-level logic
+- `cave_core/models/` — database models and model-level logic
 - `cave_core/auth.py` — authentication backends
 - `cave_core/views/` — HTTP views and endpoints
 - `cave_core/websockets/` — WebSocket session logic
