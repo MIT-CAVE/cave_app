@@ -80,6 +80,7 @@ class Replay:
 
         self.session_data = None
         self.execute_command = execute_command
+        self.is_complete = self.__update_is_complete__()
 
     def __serialize_field__(self, value):
         if value is None or value == "" or value == "null":
@@ -113,12 +114,12 @@ class Replay:
                     f"Expected each event to be a dictionary, but got: {type(raw_event)} at index {i}"
                 )
             event = {}
+            event["timestamp"] = raw_event.get("timestamp")
+            event["data_name"] = raw_event.get("data_name")
             event["data_path"] = self.__serialize_field__(raw_event.get("data_path")) or []
             event["data_value"] = self.__serialize_field__(raw_event.get("data_value"))
             event["api_command_keys"] = self.__serialize_field__(raw_event.get("api_command_keys"))
             event["api_command"] = raw_event.get("api_command")
-            event["data_name"] = raw_event.get("data_name")
-            event["timestamp"] = raw_event.get("timestamp")
             session_ids.add(raw_event.get("session_id"))
             events.append(event)
         assert (
@@ -134,12 +135,16 @@ class Replay:
 
     def __execute_step__(self):
         event = self.events[self.__current_step__]
+        # print(event['data_name'], event['data_path'], event['api_command'], event['data_value'])
+        mutate_dict = {}
         if event.get("data_name"):
             self.session_data = pamda.assocPath(
                 path=[event.get("data_name")] + event.get("data_path"),
                 value=event.get("data_value"),
                 data=self.session_data,
             )
+            # Dict to let execute command know what the original mutation was, in case it needs to do additional processing based on that
+            mutate_dict = {"data_name": event.get("data_name"), "data_path": event.get("data_path", []), "data_value": event.get("data_value")}
         if event.get("api_command"):
             api_command_keys = event.get("api_command_keys")
             session_data = (
@@ -148,14 +153,39 @@ class Replay:
                 else self.session_data
             )
             command_output = self.execute_command(
-                session_data=session_data, socket=self.__socket__, command=event.get("api_command")
+                session_data=session_data, 
+                socket=self.__socket__, 
+                command=event.get("api_command"),
+                mutate_dict=mutate_dict,
             )
             extra_kwargs = command_output.pop("extraKwargs", command_output.pop("kwargs", {}))
             if extra_kwargs.get("wipeExisting", True):
                 self.session_data = command_output
             else:
                 self.session_data = {**self.session_data, **command_output}
-                
+
+    def __update_is_complete__(self):
+        """
+        Update the `is_complete` flag based on whether there are remaining steps to execute.
+        """
+        self.is_complete = self.__current_step__ + 1 >= len(self.events)
+
+    def get_steps_remaining(self):
+        """
+        Return the number of steps remaining in the log that have not yet been replayed.
+        """
+        return len(self.events) - self.__current_step__ - 1
+    
+    def get_last_executed_event(self):
+        """
+        Return the last executed event, or None if no events have been executed yet.
+        """
+        if self.__current_step__ > 0:
+            return self.events[self.__current_step__-1]
+        elif self.__current_step__ == 0:
+            return {"timestamp": None, "data_name": None, "data_path": None, "data_value": None, "api_command": "init", "api_command_keys": None}
+        return None
+
     def validate(self):
         """
         Validate the current session data against the cave_utils Validator.
@@ -199,10 +229,10 @@ class Replay:
         if self.__current_step__ + num_steps >= len(self.events):
             raise ValueError(f"Cannot advance {num_steps} steps from current step {self.__current_step__} because it would exceed the total number of events {len(self.events)}.")
         steps_advanced = 0
-        while steps_advanced < num_steps and self.__current_step__ + 1 < len(self.events):
+        while steps_advanced < num_steps:
             # Initialize session data if this is the first time advance is called
             if self.session_data is None:
-                command_output = self.execute_command(session_data={}, socket=self.__socket__, command="init")
+                command_output = self.execute_command(session_data={}, socket=self.__socket__, command="init", mutate_dict={})
                 command_output.pop("extraKwargs", command_output.pop("kwargs", {}))
                 self.session_data = command_output
             else:
@@ -211,6 +241,7 @@ class Replay:
             steps_advanced += 1
             if validate_each_step:
                 self.validate()
+            self.__update_is_complete__()
         if validate_on_completion and not validate_each_step:
             self.validate()
 

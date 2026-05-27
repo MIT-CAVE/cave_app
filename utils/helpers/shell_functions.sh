@@ -80,7 +80,7 @@ setup_log() {
         ;;
       *)
         script_logging_levels=("ERROR")
-        printf "Invalid log level $script_logging_level" | pipe_log "ERROR"
+        printf "Invalid log level %s" "$script_logging_level" | pipe_log "ERROR"
         exit 1
         ;;
     esac
@@ -91,7 +91,7 @@ log() {
     local log_priority=$2
     
     if [[ " ${script_logging_levels[@]} " =~ " ${log_priority} " ]]; then
-      printf "$log_priority: $log_message\n" >&2
+      printf "%s: %s\n" "$log_priority" "$log_message" >&2
     fi
 }
 
