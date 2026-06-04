@@ -8,7 +8,7 @@ source ./utils/helpers/ensure_postgres_running.sh
 
 # Log the current DB migrations
 mkdir "./tmp"
-printf "$(ls ./cave_core/migrations/*.py)" > "./tmp/init.txt"
+printf "%s" "$(ls ./cave_core/migrations/*.py)" > "./tmp/init.txt"
 
 # Check if the app is functional before proceeding
 if [ "$(python ./manage.py check --deployment_type development | grep "System check identified no issues" | wc -l)" -eq "0" ]; then
@@ -23,7 +23,7 @@ python "$APP_DIR/manage.py" migrate --deployment_type development 2>&1 | pipe_lo
 python "$APP_DIR/manage.py" createcachetable 2>&1 | pipe_log "DEBUG"
 
 # Determine new DB migration files and delete them
-printf "$(ls ./cave_core/migrations/*.py)" > "./tmp/after.txt"
+printf "%s" "$(ls ./cave_core/migrations/*.py)" > "./tmp/after.txt"
 grep -Fxvf ./tmp/init.txt ./tmp/after.txt > ./tmp/new.txt
 cat ./tmp/new.txt | while read migration_name; do
   rm $migration_name

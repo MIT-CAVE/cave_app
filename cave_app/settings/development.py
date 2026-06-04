@@ -276,4 +276,5 @@ LIVE_API_VALIDATION_LOG_MAX = config("LIVE_API_VALIDATION_LOG_MAX", default=1000
 LIVE_API_VALIDATION_PRINT = config("LIVE_API_VALIDATION_PRINT", default=False, cast=bool)
 LIVE_API_VALIDATION_PRINT_MAX = config("LIVE_API_VALIDATION_PRINT_MAX", default=10, cast=int)
 DEFAULT_WIPE_EXISTING = config("DEFAULT_WIPE_EXISTING", default=True, cast=bool)
+USE_MUTATION_LOGGING = config("USE_MUTATION_LOGGING", default=False, cast=bool)
 ################################################################

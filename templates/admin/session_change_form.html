@@ -1,0 +1,13 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+    {% if object_id %}
+    <li>
+        <a href="{% url 'admin:cave_core_sessions_migrate' object_id %}">
+            {% trans "Migrate to Mutation Log" %}
+        </a>
+    </li>
+    {% endif %}
+    {{ block.super }}
+{% endblock %}

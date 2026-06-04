@@ -1,0 +1,20 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block content %}
+<p>
+    Choose the mutation log ID to migrate session <strong>{{ session }}</strong> to.
+    All mutation log events for that session up to and including that ID will be replayed.
+    The current session state will be cleared and rebuilt from those events.
+</p>
+<form method="post">
+    {% csrf_token %}
+    {% for obj in queryset %}
+    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ obj.pk }}">
+    {% endfor %}
+    <input type="hidden" name="action" value="migrate_to_mutation_log">
+    {{ form.as_p }}
+    <input type="submit" name="apply" value="Migrate Session">
+    &nbsp;<a href="{% url 'admin:cave_core_sessions_change' session.id %}">Cancel</a>
+</form>
+{% endblock %}

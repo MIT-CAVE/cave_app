@@ -13,6 +13,6 @@ for i in {1..6}; do
       exit 1
     fi
   fi
-  printf "Waiting for postgres ($i)...\n" 2>&1 | pipe_log "DEBUG"
+  printf "Waiting for postgres (%s)...\n" "$i" 2>&1 | pipe_log "DEBUG"
   sleep 3
 done
