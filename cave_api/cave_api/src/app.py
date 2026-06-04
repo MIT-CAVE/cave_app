@@ -8,14 +8,15 @@
 #
 # See cave_api/README.md for full documentation and examples.
 
+
 def execute_command(session_data, socket, command="init", **kwargs):
     return {
-            "settings": {
-                # Icon Url is used to load icons from a custom icon library
-                # See the available versions provided by the cave team here:
-                # https://react-icons.mitcave.com/versions.txt
-                # Once you select a version, you can see the available icons in the version
-                # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
-                "iconUrl": "https://react-icons.mitcave.com/5.4.0"
-            },
+        "settings": {
+            # Icon Url is used to load icons from a custom icon library
+            # See the available versions provided by the cave team here:
+            # https://react-icons.mitcave.com/versions.txt
+            # Once you select a version, you can see the available icons in the version
+            # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
+            "iconUrl": "https://react-icons.mitcave.com/5.4.0"
+        },
     }

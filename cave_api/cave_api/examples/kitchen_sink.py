@@ -160,7 +160,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "y": 68,  # 68 pixels from top edge of screen which is below the session draggable
                     },
                 },
-                
                 "mapNames": {
                     "open": True,
                     "hideCloseOption": True,

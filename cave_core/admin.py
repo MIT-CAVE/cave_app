@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django import forms
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import path, reverse
 from cave_core import models, admin_forms, resources
-from import_export.admin import ImportExportModelAdmin
+from cave_core.models import MutationLogs
+from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
+from import_export.admin import ImportExportModelAdmin, ImportExportMixin
 from solo.admin import SingletonModelAdmin
 
 # Admin site attributes
@@ -158,14 +164,105 @@ class CustomGlobalsAdmin(SingletonModelAdmin):
     )
 
 
+class MigrateToMutationLogForm(forms.Form):
+    mutation_log_id = forms.IntegerField(
+        label="Mutation Log ID",
+        help_text="ID of the mutation log event to migrate this session to (inclusive).",
+        min_value=1,
+    )
+
+
 class CustomSessionAdmin(admin.ModelAdmin):
     model = models.Sessions
-    list_display = [
-        "id",
-        "name",
-        "team",
-    ]
+    list_display = ["id", "name", "team"]
     search_fields = ["name", "team__name"]
+    change_form_template = "admin/session_change_form.html"
+
+    def get_urls(self):
+        return [
+            path(
+                "<int:session_id>/migrate/",
+                self.admin_site.admin_view(self.migrate_view),
+                name="cave_core_sessions_migrate",
+            ),
+        ] + super().get_urls()
+
+    def migrate_view(self, request, session_id):
+        session = get_object_or_404(models.Sessions, id=session_id)
+        if request.method == "POST":
+            form = MigrateToMutationLogForm(request.POST)
+            if form.is_valid():
+                try:
+                    self.__execute_migration__(session, form.cleaned_data["mutation_log_id"])
+                    self.message_user(request, f"Session '{session.name}' migrated successfully.")
+                except Exception as e:
+                    self.message_user(request, f"Migration failed: {e}", level="error")
+                return HttpResponseRedirect(
+                    reverse("admin:cave_core_sessions_change", args=[session_id])
+                )
+        else:
+            form = MigrateToMutationLogForm()
+        return render(
+            request,
+            "admin/migrate_session_form.html",
+            {
+                **self.admin_site.each_context(request),
+                "title": "Migrate Session to Mutation Log",
+                "form": form,
+                "session": session,
+                "opts": self.model._meta,
+            },
+        )
+
+    def __execute_migration__(self, session, mutation_log_id):
+        target_log = MutationLogs.objects.filter(id=mutation_log_id).first()
+        if target_log is None:
+            raise Exception(f"Mutation log {mutation_log_id} not found.")
+        source_session_id = target_log.session_id
+        if source_session_id is None:
+            raise Exception("Target mutation log has no session_id.")
+        events = list(
+            MutationLogs.objects.filter(
+                session_id=source_session_id,
+                id__lte=mutation_log_id,
+            ).order_by("timestamp", "id")
+        )
+        MutationLogs.objects.filter(session_id=session.id).delete()
+        session.execute_api_command(command="init", broadcast_changes=True, command_keys=[])
+        for event in events:
+            if event.data_name:
+                session.mutate(
+                    data_version=None,
+                    data_name=event.data_name,
+                    data_path=event.data_path or [],
+                    data_value=event.data_value,
+                    ignore_version=True,
+                )
+                if not event.api_command:
+                    CaveWSBroadcaster(session).broadcast(
+                        event="mutation",
+                        versions=session.get_versions(),
+                        data={
+                            "data_name": event.data_name,
+                            "data_path": event.data_path or [],
+                            "data_value": event.data_value,
+                        },
+                    )
+            if event.api_command:
+                session.execute_api_command(
+                    command=event.api_command,
+                    command_keys=event.api_command_keys,
+                    broadcast_changes=True,
+                )
+            MutationLogs.objects.create(
+                user_id=None,
+                session_id=session.id,
+                data_name=event.data_name,
+                data_path=event.data_path,
+                data_value=event.data_value,
+                api_command=event.api_command,
+                api_command_keys=event.api_command_keys,
+            )
 
 
 class CustomTeamUserAdmin(admin.ModelAdmin):
@@ -271,6 +368,24 @@ class CustomFileStorageAdmin(admin.ModelAdmin):
     search_fields = ["name"]
 
 
+class CustomMutationLogAdmin(ImportExportMixin, admin.ModelAdmin):
+    model = models.MutationLogs
+    resource_class = resources.MutationLogsResource
+    list_display = ["id", "session_id", "timestamp", "data_name", "api_command"]
+    list_filter = []
+    search_fields = ["session_id"]
+    readonly_fields = [
+        "user_id",
+        "session_id",
+        "timestamp",
+        "data_name",
+        "data_path",
+        "data_value",
+        "api_command",
+        "api_command_keys",
+    ]
+
+
 admin.site.register(models.CustomUserFull, CustomUserFullAdmin)
 admin.site.register(models.Globals, CustomGlobalsAdmin)
 admin.site.register(models.Pages, CustomPageAdmin)
@@ -280,6 +395,7 @@ admin.site.register(models.Teams, CustomTeamAdmin)
 admin.site.register(models.TeamUsers, CustomTeamUserAdmin)
 admin.site.register(models.Sessions, CustomSessionAdmin)
 admin.site.register(models.FileStorage, CustomFileStorageAdmin)
+admin.site.register(models.MutationLogs, CustomMutationLogAdmin)
 
 
 # Create a special Staff Admin Site

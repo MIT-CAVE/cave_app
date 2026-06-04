@@ -41,10 +41,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
         # Add your own custom logic here to modify the session data
         # EG - Toggle the icon between lightbulb and lightbulb outline
         current_icon = session_data["appBar"]["data"]["myCommandButton"]["icon"]
-        # Update the icon in the session data
-        session_data["appBar"]["data"]["myCommandButton"]["icon"] = (
-            "md/MdLightbulb" if current_icon == "md/MdLightbulbOutline" else "md/MdLightbulbOutline"
-        )
+        if current_icon == "md/MdLightbulbOutline":
+            session_data["appBar"]["data"]["myCommandButton"]["color"] = "rgba(255, 200, 0, 1)"
+            session_data["appBar"]["data"]["myCommandButton"]["icon"] = "md/MdLightbulb"
+        else:
+            session_data["appBar"]["data"]["myCommandButton"].pop("color", None)
+            session_data["appBar"]["data"]["myCommandButton"]["icon"] = "md/MdLightbulbOutline"
 
         # If you do not want to wipe the existing session data, you can set the `wipeExisting` flag to False
         # and only pass the top level keys that you want to update

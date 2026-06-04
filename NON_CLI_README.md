@@ -146,7 +146,7 @@ docker run --volume "./:/app" "cave-app:${app_name}" /app/utils/prettify.sh
 
 To apply our default lint fixes to all python code:
 ```
-docker run --volume "./:/app" "cave-app:${app_name}" /app/utils/prettify.sh -all
+docker run --volume "./:/app" "cave-app:${app_name}" /app/utils/prettify.sh
 ```
 
 ### Interactive Mode
