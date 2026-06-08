@@ -7,7 +7,7 @@ import os, importlib.resources
 
 def get_examples():
     # Return all the examples in the cave_api/examples folder
-    examples_location = os.path.join(importlib.resources.files("cave_api") , "examples")
+    examples_location = os.path.join(importlib.resources.files("cave_api"), "examples")
     return sorted(
         [
             i.replace(".py", "")

@@ -106,8 +106,6 @@ name = "cave-app"
 version = "3.6.0"
 source = { editable = "." }
 dependencies = [
-    { name = "autoflake" },
-    { name = "black" },
     { name = "cave-utils" },
     { name = "daphne" },
     { name = "django" },
@@ -130,11 +128,15 @@ dependencies = [
 cave-api = [
     { name = "requests" },
 ]
+dev = [
+    { name = "autoflake" },
+    { name = "black" },
+]
 
 [package.metadata]
 requires-dist = [
-    { name = "autoflake", specifier = "==2.3.1" },
-    { name = "black", specifier = "==25.12.0" },
+    { name = "autoflake", marker = "extra == 'dev'", specifier = "==2.3.1" },
+    { name = "black", marker = "extra == 'dev'", specifier = "==25.12.0" },
     { name = "cave-utils", specifier = "==3.5.7" },
     { name = "daphne", specifier = "==4.2.1" },
     { name = "django", specifier = ">=6.0.6,<7.0.0" },
@@ -153,7 +155,7 @@ requires-dist = [
     { name = "type-enforced", specifier = ">=2.6.0,<3.0.0" },
     { name = "whitenoise", specifier = "==6.11.0" },
 ]
-provides-extras = ["cave-api"]
+provides-extras = ["cave-api", "dev"]
 
 [[package]]
 name = "cave-utils"
