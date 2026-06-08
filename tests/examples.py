@@ -3,7 +3,7 @@ import os, importlib
 
 
 def get_examples():
-    examples_location = "/app/cave_api/cave_api/examples"
+    examples_location = "/app/cave_api/examples"
     return sorted(
         [
             i.replace(".py", "")

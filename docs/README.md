@@ -65,7 +65,7 @@ Stable `cave_static` builds are accessible via CDN at `https://builds.mitcave.co
 
 **Detailed API documentation:** [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html)
 
-**Full set of working examples:** [cave_api/cave_api/examples](cave_api/cave_api/examples)
+**Full set of working examples:** [cave_api/examples](cave_api/examples)
 
 ---
 
@@ -102,21 +102,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
 
 # Quick Start: Connecting Your Model
 
-1. Open `my_app/cave_api/cave_api/api.py`.
+1. Open `my_app/cave_api/api.py`.
 
 2. By default it imports from the example selector. To start your own app, replace that import with the pre-built starting template:
 
     ```python
     # Before (default):
-    from cave_api.cave_api.examples.selector.example_selector import execute_command
+    from cave_api.examples.selector.example_selector import execute_command
 
     # After (your app):
-    from cave_api.cave_api.src.app import execute_command
+    from cave_api.src.app import execute_command
     ```
 
-    `cave_api/cave_api/src/app.py` is the minimal starting template. Edit it directly, or create a new file and import from there instead.
+    `cave_api/src/app.py` is the minimal starting template. Edit it directly, or create a new file and import from there instead.
 
-3. Extend `cave_api/cave_api/src/app.py` with your own logic:
+3. Extend `cave_api/src/app.py` with your own logic:
 
     ```python
     def execute_command(session_data, socket, command="init", **kwargs):
@@ -136,13 +136,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
     cave run
     ```
 
-> **Tip:** Browse the examples in `cave_api/cave_api/examples/` to see complete working implementations for maps, charts, panes, and more.
+> **Tip:** Browse the examples in `cave_api/examples/` to see complete working implementations for maps, charts, panes, and more.
 
 ## Walkthrough: Adding a Button to an Example
 
 Here is a concrete end-to-end example of modifying an existing example. We will add a flag button to `api_command.py` that sends `Hello World!` to the browser.
 
-> **Note:** Make sure `your_app/cave_api/cave_api/api.py` is using Option 1 (the default), which imports from `cave_api.cave_api.examples.selector.example_selector`.
+> **Note:** Make sure `your_app/cave_api/api.py` is using Option 1 (the default), which imports from `cave_api.examples.selector.example_selector`.
 
 1. Start the app:
     ```
@@ -151,7 +151,7 @@ Here is a concrete end-to-end example of modifying an existing example. We will 
     ```
 2. Open `http://localhost:8000/cave/` in Google Chrome and log in.
 3. Click on the app page and select the `api_command.py` example from the 3-sliders menu in the top left.
-4. Open `your_app/cave_api/cave_api/examples/api_command.py` and make two edits:
+4. Open `your_app/cave_api/examples/api_command.py` and make two edits:
 
     **In the `if command == "init"` block**, add this key to `appBar.data`:
     ```python
@@ -293,7 +293,7 @@ If your model produces tabular data that you want to visualize in charts, the `G
 
 </details>
 
-A complete working example is at `cave_api/cave_api/examples/chart_grouped_outputs_builder.py`.
+A complete working example is at `cave_api/examples/chart_grouped_outputs_builder.py`.
 
 Full `GroupsBuilder` documentation: [API Spec — GroupsBuilder](https://mit-cave.github.io/cave_utils/cave_utils/builders/groups.html#GroupsBuilder)
 
@@ -342,7 +342,7 @@ Then exit the container (`exit`) and run `cave run` again.
 
 # Working with Data Files
 
-If your model uses static data files (CSVs, JSON, GeoJSON, etc.), place them in `my_app/cave_api/cave_api/data/` and access them with `importlib.resources`:
+If your model uses static data files (CSVs, JSON, GeoJSON, etc.), place them in `my_app/cave_api/data/` and access them with `importlib.resources`:
 
 ```python
 import json
@@ -357,7 +357,7 @@ with open(data_path) as f:
 
 Using `importlib.resources` ensures the path resolves correctly regardless of how or where the package is installed.
 
-See `cave_api/cave_api/examples/data_local_example.py` for a full working example.
+See `cave_api/examples/data_local_example.py` for a full working example.
 
 ---
 
@@ -366,7 +366,7 @@ See `cave_api/cave_api/examples/data_local_example.py` for a full working exampl
 Tests live in `my_app/cave_api/tests/`. The standard pattern is to call `execute_command` directly and validate the returned state using `cave_utils.Validator`:
 
 ```python
-from cave_api.cave_api.my_model import execute_command
+from cave_api.my_model import execute_command
 from cave_utils import Socket, Validator
 
 session_data = execute_command(session_data={}, socket=Socket(), command="init")
@@ -417,6 +417,6 @@ Navigate to the **Console** tab and inspect any log output to pinpoint the issue
 # Further Reading
 
 - [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html): full reference for all session data keys and values
-- [Examples](cave_api/cave_api/examples/): 20+ working examples covering maps, charts, panes, and more
+- [Examples](cave_api/examples/): 20+ working examples covering maps, charts, panes, and more
 - [Custom Mapping](cave_api/custom_mapping.md): instructions for custom map tiles and coordinate systems
 - [cave_utils on PyPI](https://pypi.org/project/cave-utils): the validation and builder utilities used in the API

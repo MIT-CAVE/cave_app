@@ -5,7 +5,7 @@ It takes advantage of functions in the pamda library to project and pivot the da
 
 It also demonstrates how to use the GroupsBuilder to create a group hierarchy for the grouped outputs.
 
-This file is equivalent in output to the cave_api/cave_api/examples/chart_global_outputs.py file, but it uses the GroupsBuilder to create the grouped outputs.
+This file is equivalent in output to the cave_api/examples/chart_global_outputs.py file, but it uses the GroupsBuilder to create the grouped outputs.
 """
 
 from cave_utils.builders.groups import GroupsBuilder

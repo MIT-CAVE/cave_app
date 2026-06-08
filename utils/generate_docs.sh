@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cave-utils-docs llm/cave_api_docs
+cave-utils-docs docs/cave_api_docs

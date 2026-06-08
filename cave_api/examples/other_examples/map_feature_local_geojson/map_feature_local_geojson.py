@@ -3,7 +3,7 @@ from cave_core import models
 
 def execute_command(session_data, socket, command="init", **kwargs):
     # Before using this example, make sure to upload the geojson file to the server
-    # See the file: cave_api/cave_api/examples/gen_pretty_route_geojson.py
+    # See the file: cave_api/examples/gen_pretty_route_geojson.py
     # Go to admin -> File Storage -> Add File
     # Upload the geojson file from data and set the name to "multi_route"
 

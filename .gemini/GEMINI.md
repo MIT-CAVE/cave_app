@@ -1,1 +1,1 @@
-../llm/DEVELOPMENT.md
+../docs/DEVELOPMENT.md

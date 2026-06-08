@@ -8,10 +8,10 @@ The CAVE App is split into two layers:
 
 | Layer | Location | Who touches it |
 |---|---|---|
-| **API** (your app logic) | `cave_api/cave_api/` | You, almost always |
+| **API** (your app logic) | `cave_api/` | You, almost always |
 | **Server** (Django/WebSocket infra) | `cave_core/`, `cave_app/` | Rarely, only for auth/admin/server-level needs |
 
-When a user asks to "add a button", "show a chart", "display a map", "create a slider", "change what the app does" — that is an **API change**. It lives in `cave_api/cave_api/` and is implemented by modifying `execute_command`.
+When a user asks to "add a button", "show a chart", "display a map", "create a slider", "change what the app does" — that is an **API change**. It lives in `cave_api/` and is implemented by modifying `execute_command`.
 
 Only escalate to server-level changes if the request is clearly about:
 - Django admin configuration
@@ -301,26 +301,26 @@ Full structured documentation for the CAVE API and all `cave_utils` modules live
 
 ---
 
-## Entry Point: `cave_api/cave_api/api.py`
+## Entry Point: `cave_api/api.py`
 
 This file is the single entry point. It must define or import `execute_command`. Three options are pre-configured (comment/uncomment to switch):
 
 - **Option 1 (default):** Example selector — browse all bundled examples from within the running app. Useful for exploration; not a coding template.
-- **Option 2:** `cave_api/cave_api/src/app.py` — the minimal starting template for a real app. **Use this when building a custom app.**
+- **Option 2:** `cave_api/src/app.py` — the minimal starting template for a real app. **Use this when building a custom app.**
 - **Option 3:** Load a specific example directly for quick reference or testing.
 
 **Recommended workflow:**
 1. Use Option 1 to explore examples and understand features
 2. Switch to Option 2 (`src/app.py`) to start building
-3. Keep examples intact in `cave_api/cave_api/examples/` — they remain available for reference
+3. Keep examples intact in `cave_api/examples/` — they remain available for reference
 
 ---
 
 ## Where to Write Custom App Code
 
 ```
-cave_api/cave_api/src/       ← your app lives here
-cave_api/cave_api/data/      ← static data files (CSV, JSON, GeoJSON)
+cave_api/src/       ← your app lives here
+cave_api/data/      ← static data files (CSV, JSON, GeoJSON)
 cave_api/requirements.txt    ← Python dependencies for your app
 ```
 
@@ -342,7 +342,7 @@ with open(data_folder.joinpath("my_data.json").__str__()) as f:
 
 ## Examples
 
-`cave_api/cave_api/examples/` contains 20+ working examples. They are the best reference for how to construct any specific feature. Key examples:
+`cave_api/examples/` contains 20+ working examples. They are the best reference for how to construct any specific feature. Key examples:
 
 | Example | What it shows |
 |---|---|

@@ -3,7 +3,7 @@ from pamda import pamda
 from importlib import resources
 
 
-# See `your_project/cave_api/cave_api/data` to see the data folder for this example
+# See `your_project/cave_api/data` to see the data folder for this example
 data_folder = resources.files("cave_api.data")
 static_data_path = data_folder.joinpath("static_data_example.json").__str__()
 

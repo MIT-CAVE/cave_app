@@ -1,5 +1,5 @@
 # This is the starting template for your own Cave API app.
-# To activate it, open cave_api/cave_api/api.py and uncomment Option 2.
+# To activate it, open cave_api/api.py and uncomment Option 2.
 #
 # The execute_command function is the sole entry point for the Cave API.
 # It receives the current app state (session_data), the socket for

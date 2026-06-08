@@ -18,3 +18,5 @@ logs
 
 # Persistent Cache
 __cache__
+
+*.egg-info

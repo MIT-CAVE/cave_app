@@ -1,4 +1,4 @@
-from cave_api.utils.replay import Replay
+from utils.replay import Replay
 import os
 
 LOGS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "mutation_logs")

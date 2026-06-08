@@ -73,7 +73,7 @@ Once your app is running (see [Getting Started](#getting-started) above) and you
 - Click on the app page icon (a square with spaces along its edges)
 - By default, you will see a button (three sliders) in the top left corner that allows you to switch between all of our examples.
   - Click on the three sliders to open the example menu and choose an example to view.
-  - To see the code for each example, navigate to `my_app/cave_api/cave_api/examples` and open the example you want to view.
+  - To see the code for each example, navigate to `my_app/cave_api/examples` and open the example you want to view.
 
 ## Making API Changes
 
