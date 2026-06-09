@@ -3,6 +3,7 @@
 
 # Virtual Environment
 venv
+.venv
 
 # Apple Files
 .DS_Store
@@ -19,4 +20,7 @@ logs
 # Persistent Cache
 __cache__
 
+# Distribution / Packaging
+dist
+build
 *.egg-info
