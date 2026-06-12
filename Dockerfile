@@ -28,4 +28,4 @@ COPY pyproject.toml uv.lock ./
 
 # Sync dependencies without installing the project itself
 # This maximizes layer caching when source code changes
-RUN uv sync --frozen --no-install-project --extra api
+RUN uv sync --no-install-project --extra api
