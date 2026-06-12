@@ -1,156 +1,208 @@
-## Non CLI Setup Instructions
-1. Install the [Cave Development Prerequisites](https://github.com/MIT-CAVE/cave_cli#development-prerequisites)
+## Non-CLI Setup Instructions
 
-2. Clone this repo in your preferred directory and enter the repo:
-    ```
-    git clone git@github.com:MIT-CAVE/cave_app.git
-    cd cave_app
-    ```
+This guide covers manual setup without the [Cave CLI](https://github.com/MIT-CAVE/cave_cli). Use this for production deployments or when you prefer full control over the Docker orchestration.
 
-3. Install Docker
+### Prerequisites
 
+- [Docker](https://docs.docker.com/get-docker/) 23.0.6+
+- [Git](https://git-scm.com/)
+
+<details>
+<summary>Ubuntu: Install Docker</summary>
+
+```sh
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh
+# Add the current user to the docker group
+dockerd-rootless-setuptool.sh install
+# Verify it works without sudo
+docker run hello-world
+```
+
+</details>
+
+### 1. Clone the Repository
+
+```sh
+git clone git@github.com:MIT-CAVE/cave_app.git
+cd cave_app
+```
+
+### 2. Configure the Environment
+
+1. Copy the example environment file:
     ```sh
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sudo sh ./get-docker.sh
+    cp example.env .env
     ```
 
-    Add the current user to the docker group
+2. Edit `.env` and set at minimum:
 
-    ```sh
-    dockerd-rootless-setuptool.sh install
-    ```
+    | Variable | Description |
+    |---|---|
+    | `SECRET_KEY` | A [Django SECRET_KEY](https://docs.djangoproject.com/en/4.1/ref/settings/#secret-key) |
+    | `DJANGO_ADMIN_EMAIL` | Administrator email address |
+    | `DJANGO_ADMIN_FIRST_NAME` | Administrator first name |
+    | `DJANGO_ADMIN_LAST_NAME` | Administrator last name |
+    | `DJANGO_ADMIN_USERNAME` | Administrator username |
+    | `DJANGO_ADMIN_PASSWORD` | A secure administrator password |
+    | `DATABASE_PASSWORD` | A secure database password |
+    | `MAPBOX_TOKEN` | Your [Mapbox](https://mapbox.com) public token |
+    | `STATIC_APP_URL` | Base URL for the static React build (e.g. `https://builds.mitcave.com`) |
+    | `STATIC_APP_URL_PATH` | Path to `index.html` (e.g. `3.6.0/index.html`) |
 
-    Make sure it works outside of sudo
+    Optional variables:
 
-    ```sh
-    docker run hello-world
-    ```
+    | Variable | Default | Description |
+    |---|---|---|
+    | `DATABASE_IMAGE` | `postgres:latest` | PostgreSQL Docker image to use |
+    | `CACHE_IMAGE` | `valkey/valkey:7` | Redis-compatible cache image to use |
 
-### Update the Server Environment Variables
+3. (Optional) Remove `.env` from `.gitignore` if you want to commit it to source control.
 
-1. Rename `example.env` to `.env`
-    ```
-    mv example.env .env
-    ```
-2. Update the `.env` file
-    - Make sure to edit:
-        - `SECRET_KEY`: A [Django SECRET_KEY](https://docs.djangoproject.com/en/4.1/ref/settings/#secret-key)
-            - If you used the CLI to create this `.env` file, a random secret key was generated during that process.
-        - `DJANGO_ADMIN_EMAIL`: The email for the site administrator
-        - `DJANGO_ADMIN_PASSWORD`: A secure password for the site administrator
-        - `DATABASE_PASSWORD`: A secure password for database access
-      - You might also consider editing:
-          - `STATIC_APP_URL` and `STATIC_APP_URL_PATH`
-              - If you plan doing development on `cave_static` and deploying it locally:
-                  - `STATIC_APP_URL='http://localhost:3000'`
-                  - `STATIC_APP_URL_PATH=''`
-              - To use any existing static build:
-                  - `STATIC_APP_URL='https://builds.mitcave.com'`
-                  - `STATIC_APP_URL_PATH='<major>.<minor>.<patch>/index.html'`
-                      - EG: `STATIC_APP_URL_PATH='0.1.0/index.html'`
-3. Open `.gitignore` and remove `.env` (if you wish to commit .env changes to your source control)
+### 3. Build the Docker Image
 
+```sh
+app_name='cave_test'
+docker build . --tag cave-app:${app_name}
+```
 
-### Mapbox Setup
+> Replace `cave_test` with your desired app name throughout these instructions.
 
-1. Go to [mapbox.com](https://mapbox.com) and create an account.
-2. Copy your public token to `MAPBOX_TOKEN` in your `.env` file.
+### 4. Create a Docker Network
 
+```sh
+app_name='cave_test'
+docker network create cave-net:${app_name}
+```
 
-### Local Deployment
+### 5. Start the Database
 
-1. Navigate to the app and build the container
-    ```
-    cd path/to/cave_app
-    source .env
-    app_name='cave_test'
-    docker build . --tag cave-app:${app_name}
-    ```
-2. Create a Docker network for the containers to run in
-    ```
-    app_name='cave_test'
-    docker network create cave-net:${app_name}
-    ```
-3. Start postgres
-    ```
-    source .env
-    app_name='cave_test'
-    docker run -d \
-        --volume "${app_name}_pg_volume:/var/lib/postgresql/data" \
-        --network cave-net:${app_name} \
-        --name "${app_name}_db_host" \
-        -e POSTGRES_PASSWORD="$DATABASE_PASSWORD" \
-        -e POSTGRES_USER="${app_name}_user" \
-        -e POSTGRES_DB="${app_name}_name"\
-        "$DATABASE_IMAGE" $DATABASE_COMMAND
-    ```
-    > Note: Replace `cave_test` with the name of your app
-3. Run the app on `localhost:8000` with development settings:
-    ```
-    source .env
-    app_name='cave_test'
-    docker run -it -p 8000:8000 --network cave-net:${app_name} --volume "./:/app" --volume "$CAVE_PATH:/cave_cli" --name "${app_name}_django" \
-      -e DATABASE_HOST="${app_name}_db_host" \
-      -e DATABASE_USER="${app_name}_user" \
-      -e DATABASE_PASSWORD="$DATABASE_PASSWORD" \
-      -e DATABASE_NAME="${app_name}_name"\
-      -e DATABASE_PORT=5432 \
-      "cave-app:${app_name}" /app/utils/run_server.sh && docker rm --force "${app_name}_django" "${app_name}_db_host"
-    ```
-    > Note: Replace `cave_test` with the name of your app
-4. Run the app on a LAN (local area network) on `0.0.0.0:8123`:
-    - Note: To run on LAN, you must use an SSL connection.
-    - Note: This uses a self signed and insecure certificate for SSL/TLS reasons
-        - The certificates are self signed and shared openly in the cave open source project
-        - You should consider appropriate security measures like generating your own SSL certificates and using a proper CA (certificate authority) if you do not trust everyone on your LAN
-    - To run the server:
-        ```
-        docker run -d --restart unless-stopped -p "0.0.0.0:8123:8000" \
-            --network cave-net:${app_name} --volume "./utils/lan_hosting:/certs" \
-            --name "${app_name}_nginx" -e CAVE_HOST="${app_name}_django" \
-            --volume "./utils/nginx_ssl.conf.template:/etc/nginx/templates/default.conf.template:ro" nginx
-        ```
+```sh
+source .env
+app_name='cave_test'
+docker run -d \
+    --volume "${app_name}_pg_volume:/var/lib/postgresql/data" \
+    --network "cave-net:${app_name}" \
+    --name "${app_name}_db_host" \
+    -e POSTGRES_PASSWORD="$DATABASE_PASSWORD" \
+    -e POSTGRES_USER="${app_name}_user" \
+    -e POSTGRES_DB="${app_name}_name" \
+    "${DATABASE_IMAGE:-postgres:latest}" postgres -c listen_addresses=*
+```
 
-        ```
-        docker run -it -p 8000 --network cave-net:${app_name} \
-            --volume "./:/app" --volume "$CAVE_PATH:/cave_cli" \
-            --name "${app_name}_django" \
-            -e CSRF_TRUSTED_ORIGIN="0.0.0.0:8123" \
-            -e DATABASE_HOST="${app_name}_db_host" \
-            -e DATABASE_USER="${app_name}_user" \
-            -e DATABASE_PASSWORD="$DATABASE_PASSWORD" \
-            -e DATABASE_NAME="${app_name}_name" \
-            -e DATABASE_PORT=5432 \
-            "cave-app:${app_name}" /app/utils/run_server.sh
-        ```
-    > Note: Replace `${app_name}` with the name of your app
-    - Note: You can specify the LAN IP with an IP pointing to your machine, ex
-      `-p 192.168.1.100:8123` or `-p 0.0.0.0`
-            - Note: Replace `192.168.1.100` with your local IP address
-            - This allows you to access the sever from a specific IP that points to your machine
-    - To access the server go to:
-    ```
-    https://192.168.1.100:8123
-    ```
-    Or whichever local address you specified at the specified port
+### 6. Start the Cache
 
+```sh
+app_name='cave_test'
+docker run -d \
+    --volume "${app_name}_redis_volume:/data" \
+    --network "cave-net:${app_name}" \
+    --name "${app_name}_redis_host" \
+    "${CACHE_IMAGE:-valkey/valkey:7}" --save 7200 1
+```
+
+### 7. Initialize the Database (First Run Only)
+
+On first run the database must be seeded. Skip this step if you are restarting an already-initialized app.
+
+```sh
+source .env
+app_name='cave_test'
+docker run -it \
+    --network "cave-net:${app_name}" \
+    --volume "./:/app" \
+    --name "${app_name}_django_setup" \
+    -e DATABASE_HOST="${app_name}_db_host" \
+    -e DATABASE_USER="${app_name}_user" \
+    -e DATABASE_PASSWORD="$DATABASE_PASSWORD" \
+    -e DATABASE_NAME="${app_name}_name" \
+    -e DATABASE_PORT=5432 \
+    -e REDIS_HOST="${app_name}_redis_host" \
+    -e REDIS_PORT=6379 \
+    "cave-app:${app_name}" ./utils/reset_db.sh
+docker rm "${app_name}_django_setup"
+```
+
+### 8. Run the App
+
+```sh
+source .env
+app_name='cave_test'
+docker run -it -p 8000:8000 \
+    --network "cave-net:${app_name}" \
+    --volume "./:/app" \
+    --name "${app_name}_django" \
+    -e DATABASE_HOST="${app_name}_db_host" \
+    -e DATABASE_USER="${app_name}_user" \
+    -e DATABASE_PASSWORD="$DATABASE_PASSWORD" \
+    -e DATABASE_NAME="${app_name}_name" \
+    -e DATABASE_PORT=5432 \
+    -e REDIS_HOST="${app_name}_redis_host" \
+    -e REDIS_PORT=6379 \
+    "cave-app:${app_name}" ./utils/run_server.sh
+```
+
+Open the app in Chrome at `http://localhost:8000/cave/`.
+
+### LAN Hosting (Optional)
+
+To host on a local network with SSL:
+
+> **Note:** The bundled certificates are self-signed and shared openly in this open-source project. For any non-test deployment, generate your own certificates. See `utils/lan_hosting/readme.md` for details.
+
+```sh
+source .env
+app_name='cave_test'
+ip='192.168.1.100'
+port='8123'
+
+# Start the Nginx reverse proxy
+docker run -d \
+    --restart unless-stopped \
+    -p "${ip}:${port}:8000" \
+    --network "cave-net:${app_name}" \
+    --volume "./utils/lan_hosting:/certs" \
+    --volume "./utils/nginx_ssl.conf.template:/etc/nginx/templates/default.conf.template:ro" \
+    --name "${app_name}_nginx_host" \
+    -e CAVE_HOST="${app_name}_django" \
+    -e CAVE_PORT="${port}" \
+    -e CAVE_IP="${ip}" \
+    nginx
+
+# Start Django with CSRF trusted origin
+docker run -it \
+    --network "cave-net:${app_name}" \
+    --volume "./:/app" \
+    --name "${app_name}_django" \
+    -e DATABASE_HOST="${app_name}_db_host" \
+    -e DATABASE_USER="${app_name}_user" \
+    -e DATABASE_PASSWORD="$DATABASE_PASSWORD" \
+    -e DATABASE_NAME="${app_name}_name" \
+    -e DATABASE_PORT=5432 \
+    -e REDIS_HOST="${app_name}_redis_host" \
+    -e REDIS_PORT=6379 \
+    -e CSRF_TRUSTED_ORIGIN="${ip}:${port}" \
+    "cave-app:${app_name}" ./utils/run_server.sh
+```
+
+Access the app at `https://192.168.1.100:8123/cave/`.
 
 ### Prettify Code
-NOTE: All prettify commands write over existing code.
 
-To apply our default lint fixes to all python code in `./cave_api`:
-```
+To apply formatting to the `cave_api` Python code:
+
+```sh
 app_name='cave_test'
-docker run --volume "./:/app" "cave-app:${app_name}" /app/utils/prettify.sh
+docker run --volume "./:/app" "cave-app:${app_name}" ./utils/prettify.sh
 ```
 
-To apply our default lint fixes to all python code:
-```
-docker run --volume "./:/app" "cave-app:${app_name}" /app/utils/prettify.sh
-```
+> **Note:** This writes changes in place.
 
 ### Interactive Mode
-To run the app in interactive mode:
-```
+
+To drop into a bash shell inside the container:
+
+```sh
+app_name='cave_test'
 docker run -it --volume "./:/app" "cave-app:${app_name}" bash
 ```

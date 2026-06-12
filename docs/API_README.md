@@ -34,9 +34,9 @@ Each CAVE app depends on three supporting projects:
 
 | Project | What it is |
 |---|---|
-| **cave_utils** | A Python package with validation, logging, and builder utilities. Auto-installed via `requirements.txt`. Available on [PyPI](https://pypi.org/project/cave-utils). |
+| **cave_utils** | A Python package with validation, logging, and builder utilities. Auto-installed via `pyproject.toml`. Available on [PyPI](https://pypi.org/project/cave-utils). |
 | **cave_static** | A static React build that browsers load to render the app UI. The exact version your app uses is set in `.env`. Hosted on a CDN. |
-| **cave_cli** | The command-line tool used to create, run, test, and manage CAVE apps. Run `cave help` to see all available commands. |
+| **cave_cli** | The command-line tool used to create, run, test, and manage CAVE apps. Run `cave --help` to see all available commands. |
 
 ---
 
@@ -55,11 +55,11 @@ To upgrade your app to a newer `cave_static` version:
 1. Update `your_app/.env` with the new version.
 2. In the admin page, edit the `globals.static_app_url_path` value, **or** run `cave reset` to apply the change from `.env`.
 
-Stable `cave_static` builds are accessible via CDN at `https://builds.mitcave.com/major.minor.patch/index.html`. Stable releases do not include `-dev` in the branch name. You can see all available versions with `cave lv --repo cave_static`
+Stable `cave_static` builds are accessible via CDN at `https://builds.mitcave.com/major.minor.patch/index.html`. Stable releases do not include `-dev` in the branch name. You can see all available versions with `cave lv` (filter by major with `--pattern v3.*`)
 
 > **Note:** Patch versions may not align across projects. For example, `cave_app 3.0.1` might ship alongside `cave_static 3.0.1` and `cave_utils 3.0.2` if only `cave_utils` needed a bug fix.
 
-`cave_utils` is listed in `your_app/requirements.txt` as `cave-utils>=x.y.z`. Because Docker may cache package versions, you may occasionally need to bump this version to pull the latest patch. Use `cave lv --repo cave_utils` to see the latest version and update accordingly.
+`cave_utils` is pinned in `your_app/pyproject.toml` as `cave_utils==x.y.z`. Because Docker may cache package versions, you may occasionally need to bump this version to pull the latest patch. Use `cave lv` to see the latest version for each repo and update `pyproject.toml` accordingly.
 
 ---
 
@@ -310,7 +310,7 @@ scipy~=1.11.0
 
 The next time you run `cave run`, Docker will install these automatically.
 
-> **Note:** Do not add these to `my_app/requirements.txt` or `my_app/utils/extra_requirements.txt`: those are for the server, not the API.
+> **Note:** Do not add these to the server-level dependencies in `my_app/pyproject.toml`: those are for the server, not the API.
 
 <details>
   <summary>Troubleshooting package install failures</summary>
@@ -324,10 +324,10 @@ cave run -it
 Then in the container terminal:
 
 ```
-pip install -r cave_api/requirements.txt
+uv sync --extra api
 ```
 
-The error output will usually tell you what system package is missing. Once identified, add the necessary steps to your `Dockerfile` before the `pip install` line:
+The error output will usually tell you what system package is missing. Once identified, add the necessary steps to your `Dockerfile` before the `uv sync` line:
 
 ```dockerfile
 RUN apt-get update
@@ -378,7 +378,7 @@ validator.log.print_logs()
 To run a test file (from your project root):
 
 ```
-cave test test_init.py
+cave test init.py
 ```
 
 The validator checks that your session data conforms to the API spec and prints any warnings or errors. It is the fastest way to catch structural mistakes before opening the browser.
@@ -400,7 +400,7 @@ This will print validation warnings to the terminal whenever `execute_command` r
 **Running tests** is the most thorough approach:
 
 ```
-cave test test_init.py
+cave test init.py
 ```
 
 Add targeted test cases to `cave_api/tests/` as your app grows to cover key commands and edge cases.

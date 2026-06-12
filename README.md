@@ -12,13 +12,12 @@ Before getting started, ensure you have the following installed:
 
 - [Google Chrome](https://www.google.com/chrome/): the only fully supported browser
 - [Docker](https://www.docker.com/get-started/): required to run the app locally
-- [Python 3](https://www.python.org/downloads/): required for the Cave CLI
 - [Cave CLI](https://github.com/MIT-CAVE/cave_cli): the command-line tool used to create and run apps
 
 # Getting Started
 
 1. Install the [Cave CLI](https://github.com/MIT-CAVE/cave_cli).
-    - If you do not want to use the CLI (or for production deployments), see the instructions [here](NON_CLI_README.md).
+    - If you do not want to use the CLI (or for production deployments), see the instructions [here](docs/NON_CLI_README.md).
 
 2. Create a new cave app (replace `my_app` with your desired app name):
     ```
@@ -81,7 +80,7 @@ The `cave_api` is where you integrate your own Python models, data, and logic in
 
 See the API documentation to get started:
 
-- [General API Topics](docs/README.md)
+- [General API Topics](docs/API_README.md)
 - [Development Guide](docs/DEVELOPMENT.md)
 - [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html)
 

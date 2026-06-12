@@ -1,4 +1,4 @@
-# CAVE App — LLM Developer Guide
+# CAVE App — Developer Guide
 
 ## How to Approach Changes
 
@@ -276,7 +276,7 @@ Map features use the same `props` schema, but values live in `data.valueLists` a
 | Values key | `values` (flat dict, one value per prop) | `data.valueLists` (list of values, one per feature) |
 | Location | N/A | `data.location` (`latitude`/`longitude` for nodes/arcs; `geoJsonValue` for geos) |
 
-> **Full reference:** `llm/cave_api_docs/cave_utils_api_utils_general.txt` — documents every prop type, variant, field, gradient system, and options structure. Read this before building any pane or map feature.
+> **Full reference:** `docs/cave_api_docs/cave_utils_api_utils_general.txt` — documents every prop type, variant, field, gradient system, and options structure. Read this before building any pane or map feature.
 
 ---
 
@@ -285,19 +285,19 @@ Map features use the same `props` schema, but values live in `data.valueLists` a
 Full structured documentation for the CAVE API and all `cave_utils` modules lives in:
 
 ```
-.claude/cave_api_docs/
+docs/cave_api_docs/
 ```
 
 **Start here:**
-- `llm/cave_api_docs/README.txt` — index of all doc files
-- `llm/cave_api_docs/PROJECT_README.md` — `cave_utils` library overview (Validator, GroupsBuilder, Socket, etc.)
+- `docs/cave_api_docs/API_README.txt` — index of all doc files
+- `docs/cave_api_docs/PROJECT_README.md` — `cave_utils` library overview (Validator, GroupsBuilder, Socket, etc.)
 
 **Consult the relevant `.txt` file when building any specific feature.** Each file documents the exact required and optional fields, types, and constraints for that part of the API. These files are the ground truth for what is valid — they take precedence over examples or README descriptions if there is a conflict.
 
 **Other useful docs:**
-- `llm/cave_api_docs/cave_utils_builders_groups.txt` — GroupsBuilder for chart data
-- `llm/cave_api_docs/cave_utils_socket.txt` — Socket methods
-- `llm/cave_api_docs/cave_utils_arguments.txt` — Arguments utility
+- `docs/cave_api_docs/cave_utils_builders_groups.txt` — GroupsBuilder for chart data
+- `docs/cave_api_docs/cave_utils_socket.txt` — Socket methods
+- `docs/cave_api_docs/cave_utils_arguments.txt` — Arguments utility
 
 ---
 
@@ -321,10 +321,13 @@ This file is the single entry point. It must define or import `execute_command`.
 ```
 cave_api/src/       ← your app lives here
 cave_api/data/      ← static data files (CSV, JSON, GeoJSON)
-cave_api/requirements.txt    ← Python dependencies for your app
+pyproject.toml [project.optional-dependencies.api]    ← Python dependencies for your app
 ```
-
-`src/app.py` is the starting template. Add modules alongside it freely (`src/model.py`, `src/charts.py`, etc.).
+`cave_api/api.py` is a hardcoded entry point and must define `execute_command`. 
+    - The recommended pattern is to keep `cave_api/api.py` as a thin router that imports from other modules in `src/`.
+    - Currently `cave_api/api.py` imports from `cave_api/examples` but you will want to modify this as you begin working on your own app code.
+    - It is recommended to keep the `examples/` folder intact for reference as you build your app in `cave_api/src/`.
+`cave_api/src/app.py` is a starting template. Add modules alongside it freely (`src/model.py`, `src/charts.py`, etc.).
 
 **Loading data files:**
 ```python
@@ -336,7 +339,7 @@ with open(data_folder.joinpath("my_data.json").__str__()) as f:
     data = json.load(f)
 ```
 
-**Adding dependencies:** edit `cave_api/requirements.txt` and restart with `cave run`.
+**Adding dependencies:** edit `pyproject.toml` [project.optional-dependencies.api] and start (restart if running) your app with `cave run`.
 
 ---
 
@@ -370,7 +373,7 @@ cave prettify
 
 ## Hot Reload
 
-Python file changes in `cave_api/` reload automatically while `cave run` is active. Restart required for: CSV/JSON data files, `requirements.txt` changes, `Dockerfile` changes.
+Python file changes in `cave_api/` reload automatically while `cave run` is active. Restart required for: CSV/JSON data files, `pyproject.toml` changes, `Dockerfile` changes.
 
 ---
 
@@ -380,7 +383,7 @@ Python file changes in `cave_api/` reload automatically while `cave run` is acti
 |---|---|
 | Print statements | Output appears in the `cave run` terminal |
 | Live validation | Set `LIVE_API_VALIDATION_PRINT=true` in `.env` |
-| Manual validation | Run `cave test test_init.py` |
+| Manual validation | Run `cave test init.py` |
 | Browser console | `Ctrl+Shift+i` → Console tab (grey screen = frontend error) |
 
 ---
@@ -388,25 +391,24 @@ Python file changes in `cave_api/` reload automatically while `cave run` is acti
 ## Project Structure (Full)
 
 ```
-cave_api/               ← API layer (your app)
-  cave_api/
-    api.py              ← entry point (Option 1/2/3)
-    src/                ← custom app code goes here
-      app.py            ← minimal starting template
-    examples/           ← 20+ reference examples (keep intact)
-      selector/         ← example browser UI (infrastructure, not a template)
-    data/               ← static data files
-  tests/                ← test files
-    mutation_logs/      ← CSV/JSON mutation logs for replay testing
-  utils/                ← shared utilities (e.g. Replay)
-  requirements.txt      ← Python deps for the API
+cave_api/             ← API project folder (your app logic lives here)
+  api.py              ← entry point (Option 1/2/3)
+  src/                ← custom app code goes here
+    app.py            ← minimal starting template
+  examples/           ← 20+ reference examples (keep intact)
+    selector/         ← example browser UI (infrastructure, not a template)
+  data/               ← static data files
+tests/                ← test files
+  mutation_logs/      ← CSV/JSON mutation logs for replay testing
 
-cave_core/              ← Django app: models, views, WebSockets, auth
-cave_app/               ← Django project: settings, ASGI, URLs
-templates/              ← Django HTML templates
-static/                 ← static assets
-media/                  ← user-uploaded media
-utils/                  ← Cave CLI utilities (start, reset, etc.)
+cave_core/            ← Django app: models, views, WebSockets, auth
+cave_app/             ← Django project: settings, ASGI, URLs
+templates/            ← Django HTML templates
+static/               ← static assets
+media/                ← user-uploaded media
+utils/                ← server utilities (run_server.sh, reset_db.sh, etc.)
+pyproject.toml        ← project dependencies (add API deps under [project.optional-dependencies.api])
+Dockerfile            ← container definition
 ```
 
 ### Server-layer files (only modify for infrastructure needs)
