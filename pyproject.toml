@@ -42,7 +42,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-cave_api = [
+api = [
     "requests>=2.32.2,<3.0.0",
 ]
 dev = [

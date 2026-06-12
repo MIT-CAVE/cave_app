@@ -81,7 +81,8 @@ The `cave_api` is where you integrate your own Python models, data, and logic in
 
 See the API documentation to get started:
 
-- [General API Topics](cave_api/README.md)
+- [General API Topics](docs/README.md)
+- [Development Guide](docs/DEVELOPMENT.md)
 - [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html)
 
 ## Development Workflow
@@ -125,7 +126,7 @@ The cave app includes a variety of core components to allow for rapid prototypin
 
 ## License Notice
 
-Copyright 2025 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
+Copyright 2026 Massachusetts Institute of Technology (MIT), Center for Transportation & Logistics (CTL)
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 

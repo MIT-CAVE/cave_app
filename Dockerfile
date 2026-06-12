@@ -8,6 +8,10 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Set environment variables for optimal Docker caching & execution
 ENV UV_LINK_MODE=copy
+# Move the virtual environment outside the app directory
+# This prevents it from being overwritten by volume mounts (e.g., --volume .:/app)
+ENV UV_PROJECT_ENVIRONMENT=/venv
+ENV PATH="/venv/bin:$PATH"
 
 # Set python to unbuffered mode
 ENV PYTHONUNBUFFERED=1
@@ -17,8 +21,11 @@ ENV PYTHONUNBUFFERED=1
 
 # Set the working directory to /app
 WORKDIR /app/
-COPY ./cave_api/__init__.py /app/cave_api/__init__.py
 
 # Install Core Cave App Python Requirements
-COPY ./pyproject.toml /app/pyproject.toml
-RUN uv sync --extra cave_api
+# Copying uv.lock ensures deterministic builds
+COPY pyproject.toml uv.lock ./
+
+# Sync dependencies without installing the project itself
+# This maximizes layer caching when source code changes
+RUN uv sync --frozen --no-install-project --extra api

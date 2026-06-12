@@ -125,7 +125,7 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
-cave-api = [
+api = [
     { name = "requests" },
 ]
 dev = [
@@ -151,11 +151,11 @@ requires-dist = [
     { name = "python-decouple", specifier = "==3.8" },
     { name = "qrcode", specifier = "==8.2" },
     { name = "redis", specifier = "==7.1.0" },
-    { name = "requests", marker = "extra == 'cave-api'", specifier = ">=2.32.2,<3.0.0" },
+    { name = "requests", marker = "extra == 'api'", specifier = ">=2.32.2,<3.0.0" },
     { name = "type-enforced", specifier = ">=2.6.0,<3.0.0" },
     { name = "whitenoise", specifier = "==6.11.0" },
 ]
-provides-extras = ["cave-api", "dev"]
+provides-extras = ["api", "dev"]
 
 [[package]]
 name = "cave-utils"
