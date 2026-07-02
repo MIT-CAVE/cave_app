@@ -15,7 +15,8 @@
       "Write(./cave_core/**)",
       "Read(./README.md)",
       "Edit(./README.md)",
-      "Write(./README.md)"
+      "Write(./README.md)",
+      "Bash(cave *)"
     ],
     "deny": [
       "Read(.env)",
