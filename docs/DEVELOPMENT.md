@@ -20,316 +20,58 @@ Only escalate to server-level changes if the request is clearly about:
 - WebSocket session infrastructure
 - Static files, templates, or deployment
 
-If in doubt, it is an API change.
+If in doubt, it is an API change. For the concrete implementation workflow, see the [add-feature](.claude/skills/add-feature/SKILL.md) skill.
+
+
+---
+
+## Skills
+
+| Skill | Use when |
+|---|---|
+| [run](.claude/skills/run/SKILL.md) | Launching the app with `cave run` and verifying it's actually serving in the browser |
+| [add-feature](.claude/skills/add-feature/SKILL.md) | Implementing a new API feature — buttons, charts, maps, sliders, panes |
+| [examples](.claude/skills/examples/SKILL.md) | Picking the closest reference example in `cave_api/examples/` before writing new API code |
+| [api-reference](.claude/skills/api-reference/SKILL.md) | Looking up `execute_command`, `session_data` keys, props schema, or field-level API docs |
+| [test](.claude/skills/test/SKILL.md) | Running the test suite via the `cave` CLI (`cave test <file>`) |
+| [add-test](.claude/skills/add-test/SKILL.md) | Adding a test for a custom command, or a replay/mutation-log regression test |
+| [lint](.claude/skills/lint/SKILL.md) | Formatting `cave_api/`, `cave_app/`, `cave_core/` with `cave prettify` |
+| [debug](.claude/skills/debug/SKILL.md) | Diagnosing validation errors, blank screens, or unexpected session state |
+| [cave-cli](.claude/skills/cave-cli/SKILL.md) | Running, resetting, upgrading, or otherwise managing the app's Docker environment via the `cave` CLI |
+| [release](.claude/skills/release/SKILL.md) | Owner-only — explains why to stop and flag instead of executing a release |
+
+
+---
+
+## The `cave` CLI
+
+This app runs in Docker, managed entirely through the `cave` CLI. See the [cave-cli](.claude/skills/cave-cli/SKILL.md) skill for the full command reference — including which commands are destructive and require user confirmation before running.
 
 ---
 ## Testing
 
-After making changes, you will often want to run a test to validate your work.
-
-Tests live in `cave_api/tests/`. Do not try to run them directly with python. You can only run them using the cave CLI. 
-
-```
-cave test <test_file.py>
-```
-
-### Default Available test files
-
-| File | Purpose | When to run |
-|---|---|---|
-| `init.py` | Calls `execute_command` with `command="init"` and validates the output. **Your primary test.** | After any API change |
-| `examples.py` | Runs `init` on every bundled example and validates each. | After touching any file in `examples/` |
-| `django.py` | Checks DB state (users, personal teams). Server-layer only. | After Django model or auth changes |
-| `replay.py` | Replays a recorded mutation log and validates the resulting session state. | After capturing a mutation log or to regression-test a recorded session |
-
-### Running tests
-
-```
-cave test init.py          # validate your app's init command (most common)
-cave test examples.py      # validate all bundled examples
-cave test django.py        # server-layer DB check
-cave test replay.py        # replay a mutation log and validate session state
-```
-
-### Standard pattern
-
-`init.py` ships configured to match whatever you are seeing in your live application.
-
-```python
-from cave_api.api import execute_command
-from cave_utils import Socket, Validator
-
-def test_init():
-    init_session_data = execute_command(session_data={}, socket=Socket(), command="init")
-
-    validator = Validator(init_session_data, ignore_keys=["meta"])
-    validator.log.print_logs()
-    assert len(validator.log.log) == 0
-
-if __name__ == "__main__":
-    test_init()
-```
-
-### Testing additional commands
-
-If your app has commands beyond `init`, test them by chaining calls:
-
-```python
-from cave_api.api import execute_command
-from cave_utils import Socket, Validator
-
-def test_command_chain():
-    init_session_data = execute_command(session_data={}, socket=Socket(), command="init")
-    my_command_session_data = execute_command(session_data=init_session_data, socket=Socket(), command="my_command")
-
-    validator = Validator(my_command_session_data, ignore_keys=["meta"])
-    validator.log.print_logs()
-    assert len(validator.log.log) == 0
-
-if __name__ == "__main__":
-    test_command_chain()
-```
-
-Create a new file (e.g., `cave_api/tests/test_my_command.py`) for command-specific tests. Run it with `cave test test_my_command.py`.
-
-### Replay testing
-
-`cave_api/tests/replay.py` replays a recorded mutation log through `execute_command` and validates the final session state. This is useful for reproducing bugs and regression-testing a specific user session.
-
-**Mutation logs** are CSV or JSON files captured from a live session. Place them in `cave_api/tests/mutation_logs/`. The bundled example is `MutationLogExample.csv`.
-
-`cave_api/tests/replay.py` ships with two helpers:
-
-- `test_replay(log_file)` — replays a single log file and validates the result. Edit this function to add path assertions specific to your app.
-- `test_all_logs()` — runs `test_replay` for every file in `mutation_logs/`.
-
-The underlying utility is `Replay` from `cave_api.utils.replay`:
-
-```python
-from cave_api.utils.replay import Replay
-
-replay = Replay("cave_api/tests/mutation_logs/MutationLogExample.csv")
-replay.advance("all")                        # replay every event
-replay.validate()                            # validate final state
-value = replay.get_path(["settings", "iconUrl"])  # inspect a specific path
-```
-
-Key `advance()` options:
-
-| Option | Default | What it does |
-|---|---|---|
-| `num_steps` | `1` | Steps to advance, or `"all"` for every remaining event |
-| `validate_each_step` | `False` | Validate after every event — slower, but pinpoints the exact failing event |
-| `validate_on_completion` | `True` | Validate once after all steps complete |
+Tests live in `tests/` and run only through the `cave` CLI (`cave test <file>`) — never directly with `python`. See the [test](.claude/skills/test/SKILL.md) skill for available test files and commands, and [add-test](.claude/skills/add-test/SKILL.md) for writing new command tests or replay-based regression tests.
 
 ---
 
-## The API: One Function
+## API Reference
 
-The entire CAVE API is a single Python function:
-
-```python
-def execute_command(session_data, socket, command="init", **kwargs):
-    ...
-    return session_data
-```
-
-| Parameter | Description |
-|---|---|
-| `session_data` | A plain dict representing the full app state. The frontend renders whatever is in here. |
-| `socket` | Sends notifications (`socket.notify("msg")`) or file exports (`socket.export("data:...")`) to the user. |
-| `command` | A string identifying what action to perform. Defaults to `"init"` on first load. |
-
-`execute_command` receives the current state, modifies it, and returns it. The framework handles routing, WebSockets, and rendering automatically.
-
-**Always handle `"init"`** — it runs on session start and must return the full initial state.
-
-**Standard command routing pattern:**
-```python
-def execute_command(session_data, socket, command="init", **kwargs):
-    if command == "init" or command == "reset":
-        return build_initial_state()
-    elif command == "run_model":
-        return update_state(session_data)
-    raise Exception(f"Command '{command}' not implemented")
-```
+The CAVE API is a single function, `execute_command(session_data, socket, command="init", **kwargs)`, that receives and returns a `session_data` dict built from 10 top-level keys (`settings`, `panes`, `mapFeatures`, `maps`, `groupedOutputs`, ...) and `props` (the shared schema behind every slider, dropdown, and map feature). Full details — the `execute_command` signature, the session_data key table, the props schema, and how to navigate the field-level docs in `docs/cave_api_docs/` — are in the [api-reference](.claude/skills/api-reference/SKILL.md) skill. Read it before building or modifying any panes, map features, or session_data structure.
 
 ---
 
-## Session Data: 10 Top-Level Keys
+## Entry Point & Custom Code
 
-`session_data` is a plain dict. The top-level keys control every part of what the user sees. All are optional except `settings`.
+`cave_api/api.py` is the hardcoded entry point — it must define or import `execute_command`. Three options are pre-configured (comment/uncomment to switch):
 
-| Key | Purpose | Doc file |
-|---|---|---|
-| `settings` | App-wide settings (icon URL, sync, etc.). **Required.** | `cave_api_docs/cave_utils_api_settings.txt` |
-| `appBar` | Buttons and pane-launchers in the app bar | `cave_api_docs/cave_utils_api_appBar.txt` |
-| `pages` | Static info pages | `cave_api_docs/cave_utils_api_pages.txt` |
-| `panes` | Slide-out panels with input props (sliders, dropdowns, etc.) | `cave_api_docs/cave_utils_api_panes.txt` |
-| `maps` | Map views with viewport, projection, layers | `cave_api_docs/cave_utils_api_maps.txt` |
-| `mapFeatures` | Interactive items on maps (nodes, arcs, geos) | `cave_api_docs/cave_utils_api_mapFeatures.txt` |
-| `groupedOutputs` | Hierarchical chart/table data with grouping | `cave_api_docs/cave_utils_api_groupedOutputs.txt` |
-| `globalOutputs` | App-wide KPI values | `cave_api_docs/cave_utils_api_globalOutputs.txt` |
-| `draggables` | Draggable UI overlay elements | `cave_api_docs/cave_utils_api_draggables.txt` |
-| `extraKwargs` | Special server-level flags (e.g. `wipeExisting`) | `cave_api_docs/cave_utils_api_extraKwargs.txt` |
-
-**Minimum valid app:**
-```python
-return {
-    "settings": {
-        "iconUrl": "https://react-icons.mitcave.com/5.4.0"
-    }
-}
-```
-
----
-
-## Props: The Building Blocks for Panes and Map Features
-
-**Props** are UI component definitions. They appear in two places:
-
-- **Panes** — interactive controls (sliders, dropdowns, buttons, etc.) that users manipulate to drive your app
-- **Map features** — visualization schemas that control how nodes, arcs, and geos are colored, sized, and labeled
-
-Every prop is a dictionary with a `name` and a `type`. Everything else is optional.
-
-```python
-{
-    "my_slider": {
-        "name": "My Slider",
-        "type": "num",
-        "variant": "slider",
-        "minValue": 0,
-        "maxValue": 100,
-        "unit": "%",
-        "apiCommand": "run_model",   # fires execute_command with command="run_model"
-        "apiCommandKeys": ["panes"],  # only pass these session_data keys
-    }
-}
-```
-
-### Prop Types
-
-| Type | What it renders | Common variants |
-|---|---|---|
-| `"head"` | Section header / divider | `"column"`, `"row"`, `"icon"` |
-| `"num"` | Numeric input | `"field"`, `"slider"`, `"icon"`, `"incslider"` |
-| `"toggle"` | Boolean switch | — |
-| `"text"` | Text input | `"single"`, `"textarea"` |
-| `"selector"` | Selection control | `"dropdown"`, `"radio"`, `"checkbox"`, `"combobox"`, `"comboboxMulti"`, `"nested"` |
-| `"button"` | Clickable button (can fire `apiCommand`) | — |
-| `"date"` | Date/time picker | `"date"`, `"time"`, `"datetime"` |
-| `"media"` | Image or video display | `"picture"`, `"video"` |
-
-### Props in Panes
-
-Panes pair a `props` schema with a `values` dict. The keys must match.
-
-```python
-"panes": {
-    "data": {
-        "my_pane": {
-            "name": "Controls",
-            "props": {
-                "speed": {"name": "Speed", "type": "num", "variant": "slider", "minValue": 0, "maxValue": 10}
-            },
-            "values": {
-                "speed": 5   # current value, keyed by prop name
-            },
-            "layout": {"type": "grid", "numColumns": 1, "numRows": "auto"}
-        }
-    }
-}
-```
-
-### Props in Map Features (Nodes, Arcs, Geos)
-
-Map features use the same `props` schema, but values live in `data.valueLists` alongside location data.
-
-```python
-"mapFeatures": {
-    "data": {
-        "my_nodes": {
-            "type": "node",
-            "name": "Facilities",
-            "props": {
-                "capacity": {"name": "Capacity", "type": "num", "variant": "icon"}
-            },
-            "data": {
-                "location": {
-                    "latitude": [[42.3], [41.8]],   # one list per feature
-                    "longitude": [[-71.0], [-87.6]]
-                },
-                "valueLists": {
-                    "capacity": [500, 1200]           # one value per feature
-                }
-            }
-        }
-    }
-}
-```
-
-**Key distinction:**
-
-| | Panes | Map Features |
-|---|---|---|
-| Values key | `values` (flat dict, one value per prop) | `data.valueLists` (list of values, one per feature) |
-| Location | N/A | `data.location` (`latitude`/`longitude` for nodes/arcs; `geoJsonValue` for geos) |
-
-> **Full reference:** `docs/cave_api_docs/cave_utils_api_utils_general.txt` — documents every prop type, variant, field, gradient system, and options structure. Read this before building any pane or map feature.
-
----
-
-## API Documentation Reference
-
-Full structured documentation for the CAVE API and all `cave_utils` modules lives in:
-
-```
-docs/cave_api_docs/
-```
-
-**Start here:**
-- `docs/cave_api_docs/API_README.txt` — index of all doc files
-- `docs/cave_api_docs/PROJECT_README.md` — `cave_utils` library overview (Validator, GroupsBuilder, Socket, etc.)
-
-**Consult the relevant `.txt` file when building any specific feature.** Each file documents the exact required and optional fields, types, and constraints for that part of the API. These files are the ground truth for what is valid — they take precedence over examples or README descriptions if there is a conflict.
-
-**Other useful docs:**
-- `docs/cave_api_docs/cave_utils_builders_groups.txt` — GroupsBuilder for chart data
-- `docs/cave_api_docs/cave_utils_socket.txt` — Socket methods
-- `docs/cave_api_docs/cave_utils_arguments.txt` — Arguments utility
-
----
-
-## Entry Point: `cave_api/api.py`
-
-This file is the single entry point. It must define or import `execute_command`. Three options are pre-configured (comment/uncomment to switch):
-
-- **Option 1 (default):** Example selector — browse all bundled examples from within the running app. Useful for exploration; not a coding template.
-- **Option 2:** `cave_api/src/app.py` — the minimal starting template for a real app. **Use this when building a custom app.**
+- **Option 1 (default):** Example selector — browse all bundled examples from within the running app. Not a coding template.
+- **Option 2:** `cave_api/src/app.py` — the minimal starting template. **Use this when building a custom app.**
 - **Option 3:** Load a specific example directly for quick reference or testing.
 
-**Recommended workflow:**
-1. Use Option 1 to explore examples and understand features
-2. Switch to Option 2 (`src/app.py`) to start building
-3. Keep examples intact in `cave_api/examples/` — they remain available for reference
+Recommended workflow: explore with Option 1 → switch to Option 2 to start building → keep `cave_api/examples/` intact for reference throughout.
 
----
+Write your app in `cave_api/src/` (add modules alongside `app.py` freely, e.g. `src/model.py`), keeping `api.py` itself as a thin router into `src/`. Put static data files in `cave_api/data/` and load them via `importlib.resources`:
 
-## Where to Write Custom App Code
-
-```
-cave_api/src/       ← your app lives here
-cave_api/data/      ← static data files (CSV, JSON, GeoJSON)
-pyproject.toml [project.optional-dependencies.api]    ← Python dependencies for your app
-```
-`cave_api/api.py` is a hardcoded entry point and must define `execute_command`. 
-    - The recommended pattern is to keep `cave_api/api.py` as a thin router that imports from other modules in `src/`.
-    - Currently `cave_api/api.py` imports from `cave_api/examples` but you will want to modify this as you begin working on your own app code.
-    - It is recommended to keep the `examples/` folder intact for reference as you build your app in `cave_api/src/`.
-`cave_api/src/app.py` is a starting template. Add modules alongside it freely (`src/model.py`, `src/charts.py`, etc.).
-
-**Loading data files:**
 ```python
 import json
 from importlib import resources
@@ -339,52 +81,19 @@ with open(data_folder.joinpath("my_data.json").__str__()) as f:
     data = json.load(f)
 ```
 
-**Adding dependencies:** edit `pyproject.toml` [project.optional-dependencies.api] and start (restart if running) your app with `cave run`.
+Add Python dependencies under `[project.optional-dependencies.api]` in `pyproject.toml`, then (re)start with `cave run` — see [cave-cli](.claude/skills/cave-cli/SKILL.md).
 
 ---
 
 ## Examples
 
-`cave_api/examples/` contains 20+ working examples. They are the best reference for how to construct any specific feature. Key examples:
-
-| Example | What it shows |
-|---|---|
-| `api_command.py` | Button → custom command → socket notification |
-| `api_command_export.py` | Export data to browser via command |
-| `map_nodes.py` / `map_arcs.py` / `map_geos.py` | Map feature types |
-| `chart_grouped_outputs_builder.py` | GroupsBuilder for chart data |
-| `general_props_all.py` | Every pane prop type (sliders, dropdowns, etc.) |
-| `pane_wall.py` / `pane_modal.py` | Pane layout variants |
-| `data_local_example.py` | Loading local CSV/JSON data |
-| `kitchen_sink.py` | Comprehensive multi-feature example |
-
-The `examples/selector/example_selector.py` file is infrastructure for the selector UI — it is not a coding example.
-
----
-
-## Linting
-
-Always use the Cave CLI formatter before committing:
-```
-cave prettify
-```
+`cave_api/examples/` contains 25+ working examples — the best reference for how to construct any specific feature. See the [examples](.claude/skills/examples/SKILL.md) skill for a categorized guide to picking the right one before writing new API code.
 
 ---
 
 ## Hot Reload
 
 Python file changes in `cave_api/` reload automatically while `cave run` is active. Restart required for: CSV/JSON data files, `pyproject.toml` changes, `Dockerfile` changes.
-
----
-
-## Debugging
-
-| Tool | How |
-|---|---|
-| Print statements | Output appears in the `cave run` terminal |
-| Live validation | Set `LIVE_API_VALIDATION_PRINT=true` in `.env` |
-| Manual validation | Run `cave test init.py` |
-| Browser console | `Ctrl+Shift+i` → Console tab (grey screen = frontend error) |
 
 ---
 
@@ -395,7 +104,7 @@ cave_api/             ← API project folder (your app logic lives here)
   api.py              ← entry point (Option 1/2/3)
   src/                ← custom app code goes here
     app.py            ← minimal starting template
-  examples/           ← 20+ reference examples (keep intact)
+  examples/           ← 25+ reference examples (keep intact)
     selector/         ← example browser UI (infrastructure, not a template)
   data/               ← static data files
 tests/                ← test files
