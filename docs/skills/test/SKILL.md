@@ -5,7 +5,10 @@ description: Run the cave_api test suite via the cave CLI (cave test <file>). Us
 
 # Running Tests
 
-Tests live in `tests/`. Do not run them directly with `python` — always go through the `cave` CLI, which runs them inside the app's Docker container:
+Tests live in `tests/`. Do not run them directly with `python` — always go through the `cave` CLI, which runs them inside the app's Docker container.
+
+> [!IMPORTANT]
+> Running `cave test` without specifying a test file will result in a `Test not found` error. You must always pass a test file.
 
 ```
 cave test <test_file.py>

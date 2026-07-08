@@ -27,11 +27,17 @@ if __name__ == "__main__":
 
 Chain calls in order if a command depends on state set by a prior command (e.g. `init` populating the pane your command mutates).
 
+> [!TIP]
+> For advanced schema checks or ignoring specific keys during validation, see the [data-validation](../data-validation/SKILL.md) skill.
+
 Run it with `cave test test_<command_name>.py` — see [test](../test/SKILL.md).
 
 ### Replay-based regression tests
 
-To reproduce a bug or regression-test a real user session, capture a mutation log (CSV/JSON) into `tests/mutation_logs/`, then add a path assertion to `tests/replay.py`'s `test_replay` function using `Replay.get_path([...])`. The bundled example is `MutationLogExample.csv`. `test_all_logs()` runs `test_replay` against every file in `mutation_logs/` if you need to check all of them at once.
+To reproduce a bug or regression-test a real user session, capture a mutation log (CSV/JSON) into `tests/mutation_logs/`, then add a path assertion to `tests/replay.py`'s `test_replay` function using `Replay.get_path([...])`. The bundled example is `MutationLogExample.csv`. 
+
+> [!NOTE]
+> By default, running `cave test replay.py` only executes `test_replay` on `MutationLogExample.csv`. To run validation against every log file in the `mutation_logs/` folder at once, modify `tests/replay.py` to comment out the `test_replay(...)` call and uncomment `test_all_logs()`.
 
 ```python
 from utils.replay import Replay

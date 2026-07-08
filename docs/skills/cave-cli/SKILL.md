@@ -13,7 +13,7 @@ This app runs in Docker, managed entirely through the `cave` CLI — not `docker
 
 | Command | What it does |
 |---|---|
-| `cave run` | Build and run the CAVE app in the current directory. Add `ip:port` to host on LAN, `-it`/`--interactive` to drop into the entrypoint shell instead. See [run](../run/SKILL.md) for confirming it's actually up and driving it. |
+| `cave run` | Build and run the CAVE app. Add `ip:port` to host on LAN. Use `-it` to open bash inside the container, or `--all` to output raw logs instead of launching the TUI dashboard. See [run](../run/SKILL.md). |
 | `cave list` (`-a` for full names) | List running CAVE app containers |
 | `cave list-versions` (`cave lv`) | List available `cave_app` template versions (git tags); `--pattern` to filter, `--all` for the full history |
 | `cave doctor` | Check the health of the CAVE environment (Docker, dependencies, etc.) |
@@ -29,7 +29,7 @@ Every command below changes or removes local state (Docker containers/volumes, p
 | `cave reset` (`cave reset-db`) | Remove Docker containers and volumes, then rebuild from scratch | Wipes the local database and any container-local state |
 | `cave kill [app-name]` (`-a` for all) | Stop Docker containers for a CAVE app, or every running CAVE app | Stops a dev session that may be in use |
 | `cave purge <app-path>` | Remove a CAVE app and all its Docker resources | Irreversible |
-| `cave upgrade` | Upgrade the CAVE app template in the current directory to a different `--version` | Can rewrite or conflict with project files; touches `.env` unless `--skip-env-upgrade` |
+| `cave upgrade` | Upgrade the CAVE app template in the current directory to a different `--version` | Can rewrite or conflict with project files; touches `.env` unless `--skip-env-upgrade` is provided |
 | `cave sync --url <url>` | Merge files from another repository into this app | Can overwrite existing files |
 | `cave uninstall` | Remove the CAVE CLI itself | Removes the tool, not just app state |
 
