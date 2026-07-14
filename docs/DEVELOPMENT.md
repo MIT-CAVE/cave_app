@@ -38,6 +38,7 @@ If in doubt, it is an API change. For the concrete implementation workflow, see 
 | [lint](.claude/skills/lint/SKILL.md) | Formatting `cave_api/`, `cave_app/`, `cave_core/` with `cave prettify` |
 | [debug](.claude/skills/debug/SKILL.md) | Diagnosing validation errors, blank screens, or unexpected session state |
 | [cave-cli](.claude/skills/cave-cli/SKILL.md) | Running, resetting, upgrading, or otherwise managing the app's Docker environment via the `cave` CLI |
+| [cave-upgrade](.claude/skills/cave-upgrade/SKILL.md) | Upgrading the CAVE framework version via the CLI and migrating custom API/test code to the new version's schema |
 | [release](.claude/skills/release/SKILL.md) | Owner-only — explains why to stop and flag instead of executing a release |
 
 
