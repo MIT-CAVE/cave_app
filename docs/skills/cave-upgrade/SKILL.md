@@ -78,6 +78,7 @@ An upgraded project can run mixed component versions under certain conditions:
 - **Serving Older Static Versions**: A CAVE project running on `cave_app==3.6.0` can serve a prior `cave_static` major version (e.g. `2.4.0`), validated using its corresponding `cave_utils` package (e.g. `2.3.0`).
 - **Validation Consistency**: In mixed environments, the reference schemas in [docs/cave_api_docs](file:///home/conmak/development/app/cave_app/docs/cave_api_docs/) are generated from the running `cave_utils` version. If the API payload passes validation against that `cave_utils` version, it is should work with that `cave_static` consumer and can be safely served by `cave_app==3.6.0`.
 - **Backward Compatibility Constraints**: `cave_app` (v3.0+) only maintains backward support for the **most recent** `cave_static` version of each prior major distribution (e.g., the last release of the `2.x.x` line, which is `2.4.0`). Intermediate/older static versions within a prior major distribution (e.g., `2.3.0`) are not supported under `cave_app 3.0+`.
+- **Utils to Static Alignment**: The `cave_utils` package version should closely approximate the `cave_static` version (specifically targeting the most recent equivalent minor version available) to prevent discrepancies between backend validation rules and frontend capabilities.
 
 ### Upgrading Static and Utils Independently
 
@@ -127,6 +128,14 @@ If a migration is needed, follow this checklist to adapt custom code:
    - Update dictionaries returned by `execute_command` to match new schema expectations (e.g., adapting `panes`, `mapFeatures`, `maps`, or `groupedOutputs`).
    - Replace deprecated prop types or keys.
    - Update imports of `cave_utils` tools or builders if their paths changed.
+
+4. **Regenerate API documentation files**:
+   - If you have updated `cave_utils`, make sure the reference schema files under [docs/cave_api_docs](file:///home/conmak/development/app/cave_app/docs/cave_api_docs/) match the new package definitions.
+   - You can regenerate these files locally by running [generate_docs.sh](file:///home/conmak/development/app/cave_app/utils/generate_docs.sh) inside the Docker container:
+     ```bash
+     cave run --entrypoint ./utils/generate_docs.sh
+     ```
+   - This executes the documentation builder in the container context and outputs the updated text files directly into your workspace.
 
 ---
 

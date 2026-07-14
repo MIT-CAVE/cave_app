@@ -6,6 +6,12 @@ FROM python:3.13-slim
 # Copy the uv and uvx binaries from the official Astral image
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+# Disable project/workspace sync at runtime. This prevents uv run from
+# automatically installing/building the project in editable mode and
+# creating cave_app.egg-info on the host.
+ENV UV_NO_PROJECT=true
+
+
 # Set environment variables for optimal Docker caching & execution
 ENV UV_LINK_MODE=copy
 # Move the virtual environment outside the app directory
