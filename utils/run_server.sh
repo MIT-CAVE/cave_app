@@ -13,4 +13,5 @@ if [ "$(uv run python ./manage.py check --deployment_type development | grep "Sy
 fi
 source ./utils/helpers/ensure_db_setup.sh
 
-uv run python "$APP_DIR/manage.py" runserver 0.0.0.0:8000 2>&1 | pipe_log "INFO"
+export DJANGO_SETTINGS_MODULE=cave_app.settings.development
+uv run uvicorn cave_app.asgi:application --host 0.0.0.0 --port 8000 --reload 2>&1 | pipe_log "INFO"

@@ -5,7 +5,7 @@ description: Launch the CAVE app in Docker via `cave run`, confirm it's actually
 
 # Running the CAVE App
 
-`cave run` builds and starts the app's Docker containers (Postgres, the Django/Daphne ASGI server, etc.) — see [cave-cli](../cave-cli/SKILL.md) for the full command reference. This skill is specifically about getting a running instance you can look at and verify.
+`cave run` builds and starts the app's Docker containers (Postgres, the Django ASGI server, etc.) — see [cave-cli](../cave-cli/SKILL.md) for the full command reference. This skill is specifically about getting a running instance you can look at and verify.
 
 ## 1. Start it
 
