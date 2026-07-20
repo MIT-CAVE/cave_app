@@ -27,8 +27,21 @@ asgi_app = get_asgi_application()
 # If not in production mode, wrap the ASGI app with the static files handler
 from django.conf import settings
 if not settings.PRODUCTION_MODE:
+    import warnings
+
+    # Suppress only Django's ASGI static file handler warning for synchronous iterators
+    # This specifically deals with the ASGIStaticFilesHandler warning that occurs when using synchronous iterators in StreamingHttpResponse
+    # It is possible that this may suppress other warnings, but it is reasonable to avoid cluttering the logs with this specific warning
+    warnings.filterwarnings(
+        "ignore",
+        message=r"StreamingHttpResponse must consume synchronous iterators",
+        category=Warning,
+        module=r"django\.core\.handlers\.asgi",
+    )
+
     from django.contrib.staticfiles.handlers import ASGIStaticFilesHandler
     asgi_app = ASGIStaticFilesHandler(asgi_app)
+
 
 # Get the websocket ASGI application from cave_core
 from cave_core.websockets.app import get_ws_asgi_application
