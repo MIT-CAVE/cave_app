@@ -279,6 +279,13 @@ def execute_command(
                             "placement": "topCenter",
                             # "container": "minimal",  # Unstyled container that will keep the prop in its layout position
                             "url": "https://github.com/MIT-CAVE",
+                            # `apiCommand` fires alongside `url` by default. Set
+                            # `suppressCommand` to `True` so a button with both
+                            # attributes only navigates, without also triggering
+                            # the paired API command (eg. for analytics logging).
+                            "apiCommand": "logGithubVisit",
+                            "suppressCommand": True,
+                            "help": "Open the MIT CAVE Lab GitHub page in a new tab. The `logGithubVisit` command is suppressed since `suppressCommand` is `True`, so only navigation occurs on click",
                         },
                         "mediaHeader": {
                             "name": "Media Props",
