@@ -373,7 +373,6 @@ def execute_command(
                                 },
                             },
                             "fullWidth": True,
-                            "propStyle": {"justifyContent": "space-evenly"},
                             "help": "Manage message visibility and importance in your inbox workflow",
                             "helperText": "Toggle multiple actions to highlight this message in your inbox.",
                             "propStyle": {
