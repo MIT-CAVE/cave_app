@@ -430,6 +430,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "help": "Select all relevant items",
                         },
+                        "hcheckboxItemExample": {
+                            "name": "Horizontal Checkbox Item Example",
+                            "type": "selector",
+                            "variant": "hcheckbox",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                            },
+                            "help": "Select all relevant items",
+                        },
                         "radioItemExample": {
                             "name": "Radio Item Example",
                             "type": "selector",
@@ -606,6 +617,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                         "dropdownItemExample": ["option_c"],
                         "checkboxItemExample": ["option_a", "option_c"],
+                        "hcheckboxItemExample": ["option_b"],
                         "radioItemExample": ["option_a"],
                         "hstepperItemExample": ["option_c"],
                         "vstepperItemExample": ["option_c"],
@@ -800,12 +812,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 6,
                                 "row": 9,
-                                "itemId": "hradioItemExample",
+                                "itemId": "hcheckboxItemExample",
                             },
                             "col6Row10": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 10,
+                                "itemId": "hradioItemExample",
+                            },
+                            "col6Row11": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 11,
                                 "itemId": "nestedItemExample",
                             },
                             "col7Row1": {

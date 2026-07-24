@@ -343,7 +343,40 @@ def execute_command(
                                 },
                             },
                             "fullWidth": False,
+                            "fallback": {"name": "Unknown Language", "color": "#9e9e9e"},
                             "help": "Select the primary programming language for your development stack",
+                        },
+                        "checkboxItemExample": {
+                            "name": "Alert Notification Channels",
+                            "subtitle": "This example uses the `selector`'s `checkbox` variant",
+                            "type": "selector",
+                            "variant": "checkbox",
+                            "options": {
+                                "email": {
+                                    "icon": "hi/HiMail",
+                                    "name": "Email",
+                                    "activeIcon": "hi/HiMailOpen",
+                                    "activeColor": "#66bb6a",
+                                },
+                                "sms": {
+                                    "icon": "hi/HiDeviceMobile",
+                                    "name": "SMS",
+                                    "activeIcon": "hi/HiChatAlt2",
+                                    "activeColor": "#42a5f5",
+                                },
+                                "slack": {
+                                    "icon": "fa/FaSlack",
+                                    "name": "Slack",
+                                    "activeColor": "#9c27b0",
+                                },
+                                "webhook": {
+                                    "icon": "hi/HiLightningBolt",
+                                    "name": "Webhook",
+                                    "activeColor": "#ffa726",
+                                },
+                            },
+                            "helperText": "Select which channels should receive critical alert notifications.",
+                            "help": "Configure how your team is notified when critical alerts are triggered",
                         },
                         "hcheckboxItemExample": {
                             "name": "Message Actions",
@@ -439,6 +472,7 @@ def execute_command(
                             "size": "24px",
                             "activeIcon": "fc/FcAssistant",
                             "activeSize": "48px",
+                            "labelPlacement": "bottom",
                             "options": {
                                 "alice": {
                                     "name": "Alice",
@@ -560,6 +594,7 @@ def execute_command(
                             "type": "selector",
                             "variant": "comboboxMulti",
                             "placeholder": "Choose features to enable",
+                            "numVisibleTags": 1,
                             "options": {
                                 "auth": {
                                     "name": "Authentication",
@@ -717,6 +752,7 @@ def execute_command(
                         "textInputExample": "cave-routing-2025",
                         "textAreaInputExample": "This project aims to optimize last-mile delivery routes using machine learning algorithms. Key features include real-time traffic integration, dynamic route adjustment, and driver mobile app integration. Target completion: Q3 2025.",
                         "dropdownItemExample": ["python"],
+                        "checkboxItemExample": ["email", "slack"],
                         "hcheckboxItemExample": ["flag", "pin"],
                         "radioItemExample": [],
                         "hstepperItemExample": ["requirements"],
@@ -896,48 +932,54 @@ def execute_command(
                                 "type": "item",
                                 "column": 6,
                                 "row": 3,
-                                "itemId": "hcheckboxItemExample",
+                                "itemId": "checkboxItemExample",
                             },
                             "col6Row4": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 4,
-                                "itemId": "radioItemExample",
+                                "itemId": "hcheckboxItemExample",
                             },
                             "col6Row5": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 5,
-                                "itemId": "hradioItemExample",
+                                "itemId": "radioItemExample",
                             },
                             "col6Row6": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 6,
-                                "itemId": "comboBoxItemExample",
+                                "itemId": "hradioItemExample",
                             },
                             "col6Row7": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 7,
-                                "itemId": "comboBoxMultiExample",
+                                "itemId": "comboBoxItemExample",
                             },
                             "col6Row8": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 8,
-                                "itemId": "hstepperItemExample",
+                                "itemId": "comboBoxMultiExample",
                             },
                             "col6Row9": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 9,
-                                "itemId": "vstepperItemExample",
+                                "itemId": "hstepperItemExample",
                             },
                             "col6Row10": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 10,
+                                "itemId": "vstepperItemExample",
+                            },
+                            "col6Row11": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 11,
                                 "itemId": "nestedItemExample",
                             },
                             "col7Row1": {
