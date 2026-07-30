@@ -343,7 +343,6 @@ def execute_command(
                                 },
                             },
                             "fullWidth": False,
-                            "fallback": {"name": "Unknown Language", "color": "#9e9e9e"},
                             "help": "Select the primary programming language for your development stack",
                         },
                         "checkboxItemExample": {
