@@ -23,7 +23,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "cave_utils==3.5.7",
+    "cave_utils==3.6.0",
     "Django>=6.0.7,<7.0.0",
     "django-import-export==4.4.1",
     "djangorestframework==3.17.1",
