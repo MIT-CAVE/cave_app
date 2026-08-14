@@ -28,3 +28,8 @@ class SocketServer(BaseSocketServer):
     def connect(self):
         self.channel_id = str(self.scope.get("user").id)
         self.subscribe(self.channel_id)
+        print(f"SOCKET CONNECTION OPENED")
+
+    def disconnect(self, code):
+        # No unsubscribe needed since the channel will be deleted when the user disconnects
+        print(f"SOCKET CONNECTION CLOSED")

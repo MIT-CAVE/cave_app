@@ -1,9 +1,23 @@
 # syntax = docker/dockerfile:1
 
-################ Settings ################
 # Choose your base image and tag
 FROM python:3.13-slim
-################ Settings ################
+
+# Copy the uv and uvx binaries from the official Astral image
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
+# Disable project/workspace sync at runtime. This prevents uv run from
+# automatically installing/building the project in editable mode and
+# creating cave_app.egg-info on the host.
+ENV UV_NO_PROJECT=true
+
+
+# Set environment variables for optimal Docker caching & execution
+ENV UV_LINK_MODE=copy
+# Move the virtual environment outside the app directory
+# This prevents it from being overwritten by volume mounts (e.g., --volume .:/app)
+ENV UV_PROJECT_ENVIRONMENT=/venv
+ENV PATH="/venv/bin:$PATH"
 
 # Set python to unbuffered mode
 ENV PYTHONUNBUFFERED=1
@@ -15,15 +29,9 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app/
 
 # Install Core Cave App Python Requirements
-COPY ./requirements.txt /app/requirements.txt
-COPY ./utils/extra_requirements.txt /app/utils/extra_requirements.txt
-RUN pip install -r /app/requirements.txt
+# Copying uv.lock ensures deterministic builds
+COPY pyproject.toml uv.lock ./
 
-# Install Cave API Python Requirements
-COPY ./cave_api/requirements.txt /app/cave_api/requirements.txt
-RUN pip install -r /app/cave_api/requirements.txt
-
-# Copy the current directory contents into the container at /app
-COPY cave_api/pyproject.toml /app/cave_api/pyproject.toml
-COPY cave_api/cave_api/__init__.py /app/cave_api/cave_api/__init__.py
-RUN pip install -e /app/cave_api
+# Sync dependencies without installing the project itself
+# This maximizes layer caching when source code changes
+RUN uv sync --no-install-project --extra api

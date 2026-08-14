@@ -6,6 +6,7 @@ staticfiles
 
 # Virtual Environment
 venv
+.venv
 
 # Apple Files
 .DS_Store

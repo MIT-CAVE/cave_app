@@ -1,0 +1,56 @@
+[tool.black]
+line-length = 100
+target-version = ['py311']
+exclude = '/.*(migrations|__pycache__).*/'
+
+[tool.setuptools]
+packages = ["cave_api"]
+
+[tool.setuptools.package-data]
+cave_api = ["**/*", "*"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cave_app"
+version = "3.6.0"
+description = "A CAVE Application"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "cave_utils==3.6.0",
+    "Django>=6.0.7,<7.0.0",
+    "django-import-export==4.4.1",
+    "djangorestframework==3.17.1",
+    "django_otp==1.7.0",
+    "django_sockets==3.0.0",
+    "uvicorn==0.51.0",
+    "websockets==16.1",
+    "django-solo==2.5.1",
+    "pamda>=2.10.0,<3.0.0",
+    "pillow==12.3.0",
+    "psycopg[binary, pool]==3.3.4",
+    "python-decouple==3.8",
+    "qrcode==8.2",
+    "redis==8.0.1",
+    "type_enforced>=2.6.0,<3.0.0",
+    "whitenoise==6.12.0",
+]
+
+[project.optional-dependencies]
+api = [
+    "requests>=2.32.2,<3.0.0",
+]
+dev = [
+    "autoflake==2.3.1",
+    "black==25.12.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/mit-cave/cave_app"
+"Bug Tracker" = "https://github.com/mit-cave/cave_app/issues"
