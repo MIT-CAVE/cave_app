@@ -167,7 +167,6 @@ USE_TZ = True
 
 # DJANGO_SOCKETS
 ################################################################
-INSTALLED_APPS = ["daphne"] + INSTALLED_APPS
 DJANGO_SOCKET_HOSTS = [
     {"address": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"}
 ]
