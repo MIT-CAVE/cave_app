@@ -732,6 +732,32 @@ def execute_command(
                             # "pathWeight": 3,
                             "help": "A walking tour path from Killian Court to MIT CAVE Lab",
                         },
+                        "headHeader": {
+                            "name": "Head Props",
+                            "type": "head",
+                            "help": "Section headers for organizing prop panels, with optional icons and tooltips",
+                        },
+                        "headColumnExample": {
+                            "name": "Fleet Overview",
+                            "type": "head",
+                            "icon": "md/MdLocalShipping",
+                            "color": "#42a5f5",
+                            "size": "32px",
+                            # No dedicated attribute exists for title alignment: `textAlign`
+                            # is inherited by the title from this root `propStyle`.
+                            "propStyle": {"textAlign": "center"},
+                            "help": "This example uses the `head`'s `column` variant (default), with a custom icon color/size and a centered title via `propStyle`",
+                        },
+                        "headRowExample": {
+                            "name": "Route Optimization",
+                            "type": "head",
+                            "variant": "row",
+                            "icon": "md/MdAltRoute",
+                            "color": "#66bb6a",
+                            "size": "32px",
+                            "propStyle": {"borderColor": "#66bb6a"},
+                            "help": "This example uses the `head`'s `row` variant, with a custom icon color/size, displayed in a bordered row",
+                        },
                     },
                     "values": {
                         "numericInputExample": 750.50,
@@ -1028,6 +1054,24 @@ def execute_command(
                                 "column": 8,
                                 "row": 4,
                                 "itemId": "latLngPathExample",
+                            },
+                            "col9Row1": {
+                                "type": "item",
+                                "column": 9,
+                                "row": 1,
+                                "itemId": "headHeader",
+                            },
+                            "col9Row2": {
+                                "type": "item",
+                                "column": 9,
+                                "row": 2,
+                                "itemId": "headColumnExample",
+                            },
+                            "col9Row3": {
+                                "type": "item",
+                                "column": 9,
+                                "row": 3,
+                                "itemId": "headRowExample",
                             },
                         },
                     },
