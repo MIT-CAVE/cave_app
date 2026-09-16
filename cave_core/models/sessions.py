@@ -224,7 +224,7 @@ class Sessions(models.Model):
                         new_data[key] = {}
                         cache.set(f"session:{self.id}:data:{key}", new_data[key])
             # If the new data is not the same length as the keys to get from the cache, there was an error
-            # Likely, some data was lost from the persistent cache
+            # Likely, some data was lost from the cache
             if len(new_data.keys()) != len(keys_to_get_from_cache):
                 CaveWSBroadcaster(self).notify(
                     title="Error:",
@@ -333,11 +333,7 @@ class Sessions(models.Model):
             data_keys = set(data.keys())
             keys_to_delete = [k for k in versions if k not in data_keys]
             if keys_to_delete:
-                cache.delete_many(
-                    [f"session:{self.id}:data:{key}" for key in keys_to_delete],
-                    memory=True,
-                    persistent=True,
-                )
+                cache.delete_many([f"session:{self.id}:data:{key}" for key in keys_to_delete])
                 for key in keys_to_delete:
                     versions.pop(key, None)
                     data_cache.pop(key, None)
@@ -563,12 +559,6 @@ class Sessions(models.Model):
             for key in list(cache.get(f"session:{self.id}:versions", {}).keys())
         ]
         return keys
-
-    def persist_cache_data(self):
-        """
-        Persists the current session data to the persistent cache
-        """
-        cache.persist_many(self.get_cache_keys())
 
     def error_on_session_not_empty(self):
         """

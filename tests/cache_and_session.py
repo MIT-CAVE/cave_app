@@ -119,7 +119,7 @@ def test_cache_primitives():
     test_cache = StandaloneCache()
 
     # 1. Single Set / Get
-    test_cache.set("test:key1", {"name": "Item 1", "count": 42}, memory=True, persistent=False)
+    test_cache.set("test:key1", {"name": "Item 1", "count": 42})
     assert test_cache.get("test:key1") == {"name": "Item 1", "count": 42}, "Single get failed"
 
     # 2. Non-string dictionary keys (e.g. integer keys) & default=str serialization
@@ -131,7 +131,7 @@ def test_cache_primitives():
         2: "team_two",
         "timestamp": now,
     }
-    test_cache.set("test:non_str_keys", non_str_key_payload, memory=True, persistent=True)
+    test_cache.set("test:non_str_keys", non_str_key_payload)
     fetched_non_str = test_cache.get("test:non_str_keys")
     assert (
         fetched_non_str.get("1") == "team_one" or fetched_non_str.get(1) == "team_one"
@@ -149,12 +149,12 @@ def test_cache_primitives():
         "test:batch:2": {"x": 100.5, "y": None},
         "test:batch:3": {"text": "hello world"},
     }
-    test_cache.set_many(payload, memory=True, persistent=False)
+    test_cache.set_many(payload)
     fetched = test_cache.get_many(list(payload.keys()))
     assert fetched == payload, f"Pipelined get_many failed: {fetched} != {payload}"
 
     # 5. Pipelined Delete Many
-    test_cache.delete_many(["test:batch:1", "test:batch:2"], memory=True, persistent=False)
+    test_cache.delete_many(["test:batch:1", "test:batch:2"])
     assert test_cache.get("test:batch:1") is None, "Delete many failed for key 1"
     assert test_cache.get("test:batch:2") is None, "Delete many failed for key 2"
     assert test_cache.get("test:batch:3") == {
@@ -162,7 +162,7 @@ def test_cache_primitives():
     }, "Delete many deleted wrong key"
 
     # 6. Flush
-    test_cache.flush(memory=True, persistent=False)
+    test_cache.flush()
     assert test_cache.get("test:batch:3") is None, "Flush failed"
     print("✔ Cache primitives passed")
 
@@ -184,12 +184,10 @@ def test_session_in_memory_caching():
 
     try:
         # Prepopulate cache in Redis/Memory
-        test_cache.set("session:999:user_ids", ["101"], memory=True)
-        test_cache.set("session:999:versions", {"settings": 1, "panes": 1}, memory=True)
-        test_cache.set(
-            "session:999:data:settings", {"iconUrl": "https://example.com/icon"}, memory=True
-        )
-        test_cache.set("session:999:data:panes", {"data": {"slider": {"value": 10}}}, memory=True)
+        test_cache.set("session:999:user_ids", ["101"])
+        test_cache.set("session:999:versions", {"settings": 1, "panes": 1})
+        test_cache.set("session:999:data:settings", {"iconUrl": "https://example.com/icon"})
+        test_cache.set("session:999:data:panes", {"data": {"slider": {"value": 10}}})
 
         # 1. Acquire Lock
         session.set_loading(True)
@@ -240,7 +238,7 @@ def test_smart_delta_versioning():
 
     try:
         session = Sessions(id=888, name="Delta Session")
-        test_cache.set("session:888:user_ids", ["101"], memory=True)
+        test_cache.set("session:888:user_ids", ["101"])
         session.set_loading(True)
 
         # Initial state replacement
@@ -299,7 +297,7 @@ def test_wipe_existing_pruning():
 
     try:
         session = Sessions(id=777, name="Wipe Session")
-        test_cache.set("session:777:user_ids", ["101"], memory=True)
+        test_cache.set("session:777:user_ids", ["101"])
         session.set_loading(True)
 
         # 1. Populate 3 keys
@@ -359,7 +357,7 @@ def test_session_mutations():
 
     try:
         session = Sessions(id=666, name="Mutate Session")
-        test_cache.set("session:666:user_ids", ["101"], memory=True)
+        test_cache.set("session:666:user_ids", ["101"])
         session.set_loading(True)
 
         session.replace_data(
@@ -471,7 +469,7 @@ def test_concurrent_lock_rejection():
 
     try:
         session = Sessions(id=555, name="Lock Session")
-        test_cache.set("session:555:user_ids", ["101"], memory=True)
+        test_cache.set("session:555:user_ids", ["101"])
 
         # First lock succeeds
         session.set_loading(True)
@@ -509,18 +507,17 @@ def test_key_filtering_and_missing_creation():
 
     try:
         session = Sessions(id=444, name="Filter Session")
-        test_cache.set("session:444:user_ids", ["101"], memory=True)
+        test_cache.set("session:444:user_ids", ["101"])
         session.set_loading(True)
 
         # Set up keys including client and non-client/background keys
-        test_cache.set("session:444:data:settings", {"iconUrl": "abc"}, memory=True)
-        test_cache.set("session:444:data:panes", {"data": {}}, memory=True)
-        test_cache.set("session:444:data:associated", {"data": {"assoc_1": {}}}, memory=True)
-        test_cache.set("session:444:data:internal_private_key", {"secret": 123}, memory=True)
+        test_cache.set("session:444:data:settings", {"iconUrl": "abc"})
+        test_cache.set("session:444:data:panes", {"data": {}})
+        test_cache.set("session:444:data:associated", {"data": {"assoc_1": {}}})
+        test_cache.set("session:444:data:internal_private_key", {"secret": 123})
         test_cache.set(
             "session:444:versions",
             {"settings": 1, "panes": 1, "associated": 1, "internal_private_key": 1},
-            memory=True,
         )
 
         # 1. client_only=True should exclude non-client api keys
@@ -581,7 +578,7 @@ def test_large_payload_fidelity():
     }
 
     t0 = time.perf_counter()
-    test_cache.set("session:333:data:mapFeatures", large_payload, memory=True, persistent=False)
+    test_cache.set("session:333:data:mapFeatures", large_payload)
     retrieved = test_cache.get("session:333:data:mapFeatures")
     t_el = time.perf_counter() - t0
 
