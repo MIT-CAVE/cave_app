@@ -20,7 +20,7 @@ def get_session_data(request):
     Optional:
     - `data_versions`:
     ----- What: A dictionary of top_level_keys and their associated versions
-    ----- Type: dict of sha256f12 strs
+    ----- Type: dict of md5 hex strings
     ----- Default: {}
     ----- Note: If an empty dictionary, all versions will be synced
 
@@ -54,9 +54,9 @@ def mutate_session(request):
     Required:
     - `data_versions`:
     ----- What: The current set of data_versions for the requesting entity
-    ----- Type: str
-    ----- Default: None
-    ----- Note: If None, no mutation is fired (used to fire an api command)
+    ----- Type: dict
+    ----- Default: {}
+    ----- Note: If empty, no version validation occurs
 
     Optional:
     - `data_name`:
