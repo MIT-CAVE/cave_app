@@ -3,7 +3,7 @@ from django.core.cache import cache
 from django.core.files.base import ContentFile
 from cave_app.storage_backends import CacheStorage
 
-import json
+import orjson
 
 
 class Cache(CacheStorage):
@@ -32,7 +32,7 @@ class Cache(CacheStorage):
         if settings.CACHE_BACKUP_INTERVAL is not None:
             try:
                 with self.open(data_id) as f:
-                    data = json.load(f)
+                    data = orjson.loads(f.read())
                 self.set(data_id, data)
                 return data
             except:
@@ -53,8 +53,27 @@ class Cache(CacheStorage):
 
         Returns: dict
         """
-        # print(f'Cache -> Getting: {data_ids}')
-        return {data_id: self.get(data_id, default) for data_id in data_ids}
+        results = {}
+        # Pipelined retrieval: sends all GET commands in a single network round-trip.
+        # Uses individual pipeline.get() which avoids CROSSSLOT errors in Redis Cluster / ElastiCache Serverless.
+        try:
+            client = self.cache._cache.get_client(None)
+            pipe = client.pipeline()
+            for data_id in data_ids:
+                pipe.get(self.cache.make_and_validate_key(data_id))
+            raw_values = pipe.execute()
+            for data_id, raw_val in zip(data_ids, raw_values):
+                if raw_val is not None:
+                    results[data_id] = self.cache._cache._serializer.loads(raw_val)
+        except Exception:
+            results = {}
+
+        # Fill any missing keys from persistent storage fallback or default
+        missing = [d_id for d_id in data_ids if d_id not in results]
+        if missing:
+            for data_id in missing:
+                results[data_id] = self.get(data_id, default)
+        return results
 
     def set(
         self,
@@ -62,7 +81,7 @@ class Cache(CacheStorage):
         data: dict,
         memory: bool = True,
         persistent: bool = False,
-        timeout: [int | None] = settings.CACHE_TIMEOUT,
+        timeout: int | None = settings.CACHE_TIMEOUT,
     ):
         """
         Sets the data in one or both of the cache and the persistent storage
@@ -86,14 +105,17 @@ class Cache(CacheStorage):
         if memory:
             self.cache.set(data_id, data, timeout=timeout)
         if persistent:
-            self.save(data_id, ContentFile(json.dumps(data)))
+            self.save(
+                data_id,
+                ContentFile(orjson.dumps(data, default=str, option=orjson.OPT_NON_STR_KEYS)),
+            )
 
     def set_many(
         self,
         data: dict,
         memory: bool = True,
         persistent: bool = False,
-        timeout: [int | None] = settings.CACHE_TIMEOUT,
+        timeout: int | None = settings.CACHE_TIMEOUT,
     ):
         """
         Sets the data in one or both of the cache and the persistent storage
@@ -112,11 +134,30 @@ class Cache(CacheStorage):
             Default: settings.CACHE_TIMEOUT
             Note: If None, the cache will not expire
         """
-        # print(f'Cache -> Setting: {data.keys()}')
-        # Note: This uses a loop instead of self.cache.set_many() because the latter
-        #       is not always supported by cache backends (esp Serverless Caches)
-        for data_id, data in data.items():
-            self.set(data_id, data, memory=memory, persistent=persistent, timeout=timeout)
+        if memory:
+            # Pipelined batch write: sends all SET commands in a single network round-trip.
+            # Compatible with AWS ElastiCache Serverless / Redis Cluster (no CROSSSLOT errors).
+            try:
+                client = self.cache._cache.get_client(None, write=True)
+                pipe = client.pipeline()
+                backend_timeout = self.cache.get_backend_timeout(timeout)
+                for data_id, val in data.items():
+                    cache_key = self.cache.make_and_validate_key(data_id)
+                    serialized = self.cache._cache._serializer.dumps(val)
+                    if backend_timeout is not None:
+                        pipe.set(cache_key, serialized, ex=backend_timeout)
+                    else:
+                        pipe.set(cache_key, serialized)
+                pipe.execute()
+            except Exception:
+                for data_id, val in data.items():
+                    self.cache.set(data_id, val, timeout=timeout)
+        if persistent:
+            for data_id, val in data.items():
+                self.save(
+                    data_id,
+                    ContentFile(orjson.dumps(val, default=str, option=orjson.OPT_NON_STR_KEYS)),
+                )
 
     def persist(self, data_id: str):
         """
@@ -136,8 +177,13 @@ class Cache(CacheStorage):
         data_ids: list
             The data_ids of the data to be persisted
         """
-        for data_id in data_ids:
-            self.persist(data_id)
+        cached_data = self.get_many(data_ids)
+        for data_id, val in cached_data.items():
+            if val is not None:
+                self.save(
+                    data_id,
+                    ContentFile(orjson.dumps(val, default=str, option=orjson.OPT_NON_STR_KEYS)),
+                )
 
     def delete(self, data_id: str, memory: bool = False, persistent: bool = False):
         """
@@ -175,12 +221,23 @@ class Cache(CacheStorage):
             Whether to delete the data from the persistent storage
             Default: False
         """
-        # print(f'Cache -> Deleting: {data_ids}')
         assert memory or persistent, "Cache.delete_many(): `memory` or `persistent` must be True"
-        # Note: This uses a loop instead of self.cache.delete_many() because the latter
-        #       is not always supported by cache backends (esp Serverless Caches)
-        for data_id in data_ids:
-            self.delete(data_id, memory=memory, persistent=persistent)
+        if memory:
+            try:
+                client = self.cache._cache.get_client(None, write=True)
+                pipe = client.pipeline()
+                for data_id in data_ids:
+                    pipe.delete(self.cache.make_and_validate_key(data_id))
+                pipe.execute()
+            except Exception:
+                for data_id in data_ids:
+                    self.cache.delete(data_id)
+        if persistent:
+            for data_id in data_ids:
+                try:
+                    super().delete(data_id)
+                except Exception:
+                    pass
 
     def flush(self, memory: bool = False, persistent: bool = False):
         """

@@ -62,6 +62,10 @@ class MutationLogs(models.Model):
         verbose_name = _("Mutation Log")
         verbose_name_plural = _("Mutation Logs")
         ordering = ("session_id", "-timestamp")
+        indexes = [
+            models.Index(fields=["session_id", "-timestamp"]),
+            models.Index(fields=["user_id"]),
+        ]
 
     def __str__(self):
         return f"{self.id}"

@@ -139,6 +139,14 @@ DATABASES = {
         "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
         "HOST": os.environ.get("DATABASE_HOST"),
         "PORT": os.environ.get("DATABASE_PORT"),
+        "CONN_MAX_AGE": 0,
+        "OPTIONS": {
+            "pool": {
+                "min_size": 2,
+                "max_size": 20,
+                "timeout": 10,
+            }
+        },
     }
 }
 # Static files (CSS, JavaScript, Images)
@@ -167,9 +175,9 @@ USE_TZ = True
 
 # DJANGO_SOCKETS
 ################################################################
-DJANGO_SOCKET_HOSTS = [
-    {"address": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"}
-]
+REDIS_HOST = os.environ.get("REDIS_HOST", "127.0.0.1")
+REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
+DJANGO_SOCKET_HOSTS = [{"address": f"redis://{REDIS_HOST}:{REDIS_PORT}"}]
 ################################################################
 
 
@@ -191,7 +199,7 @@ CACHE_BACKUP_INTERVAL = None if CACHE_BACKUP_INTERVAL == 0 else CACHE_BACKUP_INT
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
+        "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}",
     }
 }
 ################################################################

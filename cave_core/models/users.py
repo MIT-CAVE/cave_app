@@ -241,7 +241,7 @@ class CustomUser(AbstractUser):
             groups = GroupUsers.objects.filter(user=self, is_group_manager=True).values("group__id")
             if len(groups) > 0:
                 team_ids += list(
-                    Teams.objects.filter(group__in=groups).values_list("team__id", flat=True)
+                    Teams.objects.filter(group__in=groups).values_list("id", flat=True)
                 )
             team_ids = list(set(team_ids))
         return team_ids

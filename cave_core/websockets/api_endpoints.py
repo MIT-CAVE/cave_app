@@ -121,10 +121,10 @@ def mutate_session(request):
     session = request.user.session
     sessions = [session]
     if team_sync:
-        sessions = session.get_associated_sessions()
+        associated = session.get_associated_sessions()
         # Used to make sure current session is the first item in the list
-        if sessions is not None:
-            sessions += list(sessions.exclude(id=session.id))
+        if associated is not None:
+            sessions += list(associated.exclude(id=session.id))
 
     for session_i in sessions:
         # Get the session data versions
@@ -214,11 +214,13 @@ def get_associated_session_data(request):
         data={
             "associated": {
                 "data": {
-                    obj.id: {
+                    str(obj.id): {
                         "name": obj.team.name + " -> " + obj.name,
                         "data": obj.get_data(keys=data_names),
                     }
-                    for obj in session.get_associated_sessions(user=request.user)
+                    for obj in session.get_associated_sessions(user=request.user).select_related(
+                        "team"
+                    )
                 }
             }
         },
