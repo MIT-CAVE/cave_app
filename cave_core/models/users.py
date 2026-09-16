@@ -174,7 +174,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers
-        self.error_on_no_team_access(session.team.id)
+        self.error_on_no_team_access(session.team_id)
         # Queries -> Switch to the session
         self.switch_session_no_validation(session)
 
@@ -188,7 +188,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers
-        self.error_on_no_team_access(session.team.id)
+        self.error_on_no_team_access(session.team_id)
         # Validate session limit
         session.team.error_on_session_limit()
         # Queries -> Duplicates this session and session data
@@ -203,7 +203,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers (only if a team session)
-        self.error_on_no_team_access(session.team.id)
+        self.error_on_no_team_access(session.team_id)
         # Get the session team for session count incrementation
         team = session.team
         # Query CustomUsers to make sure that no one is in the session
@@ -219,7 +219,7 @@ class CustomUser(AbstractUser):
         # Query Sessions
         session = Sessions.objects.filter(id=session_id).first()
         # Query TeamUsers (only if a team session)
-        self.error_on_no_team_access(session.team.id)
+        self.error_on_no_team_access(session.team_id)
         session.name = session_name
         session.description = session_description
         session.save(update_fields=["name", "description"])
@@ -304,15 +304,16 @@ class CustomUser(AbstractUser):
         """
         Let the user know their current session info (id and loading status)
         """
+        session_id = self.session_id
         CaveWSBroadcaster(self).broadcast(
             event="updateSessions",
-            data={"data_path": ["session_id"], "data": self.session.id},
+            data={"data_path": ["session_id"], "data": session_id},
         )
         CaveWSBroadcaster(self).broadcast(
             event="updateLoading",
             data={
                 "data_path": ["session_loading"],
-                "data": cache.get(f"session:{self.session.id}:executing", False),
+                "data": cache.get(f"session:{session_id}:executing", False),
             },
         )
 
@@ -374,8 +375,8 @@ class CustomUser(AbstractUser):
         GroupUsers = apps.get_model("cave_core", "GroupUsers")
         TeamUsers = apps.get_model("cave_core", "TeamUsers")
 
-        group_ids = list(GroupUsers.objects.filter(user=self).values_list("group__id", flat=True))
-        team_ids = list(TeamUsers.objects.filter(user=self).values_list("team__id", flat=True))
+        group_ids = list(GroupUsers.objects.filter(user=self).values_list("group_id", flat=True))
+        team_ids = list(TeamUsers.objects.filter(user=self).values_list("team_id", flat=True))
         if (len(group_ids) == 0) and (len(team_ids) == 0):
             return None
         if len(group_ids) > 0:

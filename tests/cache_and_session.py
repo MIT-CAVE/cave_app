@@ -185,7 +185,7 @@ def test_session_in_memory_caching():
     try:
         # Prepopulate cache in Redis/Memory
         test_cache.set("session:999:user_ids", ["101"])
-        test_cache.set("session:999:versions", {"settings": 1, "panes": 1})
+        test_cache.set("session:999:versions", {"settings": "hash1", "panes": "hash2"})
         test_cache.set("session:999:data:settings", {"iconUrl": "https://example.com/icon"})
         test_cache.set("session:999:data:panes", {"data": {"slider": {"value": 10}}})
 
@@ -198,7 +198,6 @@ def test_session_in_memory_caching():
         data1 = session.get_data(keys=["settings", "panes"])
         assert "data" in session.__dict__, "data_cache should exist on session"
         assert session.__dict__["data"]["settings"]["iconUrl"] == "https://example.com/icon"
-        assert "hashes" in session.__dict__, "hashes should exist on session"
 
         # 3. Modify memory directly - subsequent get_data should hit memory, not backend
         session.__dict__["data"]["settings"]["iconUrl"] = "https://example.com/modified_in_memory"
@@ -217,7 +216,6 @@ def test_session_in_memory_caching():
         ), "Cache lock should be False after unlock"
         assert "data" not in session.__dict__, "data cache should be cleaned up on unlock"
         assert "versions" not in session.__dict__, "versions cache should be cleaned up on unlock"
-        assert "hashes" not in session.__dict__, "hashes cache should be cleaned up on unlock"
     finally:
         sessions_module.cache = old_cache
 
@@ -250,7 +248,10 @@ def test_smart_delta_versioning():
         session.replace_data(data=initial_data, wipeExisting=True)
 
         v1 = session.get_versions()
-        assert v1 == {"settings": 1, "panes": 1, "maps": 1}, f"Initial versions mismatch: {v1}"
+        assert set(v1.keys()) == {"settings", "panes", "maps"}, f"Initial versions mismatch: {v1}"
+        assert all(
+            isinstance(v, str) and len(v) == 32 for v in v1.values()
+        ), f"Expected 32-char hex MD5 hashes: {v1}"
 
         # Fetch session data for execution
         session_data = session.get_data(keys=["settings", "panes", "maps"])
@@ -262,10 +263,16 @@ def test_smart_delta_versioning():
         session.replace_data(data=session_data, wipeExisting=False)
 
         v2 = session.get_versions()
-        # ONLY panes version should increment! settings and maps should stay 1
-        assert v2["panes"] == 2, f"Expected panes version to be 2, got {v2['panes']}"
-        assert v2["settings"] == 1, f"Expected settings version to remain 1, got {v2['settings']}"
-        assert v2["maps"] == 1, f"Expected maps version to remain 1, got {v2['maps']}"
+        # ONLY panes hash should change! settings and maps hashes must stay identical
+        assert (
+            v2["panes"] != v1["panes"]
+        ), f"Expected panes hash to change: {v2['panes']} == {v1['panes']}"
+        assert (
+            v2["settings"] == v1["settings"]
+        ), f"Expected settings hash to remain identical: {v2['settings']} != {v1['settings']}"
+        assert (
+            v2["maps"] == v1["maps"]
+        ), f"Expected maps hash to remain identical: {v2['maps']} != {v1['maps']}"
 
         # Test Delta Broadcast resolution
         # Broadcast comparing v1 to v2 should ONLY yield updated_keys = ['panes']
@@ -329,8 +336,6 @@ def test_wipe_existing_pruning():
             "panes" not in session.__dict__["data"]
         ), "panes was not pruned from memory data cache"
         assert "maps" not in session.__dict__["data"], "maps was not pruned from memory data cache"
-        assert "panes" not in session.__dict__["hashes"], "panes was not pruned from hashes"
-        assert "maps" not in session.__dict__["hashes"], "maps was not pruned from hashes"
 
         # Check backend cache deletion
         assert test_cache.get("session:777:data:panes") is None, "panes was not deleted from cache"
@@ -379,7 +384,7 @@ def test_session_mutations():
 
         # 2. Out-of-sync mutation (version mismatch)
         res_sync_err = session.mutate(
-            data_version=999,  # Mismatched version
+            data_version="stale_hash_version",  # Mismatched version
             data_name="panes",
             data_path=["values", "slider"],
             data_value=50,
@@ -389,7 +394,7 @@ def test_session_mutations():
 
         # 3. Ignore version flag overrides mismatch
         res_ignore = session.mutate(
-            data_version=999,
+            data_version="stale_hash_version",
             data_name="panes",
             data_path=["values", "slider"],
             data_value=50,
@@ -517,7 +522,12 @@ def test_key_filtering_and_missing_creation():
         test_cache.set("session:444:data:internal_private_key", {"secret": 123})
         test_cache.set(
             "session:444:versions",
-            {"settings": 1, "panes": 1, "associated": 1, "internal_private_key": 1},
+            {
+                "settings": "hash1",
+                "panes": "hash2",
+                "associated": "hash3",
+                "internal_private_key": "hash4",
+            },
         )
 
         # 1. client_only=True should exclude non-client api keys

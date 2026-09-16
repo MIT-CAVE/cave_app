@@ -99,7 +99,6 @@ class Sessions(models.Model):
                 self.__dict__["is_executing"] = False
                 self.__dict__.pop("data", None)
                 self.__dict__.pop("versions", None)
-                self.__dict__.pop("hashes", None)
                 self.broadcast_loading(False)
 
     def get_user_ids(self) -> list:
@@ -206,7 +205,6 @@ class Sessions(models.Model):
             omit_keys_set = set(omit_keys)
             keys = [k for k in keys if k not in omit_keys_set]
         data_cache = self.__dict__.setdefault("data", {})
-        hashes = self.__dict__.setdefault("hashes", {})
         keys_to_get_from_cache = [key for key in keys if key not in data_cache]
         # If there any keys to get from the cache, get them all at once and update the session __dict__
         if len(keys_to_get_from_cache) > 0:
@@ -215,7 +213,7 @@ class Sessions(models.Model):
             )
             # Get the specific key names from the cache keys
             new_data = {
-                key.split(":")[-1]: value for key, value in new_data.items() if value != None
+                key.split(":")[-1]: value for key, value in new_data.items() if value is not None
             }
             if create_missing_cache_keys:
                 # If creating missing cache keys, fill in any missing keys with empty dictionaries to prevent errors in the client
@@ -236,11 +234,6 @@ class Sessions(models.Model):
                 # Raise an exception to stop the current execution whatever it may be.
                 raise Exception("The data error should now be fixed. Please try your action again.")
             data_cache.update(new_data)
-            for k, val in new_data.items():
-                if val is not None and k not in hashes:
-                    hashes[k] = hashlib.md5(
-                        orjson.dumps(val, default=str, option=orjson.OPT_NON_STR_KEYS)
-                    ).digest()
         return {key: data_cache.get(key) for key in keys}
 
     def broadcast_changed_data(
@@ -280,6 +273,11 @@ class Sessions(models.Model):
         updated_keys = [
             key for key, value in versions.items() if previous_versions.get(key) != value
         ]
+        if len(updated_keys) == 0 and not force_overwrite:
+            if broadcast_loading:
+                self.broadcast_loading(False)
+            return
+
         data = self.get_data(client_only=True, keys=updated_keys)
         # Broadcast the updated versions and data
 
@@ -326,7 +324,6 @@ class Sessions(models.Model):
         # print('==REPLACE DATA==')
         versions = self.get_versions()
         data_cache = self.__dict__.setdefault("data", {})
-        hashes = self.__dict__.setdefault("hashes", {})
         keys_to_delete = []
 
         if wipeExisting:
@@ -337,22 +334,20 @@ class Sessions(models.Model):
                 for key in keys_to_delete:
                     versions.pop(key, None)
                     data_cache.pop(key, None)
-                    hashes.pop(key, None)
 
         changed_data = {}
         for key, value in data.items():
             val_hash = (
                 hashlib.md5(
                     orjson.dumps(value, default=str, option=orjson.OPT_NON_STR_KEYS)
-                ).digest()
+                ).hexdigest()
                 if value is not None
                 else None
             )
-            if key not in hashes or hashes[key] != val_hash:
+            if versions.get(key) != val_hash:
                 changed_data[f"session:{self.id}:data:{key}"] = value
                 data_cache[key] = value
-                hashes[key] = val_hash
-                versions[key] = versions.get(key, 0) + 1
+                versions[key] = val_hash
 
         if changed_data or keys_to_delete:
             if changed_data:
@@ -546,7 +541,7 @@ class Sessions(models.Model):
         cache.set_many(
             {f"session:{new_session.id}:data:{key}": value for key, value in session_data.items()}
         )
-        new_session.set_versions({key: 0 for key in session_data.keys()})
+        new_session.set_versions(dict(self.get_versions()))
         return new_session
 
     def get_cache_keys(self):

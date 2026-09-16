@@ -139,14 +139,7 @@ DATABASES = {
         "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
         "HOST": os.environ.get("DATABASE_HOST"),
         "PORT": os.environ.get("DATABASE_PORT"),
-        "CONN_MAX_AGE": 0,
-        "OPTIONS": {
-            "pool": {
-                "min_size": 2,
-                "max_size": 20,
-                "timeout": 10,
-            }
-        },
+        "CONN_MAX_AGE": config("CONN_MAX_AGE", default=600, cast=int),
     }
 }
 # Static files (CSS, JavaScript, Images)
@@ -182,15 +175,19 @@ DJANGO_SOCKET_HOSTS = [{"address": f"redis://{REDIS_HOST}:{REDIS_PORT}"}]
 
 
 # Caching
-################################################################
-CACHE_TIMEOUT = None
+###############################################################
+CACHE_TIMEOUT = config("CACHE_TIMEOUT", default=0, cast=int)
+assert CACHE_TIMEOUT >= 0, "CACHE_TIMEOUT must be greater than or equal to 0"
+CACHE_TIMEOUT = None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}",
     }
 }
-################################################################
+SOLO_CACHE = "default"
+SOLO_CACHE_TIMEOUT = config("SOLO_CACHE_TIMEOUT", default=300, cast=int)
+###############################################################
 
 # Configure logging
 ################################################################
