@@ -99,7 +99,7 @@ requires-dist = [
     { name = "django", specifier = ">=6.0.7,<7.0.0" },
     { name = "django-import-export", specifier = "==4.4.1" },
     { name = "django-otp", specifier = "==1.7.0" },
-    { name = "django-sockets", specifier = "==3.1.0b2" },
+    { name = "django-sockets", specifier = "==3.1.0b3" },
     { name = "django-solo", specifier = "==2.5.1" },
     { name = "djangorestframework", specifier = "==3.17.1" },
     { name = "httptools", specifier = ">=0.6.4" },
@@ -286,7 +286,7 @@ wheels = [
 
 [[package]]
 name = "django-sockets"
-version = "3.1.0b2"
+version = "3.1.0b3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asgiref" },
@@ -295,9 +295,9 @@ dependencies = [
     { name = "orjson" },
     { name = "redis" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/42/4d/ceb1d06a37f7439c64eeb258ed3f0a384b2edd4ff0c4f3dd63a4b63a436f/django_sockets-3.1.0b2.tar.gz", hash = "sha256:23acb8c469bc9b74bbd394acf570d5daf26c1d800fe9528897eb9059a9d18404", size = 18061, upload-time = "2026-09-15T19:45:48.197Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/14/9c/6c43c46d83799ffa82dc0370346bf411eff613f124030f8a269253f66387/django_sockets-3.1.0b3.tar.gz", hash = "sha256:5781d2dcedf6dd2ab4113f6f3764dc65b7f6e0510b3a0c95f2ef9207c4c990fa", size = 19906, upload-time = "2026-09-17T17:39:15.88Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1b/40/a74be1b03e371ecd663273848b3257db9fe5ff33959d18c427f4d391e63e/django_sockets-3.1.0b2-py3-none-any.whl", hash = "sha256:d461b2d219a73de33e51eacaf3cd57aa837e166647cc50ee2147502f4299c913", size = 20355, upload-time = "2026-09-15T19:45:45.879Z" },
+    { url = "https://files.pythonhosted.org/packages/6d/f9/f934494c5003ccca799938eca97c3039d25eac82be8099a76150552f4e18/django_sockets-3.1.0b3-py3-none-any.whl", hash = "sha256:4d87e68253d03c740bd500d310cf339a550144d33f3fd3118d8c383177da97db", size = 22256, upload-time = "2026-09-17T17:39:13.231Z" },
 ]
 
 [[package]]

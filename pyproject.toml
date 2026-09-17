@@ -28,7 +28,7 @@ dependencies = [
     "django-import-export==4.4.1",
     "djangorestframework==3.17.1",
     "django_otp==1.7.0",
-    "django_sockets==3.1.0b2",
+    "django_sockets==3.1.0b3",
     "django-solo==2.5.1",
     "httptools>=0.6.4",
     "orjson>=3.10.0",
