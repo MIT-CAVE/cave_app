@@ -20,7 +20,7 @@ def get_session_data(request):
     Optional:
     - `data_versions`:
     ----- What: A dictionary of top_level_keys and their associated versions
-    ----- Type: dict of sha256f12 strs
+    ----- Type: dict of md5 hex strings
     ----- Default: {}
     ----- Note: If an empty dictionary, all versions will be synced
 
@@ -54,9 +54,9 @@ def mutate_session(request):
     Required:
     - `data_versions`:
     ----- What: The current set of data_versions for the requesting entity
-    ----- Type: str
-    ----- Default: None
-    ----- Note: If None, no mutation is fired (used to fire an api command)
+    ----- Type: dict
+    ----- Default: {}
+    ----- Note: If empty, no version validation occurs
 
     Optional:
     - `data_name`:
@@ -121,10 +121,10 @@ def mutate_session(request):
     session = request.user.session
     sessions = [session]
     if team_sync:
-        sessions = session.get_associated_sessions()
+        associated = session.get_associated_sessions()
         # Used to make sure current session is the first item in the list
-        if sessions is not None:
-            sessions += list(sessions.exclude(id=session.id))
+        if associated is not None:
+            sessions += list(associated.exclude(id=session.id))
 
     for session_i in sessions:
         # Get the session data versions
@@ -214,11 +214,13 @@ def get_associated_session_data(request):
         data={
             "associated": {
                 "data": {
-                    obj.id: {
+                    str(obj.id): {
                         "name": obj.team.name + " -> " + obj.name,
                         "data": obj.get_data(keys=data_names),
                     }
-                    for obj in session.get_associated_sessions(user=request.user)
+                    for obj in session.get_associated_sessions(user=request.user).select_related(
+                        "team"
+                    )
                 }
             }
         },

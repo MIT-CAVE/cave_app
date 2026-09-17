@@ -139,6 +139,7 @@ DATABASES = {
         "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
         "HOST": os.environ.get("DATABASE_HOST"),
         "PORT": os.environ.get("DATABASE_PORT"),
+        "CONN_MAX_AGE": config("CONN_MAX_AGE", default=600, cast=int),
     }
 }
 # Static files (CSS, JavaScript, Images)
@@ -167,34 +168,26 @@ USE_TZ = True
 
 # DJANGO_SOCKETS
 ################################################################
-DJANGO_SOCKET_HOSTS = [
-    {"address": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}"}
-]
+REDIS_HOST = os.environ.get("REDIS_HOST", "127.0.0.1")
+REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
+DJANGO_SOCKET_HOSTS = [{"address": f"redis://{REDIS_HOST}:{REDIS_PORT}"}]
 ################################################################
 
 
 # Caching
-################################################################
-CACHE_BACKUP_INTERVAL = config("CACHE_BACKUP_INTERVAL", default=0, cast=int)
+###############################################################
 CACHE_TIMEOUT = config("CACHE_TIMEOUT", default=0, cast=int)
 assert CACHE_TIMEOUT >= 0, "CACHE_TIMEOUT must be greater than or equal to 0"
-assert CACHE_BACKUP_INTERVAL >= 0, "CACHE_BACKUP_INTERVAL must be greater than or equal to 0"
-if CACHE_TIMEOUT > 0:
-    assert (
-        CACHE_TIMEOUT >= CACHE_BACKUP_INTERVAL * 2
-    ), "CACHE_TIMEOUT must be at least twice as long as CACHE_BACKUP_INTERVAL"
-    assert (
-        CACHE_BACKUP_INTERVAL > 0
-    ), "CACHE_BACKUP_INTERVAL must be greater than 0 if CACHE_TIMEOUT is greater than 0"
 CACHE_TIMEOUT = None if CACHE_TIMEOUT == 0 else CACHE_TIMEOUT
-CACHE_BACKUP_INTERVAL = None if CACHE_BACKUP_INTERVAL == 0 else CACHE_BACKUP_INTERVAL
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}",
+        "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}",
     }
 }
-################################################################
+SOLO_CACHE = "default"
+SOLO_CACHE_TIMEOUT = config("SOLO_CACHE_TIMEOUT", default=300, cast=int)
+###############################################################
 
 # Configure logging
 ################################################################

@@ -1,10 +1,13 @@
 import os
+import sys
 import django
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Note: We must first setup django - then we can import and use models or other django features
 os.environ.setdefault(
     "DJANGO_SETTINGS_MODULE",
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cave_app.settings.development"),
+    "cave_app.settings.development",
 )
 django.setup()
 

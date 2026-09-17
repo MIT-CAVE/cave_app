@@ -65,7 +65,7 @@ class Teams(models.Model):
         self.save(update_fields=["count_sessions"])
 
     def get_user_ids(self):
-        return list(TeamUsers.objects.filter(team=self).values_list("user__id", flat=True))
+        return list(TeamUsers.objects.filter(team=self).values_list("user_id", flat=True))
 
     def get_sessions(self):
         return Sessions.objects.filter(team=self)

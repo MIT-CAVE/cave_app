@@ -1,11 +1,12 @@
 from pamda import pamda
-import json
+import orjson
 
 from cave_api.api import execute_command
 from cave_utils import Socket, Validator
 
 from typing import Callable, Literal
 import type_enforced
+
 
 @type_enforced.Enforcer
 class Replay:
@@ -26,14 +27,15 @@ class Replay:
     ```
     """
 
-    def __init__(self,
-            mutation_log_file:str,
-            sort_by_timestamp:bool=True,
-            execute_command:Callable=execute_command,
-            ignore_keys:list[str]=['meta'],
-            print_on_invalid:bool=True,
-            raise_on_invalid:bool=True
-        ):
+    def __init__(
+        self,
+        mutation_log_file: str,
+        sort_by_timestamp: bool = True,
+        execute_command: Callable = execute_command,
+        ignore_keys: list[str] = ["meta"],
+        print_on_invalid: bool = True,
+        raise_on_invalid: bool = True,
+    ):
         """
         Requires:
 
@@ -72,9 +74,9 @@ class Replay:
         self.__current_step__ = -1
         self.__socket__ = Socket(silent=True)
 
-        self.__ignore_keys__=ignore_keys
-        self.__print_on_invalid__=print_on_invalid
-        self.__raise_on_invalid__=raise_on_invalid
+        self.__ignore_keys__ = ignore_keys
+        self.__print_on_invalid__ = print_on_invalid
+        self.__raise_on_invalid__ = raise_on_invalid
 
         self.__get_events__(sort_by_timestamp=sort_by_timestamp)
 
@@ -86,18 +88,19 @@ class Replay:
         if value is None or value == "" or value == "null":
             return None
         if isinstance(value, str):
-            return json.loads(value)
+            return orjson.loads(value)
         return value
-    
-    def __get_events__(self, sort_by_timestamp:bool=True):
+
+    def __get_events__(self, sort_by_timestamp: bool = True):
         # Read in Raw Events
         if self.__mutation_log_file__.endswith(".json"):
-            raw_events = pamda.read_json(self.__mutation_log_file__)
+            with open(self.__mutation_log_file__, "rb") as f:
+                raw_events = orjson.loads(f.read())
         elif self.__mutation_log_file__.endswith(".csv"):
             raw_events = pamda.read_csv(self.__mutation_log_file__)
         else:
             raise ValueError(f"Unsupported log file format for file: {self.__mutation_log_file__}")
-        
+
         if not isinstance(raw_events, list):
             raise ValueError(
                 f"Expected log file to contain a list of events, but got: {type(raw_events)}"
@@ -128,7 +131,7 @@ class Replay:
         if sort_by_timestamp:
             raw_events = sorted(raw_events, key=lambda x: x["timestamp"])
             events = sorted(events, key=lambda x: x["timestamp"])
-        
+
         # Store the events
         self.raw_events = raw_events
         self.events = events
@@ -144,7 +147,11 @@ class Replay:
                 data=self.session_data,
             )
             # Dict to let execute command know what the original mutation was, in case it needs to do additional processing based on that
-            mutate_dict = {"data_name": event.get("data_name"), "data_path": event.get("data_path", []), "data_value": event.get("data_value")}
+            mutate_dict = {
+                "data_name": event.get("data_name"),
+                "data_path": event.get("data_path", []),
+                "data_value": event.get("data_value"),
+            }
         if event.get("api_command"):
             api_command_keys = event.get("api_command_keys")
             session_data = (
@@ -153,8 +160,8 @@ class Replay:
                 else self.session_data
             )
             command_output = self.execute_command(
-                session_data=session_data, 
-                socket=self.__socket__, 
+                session_data=session_data,
+                socket=self.__socket__,
                 command=event.get("api_command"),
                 mutate_dict=mutate_dict,
             )
@@ -175,15 +182,22 @@ class Replay:
         Return the number of steps remaining in the log that have not yet been replayed.
         """
         return len(self.events) - self.__current_step__ - 1
-    
+
     def get_last_executed_event(self):
         """
         Return the last executed event, or None if no events have been executed yet.
         """
         if self.__current_step__ > 0:
-            return self.events[self.__current_step__-1]
+            return self.events[self.__current_step__ - 1]
         elif self.__current_step__ == 0:
-            return {"timestamp": None, "data_name": None, "data_path": None, "data_value": None, "api_command": "init", "api_command_keys": None}
+            return {
+                "timestamp": None,
+                "data_name": None,
+                "data_path": None,
+                "data_value": None,
+                "api_command": "init",
+                "api_command_keys": None,
+            }
         return None
 
     def validate(self):
@@ -197,10 +211,16 @@ class Replay:
             if self.__print_on_invalid__:
                 validator.log.print_logs()
             if self.__raise_on_invalid__:
-                raise Exception(f"Session data validation failed. Last executed event: {self.events[self.__current_step__]}")
+                raise Exception(
+                    f"Session data validation failed. Last executed event: {self.events[self.__current_step__]}"
+                )
 
-
-    def advance(self, num_steps:int|Literal['all']=1, validate_each_step:bool=False, validate_on_completion:bool=True):
+    def advance(
+        self,
+        num_steps: int | Literal["all"] = 1,
+        validate_each_step: bool = False,
+        validate_on_completion: bool = True,
+    ):
         """
         Execute one or more events from the log in sequence.
 
@@ -224,15 +244,19 @@ class Replay:
             - Default: True
             - Note: Ignored when `validate_each_step` is True since validation already ran per step
         """
-        if num_steps == 'all':
+        if num_steps == "all":
             num_steps = len(self.events) - self.__current_step__ - 1
         if self.__current_step__ + num_steps >= len(self.events):
-            raise ValueError(f"Cannot advance {num_steps} steps from current step {self.__current_step__} because it would exceed the total number of events {len(self.events)}.")
+            raise ValueError(
+                f"Cannot advance {num_steps} steps from current step {self.__current_step__} because it would exceed the total number of events {len(self.events)}."
+            )
         steps_advanced = 0
         while steps_advanced < num_steps:
             # Initialize session data if this is the first time advance is called
             if self.session_data is None:
-                command_output = self.execute_command(session_data={}, socket=self.__socket__, command="init", mutate_dict={})
+                command_output = self.execute_command(
+                    session_data={}, socket=self.__socket__, command="init", mutate_dict={}
+                )
                 command_output.pop("extraKwargs", command_output.pop("kwargs", {}))
                 self.session_data = command_output
             else:
@@ -245,7 +269,7 @@ class Replay:
         if validate_on_completion and not validate_each_step:
             self.validate()
 
-    def get_path(self, path:list[str]):
+    def get_path(self, path: list[str]):
         """
         Return the value at a nested path within the current session data.
 
@@ -257,7 +281,7 @@ class Replay:
         """
         return pamda.path(path, self.session_data)
 
-    def print_path(self, path:list[str]):
+    def print_path(self, path: list[str]):
         """
         Print the value at a nested path within the current session data.
 

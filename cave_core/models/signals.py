@@ -15,8 +15,8 @@ def handle_session_on_delete(sender, instance, **kwargs):
     When a session object is deleted, update the sessions list for the associated session team
     """
     instance.team.update_sessions_list()
-    # Clear the data from the cache and persistent cache if present
-    cache.delete_many(instance.get_cache_keys(), memory=True, persistent=True)
+    # Clear the data from the cache if present
+    cache.delete_many(instance.get_cache_keys())
 
 
 @receiver(post_save, sender=TeamUsers, dispatch_uid="update_team_ids_on_save")

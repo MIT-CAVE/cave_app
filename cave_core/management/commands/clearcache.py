@@ -7,9 +7,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Your command logic here
-        self.stdout.write("Clearing the Cache (memory and persistent)...")
+        self.stdout.write("Clearing the Cache...")
         try:
             cache = Cache()
-            cache.flush(memory=True, persistent=True)
+            cache.flush()
         except Exception as e:
             raise CommandError(f"Failed to clear the cache with the following error: {e}")
