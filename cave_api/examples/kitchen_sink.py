@@ -148,6 +148,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "session": {
                     "open": True,
+                    "docked": True,  # Rendered in a persistent top bar instead of floating
                     "position": {
                         "x": 8,  # distance from left app bar
                         "y": 8,
@@ -155,6 +156,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "globalOutputs": {
                     "open": True,
+                    "docked": True,
                     "position": {
                         "x": 8,
                         "y": 68,  # 68 pixels from top edge of screen which is below the session draggable
@@ -170,7 +172,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                 },
                 "time": {
+                    "open": True,
                     "showDragHandle": True,
+                    "docked": True,
                 },
             }
         },
@@ -2295,7 +2299,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "unit": "frowns",
                     "type": "num",
                     "variant": "icon",
-                    "draggable": True,
+                    "quickView": True,  # `draggable` also still works, but is deprecated
+                    "color": "#ee4b2b",
                 },
                 "key2": {
                     "name": "KPI Example 2",
@@ -2304,7 +2309,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "unit": "smiles",
                     "type": "num",
                     "variant": "icon",
-                    "draggable": True,
+                    "quickView": True,
+                    "color": "#ffff00",
                 },
                 "key3": {
                     "name": "KPI Example 3",
