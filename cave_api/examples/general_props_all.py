@@ -148,6 +148,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Dropdown Item Example",
                             "type": "selector",
                             "variant": "dropdown",
+                            "helperText": "This text stays the same no matter which option is selected.",
                             "options": {
                                 "option_a": {
                                     "name": "Option A",
@@ -163,7 +164,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "color": "rgb(0 0 255)",
                                     "size": "30px",
                                 },
-                                "option_d": {"name": "Option D"},
+                                "option_d": {"name": "Option D (Disabled)", "enabled": False},
                             },
                             "help": "Select an option from the dropdown",
                         },
@@ -237,12 +238,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "color": "#29b6f6",
                                 },
                                 "option_d": {
-                                    "name": "Option D",
+                                    "name": "Option D (Disabled)",
                                     "color": "#ffa726",
+                                    "enabled": False,
                                 },
                                 "option_e": {"name": "Option E"},
                             },
-                            "help": "Select an option from the stepper",
+                            "help": "Select an option from the stepper. Dragging onto a disabled option snaps to the nearest enabled one",
                         },
                         "vstepperItemExample": {
                             "name": "Vertical Stepper Item Example",
@@ -308,6 +310,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {
                                     "name": "Option B",
                                     "color": "#66bb6a",
+                                    "activeName": "Option B (Selected)",
                                 },
                                 "option_c": {
                                     "name": "Option C",
@@ -326,6 +329,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "comboboxMulti",
                             "placeholder": "Select multiple options",
+                            "helperText": "This text stays the same no matter which options are selected.",
                             "options": {
                                 "option_a": {
                                     "name": "Option A",
@@ -356,6 +360,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "name": "Twig1",
                                     "path": ["Tree1", "Branch1"],
                                     "color": "rgb(0 128 255)",
+                                    "activeName": "Twig1 (Checked)",
                                 },
                                 "t1_b1_tw2": {
                                     "name": "Twig2",
@@ -368,9 +373,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "color": "rgb(128 0 255)",
                                 },
                                 "t1_b2_tw1": {
-                                    "name": "Twig1",
+                                    "name": "Twig1 (Disabled)",
                                     "path": ["Tree1", "Branch2"],
                                     "color": "rgb(128 255 0)",
+                                    "enabled": False,
                                 },
                                 "t1_b2_tw2": {
                                     "name": "Twig2",

@@ -320,11 +320,15 @@ def execute_command(
                             "subtitle": "This example uses the `selector`'s `dropdown` variant",
                             "type": "selector",
                             "variant": "dropdown",
+                            "activeColor": "#000",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "helperText": "This will be used as the default language for new projects.",
                             "options": {
                                 "python": {
                                     "name": "Python",
                                     "icon": "si/SiPython",
                                     "color": "#3776ab",
+                                    "activeName": "Python (Selected)",
                                 },
                                 "rust": {
                                     "name": "Rust",
@@ -337,9 +341,10 @@ def execute_command(
                                     "color": "#3178c6",
                                 },
                                 "go": {
-                                    "name": "Go",
+                                    "name": "Go (Coming Soon)",
                                     "icon": "si/SiGo",
                                     "color": "#00add8",
+                                    "enabled": False,
                                 },
                             },
                             "fullWidth": False,
@@ -500,10 +505,12 @@ def execute_command(
                             "size": "20px",
                             "activeColor": "#66bb6a",
                             "activeSize": "32px",
+                            "helperText": "Drag the marker to update the current phase.",
                             "options": {
                                 "requirements": {
                                     "name": "Requirements",
                                     "icon": "hi/HiClipboardCheck",
+                                    "activeName": "Requirements (In Progress)",
                                     "help": "Define project requirements and scope",
                                 },
                                 "design": {
@@ -517,9 +524,10 @@ def execute_command(
                                     "help": "Implement core functionality",
                                 },
                                 "testing": {
-                                    "name": "Testing",
+                                    "name": "Testing (Blocked)",
                                     "icon": "hi/HiBeaker",
-                                    "help": "Run tests and quality assurance",
+                                    "enabled": False,
+                                    "help": "Blocked until a QA engineer is assigned — dragging onto this step snaps to the nearest enabled one",
                                 },
                                 "deployment": {
                                     "name": "Deployment",
@@ -538,10 +546,12 @@ def execute_command(
                             "size": "20px",
                             "activeColor": "#ce93d8",
                             "activeSize": "40px",
+                            "helperText": "Drag the marker to update the current stage.",
                             "options": {
                                 "submit": {
                                     "name": "Submit PR",
                                     "icon": "hi/HiUpload",
+                                    "activeName": "Submit PR (Just Now)",
                                     "help": "Create and submit pull request",
                                 },
                                 "review": {
@@ -550,9 +560,10 @@ def execute_command(
                                     "help": "Get feedback from team members",
                                 },
                                 "revise": {
-                                    "name": "Revisions",
+                                    "name": "Revisions (On Hold)",
                                     "icon": "hi/HiPencil",
-                                    "help": "Address review comments",
+                                    "enabled": False,
+                                    "help": "On hold until peer review completes — dragging onto this step snaps to the nearest enabled one",
                                 },
                                 "approve": {
                                     "name": "Approval",
@@ -568,11 +579,15 @@ def execute_command(
                             "type": "selector",
                             "variant": "combobox",
                             "placeholder": "Choose environment",
+                            "activeColor": "#000",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "helperText": "The selected environment determines which secrets are loaded.",
                             "options": {
                                 "dev": {
                                     "name": "Development",
                                     "icon": "hi/HiTerminal",
                                     "color": "#3498db",
+                                    "activeName": "Development (Active)",
                                 },
                                 "staging": {
                                     "name": "Staging",
@@ -580,9 +595,10 @@ def execute_command(
                                     "color": "#f1c40f",
                                 },
                                 "prod": {
-                                    "name": "Production",
+                                    "name": "Production (Locked)",
                                     "icon": "hi/HiGlobeAlt",
                                     "color": "#2ecc71",
+                                    "enabled": False,
                                 },
                             },
                             "help": "Set the deployment target for your application with appropriate security levels",
@@ -594,11 +610,15 @@ def execute_command(
                             "variant": "comboboxMulti",
                             "placeholder": "Choose features to enable",
                             "numVisibleTags": 1,
+                            "activeColor": "#000",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "helperText": "Enabled features apply immediately across your project.",
                             "options": {
                                 "auth": {
                                     "name": "Authentication",
                                     "icon": "hi/HiLockClosed",
                                     "color": "#9b59b6",
+                                    "activeName": "Authentication (Enabled)",
                                 },
                                 "api": {
                                     "name": "REST API",
@@ -611,9 +631,10 @@ def execute_command(
                                     "color": "#2ecc71",
                                 },
                                 "notifications": {
-                                    "name": "Notifications",
+                                    "name": "Notifications (Beta-Gated)",
                                     "icon": "hi/HiBell",
                                     "color": "#e74c3c",
+                                    "enabled": False,
                                 },
                             },
                             "help": "Enable or disable core platform capabilities based on project requirements",
@@ -623,11 +644,15 @@ def execute_command(
                             "subtitle": "Example for the `selector`'s `nested` variant.",
                             "type": "selector",
                             "variant": "nested",
+                            "activeColor": "#000",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "helperText": "Checked files are included in the next deployment bundle.",
                             "options": {
                                 "src_models": {
                                     "name": "model.py",
                                     "path": ["src", "models"],
                                     "icon": "si/SiPython",
+                                    "activeName": "model.py (Included)",
                                 },
                                 "src_views": {
                                     "name": "views.py",
@@ -665,9 +690,10 @@ def execute_command(
                                     "icon": "si/SiYaml",
                                 },
                                 "config_prod": {
-                                    "name": "prod.yaml",
+                                    "name": "prod.yaml (Locked)",
                                     "path": ["config", "environments"],
                                     "icon": "si/SiYaml",
+                                    "enabled": False,
                                 },
                             },
                             "help": "Navigate and manage project files across different functional categories",
