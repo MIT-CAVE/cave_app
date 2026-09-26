@@ -639,6 +639,45 @@ def execute_command(
                             },
                             "help": "Enable or disable core platform capabilities based on project requirements",
                         },
+                        "dualListItemExample": {
+                            "name": "Assign Team Members",
+                            "subtitle": "This example uses the `selector`'s `dualList` variant",
+                            "type": "selector",
+                            "variant": "dualList",
+                            "availableTitle": "Unassigned",
+                            "selectedTitle": "On the Project",
+                            "height": 260,
+                            "icon": "hi/HiUsers",
+                            "color": "#9e9e9e",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "activeColor": "#66bb6a",
+                            "helperText": "Move people to the right-hand list to add them to the project.",
+                            "options": {
+                                "alice": {
+                                    "name": "Alice",
+                                    "icon": "fc/FcBusinesswoman",
+                                    "activeName": "Alice (Assigned)",
+                                },
+                                "bob": {
+                                    "name": "Bob",
+                                    "icon": "fc/FcBusinessman",
+                                },
+                                "carol": {
+                                    "name": "Carol",
+                                    "icon": "fc/FcManager",
+                                    "activeIcon": "fc/FcOnlineSupport",
+                                    "activeColor": "#42a5f5",
+                                },
+                                "dan": {
+                                    "name": "Dan (On Leave)",
+                                    "icon": "fc/FcBusinessman",
+                                    "enabled": False,
+                                },
+                                "erin": {"name": "Erin"},
+                                "frank": {"name": "Frank"},
+                            },
+                            "help": "Build a team by moving people between the unassigned and assigned lists",
+                        },
                         "nestedItemExample": {
                             "name": "Project Files",
                             "subtitle": "Example for the `selector`'s `nested` variant.",
@@ -811,6 +850,7 @@ def execute_command(
                         "hradioItemExample": ["alice"],
                         "comboBoxItemExample": ["dev"],
                         "comboBoxMultiExample": ["auth", "api"],
+                        "dualListItemExample": ["alice", "carol"],
                         "nestedItemExample": [
                             "src_models",
                             "src_views",
@@ -1031,6 +1071,12 @@ def execute_command(
                                 "type": "item",
                                 "column": 6,
                                 "row": 11,
+                                "itemId": "dualListItemExample",
+                            },
+                            "col6Row12": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 12,
                                 "itemId": "nestedItemExample",
                             },
                             "col7Row1": {

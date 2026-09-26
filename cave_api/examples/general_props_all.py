@@ -351,6 +351,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "help": "Select multiple options from the combobox",
                         },
+                        "dualListItemExample": {
+                            "name": "Dual List Item Example",
+                            "type": "selector",
+                            "variant": "dualList",
+                            "availableTitle": "Available Options",
+                            "selectedTitle": "Selected Options",
+                            "options": {
+                                "option_a": {"name": "Option A", "color": "#f44336"},
+                                "option_b": {"name": "Option B", "color": "#66bb6a"},
+                                "option_c": {"name": "Option C", "color": "#29b6f6"},
+                                "option_d": {"name": "Option D", "color": "#ffa726"},
+                                "option_e": {"name": "Option E"},
+                            },
+                            "help": "Move options between the lists to select them",
+                        },
                         "nestedItemExample": {
                             "name": "Nested Item Example",
                             "type": "selector",
@@ -480,6 +495,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "hradioItemExample": ["option_c"],
                         "comboBoxItemExample": ["option_b"],
                         "comboBoxMultiExample": ["option_a", "option_b"],
+                        "dualListItemExample": ["option_a", "option_c"],
                         "nestedItemExample": [
                             "t1_b1_tw1",
                             "t1_b1_tw2",
@@ -639,6 +655,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 4,
                                 "row": 10,
+                                "itemId": "dualListItemExample",
+                            },
+                            "col4Row11": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 11,
                                 "itemId": "nestedItemExample",
                             },
                             "col5Row1": {
