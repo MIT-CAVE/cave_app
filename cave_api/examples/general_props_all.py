@@ -148,6 +148,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Dropdown Item Example",
                             "type": "selector",
                             "variant": "dropdown",
+                            "placeholder": "Select an option",
+                            "helperText": "This text stays the same no matter which option is selected.",
                             "options": {
                                 "option_a": {
                                     "name": "Option A",
@@ -163,7 +165,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "color": "rgb(0 0 255)",
                                     "size": "30px",
                                 },
-                                "option_d": {"name": "Option D"},
+                                "option_d": {"name": "Option D (Disabled)", "enabled": False},
                             },
                             "help": "Select an option from the dropdown",
                         },
@@ -237,12 +239,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "color": "#29b6f6",
                                 },
                                 "option_d": {
-                                    "name": "Option D",
+                                    "name": "Option D (Disabled)",
                                     "color": "#ffa726",
+                                    "enabled": False,
                                 },
                                 "option_e": {"name": "Option E"},
                             },
-                            "help": "Select an option from the stepper",
+                            "help": "Select an option from the stepper. Dragging onto a disabled option snaps to the nearest enabled one",
                         },
                         "vstepperItemExample": {
                             "name": "Vertical Stepper Item Example",
@@ -308,6 +311,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_b": {
                                     "name": "Option B",
                                     "color": "#66bb6a",
+                                    "activeName": "Option B (Selected)",
                                 },
                                 "option_c": {
                                     "name": "Option C",
@@ -326,6 +330,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "selector",
                             "variant": "comboboxMulti",
                             "placeholder": "Select multiple options",
+                            "helperText": "This text stays the same no matter which options are selected.",
                             "options": {
                                 "option_a": {
                                     "name": "Option A",
@@ -347,6 +352,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "help": "Select multiple options from the combobox",
                         },
+                        "dualListItemExample": {
+                            "name": "Dual List Item Example",
+                            "type": "selector",
+                            "variant": "dualList",
+                            "availableTitle": "Available Options",
+                            "selectedTitle": "Selected Options",
+                            "options": {
+                                "option_a": {"name": "Option A", "color": "#f44336"},
+                                "option_b": {"name": "Option B", "color": "#66bb6a"},
+                                "option_c": {"name": "Option C", "color": "#29b6f6"},
+                                "option_d": {"name": "Option D", "color": "#ffa726"},
+                                "option_e": {"name": "Option E"},
+                            },
+                            "help": "Move options between the lists to select them",
+                        },
                         "nestedItemExample": {
                             "name": "Nested Item Example",
                             "type": "selector",
@@ -356,6 +376,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "name": "Twig1",
                                     "path": ["Tree1", "Branch1"],
                                     "color": "rgb(0 128 255)",
+                                    "activeName": "Twig1 (Checked)",
                                 },
                                 "t1_b1_tw2": {
                                     "name": "Twig2",
@@ -368,9 +389,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                     "color": "rgb(128 0 255)",
                                 },
                                 "t1_b2_tw1": {
-                                    "name": "Twig1",
+                                    "name": "Twig1 (Disabled)",
                                     "path": ["Tree1", "Branch2"],
                                     "color": "rgb(128 255 0)",
+                                    "enabled": False,
                                 },
                                 "t1_b2_tw2": {
                                     "name": "Twig2",
@@ -466,7 +488,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
                         "textInputExample": "Example Text Here",
                         "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
-                        "dropdownItemExample": ["option_c"],
+                        "dropdownItemExample": [],
                         "checkboxItemExample": ["option_a", "option_c"],
                         "radioItemExample": ["option_a"],
                         "hstepperItemExample": ["option_c"],
@@ -474,6 +496,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "hradioItemExample": ["option_c"],
                         "comboBoxItemExample": ["option_b"],
                         "comboBoxMultiExample": ["option_a", "option_b"],
+                        "dualListItemExample": ["option_a", "option_c"],
                         "nestedItemExample": [
                             "t1_b1_tw1",
                             "t1_b1_tw2",
@@ -633,6 +656,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 4,
                                 "row": 10,
+                                "itemId": "dualListItemExample",
+                            },
+                            "col4Row11": {
+                                "type": "item",
+                                "column": 4,
+                                "row": 11,
                                 "itemId": "nestedItemExample",
                             },
                             "col5Row1": {

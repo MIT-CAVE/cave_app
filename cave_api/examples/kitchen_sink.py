@@ -416,6 +416,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Dropdown Item Example",
                             "type": "selector",
                             "variant": "dropdown",
+                            "placeholder": "Select an option",
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -512,6 +513,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "option_c": {"name": "Option C"},
                             },
                             "help": "Select multiple options from the combobox",
+                        },
+                        "dualListItemExample": {
+                            "name": "Dual List Item Example",
+                            "type": "selector",
+                            "variant": "dualList",
+                            "availableTitle": "Available Options",
+                            "selectedTitle": "Selected Options",
+                            "height": 240,
+                            "helperText": "Move options between the lists to select them",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                                "option_d": {"name": "Option D (Disabled)", "enabled": False},
+                            },
+                            "help": "Select multiple options from the dual list",
                         },
                         "nestedItemExample": {
                             "name": "Nested Item Example",
@@ -642,7 +659,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
                         "textInputExample": "Example Text Here",
                         "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
-                        "dropdownItemExample": ["option_c"],
+                        "dropdownItemExample": [],
                         "checkboxItemExample": ["option_a", "option_c"],
                         "hcheckboxItemExample": ["option_b"],
                         "radioItemExample": ["option_a"],
@@ -651,6 +668,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "hradioItemExample": ["option_c"],
                         "comboBoxItemExample": ["option_b"],
                         "comboBoxMultiExample": ["option_a", "option_b"],
+                        "dualListItemExample": ["option_a", "option_b"],
                         "nestedItemExample": [
                             "t1_b1_tw1",
                             "t1_b1_tw2",
@@ -851,6 +869,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 6,
                                 "row": 11,
+                                "itemId": "dualListItemExample",
+                            },
+                            "col6Row12": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 12,
                                 "itemId": "nestedItemExample",
                             },
                             "col7Row1": {
