@@ -148,6 +148,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Dropdown Item Example",
                             "type": "selector",
                             "variant": "dropdown",
+                            "placeholder": "Select an option",
                             "helperText": "This text stays the same no matter which option is selected.",
                             "options": {
                                 "option_a": {
@@ -487,7 +488,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
                         "textInputExample": "Example Text Here",
                         "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
-                        "dropdownItemExample": ["option_c"],
+                        "dropdownItemExample": [],
                         "checkboxItemExample": ["option_a", "option_c"],
                         "radioItemExample": ["option_a"],
                         "hstepperItemExample": ["option_c"],
