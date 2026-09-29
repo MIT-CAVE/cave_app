@@ -710,6 +710,7 @@ def execute_command(
                             "type": "coordinate",
                             "variant": "latLngInput",
                             "precision": 6,
+                            "unit": "°",
                             "help": "Enter the coordinates of MIT's Center for Transportation & Logistics",
                         },
                         "latLngMapExample": {
