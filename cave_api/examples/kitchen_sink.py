@@ -1086,24 +1086,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "maps": {
             "order": {
-                "additionalMapStyles": ["smoothLight", "smoothDark"],
+                "additionalMapStyles": ["osmRasterTiles", "satellite_streets"],
             },
             "additionalMapStyles": {
-                "smoothLight": {
-                    "name": "Smooth Light",
-                    "icon": "fi/FiSun",
-                    "spec": "https://tiles.stadiamaps.com/styles/alidade_smooth.json",
-                    # "light": True,  # Enforces a light theme for map properties, root styling, and controls to improve viz on light maps.
-                },
-                "smoothDark": {
-                    "name": "Smooth Dark",
-                    "icon": "fi/FiMoon",
-                    "spec": "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json",
-                },
                 "osmRasterTiles": {
-                    "name": "OSM Raster Tiles",
+                    "name": "Custom OSM Raster Tiles",
                     "icon": "md/MdBrush",
-                    "mapbox": True,  # Enforces Mapbox rendering engine for this map style, even if using non-Mapbox tile sources.
                     "spec": {
                         "version": 8,
                         "sources": {
@@ -1159,23 +1147,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         ],
                     },
                 },
-                "streets": {
-                    "name": "Streets",
-                    "icon": "md/MdStreetview",
-                    "spec": "mapbox://styles/mapbox/streets-v12",
-                },
-                "outdoors": {
-                    "name": "Outdoors",
-                    "icon": "md/MdForest",
-                    "spec": "mapbox://styles/mapbox/outdoors-v12",
-                },
-                "satellite": {
-                    "name": "Satellite",
-                    "icon": "md/MdSatelliteAlt",
-                    "spec": "mapbox://styles/mapbox/satellite-v9",
-                },
                 "satellite_streets": {
-                    "name": "Satellite Streets",
+                    "name": "Custom Mapbox Satellite Streets",
                     "icon": "md/MdSatellite",
                     "spec": "mapbox://styles/mapbox/satellite-streets-v12",
                 },
