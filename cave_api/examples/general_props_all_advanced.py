@@ -719,9 +719,9 @@ def execute_command(
                             "type": "coordinate",
                             "variant": "latLngMap",
                             "direction": "column",
-                            # "defaultZoom": 16,
-                            # "minZoom": 14,
-                            # "maxZoom": 19,
+                            "defaultZoom": 16,
+                            "minZoom": 14,
+                            "maxZoom": 19,
                             "help": "Click on the map to select a meeting point on MIT's campus",
                         },
                         "latLngPathExample": {
@@ -730,9 +730,11 @@ def execute_command(
                             "type": "coordinate",
                             "variant": "latLngPath",
                             "direction": "column",
-                            # "defaultZoom": 15,
-                            # "pathColor": "#a31f34",  # MIT's primary red
-                            # "pathWeight": 3,
+                            "defaultZoom": 15,
+                            "minZoom": 13,
+                            "maxZoom": 18,
+                            "pathColor": "#a31f34",  # MIT's primary red
+                            "pathWeight": 3,
                             "help": "A walking tour path from Killian Court to MIT CAVE Lab",
                         },
                         "headHeader": {
@@ -798,7 +800,9 @@ def execute_command(
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputExample": [[-71.082524, 42.361145]],  # MIT CTL Building (E40)
+                        "latLngInputExample": [
+                            [-71.082524, 42.361145]
+                        ],  # MIT CTL Building (E40)
                         "latLngMapExample": [[-71.093773, 42.359244]],  # Killian Court
                         "latLngPathExample": [
                             [-71.093773, 42.359244],  # Start: Killian Court
