@@ -718,6 +718,7 @@ def execute_command(
                             "subtitle": "Example for the `coordinate`'s `latLngMap` variant.",
                             "type": "coordinate",
                             "variant": "latLngMap",
+                            "direction": "column",
                             # "defaultZoom": 16,
                             # "minZoom": 14,
                             # "maxZoom": 19,
@@ -728,6 +729,7 @@ def execute_command(
                             "subtitle": "Example for the `coordinate`'s `latLngPath` variant.",
                             "type": "coordinate",
                             "variant": "latLngPath",
+                            "direction": "column",
                             # "defaultZoom": 15,
                             # "pathColor": "#a31f34",  # MIT's primary red
                             # "pathWeight": 3,
