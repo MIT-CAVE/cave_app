@@ -435,7 +435,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "help": "Some help for Coordinate Props",
                         },
                         "latLngInputExample": {
-                            "name": "Lat/Lng Input Example",
+                            "name": "Lat/Lng Input Example (Deprecated)",
                             "type": "coordinate",
                             "variant": "latLngInput",
                             "help": "Help for the latLngInput example",

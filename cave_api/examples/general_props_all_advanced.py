@@ -705,7 +705,7 @@ def execute_command(
                             "help": "Some help for Coordinate Props",
                         },
                         "latLngInputExample": {
-                            "name": "MIT CAVE Lab Location",
+                            "name": "MIT CAVE Lab Location (Deprecated)",
                             "subtitle": "Example for the `coordinate`'s `latLngInput` variant.",
                             "type": "coordinate",
                             "variant": "latLngInput",
