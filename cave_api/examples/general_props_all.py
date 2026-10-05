@@ -434,12 +434,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "head",
                             "help": "Some help for Coordinate Props",
                         },
-                        "latLngInputExample": {
-                            "name": "Lat/Lng Input Example",
-                            "type": "coordinate",
-                            "variant": "latLngInput",
-                            "help": "Help for the latLngInput example",
-                        },
                         "latLngMapExample": {
                             "name": "Lat/Lng Map Example",
                             "type": "coordinate",
@@ -484,7 +478,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputExample": [[-71.092003, 42.360001]],
                         "latLngMapExample": [[-71.092003, 42.360001]],
                         "latLngPathExample": [
                             [-71.092003, 42.360001],
@@ -669,18 +662,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 6,
                                 "row": 2,
-                                "itemId": "latLngInputExample",
+                                "itemId": "latLngMapExample",
                             },
                             "col6Row3": {
                                 "type": "item",
                                 "column": 6,
                                 "row": 3,
-                                "itemId": "latLngMapExample",
-                            },
-                            "col6Row4": {
-                                "type": "item",
-                                "column": 6,
-                                "row": 4,
                                 "itemId": "latLngPathExample",
                             },
                         },
