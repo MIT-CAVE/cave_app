@@ -704,15 +704,6 @@ def execute_command(
                             "type": "head",
                             "help": "Some help for Coordinate Props",
                         },
-                        "latLngInputExample": {
-                            "name": "MIT CAVE Lab Location (Deprecated)",
-                            "subtitle": "Example for the `coordinate`'s `latLngInput` variant.",
-                            "type": "coordinate",
-                            "variant": "latLngInput",
-                            "precision": 6,
-                            "unit": "°",
-                            "help": "Enter the coordinates of MIT's Center for Transportation & Logistics",
-                        },
                         "latLngMapExample": {
                             "name": "Select Meeting Point",
                             "subtitle": "Example for the `coordinate`'s `latLngMap` variant.",
@@ -800,9 +791,6 @@ def execute_command(
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputExample": [
-                            [-71.082524, 42.361145]
-                        ],  # MIT CTL Building (E40)
                         "latLngMapExample": [[-71.093773, 42.359244]],  # Killian Court
                         "latLngPathExample": [
                             [-71.093773, 42.359244],  # Start: Killian Court
@@ -1048,18 +1036,12 @@ def execute_command(
                                 "type": "item",
                                 "column": 8,
                                 "row": 2,
-                                "itemId": "latLngInputExample",
+                                "itemId": "latLngMapExample",
                             },
                             "col8Row3": {
                                 "type": "item",
                                 "column": 8,
                                 "row": 3,
-                                "itemId": "latLngMapExample",
-                            },
-                            "col8Row4": {
-                                "type": "item",
-                                "column": 8,
-                                "row": 4,
                                 "itemId": "latLngPathExample",
                             },
                             "col9Row1": {
