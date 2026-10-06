@@ -23,7 +23,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "cave_utils==3.7.0b1",
+    "cave_utils==3.7.0b2",
     "Django>=6.0.7,<7.0.0",
     "django-import-export==4.4.1",
     "djangorestframework==3.17.1",
@@ -38,7 +38,7 @@ dependencies = [
     "python-decouple==3.8",
     "qrcode==8.2",
     "redis==8.0.1",
-    "type_enforced>=2.6.0,<3.0.0",
+    "type_enforced>=2.13.0,<3.0.0",
     "uvicorn==0.51.0",
     "uvloop>=0.21.0; sys_platform != 'win32'",
     "websockets==16.1",
