@@ -157,6 +157,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 "globalOutputs": {
                     "open": True,
                     "docked": True,
+                    "hideDockOption": True,  # Global outputs are docked by default and cannot be undocked by the user
                     "position": {
                         "x": 8,
                         "y": 68,  # 68 pixels from top edge of screen which is below the session draggable
