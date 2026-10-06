@@ -18,7 +18,7 @@ from django.core.cache import cache as django_cache
 from django.core.cache.backends.locmem import LocMemCache
 from cave_core.utils.cache import Cache
 from cave_core.models import Sessions, Teams, CustomUser
-from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster, broadcaster
+from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 from cave_utils import Validator
 
 
@@ -107,8 +107,16 @@ class StandaloneCache(Cache):
 # Silence background websocket pubsub outside live server
 from cave_core.websockets import cave_ws_broadcaster as ws_module
 
-ws_module.broadcaster.broadcast = lambda *args, **kwargs: None
-ws_module.broadcaster.broadcast_many = lambda *args, **kwargs: None
+
+class DummyBroadcaster:
+    def broadcast(self, *args, **kwargs):
+        pass
+
+    def broadcast_many(self, *args, **kwargs):
+        pass
+
+
+ws_module.broadcaster = DummyBroadcaster()
 
 
 # =====================================================================
