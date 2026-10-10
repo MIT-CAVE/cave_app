@@ -39,7 +39,7 @@ What a CAVE app lets each type of user do, and which repository, service, or com
 ```mermaid
 flowchart LR
     dev([App developer]) -->|cave create / run / test| cli[cave_cli]
-    cli -->|clones template, runs Docker| app[cave_app<br/>+ your cave_api/]
+    cli -->|clones template, runs Docker| app[cave_app<br/>+ cave_api/ app logic]
     utils[cave_utils] -->|Python dependency| app
     user([End user / admin]) -->|browser| static[cave_static<br/>React UI, from CDN]
     static <-->|HTTP + WebSocket| app
@@ -75,11 +75,11 @@ flowchart LR
 
 ## Components and Data Flow
 
-| Component | Role | Who touches it |
+| Component | Role | Modified by |
 |---|---|---|
-| `cave_api/` | Your app logic, exposed through `execute_command` | You, almost always |
-| `cave_core/` | Django app: models, auth, views, WebSocket session logic | Rarely |
-| `cave_app/` | Django settings, ASGI, URL routing | Rarely |
+| `cave_api/` | App logic, exposed through `execute_command` | App developer (almost always) |
+| `cave_core/` | Django app: models, auth, views, WebSocket session logic | CAVE maintainers; app developer only for server-level needs (auth, admin, routing) |
+| `cave_app/` | Django settings, ASGI, URL routing | CAVE maintainers; app developer only for server-level needs (settings, deployment) |
 
 See [DEVELOPMENT.md](DEVELOPMENT.md) for the full folder structure.
 
