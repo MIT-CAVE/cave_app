@@ -1,6 +1,23 @@
 # CAVE App — Architecture Overview
 
-This page gives a high level view of a CAVE app: the projects it depends on, how it is deployed, how its code is organized, and what it offers to its users. It is intended for app developers first, and for anyone deploying or evaluating a CAVE app.
+This page gives a high level view of a CAVE app: what it offers to its users, the projects it depends on, how it is deployed, and how its code is organized. It is intended for app developers first, and for anyone deploying or evaluating a CAVE app.
+
+---
+
+## Capabilities
+
+What a CAVE app lets each type of user do, and which part of the stack provides it. `session_data` keys (`maps`, `panes`, ...) are documented in the [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html).
+
+| Domain | Capability | Actor | Provided by |
+|---|---|---|---|
+| **Interactive analysis** | Explore data on interactive maps | End user | `cave_static` + `cave_api` (`maps`, `mapFeatures`) |
+| | View charts, tables, and KPIs | End user | `cave_static` + `cave_api` (`groupedOutputs`, `globalOutputs`) |
+| | Set model inputs and run commands | End user | `cave_static` + `cave_api` (`panes`, `appBar`, `execute_command`) |
+| **Collaboration** | Share a synchronized session across windows and users | End user | `cave_core` (WebSockets, sessions) + Valkey / Redis |
+| **Administration** | Manage accounts, access, groups, and teams | Admin | `cave_core` (models, Django admin at `/cave/admin`) |
+| | Create and edit site content pages | Admin | `cave_core` (pages) |
+| **Development** | Expose a Python model as a web app, without frontend or backend code | App developer | `cave_api` (`execute_command`) + `cave_utils` |
+| | Create, run, and test apps locally | App developer | `cave_cli` |
 
 ---
 
@@ -77,13 +94,3 @@ sequenceDiagram
 ```
 
 See [API_README.md](API_README.md) for details on `execute_command`.
-
----
-
-## Capabilities
-
-| For | What the app provides |
-|---|---|
-| **End users** | Interactive maps, charts and dashboards, KPI panels, input panes (sliders, dropdowns, toggles, ...), multi-command workflows, and synchronized multi-window / multi-user sessions |
-| **Admins** | Content pages editable from the app, and management of accounts, access, groups, and teams via the admin interface (`/cave/admin`) |
-| **App developers** | A single Python entry point (`execute_command`); no frontend or backend code to write |
