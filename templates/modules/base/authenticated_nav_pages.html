@@ -1,15 +1,15 @@
   <ul class="navbar-nav mr-auto">
     {% if globals.show_app_page and access_dict.status == 'accepted' %}
     <li class="nav-item">
-      <a class="nav-link {{ app_active }}" href="/cave/workspace/">
-        <span class="material-icons">interactive_space</span>
+      <a class="nav-link {{ app_active }}" href="/cave/workspace/" title="App" aria-label="App">
+        <span class="material-icons" aria-hidden="true">interactive_space</span>
         <p class="d-inline d-lg-none mx-3">App</p>
       </a>
     </li>
     {% endif %}
     <li class="nav-item">
-      <a class="nav-link {{home_active}}" href="/cave/info/">
-        <span class="material-icons">info</span>
+      <a class="nav-link {{home_active}}" href="/cave/info/" title="Info" aria-label="Info">
+        <span class="material-icons" aria-hidden="true">info</span>
         <p class="d-inline d-lg-none mx-3">Info</p>
       </a>
     </li>
@@ -23,8 +23,10 @@
         data-bs-toggle="dropdown"
         aria-haspopup="true"
         aria-expanded="false"
+        title="{{ globals.custom_pages_name }}"
+        aria-label="{{ globals.custom_pages_name }}"
         >
-        <span class="material-icons">view_carousel</span>
+        <span class="material-icons" aria-hidden="true">view_carousel</span>
         <p class="d-inline d-lg-none mx-3">{{ globals.custom_pages_name }}</p>
       </a>
       <div class="dropdown-menu dropdown-menu-left" aria-labelledby="CustomPageDropdown" id="CustomPageDropdownItems">
@@ -36,8 +38,8 @@
 
       {% if globals.show_people_page %}
       <li class="nav-item">
-        <a class="nav-link {{ people_active }}" href="/cave/people/">
-          <span class="material-icons">people</span>
+        <a class="nav-link {{ people_active }}" href="/cave/people/" title="People" aria-label="People">
+          <span class="material-icons" aria-hidden="true">people</span>
           <p class="d-inline d-lg-none mx-3">People</p>
         </a>
       </li>
