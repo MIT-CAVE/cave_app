@@ -408,6 +408,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "video",
                             "help": "Click or tap the play button to start the video",
                         },
+                        "audioExample": {
+                            "name": "Audio Example",
+                            "type": "media",
+                            "variant": "audio",
+                            "helperText": "Frederic Chopin: Etude Op. 25 No. 1, 'Aeolian Harp' (piano, Donald Betts via Musopen, public domain)",
+                            "help": "Press play to listen to the audio clip",
+                        },
                         "selectorHeader": {
                             "name": "Selection Props",
                             "type": "head",
@@ -652,6 +659,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "textButtonExample": "Press Me to Show a Warning!",
                         "pictureExample": "https://cave.mit.edu/wp-content/uploads/2019/01/CAVE_CTL_Live.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                        "audioExample": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Frederic_Chopin_-_etude_no._1_in_a_flat_major%2C_op._25.ogg",
                         "textInputExample": "Example Text Here",
                         "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                         "dropdownItemExample": [],
@@ -798,6 +806,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 5,
                                 "row": 3,
                                 "itemId": "videoExample",
+                            },
+                            "col5Row4": {
+                                "type": "item",
+                                "column": 5,
+                                "row": 4,
+                                "itemId": "audioExample",
                             },
                             "col6Row1": {
                                 "type": "item",

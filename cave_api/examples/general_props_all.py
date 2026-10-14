@@ -122,6 +122,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "video",
                             "help": "Click the play button to start the video",
                         },
+                        "audioExample": {
+                            "name": "Audio Example",
+                            "type": "media",
+                            "variant": "audio",
+                            "helperText": "J. S. Bach: Prelude No. 1 in C major, BWV 846 (piano, Kimiko Ishizaka, CC0)",
+                            "help": "Press play to listen to the audio clip",
+                        },
                         "textHeader": {
                             "name": "Text Props",
                             "type": "head",
@@ -490,6 +497,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "buttonInputExample": "Press Me!",
                         "pictureExample": "https://cave.mit.edu/wp-content/uploads/2019/01/CAVE_CTL_Live.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                        "audioExample": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Kimiko_Ishizaka_-_Bach_-_Well-Tempered_Clavier%2C_Book_1_-_01_Prelude_No._1_in_C_major%2C_BWV_846.ogg",
                         "textInputExample": "Example Text Here",
                         "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
                         "dropdownItemExample": [],
@@ -600,6 +608,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "column": 3,
                                 "row": 5,
                                 "itemId": "videoExample",
+                            },
+                            "col3Row6": {
+                                "type": "item",
+                                "column": 3,
+                                "row": 6,
+                                "itemId": "audioExample",
                             },
                             "col4Row1": {
                                 "type": "item",
