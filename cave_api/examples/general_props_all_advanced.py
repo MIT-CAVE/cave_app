@@ -760,6 +760,7 @@ def execute_command(
                             "type": "date",
                             "variant": "date",
                             "label": "Landing date",
+                            "timezone": "America/New_York",
                             "minDate": "1969-01-01",
                             "maxDate": "1972-12-31",
                             "disableFuture": True,
