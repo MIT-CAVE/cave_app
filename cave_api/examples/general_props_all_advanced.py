@@ -759,6 +759,10 @@ def execute_command(
                             "subtitle": "Example for the `date`'s `date` variant.",
                             "type": "date",
                             "variant": "date",
+                            "label": "Landing date",
+                            "minDate": "1969-01-01",
+                            "maxDate": "1972-12-31",
+                            "disableFuture": True,
                             "help": "Record significant milestones in space exploration history",
                         },
                         "timeItemExample": {
@@ -767,6 +771,8 @@ def execute_command(
                             "type": "date",
                             "variant": "time",
                             "views": ["hours", "minutes", "seconds"],
+                            "minTime": "20:00",
+                            "maxTime": "21:00:00",
                             "help": "Document precise timing of mission-critical events",
                         },
                         "dateTimeItemExample": {
@@ -774,6 +780,9 @@ def execute_command(
                             "subtitle": "Example for the `date`'s `datetime` variant.",
                             "type": "date",
                             "variant": "datetime",
+                            "label": "Timestamp",
+                            "minDateTime": "1969-07-16T13:32:00",  # Launch
+                            "maxDateTime": "1969-07-24 16:50:35",  # Splashdown
                             "help": "Track exact timestamps of historic achievements for archival purposes",
                         },
                         "coordinateHeader": {
