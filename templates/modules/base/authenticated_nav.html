@@ -1,5 +1,5 @@
 <li class="nav-item dropdown">
-  <a class="nav-link" href="#" id="ProfileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <a class="nav-link" href="#" id="ProfileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Profile Settings" aria-label="Profile Settings">
     <img class="img-responsive picture rounded-circle profile-photo-sm slight-shadow" src="{{ user.photo.url }}" alt="{{ user }} Profile Photo" align="center"/>
     <p class="d-inline d-lg-none mx-3">Profile Settings</p>
   </a>
@@ -16,21 +16,21 @@
 {% if user.is_staff %}
   {% if user.is_superuser %}
     <li class="nav-item">
-      <a class="nav-link" href="/cave/admin/">
-        <span class="material-icons">admin_panel_settings</span>
+      <a class="nav-link" href="/cave/admin/" title="Admin" aria-label="Admin">
+        <span class="material-icons" aria-hidden="true">admin_panel_settings</span>
         <p class="d-inline d-lg-none mx-3">Admin</p>
       </a>
     </li>
   {% else %}
   <li class="nav-item">
-    <a class="nav-link" href="/cave/staff/">
-      <span class="d-inline material-icons">admin_panel_settings</span>
+    <a class="nav-link" href="/cave/staff/" title="Admin" aria-label="Admin">
+      <span class="d-inline material-icons" aria-hidden="true">admin_panel_settings</span>
       <p class="d-inline d-lg-none mx-3">Admin</p>
     </a>
   </li>
   {% endif %}
 {% endif %}
-<li class="nav-item"><a class="nav-link" href="/cave/auth/logout/">
-  <span class="material-icons">logout</span>
+<li class="nav-item"><a class="nav-link" href="/cave/auth/logout/" title="Logout" aria-label="Logout">
+  <span class="material-icons" aria-hidden="true">logout</span>
   <p class="d-inline d-lg-none mx-3">Logout</p>
 </a></li>
