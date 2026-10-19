@@ -766,6 +766,8 @@ def execute_command(
                             "minDate": "1969-01-01",
                             "maxDate": "1972-12-31",
                             "disableFuture": True,
+                            "disabledMonths": ["dec"],
+                            "disabledWeekdays": ["mon"],
                             "help": "Record significant milestones in space exploration history",
                         },
                         "timeItemExample": {
