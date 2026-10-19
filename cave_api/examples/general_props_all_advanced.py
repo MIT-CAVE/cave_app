@@ -774,6 +774,7 @@ def execute_command(
                             "type": "date",
                             "variant": "time",
                             "views": ["hours", "minutes", "seconds"],
+                            "secondsStep": 10,
                             "minTime": "20:00",
                             "maxTime": "21:00:00",
                             "help": "Document precise timing of mission-critical events",
