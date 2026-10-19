@@ -779,6 +779,7 @@ def execute_command(
                             "secondsStep": 10,
                             "minTime": "20:00",
                             "maxTime": "21:00:00",
+                            "disabledTimes": [["20:30", "20:45"]],
                             "help": "Document precise timing of mission-critical events",
                         },
                         "dateTimeItemExample": {
