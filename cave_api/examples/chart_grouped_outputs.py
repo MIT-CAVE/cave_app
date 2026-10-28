@@ -91,13 +91,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "product": {
                     "order": {
-                        "levels": ["color", "size", "product"],
+                        "levels": ["color", "size", "product", "organic"],
                     },
                     "data": {
                         "id": ["apple", "grape", "strawberry"],
                         "color": ["Red", "Purple", "Red"],
                         "size": ["Medium", "Small", "Small"],
                         "product": ["Apple", "Grape", "Strawberry"],
+                        "organic": [True, False, True],
                     },
                     "name": "Products",
                     "levels": {
@@ -110,6 +111,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         },
                         "product": {
                             "name": "Products",
+                        },
+                        "organic": {
+                            "name": "Organic",
+                            "valueNames": {"true": "Organic", "false": "Conventional"},
                         },
                     },
                     "layoutDirection": "horizontal",
