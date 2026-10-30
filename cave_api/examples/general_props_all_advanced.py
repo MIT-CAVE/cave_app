@@ -71,11 +71,11 @@ def execute_command(
                         },
                         "numericInputExampleAlt": {
                             "name": "Network Bandwidth",
-                            "subtitle": "This example uses the `num`'s `field` variant with custom attributes",
+                            "subtitle": "This example uses the `num`'s `field` variant with **custom attributes**",
                             "type": "num",
                             "help": "Set the maximum network bandwidth in Mbps to ensure stable and efficient data transmission across connections",
                             "minValue": 0,
-                            "label": "Maximum network bandwidth limit in Mbps for connection optimization and performance management",
+                            "label": "Maximum **network bandwidth** limit in `Mbps` for connection optimization and performance management",
                             "marqueeLabel": True,
                             "maxValue": 1_000_000_000,
                             "spinner": "left",
@@ -107,7 +107,7 @@ def execute_command(
                         },
                         "numericSliderLogScaleExample": {
                             "name": "Signal Strength",
-                            "subtitle": "This example uses the `num`'s `slider` variant with logarithmic scaling",
+                            "subtitle": "This example uses the `num`'s `slider` variant with logarithmic scaling ($\\log_{10}$)",
                             "type": "num",
                             "variant": "slider",
                             "maxValue": 3,
@@ -121,7 +121,7 @@ def execute_command(
                         },
                         "numericSliderExpScaleExample": {
                             "name": "CPU Budget",
-                            "subtitle": "This example uses the `num`'s `slider` variant with exponential scaling",
+                            "subtitle": "This example uses the `num`'s `slider` variant with exponential scaling ($2^x$)",
                             "type": "num",
                             "variant": "slider",
                             "maxValue": 256,
@@ -353,7 +353,7 @@ def execute_command(
                                     "color": "#3178c6",
                                 },
                                 "go": {
-                                    "name": "Go (Coming Soon)",
+                                    "name": "Go (_Coming Soon_)",
                                     "icon": "si/SiGo",
                                     "color": "#00add8",
                                     "enabled": False,
@@ -433,7 +433,7 @@ def execute_command(
                             },
                         },
                         "radioItemExample": {
-                            "name": "Which sorting algorithm runs in O(1) space complexity?",
+                            "name": "Which sorting algorithm runs in $O(1)$ space complexity?",
                             "subtitle": "This example uses the `selector`'s `radio` variant",
                             "type": "selector",
                             "variant": "radio",
@@ -446,28 +446,28 @@ def execute_command(
                                     "icon": "md/MdMerge",
                                     "activeColor": "#f44336",
                                     "activeIcon": "bi/BiSolidError",
-                                    "helperText": "Incorrect! Merge Sort uses O(n) extra space.",
+                                    "helperText": "**Incorrect!** Merge Sort uses $O(n)$ extra space.",
                                 },
                                 "quick": {
                                     "name": "Quick Sort",
                                     "icon": "md/MdFlashOn",
                                     "activeColor": "#ffa726",
                                     "activeIcon": "bs/BsFillQuestionCircleFill",
-                                    "helperText": "Not quite! Quick Sort partitions in-place, but its recursion uses O(log n) stack space (not O(1)), and its O(n log n) runtime only holds on average, not worst case.",
+                                    "helperText": "**Not quite!** Quick Sort partitions in-place, but its recursion uses $O(\\log n)$ stack space (not $O(1)$), and its $O(n \\log n)$ runtime only holds on average, not worst case.",
                                 },
                                 "heap": {
                                     "name": "Heap Sort",
                                     "icon": "md/MdOutlineLayers",
                                     "activeColor": "#66bb6a",
                                     "activeIcon": "bi/BiSolidCheckCircle",
-                                    "helperText": "Correct! Heap Sort's standard iterative implementation uses O(1) auxiliary space and guarantees O(n log n) time, even in the worst case.",
+                                    "helperText": "**Correct!** Heap Sort's standard iterative implementation uses $O(1)$ auxiliary space and guarantees $O(n \\log n)$ time, even in the worst case.",
                                 },
                                 "bubble": {
                                     "name": "Bubble Sort",
                                     "icon": "md/MdOutlineBubbleChart",
                                     "activeColor": "#ce93d8",
                                     "activeIcon": "bi/BiSolidXCircle",
-                                    "helperText": "Wrong! Bubble Sort is O(1) space, but its O(n²) time complexity makes it an inefficient choice.",
+                                    "helperText": "**Wrong!** Bubble Sort is $O(1)$ space, but its $O(n^2)$ time complexity makes it an inefficient choice.",
                                 },
                             },
                             "propStyle": {
@@ -502,7 +502,7 @@ def execute_command(
                                 },
                                 "chad": {
                                     "icon": "fc/FcBusinessman",
-                                    "name": "Chad (Coming soon)",
+                                    "name": "Chad (_Coming soon_)",
                                     "enabled": False,
                                 },
                             },
@@ -536,7 +536,7 @@ def execute_command(
                                     "help": "Implement core functionality",
                                 },
                                 "testing": {
-                                    "name": "Testing (Blocked)",
+                                    "name": "Testing (_Blocked_)",
                                     "icon": "hi/HiBeaker",
                                     "enabled": False,
                                     "help": "Blocked until a QA engineer is assigned — dragging onto this step snaps to the nearest enabled one",
@@ -572,7 +572,7 @@ def execute_command(
                                     "help": "Get feedback from team members",
                                 },
                                 "revise": {
-                                    "name": "Revisions (On Hold)",
+                                    "name": "Revisions (_On Hold_)",
                                     "icon": "hi/HiPencil",
                                     "enabled": False,
                                     "help": "On hold until peer review completes — dragging onto this step snaps to the nearest enabled one",
@@ -607,7 +607,7 @@ def execute_command(
                                     "color": "#f1c40f",
                                 },
                                 "prod": {
-                                    "name": "Production (Locked)",
+                                    "name": "Production (_Locked_)",
                                     "icon": "hi/HiGlobeAlt",
                                     "color": "#2ecc71",
                                     "enabled": False,
@@ -643,7 +643,7 @@ def execute_command(
                                     "color": "#2ecc71",
                                 },
                                 "notifications": {
-                                    "name": "Notifications (Beta-Gated)",
+                                    "name": "Notifications (_Beta-Gated_)",
                                     "icon": "hi/HiBell",
                                     "color": "#e74c3c",
                                     "enabled": False,
@@ -681,7 +681,7 @@ def execute_command(
                                     "activeColor": "#42a5f5",
                                 },
                                 "dan": {
-                                    "name": "Dan (On Leave)",
+                                    "name": "Dan (_On Leave_)",
                                     "icon": "fc/FcBusinessman",
                                     "enabled": False,
                                 },
@@ -700,48 +700,48 @@ def execute_command(
                             "helperText": "Checked files are included in the next deployment bundle.",
                             "options": {
                                 "src_models": {
-                                    "name": "model.py",
+                                    "name": "`model.py`",
                                     "path": ["src", "models"],
                                     "icon": "si/SiPython",
-                                    "activeName": "model.py (Included)",
+                                    "activeName": "`model.py` (Included)",
                                 },
                                 "src_views": {
-                                    "name": "views.py",
+                                    "name": "`views.py`",
                                     "path": ["src", "views"],
                                     "icon": "si/SiPython",
                                 },
                                 "src_utils": {
-                                    "name": "utils.py",
+                                    "name": "`utils.py`",
                                     "path": ["src", "utils"],
                                     "icon": "si/SiPython",
                                 },
                                 "test_unit": {
-                                    "name": "test_units.py",
+                                    "name": "`test_units.py`",
                                     "path": ["tests", "unit"],
                                     "icon": "hi/HiBeaker",
                                 },
                                 "test_integration": {
-                                    "name": "test_integration.py",
+                                    "name": "`test_integration.py`",
                                     "path": ["tests", "integration"],
                                     "icon": "hi/HiBeaker",
                                 },
                                 "docs_api": {
-                                    "name": "API.md",
+                                    "name": "`API.md`",
                                     "path": ["docs", "api"],
                                     "icon": "si/SiMarkdown",
                                 },
                                 "docs_setup": {
-                                    "name": "Setup.md",
+                                    "name": "`Setup.md`",
                                     "path": ["docs", "setup"],
                                     "icon": "si/SiMarkdown",
                                 },
                                 "config_dev": {
-                                    "name": "dev.yaml",
+                                    "name": "`dev.yaml`",
                                     "path": ["config", "environments"],
                                     "icon": "si/SiYaml",
                                 },
                                 "config_prod": {
-                                    "name": "prod.yaml (Locked)",
+                                    "name": "`prod.yaml` (_Locked_)",
                                     "path": ["config", "environments"],
                                     "icon": "si/SiYaml",
                                     "enabled": False,
@@ -900,6 +900,11 @@ def execute_command(
                     },
                     "layout": {
                         "type": "grid",
+                        # Render the labels (`name`, `subtitle`, `unit`, options, ...) of every prop in
+                        # this layout as rich text: inline markdown (`**bold**`, `_italic_`, `` `code` ``)
+                        # and inline math (`$x^2$`). `richText` cascades from layouts to their props, and
+                        # a prop can opt out with `"richText": False`. See `richText` in the API docs.
+                        "richText": True,
                         "numColumns": 5,
                         "numRows": "auto",
                         "data": {
