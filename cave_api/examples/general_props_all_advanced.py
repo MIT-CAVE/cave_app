@@ -67,6 +67,7 @@ def execute_command(
                             "precision": 2,
                             "unit": "kg",
                             "fullWidth": True,
+                            "helperText": "Maximum **cargo weight** in `kg`, including the pallet",
                             "help": "Enter the maximum cargo weight capacity for this delivery vehicle",
                         },
                         "numericInputExampleAlt": {
@@ -164,6 +165,7 @@ def execute_command(
                             "type": "text",
                             "fullWidth": False,
                             "placeholder": "Enter a unique project identifier",
+                            "helperText": "Use **lowercase** letters, digits and `-`, like `cave-routing-2025`",
                             "help": "Create a unique identifier for tracking your project across systems and documentation",
                         },
                         "textAreaInputExample": {
@@ -318,7 +320,7 @@ def execute_command(
                             "variant": "audio",
                             "fullWidth": True,
                             "placement": "center",
-                            "helperText": "Franz Liszt: Hungarian Rhapsody No. 2 (piano, Martha Goldstein, CC BY-SA 2.0)",
+                            "helperText": "Franz Liszt: _Hungarian Rhapsody No. 2_ (piano, Martha Goldstein, CC BY-SA 2.0)",
                             "help": "Listen to a piano recording of Liszt's Hungarian Rhapsody No. 2 with the native audio player",
                         },
                         "selectorHeader": {
