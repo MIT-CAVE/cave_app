@@ -389,13 +389,14 @@ The validator checks that your session data conforms to the API spec and prints 
 
 **Print statements** are the simplest tool. Output from your API code appears in the terminal running `cave run` or `cave test`.
 
-**Live API validation** catches structural errors in your session data automatically. Enable it in `my_app/.env`:
+**Live API validation** checks your session data against the API spec (types, accepted values, references between keys) every time `execute_command` returns. It runs with the development settings used by `cave run`, and is configured in `my_app/.env` (restart `cave run` after a change):
 
-```
-LIVE_API_VALIDATION_PRINT=true
-```
-
-This will print validation warnings to the terminal whenever `execute_command` returns.
+| Setting | Default in `example.env` | Effect |
+|---|---|---|
+| `LIVE_API_VALIDATION_PRINT` | `True` | Prints validation errors and warnings to the `cave run` terminal |
+| `LIVE_API_VALIDATION_PRINT_MAX` | `10` | Maximum number of printed issues per validation |
+| `LIVE_API_VALIDATION_LOG` | `False` | Writes validation issues to `logs/validation/<session_name>.log` (overwritten on each command) |
+| `LIVE_API_VALIDATION_LOG_MAX` | `1000` | Maximum number of logged issues per validation |
 
 **Running tests** is the most thorough approach:
 
