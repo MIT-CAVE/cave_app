@@ -30,7 +30,7 @@ Chain calls in order if a command depends on state set by a prior command (e.g. 
 > [!TIP]
 > For advanced schema checks or ignoring specific keys during validation, see the [data-validation](../data-validation/SKILL.md) skill.
 
-Run it with `cave test test_<command_name>.py` — see [test](../test/SKILL.md).
+Always run `cave prettify` (see [lint](../lint/SKILL.md)) before running tests. Run your test with `cave test test_<command_name>.py` — see [test](../test/SKILL.md).
 
 ### Replay-based regression tests
 
@@ -56,4 +56,4 @@ value = replay.get_path(["settings", "iconUrl"])
 | `validate_each_step` | `False` | Validate after every event — slower, but pinpoints the exact failing event |
 | `validate_on_completion` | `True` | Validate once after all steps complete |
 
-Run it with `cave test replay.py` — see [test](../test/SKILL.md).
+Always run `cave prettify` first, then run it with `cave test replay.py` — see [test](../test/SKILL.md).

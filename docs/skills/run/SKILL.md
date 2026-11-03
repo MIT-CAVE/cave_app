@@ -24,13 +24,13 @@ cave run <ip>:<port>
 
 ## 2. Confirm it's actually serving
 
-Poll the base URL rather than trusting the log stream — the container can report as running before Django finishes its startup checks. There's a real loading period on first boot (waiting for Postgres, `manage.py check`, DB migrations) — give it room, but cap how long you wait:
+Poll the base URL rather than trusting the log stream — the container can report as running before Django finishes its startup checks. On first boot (waiting for Postgres, `manage.py check`, DB migrations), startup can take 45–60 seconds:
 
 ```
-timeout 30 bash -c 'until curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/cave/ | grep -q 200; do sleep 3; done'
+timeout 60 bash -c 'until curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/cave/ | grep -q 200; do sleep 3; done'
 ```
 
-If it never comes up within that window, don't keep waiting or retry silently — notify the user that startup is stuck (include whatever the logs show) and run `cave kill` to stop it rather than leaving a hung container running.
+If it never comes up within that window, don't keep waiting or retry silently — check recent container logs, notify the user that startup is stuck, and run `cave kill` to stop it rather than leaving a hung container running.
 
 ## 3. Open and drive it
 
@@ -40,7 +40,7 @@ The app lives at `http://localhost:8000/cave/` — Chrome is the only fully supp
 - After login, click the app-page icon, then the examples switcher (three sliders, top left) to browse the bundled `cave_api/examples/` — see the [examples](../examples/SKILL.md) skill.
 - A blank/grey screen after load means a frontend error, not necessarily a Python one — see the [debug](../debug/SKILL.md) skill (start with the browser console, `Ctrl+Shift+i`).
 
-`cave test init.py` (see [test](../test/SKILL.md)) validates your `execute_command` output headlessly and is faster for iterating on API changes. Reach for a real run when you need to see the rendered UI itself, not just validate the schema.
+`cave prettify && cave test init.py` (see [lint](../lint/SKILL.md) and [test](../test/SKILL.md)) validates your `execute_command` output headlessly and is faster for iterating on API changes. Reach for a real run when you need to see the rendered UI itself, not just validate the schema. Note that `cave test` runs in a separate test environment and can run concurrently while `cave run` is actively serving.
 
 ## 4. Stop it
 

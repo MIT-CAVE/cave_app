@@ -5,7 +5,7 @@ description: Use the cave CLI to manage this app's Docker environment — starti
 
 # The `cave` CLI
 
-This app runs in Docker, managed entirely through the `cave` CLI — not `docker` directly. `cave test` and `cave prettify` have their own skills ([test](../test/SKILL.md), [lint](../lint/SKILL.md)); this skill covers everything else.
+This app runs in Docker, managed entirely through the `cave` CLI — not `docker` directly. `cave test` and `cave prettify` have their own skills ([test](../test/SKILL.md), [lint](../lint/SKILL.md)); this skill covers everything else. Note that `cave test` uses a dedicated warm test server in the background, allowing tests to run concurrently with `cave run` without container or port conflicts.
 
 **Flags and behavior can change between CLI versions.** The tables below are a map of what exists, not a substitute for checking. Before running an unfamiliar command, confirm its current flags with `cave <command> -h` (or `cave -h` for the full command list) rather than relying on memorized options.
 
@@ -14,7 +14,8 @@ This app runs in Docker, managed entirely through the `cave` CLI — not `docker
 | Command | What it does |
 |---|---|
 | `cave run` | Build and run the CAVE app. Add `ip:port` to host on LAN. Use `-it` to open bash inside the container, or `--all` to output raw logs instead of launching the TUI dashboard. See [run](../run/SKILL.md). |
-| `cave list` (`-a` for full names) | List running CAVE app containers |
+| `cave test <file>` | Run automated tests against a warm background test server (supports queueing, `--keep-alive`, `--reset`, `-c` to cancel, `-k` to kill test server). See [test](../test/SKILL.md). |
+| `cave list` (`-a` for full names) | List running CAVE app containers and warm test servers |
 | `cave list-versions` (`cave lv`) | List available `cave_app` template versions (git tags); `--pattern` to filter, `--all` for the full history |
 | `cave doctor` | Check the health of the CAVE environment (Docker, dependencies, etc.) |
 | `cave version` | Print CLI version info |

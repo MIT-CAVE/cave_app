@@ -33,9 +33,9 @@ If in doubt, it is an API change. For the concrete implementation workflow, see 
 | [add-feature](.claude/skills/add-feature/SKILL.md) | Implementing a new API feature — buttons, charts, maps, sliders, panes |
 | [examples](.claude/skills/examples/SKILL.md) | Picking the closest reference example in `cave_api/examples/` before writing new API code |
 | [api-reference](.claude/skills/api-reference/SKILL.md) | Looking up `execute_command`, `session_data` keys, props schema, or field-level API docs |
-| [test](.claude/skills/test/SKILL.md) | Running the test suite via the `cave` CLI (`cave test <file>`) |
+| [test](.claude/skills/test/SKILL.md) | Running the test suite via the `cave` CLI (`cave test <file>`), running `cave prettify` first |
 | [add-test](.claude/skills/add-test/SKILL.md) | Adding a test for a custom command, or a replay/mutation-log regression test |
-| [lint](.claude/skills/lint/SKILL.md) | Formatting `cave_api/`, `cave_app/`, `cave_core/` with `cave prettify` |
+| [lint](.claude/skills/lint/SKILL.md) | Formatting `cave_api/`, `cave_app/`, `cave_core/` with `cave prettify` (run before testing or committing) |
 | [debug](.claude/skills/debug/SKILL.md) | Diagnosing validation errors, blank screens, or unexpected session state |
 | [cave-cli](.claude/skills/cave-cli/SKILL.md) | Running, resetting, upgrading, or otherwise managing the app's Docker environment via the `cave` CLI |
 | [cave-upgrade](.claude/skills/cave-upgrade/SKILL.md) | Upgrading the CAVE framework version via the CLI and migrating custom API/test code to the new version's schema |
@@ -51,7 +51,7 @@ This app runs in Docker, managed entirely through the `cave` CLI. See the [cave-
 ---
 ## Testing
 
-Tests live in `tests/` and run only through the `cave` CLI (`cave test <file>`) — never directly with `python`. See the [test](.claude/skills/test/SKILL.md) skill for available test files and commands, and [add-test](.claude/skills/add-test/SKILL.md) for writing new command tests or replay-based regression tests.
+Tests live in `tests/` and run only through the `cave` CLI (`cave test <file>`) — never directly with `python`. Always run `cave prettify` (see the [lint](.claude/skills/lint/SKILL.md) skill) before running tests to prevent redundant test-lint-test cycles. `cave test` runs against a dedicated warm test server kept alive in the background (10 minutes by default), supports test queueing, and runs concurrently alongside `cave run` without container or port conflicts. See the [test](.claude/skills/test/SKILL.md) skill for available test files, options (`--keep-alive`, `--reset`), and queue controls (`-c` to cancel, `-k` to kill test server), and [add-test](.claude/skills/add-test/SKILL.md) for writing new command tests or replay-based regression tests.
 
 ---
 

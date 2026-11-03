@@ -15,7 +15,7 @@ This skill covers tracing, detecting, and resolving all types of errors (schema 
 |---|---|
 | **Print statements** | Add `print(...)` in `cave_api/` — output appears in the `cave run` terminal (hot-reloads, no restart needed). |
 | **Raw logs** | Start the app with `cave run --all` (or `cave run -v`) to disable the TUI dashboard and print raw stdout/stderr directly (useful for full tracebacks). |
-| **Manual validation** | `cave test init.py` — runs `Validator` against your `init` output and prints structured logs. |
+| **Manual validation** | Run `cave prettify` then `cave test init.py` — runs `Validator` against your `init` output and prints structured logs. |
 | **Live validation** | Set `LIVE_API_VALIDATION_PRINT=true` in `.env`, then restart with `cave run` to see real-time updates. |
 | **Browser console** | `Ctrl+Shift+i` → Console tab — a grey/blank screen after `init` usually means a frontend error here, not a Python exception. |
 
@@ -27,8 +27,8 @@ When the CAVE application encounters an issue at runtime (e.g., when a user inte
 
 ### Checking Background Logs
 If the server is running in the background as a task:
-1. Locate the active task's log file in your agent's runtime data directory. This will be OS and agent-specific. To keep track of the log file, you may opt to pipe the logs to some project specific log file and investigate it from there. 
-2. Read the tail of the log file using `view_file` to find the **Errors** block:
+1. Locate the active task's log output or check task status. Avoid reading unbounded log files; inspect the tail or grep for errors.
+2. Read the tail of the log to find the **Errors** block or Python exception:
    ```text
    Errors  (1 error)
    ────────────────────────────────────────────────────────────────────────────
@@ -43,7 +43,7 @@ If the server is running in the background as a task:
    ```
 
 ### Running with Raw Logs (`cave run --all`)
-If background task logs are truncated or hard to read, stop any running containers and launch CAVE in raw log mode:
+If background task logs are truncated or hard to read, stop any running containers and launch CAVE in raw log mode as a background process:
 ```bash
 cave run --all
 ```
@@ -54,7 +54,7 @@ cave run --all
 * **Live Reload Monitoring**: Real-time output allows you to see exactly when Python files are modified and the Django development server hot-reloads.
 
 > [!NOTE]
-> Since `--all` streams stdout/stderr from all containers (app, database, cache) simultaneously, the output may interleave. To terminate the server, press `Ctrl+C` in the running terminal, or run `cave kill` in another terminal.
+> `cave run --all` streams logs continuously. Always run it in the background rather than blocking synchronously. To avoid token bloat, inspect only recent log slices or grep for `Traceback` rather than dumping entire logs into context. To terminate the server, run `cave kill`.
 
 ---
 
@@ -67,7 +67,7 @@ graph TD
     B --> C{Is there a traceback?}
     C -- Yes --> D[Locate File, Line, and Exception type]
     C -- No --> E[Check browser console Ctrl+Shift+I]
-    D --> F[Use view_file to inspect code block]
+    D --> F[Inspect code block around error line]
     F --> G[Cross-reference API schemas]
     G --> H[Apply code fix & verify hot-reload]
     E --> I[Fix frontend configuration / props]
@@ -80,7 +80,7 @@ graph TD
    - Find the file and line number at the bottom of the Python traceback (e.g., in [kitchen_sink.py](../../cave_api/examples/kitchen_sink.py)).
    - Match the active `command` passed to `execute_command`.
 3. **Verify Schemas**:
-   - Run `cave test init.py` (see [test](../test/SKILL.md)) to make sure your baseline structure validates successfully.
+   - Run `cave prettify` followed by `cave test init.py` (see [lint](../lint/SKILL.md) and [test](../test/SKILL.md)) to make sure your baseline structure validates successfully.
    - For real-time updates, verify that your changes conform to the correct property formats in the [api-reference](../api-reference/SKILL.md) skill.
 4. **Fix and Validate**:
    - Edit the code. CAVE's server automatically hot-reloads Python changes, so you do not need to reboot the containers to verify most fixes.
