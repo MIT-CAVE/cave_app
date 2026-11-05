@@ -8,10 +8,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
-            "order": {"data": ["richTextPane"]},
+            "order": {"data": ["richTextPane", "richRootPane"]},
             "data": {
                 "richTextPane": {
                     "icon": "fa/FaCogs",
+                    "type": "pane",
+                    "variant": "wall",
+                    "bar": "upperLeft",
+                },
+                "richRootPane": {
+                    "icon": "im/ImFont",
                     "type": "pane",
                     "variant": "wall",
                     "bar": "upperLeft",
@@ -104,6 +110,26 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                         },
                     },
+                },
+                # `richText` on a pane makes its `name` rich and cascades to all of its props
+                "richRootPane": {
+                    "name": "**Pane** root: $x^2$",
+                    "richText": True,
+                    "props": {
+                        # No `richText` on the prop or on a layout: it comes from the pane
+                        "rootExample": {
+                            "name": "Inherits the **pane** root",
+                            "subtitle": "Without a `richText` of its own",
+                            "type": "num",
+                        },
+                        # A prop can still opt out
+                        "optOutExample": {
+                            "name": "Opts **out** of the pane root",
+                            "type": "num",
+                            "richText": False,
+                        },
+                    },
+                    "values": {"rootExample": 1, "optOutExample": 2},
                 },
             },
         },
