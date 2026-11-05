@@ -34,6 +34,7 @@ If in doubt, it is an API change. For the concrete implementation workflow, see 
 | [examples](.claude/skills/examples/SKILL.md) | Picking the closest reference example in `cave_api/examples/` before writing new API code |
 | [api-reference](.claude/skills/api-reference/SKILL.md) | Looking up `execute_command`, `session_data` keys, props schema, or field-level API docs |
 | [test](.claude/skills/test/SKILL.md) | Running the test suite via the `cave` CLI (`cave test <file>`), running `cave prettify` first |
+| [task](.claude/skills/task/SKILL.md) | Inspecting, scheduling, attaching to, cancelling, and managing background tasks and the task runner (`cave task`) |
 | [add-test](.claude/skills/add-test/SKILL.md) | Adding a test for a custom command, or a replay/mutation-log regression test |
 | [lint](.claude/skills/lint/SKILL.md) | Formatting `cave_api/`, `cave_app/`, `cave_core/` with `cave prettify` (run before testing or committing) |
 | [debug](.claude/skills/debug/SKILL.md) | Diagnosing validation errors, blank screens, or unexpected session state |
@@ -49,9 +50,22 @@ If in doubt, it is an API change. For the concrete implementation workflow, see 
 This app runs in Docker, managed entirely through the `cave` CLI. See the [cave-cli](.claude/skills/cave-cli/SKILL.md) skill for the full command reference — including which commands are destructive and require user confirmation before running.
 
 ---
-## Testing
+## Testing & Background Tasks
 
-Tests live in `tests/` and run only through the `cave` CLI (`cave test <file>`) — never directly with `python`. Always run `cave prettify` (see the [lint](.claude/skills/lint/SKILL.md) skill) before running tests to prevent redundant test-lint-test cycles. `cave test` runs against a dedicated warm test server kept alive in the background (10 minutes by default), supports test queueing, and runs concurrently alongside `cave run` without container or port conflicts. See the [test](.claude/skills/test/SKILL.md) skill for available test files, options (`--keep-alive`, `--reset`), and queue controls (`-c` to cancel, `-k` to kill test server), and [add-test](.claude/skills/add-test/SKILL.md) for writing new command tests or replay-based regression tests.
+Tests live in `tests/` and run only through the `cave` CLI (`cave test <file>`) — never directly with `python`. Always run `cave prettify` (see the [lint](.claude/skills/lint/SKILL.md) skill) before running tests to prevent redundant test-lint-test cycles.
+
+`cave test` dispatches test tasks sequentially to a dedicated background task runner, supports detached background execution (`cave test <file> -d`), and runs concurrently alongside `cave run` without container or port conflicts.
+
+Task runner lifecycle, queue inspection, log attachment, and cancellation are handled through the `cave task` command:
+- `cave task list` (`-l`): View active/queued tasks
+- `cave task list-all` (`-la`): View history of all tasks
+- `cave task attach [ID]` (`-a`): Attach to live streaming logs (`Esc` to detach, `Ctrl+C` to cancel)
+- `cave task kill <ID>` (`-k`): Cancel a specific task
+- `cave task kill-all`: Cancel all active and queued tasks
+- `cave task stop`: Stop task server containers (also `cave kill -t`)
+- `cave task reset`: Reset task runner database and rebuild container image
+
+See the [test](.claude/skills/test/SKILL.md) skill for available test files, the [task](.claude/skills/task/SKILL.md) skill for task management, and [add-test](.claude/skills/add-test/SKILL.md) for writing new command tests or replay-based regression tests.
 
 ---
 

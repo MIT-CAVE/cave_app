@@ -12,30 +12,59 @@ Tests live in `tests/`. Do not run them directly with `python` — always go thr
 >
 > Running `cave test` without specifying a test file will result in a `Test not found` error. You must always pass a test file.
 
-```
+```sh
 # Always run linting before tests:
 cave prettify
 cave test <test_file.py>
 ```
 
-## Warm Test Server, Concurrency & Queueing
+## Task Runner, Concurrency & Detached Execution
 
-- **Concurrent with `cave run`**: `cave test` runs in a dedicated test environment separate from the dev server. You can run tests while `cave run` is actively serving in the browser without container or port conflicts.
-- **Warm test server (instant reruns)**: By default, the test server stays alive in the background for 10 minutes (`--keep-alive 10`) after the last test completes. Subsequent test runs start immediately without rebuilding or restarting containers.
-- **Test queueing**: If multiple tests are triggered while one is running, they are queued and run sequentially.
+- **Dedicated Task Runner**: `cave test` runs tests sequentially as tasks inside a dedicated background task runner container.
+- **Concurrent with `cave run`**: The task runner operates in an isolated environment separate from the dev server. You can run tests while `cave run` is actively serving in the browser without container or port conflicts.
+- **Sequential Queueing**: If multiple tests or tasks are scheduled, they queue and run in sequence.
+- **Detached Execution (`-d` / `--detached`)**: By default, `cave test` attaches to test output and streams logs. Pass `-d` to run the test in the background and return immediately:
+  ```sh
+  cave test init.py -d
+  ```
+- **Live Attachment**: Use `cave task attach` to view logs for running tests. While attached, press `Esc` to detach (test keeps running in the background) or `Ctrl+C` to cancel the test.
 
-### Test CLI Flags & Options
+---
+
+## Test CLI Flags & Options
 
 | Command / Flag | Purpose |
 |---|---|
-| `cave test <test_file.py>` | Run specified test against warm test server |
-| `cave test --keep-alive <MINUTES>` | Minutes to keep test server alive after test finishes (default: `10`, `0` = stop immediately) |
-| `cave test --reset <test_file.py>` | Rebuild Docker image and reinitialize database before running this test - Use this if you have made changes to the Docker image, database schema, requirements or something that would require a fresh environment |
-| `cave test -c` (or `cave test cancel`) | Cancel currently running test and clear test queue |
-| `cave test -k` (or `cave test kill-server`) | Cancel running test, clear test queue, and stop background test server |
-| `cave test -q` / `-v` | Run in quiet mode (`-q`) or verbose debug mode (`-v`) |
+| `cave test <test_file.py>` | Run specified test file sequentially in the task runner |
+| `cave test -d` / `--detached` | Run test task in detached background mode |
+| `cave test -v` / `-q` | Verbose debug output (`-v`) or quiet mode (`-q`) |
+| `cave test --loglevel <LEVEL>` | Set log level: `DEBUG`, `INFO`, `WARN`, `ERROR`, `SILENT` |
+| `cave test -y` / `--yes` | Automatically answer confirmation prompts with yes |
+| `cave test --docker-args <ARGS>` | Additional arguments to pass to `docker run` |
+| `[remaining ...]` | Additional test files or pytest arguments |
 
-### Default available test files
+---
+
+## Managing Tests & The Task Runner via `cave task`
+
+Queue inspection, cancellation, stopping, and resetting are managed through the [task](../task/SKILL.md) command:
+
+| Goal | Command |
+|---|---|
+| View active test queue & status | `cave task list` (or `cave task -l`) |
+| View test history (active, completed, failed) | `cave task list-all` (or `cave task -la`) |
+| Attach to running test logs | `cave task attach [ID]` (or `cave task -a [ID]`) |
+| Cancel a running or queued test | `cave task kill <ID>` (or `cave task -k <ID>`) |
+| Cancel all queued and running tests | `cave task kill-all` (or `cave task --kill-all`) |
+| Stop background task server | `cave task stop` (or `cave task --stop`, `cave kill -t`) |
+| Reset & rebuild task environment | `cave task reset` (or `cave task --reset`) |
+
+> [!NOTE]
+> Previously, flags like `--reset`, `-c`, and `--keep-alive` were attached directly to `cave test`. These have been superseded by `cave task` commands (`cave task reset`, `cave task kill-all`, `cave task stop`).
+
+---
+
+## Default Available Test Files
 
 | File | Purpose | When to run |
 |---|---|---|
@@ -45,7 +74,7 @@ cave test <test_file.py>
 | `cache_and_session.py` | Tests cache, session state, and WebSocket broadcasting. Server-layer only. | After cache, session, or WebSocket changes |
 | `replay.py` | Replays a recorded mutation log (`tests/mutation_logs/`) through `execute_command` and validates the resulting session state. | After capturing a mutation log, or to regression-test a specific session |
 
-```
+```sh
 # Example test runs (preceded by linting):
 cave prettify
 cave test init.py          # validate your app's init command (most common)
@@ -58,7 +87,9 @@ cave test replay.py        # replay a mutation log and validate session state
 > [!TIP]
 > **Fast Single-Example Testing**: Validating all bundled examples via `cave test examples.py` tests 25+ files. When actively iterating on a single example, uncomment it under Option 3 in `cave_api/api.py` and run `cave prettify && cave test init.py` to validate only that file in seconds. Run `cave test examples.py` for full regression coverage once finished.
 
-### Standard pattern
+---
+
+## Standard Pattern
 
 `tests/init.py` ships configured to match whatever you are seeing in your live application:
 
