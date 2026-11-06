@@ -17,7 +17,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "iconUrl": "https://react-icons.mitcave.com/5.4.0"
         },
         "appBar": {
-            "order": {"data": ["richTextPane", "richRootPane", "richPage"]},
+            "order": {"data": ["richTextPane", "richRootPane", "richPage", "richChartPage"]},
             "data": {
                 "richTextPane": {
                     "icon": "fa/FaCogs",
@@ -31,11 +31,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "variant": "wall",
                     "bar": "upperLeft",
                 },
-                # A page with a map and the global outputs, which are also rich
+                # A page with a map
                 "richPage": {
                     "icon": "md/MdMap",
                     "type": "page",
-                    "bar": "upperLeft",
+                    "bar": "lowerLeft",
+                },
+                # A page with tables of grouped outputs and global outputs
+                "richChartPage": {
+                    "icon": "md/MdTableChart",
+                    "type": "page",
+                    "bar": "lowerLeft",
                 },
             },
         },
@@ -203,15 +209,15 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "data": {
                                 "warehouse": {
                                     "value": True,
-                                    # Allow the user to group the warehouses in clusters,
-                                    # and group them by default
-                                    "allowGrouping": True,
-                                    "group": True,
                                     "colorBy": "capacity",
                                     "colorByOptions": ["capacity", "includesAutomation"],
                                     "sizeBy": "capacity",
                                     "sizeByOptions": ["capacity"],
                                     "icon": "fa6/FaWarehouse",
+                                    # Allow the user to group the warehouses in clusters,
+                                    # and group them by default
+                                    "allowGrouping": True,
+                                    "group": True,
                                 },
                             },
                         },
@@ -299,9 +305,39 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
             }
         },
-        # Add a page with the map specified above and an overview of the global outputs,
-        # side by side: one row and two columns. The charts of the first row are
-        # stretched into the row below them with `"up"`
+        # The names of a chart come from the grouped outputs. `richText` can be set on a stat,
+        # on its dataset, on a grouping level or on its grouping
+        "groupedOutputs": {
+            "groupings": {
+                "location": {
+                    "name": "_Location_",
+                    "richText": True,
+                    "order": {"levels": ["country", "state"]},
+                    "data": {
+                        "id": ["UsMi", "UsMa", "CaOn"],
+                        "country": ["USA", "USA", "Canada"],
+                        "state": ["Michigan", "Massachusetts", "Ontario"],
+                    },
+                    "levels": {
+                        "country": {"name": "**Country**"},
+                        "state": {"name": "**State**", "parent": "country"},
+                    },
+                },
+            },
+            "data": {
+                "salesData": {
+                    "richText": True,
+                    "stats": {
+                        "sales": {"name": "**Sales**", "unit": "$m^3$"},
+                        # A stat can opt out of the `richText` of its dataset
+                        "demand": {"name": "snake_case **demand**", "richText": False},
+                    },
+                    "valueLists": {"sales": [95, 100, 60], "demand": [100, 108, 70]},
+                    "groupLists": {"location": ["UsMi", "UsMa", "CaOn"]},
+                },
+            },
+        },
+        # Add a page with the map specified above
         "pages": {
             "currentPage": "richPage",
             "data": {
@@ -310,13 +346,43 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "map": {
                             "type": "map",
                             "mapId": "exampleMap",
+                            "maximized": True,
                         },
+                    },
+                    "pageLayout": ["map", None, None, None],
+                },
+                "richChartPage": {
+                    "charts": {
+                        # The headers of a table are rich when the stat (or dataset) and the
+                        # grouping (or level) are. Canvas text (axes, legends, tooltips) shows
+                        # the plain text instead.
+                        "groupedTable": {
+                            "dataset": "salesData",
+                            "chartType": "table",
+                            "stats": [{"statId": "sales", "aggregationType": "sum"}],
+                            "groupingId": ["location"],
+                            "groupingLevel": ["state"],
+                        },
+                        "groupedBar": {
+                            "dataset": "salesData",
+                            "chartType": "bar",
+                            "stats": [{"statId": "sales", "aggregationType": "sum"}],
+                            "groupingId": ["location"],
+                            "groupingLevel": ["state"],
+                        },
+                        # An overview of the global outputs, which are rich
                         "overview": {
                             "type": "globalOutput",
                             "chartType": "overview",
                         },
+                        # The columns follow the `richText` of the global outputs props
+                        "outputsTable": {
+                            "type": "globalOutput",
+                            "chartType": "table",
+                            "globalOutput": ["throughput", "cost"],
+                        },
                     },
-                    "pageLayout": ["map", "overview", "up", "up"],
+                    "pageLayout": ["groupedTable", "groupedBar", "outputsTable", "overview"],
                 },
             },
         },
