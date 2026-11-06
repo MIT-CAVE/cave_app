@@ -1,0 +1,40 @@
+    <div id="workspace-disconnect-overlay" style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+      pointer-events: all;
+      user-select: none;
+    ">
+      <div style="
+        background: rgba(30, 30, 30, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 32px 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 420px;
+      ">
+        <div class="spinner-border text-primary mb-3" role="status" style="width: 2.75rem; height: 2.75rem; border-width: 0.25rem;">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <h4 style="margin: 0 0 10px 0; font-size: 1.25rem; font-weight: 600; letter-spacing: 0.3px; color: #ffffff;">Server Disconnected</h4>
+        <p style="margin: 0; font-size: 0.925rem; color: rgba(255, 255, 255, 0.8); line-height: 1.4;">
+          Attempting to reconnect...
+        </p>
+      </div>
+    </div>

@@ -20,16 +20,33 @@ class SocketServer(BaseSocketServer):
 
     def receive(self, data):
         if settings.DEBUG:
-            print("WS RECEIVE ", data["command"])
+            print("WS RECEIVE ", data.get("command"))
         request = Request(self.scope.get("user"), data.get("data"))
         command = get_command(data.get("command"))
         command(request)
 
     def connect(self):
-        self.channel_id = str(self.scope.get("user").id)
+        user = self.scope.get("user")
+        if (
+            not user
+            or getattr(user, "is_anonymous", True)
+            or not getattr(user, "is_authenticated", False)
+        ):
+            print("SOCKET CONNECTION REJECTED: AnonymousUser")
+            self.send(
+                {
+                    "event": "auth_status",
+                    "authenticated": False,
+                    "redirect": "/cave/auth/login/",
+                }
+            )
+            # self.close(code=4401)
+            return
+
+        self.channel_id = str(user.id)
         self.subscribe(self.channel_id)
         print(f"SOCKET CONNECTION OPENED")
 
-    def disconnect(self, code):
+    def disconnect(self, code=1000):
         # No unsubscribe needed since the channel will be deleted when the user disconnects
         print(f"SOCKET CONNECTION CLOSED")

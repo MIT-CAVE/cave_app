@@ -7,11 +7,13 @@
 
 {% block content %}
   <div id="main-app-window-div" style="
+    position: relative;
     --widthMultiplier: 1;
     height: calc( 100vh - 58px );
     width: 100vw;
-    overflow:hidden;
+    overflow: hidden;
   ">
+    {% include "modules/utils/disconnect_overlay.html" %}
     <iframe
       id="app-frame"
       src="{{ static_url }}/{{ globals.static_app_url_path|default:'' }}"
@@ -62,4 +64,5 @@
     window.addEventListener('resize', setAppDivWidth);
     window.addEventListener('load', setAppDivWidth);
   </script>
+  {% include "modules/utils/disconnect_overlay_script.html" %}
 {% endblock %}

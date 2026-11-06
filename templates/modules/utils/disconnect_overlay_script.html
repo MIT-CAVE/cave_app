@@ -1,0 +1,39 @@
+<script>
+    // Workspace connection state handlers
+    let isRedirecting = false;
+
+    function showDisconnectOverlay() {
+      const overlay = document.getElementById('workspace-disconnect-overlay');
+      if (overlay) {
+        overlay.style.display = 'flex';
+      }
+    }
+
+    function hideDisconnectOverlay() {
+      const overlay = document.getElementById('workspace-disconnect-overlay');
+      if (overlay) {
+        overlay.style.display = 'none';
+      }
+    }
+
+    function redirectToLogin(redirectUrl) {
+      if (isRedirecting) return;
+      isRedirecting = true;
+      const target = redirectUrl || ('/cave/auth/login/?next=' + encodeURIComponent(window.location.pathname));
+      window.location.href = target;
+    }
+
+    // Listen for WebSocket status messages from the iframe (cave_static)
+    window.addEventListener('message', (event) => {
+      const payload = event.data;
+      if (payload && payload.event === 'ws_status') {
+        if (payload.status === 'disconnected') {
+          showDisconnectOverlay();
+        } else if (payload.status === 'connected') {
+          hideDisconnectOverlay();
+        } else if (payload.status === 'unauthorized') {
+          redirectToLogin(payload.redirect);
+        }
+      }
+    });
+</script>
