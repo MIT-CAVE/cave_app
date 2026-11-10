@@ -10,7 +10,9 @@ CAVE can enforce strict schema validation for `session_data` outputs. Any valida
 > [!TIP]
 > To run these validations as part of automated CI/CD checks or command regression testing, see [add-test](../add-test/SKILL.md).
 
-## Manual Validation in Tests
+---
+
+## 1. Manual Validation in Tests
 
 To check a dictionary locally, use `cave_utils.Validator`:
 
@@ -19,7 +21,7 @@ from cave_utils import Validator
 
 session_data = {
     "settings": {"iconUrl": "https://example.com/icon.png"},
-    "panes": {...}
+    "panes": {...},
 }
 
 # Run the validator
@@ -32,7 +34,14 @@ validator.log.print_logs()
 assert len(validator.log.log) == 0, "Validation failed!"
 ```
 
-## Running Live Validation on the Server
+Always format and run your tests with:
+```sh
+cave prettify && cave test init.py
+```
+
+---
+
+## 2. Running Live Validation on the Server
 
 To debug validation issues in real-time while using the app:
 
@@ -42,8 +51,14 @@ To debug validation issues in real-time while using the app:
    LIVE_API_VALIDATION_PRINT=true
    ```
 3. Run or restart the app: `cave run`
-4. The terminal will print detailed, structured JSON validation reports for every command interaction.
+4. The server logs will print detailed, structured validation reports for every command interaction.
+5. Monitor validation logs in real time using:
+   ```sh
+   # Scan errors and warnings:
+   cave logs -e -w
+
+   # Inspect recent validation reports:
+   cave logs -n 50
+   ```
 
 For more details on monitoring these logs and debugging exceptions in real-time, see [debug](../debug/SKILL.md).
-
-

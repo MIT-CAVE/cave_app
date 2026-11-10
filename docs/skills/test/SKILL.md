@@ -5,10 +5,10 @@ description: Run the cave_api test suite via the cave CLI (cave test <file>), al
 
 # Running Tests
 
-Tests live in `tests/`. Do not run them directly with `python` — always go through the `cave` CLI, which runs them inside the app's Docker container.
+Tests live in `tests/`. Do not run them directly with `python` — always go through the `cave` CLI, which executes them inside an isolated container in the background task runner.
 
 > [!IMPORTANT]
-> **Always run linting before tests:** Run [lint](../lint/SKILL.md) (`cave prettify`) before running any tests. Workflows frequently make changes, run tests, run `cave prettify`, and then have to run tests again. Running `cave prettify` first ensures code formatting and unused import cleanup are applied upfront, avoiding redundant test cycles.
+> **Always run linting before tests:** Run [lint](../lint/SKILL.md) (`cave prettify`) before running any tests. Workflows frequently make changes, run tests, run `cave prettify`, and then have to run tests again. Running `cave prettify` first ensures code formatting and unused import cleanup are applied upfront, avoiding redundant test cycles and saving tokens.
 >
 > Running `cave test` without specifying a test file will result in a `Test not found` error. You must always pass a test file.
 
@@ -17,6 +17,8 @@ Tests live in `tests/`. Do not run them directly with `python` — always go thr
 cave prettify
 cave test <test_file.py>
 ```
+
+---
 
 ## Task Runner, Concurrency & Detached Execution
 
@@ -27,7 +29,9 @@ cave test <test_file.py>
   ```sh
   cave test init.py -d
   ```
-- **Live Attachment**: Use `cave task attach` to view logs for running tests. While attached, press `Esc` to detach (test keeps running in the background) or `Ctrl+C` to cancel the test.
+- **Inspecting Test Output**:
+  - Non-interactive (recommended for agents): `cave logs -t -n 50`
+  - Live attachment: `cave task attach [ID]` (press `Esc` to detach, `Ctrl+C` to cancel)
 
 ---
 
@@ -41,26 +45,26 @@ cave test <test_file.py>
 | `cave test --loglevel <LEVEL>` | Set log level: `DEBUG`, `INFO`, `WARN`, `ERROR`, `SILENT` |
 | `cave test -y` / `--yes` | Automatically answer confirmation prompts with yes |
 | `cave test --docker-args <ARGS>` | Additional arguments to pass to `docker run` |
-| `[remaining ...]` | Additional test files or pytest arguments |
+| `[remaining ...]` | Additional test files or pytest arguments (e.g. `cave test init.py -- -v`) |
 
 ---
 
-## Managing Tests & The Task Runner via `cave task`
+## Managing Tests & Output via `cave task` and `cave logs`
 
-Queue inspection, cancellation, stopping, and resetting are managed through the [task](../task/SKILL.md) command:
+Queue inspection, log retrieval, cancellation, stopping, and resetting are managed through `cave task` and `cave logs`:
 
 | Goal | Command |
 |---|---|
 | View active test queue & status | `cave task list` (or `cave task -l`) |
-| View test history (active, completed, failed) | `cave task list-all` (or `cave task -la`) |
-| Attach to running test logs | `cave task attach [ID]` (or `cave task -a [ID]`) |
+| View recent test history (with status) | `cave task -la -n 5` |
+| Inspect latest test log non-interactively | `cave logs -t -n 50` |
+| Inspect specific test task log by ID | `cave logs -t <ID> -n 50` |
+| Attach interactively to running test | `cave task attach [ID]` (or `cave task -a [ID]`) |
 | Cancel a running or queued test | `cave task kill <ID>` (or `cave task -k <ID>`) |
 | Cancel all queued and running tests | `cave task kill-all` (or `cave task --kill-all`) |
+| Clean completed test task logs | `cave task clean` (or `cave task --clean`) |
 | Stop background task server | `cave task stop` (or `cave task --stop`, `cave kill -t`) |
 | Reset & rebuild task environment | `cave task reset` (or `cave task --reset`) |
-
-> [!NOTE]
-> Previously, flags like `--reset`, `-c`, and `--keep-alive` were attached directly to `cave test`. These have been superseded by `cave task` commands (`cave task reset`, `cave task kill-all`, `cave task stop`).
 
 ---
 
@@ -97,15 +101,19 @@ cave test replay.py        # replay a mutation log and validate session state
 from cave_api.api import execute_command
 from cave_utils import Socket, Validator
 
+
 def test_init():
-    init_session_data = execute_command(session_data={}, socket=Socket(), command="init")
+    init_session_data = execute_command(
+        session_data={}, socket=Socket(), command="init"
+    )
 
     validator = Validator(init_session_data, ignore_keys=["meta"])
     validator.log.print_logs()
     assert len(validator.log.log) == 0
 
+
 if __name__ == "__main__":
     test_init()
 ```
 
-For command-specific tests beyond `init`, or extending replay coverage, see [add-test](../add-test/SKILL.md).
+For writing custom command tests beyond `init`, or extending replay coverage, see [add-test](../add-test/SKILL.md).

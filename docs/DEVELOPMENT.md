@@ -27,9 +27,15 @@ If in doubt, it is an API change. For the concrete implementation workflow, see 
 
 ## Skills
 
+> [!NOTE]
+> **Skills & Documentation Architecture**:
+> All skills and project documentation are stored canonically in `docs/` (`docs/skills/` and `docs/DEVELOPMENT.md`).
+> The agent directories `.agents/skills` and `.claude/skills` are symlinks targeting `../docs/skills/`, and both `AGENTS.md` and `CLAUDE.md` in the repository root are symlinks to `docs/DEVELOPMENT.md`.
+> **Never edit files inside `.agents/` or `.claude/` directly** — only edit files in `docs/` and all agent environments will automatically receive the updates.
+
 | Skill | Use when |
 |---|---|
-| [run](.claude/skills/run/SKILL.md) | Launching the app with `cave run` and verifying it's actually serving in the browser |
+| [run](.claude/skills/run/SKILL.md) | Launching the app with `cave run`, monitoring logs (`cave logs`), and verifying it's serving |
 | [add-feature](.claude/skills/add-feature/SKILL.md) | Implementing a new API feature — buttons, charts, maps, sliders, panes |
 | [examples](.claude/skills/examples/SKILL.md) | Picking the closest reference example in `cave_api/examples/` before writing new API code |
 | [api-reference](.claude/skills/api-reference/SKILL.md) | Looking up `execute_command`, `session_data` keys, props schema, or field-level API docs |
@@ -37,7 +43,7 @@ If in doubt, it is an API change. For the concrete implementation workflow, see 
 | [task](.claude/skills/task/SKILL.md) | Inspecting, scheduling, attaching to, cancelling, and managing background tasks and the task runner (`cave task`) |
 | [add-test](.claude/skills/add-test/SKILL.md) | Adding a test for a custom command, or a replay/mutation-log regression test |
 | [lint](.claude/skills/lint/SKILL.md) | Formatting `cave_api/`, `cave_app/`, `cave_core/` with `cave prettify` (run before testing or committing) |
-| [debug](.claude/skills/debug/SKILL.md) | Diagnosing validation errors, blank screens, or unexpected session state |
+| [debug](.claude/skills/debug/SKILL.md) | Diagnosing validation errors, live server exceptions (`cave logs -e`), task failures, or blank screens |
 | [cave-cli](.claude/skills/cave-cli/SKILL.md) | Running, resetting, upgrading, or otherwise managing the app's Docker environment via the `cave` CLI |
 | [cave-upgrade](.claude/skills/cave-upgrade/SKILL.md) | Upgrading the CAVE framework version via the CLI and migrating custom API/test code to the new version's schema |
 | [release](.claude/skills/release/SKILL.md) | Owner-only — explains why to stop and flag instead of executing a release |
@@ -50,22 +56,34 @@ If in doubt, it is an API change. For the concrete implementation workflow, see 
 This app runs in Docker, managed entirely through the `cave` CLI. See the [cave-cli](.claude/skills/cave-cli/SKILL.md) skill for the full command reference — including which commands are destructive and require user confirmation before running.
 
 ---
-## Testing & Background Tasks
+## Testing, Background Tasks & Logs
 
-Tests live in `tests/` and run only through the `cave` CLI (`cave test <file>`) — never directly with `python`. Always run `cave prettify` (see the [lint](.claude/skills/lint/SKILL.md) skill) before running tests to prevent redundant test-lint-test cycles.
+Tests live in `tests/` and run only through the `cave` CLI (`cave test <file>`) — never directly with `python`. Always run `cave prettify` (see the [lint](.claude/skills/lint/SKILL.md) skill) before running tests to prevent redundant test-lint-test cycles and save conversational tokens.
 
 `cave test` dispatches test tasks sequentially to a dedicated background task runner, supports detached background execution (`cave test <file> -d`), and runs concurrently alongside `cave run` without container or port conflicts.
 
+### Server Logs & Monitoring (`cave logs`)
+Inspect live server logs or background task logs without interrupting running containers:
+- `cave logs -e`: Scan for errors and exceptions in the running server (token-efficient).
+- `cave logs -e -w`: Scan for errors and warnings.
+- `cave logs -n 20`: Tail the last 20 lines of the server log.
+- `cave logs -f`: Follow log output in real time (`Ctrl+C` to detach).
+- `cave logs -p`: Print absolute path to the active log file (`run.log`).
+- `cave logs -c`: Clear the log file before reproducing an issue.
+- `cave logs -t [ID] -n 50`: Inspect task execution logs directly (e.g. latest test run or a specific task ID) non-interactively.
+
+### Task Management (`cave task`)
 Task runner lifecycle, queue inspection, log attachment, and cancellation are handled through the `cave task` command:
 - `cave task list` (`-l`): View active/queued tasks
-- `cave task list-all` (`-la`): View history of all tasks
+- `cave task list-all` (`-la`): View history of all tasks (use `-n <limit>` to avoid token bloat, e.g. `cave task -la -n 10`)
 - `cave task attach [ID]` (`-a`): Attach to live streaming logs (`Esc` to detach, `Ctrl+C` to cancel)
+- `cave task clean` (`--clean`): Clean completed task logs and remove completed tasks from registry
 - `cave task kill <ID>` (`-k`): Cancel a specific task
 - `cave task kill-all`: Cancel all active and queued tasks
 - `cave task stop`: Stop task server containers (also `cave kill -t`)
 - `cave task reset`: Reset task runner database and rebuild container image
 
-See the [test](.claude/skills/test/SKILL.md) skill for available test files, the [task](.claude/skills/task/SKILL.md) skill for task management, and [add-test](.claude/skills/add-test/SKILL.md) for writing new command tests or replay-based regression tests.
+See the [test](.claude/skills/test/SKILL.md) skill for available test files, the [task](.claude/skills/task/SKILL.md) skill for task management, [debug](.claude/skills/debug/SKILL.md) for troubleshooting with logs, and [add-test](.claude/skills/add-test/SKILL.md) for writing new command tests or replay-based regression tests.
 
 ---
 
