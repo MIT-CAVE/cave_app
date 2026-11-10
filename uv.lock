@@ -95,7 +95,7 @@ dev = [
 requires-dist = [
     { name = "autoflake", marker = "extra == 'dev'", specifier = "==2.3.1" },
     { name = "black", marker = "extra == 'dev'", specifier = "==25.12.0" },
-    { name = "cave-utils", specifier = "==3.7.0b2" },
+    { name = "cave-utils", specifier = "==3.7.0" },
     { name = "django", specifier = ">=6.0.7,<7.0.0" },
     { name = "django-import-export", specifier = "==4.4.1" },
     { name = "django-otp", specifier = "==1.7.0" },
@@ -121,15 +121,15 @@ provides-extras = ["api", "dev"]
 
 [[package]]
 name = "cave-utils"
-version = "3.7.0b2"
+version = "3.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pamda" },
     { name = "type-enforced" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/c6/12/4e2ebddc1c01b9f1e80021017f5713d614b49ca10a2676456926b64e3d36/cave_utils-3.7.0b2.tar.gz", hash = "sha256:f8b87835ebd03f3869fcb3d9ee434a973884b2c78e1e56347b9abde7acc9c74b", size = 67593, upload-time = "2026-10-06T12:58:20.515Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d5/28/bfed124fae564e4c9e31354025560901476b0ca610645006ce90b0f9d124/cave_utils-3.7.0.tar.gz", hash = "sha256:0a29bd42fe4fa6bc8fca5c997c5192fd42aa8d64befa97193cbdd7ee7cbb93e6", size = 87485, upload-time = "2026-11-10T18:29:13.913Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/07/7e/088216306ac67dd77142febd149ac48bd5da25a6f0bd676049ec15a3ea45/cave_utils-3.7.0b2-py3-none-any.whl", hash = "sha256:dec4db68d70e9e0a8c74330003e2b9edb983ca02c0f02794a8e7434286149fe5", size = 74450, upload-time = "2026-10-06T12:58:18.978Z" },
+    { url = "https://files.pythonhosted.org/packages/cc/b1/e37f99d0f0b572b05f46df8c35a2aaeb5518057ce95012dedc4d63ace76a/cave_utils-3.7.0-py3-none-any.whl", hash = "sha256:afbb695536834d726869290a509c02e74147ce2772ae3085bb3bb9f3bc654755", size = 86457, upload-time = "2026-11-10T18:29:12.804Z" },
 ]
 
 [[package]]

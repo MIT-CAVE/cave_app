@@ -5,7 +5,7 @@ description: Run the cave_api test suite via the cave CLI (cave test <file>), al
 
 # Running Tests
 
-Tests live in `tests/`. Do not run them directly with `python` — always go through the `cave` CLI, which executes them inside an isolated container in the background task runner.
+Tests live in `tests/`. Do not run them directly with `python` on the host — all project dependencies (`cave_utils`, `pamda`, `django`, etc.) are installed exclusively in the container environment. Running `python` directly on the host will fail with `ModuleNotFoundError`. Always execute tests through the `cave` CLI (`cave test <test_file.py>`), which executes them inside an isolated container in the background task runner. Never use raw `docker` commands to run tests or inspect containers.
 
 > [!IMPORTANT]
 > **Always run linting before tests:** Run [lint](../lint/SKILL.md) (`cave prettify`) before running any tests. Workflows frequently make changes, run tests, run `cave prettify`, and then have to run tests again. Running `cave prettify` first ensures code formatting and unused import cleanup are applied upfront, avoiding redundant test cycles and saving tokens.

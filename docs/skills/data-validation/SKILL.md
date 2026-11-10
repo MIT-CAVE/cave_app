@@ -14,7 +14,10 @@ CAVE can enforce strict schema validation for `session_data` outputs. Any valida
 
 ## 1. Manual Validation in Tests
 
-To check a dictionary locally, use `cave_utils.Validator`:
+To check a dictionary locally, use `cave_utils.Validator` inside a test file (e.g. in `tests/`):
+
+> [!IMPORTANT]
+> `cave_utils` and other project dependencies are installed exclusively inside the Docker environment. Never run `python` directly on the host machine or attempt to run `docker exec` manually. Always run validation via `cave test <test_file.py>`.
 
 ```python
 from cave_utils import Validator

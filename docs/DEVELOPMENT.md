@@ -55,6 +55,11 @@ If in doubt, it is an API change. For the concrete implementation workflow, see 
 
 This app runs in Docker, managed entirely through the `cave` CLI. See the [cave-cli](.claude/skills/cave-cli/SKILL.md) skill for the full command reference — including which commands are destructive and require user confirmation before running.
 
+> [!CAUTION]
+> **No Raw Docker or Host Python Commands:**
+> - **Never use raw `docker` or `docker compose` commands** (e.g. `docker ps`, `docker exec`, `docker run`, `docker logs`). Container lifecycle, inspection, and execution must go through the `cave` CLI (`cave list`, `cave logs`, `cave test`, `cave task`, `cave doctor`, `cave run`).
+> - **Never run Python or test commands directly on the host machine** (e.g. `python -c ...`, `python tests/init.py`, `pytest`). Project dependencies (`cave_utils`, `pamda`, `django`, etc.) are installed exclusively inside the Docker environment. Running Python on the host will fail with `ModuleNotFoundError`. Always execute code and tests via the `cave` CLI (`cave test <file>`, `cave prettify`, `cave task ...`).
+
 ---
 ## Testing, Background Tasks & Logs
 

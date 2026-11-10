@@ -14,6 +14,14 @@ This app runs in Docker, managed entirely through the `cave` CLI — not `docker
 
 The background task runner executes tasks (`cave test`, `cave prettify`, `cave task start`) sequentially in an isolated container environment, allowing tests and tasks to run concurrently alongside `cave run` without container or port conflicts.
 
+> [!CAUTION]
+> **No Raw Docker or Host Python Commands:**
+> - **Never invoke raw `docker` or `docker compose` commands** (`docker ps`, `docker exec`, `docker run`, `docker logs`, etc.). Use the corresponding `cave` commands:
+>   - Instead of `docker ps`: use `cave list`
+>   - Instead of `docker logs`: use `cave logs`
+>   - Instead of `docker exec <cmd>`: use `cave test <file>`, `cave prettify`, or `cave task start <cmd>`
+> - **Never run project Python code or imports on the host machine**: All project dependencies (`cave_utils`, `pamda`, `django`, etc.) are installed exclusively inside Docker. Running `python` directly on the host will fail with `ModuleNotFoundError`. Always execute code and tests via `cave test <file>`, `cave prettify`, or `cave task start`.
+
 **Flags and behavior can change between CLI versions.** The tables below are a map of what exists, not a substitute for checking. Before running an unfamiliar command, confirm its current flags with `cave <command> -h` (or `cave -h` for the full command list) rather than relying on memorized options.
 
 ---

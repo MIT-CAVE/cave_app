@@ -19,9 +19,12 @@ class SocketServer(BaseSocketServer):
         self.hosts = settings.DJANGO_SOCKET_HOSTS
 
     def receive(self, data):
+        data_data = data.get("data")
         if settings.DEBUG:
-            print("WS RECEIVE ", data.get("command"))
-        request = Request(self.scope.get("user"), data.get("data"))
+            print(
+                f"WS RECEIVE command='{data.get('command')}', api_command='{data_data.get('api_command')}'"
+            )
+        request = Request(self.scope.get("user"), data_data)
         command = get_command(data.get("command"))
         command(request)
 
