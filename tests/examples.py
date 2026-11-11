@@ -1,9 +1,9 @@
 from cave_utils import Socket, Validator
-import os, importlib
+import os, importlib, importlib.resources
 
 
 def get_examples():
-    examples_location = "/app/cave_api/examples"
+    examples_location = os.path.join(importlib.resources.files("cave_api"), "examples")
     return sorted(
         [
             i.replace(".py", "")

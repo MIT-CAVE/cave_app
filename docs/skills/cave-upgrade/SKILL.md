@@ -107,7 +107,7 @@ To update the validation library and generation utilities:
 
 > [!NOTE]
 > If the user has already upgraded and wants help with the migration directly, skip steps 1, 2, & 3 and immediately proceed with the migration workflow.
-> It is possible that you can not determine if the version was a major or minor update.
+> If you cannot determine whether the update was major or minor, run `cave prettify && cave test init.py` first to check if existing payloads validate under the new version.
 
 ---
 
@@ -144,15 +144,16 @@ If a migration is needed, follow this checklist to adapt custom code:
 Always verify the code behaves correctly after any version change or refactoring. Recommend the following testing paths to the user:
 
 ### Option A: Schema Validation with `cave test`
-The fastest way to test is headlessly running the validator against your `init` output:
+Always run `cave prettify` before running tests to ensure formatting and import cleanup are applied first. The fastest way to test is headlessly running the validator against your `init` output:
 ```bash
+cave prettify
 cave test init.py
 ```
-This runs the test defined in [init.py](file:///home/conmak/development/app/cave_app/tests/init.py). You can also run other tests in the [tests](file:///home/conmak/development/app/cave_app/tests/) folder, such as:
+This runs the test defined in [init.py](file:///home/conmak/development/app/cave_app/tests/init.py). You can also run other tests in the [tests](file:///home/conmak/development/app/cave_app/tests/) folder (preceded by `cave prettify`), such as:
 - `cave test examples.py`: Validates all bundled examples.
 - `cave test replay.py`: Runs replay logs to check session state regression.
 
-See [test](file:///home/conmak/development/app/cave_app/docs/skills/test/SKILL.md) and [add-test](file:///home/conmak/development/app/cave_app/docs/skills/add-test/SKILL.md) for more detail.
+See [lint](file:///home/conmak/development/app/cave_app/docs/skills/lint/SKILL.md), [test](file:///home/conmak/development/app/cave_app/docs/skills/test/SKILL.md), and [add-test](file:///home/conmak/development/app/cave_app/docs/skills/add-test/SKILL.md) for more detail.
 
 ### Option B: Enabling Live Validation
 Enable real-time schema validation of all API outputs by setting `LIVE_API_VALIDATION_PRINT=true` in [.env](file:///home/conmak/development/app/cave_app/.env):

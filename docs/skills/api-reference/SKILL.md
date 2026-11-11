@@ -161,6 +161,12 @@ The tables above tell you *which* doc file covers a given `session_data` key —
 
 `docs/cave_api_docs/` is the full generated reference for `cave_utils`, the library that validates everything `execute_command` returns. It's plain text, one file per `cave_utils` module.
 
+> [!NOTE]
+> If `docs/cave_api_docs/` is empty or ungenerated, you can generate it via `cave run --entrypoint ./utils/generate_docs.sh` (or `uv run cave-utils-docs docs/cave_api_docs`), or inspect docstrings directly in `cave_utils`.
+
+> [!TIP]
+> **Token Efficiency**: These `.txt` files can be quite long. Do not read entire doc files into context unless reasonably necessary. Use targeted grep (e.g., `grep -n -C 5 '"slider"' docs/cave_api_docs/cave_utils_api_utils_general.txt`) and read only the specific matching line ranges.
+
 **Start here:**
 1. `docs/cave_api_docs/README.txt` — index of every doc file in the folder, mapped to its `cave_utils` module path (e.g. `cave_utils.api.panes` → `./cave_utils_api_panes.txt`)
 2. `docs/cave_api_docs/PROJECT_README.md` — `cave_utils` library overview (Validator, GroupsBuilder, Socket, etc.) and a quick-start for validating `session_data` directly

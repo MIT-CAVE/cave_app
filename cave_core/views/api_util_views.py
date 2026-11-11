@@ -41,12 +41,12 @@ def custom_pages(request):
     filter_vars = {"show": True}
     if not request.user.has_access():
         filter_vars["require_access"] = False
-    custom_pages = [
-        {"name": i.name, "url_name": i.url_name}
-        for i in models.Pages.objects.filter(**filter_vars)
+    custom_pages = list(
+        models.Pages.objects.filter(**filter_vars)
         .order_by("name")
         .exclude(url_name="home")
-    ]
+        .values("name", "url_name")
+    )
     if len(custom_pages) == 0:
         custom_pages = [{"name": "Currently Unavailable", "url_name": "home"}]
     return {"custom_pages": custom_pages}

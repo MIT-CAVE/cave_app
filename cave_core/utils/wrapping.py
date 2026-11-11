@@ -6,6 +6,8 @@ from django.shortcuts import redirect
 
 # External Imports
 from functools import wraps
+import hashlib
+import orjson
 import traceback
 
 # Internal Imports
@@ -70,11 +72,18 @@ def cache_data_version(fn):
 
     @wraps(fn)
     def wrap(request):
-        data_versions = str(request.data.get("data_versions", {}))
+        data_versions = request.data.get("data_versions", {})
+        if not data_versions:
+            fn(request)
+            return
+        version_hash = hashlib.md5(
+            orjson.dumps(
+                data_versions, default=str, option=orjson.OPT_NON_STR_KEYS | orjson.OPT_SORT_KEYS
+            )
+        ).hexdigest()
         cache_versions_key = f"versionRequest:{request.user.id}"
-        if cache.get(cache_versions_key) != data_versions:
-            if data_versions != "{}":
-                cache.set(cache_versions_key, str(data_versions), 2)
+        if cache.get(cache_versions_key) != version_hash:
+            cache.set(cache_versions_key, version_hash, 2)
             fn(request)
 
     return wrap

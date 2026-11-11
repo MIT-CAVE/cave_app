@@ -7,11 +7,17 @@ from django.utils.translation import gettext_lazy as _
 # Internal Imports
 from cave_api.api import execute_command
 from cave_core.models.cache import cache
-from cave_core.utils.constants import api_keys, background_api_keys
+from cave_core.utils.constants import (
+    background_api_keys,
+    api_keys_set,
+    background_api_keys_set,
+)
 from cave_core.websockets.cave_ws_broadcaster import CaveWSBroadcaster
 from cave_utils import Validator
 
 # External Imports
+import hashlib
+import orjson
 from pamda import pamda
 
 
@@ -91,6 +97,8 @@ class Sessions(models.Model):
             else:
                 cache.set(f"session:{self.id}:executing", False)
                 self.__dict__["is_executing"] = False
+                self.__dict__.pop("data", None)
+                self.__dict__.pop("versions", None)
                 self.broadcast_loading(False)
 
     def get_user_ids(self) -> list:
@@ -137,7 +145,7 @@ class Sessions(models.Model):
         # Used a local object cached versions object to prevent multiple calls to the cache
         versions = self.__dict__.get("versions")
         if self.__dict__.get("is_executing") and versions:
-            return versions
+            return dict(versions)
         self.__dict__["versions"] = cache.get(f"session:{self.id}:versions", {})
         return dict(self.__dict__["versions"])
 
@@ -192,14 +200,12 @@ class Sessions(models.Model):
         if keys == None:
             keys = list(self.get_versions().keys())
         if client_only:
-            keys = pamda.intersection(keys, api_keys)
+            keys = [k for k in keys if k in api_keys_set]
         if len(omit_keys) > 0:
-            keys = pamda.difference(keys, omit_keys)
-        keys_to_get_from_cache = []
-        for key in keys:
-            # Avoid additional cache hits by checking if the data is already in the session __dict__
-            if not pamda.hasPath(path=["data", key], data=self.__dict__):
-                keys_to_get_from_cache.append(key)
+            omit_keys_set = set(omit_keys)
+            keys = [k for k in keys if k not in omit_keys_set]
+        data_cache = self.__dict__.setdefault("data", {})
+        keys_to_get_from_cache = [key for key in keys if key not in data_cache]
         # If there any keys to get from the cache, get them all at once and update the session __dict__
         if len(keys_to_get_from_cache) > 0:
             new_data = cache.get_many(
@@ -207,7 +213,7 @@ class Sessions(models.Model):
             )
             # Get the specific key names from the cache keys
             new_data = {
-                key.split(":")[-1]: value for key, value in new_data.items() if value != None
+                key.split(":")[-1]: value for key, value in new_data.items() if value is not None
             }
             if create_missing_cache_keys:
                 # If creating missing cache keys, fill in any missing keys with empty dictionaries to prevent errors in the client
@@ -216,7 +222,7 @@ class Sessions(models.Model):
                         new_data[key] = {}
                         cache.set(f"session:{self.id}:data:{key}", new_data[key])
             # If the new data is not the same length as the keys to get from the cache, there was an error
-            # Likely, some data was lost from the persistent cache
+            # Likely, some data was lost from the cache
             if len(new_data.keys()) != len(keys_to_get_from_cache):
                 CaveWSBroadcaster(self).notify(
                     title="Error:",
@@ -227,11 +233,8 @@ class Sessions(models.Model):
                 self.execute_api_command(command="init", broadcast_changes=True, command_keys=[])
                 # Raise an exception to stop the current execution whatever it may be.
                 raise Exception("The data error should now be fixed. Please try your action again.")
-            for key, value in new_data.items():
-                if value != None:
-                    # Update the local session __dict__ with the new data to prevent multiple cache hits later
-                    pamda.assocPath(path=["data", key], value=value, data=self.__dict__)
-        return {key: pamda.path(["data", key], self.__dict__) for key in keys}
+            data_cache.update(new_data)
+        return {key: data_cache.get(key) for key in keys}
 
     def broadcast_changed_data(
         self, previous_versions: dict, broadcast_loading: bool = True, force_overwrite: bool = False
@@ -270,6 +273,11 @@ class Sessions(models.Model):
         updated_keys = [
             key for key, value in versions.items() if previous_versions.get(key) != value
         ]
+        if len(updated_keys) == 0 and not force_overwrite:
+            if broadcast_loading:
+                self.broadcast_loading(False)
+            return
+
         data = self.get_data(client_only=True, keys=updated_keys)
         # Broadcast the updated versions and data
 
@@ -315,24 +323,36 @@ class Sessions(models.Model):
         """
         # print('==REPLACE DATA==')
         versions = self.get_versions()
+        data_cache = self.__dict__.setdefault("data", {})
+        keys_to_delete = []
+
         if wipeExisting:
-            data_keys = list(data.keys())
-            keys_to_delete = pamda.difference(list(versions.keys()), data_keys)
-            cache.delete_many(
-                [f"session:{self.id}:data:{key}" for key in keys_to_delete],
-                memory=True,
-                persistent=True,
-            )
-            for key in keys_to_delete:
-                versions.pop(key, None)
-        # Update the cache with the new data
-        cache.set_many({f"session:{self.id}:data:{key}": value for key, value in data.items()})
-        # Store the new data locally in the session __dict__ to prevent multiple cache hits
+            data_keys = set(data.keys())
+            keys_to_delete = [k for k in versions if k not in data_keys]
+            if keys_to_delete:
+                cache.delete_many([f"session:{self.id}:data:{key}" for key in keys_to_delete])
+                for key in keys_to_delete:
+                    versions.pop(key, None)
+                    data_cache.pop(key, None)
+
+        changed_data = {}
         for key, value in data.items():
-            pamda.assocPath(path=["data", key], value=value, data=self.__dict__)
-            versions[key] = versions.get(key, 0) + 1
-        # Update versions post replacement
-        self.set_versions(versions)
+            val_hash = (
+                hashlib.md5(
+                    orjson.dumps(value, default=str, option=orjson.OPT_NON_STR_KEYS)
+                ).hexdigest()
+                if value is not None
+                else None
+            )
+            if versions.get(key) != val_hash:
+                changed_data[f"session:{self.id}:data:{key}"] = value
+                data_cache[key] = value
+                versions[key] = val_hash
+
+        if changed_data or keys_to_delete:
+            if changed_data:
+                cache.set_many(changed_data)
+            self.set_versions(versions)
         # print('==REPLACE DATA END==')
 
     def execute_api_command(
@@ -381,9 +401,7 @@ class Sessions(models.Model):
             session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
         )
         # Ensure that no reserved api keys are returned
-        background_api_keys_used = pamda.intersection(
-            list(command_output.keys()), background_api_keys
-        )
+        background_api_keys_used = [k for k in command_output if k in background_api_keys_set]
         if len(background_api_keys_used) > 0:
             raise Exception(
                 f"Oops! The following reserved api keys were returned: {str(background_api_keys_used)}"
@@ -515,15 +533,15 @@ class Sessions(models.Model):
             - What: The new session object that was created
         """
         session_data = self.get_data(keys=list(self.get_versions().keys()), client_only=False)
-        new_session = self
-        new_session.name = str(name)
-        new_session.description = str(description)
-        new_session.pk = None
-        new_session.save()
+        new_session = Sessions.objects.create(
+            name=str(name),
+            description=str(description),
+            team=self.team,
+        )
         cache.set_many(
             {f"session:{new_session.id}:data:{key}": value for key, value in session_data.items()}
         )
-        new_session.set_versions({key: 0 for key in session_data.keys()})
+        new_session.set_versions(dict(self.get_versions()))
         return new_session
 
     def get_cache_keys(self):
@@ -536,12 +554,6 @@ class Sessions(models.Model):
             for key in list(cache.get(f"session:{self.id}:versions", {}).keys())
         ]
         return keys
-
-    def persist_cache_data(self):
-        """
-        Persists the current session data to the persistent cache
-        """
-        cache.persist_many(self.get_cache_keys())
 
     def error_on_session_not_empty(self):
         """
