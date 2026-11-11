@@ -74,6 +74,7 @@ Inspect live server logs or background task logs without interrupting running co
 - `cave logs -n 20`: Tail the last 20 lines of the server log.
 - `cave logs -f`: Follow log output in real time (`Ctrl+C` to detach).
 - `cave logs -p`: Print absolute path to the active log file (`run.log`).
+  - You should never aim to look into the logs yourself unless explicitly asked to. Use `cave logs` to inspect them.
 - `cave logs -c`: Clear the log file before reproducing an issue.
 - `cave logs -t [ID] -n 50`: Inspect task execution logs directly (e.g. latest test run or a specific task ID) non-interactively.
 
