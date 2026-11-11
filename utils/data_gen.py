@@ -1,5 +1,6 @@
 # Imports
 import django, os, sys
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from cave_utils import Arguments
@@ -8,12 +9,16 @@ from decouple import config
 # Fetch terminal arguments
 arguments = Arguments()
 # Setup the django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', f'cave_app.settings.{arguments.get_kwarg("deployment_type", "development")}')
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE",
+    f'cave_app.settings.{arguments.get_kwarg("deployment_type", "development")}',
+)
 django.setup()
 
 # Import models
 ## Note: Models must be imported after django.setup()
 from cave_core.models import CustomUser, Globals, Pages, PageSections
+
 
 def generate():
     # Admin User (Only create if one does not yet exist)
@@ -35,7 +40,7 @@ def generate():
     # End the data generation if the pages data exists
     if Globals.objects.first():
         return
-    
+
     globals, globals_created = Globals.objects.get_or_create(
         site_name="CAVE App",
         mapbox_token=config("MAPBOX_TOKEN"),

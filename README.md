@@ -96,6 +96,31 @@ cave prettify
 
 **NOTE**: All prettify commands write over existing code (in place).
 
+### Testing
+
+Run automated tests via the CLI:
+
+```sh
+cave test init.py
+```
+
+Tests run sequentially inside an isolated background task runner and can run concurrently while the app is serving. Add `-d` to run in detached background mode:
+
+```sh
+cave test init.py -d
+```
+
+### Background Tasks
+
+Inspect and manage background tasks and the task runner:
+
+```sh
+cave task list       # View active/queued tasks
+cave task attach     # Follow live progress (Esc to detach, Ctrl+C to cancel)
+cave task kill 1     # Cancel a specific task
+cave task stop       # Stop the task server
+```
+
 ## Cave App Components
 
 The cave app includes a variety of core components to allow for rapid prototyping, development and testing. The main components include:

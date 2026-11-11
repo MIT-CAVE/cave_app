@@ -8,7 +8,18 @@ def execute_command(session_data, socket, command="init", **kwargs):
             # Once you select a version, you can see the available icons in the version
             # EG: https://react-icons.mitcave.com/5.4.0/icon_list.txt
             "iconUrl": "https://react-icons.mitcave.com/5.4.0",
-            "time": {"timeLength": 15, "timeUnits": "seconds", "looping": False, "speed": 1},
+            "time": {"timeLength": 10, "timeUnits": "seconds", "looping": False, "speed": 1},
+        },
+        "draggables": {
+            "data": {
+                "time": {
+                    "open": True,
+                    "position": {
+                        "x": 8,
+                        "y": 8,
+                    },
+                },
+            }
         },
         "appBar": {
             # Specify the order of items as they will appear in the app bar
@@ -36,9 +47,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "currentProjection": "globe",
                     # Specify the default viewport for the map
                     "defaultViewport": {
-                        "longitude": 0,
-                        "latitude": 0,
-                        "zoom": 3,
+                        "longitude": -75.447,
+                        "latitude": 30.345,
+                        "zoom": 4.66,
                         "pitch": 0,
                         "bearing": 0,
                         "maxZoom": 12,

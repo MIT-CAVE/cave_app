@@ -15,7 +15,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cave_app"
-version = "3.6.0"
+version = "3.7.0"
 description = "A CAVE Application"
 requires-python = ">=3.12"
 classifiers = [
@@ -23,22 +23,25 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "cave_utils==3.6.0",
+    "cave_utils==3.7.0",
     "Django>=6.0.7,<7.0.0",
     "django-import-export==4.4.1",
     "djangorestframework==3.17.1",
     "django_otp==1.7.0",
-    "django_sockets==3.0.0",
-    "uvicorn==0.51.0",
-    "websockets==16.1",
+    "django_sockets==3.1.0",
     "django-solo==2.5.1",
+    "httptools>=0.6.4",
+    "orjson>=3.10.0",
     "pamda>=2.10.0,<3.0.0",
     "pillow==12.3.0",
     "psycopg[binary, pool]==3.3.4",
     "python-decouple==3.8",
     "qrcode==8.2",
     "redis==8.0.1",
-    "type_enforced>=2.6.0,<3.0.0",
+    "type_enforced>=2.13.0,<3.0.0",
+    "uvicorn==0.51.0",
+    "uvloop>=0.21.0; sys_platform != 'win32'",
+    "websockets==16.1",
     "whitenoise==6.12.0",
 ]
 

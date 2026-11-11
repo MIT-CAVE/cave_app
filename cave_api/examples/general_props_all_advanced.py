@@ -67,15 +67,16 @@ def execute_command(
                             "precision": 2,
                             "unit": "kg",
                             "fullWidth": True,
+                            "helperText": "Maximum **cargo weight** in `kg`, including the pallet",
                             "help": "Enter the maximum cargo weight capacity for this delivery vehicle",
                         },
                         "numericInputExampleAlt": {
                             "name": "Network Bandwidth",
-                            "subtitle": "This example uses the `num`'s `field` variant with custom attributes",
+                            "subtitle": "This example uses the `num`'s `field` variant with **custom attributes**",
                             "type": "num",
                             "help": "Set the maximum network bandwidth in Mbps to ensure stable and efficient data transmission across connections",
                             "minValue": 0,
-                            "label": "Maximum network bandwidth limit in Mbps for connection optimization and performance management",
+                            "label": "Maximum **network bandwidth** limit in `Mbps` for connection optimization and performance management",
                             "marqueeLabel": True,
                             "maxValue": 1_000_000_000,
                             "spinner": "left",
@@ -107,7 +108,7 @@ def execute_command(
                         },
                         "numericSliderLogScaleExample": {
                             "name": "Signal Strength",
-                            "subtitle": "This example uses the `num`'s `slider` variant with logarithmic scaling",
+                            "subtitle": "This example uses the `num`'s `slider` variant with logarithmic scaling ($\\log_{10}$)",
                             "type": "num",
                             "variant": "slider",
                             "maxValue": 3,
@@ -121,7 +122,7 @@ def execute_command(
                         },
                         "numericSliderExpScaleExample": {
                             "name": "CPU Budget",
-                            "subtitle": "This example uses the `num`'s `slider` variant with exponential scaling",
+                            "subtitle": "This example uses the `num`'s `slider` variant with exponential scaling ($2^x$)",
                             "type": "num",
                             "variant": "slider",
                             "maxValue": 256,
@@ -164,6 +165,7 @@ def execute_command(
                             "type": "text",
                             "fullWidth": False,
                             "placeholder": "Enter a unique project identifier",
+                            "helperText": "Use **lowercase** letters, digits and `-`, like `cave-routing-2025`",
                             "help": "Create a unique identifier for tracking your project across systems and documentation",
                         },
                         "textAreaInputExample": {
@@ -297,8 +299,9 @@ def execute_command(
                             "subtitle": "This example uses the `media`'s `picture` variant",
                             "type": "media",
                             "variant": "picture",
-                            "fullWidth": True,
                             "placement": "center",
+                            "scaleMode": "fitWidth",
+                            "helperText": "Click the image to view an enlarged version",
                             "help": "Interactive 3D visualization of supply chain networks at MIT CAVE Lab",
                         },
                         "videoExample": {
@@ -306,9 +309,19 @@ def execute_command(
                             "subtitle": "This example uses the `media`'s `video` variant",
                             "type": "media",
                             "variant": "video",
-                            "fullWidth": True,
                             "scaleMode": "fitContainer",
+                            "helperText": "Introduction to the MIT CAVE Lab",
                             "help": "Watch an overview of MIT CAVE Lab's mission and research initiatives",
+                        },
+                        "audioExample": {
+                            "name": "MIT CAVE Lab Soundtrack",
+                            "subtitle": "This example uses the `media`'s `audio` variant",
+                            "type": "media",
+                            "variant": "audio",
+                            "fullWidth": True,
+                            "placement": "center",
+                            "helperText": "Franz Liszt: _Hungarian Rhapsody No. 2_ (piano, Martha Goldstein, CC BY-SA 2.0)",
+                            "help": "Listen to a piano recording of Liszt's Hungarian Rhapsody No. 2 with the native audio player",
                         },
                         "selectorHeader": {
                             "name": "Selection Props",
@@ -320,11 +333,16 @@ def execute_command(
                             "subtitle": "This example uses the `selector`'s `dropdown` variant",
                             "type": "selector",
                             "variant": "dropdown",
+                            "placeholder": "Choose a programming language",
+                            "activeColor": "#000",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "helperText": "This will be used as the default language for new projects.",
                             "options": {
                                 "python": {
                                     "name": "Python",
                                     "icon": "si/SiPython",
                                     "color": "#3776ab",
+                                    "activeName": "Python (Selected)",
                                 },
                                 "rust": {
                                     "name": "Rust",
@@ -337,9 +355,10 @@ def execute_command(
                                     "color": "#3178c6",
                                 },
                                 "go": {
-                                    "name": "Go",
+                                    "name": "Go (_Coming Soon_)",
                                     "icon": "si/SiGo",
                                     "color": "#00add8",
+                                    "enabled": False,
                                 },
                             },
                             "fullWidth": False,
@@ -416,7 +435,7 @@ def execute_command(
                             },
                         },
                         "radioItemExample": {
-                            "name": "Which sorting algorithm runs in O(1) space complexity?",
+                            "name": "Which sorting algorithm runs in $O(1)$ space complexity?",
                             "subtitle": "This example uses the `selector`'s `radio` variant",
                             "type": "selector",
                             "variant": "radio",
@@ -429,28 +448,28 @@ def execute_command(
                                     "icon": "md/MdMerge",
                                     "activeColor": "#f44336",
                                     "activeIcon": "bi/BiSolidError",
-                                    "helperText": "Incorrect! Merge Sort uses O(n) extra space.",
+                                    "helperText": "**Incorrect!** Merge Sort uses $O(n)$ extra space.",
                                 },
                                 "quick": {
                                     "name": "Quick Sort",
                                     "icon": "md/MdFlashOn",
                                     "activeColor": "#ffa726",
                                     "activeIcon": "bs/BsFillQuestionCircleFill",
-                                    "helperText": "Not quite! Quick Sort partitions in-place, but its recursion uses O(log n) stack space (not O(1)), and its O(n log n) runtime only holds on average, not worst case.",
+                                    "helperText": "**Not quite!** Quick Sort partitions in-place, but its recursion uses $O(\\log n)$ stack space (not $O(1)$), and its $O(n \\log n)$ runtime only holds on average, not worst case.",
                                 },
                                 "heap": {
                                     "name": "Heap Sort",
                                     "icon": "md/MdOutlineLayers",
                                     "activeColor": "#66bb6a",
                                     "activeIcon": "bi/BiSolidCheckCircle",
-                                    "helperText": "Correct! Heap Sort's standard iterative implementation uses O(1) auxiliary space and guarantees O(n log n) time, even in the worst case.",
+                                    "helperText": "**Correct!** Heap Sort's standard iterative implementation uses $O(1)$ auxiliary space and guarantees $O(n \\log n)$ time, even in the worst case.",
                                 },
                                 "bubble": {
                                     "name": "Bubble Sort",
                                     "icon": "md/MdOutlineBubbleChart",
                                     "activeColor": "#ce93d8",
                                     "activeIcon": "bi/BiSolidXCircle",
-                                    "helperText": "Wrong! Bubble Sort is O(1) space, but its O(n²) time complexity makes it an inefficient choice.",
+                                    "helperText": "**Wrong!** Bubble Sort is $O(1)$ space, but its $O(n^2)$ time complexity makes it an inefficient choice.",
                                 },
                             },
                             "propStyle": {
@@ -485,7 +504,7 @@ def execute_command(
                                 },
                                 "chad": {
                                     "icon": "fc/FcBusinessman",
-                                    "name": "Chad (Coming soon)",
+                                    "name": "Chad (_Coming soon_)",
                                     "enabled": False,
                                 },
                             },
@@ -500,10 +519,12 @@ def execute_command(
                             "size": "20px",
                             "activeColor": "#66bb6a",
                             "activeSize": "32px",
+                            "helperText": "Drag the marker to update the current phase.",
                             "options": {
                                 "requirements": {
                                     "name": "Requirements",
                                     "icon": "hi/HiClipboardCheck",
+                                    "activeName": "Requirements (In Progress)",
                                     "help": "Define project requirements and scope",
                                 },
                                 "design": {
@@ -517,9 +538,10 @@ def execute_command(
                                     "help": "Implement core functionality",
                                 },
                                 "testing": {
-                                    "name": "Testing",
+                                    "name": "Testing (_Blocked_)",
                                     "icon": "hi/HiBeaker",
-                                    "help": "Run tests and quality assurance",
+                                    "enabled": False,
+                                    "help": "Blocked until a QA engineer is assigned — dragging onto this step snaps to the nearest enabled one",
                                 },
                                 "deployment": {
                                     "name": "Deployment",
@@ -538,10 +560,12 @@ def execute_command(
                             "size": "20px",
                             "activeColor": "#ce93d8",
                             "activeSize": "40px",
+                            "helperText": "Drag the marker to update the current stage.",
                             "options": {
                                 "submit": {
                                     "name": "Submit PR",
                                     "icon": "hi/HiUpload",
+                                    "activeName": "Submit PR (Just Now)",
                                     "help": "Create and submit pull request",
                                 },
                                 "review": {
@@ -550,9 +574,10 @@ def execute_command(
                                     "help": "Get feedback from team members",
                                 },
                                 "revise": {
-                                    "name": "Revisions",
+                                    "name": "Revisions (_On Hold_)",
                                     "icon": "hi/HiPencil",
-                                    "help": "Address review comments",
+                                    "enabled": False,
+                                    "help": "On hold until peer review completes — dragging onto this step snaps to the nearest enabled one",
                                 },
                                 "approve": {
                                     "name": "Approval",
@@ -568,11 +593,15 @@ def execute_command(
                             "type": "selector",
                             "variant": "combobox",
                             "placeholder": "Choose environment",
+                            "activeColor": "#000",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "helperText": "The selected environment determines which secrets are loaded.",
                             "options": {
                                 "dev": {
                                     "name": "Development",
                                     "icon": "hi/HiTerminal",
                                     "color": "#3498db",
+                                    "activeName": "Development (Active)",
                                 },
                                 "staging": {
                                     "name": "Staging",
@@ -580,9 +609,10 @@ def execute_command(
                                     "color": "#f1c40f",
                                 },
                                 "prod": {
-                                    "name": "Production",
+                                    "name": "Production (_Locked_)",
                                     "icon": "hi/HiGlobeAlt",
                                     "color": "#2ecc71",
+                                    "enabled": False,
                                 },
                             },
                             "help": "Set the deployment target for your application with appropriate security levels",
@@ -594,11 +624,15 @@ def execute_command(
                             "variant": "comboboxMulti",
                             "placeholder": "Choose features to enable",
                             "numVisibleTags": 1,
+                            "activeColor": "#000",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "helperText": "Enabled features apply immediately across your project.",
                             "options": {
                                 "auth": {
                                     "name": "Authentication",
                                     "icon": "hi/HiLockClosed",
                                     "color": "#9b59b6",
+                                    "activeName": "Authentication (Enabled)",
                                 },
                                 "api": {
                                     "name": "REST API",
@@ -611,63 +645,108 @@ def execute_command(
                                     "color": "#2ecc71",
                                 },
                                 "notifications": {
-                                    "name": "Notifications",
+                                    "name": "Notifications (_Beta-Gated_)",
                                     "icon": "hi/HiBell",
                                     "color": "#e74c3c",
+                                    "enabled": False,
                                 },
                             },
                             "help": "Enable or disable core platform capabilities based on project requirements",
+                        },
+                        "dualListItemExample": {
+                            "name": "Assign Team Members",
+                            "subtitle": "This example uses the `selector`'s `dualList` variant",
+                            "type": "selector",
+                            "variant": "dualList",
+                            "availableTitle": "Unassigned",
+                            "selectedTitle": "On the Project",
+                            "height": 260,
+                            "icon": "hi/HiUsers",
+                            "color": "#9e9e9e",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "activeColor": "#66bb6a",
+                            "helperText": "Move people to the right-hand list to add them to the project.",
+                            "options": {
+                                "alice": {
+                                    "name": "Alice",
+                                    "icon": "fc/FcBusinesswoman",
+                                    "activeName": "Alice (Assigned)",
+                                },
+                                "bob": {
+                                    "name": "Bob",
+                                    "icon": "fc/FcBusinessman",
+                                },
+                                "carol": {
+                                    "name": "Carol",
+                                    "icon": "fc/FcManager",
+                                    "activeIcon": "fc/FcOnlineSupport",
+                                    "activeColor": "#42a5f5",
+                                },
+                                "dan": {
+                                    "name": "Dan (_On Leave_)",
+                                    "icon": "fc/FcBusinessman",
+                                    "enabled": False,
+                                },
+                                "erin": {"name": "Erin"},
+                                "frank": {"name": "Frank"},
+                            },
+                            "help": "Build a team by moving people between the unassigned and assigned lists",
                         },
                         "nestedItemExample": {
                             "name": "Project Files",
                             "subtitle": "Example for the `selector`'s `nested` variant.",
                             "type": "selector",
                             "variant": "nested",
+                            "activeColor": "#000",
+                            "activeIcon": "bi/BiSolidCheckCircle",
+                            "helperText": "Checked files are included in the next deployment bundle.",
                             "options": {
                                 "src_models": {
-                                    "name": "model.py",
+                                    "name": "`model.py`",
                                     "path": ["src", "models"],
                                     "icon": "si/SiPython",
+                                    "activeName": "`model.py` (Included)",
                                 },
                                 "src_views": {
-                                    "name": "views.py",
+                                    "name": "`views.py`",
                                     "path": ["src", "views"],
                                     "icon": "si/SiPython",
                                 },
                                 "src_utils": {
-                                    "name": "utils.py",
+                                    "name": "`utils.py`",
                                     "path": ["src", "utils"],
                                     "icon": "si/SiPython",
                                 },
                                 "test_unit": {
-                                    "name": "test_units.py",
+                                    "name": "`test_units.py`",
                                     "path": ["tests", "unit"],
                                     "icon": "hi/HiBeaker",
                                 },
                                 "test_integration": {
-                                    "name": "test_integration.py",
+                                    "name": "`test_integration.py`",
                                     "path": ["tests", "integration"],
                                     "icon": "hi/HiBeaker",
                                 },
                                 "docs_api": {
-                                    "name": "API.md",
+                                    "name": "`API.md`",
                                     "path": ["docs", "api"],
                                     "icon": "si/SiMarkdown",
                                 },
                                 "docs_setup": {
-                                    "name": "Setup.md",
+                                    "name": "`Setup.md`",
                                     "path": ["docs", "setup"],
                                     "icon": "si/SiMarkdown",
                                 },
                                 "config_dev": {
-                                    "name": "dev.yaml",
+                                    "name": "`dev.yaml`",
                                     "path": ["config", "environments"],
                                     "icon": "si/SiYaml",
                                 },
                                 "config_prod": {
-                                    "name": "prod.yaml",
+                                    "name": "`prod.yaml` (_Locked_)",
                                     "path": ["config", "environments"],
                                     "icon": "si/SiYaml",
+                                    "enabled": False,
                                 },
                             },
                             "help": "Navigate and manage project files across different functional categories",
@@ -682,6 +761,17 @@ def execute_command(
                             "subtitle": "Example for the `date`'s `date` variant.",
                             "type": "date",
                             "variant": "date",
+                            "label": "Landing date",
+                            "dateOrder": "ymd",
+                            "views": ["year", "month", "day"],
+                            "defaultView": "year",
+                            "timezone": "America/New_York",
+                            "minDate": "1969-01-01",
+                            "maxDate": "1972-12-31",
+                            "disableFuture": True,
+                            "disabledDates": ["1969-07-04", ["1969-08-01", "1969-08-15"]],
+                            "disabledMonths": ["dec"],
+                            "disabledWeekdays": ["mon"],
                             "help": "Record significant milestones in space exploration history",
                         },
                         "timeItemExample": {
@@ -690,6 +780,11 @@ def execute_command(
                             "type": "date",
                             "variant": "time",
                             "views": ["hours", "minutes", "seconds"],
+                            "secondsStep": 10,
+                            "hour24": True,
+                            "minTime": "20:00",
+                            "maxTime": "21:00:00",
+                            "disabledTimes": [["20:30", "20:45"]],
                             "help": "Document precise timing of mission-critical events",
                         },
                         "dateTimeItemExample": {
@@ -697,6 +792,9 @@ def execute_command(
                             "subtitle": "Example for the `date`'s `datetime` variant.",
                             "type": "date",
                             "variant": "datetime",
+                            "label": "Timestamp",
+                            "minDateTime": "1969-07-16T13:32:00",  # Launch
+                            "maxDateTime": "1969-07-24 16:50:35",  # Splashdown
                             "help": "Track exact timestamps of historic achievements for archival purposes",
                         },
                         "coordinateHeader": {
@@ -704,22 +802,16 @@ def execute_command(
                             "type": "head",
                             "help": "Some help for Coordinate Props",
                         },
-                        "latLngInputExample": {
-                            "name": "MIT CAVE Lab Location",
-                            "subtitle": "Example for the `coordinate`'s `latLngInput` variant.",
-                            "type": "coordinate",
-                            "variant": "latLngInput",
-                            "precision": 6,
-                            "help": "Enter the coordinates of MIT's Center for Transportation & Logistics",
-                        },
                         "latLngMapExample": {
                             "name": "Select Meeting Point",
                             "subtitle": "Example for the `coordinate`'s `latLngMap` variant.",
                             "type": "coordinate",
                             "variant": "latLngMap",
-                            # "defaultZoom": 16,
-                            # "minZoom": 14,
-                            # "maxZoom": 19,
+                            "direction": "column",
+                            "defaultZoom": 16,
+                            "minZoom": 14,
+                            "maxZoom": 19,
+                            "maxBounds": [[-71.095, 42.358], [-71.080, 42.362]],  # MIT campus
                             "help": "Click on the map to select a meeting point on MIT's campus",
                         },
                         "latLngPathExample": {
@@ -727,10 +819,40 @@ def execute_command(
                             "subtitle": "Example for the `coordinate`'s `latLngPath` variant.",
                             "type": "coordinate",
                             "variant": "latLngPath",
-                            # "defaultZoom": 15,
-                            # "pathColor": "#a31f34",  # MIT's primary red
-                            # "pathWeight": 3,
+                            "direction": "column",
+                            "defaultZoom": 15,
+                            "minZoom": 13,
+                            "maxZoom": 18,
+                            "maxBounds": [[-71.095, 42.358], [-71.080, 42.362]],  # MIT campus
+                            "pathColor": "#a31f34",  # MIT's primary red
+                            "pathWeight": 3,
                             "help": "A walking tour path from Killian Court to MIT CAVE Lab",
+                        },
+                        "headHeader": {
+                            "name": "Head Props",
+                            "type": "head",
+                            "help": "Section headers for organizing prop panels, with optional icons and tooltips",
+                        },
+                        "headColumnExample": {
+                            "name": "Fleet Overview",
+                            "type": "head",
+                            "icon": "md/MdLocalShipping",
+                            "color": "#42a5f5",
+                            "size": "32px",
+                            # No dedicated attribute exists for title alignment: `textAlign`
+                            # is inherited by the title from this root `propStyle`.
+                            "propStyle": {"textAlign": "center"},
+                            "help": "This example uses the `head`'s `column` variant (default), with a custom icon color/size and a centered title via `propStyle`",
+                        },
+                        "headRowExample": {
+                            "name": "Route Optimization",
+                            "type": "head",
+                            "variant": "row",
+                            "icon": "md/MdAltRoute",
+                            "color": "#66bb6a",
+                            "size": "32px",
+                            "propStyle": {"borderColor": "#66bb6a"},
+                            "help": "This example uses the `head`'s `row` variant, with a custom icon color/size, displayed in a bordered row",
                         },
                     },
                     "values": {
@@ -748,9 +870,10 @@ def execute_command(
                         "textButtonExample": "Archive",
                         "pictureExample": "https://cave.mit.edu/wp-content/uploads/2019/01/CAVE_CTL_Live.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                        "audioExample": "https://archive.org/download/HungarianRhapsodyNo.2/Franz_Liszt_-_Second_Hungarian_Rhapsody.mp3",
                         "textInputExample": "cave-routing-2025",
                         "textAreaInputExample": "This project aims to optimize last-mile delivery routes using machine learning algorithms. Key features include real-time traffic integration, dynamic route adjustment, and driver mobile app integration. Target completion: Q3 2025.",
-                        "dropdownItemExample": ["python"],
+                        "dropdownItemExample": [],
                         "checkboxItemExample": ["email", "slack"],
                         "hcheckboxItemExample": ["flag", "pin"],
                         "radioItemExample": [],
@@ -759,6 +882,7 @@ def execute_command(
                         "hradioItemExample": ["alice"],
                         "comboBoxItemExample": ["dev"],
                         "comboBoxMultiExample": ["auth", "api"],
+                        "dualListItemExample": ["alice", "carol"],
                         "nestedItemExample": [
                             "src_models",
                             "src_views",
@@ -769,7 +893,6 @@ def execute_command(
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputExample": [[-71.082524, 42.361145]],  # MIT CTL Building (E40)
                         "latLngMapExample": [[-71.093773, 42.359244]],  # Killian Court
                         "latLngPathExample": [
                             [-71.093773, 42.359244],  # Start: Killian Court
@@ -780,6 +903,11 @@ def execute_command(
                     },
                     "layout": {
                         "type": "grid",
+                        # Render the labels (`name`, `subtitle`, `unit`, options, ...) of every prop in
+                        # this layout as rich text: inline markdown (`**bold**`, `_italic_`, `` `code` ``)
+                        # and inline math (`$x^2$`). `richText` cascades from layouts to their props, and
+                        # a prop can opt out with `"richText": False`. See `richText` in the API docs.
+                        "richText": True,
                         "numColumns": 5,
                         "numRows": "auto",
                         "data": {
@@ -915,6 +1043,12 @@ def execute_command(
                                 "row": 3,
                                 "itemId": "videoExample",
                             },
+                            "col5Row4": {
+                                "type": "item",
+                                "column": 5,
+                                "row": 4,
+                                "itemId": "audioExample",
+                            },
                             "col6Row1": {
                                 "type": "item",
                                 "column": 6,
@@ -979,6 +1113,12 @@ def execute_command(
                                 "type": "item",
                                 "column": 6,
                                 "row": 11,
+                                "itemId": "dualListItemExample",
+                            },
+                            "col6Row12": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 12,
                                 "itemId": "nestedItemExample",
                             },
                             "col7Row1": {
@@ -1015,19 +1155,31 @@ def execute_command(
                                 "type": "item",
                                 "column": 8,
                                 "row": 2,
-                                "itemId": "latLngInputExample",
+                                "itemId": "latLngMapExample",
                             },
                             "col8Row3": {
                                 "type": "item",
                                 "column": 8,
                                 "row": 3,
-                                "itemId": "latLngMapExample",
-                            },
-                            "col8Row4": {
-                                "type": "item",
-                                "column": 8,
-                                "row": 4,
                                 "itemId": "latLngPathExample",
+                            },
+                            "col9Row1": {
+                                "type": "item",
+                                "column": 9,
+                                "row": 1,
+                                "itemId": "headHeader",
+                            },
+                            "col9Row2": {
+                                "type": "item",
+                                "column": 9,
+                                "row": 2,
+                                "itemId": "headColumnExample",
+                            },
+                            "col9Row3": {
+                                "type": "item",
+                                "column": 9,
+                                "row": 3,
+                                "itemId": "headRowExample",
                             },
                         },
                     },

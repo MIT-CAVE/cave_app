@@ -148,6 +148,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 "session": {
                     "open": True,
+                    "docked": True,  # Rendered in a persistent top bar instead of floating
                     "position": {
                         "x": 8,  # distance from left app bar
                         "y": 8,
@@ -155,6 +156,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                 },
                 "globalOutputs": {
                     "open": True,
+                    "docked": True,
+                    "hideDockOption": True,  # Global outputs are docked by default and cannot be undocked by the user
                     "position": {
                         "x": 8,
                         "y": 68,  # 68 pixels from top edge of screen which is below the session draggable
@@ -170,7 +173,9 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     },
                 },
                 "time": {
+                    "open": True,
                     "showDragHandle": True,
+                    "docked": True,
                 },
             }
         },
@@ -403,6 +408,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "variant": "video",
                             "help": "Click or tap the play button to start the video",
                         },
+                        "audioExample": {
+                            "name": "Audio Example",
+                            "type": "media",
+                            "variant": "audio",
+                            "helperText": "Frederic Chopin: Etude Op. 25 No. 1, 'Aeolian Harp' (piano, Donald Betts via Musopen, public domain)",
+                            "help": "Press play to listen to the audio clip",
+                        },
                         "selectorHeader": {
                             "name": "Selection Props",
                             "type": "head",
@@ -412,6 +424,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "name": "Dropdown Item Example",
                             "type": "selector",
                             "variant": "dropdown",
+                            "placeholder": "Select an option",
                             "options": {
                                 "option_a": {"name": "Option A"},
                                 "option_b": {"name": "Option B"},
@@ -509,6 +522,22 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             },
                             "help": "Select multiple options from the combobox",
                         },
+                        "dualListItemExample": {
+                            "name": "Dual List Item Example",
+                            "type": "selector",
+                            "variant": "dualList",
+                            "availableTitle": "Available Options",
+                            "selectedTitle": "Selected Options",
+                            "height": 240,
+                            "helperText": "Move options between the lists to select them",
+                            "options": {
+                                "option_a": {"name": "Option A"},
+                                "option_b": {"name": "Option B"},
+                                "option_c": {"name": "Option C"},
+                                "option_d": {"name": "Option D (Disabled)", "enabled": False},
+                            },
+                            "help": "Select multiple options from the dual list",
+                        },
                         "nestedItemExample": {
                             "name": "Nested Item Example",
                             "type": "selector",
@@ -582,12 +611,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "head",
                             "help": "Some help for Coordinate Props",
                         },
-                        "latLngInputExample": {
-                            "name": "Lat/Lng Input Example",
-                            "type": "coordinate",
-                            "variant": "latLngInput",
-                            "help": "Help for the latLngInput example",
-                        },
                         "latLngMapExample": {
                             "name": "Lat/Lng Map Example",
                             "type": "coordinate",
@@ -599,6 +622,29 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "coordinate",
                             "variant": "latLngPath",
                             "help": "Help for the latLngPath example",
+                        },
+                        "headHeader": {
+                            "name": "Head Props",
+                            "type": "head",
+                            "help": "Some help for head props",
+                        },
+                        "headColumnExample": {
+                            "name": "Head Column Example",
+                            "type": "head",
+                            "icon": "md/MdViewColumn",
+                            "color": "#42a5f5",
+                            "size": "28px",
+                            "propStyle": {"textAlign": "center"},
+                            "help": "Help for the head column example",
+                        },
+                        "headRowExample": {
+                            "name": "Head Row Example",
+                            "type": "head",
+                            "variant": "row",
+                            "icon": "md/MdViewStream",
+                            "color": "#66bb6a",
+                            "size": "32px",
+                            "help": "Help for the head row example",
                         },
                     },
                     "values": {
@@ -613,9 +659,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "textButtonExample": "Press Me to Show a Warning!",
                         "pictureExample": "https://cave.mit.edu/wp-content/uploads/2019/01/CAVE_CTL_Live.png",
                         "videoExample": "https://www.youtube.com/embed/6q5R1TDmKnU",
+                        "audioExample": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Frederic_Chopin_-_etude_no._1_in_a_flat_major%2C_op._25.ogg",
                         "textInputExample": "Example Text Here",
                         "textAreaInputExample": "Velit non incididunt velit quis commodo consequat velit nulla. Id sunt sint consequat do in. Et adipisicing aliqua voluptate eu consequat et dolore mollit sit veniam minim nisi tempor. Enim laboris proident ex magna. Duis culpa veniam et officia irure id qui id ad laborum deserunt dolor proident elit.",
-                        "dropdownItemExample": ["option_c"],
+                        "dropdownItemExample": [],
                         "checkboxItemExample": ["option_a", "option_c"],
                         "hcheckboxItemExample": ["option_b"],
                         "radioItemExample": ["option_a"],
@@ -624,6 +671,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "hradioItemExample": ["option_c"],
                         "comboBoxItemExample": ["option_b"],
                         "comboBoxMultiExample": ["option_a", "option_b"],
+                        "dualListItemExample": ["option_a", "option_b"],
                         "nestedItemExample": [
                             "t1_b1_tw1",
                             "t1_b1_tw2",
@@ -634,7 +682,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "dateItemExample": "1969-07-20",
                         "timeItemExample": "20:17:40",
                         "dateTimeItemExample": "1969-07-20T20:17:40",
-                        "latLngInputExample": [[-71.092003, 42.360001]],
                         "latLngMapExample": [[-71.092003, 42.360001]],
                         "latLngPathExample": [
                             [-71.092003, 42.360001],
@@ -760,6 +807,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "row": 3,
                                 "itemId": "videoExample",
                             },
+                            "col5Row4": {
+                                "type": "item",
+                                "column": 5,
+                                "row": 4,
+                                "itemId": "audioExample",
+                            },
                             "col6Row1": {
                                 "type": "item",
                                 "column": 6,
@@ -824,6 +877,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 6,
                                 "row": 11,
+                                "itemId": "dualListItemExample",
+                            },
+                            "col6Row12": {
+                                "type": "item",
+                                "column": 6,
+                                "row": 12,
                                 "itemId": "nestedItemExample",
                             },
                             "col7Row1": {
@@ -860,19 +919,31 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "type": "item",
                                 "column": 8,
                                 "row": 2,
-                                "itemId": "latLngInputExample",
+                                "itemId": "latLngMapExample",
                             },
                             "col8Row3": {
                                 "type": "item",
                                 "column": 8,
                                 "row": 3,
-                                "itemId": "latLngMapExample",
-                            },
-                            "col8Row4": {
-                                "type": "item",
-                                "column": 8,
-                                "row": 4,
                                 "itemId": "latLngPathExample",
+                            },
+                            "col9Row1": {
+                                "type": "item",
+                                "column": 9,
+                                "row": 1,
+                                "itemId": "headHeader",
+                            },
+                            "col9Row2": {
+                                "type": "item",
+                                "column": 9,
+                                "row": 2,
+                                "itemId": "headColumnExample",
+                            },
+                            "col9Row3": {
+                                "type": "item",
+                                "column": 9,
+                                "row": 3,
+                                "itemId": "headRowExample",
                             },
                         },
                     },
@@ -1041,24 +1112,12 @@ def execute_command(session_data, socket, command="init", **kwargs):
         },
         "maps": {
             "order": {
-                "additionalMapStyles": ["smoothLight", "smoothDark"],
+                "additionalMapStyles": ["osmRasterTiles", "satellite_streets"],
             },
             "additionalMapStyles": {
-                "smoothLight": {
-                    "name": "Smooth Light",
-                    "icon": "fi/FiSun",
-                    "spec": "https://tiles.stadiamaps.com/styles/alidade_smooth.json",
-                    # "light": True,  # Enforces a light theme for map properties, root styling, and controls to improve viz on light maps.
-                },
-                "smoothDark": {
-                    "name": "Smooth Dark",
-                    "icon": "fi/FiMoon",
-                    "spec": "https://tiles.stadiamaps.com/styles/alidade_smooth_dark.json",
-                },
                 "osmRasterTiles": {
-                    "name": "OSM Raster Tiles",
+                    "name": "Custom OSM Raster Tiles",
                     "icon": "md/MdBrush",
-                    "mapbox": True,  # Enforces Mapbox rendering engine for this map style, even if using non-Mapbox tile sources.
                     "spec": {
                         "version": 8,
                         "sources": {
@@ -1114,23 +1173,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         ],
                     },
                 },
-                "streets": {
-                    "name": "Streets",
-                    "icon": "md/MdStreetview",
-                    "spec": "mapbox://styles/mapbox/streets-v12",
-                },
-                "outdoors": {
-                    "name": "Outdoors",
-                    "icon": "md/MdForest",
-                    "spec": "mapbox://styles/mapbox/outdoors-v12",
-                },
-                "satellite": {
-                    "name": "Satellite",
-                    "icon": "md/MdSatelliteAlt",
-                    "spec": "mapbox://styles/mapbox/satellite-v9",
-                },
                 "satellite_streets": {
-                    "name": "Satellite Streets",
+                    "name": "Custom Mapbox Satellite Streets",
                     "icon": "md/MdSatellite",
                     "spec": "mapbox://styles/mapbox/satellite-streets-v12",
                 },
@@ -2241,13 +2285,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "type": "head",
                     "name": "Example KPI Header 1",
                     "icon": "bs/BsInboxes",
-                    "variant": "icon",
                 },
                 "kpiHeader2": {
                     "type": "head",
                     "name": "Example KPI Header 2",
                     "icon": "bs/BsTruck",
-                    "variant": "icon",
                 },
                 "key1": {
                     "name": "KPI Example 1",
@@ -2256,7 +2298,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "unit": "frowns",
                     "type": "num",
                     "variant": "icon",
-                    "draggable": True,
+                    "quickView": True,  # `draggable` also still works, but is deprecated
+                    "color": "#ee4b2b",
                 },
                 "key2": {
                     "name": "KPI Example 2",
@@ -2265,7 +2308,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "unit": "smiles",
                     "type": "num",
                     "variant": "icon",
-                    "draggable": True,
+                    "quickView": True,
+                    "color": "#ffff00",
                 },
                 "key3": {
                     "name": "KPI Example 3",

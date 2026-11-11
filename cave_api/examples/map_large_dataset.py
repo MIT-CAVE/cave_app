@@ -155,7 +155,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "zoneGeo": {
                                     "value": True,
                                     "colorBy": "zoneValue",
-                                    "colorByOptions": ["zoneValue", "population", "environmentAlert"],
+                                    "colorByOptions": [
+                                        "zoneValue",
+                                        "population",
+                                        "environmentAlert",
+                                    ],
                                 },
                             },
                         },
@@ -187,8 +191,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "size": "10px", "color": "rgb(52, 152, 219)"},  # Blue
-                                    {"value": "max", "size": "24px", "color": "rgb(155, 89, 182)"},  # Purple
+                                    {
+                                        "value": "min",
+                                        "size": "10px",
+                                        "color": "rgb(52, 152, 219)",
+                                    },  # Blue
+                                    {
+                                        "value": "max",
+                                        "size": "24px",
+                                        "color": "rgb(155, 89, 182)",
+                                    },  # Purple
                                 ],
                             },
                         },
@@ -201,8 +213,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "size": "8px", "color": "rgb(255, 235, 204)"},  # Light orange
-                                    {"value": "max", "size": "30px", "color": "rgb(230, 126, 34)"},  # Dark orange
+                                    {
+                                        "value": "min",
+                                        "size": "8px",
+                                        "color": "rgb(255, 235, 204)",
+                                    },  # Light orange
+                                    {
+                                        "value": "max",
+                                        "size": "30px",
+                                        "color": "rgb(230, 126, 34)",
+                                    },  # Dark orange
                                 ],
                             },
                         },
@@ -215,8 +235,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "size": "10px", "color": "rgb(192, 57, 43)"},  # Dark Red
-                                    {"value": "max", "size": "24px", "color": "rgb(39, 174, 96)"},  # Emerald Green
+                                    {
+                                        "value": "min",
+                                        "size": "10px",
+                                        "color": "rgb(192, 57, 43)",
+                                    },  # Dark Red
+                                    {
+                                        "value": "max",
+                                        "size": "24px",
+                                        "color": "rgb(39, 174, 96)",
+                                    },  # Emerald Green
                                 ],
                             },
                         },
@@ -237,8 +265,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 for lon, lat in nodes_coords
                             ],
                             "reliability": [
-                                50.0 + 50.0 * abs(math.sin(idx * 0.01))
-                                for idx in range(N_nodes)
+                                50.0 + 50.0 * abs(math.sin(idx * 0.01)) for idx in range(N_nodes)
                             ],
                         },
                     },
@@ -256,8 +283,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "size": "1px", "color": "rgb(241, 196, 15)"},  # Yellow
-                                    {"value": "max", "size": "5px", "color": "rgb(211, 84, 0)"},  # Orange
+                                    {
+                                        "value": "min",
+                                        "size": "1px",
+                                        "color": "rgb(241, 196, 15)",
+                                    },  # Yellow
+                                    {
+                                        "value": "max",
+                                        "size": "5px",
+                                        "color": "rgb(211, 84, 0)",
+                                    },  # Orange
                                 ],
                             },
                         },
@@ -270,8 +305,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 1,
                                 "data": [
-                                    {"value": "min", "size": "1px", "color": "rgb(189, 195, 199)"},  # Silver
-                                    {"value": "max", "size": "6px", "color": "rgb(44, 62, 80)"},  # Midnight Blue
+                                    {
+                                        "value": "min",
+                                        "size": "1px",
+                                        "color": "rgb(189, 195, 199)",
+                                    },  # Silver
+                                    {
+                                        "value": "max",
+                                        "size": "6px",
+                                        "color": "rgb(44, 62, 80)",
+                                    },  # Midnight Blue
                                 ],
                             },
                         },
@@ -280,7 +323,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "toggle",
                             "help": "Whether the connection is congested",
                             "options": {
-                                "false": {"color": "rgb(46, 204, 113)"}, # Green for clear
+                                "false": {"color": "rgb(46, 204, 113)"},  # Green for clear
                                 "true": {"color": "rgb(231, 76, 60)"},  # Red for congested
                             },
                         },
@@ -295,12 +338,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 for i in range(len(arcs_paths))
                             ],
                             "distance": [
-                                float(math.sqrt((path[0][0] - path[-1][0])**2 + (path[0][1] - path[-1][1])**2) * 111.0)
+                                float(
+                                    math.sqrt(
+                                        (path[0][0] - path[-1][0]) ** 2
+                                        + (path[0][1] - path[-1][1]) ** 2
+                                    )
+                                    * 111.0
+                                )
                                 for path in arcs_paths
                             ],
                             "congested": [
-                                bool(abs(math.sin(i * 0.2)) > 0.75)
-                                for i in range(len(arcs_paths))
+                                bool(abs(math.sin(i * 0.2)) > 0.75) for i in range(len(arcs_paths))
                             ],
                         },
                     },
@@ -318,8 +366,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "color": "rgba(46, 204, 113, 0.05)"},  # Almost transparent green
-                                    {"value": "max", "color": "rgba(46, 204, 113, 0.6)"},   # Vibrant semi-transparent green
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(46, 204, 113, 0.05)",
+                                    },  # Almost transparent green
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(46, 204, 113, 0.6)",
+                                    },  # Vibrant semi-transparent green
                                 ],
                             },
                         },
@@ -332,8 +386,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 "notation": "precision",
                                 "precision": 0,
                                 "data": [
-                                    {"value": "min", "color": "rgba(52, 152, 219, 0.05)"},  # Light blue
-                                    {"value": "max", "color": "rgba(52, 152, 219, 0.7)"},   # Strong blue
+                                    {
+                                        "value": "min",
+                                        "color": "rgba(52, 152, 219, 0.05)",
+                                    },  # Light blue
+                                    {
+                                        "value": "max",
+                                        "color": "rgba(52, 152, 219, 0.7)",
+                                    },  # Strong blue
                                 ],
                             },
                         },
@@ -342,14 +402,16 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "type": "toggle",
                             "help": "Environmental alert status in this coverage zone",
                             "options": {
-                                "false": {"color": "rgba(189, 195, 199, 0.2)"}, # Clear/grey
+                                "false": {"color": "rgba(189, 195, 199, 0.2)"},  # Clear/grey
                                 "true": {"color": "rgba(230, 126, 34, 0.7)"},  # Warning orange
                             },
                         },
                     },
                     "data": {
                         "location": {
-                            "path": [get_hexagon_path(lon, lat, 0.045) for lon, lat in nodes_coords],
+                            "path": [
+                                get_hexagon_path(lon, lat, 0.045) for lon, lat in nodes_coords
+                            ],
                         },
                         "valueLists": {
                             "zoneValue": [
@@ -361,8 +423,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                                 for lon, lat in nodes_coords
                             ],
                             "environmentAlert": [
-                                bool(abs(math.sin(idx * 0.03)) > 0.8)
-                                for idx in range(N_nodes)
+                                bool(abs(math.sin(idx * 0.03)) > 0.8) for idx in range(N_nodes)
                             ],
                         },
                     },

@@ -63,9 +63,14 @@ class CaveWSBroadcaster:
             - Type: dict
             - What: The data to broadcast
         """
-        for user_id in self.model_object.get_user_ids():
+        user_ids = [str(uid) for uid in self.model_object.get_user_ids()]
+        if len(user_ids) == 1:
             broadcaster.broadcast(
-                str(user_id), self.format_broadcast_payload(event=event, data=data, **kwargs)
+                user_ids[0], self.format_broadcast_payload(event=event, data=data, **kwargs)
+            )
+        elif len(user_ids) > 1:
+            broadcaster.broadcast_many(
+                user_ids, self.format_broadcast_payload(event=event, data=data, **kwargs)
             )
 
     @type_enforced.Enforcer

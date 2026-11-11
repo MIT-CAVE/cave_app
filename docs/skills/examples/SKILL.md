@@ -7,6 +7,9 @@ description: Pick the right reference example from cave_api/examples/ before imp
 
 `cave_api/examples/` contains 25+ working, validated `execute_command` implementations. Before writing new API code, find the closest match below, open it, and adapt it — copying a working pattern is faster and safer than building a prop schema from memory.
 
+> [!TIP]
+> **Token Efficiency**: Several examples (like `kitchen_sink.py` or `general_props_all.py`) are large files. Avoid loading an entire example file into context. Grep for the specific prop or component you need and inspect only the relevant lines.
+
 If nothing here fits, grep the folder for the top-level `session_data` key or prop `type`/`variant` you need (`grep -rl '"type": "arc"' cave_api/examples/`) — there's likely a closer match than you think.
 
 ### Maps & map features
@@ -76,4 +79,9 @@ Not part of the curated set above and not shown in the in-app example browser, b
 
 ### After copying a pattern
 
-Cross-check the specific fields you changed against the [api-reference](../api-reference/SKILL.md) skill (or the matching file in `docs/cave_api_docs/`) — examples show *a* valid configuration, not every valid field. If you edit a file inside `cave_api/examples/` itself, run `cave test examples.py` — see the [test](../test/SKILL.md) skill.
+Cross-check the specific fields you changed against the [api-reference](../api-reference/SKILL.md) skill (or the matching file in `docs/cave_api_docs/`) — examples show *a* valid configuration, not every valid field. 
+
+If you edit a file inside `cave_api/examples/` itself, run `cave prettify` and then `cave test examples.py` — see the [lint](../lint/SKILL.md) and [test](../test/SKILL.md) skills.
+
+> [!TIP]
+> **Fast Single-Example Testing**: To test one example without waiting for all 25+ examples to validate via `cave test examples.py`, uncomment it under Option 3 in `cave_api/api.py` and run `cave prettify && cave test init.py`. Run `cave test examples.py` once finished for full regression coverage.

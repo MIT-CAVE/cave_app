@@ -23,13 +23,11 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "icon": "md/MdMap",
                     "type": "page",
                     "bar": "upperLeft",
-                    "name": "Geos On Top Map",
                 },
                 "mapArcsOnTopPage": {
                     "icon": "md/MdMap",
                     "type": "page",
                     "bar": "upperLeft",
-                    "name": "Arcs On Top Map",
                 },
             },
         },
