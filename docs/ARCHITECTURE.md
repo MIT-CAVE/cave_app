@@ -58,6 +58,8 @@ Each app runs as a set of services (Docker containers) on a dedicated network. `
 | Valkey / Redis | `<app>_redis_host` | `valkey/valkey` | Cache for session data and message broker for WebSocket broadcasts |
 | Nginx | `<app>_nginx_host` | `nginx` | Optional HTTPS reverse proxy, used for LAN hosting |
 
+The cache service is named `<app>_redis_host` but runs Valkey, a Redis-compatible fork.
+
 ```mermaid
 flowchart LR
     browser([Browser]) -->|http://localhost:8000| django
