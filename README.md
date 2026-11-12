@@ -82,6 +82,7 @@ See the API documentation to get started:
 
 - [General API Topics](docs/API_README.md)
 - [Development Guide](docs/DEVELOPMENT.md)
+- [Architecture Overview](docs/ARCHITECTURE.md)
 - [API Spec](https://mit-cave.github.io/cave_utils/cave_utils/api.html)
 
 ## Development Workflow
