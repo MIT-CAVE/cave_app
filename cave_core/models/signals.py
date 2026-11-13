@@ -5,7 +5,7 @@ from django.dispatch import receiver
 # Local Imports
 from cave_core.models.cache import cache
 from cave_core.models.sessions import Sessions
-from cave_core.models.teams import TeamUsers
+from cave_core.models.teams import TeamUsers, Teams
 from cave_core.models.users import CustomUser
 
 
@@ -14,7 +14,10 @@ def handle_session_on_delete(sender, instance, **kwargs):
     """
     When a session object is deleted, update the sessions list for the associated session team
     """
-    instance.team.update_sessions_list()
+    try:
+        instance.team.update_sessions_list()
+    except Exception:
+        pass
     # Clear the data from the cache if present
     cache.delete_many(instance.get_cache_keys())
 
@@ -32,3 +35,11 @@ def update_team_ids(sender, instance, **kwargs):
 def create_personal_team(sender, instance, created, **kwargs):
     if created:
         instance.create_personal_team()
+
+
+@receiver(post_delete, sender=CustomUser, dispatch_uid="delete_personal_team_on_user_delete")
+def delete_personal_team_on_user_delete(sender, instance, **kwargs):
+    """
+    When a user is deleted, clean up their personal team and associated sessions/caches.
+    """
+    Teams.objects.filter(name=f"{instance.username} - Personal", is_personal_team=True).delete()

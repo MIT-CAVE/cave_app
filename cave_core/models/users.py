@@ -18,6 +18,30 @@ from rest_framework.authtoken.models import Token
 import type_enforced
 
 
+def get_default_user_status():
+    """
+    Get the default status for a new user based on Globals.default_access
+    """
+    try:
+        from cave_core.models.globals import Globals
+
+        return "accepted" if Globals.get_solo().default_access else "pending"
+    except Exception:
+        return "pending"
+
+
+def get_default_email_validated():
+    """
+    Get the default email_validated value for a new user based on Globals.default_email_validated
+    """
+    try:
+        from cave_core.models.globals import Globals
+
+        return Globals.get_solo().default_email_validated
+    except Exception:
+        return True
+
+
 class CustomUser(AbstractUser):
     """
     Extends the standard django user class to allow for additional fields for each user.
@@ -57,12 +81,12 @@ class CustomUser(AbstractUser):
             ("accepted", "accepted"),
             ("declined", "declined"),
         ],
-        default="pending",
+        default=get_default_user_status,
     )
     email_validated = models.BooleanField(
         _("Email Validated"),
         help_text=_("Has the user validated their email?"),
-        default=False,
+        default=get_default_email_validated,
     )
     get_multi_team_sessions = models.BooleanField(
         _("Get Multi Team Sessions"),
@@ -281,8 +305,7 @@ class CustomUser(AbstractUser):
         team, team_created = Teams.objects.get_or_create(
             name=f"{self.username} - Personal", is_personal_team=True
         )
-        if team_created:
-            team.add_user(self)
+        team.add_user(self)
         return team
 
     def get_or_create_personal_team(self):
@@ -297,7 +320,9 @@ class CustomUser(AbstractUser):
         team = self.get_or_create_personal_team()
         team_sessions = team.get_sessions()
         if len(team_sessions) > 0:
-            return team_sessions[0]
+            session = team_sessions[0]
+            self.switch_session_no_validation(session)
+            return session
         return self.create_session(session_name=f"Initial Session", team_id=team.id)
 
     def broadcast_current_session_info(self):

@@ -398,7 +398,12 @@ class Sessions(models.Model):
         )
         socket = CaveWSBroadcaster(self)
         command_output = execute_command(
-            session_data=session_data, command=command, socket=socket, mutate_dict=mutate_dict
+            session_data=session_data,
+            command=command,
+            socket=socket,
+            mutate_dict=mutate_dict,
+            cache=cache,
+            session_id=self.id,
         )
         # Ensure that no reserved api keys are returned
         background_api_keys_used = [k for k in command_output if k in background_api_keys_set]
