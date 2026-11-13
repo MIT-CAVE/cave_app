@@ -106,7 +106,8 @@ def ws_api_app(fn):
             if settings.DEBUG:
                 print(traceback_str)
             # Notify the user of the exception
-            CaveWSBroadcaster(session).notify(
+            broadcaster_target = session if session is not None else request.user
+            CaveWSBroadcaster(broadcaster_target).notify(
                 message=str(e),
                 title="Error:",
                 show=True,
@@ -115,6 +116,7 @@ def ws_api_app(fn):
                 traceback=traceback_str,
             )
             # Set the executing / loading status to false
-            session.set_loading(False)
+            if session is not None:
+                session.set_loading(False)
 
     return wrap

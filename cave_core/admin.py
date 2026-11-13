@@ -141,6 +141,8 @@ class CustomGlobalsAdmin(SingletonModelAdmin):
             {
                 "fields": (
                     "allow_anyone_create_user",
+                    "default_access",
+                    "default_email_validated",
                     "allow_user_edit_info",
                     "allow_user_edit_bio",
                     "allow_user_edit_photo",

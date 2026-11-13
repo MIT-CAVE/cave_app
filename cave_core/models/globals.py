@@ -93,6 +93,20 @@ class Globals(SingletonModel):
         ),
         default=False,
     )
+    default_access = models.BooleanField(
+        _("Default Access"),
+        help_text=_(
+            "Should new users be granted access by default? - Used when creating a new user"
+        ),
+        default=False,
+    )
+    default_email_validated = models.BooleanField(
+        _("Default Email Validated"),
+        help_text=_(
+            "Should new users have their email validated by default? - Used when creating a new user"
+        ),
+        default=True,
+    )
     primary_color = models.CharField(
         _("Primary Color"),
         help_text=_("The primary color for the website - Used for the general style on all pages"),
