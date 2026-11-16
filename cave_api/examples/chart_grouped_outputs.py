@@ -138,6 +138,10 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         "sales": {
                             "name": "Sales",
                             "unit": "units",
+                            "yAxisNotation": "scientific",
+                            "yAxisNotationDisplay": "x10^",
+                            "yAxisTrailingZeros": False,
+                            "yAxisPrecision": 1,
                         },
                     },
                     "valueLists": {
