@@ -25,6 +25,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     # `myCommandButton` is a custom button that is added to the app bar
                     # Buttons are be used to trigger custom back end logic
                     "myCommandButton": {
+                        # `name` is the tooltip and accessible name for the button
+                        "name": "My Command",
                         "icon": "md/MdLightbulbOutline",
                         "apiCommand": "myCommand",
                         "type": "button",

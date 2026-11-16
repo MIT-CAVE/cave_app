@@ -19,6 +19,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
             "data": {
                 # Add an app bar button to launch a chart dashboard
                 "chartPage": {
+                    # `name` is the tooltip and accessible name for the page button
+                    "name": "Charts",
                     "icon": "md/MdBarChart",
                     "type": "page",
                     "bar": "upperLeft",

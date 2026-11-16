@@ -192,6 +192,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
             },
             "data": {
                 "buttonSolve": {
+                    # `name` is the tooltip and accessible name for the button
+                    "name": "Solve",
                     "icon": "bs/BsLightningFill",
                     "color": "rgb(178 179 55)",
                     "apiCommand": "solve",
@@ -205,22 +207,26 @@ def execute_command(session_data, socket, command="init", **kwargs):
                     "variant": "wall",
                 },
                 "buttonExport": {
+                    "name": "Export data",
                     "icon": "md/MdFileDownload",
                     "apiCommand": "exportData",
                     "type": "button",
                     "bar": "upperLeft",
                 },
                 "dash1": {
+                    "name": "Dashboard 1",
                     "type": "page",
                     "icon": "md/MdInsertChart",
                     "bar": "lowerLeft",
                 },
                 "dash2": {
+                    "name": "Dashboard 2",
                     "type": "page",
                     "icon": "md/MdInsertChartOutlined",
                     "bar": "lowerLeft",
                 },
                 "dash3": {
+                    "name": "Dashboard 3",
                     "type": "page",
                     "icon": "fa/FaChartArea",
                     "bar": "lowerLeft",
