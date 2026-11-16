@@ -2246,13 +2246,21 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         ],
                     },
                     "stats": {
+                        # Tooltips/tables show 1 decimal; the y-axis shows integers
                         "numericStatExampleA": {
                             "name": "Stat Example A",
                             "unit": "units",
+                            "precision": 1,
+                            "trailingZeros": True,
+                            "yAxisPrecision": 0,
                         },
+                        # Tooltips/tables show integers; the y-axis shows 1 decimal
                         "numericStatExampleB": {
                             "name": "Stat Example B",
                             "unit": "units",
+                            "precision": 0,
+                            "yAxisPrecision": 1,
+                            "yAxisTrailingZeros": True,
                         },
                     },
                     "valueLists": {

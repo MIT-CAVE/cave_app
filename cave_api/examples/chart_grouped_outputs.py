@@ -59,8 +59,31 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupingId": ["product", "location"],
                             "groupingLevel": ["color", "state"],
                         },
+                        # Mixed chart: each axis uses the `yAxis*` formatting of its own stat
+                        "chart3": {
+                            "dataset": "salesData",
+                            "chartType": "mixed",
+                            "stats": [
+                                # stat[0] = left stat
+                                {
+                                    "statId": "demand",
+                                    "aggregationType": "sum",
+                                },
+                                # stat[1] = right stat
+                                {
+                                    "statId": "sales",
+                                    "aggregationType": "sum",
+                                },
+                            ],
+                            "groupingId": ["product", "location"],
+                            "groupingLevel": ["color", "state"],
+                            "chartOptions": {
+                                "leftChartType": "bar",
+                                "rightChartType": "line",
+                            },
+                        },
                     },
-                    "pageLayout": ["chart1", "chart2", None, None],
+                    "pageLayout": ["chart1", "chart2", "chart3", None],
                 },
             },
         },
@@ -131,9 +154,13 @@ def execute_command(session_data, socket, command="init", **kwargs):
                         ],
                     },
                     "stats": {
+                        # Tooltips show 1 decimal; the y-axis shows integers
                         "demand": {
                             "name": "Demand",
                             "unit": "units",
+                            "precision": 1,
+                            "trailingZeros": True,
+                            "yAxisPrecision": 0,
                         },
                         "sales": {
                             "name": "Sales",
