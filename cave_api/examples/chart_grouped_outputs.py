@@ -59,7 +59,7 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "groupingId": ["product", "location"],
                             "groupingLevel": ["color", "state"],
                         },
-                        # Mixed chart: each axis uses the `yAxis*` formatting of its own stat
+                        # Mixed chart: each axis uses the `yAxis` formatting of its own stat
                         "chart3": {
                             "dataset": "salesData",
                             "chartType": "mixed",
@@ -160,15 +160,17 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "units",
                             "precision": 1,
                             "trailingZeros": True,
-                            "yAxisPrecision": 0,
+                            "yAxis": {"precision": 0},
                         },
                         "sales": {
                             "name": "Sales",
                             "unit": "units",
-                            "yAxisNotation": "scientific",
-                            "yAxisNotationDisplay": "x10^",
-                            "yAxisTrailingZeros": False,
-                            "yAxisPrecision": 1,
+                            "yAxis": {
+                                "notation": "scientific",
+                                "notationDisplay": "x10^",
+                                "trailingZeros": False,
+                                "precision": 1,
+                            },
                         },
                     },
                     "valueLists": {

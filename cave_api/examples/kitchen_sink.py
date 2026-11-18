@@ -2252,15 +2252,14 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "units",
                             "precision": 1,
                             "trailingZeros": True,
-                            "yAxisPrecision": 0,
+                            "yAxis": {"precision": 0},
                         },
                         # Tooltips/tables show integers; the y-axis shows 1 decimal
                         "numericStatExampleB": {
                             "name": "Stat Example B",
                             "unit": "units",
                             "precision": 0,
-                            "yAxisPrecision": 1,
-                            "yAxisTrailingZeros": True,
+                            "yAxis": {"precision": 1, "trailingZeros": True},
                         },
                     },
                     "valueLists": {
