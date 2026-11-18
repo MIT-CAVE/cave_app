@@ -188,7 +188,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "ms",
                             "help": "Response latency of the node",
                             "gradient": {
-                                "notation": "precision",
                                 "precision": 0,
                                 "data": [
                                     {
@@ -210,7 +209,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "units",
                             "help": "Customer demand at this node location",
                             "gradient": {
-                                "notation": "precision",
                                 "precision": 0,
                                 "data": [
                                     {
@@ -232,7 +230,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "%",
                             "help": "Reliability metric of the node",
                             "gradient": {
-                                "notation": "precision",
                                 "precision": 0,
                                 "data": [
                                     {
@@ -280,7 +277,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "Gbps",
                             "help": "Data flow rate through the arc",
                             "gradient": {
-                                "notation": "precision",
                                 "precision": 0,
                                 "data": [
                                     {
@@ -363,7 +359,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "%",
                             "help": "Coverage strength percentage in the zone",
                             "gradient": {
-                                "notation": "precision",
                                 "precision": 0,
                                 "data": [
                                     {
@@ -383,7 +378,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "/km²",
                             "help": "Estimated population density in this zone",
                             "gradient": {
-                                "notation": "precision",
                                 "precision": 0,
                                 "data": [
                                     {

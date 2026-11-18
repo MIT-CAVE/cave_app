@@ -240,7 +240,6 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "unit": "$ft^3$",
                             "help": "The warehouse capacity in cubic feet",
                             "gradient": {
-                                "notation": "precision",
                                 "precision": 0,
                                 "data": [
                                     {
