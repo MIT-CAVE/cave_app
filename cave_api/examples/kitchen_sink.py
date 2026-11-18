@@ -1495,6 +1495,8 @@ def execute_command(session_data, socket, command="init", **kwargs):
                             "gradient": {
                                 "scale": "linear",
                                 "notation": "compact",
+                                "precision": 1,
+                                "trailingZeros": True,
                                 "data": [
                                     {
                                         "value": "min",
